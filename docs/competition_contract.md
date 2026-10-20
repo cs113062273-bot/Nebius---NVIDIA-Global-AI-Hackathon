@@ -5,7 +5,7 @@ Verified 2026-10-20 (Asia/Taipei). Recheck before submitting. Labels describe ev
 | Item | Status | Requirement |
 |---|---|---|
 | Deadline | CONFIRMED_OFFICIAL | October 30, 2026 10:00 PDT = October 31 01:00 Taipei |
-| Judging | CONFIRMED_OFFICIAL | December 1–15; provide free unrestricted judge access until judging ends |
+| Judging | CONFIRMED_OFFICIAL | December 1–15 Pacific; ends December 16 04:00 Taipei. Provide free unrestricted judge access until then |
 | Runtime | CONFIRMED_OFFICIAL | Token Factory runtime inference or Nebius AI Cloud execution; NVIDIA open model required |
 | Demo | CONFIRMED_OFFICIAL | Working demo/application/test-build URL |
 | Repository | CONFIRMED_OFFICIAL | Public GitHub/GitLab/Bitbucket; source, assets, open-source license, setup README |

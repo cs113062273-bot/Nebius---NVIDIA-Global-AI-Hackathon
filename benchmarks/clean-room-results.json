@@ -1,14 +1,62 @@
 {
-  "at": "2026-10-20T04:48:32.160Z",
-  "pass": false,
-  "directory": "artifacts\\clean-room-3aad8cc3-2338-42f2-ac94-b412c6adc6be",
+  "at": "2026-10-20T04:52:49.092Z",
+  "pass": true,
+  "directory": "artifacts\\clean-room-64c10f45-86f8-41de-b37d-95f1f1843701",
+  "freshDependencies": true,
+  "freshBrowserBinaries": true,
+  "credentials": false,
   "checks": [
     {
       "label": "fresh-dependencies",
       "pass": true,
       "exitCode": 0,
-      "elapsedMs": 3188
+      "elapsedMs": 4181
+    },
+    {
+      "label": "fresh-chromium",
+      "pass": true,
+      "exitCode": 0,
+      "elapsedMs": 129804
+    },
+    {
+      "label": "syntax",
+      "pass": true,
+      "exitCode": 0,
+      "elapsedMs": 1931
+    },
+    {
+      "label": "unit-security",
+      "pass": true,
+      "exitCode": 0,
+      "elapsedMs": 793
+    },
+    {
+      "label": "browser-e2e",
+      "pass": true,
+      "exitCode": 0,
+      "elapsedMs": 41546
+    },
+    {
+      "label": "adversarial",
+      "pass": true,
+      "exitCode": 0,
+      "elapsedMs": 5274
+    },
+    {
+      "label": "sample-benchmark",
+      "pass": true,
+      "exitCode": 0,
+      "elapsedMs": 1938
+    },
+    {
+      "label": "historical-benchmark",
+      "pass": true,
+      "exitCode": 0,
+      "elapsedMs": 3049
+    },
+    {
+      "label": "start-http",
+      "pass": true
     }
-  ],
-  "error": "fresh-chromium timed out"
+  ]
 }

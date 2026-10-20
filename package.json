@@ -18,7 +18,8 @@
     "journey": "node scripts/journey.js",
     "benchmark:historical": "node scripts/historical.js",
     "test:adversarial": "node --test --test-concurrency=1 tests/adversarial.test.js",
-    "clean-room": "node scripts/clean-room.js"
+    "clean-room": "node scripts/clean-room.js",
+    "release:local": "node scripts/package-release.js"
   },
   "dependencies": {
     "axe-core": "4.14.0",
