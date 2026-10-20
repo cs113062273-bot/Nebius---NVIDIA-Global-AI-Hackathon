@@ -4,6 +4,8 @@
 
 A local behavioral accessibility repair workbench. Freeze a task and its functional outcomes, reproduce a real keyboard failure, apply a bounded patch in a disposable copy, replay the same journey, and export inspectable evidence. NVIDIA Nemotron through Nebius Token Factory can propose the source repair; deterministic execution owns the verdict.
 
+**Start with the case studies at the top of the app.** Three bundled recordings show a scanner-clean keyboard failure, a superficially improved candidate that breaks the functional result, and a real historical a11y-dialog focus defect. Before/after screenshots, focus paths and source changes are directly inspectable. Use **Presentation view** for the short pitch, then **Run a fresh browser journey** for actual execution. The recordings are explicitly labeled; none claims a live AI call. Regenerate them from existing measured artifacts with `node scripts/build-casebook.js`.
+
 **Current status:** functional local reference-replay system, not a completed competition submission. No live Nebius inference has been run. Seven synthetic apps share two principal defect families. One historical defect is replayed with its published human repair. No autonomous repair rate, independent holdout performance, full framework support or accessibility conformance is claimed. See [FINAL_AUDIT.md](FINAL_AUDIT.md) for measured release status.
 
 ## Run locally

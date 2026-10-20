@@ -1,0 +1,381 @@
+{
+  "version": 1,
+  "generatedAt": "2026-10-20T11:45:36.266Z",
+  "measuredAt": "2026-10-20T04:49:14.892Z",
+  "recorded": true,
+  "liveInference": false,
+  "cases": [
+    {
+      "id": "scanner-blindspot",
+      "title": "The scan is clear. The person is stuck.",
+      "kicker": "01 / WHAT A SCANNER MISSES",
+      "impact": "The email field works, but Tab never reaches the mouse-only account action. The person can enter their details and still cannot submit this keyboard task.",
+      "explanation": "Tabstitch checks what happened to the person’s interaction, then replays the same task after the source repair. The receipt and submitted input must still match.",
+      "images": {
+        "before": {
+          "src": "/casebook/scanner-blindspot-before.png",
+          "sha256": "f5f61fd4b8a2a344235acff2a034fbc8e438383d331417a14bdad993ce4e382c",
+          "checkpoint": "step-2",
+          "verdict": "VERIFIED_FAIL",
+          "focus": "#field",
+          "focusPath": [
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field"
+          ],
+          "axe": {
+            "violations": 0,
+            "incomplete": 0
+          },
+          "failure": {
+            "step": 2,
+            "category": "FOCUS",
+            "message": "Cannot reach #action within 24 Tab transitions"
+          },
+          "assertions": [],
+          "functional": [
+            {
+              "assertion": {
+                "kind": "text",
+                "selector": "#receipt",
+                "value": "Account created · judge@example.com"
+              },
+              "pass": false,
+              "observed": ""
+            },
+            {
+              "assertion": {
+                "kind": "attribute",
+                "selector": "#receipt",
+                "name": "data-input",
+                "value": "judge@example.com"
+              },
+              "pass": false,
+              "observed": null
+            }
+          ]
+        },
+        "after": {
+          "src": "/casebook/scanner-blindspot-after.png",
+          "sha256": "8e82917fc068b77ca581167fcf962c4439d9f2a1823c62730a232921f3a74ff1",
+          "checkpoint": "step-3",
+          "verdict": "VERIFIED_PASS",
+          "focus": "#action",
+          "focusPath": [
+            "#field",
+            "#action"
+          ],
+          "axe": {
+            "violations": 0,
+            "incomplete": 0
+          },
+          "failure": null,
+          "assertions": [],
+          "functional": [
+            {
+              "assertion": {
+                "kind": "text",
+                "selector": "#receipt",
+                "value": "Account created · judge@example.com"
+              },
+              "pass": true,
+              "observed": "Account created · judge@example.com"
+            },
+            {
+              "assertion": {
+                "kind": "attribute",
+                "selector": "#receipt",
+                "name": "data-input",
+                "value": "judge@example.com"
+              },
+              "pass": true,
+              "observed": "judge@example.com"
+            }
+          ]
+        }
+      },
+      "provenance": {
+        "kind": "Synthetic application · author reference patch",
+        "isAI": false,
+        "recorded": true,
+        "runId": "e314862d-9fcc-475d-8fb8-e95543681edd",
+        "recordedAt": "2026-10-20T04:47:59.229Z",
+        "source": "Common Ground account creation",
+        "originalArtifactRoot": "artifacts/benchmark/2026-10-20T04-47-43.714Z/e314862d-9fcc-475d-8fb8-e95543681edd"
+      },
+      "patch": "--- a/index.html\n+++ b/index.html\n@@ -1,3 +1,3 @@\n-<!doctype html>\n-<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Create an account · Common Ground</title><link rel=\"stylesheet\" href=\"style.css\"></head><body><header><strong>COMMON GROUND</strong><span>Objects for everyday life</span></header><main><div class=\"grid\"><div class=\"art\" aria-hidden=\"true\"><div class=\"bag\"></div></div><section><small>THE EVERYDAY COLLECTION / 01</small><h1>Create an account</h1><p>Reach the action that creates your account.</p><p class=\"price\">Made for everyday life.</p><label for=\"field\">Email</label><input id=\"field\" type=\"text\" autocomplete=\"off\"><div id=\"action\" role=\"button\" class=\"action\">Create account</div><p id=\"receipt\" role=\"status\" aria-live=\"polite\"></p></section></div></main><script src=\"app.js\"></script></body></html>\n-\n+<!doctype html>\n+<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Create an account · Common Ground</title><link rel=\"stylesheet\" href=\"style.css\"></head><body><header><strong>COMMON GROUND</strong><span>Objects for everyday life</span></header><main><div class=\"grid\"><div class=\"art\" aria-hidden=\"true\"><div class=\"bag\"></div></div><section><small>THE EVERYDAY COLLECTION / 01</small><h1>Create an account</h1><p>Reach the action that creates your account.</p><p class=\"price\">Made for everyday life.</p><label for=\"field\">Email</label><input id=\"field\" type=\"text\" autocomplete=\"off\"><button id=\"action\" type=\"button\" class=\"action\">Create account</button><p id=\"receipt\" role=\"status\" aria-live=\"polite\"></p></section></div></main><script src=\"app.js\"></script></body></html>\n+\n",
+      "gate": {
+        "verdict": "VERIFIED_PASS",
+        "reasons": [],
+        "uncertain": [],
+        "newRules": [],
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      },
+      "journeyHash": "4096b72a4b82fff76f9f8fc9ecb1f5045d20d67c014793aec63822c2f01556b6"
+    },
+    {
+      "id": "wrong-fix",
+      "title": "A reachable button. A broken result.",
+      "kicker": "02 / REJECT THE CONVINCING WRONG FIX",
+      "impact": "The replacement button can now be activated with the keyboard. But its confirmation changes to “Wrong account”. Calling that a successful repair would hide a functional regression.",
+      "explanation": "The repair gate rejects the candidate because the original functional contract fails. Better keyboard behavior alone cannot authorize a broken application.",
+      "images": {
+        "before": {
+          "src": "/casebook/wrong-fix-before.png",
+          "sha256": "f5f61fd4b8a2a344235acff2a034fbc8e438383d331417a14bdad993ce4e382c",
+          "checkpoint": "step-2",
+          "verdict": "VERIFIED_FAIL",
+          "focus": "#field",
+          "focusPath": [
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field",
+            "#field"
+          ],
+          "axe": {
+            "violations": 0,
+            "incomplete": 0
+          },
+          "failure": {
+            "step": 2,
+            "category": "FOCUS",
+            "message": "Cannot reach #action within 24 Tab transitions"
+          },
+          "assertions": [],
+          "functional": [
+            {
+              "assertion": {
+                "kind": "text",
+                "selector": "#receipt",
+                "value": "Account created · judge@example.com"
+              },
+              "pass": false,
+              "observed": ""
+            },
+            {
+              "assertion": {
+                "kind": "attribute",
+                "selector": "#receipt",
+                "name": "data-input",
+                "value": "judge@example.com"
+              },
+              "pass": false,
+              "observed": null
+            }
+          ]
+        },
+        "after": {
+          "src": "/casebook/wrong-fix-after.png",
+          "sha256": "7f58a9eedc1e4778288c0b84ffee061dd3dfe180fe507552571413e2e1a195b2",
+          "checkpoint": "step-3",
+          "verdict": "VERIFIED_FAIL",
+          "focus": "#action",
+          "focusPath": [
+            "#field",
+            "#action"
+          ],
+          "axe": {
+            "violations": 0,
+            "incomplete": 0
+          },
+          "failure": {
+            "step": 4,
+            "category": "VERIFICATION",
+            "message": "Final postcondition failed or forbidden state occurred"
+          },
+          "assertions": [],
+          "functional": [
+            {
+              "assertion": {
+                "kind": "text",
+                "selector": "#receipt",
+                "value": "Account created · judge@example.com"
+              },
+              "pass": false,
+              "observed": "Wrong account"
+            },
+            {
+              "assertion": {
+                "kind": "attribute",
+                "selector": "#receipt",
+                "name": "data-input",
+                "value": "judge@example.com"
+              },
+              "pass": true,
+              "observed": "judge@example.com"
+            }
+          ]
+        }
+      },
+      "provenance": {
+        "kind": "Synthetic application · deliberately wrong candidate",
+        "isAI": false,
+        "recorded": true,
+        "runId": "7aa51538-cfb0-4b2e-ab95-5486e94cdae3",
+        "recordedAt": "2026-10-20T04:48:50.061Z",
+        "source": "Account creation negative control",
+        "originalArtifactRoot": "artifacts/benchmark/2026-10-20T04-47-43.714Z/7aa51538-cfb0-4b2e-ab95-5486e94cdae3"
+      },
+      "patch": "--- a/index.html\n+++ b/index.html\n@@ -1,3 +1,3 @@\n-<!doctype html>\n-<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Create an account · Common Ground</title><link rel=\"stylesheet\" href=\"style.css\"></head><body><header><strong>COMMON GROUND</strong><span>Objects for everyday life</span></header><main><div class=\"grid\"><div class=\"art\" aria-hidden=\"true\"><div class=\"bag\"></div></div><section><small>THE EVERYDAY COLLECTION / 01</small><h1>Create an account</h1><p>Reach the action that creates your account.</p><p class=\"price\">Made for everyday life.</p><label for=\"field\">Email</label><input id=\"field\" type=\"text\" autocomplete=\"off\"><div id=\"action\" role=\"button\" class=\"action\">Create account</div><p id=\"receipt\" role=\"status\" aria-live=\"polite\"></p></section></div></main><script src=\"app.js\"></script></body></html>\n-\n+<!doctype html>\n+<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Create an account · Common Ground</title><link rel=\"stylesheet\" href=\"style.css\"></head><body><header><strong>COMMON GROUND</strong><span>Objects for everyday life</span></header><main><div class=\"grid\"><div class=\"art\" aria-hidden=\"true\"><div class=\"bag\"></div></div><section><small>THE EVERYDAY COLLECTION / 01</small><h1>Create an account</h1><p>Reach the action that creates your account.</p><p class=\"price\">Made for everyday life.</p><label for=\"field\">Email</label><input id=\"field\" type=\"text\" autocomplete=\"off\"><button id=\"action\" type=\"button\" class=\"action\">Create account</button><p id=\"receipt\" role=\"status\" aria-live=\"polite\"></p></section></div></main><script src=\"app.js\"></script></body></html>\n+\n--- a/app.js\n+++ b/app.js\n@@ -1,10 +1,10 @@\n-const field = document.querySelector('#field');\n-const action = document.querySelector('#action');\n-const receipt = document.querySelector('#receipt');\n-action.addEventListener('click', () => {\n-  if (!field.value.trim()) { field.setAttribute('aria-invalid', 'true'); field.focus(); return; }\n-  receipt.textContent = \"Account created · judge@example.com\";\n-  receipt.setAttribute('data-input', field.value);\n-  \n-});\n-\n+const field = document.querySelector('#field');\n+const action = document.querySelector('#action');\n+const receipt = document.querySelector('#receipt');\n+action.addEventListener('click', () => {\n+  if (!field.value.trim()) { field.setAttribute('aria-invalid', 'true'); field.focus(); return; }\n+  receipt.textContent = \"Wrong account\";\n+  receipt.setAttribute('data-input', field.value);\n+  \n+});\n+\n",
+      "gate": {
+        "verdict": "VERIFIED_FAIL",
+        "reasons": [
+          "Exact journey did not complete after repair",
+          "Task evidence is missing or contradicts the verdict",
+          "Functional regression baseline/replay failed or missing",
+          "Functional output changed"
+        ],
+        "uncertain": [],
+        "newRules": [],
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      },
+      "journeyHash": "4096b72a4b82fff76f9f8fc9ecb1f5045d20d67c014793aec63822c2f01556b6"
+    },
+    {
+      "id": "real-focus-loss",
+      "title": "The dialog closes. Focus is left behind.",
+      "kicker": "03 / A REAL OPEN-SOURCE DEFECT",
+      "impact": "After Escape hides an opacity-based dialog, focus is pulled back into invisible content. The page looks ready; the keyboard user has lost their place.",
+      "explanation": "This historical a11y-dialog change removes the focus listeners before restoring the opener. We reproduced the original failure and replayed the published human fix on the same task.",
+      "images": {
+        "before": {
+          "src": "/casebook/real-focus-loss-before.png",
+          "sha256": "7e83288bca3860b15ec082dbade0480bc73eaf15a29ae5ee4d6125c90a03e8e4",
+          "checkpoint": "step-2",
+          "verdict": "VERIFIED_FAIL",
+          "focus": "#dialog",
+          "focusPath": [
+            "#open",
+            "#dialog",
+            "#dialog"
+          ],
+          "axe": {
+            "violations": 1,
+            "incomplete": 0
+          },
+          "failure": {
+            "step": 2,
+            "category": "REPLAY",
+            "message": "Expected state did not occur after action"
+          },
+          "assertions": [
+            {
+              "assertion": {
+                "kind": "focus",
+                "selector": "#open"
+              },
+              "pass": false,
+              "observed": false
+            }
+          ],
+          "functional": [
+            {
+              "assertion": {
+                "kind": "attribute",
+                "selector": "#dialog",
+                "name": "aria-hidden",
+                "value": "true"
+              },
+              "pass": true,
+              "observed": "true"
+            }
+          ]
+        },
+        "after": {
+          "src": "/casebook/real-focus-loss-after.png",
+          "sha256": "b88c7f9e1dccad260b8ec83b93afc2ad54957b17717b089e2c45745765a03314",
+          "checkpoint": "step-2",
+          "verdict": "VERIFIED_PASS",
+          "focus": "#open",
+          "focusPath": [
+            "#open",
+            "#dialog",
+            "#open"
+          ],
+          "axe": {
+            "violations": 1,
+            "incomplete": 0
+          },
+          "failure": null,
+          "assertions": [
+            {
+              "assertion": {
+                "kind": "focus",
+                "selector": "#open"
+              },
+              "pass": true,
+              "observed": true
+            }
+          ],
+          "functional": [
+            {
+              "assertion": {
+                "kind": "attribute",
+                "selector": "#dialog",
+                "name": "aria-hidden",
+                "value": "true"
+              },
+              "pass": true,
+              "observed": "true"
+            }
+          ]
+        }
+      },
+      "provenance": {
+        "kind": "Historical defect · published human repair",
+        "isAI": false,
+        "recorded": true,
+        "source": "KittyGiraudel/a11y-dialog",
+        "url": "https://github.com/KittyGiraudel/a11y-dialog/commit/6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+        "revisions": {
+          "before": "a7718bca32ede3c01c93a67da12f45a274011c4c",
+          "after": "6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9"
+        },
+        "license": "MIT; source excerpts retain upstream attribution",
+        "sourceHashes": {
+          "before": {
+            "src/a11y-dialog.ts": "3a8e86e84add48d14f5bf37629f7e32e40957a646b28f8680f19b6732355114f",
+            "src/dom-utils.ts": "b6a1a73f7e7660849d8be9e828f1e46b2d55e7735c9ec13da7546c627019dc24",
+            "src/index.ts": "85506feadf2bfff8da99e030e6d65918cba97ad9f3fec040c4c399e3933c6dc7",
+            "LICENSE": "8792afd04f9a65eb981d796da0bd1a700081629ed83d00c6e378e0136cb77ab0",
+            "focusable-selectors-0.8.0/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e",
+            "focusable-selectors-0.8.0/LICENSE": "fbcd624c8a7ecdf806a320ee49f08f72d51b65e568c0b9467454ab7444314c9d"
+          },
+          "after": {
+            "src/a11y-dialog.ts": "08e1a28e0cbee378aee5075fc22c16b273a8f17eee6540d333a204082bf55a66",
+            "src/dom-utils.ts": "b6a1a73f7e7660849d8be9e828f1e46b2d55e7735c9ec13da7546c627019dc24",
+            "src/index.ts": "85506feadf2bfff8da99e030e6d65918cba97ad9f3fec040c4c399e3933c6dc7",
+            "LICENSE": "8792afd04f9a65eb981d796da0bd1a700081629ed83d00c6e378e0136cb77ab0",
+            "focusable-selectors-0.8.0/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e",
+            "focusable-selectors-0.8.0/LICENSE": "fbcd624c8a7ecdf806a320ee49f08f72d51b65e568c0b9467454ab7444314c9d"
+          }
+        }
+      },
+      "patch": "BEFORE\n    // If the event was prevented, do not continue with the normal behavior\n    if (hideEvent.defaultPrevented) return this\n\n    this.shown = false\n    this.$el.setAttribute('aria-hidden', 'true')\n\n    // Ensure the previously focused element (if any) has a `focus` method\n    // before attempting to call it to account for SVG elements\n    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/108\n    this.previouslyFocused?.focus?.()\n\n    // Remove the focus event listener to the body element and stop listening\n    // for specific key presses\n    document.body.removeEventListener('focus', this.maintainFocus, true)\n    this.$el.removeEventListener('keydown', this.bindKeypress, true)\n\n    return this\n  }\n\n\nAFTER\n\n    // Remove the focus event listener to the body element and stop listening\n    // for specific key presses\n    document.body.removeEventListener('focus', this.maintainFocus, true)\n    this.$el.removeEventListener('keydown', this.bindKeypress, true)\n\n    // Ensure the previously focused element (if any) has a `focus` method\n    // before attempting to call it to account for SVG elements\n    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/108\n    this.previouslyFocused?.focus?.()\n\n    return this\n  }\n\n  /**\n   * Register a new callback for the given event type\n   */\n  public on(\n    type: A11yDialogEvent,",
+      "gate": {
+        "verdict": "VERIFIED_PASS",
+        "scope": "Historical failure and human-fix task replay only. No autonomous repair or full regression claim."
+      },
+      "journeyHash": "9e939e2a7e5b6fe246f41f0f566d6f45aa68ab6f6b477a10edfb3668343f7148"
+    }
+  ]
+}

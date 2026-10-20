@@ -1,5 +1,11 @@
 # Demo script — 2 minutes 50 seconds
 
+## New presentation opening
+
+Use the bundled case studies instead of beginning on an empty workbench. Click **Presentation view**. In the first 20 seconds, show the account form with **zero axe violations** and a keyboard path that cannot reach the submit action. Switch to **The wrong fix**: the button is reachable and the scan remains clear, but the confirmation is wrong, so the candidate is rejected. Then show **Real-world focus loss** with its linked upstream human fix. All three are actual recorded evidence with explicit author/human provenance. Spend no time listing test counts. Move into a fresh run, and replace the author provider with the real Nebius/Nemotron stage only after live credentials and a genuine successful run exist. The current honest limitation is no live model execution.
+
+The detailed shot timing below predates the casebook opening; adapt its first minute to these three concrete outcomes. Keep the final video under three minutes.
+
 This script is ready for the **current local reference build**. Do not record the future live-provider statements until a genuine successful Nebius run exists. Do not imply a generated patch when reference mode is selected.
 
 0:00–0:15 — “A checkout can look polished and still stop someone using a keyboard. A clean scan is not proof that a person can finish.” Show Common Ground, then the workbench.
