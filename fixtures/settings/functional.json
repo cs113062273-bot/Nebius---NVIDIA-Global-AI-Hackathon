@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "id": "settings-pointer",
+  "title": "Save your preferences",
+  "goal": "Preferences saved · Weekly digest",
+  "source": "benchmark",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "click",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Alex"
+      }
+    },
+    {
+      "title": "Save preferences",
+      "action": {
+        "kind": "click",
+        "selector": "#action"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Preferences saved · Weekly digest"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Preferences saved · Weekly digest"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Alex"
+    }
+  ],
+  "forbidden": []
+}

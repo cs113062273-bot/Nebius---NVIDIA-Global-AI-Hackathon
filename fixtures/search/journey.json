@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "id": "search-keyboard",
+  "title": "Search the collection",
+  "goal": "1 result · Field bag",
+  "source": "benchmark",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "seek",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Field bag"
+      }
+    },
+    {
+      "title": "Reach primary action",
+      "action": {
+        "kind": "seek",
+        "selector": "#action"
+      }
+    },
+    {
+      "title": "Search collection",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "1 result · Field bag"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "1 result · Field bag"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Field bag"
+    }
+  ],
+  "forbidden": []
+}

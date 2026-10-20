@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "id": "dashboard-keyboard",
+  "title": "Export a report",
+  "goal": "Report exported · 24 records",
+  "source": "benchmark",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach task trigger",
+      "action": {
+        "kind": "seek",
+        "selector": "#open"
+      }
+    },
+    {
+      "title": "Open dialog and move focus into it",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#field"
+        },
+        {
+          "kind": "ax",
+          "role": "dialog",
+          "name": "Export report"
+        }
+      ]
+    },
+    {
+      "title": "Move backward inside dialog",
+      "action": {
+        "kind": "press",
+        "key": "Shift+Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#close"
+        }
+      ]
+    },
+    {
+      "title": "Contain backward focus in dialog",
+      "action": {
+        "kind": "press",
+        "key": "Shift+Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#action"
+        }
+      ]
+    },
+    {
+      "title": "Contain forward focus in dialog",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#close"
+        }
+      ]
+    },
+    {
+      "title": "Escape closes dialog and restores trigger",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#panel",
+          "value": false
+        },
+        {
+          "kind": "focus",
+          "selector": "#open"
+        }
+      ]
+    },
+    {
+      "title": "Reopen dialog for original task",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#field"
+        }
+      ]
+    },
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "seek",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Quarterly review"
+      }
+    },
+    {
+      "title": "Reach primary action",
+      "action": {
+        "kind": "seek",
+        "selector": "#action"
+      }
+    },
+    {
+      "title": "Export report",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Report exported · 24 records"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Report exported · 24 records"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Quarterly review"
+    }
+  ],
+  "forbidden": []
+}

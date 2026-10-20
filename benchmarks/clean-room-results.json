@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-20T04:48:32.160Z",
+  "pass": false,
+  "directory": "artifacts\\clean-room-3aad8cc3-2338-42f2-ac94-b412c6adc6be",
+  "checks": [
+    {
+      "label": "fresh-dependencies",
+      "pass": true,
+      "exitCode": 0,
+      "elapsedMs": 3188
+    }
+  ],
+  "error": "fresh-chromium timed out"
+}

@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/KittyGiraudel/a11y-dialog",
+  "fix": "https://github.com/KittyGiraudel/a11y-dialog/commit/6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+  "revisions": {
+    "before": "a7718bca32ede3c01c93a67da12f45a274011c4c",
+    "after": "6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9"
+  },
+  "sourceHashes": {
+    "before": {
+      "src/a11y-dialog.ts": "3a8e86e84add48d14f5bf37629f7e32e40957a646b28f8680f19b6732355114f",
+      "src/dom-utils.ts": "b6a1a73f7e7660849d8be9e828f1e46b2d55e7735c9ec13da7546c627019dc24",
+      "src/index.ts": "85506feadf2bfff8da99e030e6d65918cba97ad9f3fec040c4c399e3933c6dc7",
+      "LICENSE": "8792afd04f9a65eb981d796da0bd1a700081629ed83d00c6e378e0136cb77ab0",
+      "focusable-selectors-0.8.0/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e",
+      "focusable-selectors-0.8.0/LICENSE": "fbcd624c8a7ecdf806a320ee49f08f72d51b65e568c0b9467454ab7444314c9d"
+    },
+    "after": {
+      "src/a11y-dialog.ts": "08e1a28e0cbee378aee5075fc22c16b273a8f17eee6540d333a204082bf55a66",
+      "src/dom-utils.ts": "b6a1a73f7e7660849d8be9e828f1e46b2d55e7735c9ec13da7546c627019dc24",
+      "src/index.ts": "85506feadf2bfff8da99e030e6d65918cba97ad9f3fec040c4c399e3933c6dc7",
+      "LICENSE": "8792afd04f9a65eb981d796da0bd1a700081629ed83d00c6e378e0136cb77ab0",
+      "focusable-selectors-0.8.0/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e",
+      "focusable-selectors-0.8.0/LICENSE": "fbcd624c8a7ecdf806a320ee49f08f72d51b65e568c0b9467454ab7444314c9d"
+    }
+  },
+  "evaluation": "Nonblind historical reproduction and published human-fix replay, not autonomous repair or holdout."
+}

@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "id": "booking-pointer",
+  "title": "Reserve a studio",
+  "goal": "Reserved · Studio A · 10:00",
+  "source": "benchmark",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open task dialog",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#panel",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "click",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Alex"
+      }
+    },
+    {
+      "title": "Confirm reservation",
+      "action": {
+        "kind": "click",
+        "selector": "#action"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Reserved · Studio A · 10:00"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Reserved · Studio A · 10:00"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Alex"
+    }
+  ],
+  "forbidden": []
+}

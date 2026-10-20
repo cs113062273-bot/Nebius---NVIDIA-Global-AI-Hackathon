@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "id": "account-keyboard",
+  "title": "Create an account",
+  "goal": "Account created · judge@example.com",
+  "source": "benchmark",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "seek",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "judge@example.com"
+      }
+    },
+    {
+      "title": "Reach primary action",
+      "action": {
+        "kind": "seek",
+        "selector": "#action"
+      }
+    },
+    {
+      "title": "Create account",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Account created · judge@example.com"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Account created · judge@example.com"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "judge@example.com"
+    }
+  ],
+  "forbidden": []
+}

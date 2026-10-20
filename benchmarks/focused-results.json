@@ -1,0 +1,850 @@
+{
+  "pairs": 120,
+  "families": 12,
+  "metamorphicVariants": 10,
+  "passed": 120,
+  "failed": [],
+  "note": "Focused assertion fixtures. Ten label variants per family are correlated, not 120 independent real defects. These are author reference states, not generated repairs.",
+  "rows": [
+    {
+      "family": "enter-activation",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "enter-activation",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "space-activation",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "input-name",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "checkbox-space",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "tabs-arrow",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "disclosure",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-entry",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "dialog-escape",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "focus-restore",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "status-semantics",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reduced-motion",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 0,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 1,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 2,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 3,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 4,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 5,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 6,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 7,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 8,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    },
+    {
+      "family": "reflow",
+      "variant": 9,
+      "brokenSatisfied": false,
+      "referenceSatisfied": true,
+      "pass": true
+    }
+  ]
+}

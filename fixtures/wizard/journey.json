@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "id": "wizard-keyboard",
+  "title": "Send an application",
+  "goal": "Application received · Alex",
+  "source": "benchmark",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "seek",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Alex"
+      }
+    },
+    {
+      "title": "Reach primary action",
+      "action": {
+        "kind": "seek",
+        "selector": "#action"
+      }
+    },
+    {
+      "title": "Send application",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Application received · Alex"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Application received · Alex"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Alex"
+    }
+  ],
+  "forbidden": []
+}

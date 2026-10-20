@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "id": "wizard-pointer",
+  "title": "Send an application",
+  "goal": "Application received · Alex",
+  "source": "benchmark",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "click",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Alex"
+      }
+    },
+    {
+      "title": "Send application",
+      "action": {
+        "kind": "click",
+        "selector": "#action"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Application received · Alex"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Application received · Alex"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Alex"
+    }
+  ],
+  "forbidden": []
+}

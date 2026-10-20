@@ -1,0 +1,15 @@
+# Architecture and trust boundaries
+
+Node 24 hosts a buildless semantic HTML workbench and a small HTTP API. No database service. Immutable evidence files and atomic JSON snapshots persist runs. On restart, unfinished runs become inconclusive. One active browser run bounds memory and concurrency; no arbitrary execution endpoint exists.
+
+`schema.js` validates author-controlled journey/actions/assertions and model-controlled repair plans. Canonical SHA-256 freezes the journey before baseline or inference. `runner.js` dispatches real keys in clean Chromium contexts; no model evaluates success. `verifier.js` requires a reproduced baseline failure, unchanged oracle/environment/browser, passing replay, preserved functional observations, successful parse checks, no new axe findings, no runtime errors and a coarse initial screenshot gate.
+
+`repair.js` ranks source by selector and name matches. The localized file list bounds model output. Every edit needs a whole-file SHA and exactly one preimage. All edit preconditions validate before writes. Candidate directories begin as copies of the original; failed attempts cannot mutate the fixture, journey or tests. Each attempt restarts from original source and receives new failure observations; this is bounded replanning rather than incremental unbounded editing.
+
+`nebius.js` calls only the official Token Factory origin, checks the current account catalog, accepts NVIDIA Nemotron IDs, compacts untrusted evidence, validates JSON schema and records request/usage provenance. It cannot issue shell or filesystem tools. Its persistent pessimistic reservation ledger is separate from proof artifacts. Missing credentials produce inconclusive, never a synthetic model reply. The reference provider is a separate explicit mode, visible in UI and provenance.
+
+`proof.js` snapshots the verification, provenance, exact journey, source hashes and all browser evidence into a hash manifest. `run.json` is mutable status and deliberately excluded; `verification.json` and `provenance.json` are covered. The tar.gz download contains the manifest and all covered files. Integrity verification checks missing, extra and changed artifacts.
+
+Browser documents and repository text are untrusted. Their source cannot choose commands, paths or assertions. API keys remain in the host process and are removed from launched browser environment variables. The browser fixture origin is ephemeral per candidate; URLs are logically rebound to the same `/` path while viewport/profile/browser remain fixed. Runs are uniquely identified; journey content hashes are deterministic. Run IDs themselves are UUIDs to avoid artifact collisions.
+
+Local static CLI mode accepts an explicitly chosen trusted local source directory. It does not clone/install/build arbitrary repositories. Public mode accepts only curated fixtures and requires a judge token for writes. Cloudflare Worker static hosting cannot run this Node/Chromium engine; an exported evidence gallery is recorded evidence only, and is not a live inference claim.

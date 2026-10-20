@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "id": "settings-keyboard",
+  "title": "Save your preferences",
+  "goal": "Preferences saved · Weekly digest",
+  "source": "benchmark",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "seek",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Alex"
+      }
+    },
+    {
+      "title": "Reach primary action",
+      "action": {
+        "kind": "seek",
+        "selector": "#action"
+      }
+    },
+    {
+      "title": "Save preferences",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Preferences saved · Weekly digest"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Preferences saved · Weekly digest"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Alex"
+    }
+  ],
+  "forbidden": []
+}

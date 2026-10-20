@@ -1,0 +1,230 @@
+{
+  "at": "2026-10-20T04:49:14.892Z",
+  "environment": {
+    "platform": "win32",
+    "node": "v24.19.0",
+    "browser": "156.0.8078.4"
+  },
+  "reference": {
+    "cases": 7,
+    "reproduced": 7,
+    "verified": 7,
+    "rows": [
+      {
+        "fixture": "checkout",
+        "runId": "351b6a23-c9bd-4a26-8b0c-22b2740f3d89",
+        "before": "VERIFIED_FAIL",
+        "after": "VERIFIED_PASS",
+        "verdict": "VERIFIED_PASS",
+        "elapsedMs": 9128,
+        "category": "REPLAY"
+      },
+      {
+        "fixture": "account",
+        "runId": "e314862d-9fcc-475d-8fb8-e95543681edd",
+        "before": "VERIFIED_FAIL",
+        "after": "VERIFIED_PASS",
+        "verdict": "VERIFIED_PASS",
+        "elapsedMs": 6113,
+        "category": "FOCUS"
+      },
+      {
+        "fixture": "booking",
+        "runId": "1e007423-9927-40fc-9ee6-0d426de51176",
+        "before": "VERIFIED_FAIL",
+        "after": "VERIFIED_PASS",
+        "verdict": "VERIFIED_PASS",
+        "elapsedMs": 7553,
+        "category": "REPLAY"
+      },
+      {
+        "fixture": "settings",
+        "runId": "8128109e-d27d-41c9-886c-b778c20b1bf6",
+        "before": "VERIFIED_FAIL",
+        "after": "VERIFIED_PASS",
+        "verdict": "VERIFIED_PASS",
+        "elapsedMs": 6029,
+        "category": "FOCUS"
+      },
+      {
+        "fixture": "search",
+        "runId": "3adbe3b4-19b2-4ada-9b22-b6555dc8bd1b",
+        "before": "VERIFIED_FAIL",
+        "after": "VERIFIED_PASS",
+        "verdict": "VERIFIED_PASS",
+        "elapsedMs": 6154,
+        "category": "FOCUS"
+      },
+      {
+        "fixture": "dashboard",
+        "runId": "c318d463-9919-490c-a062-5639ae3f0d1d",
+        "before": "VERIFIED_FAIL",
+        "after": "VERIFIED_PASS",
+        "verdict": "VERIFIED_PASS",
+        "elapsedMs": 7601,
+        "category": "REPLAY"
+      },
+      {
+        "fixture": "wizard",
+        "runId": "f7438723-e576-43c7-af23-88b8a71cbd00",
+        "before": "VERIFIED_FAIL",
+        "after": "VERIFIED_PASS",
+        "verdict": "VERIFIED_PASS",
+        "elapsedMs": 5882,
+        "category": "FOCUS"
+      }
+    ],
+    "p50Ms": 6154,
+    "p95Ms": 9128,
+    "bugFamilies": 2
+  },
+  "negative": {
+    "cases": 16,
+    "rejected": 16,
+    "falseVerified": 0,
+    "sourcePatchCases": 2,
+    "verifierMutations": 14,
+    "rows": [
+      {
+        "type": "cosmetic-only",
+        "runId": "5beb6598-4895-4a33-aa74-116aad86007e",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "functional-regression",
+        "runId": "7aa51538-cfb0-4b2e-ab95-5486e94cdae3",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "oracle-drift",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "environment-drift",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "browser-drift",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "missing-build",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "missing-visual-check",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "no-op",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "baseline-not-reproduced",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "missing-functional-baseline",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "functional-output-drift",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "missing-task-evidence",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "incomplete-replay",
+        "verdict": "INCONCLUSIVE",
+        "rejected": true
+      },
+      {
+        "type": "runtime-error",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      },
+      {
+        "type": "network-failure",
+        "verdict": "INCONCLUSIVE",
+        "rejected": true
+      },
+      {
+        "type": "new-axe-finding",
+        "verdict": "VERIFIED_FAIL",
+        "rejected": true
+      }
+    ]
+  },
+  "focused": {
+    "pairs": 120,
+    "families": 12,
+    "passed": 120,
+    "failed": []
+  },
+  "historical": {
+    "cases": 1,
+    "reproduced": 1,
+    "humanFixReplayed": 1,
+    "autonomousRepairs": 0,
+    "holdout": false,
+    "provenance": {
+      "repository": "https://github.com/KittyGiraudel/a11y-dialog",
+      "fix": "https://github.com/KittyGiraudel/a11y-dialog/commit/6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+      "revisions": {
+        "before": "a7718bca32ede3c01c93a67da12f45a274011c4c",
+        "after": "6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9"
+      },
+      "sourceHashes": {
+        "before": {
+          "src/a11y-dialog.ts": "3a8e86e84add48d14f5bf37629f7e32e40957a646b28f8680f19b6732355114f",
+          "src/dom-utils.ts": "b6a1a73f7e7660849d8be9e828f1e46b2d55e7735c9ec13da7546c627019dc24",
+          "src/index.ts": "85506feadf2bfff8da99e030e6d65918cba97ad9f3fec040c4c399e3933c6dc7",
+          "LICENSE": "8792afd04f9a65eb981d796da0bd1a700081629ed83d00c6e378e0136cb77ab0",
+          "focusable-selectors-0.8.0/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e",
+          "focusable-selectors-0.8.0/LICENSE": "fbcd624c8a7ecdf806a320ee49f08f72d51b65e568c0b9467454ab7444314c9d"
+        },
+        "after": {
+          "src/a11y-dialog.ts": "08e1a28e0cbee378aee5075fc22c16b273a8f17eee6540d333a204082bf55a66",
+          "src/dom-utils.ts": "b6a1a73f7e7660849d8be9e828f1e46b2d55e7735c9ec13da7546c627019dc24",
+          "src/index.ts": "85506feadf2bfff8da99e030e6d65918cba97ad9f3fec040c4c399e3933c6dc7",
+          "LICENSE": "8792afd04f9a65eb981d796da0bd1a700081629ed83d00c6e378e0136cb77ab0",
+          "focusable-selectors-0.8.0/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e",
+          "focusable-selectors-0.8.0/LICENSE": "fbcd624c8a7ecdf806a320ee49f08f72d51b65e568c0b9467454ab7444314c9d"
+        }
+      },
+      "evaluation": "Nonblind historical reproduction and published human-fix replay, not autonomous repair or holdout."
+    },
+    "before": "VERIFIED_FAIL",
+    "after": "VERIFIED_PASS"
+  },
+  "live": {
+    "cases": 0,
+    "calls": 0,
+    "tokens": 0,
+    "status": "NOT_TESTED"
+  },
+  "holdout": {
+    "cases": 0,
+    "status": "NOT_TESTED"
+  },
+  "artifactRoot": "artifacts\\benchmark\\2026-10-20T04-47-43.714Z",
+  "notes": [
+    "All repairs are author reference patches or injected negative controls. No AI repair rate was measured.",
+    "Seven apps share two seeded bug families. No statistical generalization or independent holdout is claimed.",
+    "p50/p95 describe the seven local reference-replay runs, not inference latency."
+  ]
+}

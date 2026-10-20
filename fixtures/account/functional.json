@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "id": "account-pointer",
+  "title": "Create an account",
+  "goal": "Account created · judge@example.com",
+  "source": "benchmark",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "click",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "judge@example.com"
+      }
+    },
+    {
+      "title": "Create account",
+      "action": {
+        "kind": "click",
+        "selector": "#action"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Account created · judge@example.com"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Account created · judge@example.com"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "judge@example.com"
+    }
+  ],
+  "forbidden": []
+}

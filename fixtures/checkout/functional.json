@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "id": "checkout-pointer",
+  "title": "Complete a checkout",
+  "goal": "Order confirmed · Field bag · $84",
+  "source": "benchmark",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open task dialog",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#panel",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "click",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "judge@example.com"
+      }
+    },
+    {
+      "title": "Place order",
+      "action": {
+        "kind": "click",
+        "selector": "#action"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Order confirmed · Field bag · $84"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Order confirmed · Field bag · $84"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "judge@example.com"
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "id": "search-pointer",
+  "title": "Search the collection",
+  "goal": "1 result · Field bag",
+  "source": "benchmark",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "click",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Field bag"
+      }
+    },
+    {
+      "title": "Search collection",
+      "action": {
+        "kind": "click",
+        "selector": "#action"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "1 result · Field bag"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "1 result · Field bag"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Field bag"
+    }
+  ],
+  "forbidden": []
+}

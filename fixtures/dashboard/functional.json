@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "id": "dashboard-pointer",
+  "title": "Export a report",
+  "goal": "Report exported · 24 records",
+  "source": "benchmark",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open task dialog",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#panel",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "click",
+        "selector": "#field"
+      }
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "Quarterly review"
+      }
+    },
+    {
+      "title": "Export report",
+      "action": {
+        "kind": "click",
+        "selector": "#action"
+      }
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Report exported · 24 records"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Report exported · 24 records"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "Quarterly review"
+    }
+  ],
+  "forbidden": []
+}
