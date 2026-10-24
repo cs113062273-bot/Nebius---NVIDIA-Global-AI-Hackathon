@@ -1,0 +1,23 @@
+{
+  "root_cause": "The default onConfirm handler in accessibleAutocomplete only selects an option if the blurred input exactly matches an option's text. When the user types an unrecognized value (or blanks), no option is selected, leaving the previous selection intact. The form submit does not trigger validation, so the saved values remain the old codes.",
+  "repair_strategy": "Provide a custom onConfirm handler for each enhanced select that validates the input value on blur. If the input matches an option (case-insensitive), select that option; otherwise, select the empty option (value \"\"). This ensures unrecognized or blank entries clear the saved country.",
+  "edits": [
+    {
+      "path": "app.js",
+      "sha256": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489",
+      "before": "for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});\ndocument.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());\naccessibleAutocomplete({element:document.getElementById('destination-field'),id:'destination',name:'destination',source:['Paris','Lyon','Berlin','Rome']});\ndocument.getElementById('search').addEventListener('submit',event=>event.preventDefault());\n",
+      "after": "function makeOnConfirm(selectId) {\n  return function(optionText) {\n    const select = document.getElementById(selectId + '-select');\n    const input = document.getElementById(selectId);\n    if (!select || !input) return;\n    if (typeof optionText === 'string') {\n      const options = Array.from(select.options);\n      const matched = options.find(opt => (opt.textContent || opt.innerText) === optionText);\n      if (matched) matched.selected = true;\n    } else {\n      const value = input.value.trim();\n      const options = Array.from(select.options);\n      const matched = options.find(opt => (opt.textContent || opt.innerText).toLowerCase() === value.toLowerCase());\n      if (matched) {\n        matched.selected = true;\n      } else {\n        const emptyOption = options.find(opt => opt.value === '');\n        if (emptyOption) emptyOption.selected = true;\n      }\n    }\n  };\n}\n\nfor (const id of ['shipping-country', 'billing-country']) {\n  accessibleAutocomplete.enhanceSelectElement({\n    selectElement: document.getElementById(id),\n    onConfirm: makeOnConfirm(id)\n  });\n}\n\ndocument.getElementById('preferences').addEventListener('submit', event => event.preventDefault());\naccessibleAutocomplete({element: document.getElementById('destination-field'), id: 'destination', name: 'destination', source: ['Paris', 'Lyon', 'Berlin', 'Rome']});\ndocument.getElementById('search').addEventListener('submit', event => event.preventDefault());\n"
+    }
+  ],
+  "expected_accessibility_effect": "The comboboxes will correctly reflect the user's input: valid selections are preserved, invalid entries are cleared. Keyboard and pointer selection continue to work because the custom handler only intervenes when no option was explicitly selected (optionText undefined). Screen readers will hear the updated values because the hidden select's value changes.",
+  "functional_risks": [
+    "The custom onConfirm relies on the input element having the same id as the original select, which is the library's current behavior. If the library changes id assignment, it could break.",
+    "The handler uses textContent/innerText for matching, which matches the library's default. If option labeling changes, matching may fail."
+  ],
+  "verification_requirements": [
+    "Test that typing an unrecognized country (e.g., \"Atlantis\") and saving clears the field to empty.",
+    "Test that typing a partial match (e.g., \"Fra\") and saving selects the matching country (France).",
+    "Test that keyboard selection (arrow keys + Enter) still works and saves the selected country.",
+    "Test that the destination autocomplete (pickup city) remains unaffected and accepts free text."
+  ]
+}

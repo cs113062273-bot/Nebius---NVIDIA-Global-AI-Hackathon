@@ -1,0 +1,324 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "handorgel-return-keyboard",
+    "title": "Start an order return without entering collapsed delivery links",
+    "goal": "Reach the visible disclosure, open it and request the intended action for the correct record.",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach the first visible disclosure",
+        "action": {
+          "kind": "seek",
+          "selector": "#delivery-trigger"
+        }
+      },
+      {
+        "title": "Skip collapsed content to the next visible disclosure",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#returns-trigger"
+          }
+        ]
+      },
+      {
+        "title": "Open the intended disclosure",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        }
+      },
+      {
+        "title": "Reach the revealed action",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#return-start"
+          }
+        ]
+      },
+      {
+        "title": "Request the intended action",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        }
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Return requested for order 2417"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "2417"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "return"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Return requested for order 2417"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "2417"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "return"
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "handorgel-return-pointer",
+    "title": "Start an order return without entering collapsed delivery links",
+    "goal": "Reach the visible disclosure, open it and request the intended action for the correct record.",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Open the intended disclosure",
+        "action": {
+          "kind": "click",
+          "selector": "#returns-trigger"
+        }
+      },
+      {
+        "title": "Request the intended action",
+        "action": {
+          "kind": "click",
+          "selector": "#return-start"
+        }
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Return requested for order 2417"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "2417"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "return"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Return requested for order 2417"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "2417"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "return"
+      }
+    ],
+    "forbidden": []
+  },
+  "withheldJourney": {
+    "version": 1,
+    "id": "handorgel-refund-keyboard",
+    "title": "Request an invoice refund without entering collapsed invoice links",
+    "goal": "Reach the visible disclosure, open it and request the intended action for the correct record.",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach the first visible disclosure",
+        "action": {
+          "kind": "seek",
+          "selector": "#billing-trigger"
+        }
+      },
+      {
+        "title": "Skip collapsed content to the next visible disclosure",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#refund-trigger"
+          }
+        ]
+      },
+      {
+        "title": "Open the intended disclosure",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        }
+      },
+      {
+        "title": "Reach the revealed action",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#refund-start"
+          }
+        ]
+      },
+      {
+        "title": "Request the intended action",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        }
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Refund requested for invoice 8120"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "8120"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "refund"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Refund requested for invoice 8120"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "8120"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "refund"
+      }
+    ],
+    "forbidden": []
+  },
+  "withheldFunctionalJourney": {
+    "version": 1,
+    "id": "handorgel-refund-pointer",
+    "title": "Request an invoice refund without entering collapsed invoice links",
+    "goal": "Reach the visible disclosure, open it and request the intended action for the correct record.",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Open the intended disclosure",
+        "action": {
+          "kind": "click",
+          "selector": "#refund-trigger"
+        }
+      },
+      {
+        "title": "Request the intended action",
+        "action": {
+          "kind": "click",
+          "selector": "#refund-start"
+        }
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Refund requested for invoice 8120"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "8120"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "refund"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Refund requested for invoice 8120"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "8120"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "refund"
+      }
+    ],
+    "forbidden": []
+  }
+}

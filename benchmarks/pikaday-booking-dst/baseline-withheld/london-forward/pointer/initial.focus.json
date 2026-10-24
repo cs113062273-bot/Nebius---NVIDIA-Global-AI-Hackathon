@@ -1,0 +1,103 @@
+{
+  "focus": {
+    "selector": "body",
+    "tag": "body",
+    "role": null,
+    "nameHint": "EQUIPMENT HIRE / WEEKDAYS ONLY\n\nChoose booking dates\n\nOur desk is closed on Saturday and Sunday. Use arrow keys to move to the next available weekday, or choose an available date with the calendar.\n\nP",
+    "bbox": {
+      "x": 0,
+      "y": 50,
+      "width": 1280,
+      "height": 538.0625
+    },
+    "visible": true,
+    "inViewport": true,
+    "obscuredAtCenter": false,
+    "modal": null,
+    "disabled": false,
+    "inert": false,
+    "outline": {
+      "style": "none",
+      "width": "3px",
+      "color": "rgb(32, 59, 53)"
+    },
+    "html": "<body><main><p>EQUIPMENT HIRE / WEEKDAYS ONLY</p><h1>Choose booking dates</h1><p>Our desk is closed on Saturday and Sunday. Use arrow keys to move to the next available weekday, or choose an available date with the calendar.</p><form id=\"booking\"><label for=\"pickup\">Pickup date</label><input id=\"pickup\" name=\"pickup_date\" value=\"2026-10-23\" autocomplete=\"off\"><label for=\"return\">Return date</label><input id=\"return\" name=\"return_date\" value=\"2026-10-26\" autocomplete=\"off\"><button id=\"save\" type=\"submit\">Save booking dates</button></form></main><script src=\"pikaday.js\"></script><script src=\"app.js\"></script><div class=\"pika-single is-hidden is-bound\" style=\"position: static; left: auto; top: auto;\"></div><div class=\"pika-single is-hidden is-bound\" style=\"position: static; left: auto; top: auto;\"></div></body>"
+  },
+  "nodes": [
+    {
+      "selector": "#pickup",
+      "tag": "input",
+      "role": null,
+      "nameHint": "Pickup date",
+      "bbox": {
+        "x": 290,
+        "y": 321.6875,
+        "width": 400,
+        "height": 58.59375
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<input id=\"pickup\" name=\"pickup_date\" value=\"2026-10-23\" autocomplete=\"off\">"
+    },
+    {
+      "selector": "#return",
+      "tag": "input",
+      "role": null,
+      "nameHint": "Return date",
+      "bbox": {
+        "x": 290,
+        "y": 440.875,
+        "width": 400,
+        "height": 58.59375
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<input id=\"return\" name=\"return_date\" value=\"2026-10-26\" autocomplete=\"off\">"
+    },
+    {
+      "selector": "#save",
+      "tag": "button",
+      "role": null,
+      "nameHint": "Save booking dates",
+      "bbox": {
+        "x": 290,
+        "y": 529.46875,
+        "width": 201.09375,
+        "height": 58.59375
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(255, 255, 255)"
+      },
+      "html": "<button id=\"save\" type=\"submit\">Save booking dates</button>"
+    }
+  ],
+  "focusEvents": [],
+  "overflow": 0,
+  "dialogs": []
+}

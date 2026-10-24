@@ -1,0 +1,294 @@
+{
+  "runIds": [
+    "99e589ff-42bc-4bd0-b9f9-0b66aa1432db",
+    "2d7de911-90df-47ae-a9dd-4e0a36d2c206",
+    "56a72234-ccfe-4c02-b6b3-897db6d0f245",
+    "cc7af68a-ac2e-46cc-bf1d-04f48978a521",
+    "120c8bdb-63d5-4577-aa8b-afdab144aeff"
+  ],
+  "taskHash": "6e9a37e7988924c03c39c1254eee75b8f0c1cb0d45a9e743b7f5bc956bb26abc",
+  "sourceNote": "Executed in the author-created fixed-control reconstruction: both the published upstream offsetParent patch and model attempt 1 fail Shift+Tab (expected #close, observed #confirm). The author added fixed positioning; this is not a newly discovered upstream production defect.",
+  "upstream": "https://github.com/micromodal/Micromodal/commit/70dfd4320d9e0e535be432f57c698c75e230d0b3",
+  "scope": "Three recorded model calls: two automatic attempts in the first run and one call in a separate run. The CSS variant was added post-hoc, not as a blind test. Cross-scenario verification and the negative control used no new inference. An additional post-review control executes the published human patch without inference.",
+  "steps": [
+    {
+      "title": "Precommitted [hidden] reconstruction",
+      "kind": "Author-created, nonblind reconstruction",
+      "at": "2026-10-21T04:43:51.053Z",
+      "description": "The author added a visible fixed Cancel control and froze both paths before inference. The component is the pinned broken upstream revision. Issue #295 originally described CSS display:none; this first reconstruction uses [hidden].",
+      "links": [
+        {
+          "label": "Original commitment",
+          "href": "./api/evidence/micromodal/recovery-commitment"
+        },
+        {
+          "label": "Compare original baseline failure",
+          "href": "./project.html?run=99e589ff-42bc-4bd0-b9f9-0b66aa1432db&attempt=1&path=keyboard&step=4#project-result"
+        },
+        {
+          "label": "Original issue #295: CSS display:none",
+          "href": "https://github.com/micromodal/Micromodal/issues/295"
+        }
+      ]
+    },
+    {
+      "title": "Same run: failure, feedback, then a passing second attempt",
+      "kind": "Automatic model recovery",
+      "at": "2026-10-21T04:45:09.652Z",
+      "description": "99e589ff attempt 1 filtered out the fixed #close control. At step 4, Shift+Tab reached #confirm. Attempt 2 received the first plan, failed assertion and observed focus, then used a hidden-ancestor check.",
+      "links": [
+        {
+          "label": "Attempt 1: FAIL",
+          "href": "./project.html?run=99e589ff-42bc-4bd0-b9f9-0b66aa1432db&attempt=1&path=keyboard&step=4#project-result"
+        },
+        {
+          "label": "Attempt 2: PASS",
+          "href": "./project.html?run=99e589ff-42bc-4bd0-b9f9-0b66aa1432db&attempt=2&path=keyboard&step=4#project-result"
+        },
+        {
+          "label": "Request 1",
+          "href": "./api/runs/99e589ff-42bc-4bd0-b9f9-0b66aa1432db/artifacts/model-request-1.json"
+        },
+        {
+          "label": "Request 2 (includes failure feedback)",
+          "href": "./api/runs/99e589ff-42bc-4bd0-b9f9-0b66aa1432db/artifacts/model-request-2.json"
+        },
+        {
+          "label": "Source audit",
+          "href": "./api/evidence/micromodal/recovery-audit"
+        }
+      ],
+      "evidence": {
+        "run": "99e589ff-42bc-4bd0-b9f9-0b66aa1432db",
+        "source": {
+          "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+          "index.html": "47dc7a3d6f25738410ad1031488bf3f14977055cc484c7475e3c0bd7f1178ce8",
+          "micromodal.js": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+          "style.css": "0041b8336952d3dc7d0d42867982e44cf0dcc710e2252f0684668fe02e680b55"
+        },
+        "candidates": [
+          {
+            "attempt": 1,
+            "changes": [
+              {
+                "path": "micromodal.js",
+                "beforeHash": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+                "afterHash": "413de3b0a036f34dfd5ccaf87dc5828fe058b337033575b9392b8d4ab9335a2a"
+              }
+            ],
+            "requestId": "chatcmpl-d1a9fd999c69b8c0d7e5419eabc86a6d",
+            "promptHash": "09a7fa959fc4e87836666703b68629e4bf6ab00ed6b90207ce9ccd38156c69d3",
+            "startedAt": "2026-10-21T04:45:13.724Z"
+          },
+          {
+            "attempt": 2,
+            "changes": [
+              {
+                "path": "micromodal.js",
+                "beforeHash": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+                "afterHash": "9c7626d051e145d64057073c98fd94c49ca4a23257c277ba4fddafdb2279f4e9"
+              }
+            ],
+            "requestId": "chatcmpl-2494f341c10cde2d0dc04eb2b2dd5257",
+            "promptHash": "023e4804c1d922323bac463b8cc1b7a404e5aadb18f551c1ffc4baad9d4c3474",
+            "startedAt": "2026-10-21T04:45:35.096Z"
+          }
+        ]
+      }
+    },
+    {
+      "title": "CSS display:none variant added after the pass",
+      "kind": "Human-authored post-hoc variant; not blind",
+      "at": "2026-10-21T04:50:17.229Z",
+      "description": "The author changed consumer index.html and style.css; micromodal.js is byte-identical to 99e589ff attempt 2. Tasks stayed unchanged. This CSS mechanism is closer to the original issue #295 report, but was added after the initial model recovery. The timestamp records the variant commitment.",
+      "links": [
+        {
+          "label": "Variant commitment",
+          "href": "./api/evidence/micromodal/css-commitment"
+        },
+        {
+          "label": "Compare CSS baseline FAIL with candidate PASS",
+          "href": "./project.html?run=2d7de911-90df-47ae-a9dd-4e0a36d2c206&attempt=1&path=keyboard&step=4#project-result"
+        }
+      ],
+      "componentHash": "9c7626d051e145d64057073c98fd94c49ca4a23257c277ba4fddafdb2279f4e9"
+    },
+    {
+      "title": "A real model repair in a separate run",
+      "kind": "Model repair; separate run",
+      "at": "2026-10-21T04:50:38.286Z",
+      "description": "2d7de911 attempt 1 added rendered-dimensions checks to exclude CSS-hidden controls while retaining fixed Cancel. This was a separate model call, not a third automatic attempt in the earlier run.",
+      "links": [
+        {
+          "label": "CSS candidate: PASS",
+          "href": "./project.html?run=2d7de911-90df-47ae-a9dd-4e0a36d2c206&attempt=1&path=keyboard#project-result"
+        },
+        {
+          "label": "Recorded model request",
+          "href": "./api/runs/2d7de911-90df-47ae-a9dd-4e0a36d2c206/artifacts/model-request-1.json"
+        },
+        {
+          "label": "Model response",
+          "href": "./api/runs/2d7de911-90df-47ae-a9dd-4e0a36d2c206/artifacts/model-response-1.json"
+        },
+        {
+          "label": "Candidate patch",
+          "href": "./api/runs/2d7de911-90df-47ae-a9dd-4e0a36d2c206/artifacts/diff-1.patch"
+        }
+      ],
+      "evidence": {
+        "run": "2d7de911-90df-47ae-a9dd-4e0a36d2c206",
+        "source": {
+          "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+          "index.html": "5557fbe19d19e2e1ee6f3c19e06e09977fb3ff9b7c676769f979c52b3730f884",
+          "micromodal.js": "9c7626d051e145d64057073c98fd94c49ca4a23257c277ba4fddafdb2279f4e9",
+          "style.css": "8c7f5b6c5c6496f9a5c4ee9f4a81162a80a8702532db600a61066bf74e0a3f82"
+        },
+        "candidates": [
+          {
+            "attempt": 1,
+            "changes": [
+              {
+                "path": "micromodal.js",
+                "beforeHash": "9c7626d051e145d64057073c98fd94c49ca4a23257c277ba4fddafdb2279f4e9",
+                "afterHash": "2f615886b85cb4de1ea436324ffc07f443e54bcc5f65406bf9504d39a38ae481"
+              }
+            ],
+            "requestId": "chatcmpl-fc88699796e66fac2bc60d424e0f123e",
+            "promptHash": "0f1f1859aaf7dde202a03c0014d28dd69de8219b3819bc2e7f56f74e526242d9",
+            "startedAt": "2026-10-21T04:50:42.052Z"
+          }
+        ]
+      }
+    },
+    {
+      "title": "The same final component, checked in both scenarios",
+      "kind": "Human-copied component; browser verification; no new inference",
+      "at": "2026-10-21T04:51:43.717Z",
+      "description": "The final component from 2d7de911 was copied byte-for-byte to the original [hidden] consumer. Both CSS and [hidden] passed keyboard and independent functional checks. The micromodal.js bytes match; the consumers differ.",
+      "componentHash": "2f615886b85cb4de1ea436324ffc07f443e54bcc5f65406bf9504d39a38ae481",
+      "links": [
+        {
+          "label": "CSS display:none: PASS",
+          "href": "./project.html?run=2d7de911-90df-47ae-a9dd-4e0a36d2c206&attempt=1&path=keyboard#project-result"
+        },
+        {
+          "label": "[hidden]: PASS",
+          "href": "./project.html?run=56a72234-ccfe-4c02-b6b3-897db6d0f245&attempt=1&path=keyboard#project-result"
+        },
+        {
+          "label": "Final validation",
+          "href": "./api/evidence/micromodal/final-validation"
+        }
+      ],
+      "evidence": {
+        "run": "56a72234-ccfe-4c02-b6b3-897db6d0f245",
+        "source": {
+          "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+          "index.html": "47dc7a3d6f25738410ad1031488bf3f14977055cc484c7475e3c0bd7f1178ce8",
+          "micromodal.js": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+          "style.css": "0041b8336952d3dc7d0d42867982e44cf0dcc710e2252f0684668fe02e680b55"
+        },
+        "candidates": [
+          {
+            "attempt": 1,
+            "changes": [
+              {
+                "path": "micromodal.js",
+                "beforeHash": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+                "afterHash": "2f615886b85cb4de1ea436324ffc07f443e54bcc5f65406bf9504d39a38ae481"
+              }
+            ],
+            "startedAt": "2026-10-21T04:51:47.519Z"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Wrong workspace ID rejected independently",
+      "kind": "Human-authored negative control; no inference",
+      "at": "2026-10-21T04:51:51.304Z",
+      "timeNote": "File creation time was not recorded separately; the negative control existed no later than this run start.",
+      "description": "The author retained the final model component and changed app.js to write data-workspace=studio-b. Keyboard passed; the independent functional assertion expected studio-a and observed studio-b, rejecting the candidate.",
+      "links": [
+        {
+          "label": "Independent functional rejection",
+          "href": "./project.html?run=cc7af68a-ac2e-46cc-bf1d-04f48978a521&attempt=1&path=pointer&step=4#project-result"
+        },
+        {
+          "label": "Human negative-control diff",
+          "href": "./api/runs/cc7af68a-ac2e-46cc-bf1d-04f48978a521/artifacts/diff-1.patch"
+        }
+      ],
+      "evidence": {
+        "run": "cc7af68a-ac2e-46cc-bf1d-04f48978a521",
+        "source": {
+          "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+          "index.html": "47dc7a3d6f25738410ad1031488bf3f14977055cc484c7475e3c0bd7f1178ce8",
+          "micromodal.js": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+          "style.css": "0041b8336952d3dc7d0d42867982e44cf0dcc710e2252f0684668fe02e680b55"
+        },
+        "candidates": [
+          {
+            "attempt": 1,
+            "changes": [
+              {
+                "path": "app.js",
+                "beforeHash": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+                "afterHash": "8c103a5a6e46b7282a880963da00434e6e947ee17873810d52cb3783bd7e80db"
+              },
+              {
+                "path": "micromodal.js",
+                "beforeHash": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+                "afterHash": "2f615886b85cb4de1ea436324ffc07f443e54bcc5f65406bf9504d39a38ae481"
+              }
+            ],
+            "startedAt": "2026-10-21T04:51:55.112Z"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Post-review control: execute the published human patch",
+      "kind": "Published human fix; author-run comparison; no inference",
+      "at": "2026-10-21T05:48:49.077Z",
+      "description": "The published upstream patch was applied unchanged to the precommitted [hidden] consumer with the author-added fixed Cancel control. Keyboard failed at step 4: Shift+Tab expected #close but reached #confirm. Independent functionality passed. This later experiment uses the same frozen tasks; it is not a model repair attempt or blind test.",
+      "links": [
+        {
+          "label": "Executed upstream human patch: FAIL",
+          "href": "./project.html?run=120c8bdb-63d5-4577-aa8b-afdab144aeff&attempt=1&path=keyboard&step=4#project-result"
+        },
+        {
+          "label": "Upstream control record",
+          "href": "./api/evidence/micromodal/upstream-control"
+        },
+        {
+          "label": "Applied human patch",
+          "href": "./api/runs/120c8bdb-63d5-4577-aa8b-afdab144aeff/artifacts/diff-1.patch"
+        },
+        {
+          "label": "Complete control proof",
+          "href": "./api/runs/120c8bdb-63d5-4577-aa8b-afdab144aeff/proof"
+        }
+      ],
+      "evidence": {
+        "run": "120c8bdb-63d5-4577-aa8b-afdab144aeff",
+        "taskHash": "6e9a37e7988924c03c39c1254eee75b8f0c1cb0d45a9e743b7f5bc956bb26abc",
+        "sourceHashes": {
+          "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+          "index.html": "47dc7a3d6f25738410ad1031488bf3f14977055cc484c7475e3c0bd7f1178ce8",
+          "micromodal.js": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+          "style.css": "0041b8336952d3dc7d0d42867982e44cf0dcc710e2252f0684668fe02e680b55"
+        },
+        "candidateHashes": {
+          "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+          "index.html": "47dc7a3d6f25738410ad1031488bf3f14977055cc484c7475e3c0bd7f1178ce8",
+          "micromodal.js": "ae7ac37f5522ee9170f0dd77d04b4e9042975300c0b5fe09d020836085142a8f",
+          "style.css": "0041b8336952d3dc7d0d42867982e44cf0dcc710e2252f0684668fe02e680b55"
+        },
+        "upstreamPatchHash": "ab2a7ef7c265c857da171eeeb97892a84b7ed4ff22a3ebd25e314a743342de1a",
+        "inferenceCalls": 0
+      }
+    }
+  ]
+}

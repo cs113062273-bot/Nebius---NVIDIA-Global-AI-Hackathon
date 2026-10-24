@@ -1,0 +1,19 @@
+{
+  "root_cause": "The accessible autocomplete component does not synchronize the hidden select value when the combobox input is cleared via user input, causing the form data to retain the previous value.",
+  "repair_strategy": "Add a submit event listener on the form that synchronizes empty combobox inputs to their corresponding hidden selects before form submission.",
+  "edits": [
+    {
+      "path": "app.js",
+      "sha256": "c0cd5c1ac1020b4313357444a74cdf86be52c9c19abbcf2686cfb28fdc7531b2",
+      "before": "for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});\ndocument.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());",
+      "after": "for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});\ndocument.getElementById('preferences').addEventListener('submit',event=>{\n  const ids = ['shipping-country','billing-country'];\n  ids.forEach(id => {\n    const input = document.getElementById(id);\n    const select = document.getElementById(id + '-select');\n    if (input && select && input.value === '') {\n      select.value = '';\n    }\n  });\n  event.preventDefault();\n});"
+    }
+  ],
+  "expected_accessibility_effect": "The form data will correctly reflect the cleared shipping country, preserving the billing country, ensuring native form controls match visible choices.",
+  "functional_risks": [
+    "The sync logic assumes the hidden select ID pattern (original ID + '-select') and that empty input corresponds to the empty option. If the pattern changes, the sync may fail."
+  ],
+  "verification_requirements": [
+    "Verify that after clearing shipping country and saving, the form data for shipping_country is empty string and billing_country remains 'de'."
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "completedAt": "2026-10-21T07:28:24.622Z",
+  "modelRun": "65c8e7d5-3d35-41c7-a80f-3696a6273451",
+  "verification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: functional_risks: Invalid input: expected array, received string; functional_risks: Too big: expected string to have <=10 characters; verification_requirements: Invalid input: expected array, received string; verification_requirements: Too big: expected string to have <=10 characters",
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "status": "FAILED_OR_UNCERTAIN",
+        "attemptedCompletions": 1,
+        "requestId": "chatcmpl-5488cea048b9b9809b9e9504ec8c7710",
+        "finishReason": "stop",
+        "usage": {
+          "completion_tokens": 8028,
+          "prompt_tokens": 17468,
+          "total_tokens": 25496,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 6852,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 17468
+        },
+        "responseFile": "response-d5a45bd0f8f97a5cf29c6449cbe6180b66bbefb24d0b6c6f2f03add05bda2b7f-14.json",
+        "requestFile": "request-d5a45bd0f8f97a5cf29c6449cbe6180b66bbefb24d0b6c6f2f03add05bda2b7f-14.json",
+        "latencyMs": 67982
+      }
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "requestId": "chatcmpl-299c9f6239f3fdc144f0bb117c4eebc3",
+        "promptHash": "8117f0e59aecdad2bab81da770fb8953504e79ee0ba26e85c2d7839953179d09",
+        "schemaVersion": 2,
+        "structuredOutput": false,
+        "latencyMs": 44632,
+        "usage": {
+          "completion_tokens": 4659,
+          "prompt_tokens": 17630,
+          "total_tokens": 22289,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 3625,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 17630
+        },
+        "pricing": {
+          "prompt": "0.0000003",
+          "completion": "0.0000009",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0",
+          "input_cache_read": null
+        },
+        "reservedCreditUsd": 0.028364399999999998,
+        "budgetScope": "usefulness-20261021",
+        "cacheHit": false,
+        "retries": 0,
+        "attemptedCompletions": 1,
+        "responseFile": "response-879c034796755d4634e61ba3868eb9ac24a2268494991b9b59bd9be207fa5c67-15.json",
+        "requestFile": "request-879c034796755d4634e61ba3868eb9ac24a2268494991b9b59bd9be207fa5c67-15.json"
+      },
+      "changes": [
+        {
+          "path": "pikaday.js",
+          "beforeHash": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+          "afterHash": "6bedcf62f5a30e8d4071a2580e60f8d2f3877180e7d133c11686a8267df90bc3"
+        }
+      ]
+    }
+  ],
+  "transferRun": "770f858a-7b0a-42a1-94b3-132c4cc0c1b6",
+  "transferVerification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  }
+}

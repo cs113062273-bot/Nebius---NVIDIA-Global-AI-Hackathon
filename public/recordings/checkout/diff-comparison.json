@@ -1,0 +1,9 @@
+{
+  "model": {
+    "path": "recordings/checkout/review-model.patch",
+    "gitApplyCheck": true,
+    "candidateBytesMatch": true,
+    "contextLines": 3
+  },
+  "provenance": "New contextual review diff derived from original source and the recorded candidate. Original exported diff and complete proof remain unchanged."
+}

@@ -1,0 +1,17 @@
+- main:
+  - paragraph: ACCOUNT SUPPORT / KEYBOARD TASKS
+  - heading "Get the right help." [level=1]
+  - paragraph: Open the help you need and complete the action for the correct order or invoice.
+  - region "Order 2417":
+    - heading "Order 2417" [level=2]
+    - heading "Delivery updates" [level=3]:
+      - button "Delivery updates"
+    - heading "Return eligibility" [level=3]:
+      - button "Return eligibility"
+  - region "Invoice 8120":
+    - heading "Invoice 8120" [level=2]
+    - heading "Billing documents" [level=3]:
+      - button "Billing documents"
+    - heading "Request a refund" [level=3]:
+      - button "Request a refund"
+  - status: No request submitted.

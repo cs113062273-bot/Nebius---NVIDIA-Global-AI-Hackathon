@@ -6,3 +6,8 @@ artifacts/
 coverage/
 *.log
 .DS_Store
+
+# Raw DOM/AX dumps from baseline replays stay local; screenshots, results and hashes are committed.
+benchmarks/**/*.dom.html
+benchmarks/**/*.ax.json
+benchmarks/**/*.axe.json

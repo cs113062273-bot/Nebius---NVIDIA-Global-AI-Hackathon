@@ -1,6 +1,48 @@
 {
-  "status": "NOT_TESTED",
-  "reason": "No enabled sponsor-only Nebius credentials",
-  "calls": 0,
-  "at": "2026-10-20T04:36:23.963Z"
+  "status": "VERIFIED_PASS",
+  "fixture": "a11y-dialog",
+  "runId": "fa95dcbd-3dd6-4451-9cd9-aafd690606e8",
+  "model": {
+    "provider": "Nebius Token Factory",
+    "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+    "requestId": "chatcmpl-1acd76b94fc1b0257eb50f55353ac820",
+    "promptHash": "b3efe759d4bbfb8ed98af601742885bc95f9855fac3ce9a8e7755dd923a60869",
+    "schemaVersion": 2,
+    "structuredOutput": false,
+    "latencyMs": 10884,
+    "usage": {
+      "completion_tokens": 3791,
+      "prompt_tokens": 4450,
+      "total_tokens": 8241,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2803,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 4450
+    },
+    "pricing": {
+      "prompt": "0.000001",
+      "completion": "0.000003",
+      "image": "0",
+      "price_per_video_second": "0",
+      "request": "0",
+      "price_per_minute": "0",
+      "input_cache_read": null
+    },
+    "reservedCreditUsd": 0.05405,
+    "budgetScope": "real-case-20261021",
+    "cacheHit": false,
+    "retries": 0,
+    "attemptedCompletions": 1
+  },
+  "evidence": "benchmarks/live/fa95dcbd-3dd6-4451-9cd9-aafd690606e8",
+  "at": "2026-10-21T00:36:33.954Z"
 }

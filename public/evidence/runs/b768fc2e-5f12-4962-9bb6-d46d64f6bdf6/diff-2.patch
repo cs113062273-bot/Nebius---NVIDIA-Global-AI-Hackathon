@@ -1,0 +1,34 @@
+diff --git a/app.js b/app.js
+index c32feb5..9be4db9 100644
+--- a/app.js
++++ b/app.js
+@@ -1,4 +1,29 @@
+ for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});
++// Ensure custom handling for country fields to clear selection on unrecognized input
++document.querySelectorAll('select[name="shipping_country"], select[name="billing_country"]').forEach(select => {
++  const wrapper = select.previousElementSibling;
++  if (wrapper && wrapper.matches('.autocomplete__wrapper')) {
++    const input = wrapper.querySelector('input[role="combobox"]');
++    // Build label->value map
++    const labelToValue = {};
++    select.querySelectorAll('option').forEach(opt => {
++      labelToValue[opt.textContent.trim()] = opt.value;
++    });
++    const handle = () => {
++      const val = input.value.trim();
++      const mapped = labelToValue[val];
++      if (mapped !== undefined) {
++        select.value = mapped;
++      } else {
++        select.value = '';
++      }
++    };
++    input.addEventListener('input', handle);
++    input.addEventListener('change', handle);
++    // Also handle blur to ensure final commit
++    input.addEventListener('blur', handle);
++  }
++});
+ document.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());
+ accessibleAutocomplete({element:document.getElementById('destination-field'),id:'destination',name:'destination',source:['Paris','Lyon','Berlin','Rome']});
+ document.getElementById('search').addEventListener('submit',event=>event.preventDefault());

@@ -1,0 +1,252 @@
+{
+  "completedAt": "2026-10-21T07:37:33.457Z",
+  "modelRun": "459ef2eb-1518-4c98-bfb7-139912015c20",
+  "verification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "BUILD",
+      "failure": "Candidate build failed: [{\"file\":\"pikaday.js\",\"pass\":false,\"kind\":\"syntax\",\"message\":\"JavaScript syntax check failed\"}]",
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "requestId": "chatcmpl-6c6acbedf5905979611503e126e501aa",
+        "promptHash": "35866824197b635744f4b7e31acb4a93363983ee578aa6c19cc8c68ba7c02d02",
+        "schemaVersion": 2,
+        "structuredOutput": false,
+        "latencyMs": 64495,
+        "usage": {
+          "completion_tokens": 7781,
+          "prompt_tokens": 17755,
+          "total_tokens": 25536,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 6396,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 17755
+        },
+        "pricing": {
+          "prompt": "0.0000003",
+          "completion": "0.0000009",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0",
+          "input_cache_read": null
+        },
+        "reservedCreditUsd": 0.028546499999999995,
+        "budgetScope": "usefulness-20261021",
+        "cacheHit": false,
+        "retries": 0,
+        "attemptedCompletions": 1,
+        "responseFile": "response-51acc910f1953eae54a71f3be9e4df12625442695a41747d452bd76d57041715-16.json",
+        "requestFile": "request-51acc910f1953eae54a71f3be9e4df12625442695a41747d452bd76d57041715-16.json"
+      },
+      "changes": [
+        {
+          "path": "pikaday.js",
+          "beforeHash": "6bedcf62f5a30e8d4071a2580e60f8d2f3877180e7d133c11686a8267df90bc3",
+          "afterHash": "8aa5a4c61464884841376ad2ec9f94abfd5037f1499e33e349b1ef66335b66ba"
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Patch preimage must match exactly once",
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "requestId": "chatcmpl-de9d146f0e9487a30fe2179021faf20e",
+        "promptHash": "9b95de06a182230100a7cc9fd3f57e6f22a0157a9749dba06adc22903e71b5ff",
+        "schemaVersion": 2,
+        "structuredOutput": false,
+        "latencyMs": 57422,
+        "usage": {
+          "completion_tokens": 5093,
+          "prompt_tokens": 19193,
+          "total_tokens": 24286,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 3719,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 19193
+        },
+        "pricing": {
+          "prompt": "0.0000003",
+          "completion": "0.0000009",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0",
+          "input_cache_read": null
+        },
+        "reservedCreditUsd": 0.0303108,
+        "budgetScope": "usefulness-20261021",
+        "cacheHit": false,
+        "retries": 0,
+        "attemptedCompletions": 1,
+        "responseFile": "response-68adde4088cfd4dd722d1d85f3219f7631f55a8fbd51acb6ec0ba95ebd8d960e-17.json",
+        "requestFile": "request-68adde4088cfd4dd722d1d85f3219f7631f55a8fbd51acb6ec0ba95ebd8d960e-17.json"
+      }
+    },
+    {
+      "attempt": 3,
+      "verified": true,
+      "category": null,
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "requestId": "chatcmpl-48ad31eedeaf7bff279c5c2ad4b78d75",
+        "promptHash": "9bf2fa8e832654fbbb5ed94e71cfb8be97ff231e84021afd10a28d02c843b585",
+        "schemaVersion": 2,
+        "structuredOutput": false,
+        "latencyMs": 46369,
+        "usage": {
+          "completion_tokens": 5448,
+          "prompt_tokens": 20550,
+          "total_tokens": 25998,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 4063,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "created_cache_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 20550
+        },
+        "pricing": {
+          "prompt": "0.0000003",
+          "completion": "0.0000009",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0",
+          "input_cache_read": null
+        },
+        "reservedCreditUsd": 0.031986,
+        "budgetScope": "usefulness-20261021",
+        "cacheHit": false,
+        "retries": 0,
+        "attemptedCompletions": 1,
+        "responseFile": "response-772000655d2c185eb43361d86e92c7c3fc958af345fe681ca62496b0bc143682-18.json",
+        "requestFile": "request-772000655d2c185eb43361d86e92c7c3fc958af345fe681ca62496b0bc143682-18.json"
+      },
+      "changes": [
+        {
+          "path": "pikaday.js",
+          "beforeHash": "6bedcf62f5a30e8d4071a2580e60f8d2f3877180e7d133c11686a8267df90bc3",
+          "afterHash": "86adae7e6b934af216fc65b90e3e8b99c90263dd035acd47cc2b717640cd4b9a"
+        }
+      ]
+    }
+  ],
+  "transferRun": null,
+  "preservation": {
+    "withheldJourney": {
+      "before": "VERIFIED_PASS",
+      "after": "VERIFIED_PASS",
+      "checks": [
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#booking",
+            "name": "pickup_date",
+            "value": [
+              "2026-10-23"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "2026-10-23"
+          ]
+        },
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#booking",
+            "name": "return_date",
+            "value": [
+              "2026-10-23"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "2026-10-23"
+          ]
+        }
+      ]
+    },
+    "withheldFunctionalJourney": {
+      "before": "VERIFIED_PASS",
+      "after": "VERIFIED_PASS",
+      "checks": [
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#booking",
+            "name": "pickup_date",
+            "value": [
+              "2026-10-23"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "2026-10-23"
+          ]
+        },
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#booking",
+            "name": "return_date",
+            "value": [
+              "2026-10-27"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "2026-10-27"
+          ]
+        }
+      ]
+    }
+  }
+}

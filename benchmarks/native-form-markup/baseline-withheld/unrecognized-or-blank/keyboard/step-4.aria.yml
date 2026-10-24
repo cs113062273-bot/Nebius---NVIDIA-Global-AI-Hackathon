@@ -1,0 +1,18 @@
+- main:
+  - paragraph: ACCOUNT / OPTIONAL SAVED COUNTRIES
+  - heading "Where should we deliver?" [level=1]
+  - paragraph: You can change or clear either saved country. Saving must preserve what is visible in each field.
+  - text: Shipping country (optional)
+  - status
+  - status
+  - combobox "Shipping country (optional)": Atlantis
+  - text: Billing country (optional)
+  - status
+  - status
+  - combobox "Billing country (optional)": Germany
+  - button "Save delivery preferences"
+  - search:
+    - text: Find a pickup city (optional)
+    - status
+    - status
+    - combobox "Find a pickup city (optional)"

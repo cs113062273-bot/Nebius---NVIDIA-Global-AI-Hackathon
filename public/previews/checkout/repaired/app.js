@@ -1,0 +1,50 @@
+const field = document.querySelector('#field');
+const action = document.querySelector('#action');
+const receipt = document.querySelector('#receipt');
+const panel = document.querySelector('#panel');
+const trigger = document.querySelector('#open');
+const close = document.querySelector('#close');
+
+function openDialog() {
+  panel.hidden = false;
+  field.focus();
+}
+
+function closeDialog() {
+  panel.hidden = true;
+  trigger.focus();
+}
+
+function handleKeyDown(e) {
+  if (e.key === 'Escape') {
+    closeDialog();
+    return;
+  }
+  if (e.key === 'Tab') {
+    const focusables = [close, field, action];
+    const active = document.activeElement;
+    const idx = focusables.indexOf(active);
+    if (idx === -1) return;
+    if (e.shiftKey) {
+      if (idx === 0) {
+        e.preventDefault();
+        focusables[focusables.length - 1].focus();
+      }
+    } else {
+      if (idx === focusables.length - 1) {
+        e.preventDefault();
+        focusables[0].focus();
+      }
+    }
+  }
+}
+
+trigger.addEventListener('click', openDialog);
+close.addEventListener('click', closeDialog);
+action.addEventListener('click', () => {
+  if (!field.value.trim()) { field.setAttribute('aria-invalid', 'true'); field.focus(); return; }
+  receipt.textContent = "Order confirmed · Field bag · $84";
+  receipt.setAttribute('data-input', field.value);
+  closeDialog();
+});
+panel.addEventListener('keydown', handleKeyDown);

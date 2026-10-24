@@ -1,0 +1,67 @@
+{
+  "recordedAt": "2026-10-21T05:48:58.292Z",
+  "runId": "120c8bdb-63d5-4577-aa8b-afdab144aeff",
+  "startedAt": "2026-10-21T05:48:49.077Z",
+  "completedAt": "2026-10-21T05:48:57.523Z",
+  "provenance": "Post-review author-run control: published upstream human patch applied to the precommitted author-created [hidden] consumer with fixed Cancel. No model inference. Not an upstream production failure or blind test.",
+  "upstream": {
+    "repository": "https://github.com/micromodal/Micromodal",
+    "issue": "https://github.com/micromodal/Micromodal/issues/295",
+    "brokenRevision": "777dbcbeaf6314da0a3669f2b5ed9cdd66e6fc8a",
+    "upstreamFix": "70dfd4320d9e0e535be432f57c698c75e230d0b3",
+    "upstreamPath": "lib/src/index.js",
+    "sourceHash": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+    "sourceUnmodified": true,
+    "scope": "Pinned published historical component defect with an author-created booking consumer and fixed-position Cancel coverage. Nonblind reconstruction, not a newly discovered upstream defect or production customer result. The model receives neither upstream patch nor fixed source."
+  },
+  "taskHash": "6e9a37e7988924c03c39c1254eee75b8f0c1cb0d45a9e743b7f5bc956bb26abc",
+  "sourceHashes": {
+    "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+    "index.html": "47dc7a3d6f25738410ad1031488bf3f14977055cc484c7475e3c0bd7f1178ce8",
+    "micromodal.js": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+    "style.css": "0041b8336952d3dc7d0d42867982e44cf0dcc710e2252f0684668fe02e680b55"
+  },
+  "candidateHashes": {
+    "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+    "index.html": "47dc7a3d6f25738410ad1031488bf3f14977055cc484c7475e3c0bd7f1178ce8",
+    "micromodal.js": "ae7ac37f5522ee9170f0dd77d04b4e9042975300c0b5fe09d020836085142a8f",
+    "style.css": "0041b8336952d3dc7d0d42867982e44cf0dcc710e2252f0684668fe02e680b55"
+  },
+  "upstreamPatchHash": "ab2a7ef7c265c857da171eeeb97892a84b7ed4ff22a3ebd25e314a743342de1a",
+  "browser": "155.0.8059.85",
+  "mode": "reference",
+  "inferenceCalls": 0,
+  "verification": {
+    "verdict": "VERIFIED_FAIL",
+    "reasons": [
+      "Keyboard candidate: failed · Step 4 · #close: expected \"#close\", observed \"#confirm\"",
+      "Task evidence is missing or contradicts the verdict"
+    ],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_FAIL",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "failedStep": {
+    "step": 4,
+    "key": "Shift+Tab",
+    "expected": "#close",
+    "observed": "#confirm"
+  },
+  "patchValidation": {
+    "gitApplyCheck": true,
+    "candidateBytesMatch": true,
+    "contextLines": 3
+  },
+  "proofIntegrity": true,
+  "url": "http://127.0.0.1:4317/project.html?run=120c8bdb-63d5-4577-aa8b-afdab144aeff",
+  "publishedSource": {
+    "url": "https://raw.githubusercontent.com/micromodal/Micromodal/70dfd4320d9e0e535be432f57c698c75e230d0b3/lib/src/index.js",
+    "sha256": "ae7ac37f5522ee9170f0dd77d04b4e9042975300c0b5fe09d020836085142a8f",
+    "byteIdenticalToCandidate": true
+  }
+}

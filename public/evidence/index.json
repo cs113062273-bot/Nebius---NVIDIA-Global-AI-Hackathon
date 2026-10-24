@@ -1,0 +1,438 @@
+{
+  "generatedAt": "2026-10-24T10:54:37.694Z",
+  "note": "Read-only published evidence. Screenshots, plans, diffs and raw model requests/responses are byte-identical to the run manifests. run.json is a reduced, path-sanitized view; complete archives are attached where marked.",
+  "groups": [
+    {
+      "title": "GOV.UK autocomplete · final contract (markup-independent)",
+      "summary": "Same task with the options pretty-printed the way server templates often emit them, plus a third guard: saving without editing must keep both saved countries. The previous final repair erased them and is rejected. A new Nemotron Ultra run passes every gate; three of four withheld checks pass, and the fourth is a recorded FAIL explained in the history.",
+      "runs": [
+        {
+          "id": "c3158127-dba3-43b3-8dcc-981dc00e071f",
+          "label": "Final Nemotron Ultra repair (attempt 1 rejected by guards, attempt 2 verified)",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "3bc5e94f83604e9fc9bfceaae6ed239b75b5c44206bae6fd6ca6c226fc417392",
+          "proofArchive": true
+        },
+        {
+          "id": "b9223625-8d8c-42f4-be52-c11aa95d3422",
+          "label": "Previous final repair rejected: untouched save erases both countries",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "aa65450ffc28493d07542a23a80dc67516cfbf04e364c2d734e9624129068bb5",
+          "proofArchive": true
+        },
+        {
+          "id": "537fabba-1354-4946-8bb8-f3641dc5b88b",
+          "label": "Guarded repair rejected",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "95d79c2aa40c2d37d41603a5d2f5802a090db64b4b39c2094d9480a794873232",
+          "proofArchive": false
+        },
+        {
+          "id": "0cf6e4b4-677b-4839-860f-60a0c96c7775",
+          "label": "Withheld: single-line page",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "dc2fd49c68893d2eb56ba577c24337a1ee7274d81486cd7f806aa2a702d9447e",
+          "proofArchive": false
+        },
+        {
+          "id": "ed4b61c6-3c4a-4b84-8a5d-1e5a9aa1c9eb",
+          "label": "Withheld: clear shipping",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "32188dd167e2c7123256a62b83e0753d3c47a88e6da2e9899b29ba0f1a4fbe11",
+          "proofArchive": false
+        },
+        {
+          "id": "6b8be951-29ac-45df-8aaa-379293b5f68b",
+          "label": "Withheld: clear billing",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "b633727fa28b98d967c3cb6ef3041b3a47224847803213328eb3d4a13941fb01",
+          "proofArchive": false
+        },
+        {
+          "id": "67e901e9-00ef-43bd-8ca4-27d422ed179d",
+          "label": "Withheld: unlisted and blank (recorded FAIL; component shows Germany)",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "c3b3b385ac52b22de7bd681b5a0797e508d112fa4188eb12fd0c2ba6ac3575a6",
+          "proofArchive": false
+        }
+      ]
+    },
+    {
+      "title": "Pikaday · daylight-saving week jump",
+      "summary": "In Europe/London, ArrowDown from Friday 23 October 2026 selected Thursday 29 October. Nemotron Super switched the component to calendar-day arithmetic; six withheld UTC, London and closed-range checks pass.",
+      "runs": [
+        {
+          "id": "cbb88e80-22b1-481b-a774-0d7dea9486f3",
+          "label": "Nemotron Super · calendar-day arithmetic",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "375b5614a6fd5282441b5792b59c158ddddf235d8ade1b82bf188aee25c6d3b8",
+          "proofArchive": true
+        },
+        {
+          "id": "e211fc5c-5553-4c01-acf6-80a865ffb891",
+          "label": "Nemotron Ultra · rewritten preimages rejected; local ceiling stopped attempt 3",
+          "verdict": "INCONCLUSIVE",
+          "execution": "3 Nemotron proposals · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "1f355b8b0a8d37d45b2436bb401f2da78ad7415e0873caaf2643e09e6df29a16",
+          "proofArchive": false
+        },
+        {
+          "id": "38bb7c9f-7385-4170-ab7a-57d9ef79f1a6",
+          "label": "Withheld: UTC forward",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "f90aaa153d586d446d5959ada5e98cfec287a4e58fd1fd1fdece868ec44560c9",
+          "proofArchive": false
+        },
+        {
+          "id": "8572d4e8-fff9-47c9-92d2-ff6a9d00b181",
+          "label": "Withheld: UTC backward",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "53ac3593d0d6ebbc57e96accb0330040372a53ef5a4ee1cc8cee4ba91cfd21b2",
+          "proofArchive": false
+        },
+        {
+          "id": "83c2bc19-69dc-4c53-911d-da39dd7a1954",
+          "label": "Withheld: London forward",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "fa892c1f807f68a339d91c6a993666c715e332e35d2eeb93c651892833c17db7",
+          "proofArchive": false
+        },
+        {
+          "id": "397c4bac-572a-4e0a-9ede-30c1e290e702",
+          "label": "Withheld: London backward",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "784b3d9e1a1a00a251c12aa9eb71dfca8dc78da314d2ae8dee8b6afe6628f0c6",
+          "proofArchive": false
+        },
+        {
+          "id": "a18bb581-77a2-4f9b-84cc-33ef841243e9",
+          "label": "Withheld: closed range boundary",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "d893c61de758b4748e28120d3bb43fe116a0bc4a104ce4bbb6f2c14551363ac4",
+          "proofArchive": false
+        }
+      ]
+    },
+    {
+      "title": "Pikaday · closed weekends and closed range",
+      "summary": "ArrowRight from Friday selected closed Saturday. Super repaired it; an author-added closed-range variant exposed a remaining flaw that a separate model run fixed.",
+      "runs": [
+        {
+          "id": "65c8e7d5-3d35-41c7-a80f-3696a6273451",
+          "label": "Nemotron Super · weekend skipping",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "b6cb96590dc01958bb8ad8d40b2df718e9e83749d66e7ba88a2f824dc2fe6e13",
+          "proofArchive": true
+        },
+        {
+          "id": "770f858a-7b0a-42a1-94b3-132c4cc0c1b6",
+          "label": "Same patch: precommitted reverse task",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "f7613c0643d991a1ea8775b0fbcbb5c877289709d5360abcca4f6dc567b49f30",
+          "proofArchive": false
+        },
+        {
+          "id": "459ef2eb-1518-4c98-bfb7-139912015c20",
+          "label": "Nemotron Super · closed-range follow-up",
+          "attempt": 3,
+          "verdict": "VERIFIED_PASS",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "c4d35c6cf0c0dfa28c3f610c46321bceb7107b8be0751e9561960dd83e25c93d",
+          "proofArchive": true
+        },
+        {
+          "id": "374ef458-3f62-4074-8691-c476d43c863f",
+          "label": "Final component: forward task",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "ba7106fcfecd0123cae1290841fca499bac6548db31c06ed1cefc67fc81a80ab",
+          "proofArchive": false
+        },
+        {
+          "id": "eae53cc0-c0d8-48e9-be14-cf64478b3f55",
+          "label": "Final component: backward task",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "31ea2e164523a077f4066562cb4138017a16514727caab64726be682831578fd",
+          "proofArchive": false
+        },
+        {
+          "id": "fef8da72-c446-4116-b69c-fc0c2c655472",
+          "label": "Ultra request timed out",
+          "verdict": "INCONCLUSIVE",
+          "execution": "1 Nemotron proposal · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "131e86fe83255532db40eefed897f712bd1bb81976a1c8db09d3688007255a94",
+          "proofArchive": false
+        },
+        {
+          "id": "5b0c2db0-6309-435d-8362-ca223ff2f672",
+          "label": "Stopped before inference: model-context limit",
+          "verdict": "INCONCLUSIVE",
+          "execution": "1 Nemotron proposal · no response",
+          "rootHash": "a053c41ad2aeadf4eef35fdf43dea0609552a07bd0d1192ca95989f5ef50503e",
+          "proofArchive": false
+        }
+      ]
+    },
+    {
+      "title": "GOV.UK autocomplete · implicit submission",
+      "summary": "An unlisted shipping country and a billing field cleared and submitted with Enter must both save no country. Two regression guards must keep passing. Earlier model patches are replayed against this gate; an Ultra repair passed it and three withheld checks, but a later reviewer probe showed it erased saved countries when options are pretty-printed (see the markup-independent contract).",
+      "runs": [
+        {
+          "id": "bea9de3c-28dd-43a1-8777-c3b1a23ba7c9",
+          "label": "Nemotron Ultra repair · passed this gate; later rejected by the markup gate",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "a8f8a5eee190118dd8805ceae5a75f61d810e752c04a5ba4677ee3e538af6e83",
+          "proofArchive": true
+        },
+        {
+          "id": "0b341dc4-5c54-44e8-9750-a8c5a504e2dc",
+          "label": "Withheld: clear shipping",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "9100f2c5234df61d250930452c1e53270984584bf7aace3755c3dcea30c896ab",
+          "proofArchive": false
+        },
+        {
+          "id": "d5fa5759-20ae-45b9-87f0-971981dfe816",
+          "label": "Withheld: clear billing",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "69d837f2d32d66aa59b6fccf25f92b865d88ad7b80eb90f6022c205f10f6307a",
+          "proofArchive": false
+        },
+        {
+          "id": "797b82c8-cfdf-4975-b243-db48350fc49b",
+          "label": "Withheld: unlisted and blank countries",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "ee19ea8d92a1972a55be22b07b5d976a5030a24cef93024c096242f556480ef6",
+          "proofArchive": false
+        },
+        {
+          "id": "a7653c03-77af-424a-ad1a-776455fedf22",
+          "label": "Earlier Ultra patch rejected: Enter inside the field still sends de",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "ae188b8294073c0c84584e91775daeb3f165c6cbde7accaeb31de592e91aefa4",
+          "proofArchive": true
+        },
+        {
+          "id": "cd8d9040-155d-498b-a3fd-7b94e872c994",
+          "label": "First model patch rejected: unlisted country still sends gb",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "d2a9e2150bea3703f41367330a16c99cd970e52e03994c60a742c096e4f0d672",
+          "proofArchive": false
+        }
+      ]
+    },
+    {
+      "title": "GOV.UK autocomplete · regression guards",
+      "summary": "Guards: a partial match confirmed on blur still saves France, and a plain (non-select) autocomplete on the same page keeps working. Three earlier model patches are replayed and rejected; two new model runs fail; Ultra then passes every gate.",
+      "runs": [
+        {
+          "id": "1d5036c9-3c31-436b-821a-8dacf8fb6ebb",
+          "label": "Model patch that passed its own task, rejected by both guards",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "1af2d278a38ea38d12e72fcd8aeadf90aad97ec9d7e1d8e1285b051a5843495c",
+          "proofArchive": true
+        },
+        {
+          "id": "0fcd838c-1959-4671-a14c-f63c526658bd",
+          "label": "First model patch rejected: unlisted country still sends gb",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "e357a9005fb2378fcfd96ccb2fadabdd44a33f8931f8a8170601b8a049947150",
+          "proofArchive": false
+        },
+        {
+          "id": "78893b29-e3dd-404c-9f3e-d6d23c14c73d",
+          "label": "Model patch rejected: blank billing still sends de",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "b0dbf20c985cc2c7461723de7015ac5da7b81732f39c084d31c158c5f4750d22",
+          "proofArchive": false
+        },
+        {
+          "id": "b768fc2e-5f12-4962-9bb6-d46d64f6bdf6",
+          "label": "Nemotron Super · three rejected proposals",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "b4152204d16fd3f5ba362a3a6060f3f78006f4f9cf244b7ade346e55283c0d5e",
+          "proofArchive": false
+        },
+        {
+          "id": "63c909d4-7acb-46f4-839e-fc42c0aee73a",
+          "label": "Nemotron Ultra · two truncated outputs, one rejected patch",
+          "verdict": "INCONCLUSIVE",
+          "execution": "3 Nemotron proposals · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "b21c189ad81a52886baef57687cd42e3a6695ade6f4707e4b385bebe43d2ab87",
+          "proofArchive": false
+        },
+        {
+          "id": "7746b726-e0f2-4bc0-90a9-7b9b47b73203",
+          "label": "Nemotron Ultra · verified through the public onConfirm option",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "f2ac8f5e7986c77560a0684c144148e792cb228407c071c5eb69f2334eee8526",
+          "proofArchive": true
+        },
+        {
+          "id": "8ddb2160-2cbf-4960-b51a-a470e0386a3d",
+          "label": "Withheld: clear shipping",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "c56e60b53b2efa8693fc94bed5006769846b3813c89f0f034c4acba280aba2d0",
+          "proofArchive": false
+        },
+        {
+          "id": "b183ec79-9f35-43d3-ac1a-eac8185bc25f",
+          "label": "Withheld: clear billing",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "912ad9b24942cd5e3de5ec8e674bf6978273826e843f5d279e8a053f16efe3dc",
+          "proofArchive": false
+        }
+      ]
+    },
+    {
+      "title": "GOV.UK autocomplete · unlisted and blank entries",
+      "summary": "The first strengthening after independent review. Super produced three rejected proposals, then a component patch that passed its task but failed a withheld partial-match check.",
+      "runs": [
+        {
+          "id": "a66884e3-0c53-4bc9-8703-d0e06a4d43ca",
+          "label": "Nemotron Super · invalid fields, runtime errors, blank matched the empty option",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "e6d7c7eb250a298bef851b0f5991243e8bf848de999f7d0d94833e9d56333070",
+          "proofArchive": false
+        },
+        {
+          "id": "2b863464-168d-4a1c-8fd6-6685b7bc3a45",
+          "label": "Nemotron Super · passed its task; later rejected by a withheld check",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "2d0ad40d4b0735fb87022b19696240d8ce555bc037b1283b1283598f972181c1",
+          "proofArchive": false
+        },
+        {
+          "id": "98988a04-01ec-4124-8c48-5ea4be054a66",
+          "label": "Withheld: clear shipping",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "767f7112f95a4a91403d98dc3410d95d4f7d4923f1aba83380ddf3b9e7458773",
+          "proofArchive": false
+        },
+        {
+          "id": "ae1534ec-36a4-4d2b-83b2-cdf0199dbb8d",
+          "label": "Withheld: clear billing",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "9f32832f0d4224526e60f662dbc8cacd2b914fef18fc36cf174176bf2a9528a7",
+          "proofArchive": false
+        }
+      ]
+    },
+    {
+      "title": "GOV.UK autocomplete · first repair (clearing only)",
+      "summary": "The original case: clearing a saved country kept gb. One Ultra call repaired it; a precommitted billing task passed; a human wrong-country variant was rejected by the independent pointer path.",
+      "runs": [
+        {
+          "id": "d2eb947c-deed-44c9-9381-b444438a5c11",
+          "label": "Nemotron Ultra · first repair",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "d5986e3b1834a7d34cd5e8d1f8a2d96d6962e95f7b4d0a84a92ab8ecf850802e",
+          "proofArchive": true
+        },
+        {
+          "id": "12b01ae9-a19c-4d84-b4dc-acc3a1da82d0",
+          "label": "Same patch: precommitted billing task",
+          "verdict": "VERIFIED_PASS",
+          "execution": "browser-only recheck · no inference",
+          "rootHash": "73b17a1bc8d40c11616d8003d3deae07fbb2c9ebe5fafa69b7e5502229226401",
+          "proofArchive": false
+        },
+        {
+          "id": "050ef18e-84ea-4891-b43a-f1d1f41698a4",
+          "label": "Human negative control: visible France, form code gb",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "220319d5ffb3ac9b95330ec81103d7b9fe80fba6a6aaa1c58e535e0f31a027da",
+          "proofArchive": false
+        }
+      ]
+    },
+    {
+      "title": "MicroModal · hidden-node focus routing",
+      "summary": "Earlier case on MicroModal #295 with a published human patch and model repairs.",
+      "runs": [
+        {
+          "id": "99e589ff-42bc-4bd0-b9f9-0b66aa1432db",
+          "label": "Nemotron repair",
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "121a76c14466ca4c7aa81b8c7ea0171bd549731a6e514d56dff1c273c72c0596",
+          "proofArchive": false
+        },
+        {
+          "id": "2d7de911-90df-47ae-a9dd-4e0a36d2c206",
+          "label": "Nemotron repair · CSS-hidden retry",
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "b3e80624967e0acc6f1e45b506d29de0ab38f4465eef4ee5a6e00b25a2ed143b",
+          "proofArchive": false
+        },
+        {
+          "id": "120c8bdb-63d5-4577-aa8b-afdab144aeff",
+          "label": "Published human patch vs author-added control",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "936234c763d7223dfb3b7e874a464df555b4b32aad2cbd7348a4c0adb614dd89",
+          "proofArchive": false
+        },
+        {
+          "id": "56a72234-ccfe-4c02-b6b3-897db6d0f245",
+          "label": "Human reference replay",
+          "verdict": "VERIFIED_PASS",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "51cd4ae25a580fd48cbf816b7c20403733103860dd12e2f952604d1f1ec822f0",
+          "proofArchive": false
+        },
+        {
+          "id": "cc7af68a-ac2e-46cc-bf1d-04f48978a521",
+          "label": "Human reference replay (rejected)",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "6e0e03f20655425ef6fbd27eb3ce1912ca844cf44b6b9094b8d3048e83b37cd2",
+          "proofArchive": false
+        }
+      ]
+    }
+  ]
+}

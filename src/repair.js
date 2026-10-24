@@ -1,8 +1,10 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
+import { spawnSync } from 'node:child_process';
 import { RepairPlan, digest } from './schema.js';
 import { contained, listFiles } from './files.js';
+import { checkedDiff } from './diff.js';
 
 const allowedExtensions = new Set(['.html','.css','.js','.jsx','.tsx','.ts']);
 export function allowedSource(file) {
@@ -10,15 +12,31 @@ export function allowedSource(file) {
 }
 export async function localize(root, evidence) {
   const terms = new Set();
-  for (const step of evidence.steps) { if(step.action.selector) terms.add(step.action.selector.replace(/^[#.]/,'')); }
+  for (const step of evidence.steps) { if(step.action.selector) terms.add(step.action.selector.replace(/^[#.]/,''));for(const a of step.assertions||[])if(a.assertion?.selector)terms.add(a.assertion.selector.replace(/^[#.]/,'')); }
+  for(const cp of evidence.checkpoints)if(cp.state.focus?.selector)terms.add(cp.state.focus.selector.replace(/^[#.]/,''));
   for (const cp of evidence.checkpoints) for (const node of cp.state.nodes) if(node.nameHint) terms.add(node.nameHint);
-  const candidates = [];
+  const candidates = [],sources=new Map();
   for(const file of await listFiles(root)) {
     if(!allowedSource(file)) continue;
     const p = await contained(root,file), st = await fs.stat(p); if(st.size > 60000) continue;
     const source = await fs.readFile(p,'utf8');
+    sources.set(file,source);
     const matches = [...terms].filter(t=>t.length>1 && source.includes(t));
     if(matches.length) candidates.push({path:file,score:matches.length,signals:matches.slice(0,12),sha256:digest(source),source});
+  }
+  // Follow local runtime dependencies: component internals rarely contain the
+  // consumer's selectors. Never execute code or resolve third-party packages.
+  const queue=[...candidates];
+  for(let i=0;i<queue.length&&i<12;i++){
+    const from=queue[i];
+    const imports=[...from.source.matchAll(/(?:from\s*|import\s*\(\s*|import\s*|src\s*=\s*)['"]([^'"]+)['"]/g)];
+    for(const match of imports){
+      const specifier=match[1].split(/[?#]/)[0];if(/^(?:[a-z]+:|\/\/|\/)/i.test(specifier))continue;
+      const file=path.posix.normalize(path.posix.join(path.posix.dirname(from.path),specifier));
+      if(!sources.has(file)||candidates.some(c=>c.path===file))continue;
+      const source=sources.get(file),candidate={path:file,score:Math.max(1,from.score-.5),signals:['Imported runtime dependency of '+from.path],sha256:digest(source),source};
+      candidates.push(candidate);queue.push(candidate);
+    }
   }
   return candidates.sort((a,b)=>b.score-a.score).slice(0,5);
 }
@@ -57,20 +75,37 @@ export async function applyPlan(root, rawPlan, allowedFiles) {
   // Validate every preimage before any write. Only disposable copies are accepted by the orchestrator.
   for(const [file,value] of staged) await fs.writeFile(file,value.after);
   changed=changes.length;
-  const patch = changes.map(c=>`--- a/${c.path}\n+++ b/${c.path}\n@@ -1,${c.before.split('\n').length} +1,${c.after.split('\n').length} @@\n${c.before.split('\n').map(l=>'-'+l).join('\n')}\n${c.after.split('\n').map(l=>'+'+l).join('\n')}\n`).join('');
-  return {changed,changes:changes.map(c=>({path:c.path,beforeHash:digest(c.before),afterHash:digest(c.after)})),patch};
+  return checkedDiff(changes);
+}
+export async function applyReference(root, referenceRoot, {staticProject=false,runtimeOnly=false}={}) {
+  const names=new Set([...await listFiles(root),...await listFiles(referenceRoot)]),changes=[];
+  for(const file of names){
+    if(!staticProject&&(!allowedSource(file)||runtimeOnly&&!file.endsWith('.js')))continue;
+    const read=async dir=>fs.readFile(await contained(dir,file,{existing:false})).catch(e=>{if(e.code==='ENOENT')return null;throw e;});
+    const before=await read(root),after=await read(referenceRoot);
+    if(before===null&&after===null||before!==null&&after!==null&&before.equals(after))continue;
+    changes.push({path:file,before,after});
+  }
+  if(!changes.length)throw new Error('No source changes in edited version');
+  const result=await checkedDiff(changes);
+  for(const c of changes){const file=await contained(root,c.path,{existing:false});if(c.after===null)await fs.unlink(file);else{await fs.mkdir(path.dirname(file),{recursive:true});await fs.writeFile(file,c.after);}}
+  return result;
 }
 export async function buildStatic(root) {
   const checks=[];
   for(const file of await listFiles(root)) {
     if(file.endsWith('.js')) {
       try { new vm.Script(await fs.readFile(await contained(root,file),'utf8'), {filename:file}); checks.push({file,pass:true,kind:'syntax'}); }
-      catch(error) { checks.push({file,pass:false,kind:'syntax',message:error.message}); }
+      catch(error) {
+        // Parse ESM without importing or executing the application's code.
+        const result=spawnSync(process.execPath,['--input-type=module','--check'],{input:await fs.readFile(await contained(root,file),'utf8'),encoding:'utf8',timeout:5000,windowsHide:true,maxBuffer:20000,env:{}});
+        checks.push({file,pass:result.status===0,kind:'syntax',...(result.status===0?{}:{message:'JavaScript syntax check failed'})});
+      }
     }
     if(file.endsWith('.html')) {
       const html = await fs.readFile(await contained(root,file),'utf8');
       checks.push({file,pass:/<!doctype html>/i.test(html) && /<html[\s>]/i.test(html) && /<body[\s>]/i.test(html),kind:'document-structure'});
     }
   }
-  return {pass:checks.length>0 && checks.every(c=>c.pass),checks,scope:'Static HTML structure and classic JavaScript syntax only; no framework compilation claim.'};
+  return {pass:checks.length>0 && checks.every(c=>c.pass),checks,scope:'Static HTML structure and JavaScript syntax (classic or ESM) only; no framework compilation claim.'};
 }

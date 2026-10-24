@@ -1,0 +1,21 @@
+{
+  "root_cause": "The focus trap in MicroModal includes hidden elements (the retry button inside a hidden div) in the focusable nodes list. When Shift+Tab is pressed from the first focusable element (email), the code attempts to focus the last node in the list (the hidden retry button). Focusing a hidden element fails, so focus remains on the email input, breaking reverse tab navigation.",
+  "repair_strategy": "Modify getFocusableNodes to filter out elements that are hidden via the [hidden] attribute or have a hidden ancestor. This ensures only visible focusable controls participate in the tab order, allowing Shift+Tab to correctly reach the Cancel button.",
+  "edits": [
+    {
+      "path": "micromodal.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes)\n    }",
+      "after": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array.from(nodes).filter(node => !node.closest('[hidden]') && !node.hasAttribute('hidden'))\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard navigation within the modal dialog will correctly cycle through visible controls (Email, Confirm, Cancel) in both directions, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Filtering by closest('[hidden]') may exclude elements that are intentionally hidden but still focusable (e.g., off-screen via CSS transform). However, the modal's controls are all visible and in the viewport."
+  ],
+  "verification_requirements": [
+    "Step 3 (Shift+Tab) moves focus to #close.",
+    "Steps 4-9 (Tab) cycle focus through #email, #confirm, #close, #email, #confirm, #close.",
+    "Step 10 (Enter on #confirm) closes modal, shows receipt with correct data."
+  ]
+}

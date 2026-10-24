@@ -1,0 +1,28 @@
+diff --git a/app.js b/app.js
+index 91c234a..47623fb 100644
+--- a/app.js
++++ b/app.js
+@@ -1,2 +1,23 @@
+ for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});
+ document.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());
++
++// Ensure that typing an unrecognized or blank value clears the underlying select.
++const observer = new MutationObserver(() => {
++  document.querySelectorAll('#shipping-country, #billing-country').forEach(select => {
++    // Find the associated combobox input (created by accessible-autocomplete)
++    const input = select.parentElement.querySelector('input[role="combobox"]');
++    if (!input) return;
++    const val = input.value.trim();
++    let matched = false;
++    for (const option of select.options) {
++      if (option.value === val || option.textContent.trim() === val) {
++        matched = true;
++        break;
++      }
++    }
++    if (!matched && select.value !== '') {
++      select.value = '';
++    }
++  });
++});
++observer.observe(document.body, { childList: true, subtree: true });

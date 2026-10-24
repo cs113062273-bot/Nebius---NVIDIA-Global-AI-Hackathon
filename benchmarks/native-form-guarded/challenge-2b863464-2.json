@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-24T06:58:15.375Z",
+  "challengedRun": "2b863464-168d-4a1c-8fd6-6685b7bc3a45",
+  "attempt": 2,
+  "changedFiles": [
+    "accessible-autocomplete.js"
+  ],
+  "run": "1d5036c9-3c31-436b-821a-8dacf8fb6ebb",
+  "verification": {
+    "verdict": "VERIFIED_FAIL",
+    "reasons": [
+      "Regression guard \"Guard · a partial match confirmed on blur still saves France\": failed · #preferences shipping_country: expected [\"fr\"], observed [\"\"]",
+      "Regression guard \"Guard · the plain pickup-city autocomplete keeps working\": inconclusive · Browser runtime/console/network errors require review",
+      "Regression guard \"Guard · the plain pickup-city autocomplete keeps working\": runtime error · Cannot set properties of undefined (setting 'value')"
+    ],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true,
+      "regressionGuards": "0/2"
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "inferenceCalls": 0
+}

@@ -1,0 +1,45 @@
+{
+  "fixedAt": "2026-10-24T06:49:43.511Z",
+  "issue": "https://github.com/alphagov/accessible-autocomplete/issues/777",
+  "derivedFrom": "benchmarks/native-form/original",
+  "sourceHashes": {
+    "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+    "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+    "app.js": "c0cd5c1ac1020b4313357444a74cdf86be52c9c19abbcf2686cfb28fdc7531b2",
+    "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+    "index.html": "71dd957392336c3af33f9e8bef51136bd4c7e88bce5b121d846053e6542c89e8",
+    "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+  },
+  "taskHash": "b4c51203617370bce9e50a69480b3bc5b27572a797f5e9a7162bc7096c3a7c27",
+  "withheldTaskHash": "86da6b233a43d0d3619dfb70affa3084199a304f1ed49a37e8ca2cf6bac1cb9c",
+  "baseline": {
+    "journey": "VERIFIED_FAIL",
+    "functionalJourney": "VERIFIED_PASS"
+  },
+  "withheldBaseline": {
+    "clear-shipping": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "kind": "repair"
+    },
+    "clear-billing": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "kind": "repair"
+    },
+    "partial-match-confirms": {
+      "keyboard": "VERIFIED_PASS",
+      "pointer": "VERIFIED_PASS",
+      "kind": "preservation"
+    }
+  },
+  "implementation": {
+    "src/engine.js": "da7ad6e2850139b5c2a1cb45797253d625f72989ad2c6092937f4ca721eac160",
+    "src/nebius.js": "1db5ad20f9320f5ee5b82f347a4f4814794efc70252c0d71936c1be92200fa05",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "c6cb974d7dbd7034bd8dc5f376f78e2df8a5ff9c95bdf833d9d130812493b17b"
+  },
+  "provenance": "Post-hoc task added after an independent review (2026-10-24) showed that model run d2eb947c attempt 1 cleared only an exactly empty input: an unrecognized entry (\"Atlantis\") or a blank entry still submitted the previous code. Same pinned GOV.UK component and author-created consumer as the original case. Fresh model run against the ORIGINAL source, not the earlier patch. The empty-value rule for unrecognized text is an authored acceptance condition. Withheld checks were frozen before inference and omitted from the model request; billing markup is visible. Not blind or production-customer evidence."
+}

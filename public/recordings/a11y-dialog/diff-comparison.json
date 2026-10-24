@@ -1,0 +1,23 @@
+{
+  "model": {
+    "path": "recordings/a11y-dialog/review-model.patch",
+    "gitApplyCheck": true,
+    "candidateBytesMatch": true,
+    "contextLines": 3
+  },
+  "provenance": "New contextual review diff derived from original source and the recorded candidate. Original exported diff and complete proof remain unchanged.",
+  "human-runtime": {
+    "path": "recordings/a11y-dialog/human-runtime.patch",
+    "gitApplyCheck": true,
+    "candidateBytesMatch": true,
+    "contextLines": 3
+  },
+  "upstream-typescript": {
+    "path": "recordings/a11y-dialog/upstream-typescript.patch",
+    "gitApplyCheck": true,
+    "candidateBytesMatch": true,
+    "contextLines": 3
+  },
+  "humanSource": "https://github.com/KittyGiraudel/a11y-dialog/commit/6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+  "humanScope": "Published human TypeScript change and its type-stripped runtime reconstruction. Neither is a model repair."
+}

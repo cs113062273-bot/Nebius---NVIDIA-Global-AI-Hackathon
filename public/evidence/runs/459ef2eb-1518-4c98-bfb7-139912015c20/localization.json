@@ -1,0 +1,86 @@
+[
+  {
+    "path": "pikaday.js",
+    "score": 17,
+    "signals": [
+      "body",
+      "Use the arrow keys to pick a date",
+      "Previous Month",
+      "Next Month",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "18",
+      "20",
+      "24"
+    ],
+    "sha256": "6bedcf62f5a30e8d4071a2580e60f8d2f3877180e7d133c11686a8267df90bc3"
+  },
+  {
+    "path": "pikaday.css",
+    "score": 13,
+    "signals": [
+      "10",
+      "11",
+      "12",
+      "14",
+      "15",
+      "17",
+      "20",
+      "24",
+      "25",
+      "26",
+      "28",
+      "30"
+    ],
+    "sha256": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047"
+  },
+  {
+    "path": "index.html",
+    "score": 11,
+    "signals": [
+      "pickup",
+      "save",
+      "body",
+      "Pickup date",
+      "Return date",
+      "Save booking dates",
+      "10",
+      "20",
+      "23",
+      "24",
+      "26"
+    ],
+    "sha256": "ab2d54dd31cb433616a48ff39bfb6cb863e4bed4ae41f7c0ed9575da850e5cb8"
+  },
+  {
+    "path": "style.css",
+    "score": 10,
+    "signals": [
+      "save",
+      "body",
+      "12",
+      "14",
+      "16",
+      "18",
+      "20",
+      "22",
+      "24",
+      "30"
+    ],
+    "sha256": "b04872e24cfb0fa272b2c096755abf99d1746c834923fc43f55341eb290744ae"
+  },
+  {
+    "path": "app.js",
+    "score": 4,
+    "signals": [
+      "pickup",
+      "20",
+      "24",
+      "26"
+    ],
+    "sha256": "bbf65796046091db966c94e4cb4a8121cfcb1d6b60e4b7b6cba19d8a639dd981"
+  }
+]

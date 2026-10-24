@@ -1,0 +1,338 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "country-shipping-keyboard",
+    "title": "Clear saved shipping country without submitting a stale code",
+    "goal": "The submitted shipping country must match the visible input; preserve the billing country.",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach the saved shipping country",
+        "action": {
+          "kind": "seek",
+          "selector": "#shipping-country",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Clear the optional saved country",
+        "action": {
+          "kind": "type",
+          "text": "",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Leave the field and reach Save",
+        "action": {
+          "kind": "seek",
+          "selector": "#save",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Shipping: none | Billing: de"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-shipping",
+        "value": ""
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-billing",
+        "value": "de"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Shipping: none | Billing: de"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-shipping",
+        "value": ""
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-billing",
+        "value": "de"
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "country-shipping-pointer",
+    "title": "Select a different shipping country and preserve its code",
+    "goal": "The submitted shipping country must match the visible input; preserve the billing country.",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Edit shipping country",
+        "action": {
+          "kind": "click",
+          "selector": "#shipping-country"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Choose France",
+        "action": {
+          "kind": "type",
+          "text": "France",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Confirm the suggested country",
+        "action": {
+          "kind": "click",
+          "selector": "#shipping-country__option--0"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "click",
+          "selector": "#save"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Shipping: fr | Billing: de"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-shipping",
+        "value": "fr"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-billing",
+        "value": "de"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Shipping: fr | Billing: de"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-shipping",
+        "value": "fr"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-billing",
+        "value": "de"
+      }
+    ],
+    "forbidden": []
+  },
+  "withheldJourney": {
+    "version": 1,
+    "id": "country-billing-keyboard",
+    "title": "Clear saved billing country without submitting a stale code",
+    "goal": "The submitted billing country must match the visible input; preserve the shipping country.",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach the saved billing country",
+        "action": {
+          "kind": "seek",
+          "selector": "#billing-country",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Clear the optional saved country",
+        "action": {
+          "kind": "type",
+          "text": "",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Leave the field and reach Save",
+        "action": {
+          "kind": "seek",
+          "selector": "#save",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Shipping: gb | Billing: none"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-shipping",
+        "value": "gb"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-billing",
+        "value": ""
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Shipping: gb | Billing: none"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-shipping",
+        "value": "gb"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-billing",
+        "value": ""
+      }
+    ],
+    "forbidden": []
+  },
+  "withheldFunctionalJourney": {
+    "version": 1,
+    "id": "country-billing-pointer",
+    "title": "Select a different billing country and preserve its code",
+    "goal": "The submitted billing country must match the visible input; preserve the shipping country.",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Edit billing country",
+        "action": {
+          "kind": "click",
+          "selector": "#billing-country"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Choose Italy",
+        "action": {
+          "kind": "type",
+          "text": "Italy",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Confirm the suggested country",
+        "action": {
+          "kind": "click",
+          "selector": "#billing-country__option--0"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "click",
+          "selector": "#save"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Shipping: gb | Billing: it"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-shipping",
+        "value": "gb"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-billing",
+        "value": "it"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Shipping: gb | Billing: it"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-shipping",
+        "value": "gb"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-billing",
+        "value": "it"
+      }
+    ],
+    "forbidden": []
+  }
+}

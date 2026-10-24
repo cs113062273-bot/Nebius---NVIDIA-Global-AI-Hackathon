@@ -1,0 +1,20 @@
+diff --git a/app.js b/app.js
+index c32feb5..da0535d 100644
+--- a/app.js
++++ b/app.js
+@@ -1,4 +1,14 @@
+ for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});
+-document.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());
++document.getElementById('preferences').addEventListener('submit',event=>{
++  const ids = ['shipping-country','billing-country'];
++  ids.forEach(id => {
++    const input = document.getElementById(id);
++    const select = document.getElementById(id + '-select');
++    if (input && select && input.value === '') {
++      select.value = '';
++    }
++  });
++  event.preventDefault();
++});
+ accessibleAutocomplete({element:document.getElementById('destination-field'),id:'destination',name:'destination',source:['Paris','Lyon','Berlin','Rome']});
+ document.getElementById('search').addEventListener('submit',event=>event.preventDefault());

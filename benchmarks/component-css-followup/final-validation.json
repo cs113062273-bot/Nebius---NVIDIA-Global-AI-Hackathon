@@ -1,0 +1,58 @@
+{
+  "source": "Final actual model patch from 2d7de911-90df-47ae-a9dd-4e0a36d2c206; byte-for-byte component copied, no human component edits.",
+  "taskHash": "6e9a37e7988924c03c39c1254eee75b8f0c1cb0d45a9e743b7f5bc956bb26abc",
+  "results": [
+    {
+      "label": "hidden-attribute",
+      "runId": "56a72234-ccfe-4c02-b6b3-897db6d0f245",
+      "verification": {
+        "verdict": "VERIFIED_PASS",
+        "reasons": [],
+        "uncertain": [],
+        "newRules": [],
+        "gates": {
+          "keyboard": "VERIFIED_PASS",
+          "independentFunctional": "VERIFIED_PASS",
+          "functionalOutputUnchanged": true
+        },
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      },
+      "keyboard": "VERIFIED_PASS",
+      "functional": "VERIFIED_PASS",
+      "url": "http://127.0.0.1:4317/project.html?run=56a72234-ccfe-4c02-b6b3-897db6d0f245"
+    },
+    {
+      "label": "wrong-workspace",
+      "runId": "cc7af68a-ac2e-46cc-bf1d-04f48978a521",
+      "verification": {
+        "verdict": "VERIFIED_FAIL",
+        "reasons": [
+          "Functional regression baseline/replay failed or missing",
+          "Functional output changed"
+        ],
+        "uncertain": [],
+        "newRules": [],
+        "gates": {
+          "keyboard": "VERIFIED_PASS",
+          "independentFunctional": "VERIFIED_FAIL",
+          "functionalOutputUnchanged": false
+        },
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      },
+      "keyboard": "VERIFIED_PASS",
+      "functional": "VERIFIED_FAIL",
+      "url": "http://127.0.0.1:4317/project.html?run=cc7af68a-ac2e-46cc-bf1d-04f48978a521"
+    }
+  ],
+  "liveProof": {
+    "path": "benchmarks/component-css-followup/live-proof.tar.gz",
+    "sha256": "301d50c8936a33140023eb9c0e31716e8251103318ebca4a2fcad740aedd744c"
+  },
+  "final-rejectionProof": {
+    "path": "benchmarks/component-css-followup/final-rejection-proof.tar.gz",
+    "sha256": "d4b663334db104026bd4a46b772adc8a8d0c6a6698b5d1ccd39825c1db21a32f"
+  },
+  "modelPlansMatchRawResponses": true,
+  "componentOnlyEdits": true,
+  "finalModelRequest": "chatcmpl-fc88699796e66fac2bc60d424e0f123e"
+}

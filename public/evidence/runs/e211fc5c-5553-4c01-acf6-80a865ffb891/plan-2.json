@@ -1,0 +1,23 @@
+{
+  "root_cause": "The adjustDate function in pikaday.js adds days by adding milliseconds (UTC), which does not account for daylight saving time transitions. When crossing a DST boundary, adding 7 days worth of milliseconds can result in a local date that is off by one day, causing ArrowDown to land on 2026-10-29 instead of the expected 2026-10-30.",
+  "repair_strategy": "Replace the adjustDate function to perform calendar-day arithmetic by manipulating the date's year, month, and day fields. This ensures that adding 7 days moves the local date by exactly 7 calendar days regardless of DST changes. The while loop that skips disabled days (weekends) is also updated to use calendar-day increments.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "86adae7e6b934af216fc65b90e3e8b99c90263dd035acd47cc2b717640cd4b9a",
+      "before": "        adjustDate: function(sign, days) {\n\n            var day = this.getDate() || new Date();\n            var difference = parseInt(days)*24*60*60*1000;\n\n            var newDay;\n            if (sign === 'add') {\n                newDay = new Date(day.valueOf() + difference);\n            } else if (sign === 'subtract') {\n                newDay = new Date(day.valueOf() - difference);\n            }\n            // skip disabled days\n            var opts = this._o;\n            var maxIter = 366;\n            var found = false;\n            while (maxIter--) {\n                if (opts.minDate && newDay < opts.minDate) {\n                    break;\n                }\n                if (opts.maxDate && newDay > opts.maxDate) {\n                    break;\n                }\n                var disabled = false;\n                if (opts.disableWeekends && isWeekend(newDay)) {\n                    disabled = true;\n                }\n                if (opts.disableDayFn && opts.disableDayFn(newDay)) {\n                    disabled = true;\n                }\n                if (!disabled) {\n                    found = true;\n                    break;\n                }\n                // move one more day in the same direction\n                if (sign === 'add') {\n                    newDay = new Date(newDay.valueOf() + 24*60*60*1000);\n                } else {\n                    newDay = new Date(newDay.valueOf() - 24*60*60*1000);\n                }\n            }\n            if (!found) {\n                newDay = day;\n            }\n            this.setDate(newDay);\n        },",
+      "after": "        adjustDate: function(sign, days) {\n\n            var day = this.getDate() || new Date();\n            var newDay = new Date(day.getFullYear(), day.getMonth(), day.getDate() + (sign === 'add' ? days : -days));\n            // skip disabled days\n            var opts = this._o;\n            var maxIter = 366;\n            var found = false;\n            while (maxIter--) {\n                if (opts.minDate && newDay < opts.minDate) {\n                    break;\n                }\n                if (opts.maxDate && newDay > opts.maxDate) {\n                    break;\n                }\n                var disabled = false;\n                if (opts.disableWeekends && isWeekend(newDay)) {\n                    disabled = true;\n                }\n                if (opts.disableDayFn && opts.disableDayFn(newDay)) {\n                    disabled = true;\n                }\n                if (!disabled) {\n                    found = true;\n                    break;\n                }\n                // move one more day in the same direction\n                newDay = new Date(newDay.getFullYear(), newDay.getMonth(), newDay.getDate() + (sign === 'add' ? 1 : -1));\n            }\n            if (!found) {\n                newDay = day;\n            }\n            this.setDate(newDay);\n        },"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard navigation for date pickers will correctly move by weeks across DST boundaries, ensuring users can select dates predictably and consistently with WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Changing date arithmetic may affect other uses of adjustDate (e.g., single-day arrows). However, the new method is more correct for all cases.",
+    "Risk of off-by-one in other scenarios is low because the Date constructor handles month/year rollover."
+  ],
+  "verification_requirements": [
+    "Test ArrowDown on a date before DST end (e.g., 2026-10-22) results in 2026-10-30 (not 2026-10-29).",
+    "Test ArrowUp after DST end.",
+    "Test single-day arrows (ArrowLeft/Right) across DST boundaries.",
+    "Verify that weekend skipping still works correctly."
+  ]
+}

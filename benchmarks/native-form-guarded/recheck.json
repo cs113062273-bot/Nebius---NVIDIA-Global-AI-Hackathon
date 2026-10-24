@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-24T07:06:37.574Z",
+  "modelRun": "7746b726-e0f2-4bc0-90a9-7b9b47b73203",
+  "attempt": 1,
+  "inferenceCalls": 0,
+  "rechecks": {
+    "clear-shipping": {
+      "kind": "repair",
+      "run": "8ddb2160-2cbf-4960-b51a-a470e0386a3d",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "clear-billing": {
+      "kind": "repair",
+      "run": "b183ec79-9f35-43d3-ac1a-eac8185bc25f",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    }
+  }
+}

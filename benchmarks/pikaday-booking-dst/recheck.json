@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-24T07:14:34.556Z",
+  "modelRun": "cbb88e80-22b1-481b-a774-0d7dea9486f3",
+  "attempt": 2,
+  "inferenceCalls": 0,
+  "rechecks": {
+    "utc-forward": {
+      "kind": "repair",
+      "run": "38bb7c9f-7385-4170-ab7a-57d9ef79f1a6",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "utc-backward": {
+      "kind": "repair",
+      "run": "8572d4e8-fff9-47c9-92d2-ff6a9d00b181",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "london-forward": {
+      "kind": "repair",
+      "run": "83c2bc19-69dc-4c53-911d-da39dd7a1954",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "london-backward": {
+      "kind": "repair",
+      "run": "397c4bac-572a-4e0a-9ede-30c1e290e702",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "london-week-back": {
+      "kind": "preservation",
+      "keyboard": "VERIFIED_PASS",
+      "pointer": "VERIFIED_PASS",
+      "verdict": "VERIFIED_PASS"
+    },
+    "closed-range-boundary": {
+      "kind": "repair",
+      "run": "a18bb581-77a2-4f9b-84cc-33ef841243e9",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    }
+  }
+}

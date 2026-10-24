@@ -1,0 +1,22 @@
+{
+  "root_cause": "The autocomplete enhancement does not update the underlying select element when the user enters an unrecognized value and submits the form. The form's submit event listener only prevents default but does not synchronize the select elements with the autocomplete inputs, leaving the previously selected country codes intact.",
+  "repair_strategy": "Update the form's submit event listener to synchronize each enhanced select element with its corresponding autocomplete input. For each input, if its value matches an option's text, select that option; otherwise, select the empty option (value \"\"). This ensures that unrecognized or cleared entries result in an empty saved country while preserving valid selections made via keyboard or pointer.",
+  "edits": [
+    {
+      "path": "app.js",
+      "sha256": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489",
+      "before": "document.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());",
+      "after": "document.getElementById('preferences').addEventListener('submit', event => {\n    event.preventDefault();\n    ['shipping-country', 'billing-country'].forEach(id => {\n        const input = document.getElementById(id);\n        const select = document.getElementById(id + '-select');\n        if (input && select) {\n            const value = input.value;\n            let found = false;\n            for (const option of select.options) {\n                if ((option.textContent || option.innerText) === value) {\n                    option.selected = true;\n                    found = true;\n                    break;\n                }\n            }\n            if (!found) {\n                for (const option of select.options) {\n                    if (option.value === '') {\n                        option.selected = true;\n                        break;\n                    }\n                }\n            }\n        }\n    });\n});"
+    }
+  ],
+  "expected_accessibility_effect": "The form will correctly reflect the user's input, including clearing the saved country when the input is unrecognized or empty, while preserving keyboard and pointer selection behavior for valid options.",
+  "functional_risks": [
+    "The synchronization runs on form submit, which may not cover cases where the form is submitted programmatically without the submit event. However, the current UI only uses the save button (type=submit) and Enter key in the form, both triggering the submit event."
+  ],
+  "verification_requirements": [
+    "Test that typing an unrecognized country (e.g., \"Atlantis\") and submitting clears the saved country (empty string).",
+    "Test that selecting a valid country via keyboard (arrow keys + Enter) or pointer (click) still saves the correct country code.",
+    "Test that clearing the field (empty input) and submitting saves an empty value.",
+    "Test that partial matches confirmed on blur (e.g., \"Fra\" -> France) still save the matched country."
+  ]
+}

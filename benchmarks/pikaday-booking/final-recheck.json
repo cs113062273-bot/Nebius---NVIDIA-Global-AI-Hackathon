@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-21T07:39:26.186Z",
+  "sourceRun": "459ef2eb-1518-4c98-bfb7-139912015c20",
+  "sourceAttempt": 3,
+  "componentHash": "86adae7e6b934af216fc65b90e3e8b99c90263dd035acd47cc2b717640cd4b9a",
+  "inferenceCalls": 0,
+  "runs": {
+    "forward": {
+      "id": "374ef458-3f62-4074-8691-c476d43c863f",
+      "verification": {
+        "verdict": "VERIFIED_PASS",
+        "reasons": [],
+        "uncertain": [],
+        "newRules": [],
+        "gates": {
+          "keyboard": "VERIFIED_PASS",
+          "independentFunctional": "VERIFIED_PASS",
+          "functionalOutputUnchanged": true
+        },
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      }
+    },
+    "reverse": {
+      "id": "eae53cc0-c0d8-48e9-be14-cf64478b3f55",
+      "verification": {
+        "verdict": "VERIFIED_PASS",
+        "reasons": [],
+        "uncertain": [],
+        "newRules": [],
+        "gates": {
+          "keyboard": "VERIFIED_PASS",
+          "independentFunctional": "VERIFIED_PASS",
+          "functionalOutputUnchanged": true
+        },
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      }
+    }
+  }
+}

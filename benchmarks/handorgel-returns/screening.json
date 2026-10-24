@@ -1,0 +1,8 @@
+{
+  "screenedAt": "2026-10-21T06:09:12.976Z",
+  "repository": "https://github.com/oncode/handorgel",
+  "revision": "dff6da4a71b8f5ab9eacc401bfffd7b475ff40d9",
+  "reportedIssue": "https://github.com/oncode/handorgel/pull/34",
+  "outcome": "NOT_REPRODUCED",
+  "reason": "Both keyboard workflows and pointer controls passed using the unmodified shipped default stylesheet. No model request made. This healthy screening case is not counted as a repair or failure."
+}

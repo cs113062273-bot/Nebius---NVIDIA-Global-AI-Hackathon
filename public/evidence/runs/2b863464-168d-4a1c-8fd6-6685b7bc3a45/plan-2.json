@@ -1,0 +1,23 @@
+{
+  "root_cause": "The accessible-autocomplete widget does not update the underlying <select> element's value when the user enters an unrecognized or blank value and then moves away; it retains the previously selected value.",
+  "repair_strategy": "Modify the handleComponentBlur method in accessible-autocomplete.js to clear the associated select element's value when the current query does not match any option (i.e., validChoiceMade is false), ensuring that blurring the field with an invalid entry resets the select to empty.",
+  "edits": [
+    {
+      "path": "accessible-autocomplete.js",
+      "sha256": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+      "before": "o.handleComponentBlur=function(t){var e,n=this.state,r=n.options,o=n.query,i=n.selected;this.props.confirmOnBlur?(e=t.query||o,this.props.onConfirm(r[i])):e=o,this.setState({focused:null,menuOpen:t.menuOpen||!1,query:e,selected:null,validChoiceMade:this.isQueryAnOption(e,r)})},",
+      "after": "o.handleComponentBlur=function(t){var e=this.state,r=this.state.options,o=this.state.query,i=this.state.selected;var valid=this.isQueryAnOption(o,r);if(this.props.confirmOnBlur){var query=t.query||o;this.props.onConfirm(r[i]);}this.setState({focused:null,menuOpen:t.menuOpen||!1,query:o,selected:null,validChoiceMade:valid});if(!valid){this.props.selectElement.value=\"\"};},"
+    }
+  ],
+  "expected_accessibility_effect": "Users will see that entering an unrecognized country leaves the field showing the typed text but the underlying form value is empty, meeting the requirement that blank/unrecognized entries submit no saved country. Keyboard navigation and selection of valid options remain unaffected.",
+  "functional_risks": [
+    "Potential interference with custom onConfirm handlers that expect the select to retain previous value on blur.",
+    "Risk of inadvertently clearing select when a custom onConfirm is relied upon for other purposes.",
+    "Default behavior is preserved and custom handlers still receive the query value."
+  ],
+  "verification_requirements": [
+    "After applying the edit, the test journey should pass: typing \"Atlantis\" in shipping country and three spaces in billing country, then saving, results in empty values for both fields.",
+    "Selecting a valid option via arrow keys or mouse should still set the select's corresponding code.",
+    "Focus and blur events should continue to work as expected."
+  ]
+}

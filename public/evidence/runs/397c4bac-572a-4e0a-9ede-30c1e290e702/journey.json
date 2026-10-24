@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "id": "pikaday-london-left",
+  "title": "London: backward selection across the clock change skips the closed weekend",
+  "goal": "Weekends are closed. Arrow keys move by calendar days (ArrowLeft/Right one day, ArrowUp/Down one week) in the user time zone, including across daylight-saving changes, then skip closed days in the same direction. Preserve pointer selection and the other field.",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "timezone": "Europe/London",
+  "steps": [
+    {
+      "title": "Reach return date",
+      "action": {
+        "kind": "seek",
+        "selector": "#return",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Press ArrowLeft",
+      "action": {
+        "kind": "press",
+        "key": "ArrowLeft"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach Save",
+      "action": {
+        "kind": "seek",
+        "selector": "#save",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save booking dates",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-23"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-23"
+      ]
+    }
+  ],
+  "forbidden": []
+}

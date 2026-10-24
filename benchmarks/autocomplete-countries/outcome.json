@@ -1,0 +1,143 @@
+{
+  "problem": "An empty visible country field still submitted a stale saved country code.",
+  "audience": "Frontend developers integrating enhanced form controls.",
+  "issue": "https://github.com/alphagov/accessible-autocomplete/issues/777",
+  "repair": "Real Nemotron-authored consumer integration change in app.js; upstream bundle unmodified.",
+  "modelCalls": 3,
+  "applicationRejections": 2,
+  "modelRun": "62a2f33a-b1a1-4e29-8daa-f6b8250eac00",
+  "withheldRun": "b42ec9e7-692b-4d67-8d97-1630d555bc1f",
+  "shipping": {
+    "before": [
+      {
+        "assertion": {
+          "kind": "text",
+          "selector": "#receipt",
+          "value": "Shipping: none | Billing: de"
+        },
+        "pass": false,
+        "observed": "Shipping: gb | Billing: de"
+      },
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-shipping",
+          "value": ""
+        },
+        "pass": false,
+        "observed": "gb"
+      },
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-billing",
+          "value": "de"
+        },
+        "pass": true,
+        "observed": "de"
+      }
+    ],
+    "after": [
+      {
+        "assertion": {
+          "kind": "text",
+          "selector": "#receipt",
+          "value": "Shipping: none | Billing: de"
+        },
+        "pass": true,
+        "observed": "Shipping: none | Billing: de"
+      },
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-shipping",
+          "value": ""
+        },
+        "pass": true,
+        "observed": ""
+      },
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-billing",
+          "value": "de"
+        },
+        "pass": true,
+        "observed": "de"
+      }
+    ]
+  },
+  "withheldBilling": {
+    "before": [
+      {
+        "assertion": {
+          "kind": "text",
+          "selector": "#receipt",
+          "value": "Shipping: gb | Billing: none"
+        },
+        "pass": false,
+        "observed": "Shipping: gb | Billing: de"
+      },
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-shipping",
+          "value": "gb"
+        },
+        "pass": true,
+        "observed": "gb"
+      },
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-billing",
+          "value": ""
+        },
+        "pass": false,
+        "observed": "de"
+      }
+    ],
+    "after": [
+      {
+        "assertion": {
+          "kind": "text",
+          "selector": "#receipt",
+          "value": "Shipping: gb | Billing: none"
+        },
+        "pass": true,
+        "observed": "Shipping: gb | Billing: none"
+      },
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-shipping",
+          "value": "gb"
+        },
+        "pass": true,
+        "observed": "gb"
+      },
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-billing",
+          "value": ""
+        },
+        "pass": true,
+        "observed": ""
+      }
+    ]
+  },
+  "withheldScope": "Acceptance steps for clearing billing were committed before inference and omitted from the model task requirements. Both fields were visible in the source. Not a fully blind or production-user evaluation.",
+  "estimatedSponsorCreditUsd": 0.074495,
+  "costScope": "Token usage multiplied by recorded catalog pricing; estimate, not an invoice or account balance.",
+  "primaryUrl": "http://127.0.0.1:4317/project.html?run=62a2f33a-b1a1-4e29-8daa-f6b8250eac00&attempt=3",
+  "withheldUrl": "http://127.0.0.1:4317/project.html?run=b42ec9e7-692b-4d67-8d97-1630d555bc1f"
+}

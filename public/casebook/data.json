@@ -1,10 +1,161 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-20T11:45:36.266Z",
+  "generatedAt": "2026-10-21T00:06:47.848Z",
   "measuredAt": "2026-10-20T04:49:14.892Z",
   "recorded": true,
-  "liveInference": false,
+  "liveInference": true,
   "cases": [
+    {
+      "id": "live-repair",
+      "title": "Nemotron wrote the fix. The same task proved it.",
+      "kicker": "LIVE NVIDIA NEMOTRON REPAIR",
+      "impact": "The scanner reports zero violations, yet Enter opens a checkout dialog that keyboard focus never enters. A keyboard user cannot place the order.",
+      "explanation": "NVIDIA Nemotron on Nebius Token Factory read the failed journey and the source, then proposed this patch: Add focus management functions to openDialog (show dialog and focus field), closeDialog (hide dialog and focus trigger), and a keydown handler on the dialog to trap Tab/Shift+Tab cycling among the dialog's focusable elements (close button, field, action button) and handle Escape to close. Replace existing click handlers with these functions. Tabstitch applied it in a disposable copy and replayed the identical keyboard journey plus the pointer functional check.",
+      "images": {
+        "before": {
+          "src": "/casebook/live-repair-before.png",
+          "sha256": "b91918a7c922dfbb2d3bbabf6b0528b16640fd4313f114f0c29417df63456b33",
+          "checkpoint": "step-1",
+          "verdict": "VERIFIED_FAIL",
+          "focus": "#open",
+          "focusPath": [
+            "#open"
+          ],
+          "axe": {
+            "violations": 0,
+            "incomplete": 1
+          },
+          "failure": {
+            "step": 1,
+            "category": "REPLAY",
+            "message": "Expected state did not occur after action"
+          },
+          "assertions": [
+            {
+              "assertion": {
+                "kind": "focus",
+                "selector": "#field"
+              },
+              "pass": false,
+              "observed": false
+            },
+            {
+              "assertion": {
+                "kind": "ax",
+                "role": "dialog",
+                "name": "Place order"
+              },
+              "pass": true,
+              "observed": 1
+            }
+          ],
+          "functional": [
+            {
+              "assertion": {
+                "kind": "text",
+                "selector": "#receipt",
+                "value": "Order confirmed · Field bag · $84"
+              },
+              "pass": false,
+              "observed": ""
+            },
+            {
+              "assertion": {
+                "kind": "attribute",
+                "selector": "#receipt",
+                "name": "data-input",
+                "value": "judge@example.com"
+              },
+              "pass": false,
+              "observed": null
+            }
+          ]
+        },
+        "after": {
+          "src": "/casebook/live-repair-after.png",
+          "sha256": "8972ce3634ad4db3999e2ad8412323f07f31a54bff00f7807728a5abd0ae3bc1",
+          "checkpoint": "step-10",
+          "verdict": "VERIFIED_PASS",
+          "focus": "#open",
+          "focusPath": [
+            "#open",
+            "#field",
+            "#close",
+            "#action",
+            "#close",
+            "#open",
+            "#field",
+            "#action",
+            "#open"
+          ],
+          "axe": {
+            "violations": 0,
+            "incomplete": 0
+          },
+          "failure": null,
+          "assertions": [],
+          "functional": [
+            {
+              "assertion": {
+                "kind": "text",
+                "selector": "#receipt",
+                "value": "Order confirmed · Field bag · $84"
+              },
+              "pass": true,
+              "observed": "Order confirmed · Field bag · $84"
+            },
+            {
+              "assertion": {
+                "kind": "attribute",
+                "selector": "#receipt",
+                "name": "data-input",
+                "value": "judge@example.com"
+              },
+              "pass": true,
+              "observed": "judge@example.com"
+            }
+          ]
+        }
+      },
+      "provenance": {
+        "kind": "Synthetic application · live NVIDIA Nemotron proposal",
+        "isAI": true,
+        "recorded": true,
+        "runId": "f79fedbc-405f-4f47-9297-1ece840b5d09",
+        "recordedAt": "2026-10-21T00:03:21.701Z",
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "requestId": "chatcmpl-a255b83371745f71e18ee94b246ec51b",
+        "latencyMs": 12971,
+        "usage": {
+          "completion_tokens": 4222,
+          "prompt_tokens": 2381,
+          "total_tokens": 6603,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 3065,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 2381
+        },
+        "evidence": "benchmarks/live/f79fedbc-405f-4f47-9297-1ece840b5d09"
+      },
+      "patch": "--- a/app.js\n+++ b/app.js\n@@ -1,14 +1,51 @@\n-const field = document.querySelector('#field');\n-const action = document.querySelector('#action');\n-const receipt = document.querySelector('#receipt');\n-const panel = document.querySelector('#panel');\n-const trigger = document.querySelector('#open');\n-trigger.addEventListener('click', () => { panel.hidden = false; });\n-document.querySelector('#close').addEventListener('click', () => { panel.hidden = true; });\n-action.addEventListener('click', () => {\n-  if (!field.value.trim()) { field.setAttribute('aria-invalid', 'true'); field.focus(); return; }\n-  receipt.textContent = \"Order confirmed · Field bag · $84\";\n-  receipt.setAttribute('data-input', field.value);\n-  panel.hidden = true;\n-});\n-\n+const field = document.querySelector('#field');\n+const action = document.querySelector('#action');\n+const receipt = document.querySelector('#receipt');\n+const panel = document.querySelector('#panel');\n+const trigger = document.querySelector('#open');\n+const close = document.querySelector('#close');\n+\n+function openDialog() {\n+  panel.hidden = false;\n+  field.focus();\n+}\n+\n+function closeDialog() {\n+  panel.hidden = true;\n+  trigger.focus();\n+}\n+\n+function handleKeyDown(e) {\n+  if (e.key === 'Escape') {\n+    closeDialog();\n+    return;\n+  }\n+  if (e.key === 'Tab') {\n+    const focusables = [close, field, action];\n+    const active = document.activeElement;\n+    const idx = focusables.indexOf(active);\n+    if (idx === -1) return;\n+    if (e.shiftKey) {\n+      if (idx === 0) {\n+        e.preventDefault();\n+        focusables[focusables.length - 1].focus();\n+      }\n+    } else {\n+      if (idx === focusables.length - 1) {\n+        e.preventDefault();\n+        focusables[0].focus();\n+      }\n+    }\n+  }\n+}\n+\n+trigger.addEventListener('click', openDialog);\n+close.addEventListener('click', closeDialog);\n+action.addEventListener('click', () => {\n+  if (!field.value.trim()) { field.setAttribute('aria-invalid', 'true'); field.focus(); return; }\n+  receipt.textContent = \"Order confirmed · Field bag · $84\";\n+  receipt.setAttribute('data-input', field.value);\n+  closeDialog();\n+});\n+panel.addEventListener('keydown', handleKeyDown);\n+\n",
+      "gate": {
+        "verdict": "VERIFIED_PASS",
+        "reasons": [],
+        "uncertain": [],
+        "newRules": [],
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      },
+      "journeyHash": "213e0ce55b0ddab654d00bec983181a748f72e1109c16a35889c9a0e9f5ee5db"
+    },
     {
       "id": "scanner-blindspot",
       "title": "The scan is clear. The person is stuck.",

@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "pikaday-return-keyboard",
+  "title": "Keyboard backward selection must skip closed weekends",
+  "goal": "Weekends are unavailable. Arrow navigation must skip them and preserve the other date. Pointer selection of an available weekday must continue working.",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach return date",
+      "action": {
+        "kind": "seek",
+        "selector": "#return",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move back to the next available date, skipping closed weekends",
+      "action": {
+        "kind": "press",
+        "key": "ArrowLeft"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach Save",
+      "action": {
+        "kind": "seek",
+        "selector": "#save",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save booking dates",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-23"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-23"
+      ]
+    }
+  ],
+  "forbidden": []
+}

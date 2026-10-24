@@ -1,0 +1,19 @@
+{
+  "completedAt": "2026-10-21T07:19:14.526Z",
+  "modelRun": "5b0c2db0-6309-435d-8362-ca223ff2f672",
+  "verification": {
+    "verdict": "INCONCLUSIVE",
+    "reasons": [
+      "PROPOSAL: Focused evidence exceeds inference budget; localize more narrowly"
+    ]
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Focused evidence exceeds inference budget; localize more narrowly"
+    }
+  ],
+  "transferRun": null
+}

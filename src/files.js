@@ -22,19 +22,19 @@ export async function contained(root, relative, { existing = true } = {}) {
   }
   return resolved;
 }
-export async function listFiles(root, prefix = '') {
+export async function listFiles(root, prefix = '', limit = 2000) {
   const files = [];
   for (const entry of await fs.readdir(path.join(root, prefix), { withFileTypes: true })) {
     if (entry.isSymbolicLink()) throw new Error('Symbolic links forbidden');
     const rel = prefix ? prefix + '/' + entry.name : entry.name;
-    if (entry.isDirectory()) files.push(...await listFiles(root, rel));
+    if (entry.isDirectory()) files.push(...await listFiles(root, rel, limit));
     else if (entry.isFile()) files.push(rel);
-    if (files.length > 2000) throw new Error('File count limit');
+    if (files.length > limit) throw new Error('File count limit');
   }
   return files.sort();
 }
-export async function hashTree(root, exclude = []) {
+export async function hashTree(root, exclude = [], limit = 2000) {
   const hashes = {};
-  for (const file of await listFiles(root)) if (!exclude.includes(file)) hashes[file] = digest(await fs.readFile(await contained(root, file)));
+  for (const file of await listFiles(root, '', limit)) if (!exclude.includes(file)) hashes[file] = digest(await fs.readFile(await contained(root, file)));
   return hashes;
 }

@@ -1,0 +1,15 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Functional regression baseline/replay failed or missing",
+    "Functional output changed"
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_FAIL",
+    "functionalOutputUnchanged": false
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

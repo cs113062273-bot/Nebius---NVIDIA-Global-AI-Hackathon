@@ -1,0 +1,119 @@
+{
+  "tool": "Tabstitch",
+  "version": "0.1.0",
+  "node": "v24.14.0",
+  "platform": "win32",
+  "mode": "nebius",
+  "model": {
+    "provider": "Nebius Token Factory",
+    "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+    "requestId": "chatcmpl-1acd76b94fc1b0257eb50f55353ac820",
+    "promptHash": "b3efe759d4bbfb8ed98af601742885bc95f9855fac3ce9a8e7755dd923a60869",
+    "schemaVersion": 2,
+    "structuredOutput": false,
+    "latencyMs": 10884,
+    "usage": {
+      "completion_tokens": 3791,
+      "prompt_tokens": 4450,
+      "total_tokens": 8241,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2803,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 4450
+    },
+    "pricing": {
+      "prompt": "0.000001",
+      "completion": "0.000003",
+      "image": "0",
+      "price_per_video_second": "0",
+      "request": "0",
+      "price_per_minute": "0",
+      "input_cache_read": null
+    },
+    "reservedCreditUsd": 0.05405,
+    "budgetScope": "real-case-20261021",
+    "cacheHit": false,
+    "retries": 0,
+    "attemptedCompletions": 1
+  },
+  "journeyHash": "b84dda8ecbcf22ed40f789614a79ddf266c6e96c0311e5bed08115de82cd2e74",
+  "sourceHashes": {
+    "LICENSE": "1b306f2678ac7b3cd933ce08b2096c9ed6c42ed23e0a1b6116bf72febe01637c",
+    "index.html": "be27c7e2735cefa906ed79979311c1471ea497cfbd7dfdde0d0de0475852ff3b",
+    "src/a11y-dialog.js": "9dbd1daa87fcac8518db48e4cbb4b0eeea7c30c92a6171ff59cbc895938aaf4c",
+    "src/a11y-dialog.ts": "4451a44bcda3dbdc5e31ce4e6e058e6bab71d86d4ee8dc410bcb3c4398fa14cc",
+    "src/dom-utils.js": "b61f2298c180ce08cf5f1669fd68b52d3d5c11f11ffec05380dd87cbce5c2fd5",
+    "src/dom-utils.ts": "2d72fcf848623977a14688dce4171a564ae89893e342648d4031e8f4106e3cfb",
+    "src/focusable-selectors.js": "81543859737209c40bf92538005159b129d21bc0c2db24c85c17852f90f2eec9",
+    "src/index.js": "a5ea03dfa2b91ef17d10fbc28ec5c28a1d225531e6e3947a1cc25d9d360612bb",
+    "src/index.ts": "f34d26f8b6e8125f40d47754e48c0d5e8dfad8925e33581d745b3c159ba2521e",
+    "upstream-dependency/LICENSE": "f9bb23cef8bc55babc5f0590d4a6e4f7895bd0e20b7d26e56e528c25dc83057a",
+    "upstream-dependency/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": true,
+      "category": null,
+      "verification": {
+        "verdict": "VERIFIED_PASS",
+        "reasons": [],
+        "uncertain": [],
+        "newRules": [],
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      },
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "requestId": "chatcmpl-1acd76b94fc1b0257eb50f55353ac820",
+        "promptHash": "b3efe759d4bbfb8ed98af601742885bc95f9855fac3ce9a8e7755dd923a60869",
+        "schemaVersion": 2,
+        "structuredOutput": false,
+        "latencyMs": 10884,
+        "usage": {
+          "completion_tokens": 3791,
+          "prompt_tokens": 4450,
+          "total_tokens": 8241,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 2803,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 4450
+        },
+        "pricing": {
+          "prompt": "0.000001",
+          "completion": "0.000003",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0",
+          "input_cache_read": null
+        },
+        "reservedCreditUsd": 0.05405,
+        "budgetScope": "real-case-20261021",
+        "cacheHit": false,
+        "retries": 0,
+        "attemptedCompletions": 1
+      }
+    }
+  ],
+  "revision": "uncommitted-worktree",
+  "createdAt": "2026-10-21T00:36:33.766Z"
+}

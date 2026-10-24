@@ -1,0 +1,144 @@
+{
+  "runId": "2d7de911-90df-47ae-a9dd-4e0a36d2c206",
+  "model": {
+    "provider": "Nebius Token Factory",
+    "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+    "requestId": "chatcmpl-fc88699796e66fac2bc60d424e0f123e",
+    "promptHash": "0f1f1859aaf7dde202a03c0014d28dd69de8219b3819bc2e7f56f74e526242d9",
+    "schemaVersion": 2,
+    "structuredOutput": false,
+    "latencyMs": 15203,
+    "usage": {
+      "completion_tokens": 3045,
+      "prompt_tokens": 6681,
+      "total_tokens": 9726,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2391,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 6681
+    },
+    "pricing": {
+      "prompt": "0.000001",
+      "completion": "0.000003",
+      "image": "0",
+      "price_per_video_second": "0",
+      "request": "0",
+      "price_per_minute": "0",
+      "input_cache_read": null
+    },
+    "reservedCreditUsd": 0.060002,
+    "budgetScope": "desktop-quality-20261021",
+    "cacheHit": false,
+    "retries": 0,
+    "attemptedCompletions": 1,
+    "responseFile": "response-05b36066b5a93d6b55397fce5ca1ac1d7bee93369f993c17c58e375b7e71f84d-8.json",
+    "requestFile": "request-05b36066b5a93d6b55397fce5ca1ac1d7bee93369f993c17c58e375b7e71f84d-8.json"
+  },
+  "verification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": true,
+      "verification": {
+        "verdict": "VERIFIED_PASS",
+        "reasons": [],
+        "uncertain": [],
+        "newRules": [],
+        "gates": {
+          "keyboard": "VERIFIED_PASS",
+          "independentFunctional": "VERIFIED_PASS",
+          "functionalOutputUnchanged": true
+        },
+        "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+      },
+      "plan": {
+        "root_cause": "The MicroModal library's getFocusableNodes() method only filters out elements with the 'hidden' attribute or inside a '[hidden]' ancestor, but does not exclude elements hidden via CSS display:none. The 'Try again' button (#retry) inside .optional-retry {display:none} remains in the focusable nodes array, making it the last focusable element. When Shift+Tab is pressed from the first element (#email), focus attempts to move to #retry (index 3), but since it's display:none, focus stays on #email instead of wrapping to #close (index 2).",
+        "repair_strategy": "Modify getFocusableNodes() in micromodal.js to additionally filter out elements that have zero rendered dimensions (width/height 0), which excludes CSS display:none elements like #retry while preserving all visibly rendered dialog controls.",
+        "edits": [
+          {
+            "path": "micromodal.js",
+            "sha256": "9c7626d051e145d64057073c98fd94c49ca4a23257c277ba4fddafdb2279f4e9",
+            "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array.from(nodes).filter(node => !node.closest('[hidden]') && !node.hasAttribute('hidden'))\n    }",
+            "after": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array.from(nodes).filter(node => {\n        if (node.closest('[hidden]') || node.hasAttribute('hidden')) return false\n        const rect = node.getBoundingClientRect()\n        return rect.width > 0 || rect.height > 0\n      })\n    }"
+          }
+        ],
+        "expected_accessibility_effect": "Restores correct bidirectional Tab/Shift+Tab focus cycling through only visibly rendered dialog controls (#email → #confirm → #close → #email), preserving the fixed Cancel button in the tab order and preventing focus from escaping the modal.",
+        "functional_risks": [
+          "Elements intentionally sized to 0x0 but focusable (rare) would be excluded",
+          "Computed layout may briefly report 0 during animations; however dialog is static when focus trapping runs"
+        ],
+        "verification_requirements": [
+          "Shift+Tab from #email moves focus to #close (step 3 passes)",
+          "Tab from #close moves focus to #email (step 6 passes)",
+          "Full Tab cycle: #email → #confirm → #close → #email (steps 4-7 pass)",
+          "Enter on #confirm closes dialog, shows receipt, returns focus to #open (step 9 passes)",
+          "All functional invariants (receipt text, data attributes, visibility) hold"
+        ]
+      },
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "requestId": "chatcmpl-fc88699796e66fac2bc60d424e0f123e",
+        "promptHash": "0f1f1859aaf7dde202a03c0014d28dd69de8219b3819bc2e7f56f74e526242d9",
+        "schemaVersion": 2,
+        "structuredOutput": false,
+        "latencyMs": 15203,
+        "usage": {
+          "completion_tokens": 3045,
+          "prompt_tokens": 6681,
+          "total_tokens": 9726,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 2391,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 6681
+        },
+        "pricing": {
+          "prompt": "0.000001",
+          "completion": "0.000003",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0",
+          "input_cache_read": null
+        },
+        "reservedCreditUsd": 0.060002,
+        "budgetScope": "desktop-quality-20261021",
+        "cacheHit": false,
+        "retries": 0,
+        "attemptedCompletions": 1,
+        "responseFile": "response-05b36066b5a93d6b55397fce5ca1ac1d7bee93369f993c17c58e375b7e71f84d-8.json",
+        "requestFile": "request-05b36066b5a93d6b55397fce5ca1ac1d7bee93369f993c17c58e375b7e71f84d-8.json"
+      }
+    }
+  ],
+  "url": "http://127.0.0.1:4317/project.html?run=2d7de911-90df-47ae-a9dd-4e0a36d2c206"
+}

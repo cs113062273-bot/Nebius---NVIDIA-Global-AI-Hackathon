@@ -1,0 +1,59 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..ab24a97 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -899,18 +899,46 @@
+         },
+ 
+         adjustDate: function(sign, days) {
+-
+             var day = this.getDate() || new Date();
+-            var difference = parseInt(days)*24*60*60*1000;
+-
+-            var newDay;
+-
++            var newDay = new Date(day.getTime());
+             if (sign === 'add') {
+-                newDay = new Date(day.valueOf() + difference);
++                newDay.setDate(newDay.getDate() + days);
+             } else if (sign === 'subtract') {
+-                newDay = new Date(day.valueOf() - difference);
++                newDay.setDate(newDay.getDate() - days);
++            }
++            // skip disabled days
++            var opts = this._o;
++            var maxIter = 366;
++            var found = false;
++            while (maxIter--) {
++                if (opts.minDate && newDay < opts.minDate) {
++                    break;
++                }
++                if (opts.maxDate && newDay > opts.maxDate) {
++                    break;
++                }
++                var disabled = false;
++                if (opts.disableWeekends) {
++                    var w = newDay.getDay();
++                    if (w === 0 || w === 6) disabled = true;
++                }
++                if (opts.disableDayFn && opts.disableDayFn(newDay)) {
++                    disabled = true;
++                }
++                if (!disabled) {
++                    found = true;
++                    break;
++                }
++                // move one more day in the same direction
++                if (sign === 'add') {
++                    newDay.setDate(newDay.getDate() + 1);
++                } else {
++                    newDay.setDate(newDay.getDate() - 1);
++                }
++            }
++            if (!found) {
++                newDay = day;
+             }
+-
+             this.setDate(newDay);
+         },
+ 

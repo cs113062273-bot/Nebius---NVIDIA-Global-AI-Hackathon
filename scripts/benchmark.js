@@ -11,7 +11,7 @@ import { focusedBenchmark } from './focused-benchmark.js';
 
 const root=path.join(ROOT,'artifacts','benchmark',new Date().toISOString().replaceAll(':','-'));
 const runs=[];const reference=[];
-for(const fixture of fixtures){const run=await runRepair({fixture:fixture.id,artifactRoot:root,mode:'reference'});runs.push(run);reference.push({fixture:fixture.id,runId:run.id,before:run.before?.verdict,after:run.after?.verdict,verdict:run.verification?.verdict,elapsedMs:run.elapsedMs,category:run.before?.failure?.category});console.log(fixture.id,run.verification?.verdict,run.elapsedMs+'ms');}
+for(const fixture of fixtures.filter(f=>f.kind!=='historical')){const run=await runRepair({fixture:fixture.id,artifactRoot:root,mode:'reference'});runs.push(run);reference.push({fixture:fixture.id,runId:run.id,before:run.before?.verdict,after:run.after?.verdict,verdict:run.verification?.verdict,elapsedMs:run.elapsedMs,category:run.before?.failure?.category});console.log(fixture.id,run.verification?.verdict,run.elapsedMs+'ms');}
 const sourceNegatives=[];
 for(const type of ['cosmetic-only','functional-regression']){
   const run=await runRepair({fixture:'account',artifactRoot:root,mode:'provided',maxAttempts:1,planProvider:async({candidates})=>{

@@ -1,0 +1,64 @@
+{
+  "id": "9557d06e-87f7-464a-8f9f-16c60b8e2347",
+  "model": {
+    "provider": "Nebius Token Factory",
+    "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+    "requestId": "chatcmpl-b8ef6b653cc33793149c022b831d1c2d",
+    "promptHash": "1c76455bb63f8a07b1a3bf0122cf2c7dfdc2b256ceb8ea917a4f225f04daa912",
+    "schemaVersion": 2,
+    "structuredOutput": false,
+    "latencyMs": 7096,
+    "usage": {
+      "completion_tokens": 2704,
+      "prompt_tokens": 3129,
+      "total_tokens": 5833,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2252,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 3129
+    },
+    "pricing": {
+      "prompt": "0.000001",
+      "completion": "0.000003",
+      "image": "0",
+      "price_per_video_second": "0",
+      "request": "0",
+      "price_per_minute": "0",
+      "input_cache_read": null
+    },
+    "reservedCreditUsd": 0.047805,
+    "budgetScope": "desktop-quality-20261021",
+    "cacheHit": false,
+    "retries": 0,
+    "attemptedCompletions": 1,
+    "responseFile": "response-23c225856eb76dda95908a5bc8254f91897e9c1c766c2d26812b85dbe73991df-5.json"
+  },
+  "verification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "category": null,
+      "verified": true,
+      "patchValidation": {
+        "gitApplyCheck": true,
+        "candidateBytesMatch": true,
+        "contextLines": 3
+      }
+    }
+  ]
+}

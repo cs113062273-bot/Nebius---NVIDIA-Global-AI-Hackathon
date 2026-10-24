@@ -1,0 +1,11 @@
+{
+  "errors": [],
+  "violations": [],
+  "verified": [
+    "two-attempt timeline",
+    "attempt selection",
+    "checkpoint selection",
+    "pointer replay",
+    "isolated keyboard-pass functional-fail verdict"
+  ]
+}

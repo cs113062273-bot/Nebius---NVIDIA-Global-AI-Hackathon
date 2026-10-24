@@ -1,0 +1,11 @@
+{
+  "fixedAt": "2026-10-21T04:50:17.229Z",
+  "sourceHashes": {
+    "app.js": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b",
+    "index.html": "5557fbe19d19e2e1ee6f3c19e06e09977fb3ff9b7c676769f979c52b3730f884",
+    "micromodal.js": "9c7626d051e145d64057073c98fd94c49ca4a23257c277ba4fddafdb2279f4e9",
+    "style.css": "8c7f5b6c5c6496f9a5c4ee9f4a81162a80a8702532db600a61066bf74e0a3f82"
+  },
+  "taskHash": "6e9a37e7988924c03c39c1254eee75b8f0c1cb0d45a9e743b7f5bc956bb26abc",
+  "provenance": "CSS-only hidden consumer variation of the original real component defect. Component source is byte-identical to the actual second model candidate from run 99e589ff-42bc-4bd0-b9f9-0b66aa1432db; no human component patch. Same task; neither task nor source will be changed in response to the follow-up inference."
+}

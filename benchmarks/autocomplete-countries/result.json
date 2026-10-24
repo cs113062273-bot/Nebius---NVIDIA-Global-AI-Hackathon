@@ -1,0 +1,109 @@
+{
+  "completedAt": "2026-10-21T06:13:20.280Z",
+  "modelRun": "62a2f33a-b1a1-4e29-8daa-f6b8250eac00",
+  "verification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "failure": "Patch preimage must match exactly once",
+      "requestId": "chatcmpl-ef1191c2999a0122186c0981b364cb0e",
+      "usage": {
+        "completion_tokens": 4471,
+        "prompt_tokens": 10609,
+        "total_tokens": 15080,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3650,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10609
+      }
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "failure": "Patch preimage must match exactly once",
+      "requestId": "chatcmpl-8643d0b79773130656df3c3d70b47ff6",
+      "usage": {
+        "completion_tokens": 5043,
+        "prompt_tokens": 11436,
+        "total_tokens": 16479,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4222,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 11436
+      }
+    },
+    {
+      "attempt": 3,
+      "verified": true,
+      "requestId": "chatcmpl-77cfbe60405a45e889bd131eb627b6f8",
+      "usage": {
+        "completion_tokens": 3880,
+        "prompt_tokens": 12268,
+        "total_tokens": 16148,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3313,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 12268
+      },
+      "changes": [
+        {
+          "path": "app.js",
+          "beforeHash": "1739df2162a63417ea4d7f7240bbb9efde11c6f48ba309469864cd158aed51be",
+          "afterHash": "86fbd4920593caf9b69cb5b8b99b9e5ace111a19539dae5c0327da44b8f1670f"
+        }
+      ]
+    }
+  ],
+  "withheldRun": "b42ec9e7-692b-4d67-8d97-1630d555bc1f",
+  "withheldVerification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  }
+}

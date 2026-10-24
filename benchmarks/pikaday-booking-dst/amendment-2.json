@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-24T07:09:43.959Z",
+  "beforeFirstInference": true,
+  "changedFiles": [
+    "src/engine.js",
+    "src/verifier.js",
+    "src/project.js",
+    "src/server.js"
+  ],
+  "change": "Optional regression guards were added to the repair engine and verifier. This case declares no guards; a guard-less run executes the same journeys and gates as before.",
+  "sourceAndTasksUnchanged": true,
+  "implementation": {
+    "src/engine.js": "502b77571e756e299f2975aaae328ffd7f32a2baa16094e2dfc6e2ab1d0dce15",
+    "src/nebius.js": "f6cd97a51bd20974fb32c1116a668cddbca09e336b7fbee511eaf2ae3692bb08",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  }
+}

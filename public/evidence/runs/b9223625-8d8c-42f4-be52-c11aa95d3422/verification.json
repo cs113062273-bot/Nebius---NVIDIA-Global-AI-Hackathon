@@ -1,0 +1,19 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Independent functional candidate: failed · #preferences shipping_country: expected [\"fr\"], observed [\"\"]",
+    "Functional output changed",
+    "Regression guard \"Guard · a partial match confirmed on blur still saves France\": failed · #preferences shipping_country: expected [\"fr\"], observed [\"\"]",
+    "Regression guard \"Guard · the plain pickup-city autocomplete keeps working\": failed · #preferences shipping_country: expected [\"gb\"], observed [\"\"]",
+    "Regression guard \"Guard · saving without editing keeps both saved countries\": failed · #preferences shipping_country: expected [\"gb\"], observed [\"\"]"
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_FAIL",
+    "functionalOutputUnchanged": false,
+    "regressionGuards": "0/3"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

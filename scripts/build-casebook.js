@@ -5,7 +5,7 @@ import { readJson,json,contained } from '../src/files.js';
 import { digest } from '../src/schema.js';
 
 const measured=await readJson(path.join(ROOT,'benchmarks','results.json'));
-const benchmarkRoot=await contained(ROOT,measured.artifactRoot.replaceAll('\\','/'));
+const benchmarkRoot=await contained(ROOT,measured.artifactRoot.replaceAll('\\','/')).catch(()=>null);
 const out=path.join(ROOT,'public','casebook');await fs.mkdir(out,{recursive:true});
 const cases=[];
 async function add({id,title,kicker,impact,explanation,before,after,beforeRoot,afterRoot,provenance,patch,gate}) {
@@ -20,6 +20,21 @@ async function add({id,title,kicker,impact,explanation,before,after,beforeRoot,a
   }
   cases.push({id,title,kicker,impact,explanation,images,provenance,patch,gate,journeyHash:before.journeyHash});
 }
+const latestLive=await readJson(path.join(ROOT,'benchmarks','live-status.json'));
+const checkoutRecording=await readJson(path.join(ROOT,'public','recordings','checkout','data.json')).catch(()=>null);
+const live=latestLive.fixture==='checkout'?latestLive:checkoutRecording?{status:'VERIFIED_PASS',runId:checkoutRecording.runId,evidence:'benchmarks/live/'+checkoutRecording.runId}:latestLive;
+if(live.status==='VERIFIED_PASS'&&live.runId){
+  const liveRoot=path.join(ROOT,'artifacts','runs',live.runId),lr=await readJson(path.join(liveRoot,'run.json'));
+  if(lr.verification?.verdict!=='VERIFIED_PASS'||lr.model?.cacheHit!==false)throw new Error('Live case must be an uncached, verified Nemotron run');
+  const plan=await readJson(path.join(liveRoot,'plan-1.json'));
+  await add({id:'live-repair',title:'Nemotron wrote the fix. The same task proved it.',kicker:'LIVE NVIDIA NEMOTRON REPAIR',
+    impact:'The scanner reports zero violations, yet Enter opens a checkout dialog that keyboard focus never enters. A keyboard user cannot place the order.',
+    explanation:'NVIDIA Nemotron on Nebius Token Factory read the failed journey and the source, then proposed this patch: '+plan.repair_strategy+' Tabstitch applied it in a disposable copy and replayed the identical keyboard journey plus the pointer functional check.',
+    before:lr.before,after:lr.after,beforeRoot:path.join(liveRoot,'before'),afterRoot:path.join(liveRoot,lr.afterDir),
+    provenance:{kind:'Synthetic application · live NVIDIA Nemotron proposal',isAI:true,recorded:true,runId:lr.id,recordedAt:lr.completedAt,model:lr.model.model,requestId:lr.model.requestId,latencyMs:lr.model.latencyMs,usage:lr.model.usage,evidence:live.evidence},
+    patch:await fs.readFile(path.join(liveRoot,'diff-1.patch'),'utf8'),gate:lr.verification});
+}
+if(benchmarkRoot && await fs.access(path.join(ROOT,'artifacts','historical')).then(()=>true,()=>false)) {
 const positive=measured.reference.rows.find(r=>r.fixture==='account'&&r.verdict==='VERIFIED_PASS');
 if(!positive)throw new Error('No executed account evidence available');
 const positiveRoot=path.join(benchmarkRoot,positive.runId),run=await readJson(path.join(positiveRoot,'run.json'));
@@ -49,5 +64,9 @@ await add({id:'real-focus-loss',title:'The dialog closes. Focus is left behind.'
   provenance:{kind:'Historical defect · published human repair',isAI:false,recorded:true,source:'KittyGiraudel/a11y-dialog',url:historical.provenance.fix,revisions:historical.provenance.revisions,license:'MIT; source excerpts retain upstream attribution',sourceHashes:historical.provenance.sourceHashes},
   patch:'BEFORE\n'+await context('before')+'\n\nAFTER\n'+await context('after'),
   gate:{verdict:historical.before==='VERIFIED_FAIL'&&historical.after==='VERIFIED_PASS'?'VERIFIED_PASS':'INCONCLUSIVE',scope:'Historical failure and human-fix task replay only. No autonomous repair or full regression claim.'}});
-await json(path.join(out,'data.json'),{version:1,generatedAt:new Date().toISOString(),measuredAt:measured.at,recorded:true,liveInference:false,cases});
+} else {
+  // Source artifacts for the earlier recordings live on the machine that measured them; keep their published entries unchanged.
+  const previous=await readJson(path.join(out,'data.json'));cases.push(...previous.cases.filter(c=>c.id!=='live-repair'));
+}
+await json(path.join(out,'data.json'),{version:1,generatedAt:new Date().toISOString(),measuredAt:measured.at,recorded:true,liveInference:cases.some(c=>c.provenance.isAI),cases});
 console.log(`Published ${cases.length} actual recorded case studies into the local workbench. No inference or new test suite.`);

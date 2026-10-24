@@ -1,0 +1,256 @@
+{
+  "completedAt": "2026-10-21T04:45:58.145Z",
+  "provenance": {
+    "repository": "https://github.com/micromodal/Micromodal",
+    "issue": "https://github.com/micromodal/Micromodal/issues/295",
+    "brokenRevision": "777dbcbeaf6314da0a3669f2b5ed9cdd66e6fc8a",
+    "upstreamFix": "70dfd4320d9e0e535be432f57c698c75e230d0b3",
+    "upstreamPath": "lib/src/index.js",
+    "sourceHash": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+    "sourceUnmodified": true,
+    "scope": "Pinned published historical component defect with an author-created booking consumer and fixed-position Cancel coverage. Nonblind reconstruction, not a newly discovered upstream defect or production customer result. The model receives neither upstream patch nor fixed source."
+  },
+  "taskHash": "6e9a37e7988924c03c39c1254eee75b8f0c1cb0d45a9e743b7f5bc956bb26abc",
+  "live": {
+    "runId": "99e589ff-42bc-4bd0-b9f9-0b66aa1432db",
+    "model": {
+      "provider": "Nebius Token Factory",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-2494f341c10cde2d0dc04eb2b2dd5257",
+      "promptHash": "023e4804c1d922323bac463b8cc1b7a404e5aadb18f551c1ffc4baad9d4c3474",
+      "schemaVersion": 2,
+      "structuredOutput": false,
+      "latencyMs": 9913,
+      "usage": {
+        "completion_tokens": 3494,
+        "prompt_tokens": 6410,
+        "total_tokens": 9904,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2970,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6410
+      },
+      "pricing": {
+        "prompt": "0.000001",
+        "completion": "0.000003",
+        "image": "0",
+        "price_per_video_second": "0",
+        "request": "0",
+        "price_per_minute": "0",
+        "input_cache_read": null
+      },
+      "reservedCreditUsd": 0.060019,
+      "budgetScope": "desktop-quality-20261021",
+      "cacheHit": false,
+      "retries": 0,
+      "attemptedCompletions": 1,
+      "responseFile": "response-7279662234714c5dc578fc030bb8fddd2ba1eb346677d8b33f4a181681c6bef2-7.json",
+      "requestFile": "request-7279662234714c5dc578fc030bb8fddd2ba1eb346677d8b33f4a181681c6bef2-7.json"
+    },
+    "verification": {
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "uncertain": [],
+      "newRules": [],
+      "gates": {
+        "keyboard": "VERIFIED_PASS",
+        "independentFunctional": "VERIFIED_PASS",
+        "functionalOutputUnchanged": true
+      },
+      "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+    },
+    "attempts": [
+      {
+        "attempt": 1,
+        "verified": false,
+        "category": "VERIFICATION",
+        "verification": {
+          "verdict": "VERIFIED_FAIL",
+          "reasons": [
+            "Exact journey did not complete after repair",
+            "Task evidence is missing or contradicts the verdict"
+          ],
+          "uncertain": [],
+          "newRules": [],
+          "gates": {
+            "keyboard": "VERIFIED_FAIL",
+            "independentFunctional": "VERIFIED_PASS",
+            "functionalOutputUnchanged": true
+          },
+          "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+        },
+        "provenance": {
+          "provider": "Nebius Token Factory",
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "requestId": "chatcmpl-d1a9fd999c69b8c0d7e5419eabc86a6d",
+          "promptHash": "09a7fa959fc4e87836666703b68629e4bf6ab00ed6b90207ce9ccd38156c69d3",
+          "schemaVersion": 2,
+          "structuredOutput": false,
+          "latencyMs": 15745,
+          "usage": {
+            "completion_tokens": 5856,
+            "prompt_tokens": 6638,
+            "total_tokens": 12494,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": null,
+              "reasoning_tokens": 5352,
+              "rejected_prediction_tokens": null
+            },
+            "prompt_tokens_details": {
+              "audio_tokens": null,
+              "cached_tokens": 0,
+              "multimodal_tokens": null
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 6638
+          },
+          "pricing": {
+            "prompt": "0.000001",
+            "completion": "0.000003",
+            "image": "0",
+            "price_per_video_second": "0",
+            "request": "0",
+            "price_per_minute": "0",
+            "input_cache_read": null
+          },
+          "reservedCreditUsd": 0.059875000000000005,
+          "budgetScope": "desktop-quality-20261021",
+          "cacheHit": false,
+          "retries": 0,
+          "attemptedCompletions": 1,
+          "responseFile": "response-84a5ed4f0ac1b462370821902ef795fb53b8cc811233046fbe01d1fc1ea214e3-6.json",
+          "requestFile": "request-84a5ed4f0ac1b462370821902ef795fb53b8cc811233046fbe01d1fc1ea214e3-6.json"
+        }
+      },
+      {
+        "attempt": 2,
+        "verified": true,
+        "category": null,
+        "verification": {
+          "verdict": "VERIFIED_PASS",
+          "reasons": [],
+          "uncertain": [],
+          "newRules": [],
+          "gates": {
+            "keyboard": "VERIFIED_PASS",
+            "independentFunctional": "VERIFIED_PASS",
+            "functionalOutputUnchanged": true
+          },
+          "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+        },
+        "provenance": {
+          "provider": "Nebius Token Factory",
+          "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "requestId": "chatcmpl-2494f341c10cde2d0dc04eb2b2dd5257",
+          "promptHash": "023e4804c1d922323bac463b8cc1b7a404e5aadb18f551c1ffc4baad9d4c3474",
+          "schemaVersion": 2,
+          "structuredOutput": false,
+          "latencyMs": 9913,
+          "usage": {
+            "completion_tokens": 3494,
+            "prompt_tokens": 6410,
+            "total_tokens": 9904,
+            "completion_tokens_details": {
+              "accepted_prediction_tokens": null,
+              "audio_tokens": null,
+              "reasoning_tokens": 2970,
+              "rejected_prediction_tokens": null
+            },
+            "prompt_tokens_details": {
+              "audio_tokens": null,
+              "cached_tokens": 0,
+              "multimodal_tokens": null
+            },
+            "prompt_cache_hit_tokens": 0,
+            "prompt_cache_miss_tokens": 6410
+          },
+          "pricing": {
+            "prompt": "0.000001",
+            "completion": "0.000003",
+            "image": "0",
+            "price_per_video_second": "0",
+            "request": "0",
+            "price_per_minute": "0",
+            "input_cache_read": null
+          },
+          "reservedCreditUsd": 0.060019,
+          "budgetScope": "desktop-quality-20261021",
+          "cacheHit": false,
+          "retries": 0,
+          "attemptedCompletions": 1,
+          "responseFile": "response-7279662234714c5dc578fc030bb8fddd2ba1eb346677d8b33f4a181681c6bef2-7.json",
+          "requestFile": "request-7279662234714c5dc578fc030bb8fddd2ba1eb346677d8b33f4a181681c6bef2-7.json"
+        }
+      }
+    ],
+    "url": "http://127.0.0.1:4317/project.html?run=99e589ff-42bc-4bd0-b9f9-0b66aa1432db"
+  },
+  "isolatedGate": {
+    "runId": "fe7fc464-9f17-4887-aca3-b9ae6ce70dd7",
+    "source": "Human-corrupted workspace ID, with unchanged keyboard contract",
+    "keyboard": "VERIFIED_PASS",
+    "functional": "VERIFIED_FAIL",
+    "verification": {
+      "verdict": "VERIFIED_FAIL",
+      "reasons": [
+        "Functional regression baseline/replay failed or missing",
+        "Functional output changed"
+      ],
+      "uncertain": [],
+      "newRules": [],
+      "gates": {
+        "keyboard": "VERIFIED_PASS",
+        "independentFunctional": "VERIFIED_FAIL",
+        "functionalOutputUnchanged": false
+      },
+      "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+    },
+    "failedAssertions": [
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#receipt",
+          "name": "data-workspace",
+          "value": "studio-a"
+        },
+        "pass": false,
+        "observed": "studio-b"
+      }
+    ],
+    "url": "http://127.0.0.1:4317/project.html?run=fe7fc464-9f17-4887-aca3-b9ae6ce70dd7"
+  },
+  "sourceUnchanged": true,
+  "implementationUnchanged": true,
+  "browserErrors": [],
+  "liveProof": {
+    "path": "benchmarks/component-recovery/live-proof.tar.gz",
+    "sha256": "386d9d0ecf1c75739e4f83f888714c778f767f02c615e7245fd9a7204071c299"
+  },
+  "isolated-rejectionProof": {
+    "path": "benchmarks/component-recovery/isolated-rejection-proof.tar.gz",
+    "sha256": "02003616486f18c94f667967f18b6833f038fb39e20cb5939dbdbd40d87486a0"
+  },
+  "audit": {
+    "modelPlansMatchRawResponses": true,
+    "requestHashesMatch": true,
+    "secondRequestContainsActualFirstFailure": true,
+    "actualFailure": {
+      "assertion": "focus #close",
+      "observed": false
+    },
+    "componentOnlyEdits": true,
+    "verbatimPinnedUpstreamSource": true,
+    "originalUnchanged": true
+  },
+  "totalLiveTokens": 22398
+}

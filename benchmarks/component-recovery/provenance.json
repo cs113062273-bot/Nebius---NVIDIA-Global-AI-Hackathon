@@ -1,0 +1,10 @@
+{
+  "repository": "https://github.com/micromodal/Micromodal",
+  "issue": "https://github.com/micromodal/Micromodal/issues/295",
+  "brokenRevision": "777dbcbeaf6314da0a3669f2b5ed9cdd66e6fc8a",
+  "upstreamFix": "70dfd4320d9e0e535be432f57c698c75e230d0b3",
+  "upstreamPath": "lib/src/index.js",
+  "sourceHash": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+  "sourceUnmodified": true,
+  "scope": "Pinned published historical component defect with an author-created booking consumer and fixed-position Cancel coverage. Nonblind reconstruction, not a newly discovered upstream defect or production customer result. The model receives neither upstream patch nor fixed source."
+}

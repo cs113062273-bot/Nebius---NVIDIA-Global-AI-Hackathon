@@ -1,0 +1,34 @@
+diff --git a/app.js b/app.js
+index c32feb5..007f7d9 100644
+--- a/app.js
++++ b/app.js
+@@ -1,4 +1,28 @@
+-for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});
++for (const id of ['shipping-country','billing-country']) {
++  const select = document.getElementById(id);
++  accessibleAutocomplete.enhanceSelectElement({
++    selectElement: select,
++    onConfirm: function(text) {
++      const options = select.options;
++      let found = false;
++      for (let i = 0; i < options.length; i++) {
++        if (options[i].textContent === text) {
++          options[i].selected = true;
++          found = true;
++          break;
++        }
++      }
++      if (!found) {
++        for (let i = 0; i < options.length; i++) {
++          if (options[i].value === "") {
++            options[i].selected = true;
++            break;
++          }
++        }
++      }
++    }
++  });
++}
+ document.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());
+ accessibleAutocomplete({element:document.getElementById('destination-field'),id:'destination',name:'destination',source:['Paris','Lyon','Berlin','Rome']});
+ document.getElementById('search').addEventListener('submit',event=>event.preventDefault());

@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-21T07:40:31.676Z",
+  "browser": "155.0.8059.85",
+  "method": "Installed Chrome, clean headless profiles; post-hoc targeted model-patch review probes, no inference.",
+  "sourceRun": "459ef2eb-1518-4c98-bfb7-139912015c20",
+  "sourceAttempt": 3,
+  "componentHash": "86adae7e6b934af216fc65b90e3e8b99c90263dd035acd47cc2b717640cd4b9a",
+  "checks": [
+    {
+      "condition": "closed maximum",
+      "expected": "2026-10-23",
+      "observed": "2026-10-23",
+      "pass": true
+    },
+    {
+      "condition": "closed minimum",
+      "expected": "2026-10-26",
+      "observed": "2026-10-26",
+      "pass": true
+    },
+    {
+      "condition": "all later dates closed",
+      "expected": "2026-10-23",
+      "observed": "2026-10-23",
+      "pass": true
+    },
+    {
+      "condition": "normal forward",
+      "expected": "2026-10-26",
+      "observed": "2026-10-26",
+      "pass": true
+    },
+    {
+      "condition": "normal reverse",
+      "expected": "2026-10-23",
+      "observed": "2026-10-23",
+      "pass": true
+    },
+    {
+      "condition": "custom weekday closed",
+      "expected": "2026-10-28",
+      "observed": "2026-10-28",
+      "pass": true
+    },
+    {
+      "condition": "month boundary",
+      "expected": "2026-11-02",
+      "observed": "2026-11-02",
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+{
+  "fixedAt": "2026-10-21T04:29:45.549Z",
+  "case": "Seatwise annual community-rate estimate",
+  "provenance": "New author-created browser app fixed after implementation. Not an external production case. No model runs or implementation tuning used this case before this commitment.",
+  "sourceHashes": {
+    "app.js": "c7dee087ea889d15afbba7dce05a4d51a73310cc4569090fe94af4e1d18d04d5",
+    "index.html": "b02e8c653e180712163b214d0d6ab36d73a236f5dedf4403285fd37b50ce229f",
+    "style.css": "67d2804eecb9db9ea2c57b79f6ffe6645c889e52952edef7f9a059c78ce9fac6"
+  },
+  "implementation": {
+    "src/diff.js": "d2573cf4cd97e443db455d3f5dc5a493cbfac5fcf4ab568d6a8ebf2fe199856e",
+    "src/engine.js": "d16d67241818862bed0ac35b2b096054fa6c5f16d0fd4cffb0532335b7618853",
+    "src/nebius.js": "5fcaabbdc8cd4344d4df804621c9ecbb9e8e13d043a2e4caee394dc5cf9b1877",
+    "src/project.js": "70e24e7454490f2e463a362cb0b0e6aa9566b1b8a9e04fef7398cf78e299f303",
+    "src/repair.js": "6771a429e139b129cf42aada95c6b0c80a50a9db277fada9ad4dc18cea2979cf",
+    "src/runner.js": "b9fb89334e6a948a105ccdd63651582dc0c54d0518509cde5b44b55eb3f7e689",
+    "src/schema.js": "e81984c9cfe5d44e433591e1756542e8abf49b8ad8e3aed61118241458a087ab",
+    "src/server.js": "6d4e5e475bb71d11dc7f123d500f252a7c41f830d4dc3227b692e27c14804a1f",
+    "src/static.js": "7d2785ebdebc294ac8bead3e9fb8d4ad71aba91694c5abce02dca70948620cd6",
+    "src/verifier.js": "44d5a9f36e245554e20e2007f33f8c9a74d89891e5c6b9e3cf27600ba17bc5bc",
+    "public/project.html": "1b5578fc4d761c8316db425adebfecc2355d97da40e888e2552703fc2e8d4388",
+    "public/project.js": "573acab5622b6d52b19f6637a64d727a0f11d926d27503480161d001c0565e4e",
+    "public/project.css": "c1106045ba5902309a822fa4e6dc3be19b48b4b3857c4c9395279862df4c1487",
+    "public/recorder.js": "3c15643500a9bb3b34e9278c5805d96237163745f7ef18930d0f9694c114c335"
+  },
+  "taskHash": "ff44cbecda6003b2fe3aa21f28408b8b3937c7baa07309846927ab0a24c67b80",
+  "journey": {
+    "version": 1,
+    "id": "captured-keyboard",
+    "title": "Complete the keyboard task",
+    "goal": "Complete the confirmed task and preserve the selected outcome",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Tab · INPUT",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#seats"
+          }
+        ]
+      },
+      {
+        "title": "Type in INPUT",
+        "action": {
+          "kind": "type",
+          "text": "2",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Tab · Apply community rate",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#community"
+          }
+        ]
+      },
+      {
+        "title": "Space · Apply community rate",
+        "action": {
+          "kind": "press",
+          "key": "Space"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#community"
+          }
+        ]
+      },
+      {
+        "title": "Tab · Generate estimate",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#generate"
+          }
+        ]
+      },
+      {
+        "title": "Enter · Generate estimate",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#generate"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#estimate",
+        "value": "2 seats · $144.00 / year"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#estimate",
+        "name": "data-rate",
+        "value": "community"
+      },
+      {
+        "kind": "visible",
+        "selector": "#estimate",
+        "value": true
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#estimate",
+        "value": "2 seats · $144.00 / year"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#estimate",
+        "name": "data-rate",
+        "value": "community"
+      },
+      {
+        "kind": "visible",
+        "selector": "#estimate",
+        "value": true
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "captured-pointer",
+    "title": "Preserve the functional result",
+    "goal": "Complete the confirmed task and preserve the selected outcome",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Click · INPUT",
+        "action": {
+          "kind": "click",
+          "selector": "#seats"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Type in INPUT",
+        "action": {
+          "kind": "type",
+          "text": "2",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Click · Apply community rate",
+        "action": {
+          "kind": "click",
+          "selector": "#community"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Click · Generate estimate",
+        "action": {
+          "kind": "click",
+          "selector": "#generate"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#estimate",
+        "value": "2 seats · $144.00 / year"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#estimate",
+        "name": "data-rate",
+        "value": "community"
+      },
+      {
+        "kind": "visible",
+        "selector": "#estimate",
+        "value": true
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#estimate",
+        "value": "2 seats · $144.00 / year"
+      },
+      {
+        "kind": "attribute",
+        "selector": "#estimate",
+        "name": "data-rate",
+        "value": "community"
+      },
+      {
+        "kind": "visible",
+        "selector": "#estimate",
+        "value": true
+      }
+    ],
+    "forbidden": []
+  },
+  "callsBefore": 4
+}

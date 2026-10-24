@@ -1,0 +1,176 @@
+{
+  "fixedAt": "2026-10-21T06:11:58.804Z",
+  "repository": "https://github.com/alphagov/accessible-autocomplete",
+  "issue": "https://github.com/alphagov/accessible-autocomplete/issues/777",
+  "revision": "a4e8637ddb5423b64622d59a852b30a451266f91",
+  "upstreamSourceUnmodified": true,
+  "sourceHashes": {
+    "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+    "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+    "app.js": "1739df2162a63417ea4d7f7240bbb9efde11c6f48ba309469864cd158aed51be",
+    "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+    "index.html": "0812329b19aea8aea408f192a4b97c30b27ba5fbcd6a1f8f70eb085fc2716118",
+    "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+  },
+  "taskHash": "46f2d4860156b3055310ce2231edb0a3bf5b44fcb58e23161f4ba275f34468f0",
+  "withheldTaskHash": "4d0435bd8814e527cd6de86788096b84aacb3c0f00ad6d2322ed76f9e709d736",
+  "implementation": {
+    "src/engine.js": "88f3cd39de200c98df517575368dd512c0d7b44feb282eb4966f2f33799c8447",
+    "src/nebius.js": "7aaa941327629f3b3c44b1c82bb1e862fd0a21521b9418bd07cba7da05651625",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "b9fb89334e6a948a105ccdd63651582dc0c54d0518509cde5b44b55eb3f7e689",
+    "src/schema.js": "e81984c9cfe5d44e433591e1756542e8abf49b8ad8e3aed61118241458a087ab",
+    "src/verifier.js": "c6cb974d7dbd7034bd8dc5f376f78e2df8a5ff9c95bdf833d9d130812493b17b"
+  },
+  "provenance": "Publicly reported real component state-synchronization bug; pinned shipped upstream JS/CSS unchanged. Author-created delivery preferences consumer, not a production customer. No injected component defect. Nonblind reconstruction. Billing task is committed before inference and withheld from model task requirements; its markup is visible in source.",
+  "baseline": {
+    "journey": {
+      "verdict": "VERIFIED_FAIL",
+      "failure": {
+        "step": 4,
+        "category": "VERIFICATION",
+        "message": "Final postcondition failed or forbidden state occurred"
+      },
+      "checks": [
+        {
+          "assertion": {
+            "kind": "text",
+            "selector": "#receipt",
+            "value": "Shipping: none | Billing: de"
+          },
+          "pass": false,
+          "observed": "Shipping: gb | Billing: de"
+        },
+        {
+          "assertion": {
+            "kind": "attribute",
+            "selector": "#receipt",
+            "name": "data-shipping",
+            "value": ""
+          },
+          "pass": false,
+          "observed": "gb"
+        },
+        {
+          "assertion": {
+            "kind": "attribute",
+            "selector": "#receipt",
+            "name": "data-billing",
+            "value": "de"
+          },
+          "pass": true,
+          "observed": "de"
+        }
+      ]
+    },
+    "functionalJourney": {
+      "verdict": "VERIFIED_PASS",
+      "failure": null,
+      "checks": [
+        {
+          "assertion": {
+            "kind": "text",
+            "selector": "#receipt",
+            "value": "Shipping: fr | Billing: de"
+          },
+          "pass": true,
+          "observed": "Shipping: fr | Billing: de"
+        },
+        {
+          "assertion": {
+            "kind": "attribute",
+            "selector": "#receipt",
+            "name": "data-shipping",
+            "value": "fr"
+          },
+          "pass": true,
+          "observed": "fr"
+        },
+        {
+          "assertion": {
+            "kind": "attribute",
+            "selector": "#receipt",
+            "name": "data-billing",
+            "value": "de"
+          },
+          "pass": true,
+          "observed": "de"
+        }
+      ]
+    },
+    "withheldJourney": {
+      "verdict": "VERIFIED_FAIL",
+      "failure": {
+        "step": 4,
+        "category": "VERIFICATION",
+        "message": "Final postcondition failed or forbidden state occurred"
+      },
+      "checks": [
+        {
+          "assertion": {
+            "kind": "text",
+            "selector": "#receipt",
+            "value": "Shipping: gb | Billing: none"
+          },
+          "pass": false,
+          "observed": "Shipping: gb | Billing: de"
+        },
+        {
+          "assertion": {
+            "kind": "attribute",
+            "selector": "#receipt",
+            "name": "data-shipping",
+            "value": "gb"
+          },
+          "pass": true,
+          "observed": "gb"
+        },
+        {
+          "assertion": {
+            "kind": "attribute",
+            "selector": "#receipt",
+            "name": "data-billing",
+            "value": ""
+          },
+          "pass": false,
+          "observed": "de"
+        }
+      ]
+    },
+    "withheldFunctionalJourney": {
+      "verdict": "VERIFIED_PASS",
+      "failure": null,
+      "checks": [
+        {
+          "assertion": {
+            "kind": "text",
+            "selector": "#receipt",
+            "value": "Shipping: gb | Billing: it"
+          },
+          "pass": true,
+          "observed": "Shipping: gb | Billing: it"
+        },
+        {
+          "assertion": {
+            "kind": "attribute",
+            "selector": "#receipt",
+            "name": "data-shipping",
+            "value": "gb"
+          },
+          "pass": true,
+          "observed": "gb"
+        },
+        {
+          "assertion": {
+            "kind": "attribute",
+            "selector": "#receipt",
+            "name": "data-billing",
+            "value": "it"
+          },
+          "pass": true,
+          "observed": "it"
+        }
+      ]
+    }
+  }
+}

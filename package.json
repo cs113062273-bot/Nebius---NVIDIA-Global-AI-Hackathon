@@ -13,13 +13,16 @@
     "test:all": "npm test && npm run test:browser && npm run test:adversarial",
     "benchmark": "node --env-file-if-exists=.env scripts/benchmark.js",
     "live:smoke": "node --env-file-if-exists=.env scripts/live-smoke.js",
+    "live:catalog": "node --env-file-if-exists=.env scripts/catalog.js",
     "check": "node scripts/check.js",
     "proof:verify": "node scripts/verify-proof.js",
     "journey": "node scripts/journey.js",
     "benchmark:historical": "node scripts/historical.js",
     "test:adversarial": "node --test --test-concurrency=1 tests/adversarial.test.js",
     "clean-room": "node scripts/clean-room.js",
-    "release:local": "node scripts/package-release.js"
+    "release:local": "node scripts/package-release.js",
+    "review:build": "node scripts/build-review.js",
+    "demo:build": "node scripts/build-demo.js"
   },
   "dependencies": {
     "axe-core": "4.14.0",

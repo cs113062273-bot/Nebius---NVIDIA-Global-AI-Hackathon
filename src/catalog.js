@@ -8,12 +8,26 @@ export const fixtures = [
   { id: 'settings', title: 'Save your preferences', subtitle: 'A custom control must work without a mouse.', category: 'Keyboard activation', kind: 'activation', action: 'Save preferences', output: 'Preferences saved · Weekly digest', field: 'Name', value: 'Alex' },
   { id: 'search', title: 'Search the collection', subtitle: 'Find an item using the keyboard.', category: 'Keyboard activation', kind: 'activation', action: 'Search collection', output: '1 result · Field bag', field: 'Search', value: 'Field bag' },
   { id: 'dashboard', title: 'Export a report', subtitle: 'Review the export dialog and finish the task.', category: 'Modal focus', kind: 'dialog', action: 'Export report', output: 'Report exported · 24 records', field: 'Report name', value: 'Quarterly review' },
-  { id: 'wizard', title: 'Send an application', subtitle: 'Finish the last step of an application.', category: 'Keyboard activation', kind: 'activation', action: 'Send application', output: 'Application received · Alex', field: 'Name', value: 'Alex' }
+  { id: 'wizard', title: 'Send an application', subtitle: 'Finish the last step of an application.', category: 'Keyboard activation', kind: 'activation', action: 'Send application', output: 'Application received · Alex', field: 'Name', value: 'Alex' },
+  { id: 'a11y-dialog', title: 'Restore focus after closing a real dialog', subtitle: 'Pinned a11y-dialog historical regression; reconstructed notice task.', category: 'Historical open-source defect', kind: 'historical', action: 'Dismiss notice', output: 'Focus returns to the opener', sourceKind:'historical', sourceUrl:'https://github.com/KittyGiraudel/a11y-dialog/commit/6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9' }
 ];
 export function getFixture(id) { const fixture = fixtures.find(f => f.id === id); if (!fixture) throw new Error('Unknown fixture'); return fixture; }
-export function fixturePath(id, version = 'broken') { getFixture(id); if (!['broken','reference'].includes(version)) throw new Error('Invalid fixture version'); return path.join(ROOT, 'fixtures', id, version); }
+export function fixturePath(id, version = 'broken') { getFixture(id); if (!['broken','reference'].includes(version)) throw new Error('Invalid fixture version'); return id==='a11y-dialog'?path.join(ROOT,'benchmarks','historical','a11y-dialog-restore',version==='broken'?'before':'after'):path.join(ROOT, 'fixtures', id, version); }
 export function journeyFor(id, profile = 'keyboard') {
   const f = getFixture(id), pointer = profile === 'pointer';
+  if(f.kind==='historical')return {
+    version:1,id:'historical-dialog-'+profile,title:f.title,goal:f.output,source:'benchmark',profile,path:'/',
+    steps:pointer?[
+      {title:'Open notice',action:{kind:'click',selector:'#open'},assertions:[{kind:'attribute',selector:'#dialog',name:'aria-hidden',value:null}]},
+      {title:'Close notice with pointer',action:{kind:'click',selector:'#close'},assertions:[{kind:'attribute',selector:'#dialog',name:'aria-hidden',value:'true'}]}
+    ]:[
+      {title:'Reach notice trigger',action:{kind:'seek',selector:'#open'}},
+      {title:'Open notice',action:{kind:'press',key:'Enter'},assertions:[{kind:'focus',selector:'#dialog'}]},
+      {title:'Dismiss notice and return to the opener',action:{kind:'press',key:'Escape'},assertions:[{kind:'focus',selector:'#open'}]}
+    ],
+    success:pointer?[{kind:'attribute',selector:'#dialog',name:'aria-hidden',value:'true'}]:[{kind:'focus',selector:'#open'}],
+    functional:[{kind:'attribute',selector:'#dialog',name:'aria-hidden',value:'true'}],forbidden:[]
+  };
   const seek = selector => ({ kind: pointer ? 'click' : 'seek', selector });
   const activate = () => ({ kind: 'press', key: 'Enter' });
   const steps = [];

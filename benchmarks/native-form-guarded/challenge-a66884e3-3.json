@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-24T07:00:08.319Z",
+  "challengedRun": "a66884e3-0c53-4bc9-8703-d0e06a4d43ca",
+  "attempt": 3,
+  "changedFiles": [
+    "app.js"
+  ],
+  "run": "78893b29-e3dd-404c-9f3e-d6d23c14c73d",
+  "verification": {
+    "verdict": "VERIFIED_FAIL",
+    "reasons": [
+      "Keyboard candidate: failed · #preferences billing_country: expected [\"\"], observed [\"de\"]",
+      "Task evidence is missing or contradicts the verdict"
+    ],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_FAIL",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true,
+      "regressionGuards": "2/2"
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "inferenceCalls": 0
+}

@@ -1,0 +1,22 @@
+{
+  "root_cause": "The accessible-autocomplete library's default onConfirm callback only sets the hidden select element when the input matches an option. When the input is blank or unrecognized, onConfirm is called with undefined, leaving the select at its previous value instead of clearing it to the empty option.",
+  "repair_strategy": "Modify the default onConfirm function in enhanceSelectElement to explicitly set the select's value to an empty string when no matching option is found (or when the argument is undefined). This ensures that blurring an invalid or blank input clears the saved country.",
+  "edits": [
+    {
+      "path": "accessible-autocomplete.js",
+      "sha256": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+      "before": "t.onConfirm=t.onConfirm||function(e){var n=[].filter.call(t.selectElement.options,(function(t){return(t.textContent||t.innerText)===e}))[0];n&&(n.selected=!0)}",
+      "after": "t.onConfirm=t.onConfirm||function(e){var n=[].filter.call(t.selectElement.options,(function(t){return(t.textContent||t.innerText)===e}))[0];if(n){n.selected=!0}else{t.selectElement.value=\"\"}}"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard and pointer selection of listed countries continues to work. When a user types an unrecognized value or blanks the field and moves focus away, the hidden select is cleared, so the form submits an empty value for that country. This matches the requirement that empty, blank, or unrecognized entries submit no saved country.",
+  "functional_risks": [
+    "If the onConfirm callback is overridden by a consumer, the fix does not apply. However, the current consumers (shipping-country, billing-country) use the default.",
+    "The change could affect other uses of enhanceSelectElement that rely on the previous behavior of leaving the select unchanged on invalid blur. The new behavior aligns with the spec that invalid input should clear the selection."
+  ],
+  "verification_requirements": [
+    "Run the provided journey: type 'Atlantis' in shipping-country, type spaces in billing-country, press Enter on Save. Verify that both hidden selects have empty values.",
+    "Test that selecting a valid country via keyboard (arrow keys + Enter) or mouse still sets the select to that country's code.",
+    "Test that typing a valid country name exactly and blurring also sets the select (autoselect behavior)."
+  ]
+}

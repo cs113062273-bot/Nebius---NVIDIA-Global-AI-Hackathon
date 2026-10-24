@@ -1,0 +1,2 @@
+for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});
+document.getElementById('preferences').addEventListener('submit',event=>{event.preventDefault();const data=new FormData(event.target),shipping=data.get('shipping_country')||'',billing=data.get('billing_country')||'',receipt=document.getElementById('receipt');receipt.textContent='Shipping: '+(shipping||'none')+' | Billing: '+(billing||'none');receipt.dataset.shipping=shipping;receipt.dataset.billing=billing;});

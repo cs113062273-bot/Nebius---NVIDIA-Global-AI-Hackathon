@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-21T06:23:26.888Z",
+  "browser": "155.0.8059.85",
+  "userFlow": "Homepage -> load real form issue -> reproduce stale country -> confirm frozen tasks -> inspect real model repair and withheld billing check",
+  "originalSubmitted": "Shipping: gb | Billing: de (shipping input empty)",
+  "repairedSubmitted": "Shipping: none | Billing: de",
+  "withheldSubmitted": "Shipping: gb | Billing: none",
+  "pointerCountryChoicesPreserved": [
+    "fr",
+    "it"
+  ],
+  "proofsVerify": true,
+  "modelCallsDuringUIAcceptance": 0,
+  "errors": []
+}

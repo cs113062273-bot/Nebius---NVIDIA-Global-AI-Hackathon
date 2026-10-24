@@ -1,0 +1,1288 @@
+{
+  "verdict": "VERIFIED_PASS",
+  "journeyHash": "70bf810728eefb8f9b9f640a777903818af1e75e64466fa3a36aa75009fe1a07",
+  "environment": {
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "locale": "en-US",
+    "timezoneId": "UTC",
+    "colorScheme": "light",
+    "reducedMotion": "no-preference",
+    "forcedColors": "none",
+    "serviceWorkers": "block",
+    "acceptDownloads": false,
+    "deviceScaleFactor": 1
+  },
+  "browser": "156.0.8078.4",
+  "steps": [
+    {
+      "index": 0,
+      "title": "Open the intended disclosure",
+      "action": {
+        "kind": "click",
+        "selector": "#returns-trigger"
+      },
+      "before": {
+        "selector": "body",
+        "tag": "body",
+        "role": null,
+        "nameHint": "ACCOUNT SUPPORT / KEYBOARD TASKS\n\nGet the right help.\n\nOpen the help you need and complete the action for the correct order or invoice.\n\nOrder 2417\nDelivery updates\nReturn eligibility\nInvoice 8120\nBil",
+        "bbox": {
+          "x": 0,
+          "y": 40,
+          "width": 1280,
+          "height": 731.03125
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(32, 59, 53)"
+        },
+        "html": "<body><main><p>ACCOUNT SUPPORT / KEYBOARD TASKS</p><h1>Get the right help.</h1><p>Open the help you need and complete the action for the correct order or invoice.</p><section aria-labelledby=\"orders-title\"><h2 id=\"orders-title\">Order 2417</h2><div id=\"handorgel1\" class=\"handorgel\"><h3 class=\"handorgel__header\" id=\"handorgel1-fold1-header\"><button id=\"delivery-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Delivery updates</button></h3><div class=\"handorgel__content\" id=\"handorgel1-fold1-content\" role=\"region\" aria-labelledby=\"handorgel1-fold1-header\"><div class=\"handorgel__content__inner\"><a id=\"hidden-tracking\" href=\"#receipt\">Track this parcel</a></div></div><h3 class=\"handorgel__header\" id=\"handorgel1-fold2-header\"><button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"false\" aria-disabled=\"false\">Return eligibility</button></h3><div class=\"handorgel__content\" id=\"handorgel1-fold2-content\" role=\"region\" aria-labelledby=\"handorgel1-fold2-header\"><div class=\"handorgel__content__inner\"><p>This order is eligible for return within 30 days.</p><a id=\"return-start\" href=\"#receipt\">Start a return for order 2417</a></div></div></div></section><section aria-labelledby=\"invoices-title\"><h2 id=\"invoices-title\">Invoice 8120</h2><div id=\"handorgel2\" class=\"handorgel\"><h3 class=\"handorgel__header\" id=\"handorgel2-fold1-header\"><button id=\"billing-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Billing documents</button></h3><div class=\"handorgel__content\" id=\"handorgel2-fold1-content\" role=\"region\" aria-labelledby=\"handorgel2-fold1-header\"><div class=\"handorgel_"
+      },
+      "after": {
+        "selector": "#returns-trigger",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Return eligibility",
+        "bbox": {
+          "x": 281,
+          "y": 373.453125,
+          "width": 718,
+          "height": 72.8125
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(32, 59, 53)"
+        },
+        "html": "<button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"true\" aria-disabled=\"false\">Return eligibility</button>"
+      },
+      "assertions": [],
+      "result": "VERIFIED_PASS"
+    },
+    {
+      "index": 1,
+      "title": "Request the intended action",
+      "action": {
+        "kind": "click",
+        "selector": "#return-start"
+      },
+      "before": {
+        "selector": "#returns-trigger",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Return eligibility",
+        "bbox": {
+          "x": 281,
+          "y": 373.453125,
+          "width": 718,
+          "height": 72.8125
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(32, 59, 53)"
+        },
+        "html": "<button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"true\" aria-disabled=\"false\">Return eligibility</button>"
+      },
+      "after": {
+        "selector": "#return-start",
+        "tag": "a",
+        "role": null,
+        "nameHint": "Start a return for order 2417",
+        "bbox": {
+          "x": 305,
+          "y": 531.453125,
+          "width": 222.609375,
+          "height": 21
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(36, 95, 75)"
+        },
+        "html": "<a id=\"return-start\" href=\"#receipt\">Start a return for order 2417</a>"
+      },
+      "assertions": [],
+      "result": "VERIFIED_PASS"
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "initial",
+      "screenshot": "initial.png",
+      "aria": "initial.aria.yml",
+      "ax": "initial.ax.json",
+      "dom": "initial.dom.html",
+      "state": {
+        "focus": {
+          "selector": "body",
+          "tag": "body",
+          "role": null,
+          "nameHint": "ACCOUNT SUPPORT / KEYBOARD TASKS\n\nGet the right help.\n\nOpen the help you need and complete the action for the correct order or invoice.\n\nOrder 2417\nDelivery updates\nReturn eligibility\nInvoice 8120\nBil",
+          "bbox": {
+            "x": 0,
+            "y": 40,
+            "width": 1280,
+            "height": 731.03125
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "none",
+            "width": "3px",
+            "color": "rgb(32, 59, 53)"
+          },
+          "html": "<body><main><p>ACCOUNT SUPPORT / KEYBOARD TASKS</p><h1>Get the right help.</h1><p>Open the help you need and complete the action for the correct order or invoice.</p><section aria-labelledby=\"orders-title\"><h2 id=\"orders-title\">Order 2417</h2><div id=\"handorgel1\" class=\"handorgel\"><h3 class=\"handorgel__header\" id=\"handorgel1-fold1-header\"><button id=\"delivery-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Delivery updates</button></h3><div class=\"handorgel__content\" id=\"handorgel1-fold1-content\" role=\"region\" aria-labelledby=\"handorgel1-fold1-header\"><div class=\"handorgel__content__inner\"><a id=\"hidden-tracking\" href=\"#receipt\">Track this parcel</a></div></div><h3 class=\"handorgel__header\" id=\"handorgel1-fold2-header\"><button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"false\" aria-disabled=\"false\">Return eligibility</button></h3><div class=\"handorgel__content\" id=\"handorgel1-fold2-content\" role=\"region\" aria-labelledby=\"handorgel1-fold2-header\"><div class=\"handorgel__content__inner\"><p>This order is eligible for return within 30 days.</p><a id=\"return-start\" href=\"#receipt\">Start a return for order 2417</a></div></div></div></section><section aria-labelledby=\"invoices-title\"><h2 id=\"invoices-title\">Invoice 8120</h2><div id=\"handorgel2\" class=\"handorgel\"><h3 class=\"handorgel__header\" id=\"handorgel2-fold1-header\"><button id=\"billing-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Billing documents</button></h3><div class=\"handorgel__content\" id=\"handorgel2-fold1-content\" role=\"region\" aria-labelledby=\"handorgel2-fold1-header\"><div class=\"handorgel_"
+        },
+        "nodes": [
+          {
+            "selector": "#delivery-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Delivery updates",
+            "bbox": {
+              "x": 281,
+              "y": 300.640625,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"delivery-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Delivery updates</button>"
+          },
+          {
+            "selector": "#hidden-tracking",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Track this parcel",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"hidden-tracking\" href=\"#receipt\">Track this parcel</a>"
+          },
+          {
+            "selector": "#returns-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Return eligibility",
+            "bbox": {
+              "x": 281,
+              "y": 373.453125,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"false\" aria-disabled=\"false\">Return eligibility</button>"
+          },
+          {
+            "selector": "#return-start",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Start a return for order 2417",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"return-start\" href=\"#receipt\">Start a return for order 2417</a>"
+          },
+          {
+            "selector": "#billing-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Billing documents",
+            "bbox": {
+              "x": 281,
+              "y": 534.21875,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"billing-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Billing documents</button>"
+          },
+          {
+            "selector": "#hidden-invoice",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Download invoice",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"hidden-invoice\" href=\"#receipt\">Download invoice</a>"
+          },
+          {
+            "selector": "#refund-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Request a refund",
+            "bbox": {
+              "x": 281,
+              "y": 607.03125,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"refund-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold2-content\" aria-expanded=\"false\" aria-disabled=\"false\">Request a refund</button>"
+          },
+          {
+            "selector": "#refund-start",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Request refund for invoice 8120",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"refund-start\" href=\"#receipt\">Request refund for invoice 8120</a>"
+          }
+        ],
+        "focusEvents": [],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          "aria-allowed-attr",
+          "aria-conditional-attr",
+          "aria-hidden-body",
+          "aria-prohibited-attr",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "button-name",
+          "bypass",
+          "color-contrast",
+          "document-title",
+          "duplicate-id-aria",
+          "html-has-lang",
+          "html-lang-valid",
+          "nested-interactive",
+          "target-size"
+        ],
+        "inapplicable": [
+          "area-alt",
+          "aria-braille-equivalent",
+          "aria-command-name",
+          "aria-deprecated-role",
+          "aria-hidden-focus",
+          "aria-input-field-name",
+          "aria-meter-name",
+          "aria-progressbar-name",
+          "aria-required-attr",
+          "aria-required-children",
+          "aria-required-parent",
+          "aria-roles",
+          "aria-tab-name",
+          "aria-toggle-field-name",
+          "aria-tooltip-name",
+          "autocomplete-valid",
+          "avoid-inline-spacing",
+          "blink",
+          "definition-list",
+          "dlitem",
+          "form-field-multiple-labels",
+          "frame-focusable-content",
+          "frame-title-unique",
+          "frame-title",
+          "html-xml-lang-mismatch",
+          "image-alt",
+          "input-button-name",
+          "input-image-alt",
+          "label-content-name-mismatch",
+          "label",
+          "link-in-text-block",
+          "link-name",
+          "list",
+          "listitem",
+          "marquee",
+          "meta-refresh",
+          "meta-viewport",
+          "object-alt",
+          "role-img-alt",
+          "scrollable-region-focusable",
+          "select-name",
+          "server-side-image-map",
+          "summary-name",
+          "svg-img-alt",
+          "td-headers-attr",
+          "th-has-data-cells",
+          "valid-lang",
+          "video-caption",
+          "no-autoplay-audio"
+        ]
+      }
+    },
+    {
+      "id": "step-0",
+      "screenshot": "step-0.png",
+      "aria": "step-0.aria.yml",
+      "ax": "step-0.ax.json",
+      "dom": "step-0.dom.html",
+      "state": {
+        "focus": {
+          "selector": "#returns-trigger",
+          "tag": "button",
+          "role": null,
+          "nameHint": "Return eligibility",
+          "bbox": {
+            "x": 281,
+            "y": 373.453125,
+            "width": 718,
+            "height": 72.8125
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "none",
+            "width": "3px",
+            "color": "rgb(32, 59, 53)"
+          },
+          "html": "<button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"true\" aria-disabled=\"false\">Return eligibility</button>"
+        },
+        "nodes": [
+          {
+            "selector": "#delivery-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Delivery updates",
+            "bbox": {
+              "x": 281,
+              "y": 300.640625,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"delivery-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Delivery updates</button>"
+          },
+          {
+            "selector": "#hidden-tracking",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Track this parcel",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"hidden-tracking\" href=\"#receipt\">Track this parcel</a>"
+          },
+          {
+            "selector": "#returns-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Return eligibility",
+            "bbox": {
+              "x": 281,
+              "y": 373.453125,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"true\" aria-disabled=\"false\">Return eligibility</button>"
+          },
+          {
+            "selector": "#return-start",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Start a return for order 2417",
+            "bbox": {
+              "x": 305,
+              "y": 531.453125,
+              "width": 222.609375,
+              "height": 21
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"return-start\" href=\"#receipt\">Start a return for order 2417</a>"
+          },
+          {
+            "selector": "#billing-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Billing documents",
+            "bbox": {
+              "x": 281,
+              "y": 535.21875,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"billing-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Billing documents</button>"
+          },
+          {
+            "selector": "#hidden-invoice",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Download invoice",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"hidden-invoice\" href=\"#receipt\">Download invoice</a>"
+          },
+          {
+            "selector": "#refund-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Request a refund",
+            "bbox": {
+              "x": 281,
+              "y": 608.03125,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"refund-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold2-content\" aria-expanded=\"false\" aria-disabled=\"false\">Request a refund</button>"
+          },
+          {
+            "selector": "#refund-start",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Request refund for invoice 8120",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"refund-start\" href=\"#receipt\">Request refund for invoice 8120</a>"
+          }
+        ],
+        "focusEvents": [
+          {
+            "sequence": 0,
+            "from": "body",
+            "to": "#returns-trigger",
+            "tag": "button"
+          }
+        ],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": null
+    },
+    {
+      "id": "step-1",
+      "screenshot": "step-1.png",
+      "aria": "step-1.aria.yml",
+      "ax": "step-1.ax.json",
+      "dom": "step-1.dom.html",
+      "state": {
+        "focus": {
+          "selector": "#return-start",
+          "tag": "a",
+          "role": null,
+          "nameHint": "Start a return for order 2417",
+          "bbox": {
+            "x": 305,
+            "y": 531.453125,
+            "width": 222.609375,
+            "height": 21
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "none",
+            "width": "3px",
+            "color": "rgb(36, 95, 75)"
+          },
+          "html": "<a id=\"return-start\" href=\"#receipt\">Start a return for order 2417</a>"
+        },
+        "nodes": [
+          {
+            "selector": "#delivery-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Delivery updates",
+            "bbox": {
+              "x": 281,
+              "y": 300.640625,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"delivery-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Delivery updates</button>"
+          },
+          {
+            "selector": "#hidden-tracking",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Track this parcel",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"hidden-tracking\" href=\"#receipt\">Track this parcel</a>"
+          },
+          {
+            "selector": "#returns-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Return eligibility",
+            "bbox": {
+              "x": 281,
+              "y": 373.453125,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"true\" aria-disabled=\"false\">Return eligibility</button>"
+          },
+          {
+            "selector": "#return-start",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Start a return for order 2417",
+            "bbox": {
+              "x": 305,
+              "y": 531.453125,
+              "width": 222.609375,
+              "height": 21
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"return-start\" href=\"#receipt\">Start a return for order 2417</a>"
+          },
+          {
+            "selector": "#billing-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Billing documents",
+            "bbox": {
+              "x": 281,
+              "y": 663.59375,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"billing-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Billing documents</button>"
+          },
+          {
+            "selector": "#hidden-invoice",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Download invoice",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"hidden-invoice\" href=\"#receipt\">Download invoice</a>"
+          },
+          {
+            "selector": "#refund-trigger",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Request a refund",
+            "bbox": {
+              "x": 281,
+              "y": 736.40625,
+              "width": 718,
+              "height": 72.8125
+            },
+            "visible": true,
+            "inViewport": false,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(32, 59, 53)"
+            },
+            "html": "<button id=\"refund-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold2-content\" aria-expanded=\"false\" aria-disabled=\"false\">Request a refund</button>"
+          },
+          {
+            "selector": "#refund-start",
+            "tag": "a",
+            "role": null,
+            "nameHint": "Request refund for invoice 8120",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(36, 95, 75)"
+            },
+            "html": "<a id=\"refund-start\" href=\"#receipt\">Request refund for invoice 8120</a>"
+          }
+        ],
+        "focusEvents": [
+          {
+            "sequence": 0,
+            "from": "body",
+            "to": "#returns-trigger",
+            "tag": "button"
+          },
+          {
+            "sequence": 1,
+            "from": "#returns-trigger",
+            "to": "#return-start",
+            "tag": "a"
+          }
+        ],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          "aria-allowed-attr",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "avoid-inline-spacing",
+          "button-name",
+          "bypass",
+          "color-contrast",
+          "document-title",
+          "duplicate-id-aria",
+          "html-has-lang",
+          "html-lang-valid",
+          "link-name",
+          "nested-interactive",
+          "target-size"
+        ],
+        "inapplicable": [
+          "area-alt",
+          "aria-braille-equivalent",
+          "aria-command-name",
+          "aria-hidden-focus",
+          "aria-input-field-name",
+          "aria-meter-name",
+          "aria-progressbar-name",
+          "aria-required-children",
+          "aria-required-parent",
+          "aria-tab-name",
+          "aria-toggle-field-name",
+          "aria-tooltip-name",
+          "autocomplete-valid",
+          "blink",
+          "definition-list",
+          "dlitem",
+          "form-field-multiple-labels",
+          "frame-focusable-content",
+          "frame-title-unique",
+          "frame-title",
+          "html-xml-lang-mismatch",
+          "image-alt",
+          "input-button-name",
+          "input-image-alt",
+          "label-content-name-mismatch",
+          "label",
+          "link-in-text-block",
+          "list",
+          "listitem",
+          "marquee",
+          "meta-refresh",
+          "meta-viewport",
+          "object-alt",
+          "role-img-alt",
+          "scrollable-region-focusable",
+          "select-name",
+          "server-side-image-map",
+          "summary-name",
+          "svg-img-alt",
+          "td-headers-attr",
+          "th-has-data-cells",
+          "valid-lang",
+          "video-caption",
+          "no-autoplay-audio"
+        ]
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "networkFailures": [],
+  "checks": [
+    {
+      "assertion": {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Return requested for order 2417"
+      },
+      "pass": true,
+      "observed": "Return requested for order 2417"
+    },
+    {
+      "assertion": {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "2417"
+      },
+      "pass": true,
+      "observed": "2417"
+    },
+    {
+      "assertion": {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "return"
+      },
+      "pass": true,
+      "observed": "return"
+    }
+  ],
+  "functional": [
+    {
+      "assertion": {
+        "kind": "text",
+        "selector": "#receipt",
+        "value": "Return requested for order 2417"
+      },
+      "pass": true,
+      "observed": "Return requested for order 2417"
+    },
+    {
+      "assertion": {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-record",
+        "value": "2417"
+      },
+      "pass": true,
+      "observed": "2417"
+    },
+    {
+      "assertion": {
+        "kind": "attribute",
+        "selector": "#receipt",
+        "name": "data-action",
+        "value": "return"
+      },
+      "pass": true,
+      "observed": "return"
+    }
+  ],
+  "forbidden": [],
+  "failure": null,
+  "focusGraph": {
+    "nodes": [
+      {
+        "selector": "#delivery-trigger",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Delivery updates",
+        "bbox": {
+          "x": 281,
+          "y": 300.640625,
+          "width": 718,
+          "height": 72.8125
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(32, 59, 53)"
+        },
+        "html": "<button id=\"delivery-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Delivery updates</button>"
+      },
+      {
+        "selector": "#hidden-tracking",
+        "tag": "a",
+        "role": null,
+        "nameHint": "Track this parcel",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "visible": false,
+        "inViewport": true,
+        "obscuredAtCenter": true,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(36, 95, 75)"
+        },
+        "html": "<a id=\"hidden-tracking\" href=\"#receipt\">Track this parcel</a>"
+      },
+      {
+        "selector": "#returns-trigger",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Return eligibility",
+        "bbox": {
+          "x": 281,
+          "y": 373.453125,
+          "width": 718,
+          "height": 72.8125
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(32, 59, 53)"
+        },
+        "html": "<button id=\"returns-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel1-fold2-content\" aria-expanded=\"true\" aria-disabled=\"false\">Return eligibility</button>"
+      },
+      {
+        "selector": "#return-start",
+        "tag": "a",
+        "role": null,
+        "nameHint": "Start a return for order 2417",
+        "bbox": {
+          "x": 305,
+          "y": 531.453125,
+          "width": 222.609375,
+          "height": 21
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(36, 95, 75)"
+        },
+        "html": "<a id=\"return-start\" href=\"#receipt\">Start a return for order 2417</a>"
+      },
+      {
+        "selector": "#billing-trigger",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Billing documents",
+        "bbox": {
+          "x": 281,
+          "y": 663.59375,
+          "width": 718,
+          "height": 72.8125
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(32, 59, 53)"
+        },
+        "html": "<button id=\"billing-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold1-content\" aria-expanded=\"false\" aria-disabled=\"false\">Billing documents</button>"
+      },
+      {
+        "selector": "#hidden-invoice",
+        "tag": "a",
+        "role": null,
+        "nameHint": "Download invoice",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "visible": false,
+        "inViewport": true,
+        "obscuredAtCenter": true,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(36, 95, 75)"
+        },
+        "html": "<a id=\"hidden-invoice\" href=\"#receipt\">Download invoice</a>"
+      },
+      {
+        "selector": "#refund-trigger",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Request a refund",
+        "bbox": {
+          "x": 281,
+          "y": 736.40625,
+          "width": 718,
+          "height": 72.8125
+        },
+        "visible": true,
+        "inViewport": false,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(32, 59, 53)"
+        },
+        "html": "<button id=\"refund-trigger\" class=\"handorgel__header__button\" aria-controls=\"handorgel2-fold2-content\" aria-expanded=\"false\" aria-disabled=\"false\">Request a refund</button>"
+      },
+      {
+        "selector": "#refund-start",
+        "tag": "a",
+        "role": null,
+        "nameHint": "Request refund for invoice 8120",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "visible": false,
+        "inViewport": true,
+        "obscuredAtCenter": true,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(36, 95, 75)"
+        },
+        "html": "<a id=\"refund-start\" href=\"#receipt\">Request refund for invoice 8120</a>"
+      }
+    ],
+    "edges": [
+      {
+        "sequence": 0,
+        "from": "body",
+        "to": "#returns-trigger",
+        "tag": "button"
+      },
+      {
+        "sequence": 1,
+        "from": "#returns-trigger",
+        "to": "#return-start",
+        "tag": "a"
+      }
+    ],
+    "findings": [],
+    "note": "Observed transitions only. Name hints are DOM-derived; authoritative semantics are in AX artifacts. Center-point obstruction is a heuristic."
+  },
+  "scope": {
+    "tested": [
+      "pointer interaction attempted",
+      "AX semantics captured",
+      "axe WCAG A/AA rules executed",
+      "explicit functional postconditions evaluated"
+    ],
+    "untested": [
+      "real screen readers",
+      "all WCAG criteria",
+      "cognitive usability",
+      "platform assistive technology",
+      "unlisted journeys"
+    ],
+    "note": "Zero axe violations does not mean full accessibility. Reflow profiles use equivalent CSS viewport widths, not actual browser zoom."
+  }
+}

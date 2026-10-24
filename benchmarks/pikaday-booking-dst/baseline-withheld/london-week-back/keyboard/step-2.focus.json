@@ -1,0 +1,1802 @@
+{
+  "focus": {
+    "selector": "#save",
+    "tag": "button",
+    "role": null,
+    "nameHint": "Save booking dates",
+    "bbox": {
+      "x": 290,
+      "y": 529.46875,
+      "width": 201.09375,
+      "height": 58.59375
+    },
+    "visible": true,
+    "inViewport": true,
+    "obscuredAtCenter": true,
+    "modal": null,
+    "disabled": false,
+    "inert": false,
+    "outline": {
+      "style": "solid",
+      "width": "3px",
+      "color": "rgb(22, 77, 180)"
+    },
+    "html": "<button id=\"save\" type=\"submit\">Save booking dates</button>"
+  },
+  "nodes": [
+    {
+      "selector": "#pickup",
+      "tag": "input",
+      "role": null,
+      "nameHint": "Use the arrow keys to pick a date",
+      "bbox": {
+        "x": 290,
+        "y": 321.6875,
+        "width": 400,
+        "height": 58.59375
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<input id=\"pickup\" name=\"pickup_date\" value=\"2026-10-23\" autocomplete=\"off\" style=\"\" aria-label=\"Use the arrow keys to pick a date\">"
+    },
+    {
+      "selector": "#return",
+      "tag": "input",
+      "role": null,
+      "nameHint": "Use the arrow keys to pick a date",
+      "bbox": {
+        "x": 290,
+        "y": 440.875,
+        "width": 400,
+        "height": 58.59375
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<input id=\"return\" name=\"return_date\" value=\"2026-10-26\" autocomplete=\"off\" style=\"\" aria-label=\"Use the arrow keys to pick a date\">"
+    },
+    {
+      "selector": "#save",
+      "tag": "button",
+      "role": null,
+      "nameHint": "Save booking dates",
+      "bbox": {
+        "x": 290,
+        "y": 529.46875,
+        "width": 201.09375,
+        "height": 58.59375
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "solid",
+        "width": "3px",
+        "color": "rgb(22, 77, 180)"
+      },
+      "html": "<button id=\"save\" type=\"submit\">Save booking dates</button>"
+    },
+    {
+      "selector": "select",
+      "tag": "select",
+      "role": null,
+      "nameHint": "JanuaryFebruaryMarchAprilMayJuneJulyAugustSeptemberOctoberNovemberDecember",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<select class=\"pika-select pika-select-month\" tabindex=\"-1\"><option value=\"0\">January</option><option value=\"1\">February</option><option value=\"2\">March</option><option value=\"3\">April</option><option value=\"4\">May</option><option value=\"5\">June</option><option value=\"6\">July</option><option value=\"7\">August</option><option value=\"8\">September</option><option value=\"9\" selected=\"selected\">October</option><option value=\"10\">November</option><option value=\"11\">December</option></select>"
+    },
+    {
+      "selector": "select",
+      "tag": "select",
+      "role": null,
+      "nameHint": "201620172018201920202021202220232024202520262027202820292030203120322033203420352036",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<select class=\"pika-select pika-select-year\" tabindex=\"-1\"><option value=\"2016\">2016</option><option value=\"2017\">2017</option><option value=\"2018\">2018</option><option value=\"2019\">2019</option><option value=\"2020\">2020</option><option value=\"2021\">2021</option><option value=\"2022\">2022</option><option value=\"2023\">2023</option><option value=\"2024\">2024</option><option value=\"2025\">2025</option><option value=\"2026\" selected=\"selected\">2026</option><option value=\"2027\">2027</option><option value=\"2028\">2028</option><option value=\"2029\">2029</option><option value=\"2030\">2030</option><option value=\"2031\">2031</option><option value=\"2032\">2032</option><option value=\"2033\">2033</option><option value=\"2034\">2034</option><option value=\"2035\">2035</option><option value=\"2036\">2036</option></select>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "Previous Month",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<button class=\"pika-prev\" type=\"button\">Previous Month</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "Next Month",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<button class=\"pika-next\" type=\"button\">Next Month</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "1",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"1\">1</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "2",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"2\">2</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "3",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"3\">3</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "4",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"4\">4</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "5",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"5\">5</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "6",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"6\">6</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "7",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"7\">7</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "8",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"8\">8</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "9",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"9\">9</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "10",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"10\">10</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "11",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"11\">11</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "12",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"12\">12</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "13",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"13\">13</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "14",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"14\">14</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "15",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"15\">15</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "16",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"16\">16</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "17",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"17\">17</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "18",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"18\">18</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "19",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"19\">19</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "20",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"20\">20</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "21",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"21\">21</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "22",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"22\">22</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "23",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(255, 255, 255)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"23\">23</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "24",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"24\">24</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "25",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"25\">25</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "26",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"26\">26</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "27",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"27\">27</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "28",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"28\">28</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "29",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"29\">29</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "30",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"30\">30</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "31",
+      "bbox": {
+        "x": 0,
+        "y": 0,
+        "width": 0,
+        "height": 0
+      },
+      "visible": false,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"31\">31</button>"
+    },
+    {
+      "selector": "select",
+      "tag": "select",
+      "role": null,
+      "nameHint": "January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember",
+      "bbox": {
+        "x": 370.578125,
+        "y": 513.46875,
+        "width": 88,
+        "height": 19
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<select class=\"pika-select pika-select-month\" tabindex=\"-1\"><option value=\"0\">January</option><option value=\"1\">February</option><option value=\"2\">March</option><option value=\"3\">April</option><option value=\"4\">May</option><option value=\"5\">June</option><option value=\"6\">July</option><option value=\"7\">August</option><option value=\"8\">September</option><option value=\"9\" selected=\"selected\">October</option><option value=\"10\">November</option><option value=\"11\">December</option></select>"
+    },
+    {
+      "selector": "select",
+      "tag": "select",
+      "role": null,
+      "nameHint": "2016\n2017\n2018\n2019\n2020\n2021\n2022\n2023\n2024\n2025\n2026\n2027\n2028\n2029\n2030\n2031\n2032\n2033\n2034\n2035\n2036",
+      "bbox": {
+        "x": 430.265625,
+        "y": 513.46875,
+        "width": 52,
+        "height": 19
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<select class=\"pika-select pika-select-year\" tabindex=\"-1\"><option value=\"2016\">2016</option><option value=\"2017\">2017</option><option value=\"2018\">2018</option><option value=\"2019\">2019</option><option value=\"2020\">2020</option><option value=\"2021\">2021</option><option value=\"2022\">2022</option><option value=\"2023\">2023</option><option value=\"2024\">2024</option><option value=\"2025\">2025</option><option value=\"2026\" selected=\"selected\">2026</option><option value=\"2027\">2027</option><option value=\"2028\">2028</option><option value=\"2029\">2029</option><option value=\"2030\">2030</option><option value=\"2031\">2031</option><option value=\"2032\">2032</option><option value=\"2033\">2033</option><option value=\"2034\">2034</option><option value=\"2035\">2035</option><option value=\"2036\">2036</option></select>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "Previous Month",
+      "bbox": {
+        "x": 299,
+        "y": 508.46875,
+        "width": 20,
+        "height": 30
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<button class=\"pika-prev\" type=\"button\">Previous Month</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "Next Month",
+      "bbox": {
+        "x": 519,
+        "y": 508.46875,
+        "width": 20,
+        "height": 30
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(0, 0, 0)"
+      },
+      "html": "<button class=\"pika-next\" type=\"button\">Next Month</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "1",
+      "bbox": {
+        "x": 401.84375,
+        "y": 573.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"1\">1</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "2",
+      "bbox": {
+        "x": 436.125,
+        "y": 573.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"2\">2</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "3",
+      "bbox": {
+        "x": 470.40625,
+        "y": 573.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"3\">3</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "4",
+      "bbox": {
+        "x": 504.6875,
+        "y": 573.0625,
+        "width": 34.3125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"4\">4</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "5",
+      "bbox": {
+        "x": 299,
+        "y": 598.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"5\">5</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "6",
+      "bbox": {
+        "x": 333.28125,
+        "y": 598.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"6\">6</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "7",
+      "bbox": {
+        "x": 367.5625,
+        "y": 598.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"7\">7</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "8",
+      "bbox": {
+        "x": 401.84375,
+        "y": 598.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"8\">8</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "9",
+      "bbox": {
+        "x": 436.125,
+        "y": 598.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"9\">9</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "10",
+      "bbox": {
+        "x": 470.40625,
+        "y": 598.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"10\">10</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "11",
+      "bbox": {
+        "x": 504.6875,
+        "y": 598.0625,
+        "width": 34.3125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"11\">11</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "12",
+      "bbox": {
+        "x": 299,
+        "y": 623.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"12\">12</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "13",
+      "bbox": {
+        "x": 333.28125,
+        "y": 623.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"13\">13</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "14",
+      "bbox": {
+        "x": 367.5625,
+        "y": 623.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"14\">14</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "15",
+      "bbox": {
+        "x": 401.84375,
+        "y": 623.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"15\">15</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "16",
+      "bbox": {
+        "x": 436.125,
+        "y": 623.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"16\">16</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "17",
+      "bbox": {
+        "x": 470.40625,
+        "y": 623.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"17\">17</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "18",
+      "bbox": {
+        "x": 504.6875,
+        "y": 623.0625,
+        "width": 34.3125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"18\">18</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "19",
+      "bbox": {
+        "x": 299,
+        "y": 648.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(255, 255, 255)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"19\">19</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "20",
+      "bbox": {
+        "x": 333.28125,
+        "y": 648.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"20\">20</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "21",
+      "bbox": {
+        "x": 367.5625,
+        "y": 648.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"21\">21</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "22",
+      "bbox": {
+        "x": 401.84375,
+        "y": 648.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"22\">22</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "23",
+      "bbox": {
+        "x": 436.125,
+        "y": 648.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"23\">23</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "24",
+      "bbox": {
+        "x": 470.40625,
+        "y": 648.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"24\">24</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "25",
+      "bbox": {
+        "x": 504.6875,
+        "y": 648.0625,
+        "width": 34.3125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"25\">25</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "26",
+      "bbox": {
+        "x": 299,
+        "y": 673.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"26\">26</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "27",
+      "bbox": {
+        "x": 333.28125,
+        "y": 673.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"27\">27</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "28",
+      "bbox": {
+        "x": 367.5625,
+        "y": 673.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"28\">28</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "29",
+      "bbox": {
+        "x": 401.84375,
+        "y": 673.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"29\">29</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "30",
+      "bbox": {
+        "x": 436.125,
+        "y": 673.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": false,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(102, 102, 102)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"30\">30</button>"
+    },
+    {
+      "selector": "button",
+      "tag": "button",
+      "role": null,
+      "nameHint": "31",
+      "bbox": {
+        "x": 470.40625,
+        "y": 673.0625,
+        "width": 34.28125,
+        "height": 25
+      },
+      "visible": true,
+      "inViewport": true,
+      "obscuredAtCenter": true,
+      "modal": null,
+      "disabled": false,
+      "inert": false,
+      "outline": {
+        "style": "none",
+        "width": "3px",
+        "color": "rgb(153, 153, 153)"
+      },
+      "html": "<button class=\"pika-button pika-day\" type=\"button\" data-pika-year=\"2026\" data-pika-month=\"9\" data-pika-day=\"31\">31</button>"
+    }
+  ],
+  "focusEvents": [
+    {
+      "sequence": 0,
+      "from": "body",
+      "to": "#pickup",
+      "tag": "input"
+    },
+    {
+      "sequence": 1,
+      "from": "#pickup",
+      "to": "#return",
+      "tag": "input"
+    },
+    {
+      "sequence": 2,
+      "from": "#return",
+      "to": "#save",
+      "tag": "button"
+    }
+  ],
+  "overflow": 0,
+  "dialogs": []
+}

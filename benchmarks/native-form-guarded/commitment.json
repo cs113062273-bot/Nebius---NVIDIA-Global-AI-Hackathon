@@ -1,0 +1,42 @@
+{
+  "fixedAt": "2026-10-24T06:57:27.135Z",
+  "issue": "https://github.com/alphagov/accessible-autocomplete/issues/777",
+  "derivedFrom": "benchmarks/native-form/original",
+  "sourceHashes": {
+    "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+    "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+    "app.js": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489",
+    "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+    "index.html": "9687b417ec1d0fca00c4bbd9eb320d94cac643d6f6a6b4310389c408afb23ceb",
+    "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+  },
+  "taskHash": "40938b76eb5cf769d35df6f6aee31197d8e09cb584adfca0ebbd3b6259dba21a",
+  "withheldTaskHash": "3dbc9aa3846adbd8ca0933f316798293ed488d336b3da620685258876df26e04",
+  "baseline": {
+    "journey": "VERIFIED_FAIL",
+    "functionalJourney": "VERIFIED_PASS",
+    "guard-0": "VERIFIED_PASS",
+    "guard-1": "VERIFIED_PASS"
+  },
+  "withheldBaseline": {
+    "clear-shipping": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "kind": "repair"
+    },
+    "clear-billing": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "kind": "repair"
+    }
+  },
+  "implementation": {
+    "src/engine.js": "502b77571e756e299f2975aaae328ffd7f32a2baa16094e2dfc6e2ab1d0dce15",
+    "src/nebius.js": "f6cd97a51bd20974fb32c1116a668cddbca09e336b7fbee511eaf2ae3692bb08",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "provenance": "Second post-hoc strengthening. Model run 2b863464 attempt 2 passed the native-form-visible task by editing the component blur handler, but a withheld check frozen before that inference showed typing \"Fra\" and leaving the field no longer saved France, and a reviewer probe showed the same patch throws on blur in the library standard (non-select) usage. The author added a plain pickup-city autocomplete to the consumer page and made both behaviours regression guards that must pass before and after every candidate. Guards are part of the gate and the model request; clear-shipping and clear-billing remain withheld. Pinned GOV.UK component unchanged. Not blind or production-customer evidence."
+}

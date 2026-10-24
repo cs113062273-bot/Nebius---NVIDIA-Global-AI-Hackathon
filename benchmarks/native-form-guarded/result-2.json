@@ -1,0 +1,93 @@
+{
+  "completedAt": "2026-10-24T07:04:10.639Z",
+  "modelRun": "63c909d4-7acb-46f4-839e-fc42c0aee73a",
+  "verification": {
+    "verdict": "INCONCLUSIVE",
+    "reasons": [
+      "TRUNCATED: Model output truncated at max_tokens; reasoning may have consumed the output limit"
+    ]
+  },
+  "withheldTitlesAbsentFromRequests": true,
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "TRUNCATED",
+      "failure": "Model output truncated at max_tokens; reasoning may have consumed the output limit",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-de1514c5c0944e6144f2fa4fc24b5c5a",
+      "usage": {
+        "completion_tokens": 10000,
+        "prompt_tokens": 25544,
+        "total_tokens": 35544,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10000,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 25544
+      },
+      "latencyMs": 27138
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-3acaab75d454efa5f9856759ffc4019a",
+      "usage": {
+        "completion_tokens": 8159,
+        "prompt_tokens": 25604,
+        "total_tokens": 33763,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7572,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 25604
+      },
+      "latencyMs": 22021
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "TRUNCATED",
+      "failure": "Model output truncated at max_tokens; reasoning may have consumed the output limit",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-69bdde45781e472a198e7e37d4c7a9cc",
+      "usage": {
+        "completion_tokens": 10000,
+        "prompt_tokens": 26895,
+        "total_tokens": 36895,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10000,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 26895
+      },
+      "latencyMs": 29031
+    }
+  ]
+}

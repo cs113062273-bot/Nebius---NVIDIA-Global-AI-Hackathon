@@ -1,0 +1,400 @@
+{
+  "runIds": [
+    "d2eb947c-deed-44c9-9381-b444438a5c11",
+    "12b01ae9-a19c-4d84-b4dc-acc3a1da82d0",
+    "050ef18e-84ea-4891-b43a-f1d1f41698a4",
+    "a66884e3-0c53-4bc9-8703-d0e06a4d43ca",
+    "2b863464-168d-4a1c-8fd6-6685b7bc3a45",
+    "98988a04-01ec-4124-8c48-5ea4be054a66",
+    "ae1534ec-36a4-4d2b-83b2-cdf0199dbb8d",
+    "1d5036c9-3c31-436b-821a-8dacf8fb6ebb",
+    "0fcd838c-1959-4671-a14c-f63c526658bd",
+    "78893b29-e3dd-404c-9f3e-d6d23c14c73d",
+    "b768fc2e-5f12-4962-9bb6-d46d64f6bdf6",
+    "63c909d4-7acb-46f4-839e-fc42c0aee73a",
+    "7746b726-e0f2-4bc0-90a9-7b9b47b73203",
+    "8ddb2160-2cbf-4960-b51a-a470e0386a3d",
+    "b183ec79-9f35-43d3-ac1a-eac8185bc25f",
+    "a7653c03-77af-424a-ad1a-776455fedf22",
+    "cd8d9040-155d-498b-a3fd-7b94e872c994",
+    "bea9de3c-28dd-43a1-8777-c3b1a23ba7c9",
+    "0b341dc4-5c54-44e8-9750-a8c5a504e2dc",
+    "d5fa5759-20ae-45b9-87f0-971981dfe816",
+    "797b82c8-cfdf-4975-b243-db48350fc49b",
+    "c3158127-dba3-43b3-8dcc-981dc00e071f",
+    "b9223625-8d8c-42f4-be52-c11aa95d3422",
+    "537fabba-1354-4946-8bb8-f3641dc5b88b",
+    "ed4b61c6-3c4a-4b84-8a5d-1e5a9aa1c9eb",
+    "6b8be951-29ac-45df-8aaa-379293b5f68b",
+    "67e901e9-00ef-43bd-8ca4-27d422ed179d",
+    "0cf6e4b4-677b-4839-860f-60a0c96c7775"
+  ],
+  "scope": "The first Ultra repair passed the original clearing task. Independent review then strengthened the frozen contract three times. Each stricter gate was frozen before new inference, replayed earlier model patches without inference, and kept separate withheld checks. Super and Ultra produced several rejected proposals before the final Ultra repair passed everything. Post-hoc tasks are authored acceptance conditions, not a blind evaluation. A fourth gate, added after a reviewer showed the previous final repair erased saved countries when options are pretty-printed, rejected that repair; a new Ultra run then passed it.",
+  "sourceNote": "Pinned GOV.UK accessible-autocomplete in an author-created form. No receipt or data-attribute output is required. Values come from browser FormData at the final checkpoint; network submission and server persistence are outside this check.",
+  "upstream": "https://github.com/alphagov/accessible-autocomplete/issues/777",
+  "upstreamLabel": "Publicly reported component issue #777",
+  "steps": [
+    {
+      "title": "Frozen real-component reproduction",
+      "kind": "Author-created consumer; unmodified upstream component",
+      "at": "2026-10-21T06:44:13.946Z",
+      "description": "Clearing shipping leaves form data [\"gb\"] instead of [\"\"]. Shipping selection already works. Billing clear/selection tasks were committed before inference but omitted from model task requirements; their source markup was visible. This is not a blind test.",
+      "links": [
+        {
+          "href": "./project.html?run=d2eb947c-deed-44c9-9381-b444438a5c11&attempt=1&path=keyboard&step=4#project-result",
+          "label": "Inspect the original failure"
+        }
+      ],
+      "evidence": {
+        "revision": "a4e8637ddb5423b64622d59a852b30a451266f91",
+        "sourceHashes": {
+          "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+          "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+          "app.js": "c0cd5c1ac1020b4313357444a74cdf86be52c9c19abbcf2686cfb28fdc7531b2",
+          "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+          "index.html": "71dd957392336c3af33f9e8bef51136bd4c7e88bce5b121d846053e6542c89e8",
+          "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+        },
+        "taskHash": "9c7dc9e659baf4f45b020d431e6a2522c304dba798c52ec89e1c16dccbf4ef0a",
+        "withheldTaskHash": "ed0fe460da493819d8630a591a2780a8690b31895528e418133d4e631280633d"
+      }
+    },
+    {
+      "title": "Model repairs the integration",
+      "kind": "Genuine uncached Nebius inference",
+      "at": "2026-10-21T06:44:28.501Z",
+      "description": "Nemotron changed source code, then both the shipping clear task and independent France-selection path passed actual form-data checks.",
+      "links": [
+        {
+          "href": "./project.html?run=d2eb947c-deed-44c9-9381-b444438a5c11&attempt=1&path=keyboard&step=4#project-result",
+          "label": "Inspect the model repair"
+        }
+      ],
+      "evidence": {
+        "run": "d2eb947c-deed-44c9-9381-b444438a5c11",
+        "attempt": 1,
+        "requestId": "chatcmpl-231fcd68b0d71c74f91f45459309adff",
+        "promptHash": "1f69af4e5a6e31469a70d643cffaa3f9a00651e76463fa4ea53bb21fc9d44029",
+        "candidateHashes": {
+          "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+          "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+          "app.js": "00bbd8d5d4d29208dc04fd2e3de37991f81a00854a859c08252ef98f185a4779",
+          "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+          "index.html": "71dd957392336c3af33f9e8bef51136bd4c7e88bce5b121d846053e6542c89e8",
+          "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+        }
+      }
+    },
+    {
+      "title": "The same patch clears the other country",
+      "kind": "Fresh-browser transfer check; no new model call",
+      "at": "2026-10-21T06:44:54.232Z",
+      "description": "The unchanged model candidate also clears billing_country while preserving shipping_country. Selecting Italy independently preserves its it code.",
+      "links": [
+        {
+          "href": "./project.html?run=12b01ae9-a19c-4d84-b4dc-acc3a1da82d0&attempt=1&path=keyboard&step=4#project-result",
+          "label": "Inspect the billing transfer"
+        }
+      ],
+      "evidence": {
+        "run": "12b01ae9-a19c-4d84-b4dc-acc3a1da82d0",
+        "sourceRun": "d2eb947c-deed-44c9-9381-b444438a5c11",
+        "sourceAttempt": 1,
+        "candidateHashes": {
+          "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+          "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+          "app.js": "00bbd8d5d4d29208dc04fd2e3de37991f81a00854a859c08252ef98f185a4779",
+          "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+          "index.html": "71dd957392336c3af33f9e8bef51136bd4c7e88bce5b121d846053e6542c89e8",
+          "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+        }
+      }
+    },
+    {
+      "title": "Correct-looking France, wrong form data",
+      "kind": "Post-hoc author-added negative control; no model call",
+      "at": "2026-10-21T06:44:58.902Z",
+      "description": "The author deliberately forces gb when the visible selection is France. Keyboard clear still passes; independent form data expects fr, observes gb and rejects the candidate.",
+      "links": [
+        {
+          "href": "./project.html?run=050ef18e-84ea-4891-b43a-f1d1f41698a4&attempt=1&path=pointer&step=4#project-result",
+          "label": "Inspect the independent rejection"
+        }
+      ],
+      "evidence": {
+        "run": "050ef18e-84ea-4891-b43a-f1d1f41698a4",
+        "sourceRun": "d2eb947c-deed-44c9-9381-b444438a5c11",
+        "sourceAttempt": 1
+      }
+    },
+    {
+      "title": "Independent review: the first repair only handled an exactly empty field",
+      "kind": "Reviewer probe and post-hoc task; no inference",
+      "at": "2026-10-24T06:49:43.511Z",
+      "evidence": {
+        "commitment": "benchmarks/native-form-visible/commitment.json",
+        "sourceHashes": {
+          "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+          "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+          "app.js": "c0cd5c1ac1020b4313357444a74cdf86be52c9c19abbcf2686cfb28fdc7531b2",
+          "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+          "index.html": "71dd957392336c3af33f9e8bef51136bd4c7e88bce5b121d846053e6542c89e8",
+          "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+        },
+        "taskHash": "b4c51203617370bce9e50a69480b3bc5b27572a797f5e9a7162bc7096c3a7c27",
+        "withheldTaskHash": "86da6b233a43d0d3619dfb70affa3084199a304f1ed49a37e8ca2cf6bac1cb9c"
+      },
+      "description": "With the first repair, typing an unlisted country (\"Atlantis\") or only spaces still saved the old code. The author froze a stricter task against the original source: an unlisted or blank entry must save no country. Clear-shipping, clear-billing and a partial-match check were frozen as withheld checks and omitted from the model request.",
+      "links": []
+    },
+    {
+      "title": "Super run: three proposals rejected",
+      "kind": "Real uncached model run; three proposals",
+      "at": "2026-10-24T06:51:25.250Z",
+      "description": "Attempt 1 returned advisory lists as strings and was discarded before patching. Attempt 2 added a MutationObserver that threw runtime errors. Attempt 3 trimmed blank input and then matched the empty \"No saved country\" option by value, so billing still sent de.",
+      "links": [
+        {
+          "href": "./project.html?run=a66884e3-0c53-4bc9-8703-d0e06a4d43ca&attempt=3#project-result",
+          "label": "Inspect the blank-input rejection"
+        }
+      ],
+      "evidence": {
+        "run": "a66884e3-0c53-4bc9-8703-d0e06a4d43ca",
+        "attempt": 3,
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "requestId": "chatcmpl-34e9c7e8be5562074ddfd0aca19b85d7",
+        "usage": {
+          "prompt": 26161,
+          "completion": 2548
+        }
+      }
+    },
+    {
+      "title": "Author accepts a lone string for advisory lists",
+      "kind": "Human implementation change; source and tasks unchanged",
+      "at": "2026-10-24T06:52:21.771Z",
+      "description": "Advisory lists functional_risks and verification_requirements returned as a single string are wrapped into a one-item array before schema validation. Edits and all other fields remain strictly validated. Attempt 1 of run a66884e3 (and attempt 1 of run 65c8e7d5) discarded an otherwise parseable proposal only because these advisory fields were strings. Attempts 2 and 3 were rejected by the browser gates and remain recorded unchanged.",
+      "links": [],
+      "evidence": {
+        "amendment": "benchmarks/native-form-visible/amendment.json"
+      }
+    },
+    {
+      "title": "Super passes its task; a withheld check rejects it",
+      "kind": "Real uncached model run; two proposals",
+      "at": "2026-10-24T06:53:11.940Z",
+      "description": "Attempt 2 edited the component blur handler and passed the keyboard and pointer gates. The withheld clear checks passed, but the withheld partial-match check failed: typing \"Fra\" and leaving the field saved no country instead of France. A reviewer probe also showed the patch throws on blur in the library's plain, non-select usage.",
+      "links": [
+        {
+          "href": "./project.html?run=2b863464-168d-4a1c-8fd6-6685b7bc3a45&attempt=2#project-result",
+          "label": "Inspect the passing model run"
+        },
+        {
+          "href": "./project.html?run=98988a04-01ec-4124-8c48-5ea4be054a66#project-result",
+          "label": "Withheld clear shipping"
+        }
+      ],
+      "evidence": {
+        "run": "2b863464-168d-4a1c-8fd6-6685b7bc3a45",
+        "attempt": 2,
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "requestId": "chatcmpl-109c7b68ff4a92e4d470d923145d7663",
+        "usage": {
+          "prompt": 25717,
+          "completion": 5175
+        }
+      }
+    },
+    {
+      "title": "Regression guards join the gate",
+      "kind": "Post-hoc gate strengthening; earlier patches replayed without inference",
+      "at": "2026-10-24T06:57:27.135Z",
+      "evidence": {
+        "commitment": "benchmarks/native-form-guarded/commitment.json",
+        "sourceHashes": {
+          "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+          "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+          "app.js": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489",
+          "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+          "index.html": "9687b417ec1d0fca00c4bbd9eb320d94cac643d6f6a6b4310389c408afb23ceb",
+          "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+        },
+        "taskHash": "40938b76eb5cf769d35df6f6aee31197d8e09cb584adfca0ebbd3b6259dba21a",
+        "withheldTaskHash": "3dbc9aa3846adbd8ca0933f316798293ed488d336b3da620685258876df26e04"
+      },
+      "description": "The author added a plain pickup-city autocomplete to the page. Two guards must pass before and after every candidate: a partial match still saves France, and the plain field keeps working. Replaying earlier model patches: the first repair still sent gb, the blank-input attempt still sent de, and the component patch failed both guards with a runtime error.",
+      "links": [
+        {
+          "href": "./project.html?run=1d5036c9-3c31-436b-821a-8dacf8fb6ebb&path=guard-0#project-result",
+          "label": "Component patch rejected by guards"
+        },
+        {
+          "href": "./project.html?run=0fcd838c-1959-4671-a14c-f63c526658bd#project-result",
+          "label": "First repair rejected"
+        },
+        {
+          "href": "./project.html?run=78893b29-e3dd-404c-9f3e-d6d23c14c73d#project-result",
+          "label": "Blank-input attempt rejected"
+        }
+      ]
+    },
+    {
+      "title": "Super and Ultra fail the guarded gate",
+      "kind": "Two real uncached model runs; six proposals",
+      "at": "2026-10-24T07:04:09.487Z",
+      "description": "Super: a preimage that did not match, a patch that left gb, and a patch that duplicated the city field (caught by a guard). Ultra with a 10,000-token output limit: two outputs truncated during reasoning and one onConfirm patch that cleared France on blur, failing the pointer path and both guards.",
+      "links": [
+        {
+          "href": "./project.html?run=b768fc2e-5f12-4962-9bb6-d46d64f6bdf6&attempt=3#project-result",
+          "label": "Inspect the Super run"
+        },
+        {
+          "href": "./project.html?run=63c909d4-7acb-46f4-839e-fc42c0aee73a&attempt=2#project-result",
+          "label": "Inspect the Ultra run"
+        }
+      ]
+    },
+    {
+      "title": "Ultra passes through the public onConfirm option",
+      "kind": "Real uncached model run; 16,000-token output limit",
+      "at": "2026-10-24T07:05:14.305Z",
+      "description": "One proposal passed the keyboard task, the pointer path and both guards without editing the library. Withheld clear checks passed. A reviewer probe then found that clearing a country and pressing Enter inside the field submits without a blur, so the old code is still sent.",
+      "links": [
+        {
+          "href": "./project.html?run=7746b726-e0f2-4bc0-90a9-7b9b47b73203&attempt=1#project-result",
+          "label": "Inspect the guarded repair"
+        }
+      ],
+      "evidence": {
+        "run": "7746b726-e0f2-4bc0-90a9-7b9b47b73203",
+        "attempt": 1,
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "requestId": "chatcmpl-b9930835c1b22124f421935380435314",
+        "usage": {
+          "prompt": 25544,
+          "completion": 7978
+        }
+      }
+    },
+    {
+      "title": "Implicit submission joins the task",
+      "kind": "Post-hoc gate strengthening; earlier patches replayed without inference",
+      "at": "2026-10-24T07:06:54.017Z",
+      "evidence": {
+        "commitment": "benchmarks/native-form-submit/commitment.json",
+        "sourceHashes": {
+          "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+          "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+          "app.js": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489",
+          "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+          "index.html": "9687b417ec1d0fca00c4bbd9eb320d94cac643d6f6a6b4310389c408afb23ceb",
+          "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+        },
+        "taskHash": "2d7a25956509af5090de0ebc87f6c4ca5db5a0bafe1f61a3ce48133dd3715e45",
+        "withheldTaskHash": "f5b00aa4a8d22843bf11c737305cc0983a52eff31d5661f8bc8fa24c5d2f9847"
+      },
+      "description": "The keyboard task now clears billing and presses Enter inside the field after an unlisted shipping entry. The previous unlisted/blank task, clear-shipping and clear-billing are withheld; the guards are unchanged. Replays: the guarded Ultra repair still sent de; the first repair still sent gb.",
+      "links": [
+        {
+          "href": "./project.html?run=a7653c03-77af-424a-ad1a-776455fedf22#project-result",
+          "label": "Guarded Ultra repair rejected"
+        },
+        {
+          "href": "./project.html?run=cd8d9040-155d-498b-a3fd-7b94e872c994#project-result",
+          "label": "First repair rejected"
+        }
+      ]
+    },
+    {
+      "title": "Final Ultra repair passes every gate and withheld check",
+      "kind": "Real uncached model run; two proposals",
+      "at": "2026-10-24T07:08:47.056Z",
+      "description": "Attempt 1 was rejected by the keyboard, pointer and guard gates. Attempt 2 used onConfirm plus a submit-time sync that matches the visible text to an option and otherwise selects the empty option. It passed the task, pointer path and both guards, then all three withheld checks. Eight reviewer probes (Enter inside the field, Escape, lowercase text, arrow selection, pointer selection, retyping, plain field) kept visible text and form data consistent.",
+      "links": [
+        {
+          "href": "./project.html?run=bea9de3c-28dd-43a1-8777-c3b1a23ba7c9&attempt=2#project-result",
+          "label": "Inspect the final repair"
+        },
+        {
+          "href": "./project.html?run=797b82c8-cfdf-4975-b243-db48350fc49b#project-result",
+          "label": "Withheld unlisted and blank"
+        },
+        {
+          "href": "./project.html?run=d5fa5759-20ae-45b9-87f0-971981dfe816#project-result",
+          "label": "Withheld clear billing"
+        }
+      ],
+      "evidence": {
+        "run": "bea9de3c-28dd-43a1-8777-c3b1a23ba7c9",
+        "attempt": 2,
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "requestId": "chatcmpl-083dff68b1e8d6d5de8a08d55b42a97b",
+        "usage": {
+          "prompt": 27162,
+          "completion": 13653
+        }
+      }
+    },
+    {
+      "title": "Reviewer probe: the previous final repair erases saved countries",
+      "kind": "Reviewer probe and post-hoc task; no inference",
+      "at": "2026-10-24T10:49:13.022Z",
+      "description": "Run bea9de3c compared the visible text with option textContent exactly. With the same options printed the way server templates often do (text on its own indented line), saving without touching either field submitted no country for shipping or billing, and choosing France saved nothing. The original component kept gb and de. The author froze native-form-markup: that semantically identical markup, the implicit-submission task, and a third guard that an untouched save keeps both countries. The single-line page became a withheld transfer check. Replays without inference: bea9de3c failed the pointer path and all three guards; 7746b726 failed the task, pointer path and guards.",
+      "evidence": {
+        "commitment": "benchmarks/native-form-markup/commitment.json",
+        "sourceHashes": {
+          "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+          "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+          "app.js": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489",
+          "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+          "index.html": "fba53ddd490876c58c7b3df576df2f96ef3211466cd38257d4695391d53aee24",
+          "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+        },
+        "taskHash": "a0225203253ebe87676ff092dd470c5502ca47861cb0cec362999b660c5f4009",
+        "withheldTaskHash": "7daad2c3c3e85d67f4375144ab01f2141944d586e5e03adb66bbd664b74ea2c3",
+        "probes": "benchmarks/native-form-markup/reviewer-probes.json"
+      },
+      "links": [
+        {
+          "href": "./project.html?run=b9223625-8d8c-42f4-be52-c11aa95d3422#project-result",
+          "label": "Previous final repair rejected"
+        },
+        {
+          "href": "./project.html?run=537fabba-1354-4946-8bb8-f3641dc5b88b#project-result",
+          "label": "Guarded repair rejected"
+        }
+      ]
+    },
+    {
+      "title": "Ultra repairs the markup-independent gate",
+      "kind": "Real uncached model run; two proposals",
+      "at": "2026-10-24T10:51:25.194Z",
+      "description": "Attempt 1 cleared the saved countries and was rejected by all three guards; that failure was returned to the model. Attempt 2 replaced the exact comparison with a submit-time sync that trims both the visible text and the option text, and otherwise selects the empty option. It passed the task, pointer path and 3/3 guards. Withheld rechecks without inference: clear shipping, clear billing and the single-line page passed. The withheld unlisted/blank check failed and is kept as recorded: with pretty-printed options, typing spaces matches the whitespace inside the component option text, so the pinned component itself confirms Germany on blur. The field visibly shows Germany and de is submitted, which matches the case goal but not that check written for single-line markup. A reviewer probe of eleven interactions found visible text and form data consistent 11/11 on both markups (original component 5/11, previous final repair 0/11).",
+      "links": [
+        {
+          "href": "./project.html?run=c3158127-dba3-43b3-8dcc-981dc00e071f&attempt=2#project-result",
+          "label": "Inspect the new repair"
+        },
+        {
+          "href": "./project.html?run=0cf6e4b4-677b-4839-860f-60a0c96c7775#project-result",
+          "label": "Withheld single-line page"
+        },
+        {
+          "href": "./project.html?run=67e901e9-00ef-43bd-8ca4-27d422ed179d#project-result",
+          "label": "Withheld blank check (recorded FAIL)"
+        }
+      ],
+      "evidence": {
+        "run": "c3158127-dba3-43b3-8dcc-981dc00e071f",
+        "attempt": 2,
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "requestId": "chatcmpl-3741d99f44f079fdfa327874f4b54881",
+        "usage": {
+          "prompt": 27532,
+          "completion": 5033
+        }
+      }
+    }
+  ],
+  "title": "Evidence history · rejected model patches, four stricter gates, then a verified Ultra repair"
+}

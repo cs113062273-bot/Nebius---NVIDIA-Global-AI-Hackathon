@@ -1,0 +1,1118 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "native-submit-keyboard",
+    "title": "Unrecognized or cleared countries must not save an old code, even when submitted from the field",
+    "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach shipping country",
+        "action": {
+          "kind": "seek",
+          "selector": "#shipping-country",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Enter a country that is not listed",
+        "action": {
+          "kind": "type",
+          "text": "Atlantis",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Reach billing country",
+        "action": {
+          "kind": "seek",
+          "selector": "#billing-country",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Clear the billing country",
+        "action": {
+          "kind": "type",
+          "text": "",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Submit from inside the billing field",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          ""
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          ""
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "native-visible-pointer",
+    "title": "Pointer selection of a listed country is preserved",
+    "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Edit shipping country",
+        "action": {
+          "kind": "click",
+          "selector": "#shipping-country"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Choose France",
+        "action": {
+          "kind": "type",
+          "text": "France",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Confirm the suggested country",
+        "action": {
+          "kind": "click",
+          "selector": "#shipping-country__option--0"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "click",
+          "selector": "#save"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          "fr"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          "de"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          "fr"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          "de"
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "native-guard-partial",
+      "title": "Guard · a partial match confirmed on blur still saves France",
+      "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        {
+          "title": "Reach shipping country",
+          "action": {
+            "kind": "seek",
+            "selector": "#shipping-country",
+            "maxTabs": 24
+          },
+          "assertions": []
+        },
+        {
+          "title": "Type the start of France",
+          "action": {
+            "kind": "type",
+            "text": "Fra",
+            "replace": true
+          },
+          "assertions": []
+        },
+        {
+          "title": "Leave the field and reach Save",
+          "action": {
+            "kind": "seek",
+            "selector": "#save",
+            "maxTabs": 24
+          },
+          "assertions": []
+        },
+        {
+          "title": "Save preferences",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": []
+        }
+      ],
+      "success": [
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "shipping_country",
+          "value": [
+            "fr"
+          ]
+        },
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "billing_country",
+          "value": [
+            "de"
+          ]
+        }
+      ],
+      "functional": [
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "shipping_country",
+          "value": [
+            "fr"
+          ]
+        },
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "billing_country",
+          "value": [
+            "de"
+          ]
+        }
+      ],
+      "forbidden": []
+    },
+    {
+      "version": 1,
+      "id": "native-guard-plain",
+      "title": "Guard · the plain pickup-city autocomplete keeps working",
+      "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        {
+          "title": "Reach pickup city",
+          "action": {
+            "kind": "seek",
+            "selector": "#destination",
+            "maxTabs": 24
+          },
+          "assertions": []
+        },
+        {
+          "title": "Type a city that is not listed",
+          "action": {
+            "kind": "type",
+            "text": "zzz",
+            "replace": true
+          },
+          "assertions": []
+        },
+        {
+          "title": "Leave the field and reach Save",
+          "action": {
+            "kind": "seek",
+            "selector": "#save",
+            "maxTabs": 24
+          },
+          "assertions": []
+        },
+        {
+          "title": "Save preferences",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": []
+        }
+      ],
+      "success": [
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "shipping_country",
+          "value": [
+            "gb"
+          ]
+        },
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "billing_country",
+          "value": [
+            "de"
+          ]
+        },
+        {
+          "kind": "form-data",
+          "selector": "#search",
+          "name": "destination",
+          "value": [
+            "zzz"
+          ]
+        }
+      ],
+      "functional": [
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "shipping_country",
+          "value": [
+            "gb"
+          ]
+        },
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "billing_country",
+          "value": [
+            "de"
+          ]
+        },
+        {
+          "kind": "form-data",
+          "selector": "#search",
+          "name": "destination",
+          "value": [
+            "zzz"
+          ]
+        }
+      ],
+      "forbidden": []
+    },
+    {
+      "version": 1,
+      "id": "native-guard-untouched",
+      "title": "Guard · saving without editing keeps both saved countries",
+      "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        {
+          "title": "Reach Save without editing",
+          "action": {
+            "kind": "seek",
+            "selector": "#save",
+            "maxTabs": 24
+          },
+          "assertions": []
+        },
+        {
+          "title": "Save preferences",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": []
+        }
+      ],
+      "success": [
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "shipping_country",
+          "value": [
+            "gb"
+          ]
+        },
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "billing_country",
+          "value": [
+            "de"
+          ]
+        }
+      ],
+      "functional": [
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "shipping_country",
+          "value": [
+            "gb"
+          ]
+        },
+        {
+          "kind": "form-data",
+          "selector": "#preferences",
+          "name": "billing_country",
+          "value": [
+            "de"
+          ]
+        }
+      ],
+      "forbidden": []
+    }
+  ],
+  "withheld": {
+    "clear-shipping": [
+      {
+        "version": 1,
+        "id": "native-shipping-keyboard",
+        "title": "Clearing shipping must clear its actual form value",
+        "goal": "Native form data must match the visible country choices; preserve the other country.",
+        "source": "authored",
+        "profile": "keyboard",
+        "path": "/",
+        "steps": [
+          {
+            "title": "Reach saved shipping country",
+            "action": {
+              "kind": "seek",
+              "selector": "#shipping-country",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Clear the optional saved country",
+            "action": {
+              "kind": "type",
+              "text": "",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Leave the country field",
+            "action": {
+              "kind": "seek",
+              "selector": "#save",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Save preferences",
+            "action": {
+              "kind": "press",
+              "key": "Enter"
+            },
+            "assertions": []
+          }
+        ],
+        "success": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              ""
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          }
+        ],
+        "functional": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              ""
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          }
+        ],
+        "forbidden": []
+      },
+      {
+        "version": 1,
+        "id": "native-shipping-pointer",
+        "title": "Preserve the selected shipping country in native form data",
+        "goal": "Native form data must match the visible country choices; preserve the other country.",
+        "source": "authored",
+        "profile": "pointer",
+        "path": "/",
+        "steps": [
+          {
+            "title": "Edit shipping country",
+            "action": {
+              "kind": "click",
+              "selector": "#shipping-country"
+            },
+            "assertions": []
+          },
+          {
+            "title": "Choose France",
+            "action": {
+              "kind": "type",
+              "text": "France",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Confirm the suggested country",
+            "action": {
+              "kind": "click",
+              "selector": "#shipping-country__option--0"
+            },
+            "assertions": []
+          },
+          {
+            "title": "Save preferences",
+            "action": {
+              "kind": "click",
+              "selector": "#save"
+            },
+            "assertions": []
+          }
+        ],
+        "success": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "fr"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          }
+        ],
+        "functional": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "fr"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          }
+        ],
+        "forbidden": []
+      }
+    ],
+    "clear-billing": [
+      {
+        "version": 1,
+        "id": "native-billing-keyboard",
+        "title": "Clearing billing must clear its actual form value",
+        "goal": "Native form data must match the visible country choices; preserve the other country.",
+        "source": "authored",
+        "profile": "keyboard",
+        "path": "/",
+        "steps": [
+          {
+            "title": "Reach saved billing country",
+            "action": {
+              "kind": "seek",
+              "selector": "#billing-country",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Clear the optional saved country",
+            "action": {
+              "kind": "type",
+              "text": "",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Leave the country field",
+            "action": {
+              "kind": "seek",
+              "selector": "#save",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Save preferences",
+            "action": {
+              "kind": "press",
+              "key": "Enter"
+            },
+            "assertions": []
+          }
+        ],
+        "success": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "gb"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              ""
+            ]
+          }
+        ],
+        "functional": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "gb"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              ""
+            ]
+          }
+        ],
+        "forbidden": []
+      },
+      {
+        "version": 1,
+        "id": "native-billing-pointer",
+        "title": "Preserve the selected billing country in native form data",
+        "goal": "Native form data must match the visible country choices; preserve the other country.",
+        "source": "authored",
+        "profile": "pointer",
+        "path": "/",
+        "steps": [
+          {
+            "title": "Edit billing country",
+            "action": {
+              "kind": "click",
+              "selector": "#billing-country"
+            },
+            "assertions": []
+          },
+          {
+            "title": "Choose Italy",
+            "action": {
+              "kind": "type",
+              "text": "Italy",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Confirm the suggested country",
+            "action": {
+              "kind": "click",
+              "selector": "#billing-country__option--0"
+            },
+            "assertions": []
+          },
+          {
+            "title": "Save preferences",
+            "action": {
+              "kind": "click",
+              "selector": "#save"
+            },
+            "assertions": []
+          }
+        ],
+        "success": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "gb"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "it"
+            ]
+          }
+        ],
+        "functional": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "gb"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "it"
+            ]
+          }
+        ],
+        "forbidden": []
+      }
+    ],
+    "unrecognized-or-blank": [
+      {
+        "version": 1,
+        "id": "native-visible-keyboard",
+        "title": "Unrecognized or blank countries must not save an old code",
+        "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+        "source": "authored",
+        "profile": "keyboard",
+        "path": "/",
+        "steps": [
+          {
+            "title": "Reach shipping country",
+            "action": {
+              "kind": "seek",
+              "selector": "#shipping-country",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Enter a country that is not listed",
+            "action": {
+              "kind": "type",
+              "text": "Atlantis",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Reach billing country",
+            "action": {
+              "kind": "seek",
+              "selector": "#billing-country",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Replace billing with blank spaces",
+            "action": {
+              "kind": "type",
+              "text": "   ",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Reach Save",
+            "action": {
+              "kind": "seek",
+              "selector": "#save",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Save preferences",
+            "action": {
+              "kind": "press",
+              "key": "Enter"
+            },
+            "assertions": []
+          }
+        ],
+        "success": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              ""
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              ""
+            ]
+          }
+        ],
+        "functional": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              ""
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              ""
+            ]
+          }
+        ],
+        "forbidden": []
+      },
+      {
+        "version": 1,
+        "id": "native-visible-pointer",
+        "title": "Pointer selection of a listed country is preserved",
+        "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+        "source": "authored",
+        "profile": "pointer",
+        "path": "/",
+        "steps": [
+          {
+            "title": "Edit shipping country",
+            "action": {
+              "kind": "click",
+              "selector": "#shipping-country"
+            },
+            "assertions": []
+          },
+          {
+            "title": "Choose France",
+            "action": {
+              "kind": "type",
+              "text": "France",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Confirm the suggested country",
+            "action": {
+              "kind": "click",
+              "selector": "#shipping-country__option--0"
+            },
+            "assertions": []
+          },
+          {
+            "title": "Save preferences",
+            "action": {
+              "kind": "click",
+              "selector": "#save"
+            },
+            "assertions": []
+          }
+        ],
+        "success": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "fr"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          }
+        ],
+        "functional": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "fr"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          }
+        ],
+        "forbidden": []
+      }
+    ],
+    "single-line-markup": [
+      {
+        "version": 1,
+        "id": "native-submit-keyboard",
+        "title": "Unrecognized or cleared countries must not save an old code, even when submitted from the field",
+        "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+        "source": "authored",
+        "profile": "keyboard",
+        "path": "/",
+        "steps": [
+          {
+            "title": "Reach shipping country",
+            "action": {
+              "kind": "seek",
+              "selector": "#shipping-country",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Enter a country that is not listed",
+            "action": {
+              "kind": "type",
+              "text": "Atlantis",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Reach billing country",
+            "action": {
+              "kind": "seek",
+              "selector": "#billing-country",
+              "maxTabs": 24
+            },
+            "assertions": []
+          },
+          {
+            "title": "Clear the billing country",
+            "action": {
+              "kind": "type",
+              "text": "",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Submit from inside the billing field",
+            "action": {
+              "kind": "press",
+              "key": "Enter"
+            },
+            "assertions": []
+          }
+        ],
+        "success": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              ""
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              ""
+            ]
+          }
+        ],
+        "functional": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              ""
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              ""
+            ]
+          }
+        ],
+        "forbidden": []
+      },
+      {
+        "version": 1,
+        "id": "native-visible-pointer",
+        "title": "Pointer selection of a listed country is preserved",
+        "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+        "source": "authored",
+        "profile": "pointer",
+        "path": "/",
+        "steps": [
+          {
+            "title": "Edit shipping country",
+            "action": {
+              "kind": "click",
+              "selector": "#shipping-country"
+            },
+            "assertions": []
+          },
+          {
+            "title": "Choose France",
+            "action": {
+              "kind": "type",
+              "text": "France",
+              "replace": true
+            },
+            "assertions": []
+          },
+          {
+            "title": "Confirm the suggested country",
+            "action": {
+              "kind": "click",
+              "selector": "#shipping-country__option--0"
+            },
+            "assertions": []
+          },
+          {
+            "title": "Save preferences",
+            "action": {
+              "kind": "click",
+              "selector": "#save"
+            },
+            "assertions": []
+          }
+        ],
+        "success": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "fr"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          }
+        ],
+        "functional": [
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "fr"
+            ]
+          },
+          {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          }
+        ],
+        "forbidden": []
+      },
+      "benchmarks/native-form-submit/original"
+    ]
+  }
+}

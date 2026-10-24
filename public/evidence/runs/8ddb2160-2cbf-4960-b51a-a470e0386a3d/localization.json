@@ -1,0 +1,42 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "shipping-country",
+      "save",
+      "body",
+      "Shipping country (optional)",
+      "United Kingdom",
+      "Billing country (optional)",
+      "Germany",
+      "Save delivery preferences",
+      "Find a pickup city (optional)"
+    ],
+    "sha256": "9687b417ec1d0fca00c4bbd9eb320d94cac643d6f6a6b4310389c408afb23ceb"
+  },
+  {
+    "path": "accessible-autocomplete.js",
+    "score": 8.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45"
+  },
+  {
+    "path": "app.js",
+    "score": 1,
+    "signals": [
+      "shipping-country"
+    ],
+    "sha256": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489"
+  },
+  {
+    "path": "style.css",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+  }
+]

@@ -1,0 +1,17 @@
+- main:
+  - paragraph: ACCOUNT / OPTIONAL SAVED COUNTRIES
+  - heading "Where should we deliver?" [level=1]
+  - paragraph: You can change or clear either saved country. Saving must preserve what is visible in each field.
+  - text: Shipping country (optional)
+  - status
+  - status
+  - combobox "Shipping country (optional)": United Kingdom
+  - text: Billing country (optional)
+  - status
+  - status
+  - textbox: Italy
+  - combobox "Billing country (optional)" [expanded]: Italy
+  - listbox "Italy":
+    - option "Italy"
+  - button "Save delivery preferences"
+  - status: No changes saved.

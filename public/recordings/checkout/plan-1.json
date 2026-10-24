@@ -1,0 +1,24 @@
+{
+  "root_cause": "The modal dialog lacks focus management: opening the dialog does not move focus to the first focusable element (email field), closing the dialog does not return focus to the trigger button, and there is no focus trapping for Tab/Shift+Tab within the dialog. This causes keyboard navigation to fail the expected focus sequence.",
+  "repair_strategy": "Add focus management functions to openDialog (show dialog and focus field), closeDialog (hide dialog and focus trigger), and a keydown handler on the dialog to trap Tab/Shift+Tab cycling among the dialog's focusable elements (close button, field, action button) and handle Escape to close. Replace existing click handlers with these functions.",
+  "edits": [
+    {
+      "path": "app.js",
+      "sha256": "c109af2918e7081829418acec93093dad0b2d4ee586b507dc4ad204aef48d9e3",
+      "before": "const field = document.querySelector('#field');\nconst action = document.querySelector('#action');\nconst receipt = document.querySelector('#receipt');\nconst panel = document.querySelector('#panel');\nconst trigger = document.querySelector('#open');\ntrigger.addEventListener('click', () => { panel.hidden = false; });\ndocument.querySelector('#close').addEventListener('click', () => { panel.hidden = true; });\naction.addEventListener('click', () => {\n  if (!field.value.trim()) { field.setAttribute('aria-invalid', 'true'); field.focus(); return; }\n  receipt.textContent = \"Order confirmed · Field bag · $84\";\n  receipt.setAttribute('data-input', field.value);\n  panel.hidden = true;\n});\n",
+      "after": "const field = document.querySelector('#field');\nconst action = document.querySelector('#action');\nconst receipt = document.querySelector('#receipt');\nconst panel = document.querySelector('#panel');\nconst trigger = document.querySelector('#open');\nconst close = document.querySelector('#close');\n\nfunction openDialog() {\n  panel.hidden = false;\n  field.focus();\n}\n\nfunction closeDialog() {\n  panel.hidden = true;\n  trigger.focus();\n}\n\nfunction handleKeyDown(e) {\n  if (e.key === 'Escape') {\n    closeDialog();\n    return;\n  }\n  if (e.key === 'Tab') {\n    const focusables = [close, field, action];\n    const active = document.activeElement;\n    const idx = focusables.indexOf(active);\n    if (idx === -1) return;\n    if (e.shiftKey) {\n      if (idx === 0) {\n        e.preventDefault();\n        focusables[focusables.length - 1].focus();\n      }\n    } else {\n      if (idx === focusables.length - 1) {\n        e.preventDefault();\n        focusables[0].focus();\n      }\n    }\n  }\n}\n\ntrigger.addEventListener('click', openDialog);\nclose.addEventListener('click', closeDialog);\naction.addEventListener('click', () => {\n  if (!field.value.trim()) { field.setAttribute('aria-invalid', 'true'); field.focus(); return; }\n  receipt.textContent = \"Order confirmed · Field bag · $84\";\n  receipt.setAttribute('data-input', field.value);\n  closeDialog();\n});\npanel.addEventListener('keydown', handleKeyDown);\n"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can open the dialog with Enter on the trigger button, focus immediately moves to the email field. Tab and Shift+Tab cycle within the dialog's focusable elements (close button, field, action button). Escape closes the dialog and returns focus to the trigger. The close button also closes the dialog and returns focus. This satisfies WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value) for the modal dialog.",
+  "functional_risks": [
+    "Focus trap may interfere with other components if the dialog is not the only modal, but the handler is scoped to the panel element.",
+    "The keydown listener remains attached when the dialog is hidden; however, focus cannot be inside a hidden dialog, so no conflict.",
+    "The aria-invalid attribute on empty field is preserved; ensure it is cleared on valid input (not required by current tests)."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey again; all assertions must pass (focus sequence, dialog open/close, receipt text).",
+    "Manually test with keyboard only: open dialog, navigate with Tab/Shift+Tab, close with Escape and close button, verify focus return.",
+    "Verify with a screen reader (e.g., NVDA, VoiceOver) that the dialog is announced with its accessible name 'Place order' and role dialog.",
+    "Ensure the receipt status updates correctly with the entered email and order confirmation text."
+  ]
+}

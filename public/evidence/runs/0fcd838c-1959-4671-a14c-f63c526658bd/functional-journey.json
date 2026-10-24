@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "id": "native-visible-pointer",
+  "title": "Pointer selection of a listed country is preserved",
+  "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Edit shipping country",
+      "action": {
+        "kind": "click",
+        "selector": "#shipping-country"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Choose France",
+      "action": {
+        "kind": "type",
+        "text": "France",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Confirm the suggested country",
+      "action": {
+        "kind": "click",
+        "selector": "#shipping-country__option--0"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save preferences",
+      "action": {
+        "kind": "click",
+        "selector": "#save"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "shipping_country",
+      "value": [
+        "fr"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "billing_country",
+      "value": [
+        "de"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "shipping_country",
+      "value": [
+        "fr"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "billing_country",
+      "value": [
+        "de"
+      ]
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,106 @@
+{
+  "completedAt": "2026-10-24T07:02:07.586Z",
+  "modelRun": "b768fc2e-5f12-4962-9bb6-d46d64f6bdf6",
+  "verification": {
+    "verdict": "VERIFIED_FAIL",
+    "reasons": [
+      "Keyboard candidate: failed · #preferences shipping_country: expected [\"\"], observed [\"gb\"]",
+      "Task evidence is missing or contradicts the verdict",
+      "Regression guard \"Guard · the plain pickup-city autocomplete keeps working\": inconclusive · #search destination: expected [\"zzz\"], observed [\"\",\"\"]"
+    ],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_FAIL",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true,
+      "regressionGuards": "1/2"
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "withheldTitlesAbsentFromRequests": true,
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Patch preimage must match exactly once",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-87de824a1913530a97619dec0c25f27b",
+      "usage": {
+        "completion_tokens": 3738,
+        "prompt_tokens": 25544,
+        "total_tokens": 29282,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2805,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 16864,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 25544
+      },
+      "latencyMs": 45774
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-578b6914c002ec2a4581d08532704ccc",
+      "usage": {
+        "completion_tokens": 2617,
+        "prompt_tokens": 26486,
+        "total_tokens": 29103,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1699,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 16864,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 26486
+      },
+      "latencyMs": 19358
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-fab4dcbb3c299d4a67ea3f6ceab84f51",
+      "usage": {
+        "completion_tokens": 2654,
+        "prompt_tokens": 27527,
+        "total_tokens": 30181,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1789,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 16864,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 27527
+      },
+      "latencyMs": 19806
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "fixedAt": "2026-10-24T10:49:13.022Z",
+  "issue": "https://github.com/alphagov/accessible-autocomplete/issues/777",
+  "derivedFrom": "benchmarks/native-form-submit/original",
+  "sourceHashes": {
+    "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+    "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+    "app.js": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489",
+    "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+    "index.html": "fba53ddd490876c58c7b3df576df2f96ef3211466cd38257d4695391d53aee24",
+    "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+  },
+  "taskHash": "a0225203253ebe87676ff092dd470c5502ca47861cb0cec362999b660c5f4009",
+  "withheldTaskHash": "7daad2c3c3e85d67f4375144ab01f2141944d586e5e03adb66bbd664b74ea2c3",
+  "baseline": {
+    "journey": "VERIFIED_FAIL",
+    "functionalJourney": "VERIFIED_PASS",
+    "guard-0": "VERIFIED_PASS",
+    "guard-1": "VERIFIED_PASS",
+    "guard-2": "VERIFIED_PASS"
+  },
+  "withheldBaseline": {
+    "clear-shipping": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "kind": "repair"
+    },
+    "clear-billing": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "kind": "repair"
+    },
+    "unrecognized-or-blank": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "kind": "repair"
+    },
+    "single-line-markup": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "kind": "repair"
+    }
+  },
+  "implementation": {
+    "src/engine.js": "502b77571e756e299f2975aaae328ffd7f32a2baa16094e2dfc6e2ab1d0dce15",
+    "src/nebius.js": "f6cd97a51bd20974fb32c1116a668cddbca09e336b7fbee511eaf2ae3692bb08",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "provenance": "Fourth post-hoc strengthening. Ultra run bea9de3c attempt 2 passed every native-form-submit gate by comparing the visible text with option textContent exactly. A reviewer probe (2026-10-24) reformatted the same options the way server templates commonly print them (text on its own indented line): with that patch, saving without touching either field erased both saved countries, and choosing France saved nothing. The original component kept them. This case uses that semantically identical markup and adds a guard: an untouched save must keep both saved countries. The single-line page is withheld as a transfer check. Pinned GOV.UK component unchanged. Not blind or production-customer evidence."
+}

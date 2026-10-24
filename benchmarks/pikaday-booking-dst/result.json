@@ -1,0 +1,73 @@
+{
+  "completedAt": "2026-10-24T07:10:30.955Z",
+  "modelRun": "e211fc5c-5553-4c01-acf6-80a865ffb891",
+  "verification": {
+    "verdict": "INCONCLUSIVE",
+    "reasons": [
+      "PROPOSAL: Sponsor-credit token/call ceiling reached before request"
+    ]
+  },
+  "withheldTitlesAbsentFromRequests": true,
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Patch preimage must match exactly once",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-80bc1c163c9fc491ac8a4bddb6aa5ef3",
+      "usage": {
+        "completion_tokens": 13759,
+        "prompt_tokens": 17799,
+        "total_tokens": 31558,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 12557,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17799
+      },
+      "latencyMs": 33875
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Patch preimage must match exactly once",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-07665d09ed3c2402b76464fe09382224",
+      "usage": {
+        "completion_tokens": 2893,
+        "prompt_tokens": 19005,
+        "total_tokens": 21898,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1692,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19005
+      },
+      "latencyMs": 7075
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Sponsor-credit token/call ceiling reached before request"
+    }
+  ]
+}

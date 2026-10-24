@@ -1,0 +1,469 @@
+{
+  "version": 1,
+  "id": "a11y-dialog",
+  "title": "Restore focus after closing a real dialog",
+  "kind": "Pinned open-source defect · reconstructed notice task · model-authored repair",
+  "recordedAt": "2026-10-21T00:36:33.760Z",
+  "runId": "fa95dcbd-3dd6-4451-9cd9-aafd690606e8",
+  "journeyHash": "b84dda8ecbcf22ed40f789614a79ddf266c6e96c0311e5bed08115de82cd2e74",
+  "journey": {
+    "version": 1,
+    "id": "historical-dialog-keyboard",
+    "title": "Restore focus after closing a real dialog",
+    "goal": "Focus returns to the opener",
+    "source": "benchmark",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach notice trigger",
+        "action": {
+          "kind": "seek",
+          "selector": "#open",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Open notice",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#dialog"
+          }
+        ]
+      },
+      {
+        "title": "Dismiss notice and return to the opener",
+        "action": {
+          "kind": "press",
+          "key": "Escape"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#open"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "focus",
+        "selector": "#open"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "attribute",
+        "selector": "#dialog",
+        "name": "aria-hidden",
+        "value": "true"
+      }
+    ],
+    "forbidden": []
+  },
+  "model": {
+    "provider": "Nebius Token Factory",
+    "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+    "requestId": "chatcmpl-1acd76b94fc1b0257eb50f55353ac820",
+    "promptHash": "b3efe759d4bbfb8ed98af601742885bc95f9855fac3ce9a8e7755dd923a60869",
+    "schemaVersion": 2,
+    "structuredOutput": false,
+    "latencyMs": 10884,
+    "usage": {
+      "completion_tokens": 3791,
+      "prompt_tokens": 4450,
+      "total_tokens": 8241,
+      "completion_tokens_details": {
+        "accepted_prediction_tokens": null,
+        "audio_tokens": null,
+        "reasoning_tokens": 2803,
+        "rejected_prediction_tokens": null
+      },
+      "prompt_tokens_details": {
+        "audio_tokens": null,
+        "cached_tokens": 0,
+        "multimodal_tokens": null
+      },
+      "prompt_cache_hit_tokens": 0,
+      "prompt_cache_miss_tokens": 4450
+    },
+    "pricing": {
+      "prompt": "0.000001",
+      "completion": "0.000003",
+      "image": "0",
+      "price_per_video_second": "0",
+      "request": "0",
+      "price_per_minute": "0",
+      "input_cache_read": null
+    },
+    "reservedCreditUsd": 0.05405,
+    "budgetScope": "real-case-20261021",
+    "cacheHit": false,
+    "retries": 0,
+    "attemptedCompletions": 1
+  },
+  "elapsedMs": 16582,
+  "verification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "before": {
+    "verdict": "VERIFIED_FAIL",
+    "failure": {
+      "step": 2,
+      "category": "REPLAY",
+      "message": "Expected state did not occur after action"
+    },
+    "frames": [
+      {
+        "id": "initial",
+        "image": "recordings/a11y-dialog/before/initial.png",
+        "focus": {
+          "selector": "body",
+          "name": "Read a notice\nRead notice\nNotice\n\nA dialog with opacity-based hiding.\n\nClose not",
+          "bbox": {
+            "x": 8,
+            "y": 8,
+            "width": 1264,
+            "height": 460.03125
+          }
+        },
+        "dialogs": [
+          {
+            "containsFocus": false
+          }
+        ],
+        "assertions": []
+      },
+      {
+        "id": "step-0",
+        "image": "recordings/a11y-dialog/before/step-0.png",
+        "focus": {
+          "selector": "#open",
+          "name": "Read notice",
+          "bbox": {
+            "x": 48,
+            "y": 142.21875,
+            "width": 127.53125,
+            "height": 51
+          }
+        },
+        "dialogs": [
+          {
+            "containsFocus": false
+          }
+        ],
+        "assertions": []
+      },
+      {
+        "id": "step-1",
+        "image": "recordings/a11y-dialog/before/step-1.png",
+        "focus": {
+          "selector": "#dialog",
+          "name": "Notice\n\nA dialog with opacity-based hiding.\n\nClose notice",
+          "bbox": {
+            "x": 48,
+            "y": 193.21875,
+            "width": 1184,
+            "height": 234.8125
+          }
+        },
+        "dialogs": [
+          {
+            "containsFocus": true
+          }
+        ],
+        "assertions": [
+          {
+            "assertion": {
+              "kind": "focus",
+              "selector": "#dialog"
+            },
+            "pass": true,
+            "observed": true
+          }
+        ]
+      },
+      {
+        "id": "step-2",
+        "image": "recordings/a11y-dialog/before/step-2.png",
+        "focus": {
+          "selector": "#dialog",
+          "name": "Notice\n\nA dialog with opacity-based hiding.\n\nClose notice",
+          "bbox": {
+            "x": 48,
+            "y": 193.21875,
+            "width": 1184,
+            "height": 234.8125
+          }
+        },
+        "dialogs": [
+          {
+            "containsFocus": true
+          }
+        ],
+        "assertions": [
+          {
+            "assertion": {
+              "kind": "focus",
+              "selector": "#open"
+            },
+            "pass": false,
+            "observed": false
+          }
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "assertion": {
+          "kind": "focus",
+          "selector": "#open"
+        },
+        "pass": false,
+        "observed": false
+      }
+    ],
+    "functional": [
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#dialog",
+          "name": "aria-hidden",
+          "value": "true"
+        },
+        "pass": true,
+        "observed": "true"
+      }
+    ],
+    "scan": {
+      "violations": 1,
+      "incomplete": 0
+    }
+  },
+  "after": {
+    "verdict": "VERIFIED_PASS",
+    "failure": null,
+    "frames": [
+      {
+        "id": "initial",
+        "image": "recordings/a11y-dialog/after-1/initial.png",
+        "focus": {
+          "selector": "body",
+          "name": "Read a notice\nRead notice\nNotice\n\nA dialog with opacity-based hiding.\n\nClose not",
+          "bbox": {
+            "x": 8,
+            "y": 8,
+            "width": 1264,
+            "height": 460.03125
+          }
+        },
+        "dialogs": [
+          {
+            "containsFocus": false
+          }
+        ],
+        "assertions": []
+      },
+      {
+        "id": "step-0",
+        "image": "recordings/a11y-dialog/after-1/step-0.png",
+        "focus": {
+          "selector": "#open",
+          "name": "Read notice",
+          "bbox": {
+            "x": 48,
+            "y": 142.21875,
+            "width": 127.53125,
+            "height": 51
+          }
+        },
+        "dialogs": [
+          {
+            "containsFocus": false
+          }
+        ],
+        "assertions": []
+      },
+      {
+        "id": "step-1",
+        "image": "recordings/a11y-dialog/after-1/step-1.png",
+        "focus": {
+          "selector": "#dialog",
+          "name": "Notice\n\nA dialog with opacity-based hiding.\n\nClose notice",
+          "bbox": {
+            "x": 48,
+            "y": 193.21875,
+            "width": 1184,
+            "height": 234.8125
+          }
+        },
+        "dialogs": [
+          {
+            "containsFocus": true
+          }
+        ],
+        "assertions": [
+          {
+            "assertion": {
+              "kind": "focus",
+              "selector": "#dialog"
+            },
+            "pass": true,
+            "observed": true
+          }
+        ]
+      },
+      {
+        "id": "step-2",
+        "image": "recordings/a11y-dialog/after-1/step-2.png",
+        "focus": {
+          "selector": "#open",
+          "name": "Read notice",
+          "bbox": {
+            "x": 48,
+            "y": 142.21875,
+            "width": 127.53125,
+            "height": 51
+          }
+        },
+        "dialogs": [
+          {
+            "containsFocus": false
+          }
+        ],
+        "assertions": [
+          {
+            "assertion": {
+              "kind": "focus",
+              "selector": "#open"
+            },
+            "pass": true,
+            "observed": true
+          }
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "assertion": {
+          "kind": "focus",
+          "selector": "#open"
+        },
+        "pass": true,
+        "observed": true
+      }
+    ],
+    "functional": [
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#dialog",
+          "name": "aria-hidden",
+          "value": "true"
+        },
+        "pass": true,
+        "observed": "true"
+      }
+    ],
+    "scan": {
+      "violations": 1,
+      "incomplete": 0
+    }
+  },
+  "functional": {
+    "before": "VERIFIED_PASS",
+    "after": "VERIFIED_PASS",
+    "assertions": [
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#dialog",
+          "name": "aria-hidden",
+          "value": "true"
+        },
+        "pass": true,
+        "observed": "true"
+      }
+    ]
+  },
+  "plan": {
+    "root_cause": "In the hide() method, the focus event listener (maintainFocus) is still attached when previouslyFocused.focus() is called. The focus event bubbles to the body (capturing phase), triggering maintainFocus which sees the active element (the opener button) is not inside a dialog and moves focus back to the dialog, preventing focus restoration.",
+    "repair_strategy": "Remove the focus event listener before restoring focus to the previously focused element, so maintainFocus does not intercept the focus move.",
+    "edits": [
+      {
+        "path": "src/a11y-dialog.js",
+        "sha256": "9dbd1daa87fcac8518db48e4cbb4b0eeea7c30c92a6171ff59cbc895938aaf4c",
+        "before": "  /**\n   * Hide the dialog element, restore the focus to the previously active\n   * element, stop listening for some specific key presses and fire all\n   * registered callbacks for `hide` event\n   */\n         hide(event        ) {\n    // If the dialog is already closed, abort\n    if (!this.shown) return this\n\n    // Dispatch a `hide` event\n    const hideEvent = this.fire('hide', event)\n\n    // If the event was prevented, do not continue with the normal behavior\n    if (hideEvent.defaultPrevented) return this\n\n    this.shown = false\n    this.$el.setAttribute('aria-hidden', 'true')\n\n    // Ensure the previously focused element (if any) has a `focus` method\n    // before attempting to call it to account for SVG elements\n    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/108\n    this.previouslyFocused?.focus?.()\n\n    // Remove the focus event listener to the body element and stop listening\n    // for specific key presses\n    document.body.removeEventListener('focus', this.maintainFocus, true)\n    this.$el.removeEventListener('keydown', this.bindKeypress, true)\n\n    return this\n  }",
+        "after": "  /**\n   * Hide the dialog element, restore the focus to the previously active\n   * element, stop listening for some specific key presses and fire all\n   * registered callbacks for `hide` event\n   */\n         hide(event        ) {\n    // If the dialog is already closed, abort\n    if (!this.shown) return this\n\n    // Dispatch a `hide` event\n    const hideEvent = this.fire('hide', event)\n\n    // If the event was prevented, do not continue with the normal behavior\n    if (hideEvent.defaultPrevented) return this\n\n    this.shown = false\n    this.$el.setAttribute('aria-hidden', 'true')\n\n    // Remove the focus event listener to the body element before restoring focus\n    // so that maintainFocus does not trap focus back into the dialog.\n    document.body.removeEventListener('focus', this.maintainFocus, true)\n\n    // Ensure the previously focused element (if any) has a `focus` method\n    // before attempting to call it to account for SVG elements\n    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/108\n    this.previouslyFocused?.focus?.()\n\n    // Stop listening for specific key presses\n    this.$el.removeEventListener('keydown', this.bindKeypress, true)\n\n    return this\n  }"
+      }
+    ],
+    "expected_accessibility_effect": "Pressing Escape in a modal dialog will now correctly return focus to the element that opened the dialog (the opener button), satisfying WCAG 2.4.3 Focus Order and 4.1.2 Name, Role, Value for dialog focus management.",
+    "functional_risks": [
+      "If other code relies on the focus event listener being present during the focus restoration (unlikely), behavior may change.",
+      "The order of removing keydown listener after focus restoration is preserved; no risk there."
+    ],
+    "verification_requirements": [
+      "Run the provided journey: open dialog with Enter, close with Escape, verify focus returns to #open.",
+      "Test nested dialogs to ensure top-most dialog closes and focus returns to its opener.",
+      "Test with alertdialog role (should not close on Escape) to ensure no regression."
+    ]
+  },
+  "patch": "--- a/src/a11y-dialog.js\n+++ b/src/a11y-dialog.js\n@@ -1,276 +1,278 @@\n-import { closest, focus, getActiveEl, trapTabKey } from './dom-utils.js'\n-\n-                                                         \n-                                                                \n-\n-const SCOPE = 'data-a11y-dialog'\n-\n-export default class A11yDialog {\n-          $el             \n-          id        \n-          previouslyFocused                    \n-\n-         shown         \n-\n-  constructor(element             ) {\n-    this.$el = element\n-    this.id = this.$el.getAttribute(SCOPE) || this.$el.id\n-    this.previouslyFocused = null\n-    this.shown = false\n-\n-    this.maintainFocus = this.maintainFocus.bind(this)\n-    this.bindKeypress = this.bindKeypress.bind(this)\n-    this.handleTriggerClicks = this.handleTriggerClicks.bind(this)\n-\n-    this.show = this.show.bind(this)\n-    this.hide = this.hide.bind(this)\n-\n-    this.$el.setAttribute('aria-hidden', 'true')\n-    this.$el.setAttribute('aria-modal', 'true')\n-    this.$el.setAttribute('tabindex', '-1')\n-\n-    if (!this.$el.hasAttribute('role')) {\n-      this.$el.setAttribute('role', 'dialog')\n-    }\n-\n-    document.addEventListener('click', this.handleTriggerClicks, true)\n-  }\n-\n-  /**\n-   * Destroy the current instance (after making sure the dialog has been hidden)\n-   * and remove all associated listeners from dialog openers and closers\n-   */\n-         destroy() {\n-    // Dispatch a `destroy` event\n-    const destroyEvent = this.fire('destroy')\n-\n-    // If the event was prevented, do not continue with the normal behavior\n-    if (destroyEvent.defaultPrevented) return this\n-\n-    // Hide the dialog to avoid destroying an open instance\n-    this.hide()\n-\n-    // Remove the click event delegates for our openers and closers\n-    document.removeEventListener('click', this.handleTriggerClicks, true)\n-\n-    // Clone and replace the dialog element to prevent memory leaks caused by\n-    // event listeners that the author might not have cleaned up.\n-    this.$el.replaceWith(this.$el.cloneNode(true))\n-\n-    return this\n-  }\n-\n-  /**\n-   * Show the dialog element, trap the current focus within it, listen for some\n-   * specific key presses and fire all registered callbacks for `show` event\n-   */\n-         show(event        ) {\n-    // If the dialog is already open, abort\n-    if (this.shown) return this\n-\n-    // Dispatch a `show` event\n-    const showEvent = this.fire('show', event)\n-\n-    // If the event was prevented, do not continue with the normal behavior\n-    if (showEvent.defaultPrevented) return this\n-\n-    // Keep a reference to the currently focused element to be able to restore\n-    // it later\n-    this.shown = true\n-    this.$el.removeAttribute('aria-hidden')\n-    this.previouslyFocused = getActiveEl()               \n-\n-    // Due to a long lasting bug in Safari, clicking an interactive element\n-    // (like a <button>) does *not* move the focus to that element, which means\n-    // `document.activeElement` is whatever element is currently focused (like\n-    // an <input>), or the <body> element otherwise. We can work around that\n-    // problem by checking whether the focused element is the <body>, and if it,\n-    // store the click event target.\n-    // See: https://bugs.webkit.org/show_bug.cgi?id=22261\n-    if (this.previouslyFocused?.tagName === 'BODY' && event?.target) {\n-      this.previouslyFocused = event.target               \n-    }\n-\n-    // Set the focus to the dialog element\n-    // See: https://github.com/KittyGiraudel/a11y-dialog/pull/583\n-    if (event?.type === 'focus') {\n-      this.maintainFocus()\n-    } else {\n-      focus(this.$el)\n-    }\n-\n-    // Bind a focus event listener to the body element to make sure the focus\n-    // stays trapped inside the dialog while open, and start listening for some\n-    // specific key presses (TAB and ESC)\n-    document.body.addEventListener('focus', this.maintainFocus, true)\n-    this.$el.addEventListener('keydown', this.bindKeypress, true)\n-\n-    return this\n-  }\n-\n-  /**\n-   * Hide the dialog element, restore the focus to the previously active\n-   * element, stop listening for some specific key presses and fire all\n-   * registered callbacks for `hide` event\n-   */\n-         hide(event        ) {\n-    // If the dialog is already closed, abort\n-    if (!this.shown) return this\n-\n-    // Dispatch a `hide` event\n-    const hideEvent = this.fire('hide', event)\n-\n-    // If the event was prevented, do not continue with the normal behavior\n-    if (hideEvent.defaultPrevented) return this\n-\n-    this.shown = false\n-    this.$el.setAttribute('aria-hidden', 'true')\n-\n-    // Ensure the previously focused element (if any) has a `focus` method\n-    // before attempting to call it to account for SVG elements\n-    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/108\n-    this.previouslyFocused?.focus?.()\n-\n-    // Remove the focus event listener to the body element and stop listening\n-    // for specific key presses\n-    document.body.removeEventListener('focus', this.maintainFocus, true)\n-    this.$el.removeEventListener('keydown', this.bindKeypress, true)\n-\n-    return this\n-  }\n-\n-  /**\n-   * Register a new callback for the given event type\n-   */\n-         on(\n-    type                 ,\n-    handler               ,\n-    options                          \n-  ) {\n-    this.$el.addEventListener(type, handler, options)\n-\n-    return this\n-  }\n-\n-  /**\n-   * Unregister an existing callback for the given event type\n-   */\n-         off(\n-    type                 ,\n-    handler               ,\n-    options                          \n-  ) {\n-    this.$el.removeEventListener(type, handler, options)\n-\n-    return this\n-  }\n-\n-  /**\n-   * Dispatch and return a custom event from the DOM element associated with\n-   * this dialog; this allows authors to listen for and respond to the events\n-   * in their own code\n-   */\n-          fire(type                 , event        ) {\n-    const customEvent = new CustomEvent(type, {\n-      detail: event,\n-      cancelable: true,\n-    })\n-\n-    this.$el.dispatchEvent(customEvent)\n-\n-    return customEvent\n-  }\n-\n-  /**\n-   * Add a delegated event listener for when elememts that open or close the\n-   * dialog are clicked, and call `show` or `hide`, respectively\n-   */\n-          handleTriggerClicks(event       ) {\n-    // We need to retrieve the click target while accounting for Shadow DOM.\n-    // When within a web component, `event.target` is the shadow root (e.g.\n-    // `<my-dialog>`), so we need to use `event.composedPath()` to get the click\n-    // target\n-    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/582\n-    const target = event.composedPath()[0]               \n-    const opener = closest(`[${SCOPE}-show=\"${this.id}\"]`, target)\n-    const explicitCloser = closest(`[${SCOPE}-hide=\"${this.id}\"]`, target)\n-    const implicitCloser =\n-      closest(`[${SCOPE}-hide]`, target) &&\n-      closest('[aria-modal=\"true\"]', target) === this.$el\n-\n-    // We use `closest(..)` (instead of `matches(..)`) so that clicking an\n-    // element nested within a dialog opener does cause the dialog to open, and\n-    // we use our custom `closest(..)` function so that it can cross shadow\n-    // boundaries\n-    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/712\n-    if (opener) this.show(event)\n-    if (explicitCloser || implicitCloser) this.hide(event)\n-  }\n-\n-  /**\n-   * Private event handler used when listening to some specific key presses\n-   * (namely ESC and TAB)\n-   */\n-          bindKeypress(event               ) {\n-    // This is an escape hatch in case there are nested open dialogs, so that\n-    // only the top most dialog gets interacted with (`closest` is basically\n-    // `Element.prototype.closest()` accounting for Shadow DOM subtrees)\n-    if (closest('[aria-modal=\"true\"]', getActiveEl()) !== this.$el) {\n-      return\n-    }\n-\n-    let hasOpenPopover = false\n-    try {\n-      hasOpenPopover = !!this.$el.querySelector(\n-        '[popover]:not([popover=\"manual\"]):popover-open'\n-      )\n-    } catch {\n-      // Run that DOM query in a try/catch because not all browsers support the\n-      // `:popover-open` selector, which would cause the whole expression to\n-      // fail\n-      // See: https://caniuse.com/mdn-css_selectors_popover-open\n-      // See: https://github.com/KittyGiraudel/a11y-dialog/pull/578#discussion_r1343215149\n-    }\n-\n-    // If the dialog is shown and the ESC key is pressed, prevent any further\n-    // effects from the ESC key and hide the dialog, unless:\n-    // - its role is `alertdialog`, which means it should be modal\n-    // - or it contains an open popover, in which case ESC should close it\n-    if (\n-      event.key === 'Escape' &&\n-      this.$el.getAttribute('role') !== 'alertdialog' &&\n-      !hasOpenPopover\n-    ) {\n-      event.preventDefault()\n-      this.hide(event)\n-    }\n-\n-    // If the dialog is shown and the TAB key is pressed, make sure the focus\n-    // stays trapped within the dialog element\n-    if (event.key === 'Tab') {\n-      trapTabKey(this.$el, event)\n-    }\n-  }\n-\n-  /**\n-   * If the dialog is shown and the focus is not within a dialog element (either\n-   * this one or another one in case of nested dialogs) or an element with the\n-   * ignore attribute, move it back to the dialog container\n-   * See: https://github.com/KittyGiraudel/a11y-dialog/issues/177\n-   */\n-          maintainFocus() {\n-    // We use `getActiveEl()` and not `event.target` here because the latter can\n-    // be a shadow root. This can happen when having a focusable element after\n-    // slotted content: tabbing out of it causes this focus listener to trigger\n-    // with the shadow root as a target event. In such a case, the focus would\n-    // be incorrectly moved to the dialog, which shouldn’t happen. Getting the\n-    // active element (while accounting for Shadow DOM) avoids that problem.\n-    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/778\n-    const target = getActiveEl()\n-\n-    if (!closest(`[aria-modal=\"true\"], [${SCOPE}-ignore-focus-trap]`, target)) {\n-      focus(this.$el)\n-    }\n-  }\n-}\n-\n+import { closest, focus, getActiveEl, trapTabKey } from './dom-utils.js'\n+\n+                                                         \n+                                                                \n+\n+const SCOPE = 'data-a11y-dialog'\n+\n+export default class A11yDialog {\n+          $el             \n+          id        \n+          previouslyFocused                    \n+\n+         shown         \n+\n+  constructor(element             ) {\n+    this.$el = element\n+    this.id = this.$el.getAttribute(SCOPE) || this.$el.id\n+    this.previouslyFocused = null\n+    this.shown = false\n+\n+    this.maintainFocus = this.maintainFocus.bind(this)\n+    this.bindKeypress = this.bindKeypress.bind(this)\n+    this.handleTriggerClicks = this.handleTriggerClicks.bind(this)\n+\n+    this.show = this.show.bind(this)\n+    this.hide = this.hide.bind(this)\n+\n+    this.$el.setAttribute('aria-hidden', 'true')\n+    this.$el.setAttribute('aria-modal', 'true')\n+    this.$el.setAttribute('tabindex', '-1')\n+\n+    if (!this.$el.hasAttribute('role')) {\n+      this.$el.setAttribute('role', 'dialog')\n+    }\n+\n+    document.addEventListener('click', this.handleTriggerClicks, true)\n+  }\n+\n+  /**\n+   * Destroy the current instance (after making sure the dialog has been hidden)\n+   * and remove all associated listeners from dialog openers and closers\n+   */\n+         destroy() {\n+    // Dispatch a `destroy` event\n+    const destroyEvent = this.fire('destroy')\n+\n+    // If the event was prevented, do not continue with the normal behavior\n+    if (destroyEvent.defaultPrevented) return this\n+\n+    // Hide the dialog to avoid destroying an open instance\n+    this.hide()\n+\n+    // Remove the click event delegates for our openers and closers\n+    document.removeEventListener('click', this.handleTriggerClicks, true)\n+\n+    // Clone and replace the dialog element to prevent memory leaks caused by\n+    // event listeners that the author might not have cleaned up.\n+    this.$el.replaceWith(this.$el.cloneNode(true))\n+\n+    return this\n+  }\n+\n+  /**\n+   * Show the dialog element, trap the current focus within it, listen for some\n+   * specific key presses and fire all registered callbacks for `show` event\n+   */\n+         show(event        ) {\n+    // If the dialog is already open, abort\n+    if (this.shown) return this\n+\n+    // Dispatch a `show` event\n+    const showEvent = this.fire('show', event)\n+\n+    // If the event was prevented, do not continue with the normal behavior\n+    if (showEvent.defaultPrevented) return this\n+\n+    // Keep a reference to the currently focused element to be able to restore\n+    // it later\n+    this.shown = true\n+    this.$el.removeAttribute('aria-hidden')\n+    this.previouslyFocused = getActiveEl()               \n+\n+    // Due to a long lasting bug in Safari, clicking an interactive element\n+    // (like a <button>) does *not* move the focus to that element, which means\n+    // `document.activeElement` is whatever element is currently focused (like\n+    // an <input>), or the <body> element otherwise. We can work around that\n+    // problem by checking whether the focused element is the <body>, and if it,\n+    // store the click event target.\n+    // See: https://bugs.webkit.org/show_bug.cgi?id=22261\n+    if (this.previouslyFocused?.tagName === 'BODY' && event?.target) {\n+      this.previouslyFocused = event.target               \n+    }\n+\n+    // Set the focus to the dialog element\n+    // See: https://github.com/KittyGiraudel/a11y-dialog/pull/583\n+    if (event?.type === 'focus') {\n+      this.maintainFocus()\n+    } else {\n+      focus(this.$el)\n+    }\n+\n+    // Bind a focus event listener to the body element to make sure the focus\n+    // stays trapped inside the dialog while open, and start listening for some\n+    // specific key presses (TAB and ESC)\n+    document.body.addEventListener('focus', this.maintainFocus, true)\n+    this.$el.addEventListener('keydown', this.bindKeypress, true)\n+\n+    return this\n+  }\n+\n+  /**\n+   * Hide the dialog element, restore the focus to the previously active\n+   * element, stop listening for some specific key presses and fire all\n+   * registered callbacks for `hide` event\n+   */\n+         hide(event        ) {\n+    // If the dialog is already closed, abort\n+    if (!this.shown) return this\n+\n+    // Dispatch a `hide` event\n+    const hideEvent = this.fire('hide', event)\n+\n+    // If the event was prevented, do not continue with the normal behavior\n+    if (hideEvent.defaultPrevented) return this\n+\n+    this.shown = false\n+    this.$el.setAttribute('aria-hidden', 'true')\n+\n+    // Remove the focus event listener to the body element before restoring focus\n+    // so that maintainFocus does not trap focus back into the dialog.\n+    document.body.removeEventListener('focus', this.maintainFocus, true)\n+\n+    // Ensure the previously focused element (if any) has a `focus` method\n+    // before attempting to call it to account for SVG elements\n+    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/108\n+    this.previouslyFocused?.focus?.()\n+\n+    // Stop listening for specific key presses\n+    this.$el.removeEventListener('keydown', this.bindKeypress, true)\n+\n+    return this\n+  }\n+\n+  /**\n+   * Register a new callback for the given event type\n+   */\n+         on(\n+    type                 ,\n+    handler               ,\n+    options                          \n+  ) {\n+    this.$el.addEventListener(type, handler, options)\n+\n+    return this\n+  }\n+\n+  /**\n+   * Unregister an existing callback for the given event type\n+   */\n+         off(\n+    type                 ,\n+    handler               ,\n+    options                          \n+  ) {\n+    this.$el.removeEventListener(type, handler, options)\n+\n+    return this\n+  }\n+\n+  /**\n+   * Dispatch and return a custom event from the DOM element associated with\n+   * this dialog; this allows authors to listen for and respond to the events\n+   * in their own code\n+   */\n+          fire(type                 , event        ) {\n+    const customEvent = new CustomEvent(type, {\n+      detail: event,\n+      cancelable: true,\n+    })\n+\n+    this.$el.dispatchEvent(customEvent)\n+\n+    return customEvent\n+  }\n+\n+  /**\n+   * Add a delegated event listener for when elememts that open or close the\n+   * dialog are clicked, and call `show` or `hide`, respectively\n+   */\n+          handleTriggerClicks(event       ) {\n+    // We need to retrieve the click target while accounting for Shadow DOM.\n+    // When within a web component, `event.target` is the shadow root (e.g.\n+    // `<my-dialog>`), so we need to use `event.composedPath()` to get the click\n+    // target\n+    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/582\n+    const target = event.composedPath()[0]               \n+    const opener = closest(`[${SCOPE}-show=\"${this.id}\"]`, target)\n+    const explicitCloser = closest(`[${SCOPE}-hide=\"${this.id}\"]`, target)\n+    const implicitCloser =\n+      closest(`[${SCOPE}-hide]`, target) &&\n+      closest('[aria-modal=\"true\"]', target) === this.$el\n+\n+    // We use `closest(..)` (instead of `matches(..)`) so that clicking an\n+    // element nested within a dialog opener does cause the dialog to open, and\n+    // we use our custom `closest(..)` function so that it can cross shadow\n+    // boundaries\n+    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/712\n+    if (opener) this.show(event)\n+    if (explicitCloser || implicitCloser) this.hide(event)\n+  }\n+\n+  /**\n+   * Private event handler used when listening to some specific key presses\n+   * (namely ESC and TAB)\n+   */\n+          bindKeypress(event               ) {\n+    // This is an escape hatch in case there are nested open dialogs, so that\n+    // only the top most dialog gets interacted with (`closest` is basically\n+    // `Element.prototype.closest()` accounting for Shadow DOM subtrees)\n+    if (closest('[aria-modal=\"true\"]', getActiveEl()) !== this.$el) {\n+      return\n+    }\n+\n+    let hasOpenPopover = false\n+    try {\n+      hasOpenPopover = !!this.$el.querySelector(\n+        '[popover]:not([popover=\"manual\"]):popover-open'\n+      )\n+    } catch {\n+      // Run that DOM query in a try/catch because not all browsers support the\n+      // `:popover-open` selector, which would cause the whole expression to\n+      // fail\n+      // See: https://caniuse.com/mdn-css_selectors_popover-open\n+      // See: https://github.com/KittyGiraudel/a11y-dialog/pull/578#discussion_r1343215149\n+    }\n+\n+    // If the dialog is shown and the ESC key is pressed, prevent any further\n+    // effects from the ESC key and hide the dialog, unless:\n+    // - its role is `alertdialog`, which means it should be modal\n+    // - or it contains an open popover, in which case ESC should close it\n+    if (\n+      event.key === 'Escape' &&\n+      this.$el.getAttribute('role') !== 'alertdialog' &&\n+      !hasOpenPopover\n+    ) {\n+      event.preventDefault()\n+      this.hide(event)\n+    }\n+\n+    // If the dialog is shown and the TAB key is pressed, make sure the focus\n+    // stays trapped within the dialog element\n+    if (event.key === 'Tab') {\n+      trapTabKey(this.$el, event)\n+    }\n+  }\n+\n+  /**\n+   * If the dialog is shown and the focus is not within a dialog element (either\n+   * this one or another one in case of nested dialogs) or an element with the\n+   * ignore attribute, move it back to the dialog container\n+   * See: https://github.com/KittyGiraudel/a11y-dialog/issues/177\n+   */\n+          maintainFocus() {\n+    // We use `getActiveEl()` and not `event.target` here because the latter can\n+    // be a shadow root. This can happen when having a focusable element after\n+    // slotted content: tabbing out of it causes this focus listener to trigger\n+    // with the shadow root as a target event. In such a case, the focus would\n+    // be incorrectly moved to the dialog, which shouldn’t happen. Getting the\n+    // active element (while accounting for Shadow DOM) avoids that problem.\n+    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/778\n+    const target = getActiveEl()\n+\n+    if (!closest(`[aria-modal=\"true\"], [${SCOPE}-ignore-focus-trap]`, target)) {\n+      focus(this.$el)\n+    }\n+  }\n+}\n+\n",
+  "files": {
+    "journey.json": "recordings/a11y-dialog/journey.json",
+    "verification.json": "recordings/a11y-dialog/verification.json",
+    "provenance.json": "recordings/a11y-dialog/provenance.json",
+    "manifest.json": "recordings/a11y-dialog/manifest.json",
+    "plan-1.json": "recordings/a11y-dialog/plan-1.json",
+    "diff-1.patch": "recordings/a11y-dialog/diff-1.patch",
+    "model-response.json": "recordings/a11y-dialog/model-response.json",
+    "source.json": "recordings/a11y-dialog/source.json",
+    "request.json": "recordings/a11y-dialog/request.json"
+  },
+  "source": {
+    "repository": "https://github.com/KittyGiraudel/a11y-dialog",
+    "fix": "https://github.com/KittyGiraudel/a11y-dialog/commit/6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+    "revisions": {
+      "before": "a7718bca32ede3c01c93a67da12f45a274011c4c",
+      "after": "6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9"
+    },
+    "sourceHashes": {
+      "before": {
+        "src/a11y-dialog.ts": "3a8e86e84add48d14f5bf37629f7e32e40957a646b28f8680f19b6732355114f",
+        "src/dom-utils.ts": "b6a1a73f7e7660849d8be9e828f1e46b2d55e7735c9ec13da7546c627019dc24",
+        "src/index.ts": "85506feadf2bfff8da99e030e6d65918cba97ad9f3fec040c4c399e3933c6dc7",
+        "LICENSE": "8792afd04f9a65eb981d796da0bd1a700081629ed83d00c6e378e0136cb77ab0",
+        "focusable-selectors-0.8.0/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e",
+        "focusable-selectors-0.8.0/LICENSE": "fbcd624c8a7ecdf806a320ee49f08f72d51b65e568c0b9467454ab7444314c9d"
+      },
+      "after": {
+        "src/a11y-dialog.ts": "08e1a28e0cbee378aee5075fc22c16b273a8f17eee6540d333a204082bf55a66",
+        "src/dom-utils.ts": "b6a1a73f7e7660849d8be9e828f1e46b2d55e7735c9ec13da7546c627019dc24",
+        "src/index.ts": "85506feadf2bfff8da99e030e6d65918cba97ad9f3fec040c4c399e3933c6dc7",
+        "LICENSE": "8792afd04f9a65eb981d796da0bd1a700081629ed83d00c6e378e0136cb77ab0",
+        "focusable-selectors-0.8.0/index.js": "8810ae600067aaeff63e3aace45113dcaf6b91742736d5527dc54e56e5034e5e",
+        "focusable-selectors-0.8.0/LICENSE": "fbcd624c8a7ecdf806a320ee49f08f72d51b65e568c0b9467454ab7444314c9d"
+      }
+    },
+    "evaluation": "Nonblind historical reproduction; model patched type-stripped runtime JS from the pinned before revision. Not a new upstream fix or a blind benchmark."
+  },
+  "bundle": {
+    "path": "recordings/a11y-dialog/proof.tar.gz",
+    "bytes": 204348,
+    "sha256": "54f2b1070f3f0bb5ee58ddc8b3d4169f08fb60ded0e7f656ded3580d5dc5878e"
+  },
+  "previews": {
+    "before": "previews/a11y-dialog/original/index.html",
+    "after": "previews/a11y-dialog/repaired/index.html"
+  }
+}

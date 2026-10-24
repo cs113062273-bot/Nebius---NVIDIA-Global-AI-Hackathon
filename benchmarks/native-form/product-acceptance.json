@@ -1,0 +1,22 @@
+{
+  "at": "2026-10-21T07:45:05.970Z",
+  "browser": "155.0.8059.85",
+  "method": "Installed Chrome in a clean temporary headless profile",
+  "checks": [
+    "Actual native FormData before gb, after empty, both gates pass.",
+    "Selected patch download exactly matches the recorded, git-checked source diff.",
+    "Path/checkpoint deep link survives refresh.",
+    "Two clicks from model repair reach same-patch billing transfer.",
+    "Negative opens at actual pointer failure, expected fr/observed gb, Keyboard PASS/functional FAIL.",
+    "Original MicroModal 1/2/1 attempt toggles and refresh retain true verdicts.",
+    "Existing workspace negative still opens with its actual functional mismatch.",
+    "Unexecuted application rejection has no inherited pass or final outcome.",
+    "Actual iframe element picker selects native backing field; empty, multiple and absent values survive editing and server-side task freezing.",
+    "No page errors or extra inference calls during product walkthrough."
+  ],
+  "urls": {
+    "modelRun": "http://127.0.0.1:4317/project.html?run=d2eb947c-deed-44c9-9381-b444438a5c11",
+    "transferRun": "http://127.0.0.1:4317/project.html?run=12b01ae9-a19c-4d84-b4dc-acc3a1da82d0",
+    "negativeRun": "http://127.0.0.1:4317/project.html?run=050ef18e-84ea-4891-b43a-f1d1f41698a4"
+  }
+}

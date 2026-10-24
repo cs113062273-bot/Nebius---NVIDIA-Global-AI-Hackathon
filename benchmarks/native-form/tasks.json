@@ -1,0 +1,330 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "native-shipping-keyboard",
+    "title": "Clearing shipping must clear its actual form value",
+    "goal": "Native form data must match the visible country choices; preserve the other country.",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach saved shipping country",
+        "action": {
+          "kind": "seek",
+          "selector": "#shipping-country",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Clear the optional saved country",
+        "action": {
+          "kind": "type",
+          "text": "",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Leave the country field",
+        "action": {
+          "kind": "seek",
+          "selector": "#save",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          "de"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          ""
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          "de"
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "native-shipping-pointer",
+    "title": "Preserve the selected shipping country in native form data",
+    "goal": "Native form data must match the visible country choices; preserve the other country.",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Edit shipping country",
+        "action": {
+          "kind": "click",
+          "selector": "#shipping-country"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Choose France",
+        "action": {
+          "kind": "type",
+          "text": "France",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Confirm the suggested country",
+        "action": {
+          "kind": "click",
+          "selector": "#shipping-country__option--0"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "click",
+          "selector": "#save"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          "fr"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          "de"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          "fr"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          "de"
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "withheldJourney": {
+    "version": 1,
+    "id": "native-billing-keyboard",
+    "title": "Clearing billing must clear its actual form value",
+    "goal": "Native form data must match the visible country choices; preserve the other country.",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach saved billing country",
+        "action": {
+          "kind": "seek",
+          "selector": "#billing-country",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Clear the optional saved country",
+        "action": {
+          "kind": "type",
+          "text": "",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Leave the country field",
+        "action": {
+          "kind": "seek",
+          "selector": "#save",
+          "maxTabs": 24
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          "gb"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          ""
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          "gb"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          ""
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "withheldFunctionalJourney": {
+    "version": 1,
+    "id": "native-billing-pointer",
+    "title": "Preserve the selected billing country in native form data",
+    "goal": "Native form data must match the visible country choices; preserve the other country.",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Edit billing country",
+        "action": {
+          "kind": "click",
+          "selector": "#billing-country"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Choose Italy",
+        "action": {
+          "kind": "type",
+          "text": "Italy",
+          "replace": true
+        },
+        "assertions": []
+      },
+      {
+        "title": "Confirm the suggested country",
+        "action": {
+          "kind": "click",
+          "selector": "#billing-country__option--0"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Save preferences",
+        "action": {
+          "kind": "click",
+          "selector": "#save"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          "gb"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          "it"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          "gb"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          "it"
+        ]
+      }
+    ],
+    "forbidden": []
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "id": "native-billing-keyboard",
+  "title": "Clearing billing must clear its actual form value",
+  "goal": "Native form data must match the visible country choices; preserve the other country.",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach saved billing country",
+      "action": {
+        "kind": "seek",
+        "selector": "#billing-country",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Clear the optional saved country",
+      "action": {
+        "kind": "type",
+        "text": "",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Leave the country field",
+      "action": {
+        "kind": "seek",
+        "selector": "#save",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save preferences",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "shipping_country",
+      "value": [
+        "gb"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "billing_country",
+      "value": [
+        ""
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "shipping_country",
+      "value": [
+        "gb"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "billing_country",
+      "value": [
+        ""
+      ]
+    }
+  ],
+  "forbidden": []
+}

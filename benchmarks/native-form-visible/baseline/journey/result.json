@@ -1,0 +1,2131 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "journeyHash": "787c39aaf24acda2a2cd15e150bae83dc3d05f5630ed8b5824775f7849090a95",
+  "environment": {
+    "viewport": {
+      "width": 1280,
+      "height": 800
+    },
+    "locale": "en-US",
+    "timezoneId": "UTC",
+    "colorScheme": "light",
+    "reducedMotion": "no-preference",
+    "forcedColors": "none",
+    "serviceWorkers": "block",
+    "acceptDownloads": false,
+    "deviceScaleFactor": 1
+  },
+  "browser": "156.0.8078.4",
+  "steps": [
+    {
+      "index": 0,
+      "title": "Reach shipping country",
+      "action": {
+        "kind": "seek",
+        "selector": "#shipping-country",
+        "maxTabs": 24
+      },
+      "before": {
+        "selector": "body",
+        "tag": "body",
+        "role": null,
+        "nameHint": "ACCOUNT / OPTIONAL SAVED COUNTRIES\n\nWhere should we deliver?\n\nYou can change or clear either saved country. Saving must preserve what is visible in each field.\n\nShipping country (optional)\nBilling cou",
+        "bbox": {
+          "x": 0,
+          "y": 60,
+          "width": 1280,
+          "height": 528.09375
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(32, 59, 53)"
+        },
+        "html": "<body><main><p>ACCOUNT / OPTIONAL SAVED COUNTRIES</p><h1>Where should we deliver?</h1><p>You can change or clear either saved country. Saving must preserve what is visible in each field.</p><form id=\"preferences\"><label for=\"shipping-country\">Shipping country (optional)</label><div><div class=\"autocomplete__wrapper\"><div class=\"autocomplete__status autocomplete__visually-hidden\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; margin-bottom: -1px; margin-right: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;\"><div id=\"shipping-country__status--A\" role=\"status\" aria-atomic=\"true\" aria-live=\"polite\"></div><div id=\"shipping-country__status--B\" role=\"status\" aria-atomic=\"true\" aria-live=\"polite\"></div></div><input aria-describedby=\"shipping-country__assistiveHint\" aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\"><ul aria-labelledby=\"shipping-country\" id=\"shipping-country__listbox\" role=\"listbox\" class=\"autocomplete__menu autocomplete__menu--inline autocomplete__menu--hidden\"><li aria-selected=\"false\" class=\"autocomplete__option\" id=\"shipping-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">United Kingdom</li></ul><span id=\"shipping-country__assistiveHint\" style=\"display: none;\">When autocomplete results are available use up and down arrows to review and enter to select.  Touch device users, explore by touch or with swipe gestures.</span></div></div><select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"g"
+      },
+      "after": {
+        "selector": "#shipping-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Shipping country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 328.5,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<input aria-describedby=\"shipping-country__assistiveHint\" aria-expanded=\"true\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      "assertions": [],
+      "result": "VERIFIED_PASS"
+    },
+    {
+      "index": 1,
+      "title": "Enter a country that is not listed",
+      "action": {
+        "kind": "type",
+        "text": "Atlantis",
+        "replace": true
+      },
+      "before": {
+        "selector": "#shipping-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Shipping country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 328.5,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<input aria-describedby=\"shipping-country__assistiveHint\" aria-expanded=\"true\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      "after": {
+        "selector": "#shipping-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Shipping country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 328.5,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      "assertions": [],
+      "result": "VERIFIED_PASS"
+    },
+    {
+      "index": 2,
+      "title": "Reach billing country",
+      "action": {
+        "kind": "seek",
+        "selector": "#billing-country",
+        "maxTabs": 24
+      },
+      "before": {
+        "selector": "#shipping-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Shipping country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 328.5,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      "after": {
+        "selector": "#billing-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Billing country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 431.296875,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<input aria-describedby=\"billing-country__assistiveHint\" aria-expanded=\"true\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      "assertions": [],
+      "result": "VERIFIED_PASS"
+    },
+    {
+      "index": 3,
+      "title": "Replace billing with blank spaces",
+      "action": {
+        "kind": "type",
+        "text": "   ",
+        "replace": true
+      },
+      "before": {
+        "selector": "#billing-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Billing country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 431.296875,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<input aria-describedby=\"billing-country__assistiveHint\" aria-expanded=\"true\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      "after": {
+        "selector": "#billing-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Billing country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 431.296875,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<input aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      "assertions": [],
+      "result": "VERIFIED_PASS"
+    },
+    {
+      "index": 4,
+      "title": "Reach Save",
+      "action": {
+        "kind": "seek",
+        "selector": "#save",
+        "maxTabs": 24
+      },
+      "before": {
+        "selector": "#billing-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Billing country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 431.296875,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<input aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      "after": {
+        "selector": "#save",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Save delivery preferences",
+        "bbox": {
+          "x": 290,
+          "y": 501.296875,
+          "width": 250.3125,
+          "height": 56.796875
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+      },
+      "assertions": [],
+      "result": "VERIFIED_PASS"
+    },
+    {
+      "index": 5,
+      "title": "Save preferences",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "before": {
+        "selector": "#save",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Save delivery preferences",
+        "bbox": {
+          "x": 290,
+          "y": 501.296875,
+          "width": 250.3125,
+          "height": 56.796875
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+      },
+      "after": {
+        "selector": "#save",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Save delivery preferences",
+        "bbox": {
+          "x": 290,
+          "y": 501.296875,
+          "width": 250.3125,
+          "height": 56.796875
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+      },
+      "assertions": [],
+      "result": "VERIFIED_PASS"
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "initial",
+      "screenshot": "initial.png",
+      "aria": "initial.aria.yml",
+      "ax": "initial.ax.json",
+      "dom": "initial.dom.html",
+      "state": {
+        "focus": {
+          "selector": "body",
+          "tag": "body",
+          "role": null,
+          "nameHint": "ACCOUNT / OPTIONAL SAVED COUNTRIES\n\nWhere should we deliver?\n\nYou can change or clear either saved country. Saving must preserve what is visible in each field.\n\nShipping country (optional)\nBilling cou",
+          "bbox": {
+            "x": 0,
+            "y": 60,
+            "width": 1280,
+            "height": 528.09375
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "none",
+            "width": "3px",
+            "color": "rgb(32, 59, 53)"
+          },
+          "html": "<body><main><p>ACCOUNT / OPTIONAL SAVED COUNTRIES</p><h1>Where should we deliver?</h1><p>You can change or clear either saved country. Saving must preserve what is visible in each field.</p><form id=\"preferences\"><label for=\"shipping-country\">Shipping country (optional)</label><div><div class=\"autocomplete__wrapper\"><div class=\"autocomplete__status autocomplete__visually-hidden\" style=\"border: 0px; clip: rect(0px, 0px, 0px, 0px); height: 1px; margin-bottom: -1px; margin-right: -1px; overflow: hidden; padding: 0px; position: absolute; white-space: nowrap; width: 1px;\"><div id=\"shipping-country__status--A\" role=\"status\" aria-atomic=\"true\" aria-live=\"polite\"></div><div id=\"shipping-country__status--B\" role=\"status\" aria-atomic=\"true\" aria-live=\"polite\"></div></div><input aria-describedby=\"shipping-country__assistiveHint\" aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\"><ul aria-labelledby=\"shipping-country\" id=\"shipping-country__listbox\" role=\"listbox\" class=\"autocomplete__menu autocomplete__menu--inline autocomplete__menu--hidden\"><li aria-selected=\"false\" class=\"autocomplete__option\" id=\"shipping-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">United Kingdom</li></ul><span id=\"shipping-country__assistiveHint\" style=\"display: none;\">When autocomplete results are available use up and down arrows to review and enter to select.  Touch device users, explore by touch or with swipe gestures.</span></div></div><select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" select"
+        },
+        "nodes": [
+          {
+            "selector": "#shipping-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Shipping country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 328.5,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-describedby=\"shipping-country__assistiveHint\" aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\">"
+          },
+          {
+            "selector": "#shipping-country__option--0",
+            "tag": "li",
+            "role": "option",
+            "nameHint": "United Kingdom",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(11, 12, 12)"
+            },
+            "html": "<li aria-selected=\"false\" class=\"autocomplete__option\" id=\"shipping-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">United Kingdom</li>"
+          },
+          {
+            "selector": "#shipping-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryUnited KingdomFrance",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" selected=\"\">United Kingdom</option><option value=\"fr\">France</option></select>"
+          },
+          {
+            "selector": "#billing-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Billing country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 431.296875,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-describedby=\"billing-country__assistiveHint\" aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\">"
+          },
+          {
+            "selector": "#billing-country__option--0",
+            "tag": "li",
+            "role": "option",
+            "nameHint": "Germany",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(11, 12, 12)"
+            },
+            "html": "<li aria-selected=\"false\" class=\"autocomplete__option\" id=\"billing-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">Germany</li>"
+          },
+          {
+            "selector": "#billing-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryGermanyItaly",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"billing-country-select\" name=\"billing_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"de\" selected=\"\">Germany</option><option value=\"it\">Italy</option></select>"
+          },
+          {
+            "selector": "#save",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Save delivery preferences",
+            "bbox": {
+              "x": 290,
+              "y": 501.296875,
+              "width": 250.3125,
+              "height": 56.796875
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(255, 255, 255)"
+            },
+            "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+          }
+        ],
+        "focusEvents": [],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          "aria-allowed-attr",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "autocomplete-valid",
+          "button-name",
+          "color-contrast",
+          "document-title",
+          "duplicate-id-aria",
+          "form-field-multiple-labels",
+          "html-has-lang",
+          "html-lang-valid",
+          "label",
+          "nested-interactive",
+          "target-size"
+        ],
+        "inapplicable": [
+          "area-alt",
+          "aria-braille-equivalent",
+          "aria-command-name",
+          "aria-hidden-focus",
+          "aria-input-field-name",
+          "aria-meter-name",
+          "aria-progressbar-name",
+          "aria-required-children",
+          "aria-required-parent",
+          "aria-tab-name",
+          "aria-toggle-field-name",
+          "aria-tooltip-name",
+          "avoid-inline-spacing",
+          "blink",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "frame-focusable-content",
+          "frame-title-unique",
+          "frame-title",
+          "html-xml-lang-mismatch",
+          "image-alt",
+          "input-button-name",
+          "input-image-alt",
+          "label-content-name-mismatch",
+          "link-in-text-block",
+          "link-name",
+          "list",
+          "listitem",
+          "marquee",
+          "meta-refresh",
+          "meta-viewport",
+          "object-alt",
+          "role-img-alt",
+          "scrollable-region-focusable",
+          "select-name",
+          "server-side-image-map",
+          "summary-name",
+          "svg-img-alt",
+          "td-headers-attr",
+          "th-has-data-cells",
+          "valid-lang",
+          "video-caption",
+          "no-autoplay-audio"
+        ]
+      }
+    },
+    {
+      "id": "step-0",
+      "screenshot": "step-0.png",
+      "aria": "step-0.aria.yml",
+      "ax": "step-0.ax.json",
+      "dom": "step-0.dom.html",
+      "state": {
+        "focus": {
+          "selector": "#shipping-country",
+          "tag": "input",
+          "role": "combobox",
+          "nameHint": "Shipping country (optional)",
+          "bbox": {
+            "x": 290,
+            "y": 328.5,
+            "width": 480,
+            "height": 40
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "solid",
+            "width": "3px",
+            "color": "rgb(22, 77, 180)"
+          },
+          "html": "<input aria-describedby=\"shipping-country__assistiveHint\" aria-expanded=\"true\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+        },
+        "nodes": [
+          {
+            "selector": "#shipping-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Shipping country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 328.5,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "solid",
+              "width": "3px",
+              "color": "rgb(22, 77, 180)"
+            },
+            "html": "<input aria-describedby=\"shipping-country__assistiveHint\" aria-expanded=\"true\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#shipping-country__option--0",
+            "tag": "li",
+            "role": "option",
+            "nameHint": "United Kingdom",
+            "bbox": {
+              "x": 292,
+              "y": 368.5,
+              "width": 472,
+              "height": 35
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(11, 12, 12)"
+            },
+            "html": "<li aria-selected=\"false\" class=\"autocomplete__option\" id=\"shipping-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">United Kingdom</li>"
+          },
+          {
+            "selector": "#shipping-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryUnited KingdomFrance",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" selected=\"\">United Kingdom</option><option value=\"fr\">France</option></select>"
+          },
+          {
+            "selector": "#billing-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Billing country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 468.296875,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-describedby=\"billing-country__assistiveHint\" aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#billing-country__option--0",
+            "tag": "li",
+            "role": "option",
+            "nameHint": "Germany",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(11, 12, 12)"
+            },
+            "html": "<li aria-selected=\"false\" class=\"autocomplete__option\" id=\"billing-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">Germany</li>"
+          },
+          {
+            "selector": "#billing-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryGermanyItaly",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"billing-country-select\" name=\"billing_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"de\" selected=\"\">Germany</option><option value=\"it\">Italy</option></select>"
+          },
+          {
+            "selector": "#save",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Save delivery preferences",
+            "bbox": {
+              "x": 290,
+              "y": 538.296875,
+              "width": 250.3125,
+              "height": 56.796875
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(255, 255, 255)"
+            },
+            "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+          }
+        ],
+        "focusEvents": [
+          {
+            "sequence": 0,
+            "from": "body",
+            "to": "#shipping-country",
+            "tag": "input"
+          }
+        ],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": null
+    },
+    {
+      "id": "step-1",
+      "screenshot": "step-1.png",
+      "aria": "step-1.aria.yml",
+      "ax": "step-1.ax.json",
+      "dom": "step-1.dom.html",
+      "state": {
+        "focus": {
+          "selector": "#shipping-country",
+          "tag": "input",
+          "role": "combobox",
+          "nameHint": "Shipping country (optional)",
+          "bbox": {
+            "x": 290,
+            "y": 328.5,
+            "width": 480,
+            "height": 40
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "solid",
+            "width": "3px",
+            "color": "rgb(22, 77, 180)"
+          },
+          "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+        },
+        "nodes": [
+          {
+            "selector": "#shipping-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Shipping country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 328.5,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "solid",
+              "width": "3px",
+              "color": "rgb(22, 77, 180)"
+            },
+            "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#shipping-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryUnited KingdomFrance",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" selected=\"\">United Kingdom</option><option value=\"fr\">France</option></select>"
+          },
+          {
+            "selector": "#billing-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Billing country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 468.296875,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-describedby=\"billing-country__assistiveHint\" aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#billing-country__option--0",
+            "tag": "li",
+            "role": "option",
+            "nameHint": "Germany",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(11, 12, 12)"
+            },
+            "html": "<li aria-selected=\"false\" class=\"autocomplete__option\" id=\"billing-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">Germany</li>"
+          },
+          {
+            "selector": "#billing-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryGermanyItaly",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"billing-country-select\" name=\"billing_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"de\" selected=\"\">Germany</option><option value=\"it\">Italy</option></select>"
+          },
+          {
+            "selector": "#save",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Save delivery preferences",
+            "bbox": {
+              "x": 290,
+              "y": 538.296875,
+              "width": 250.3125,
+              "height": 56.796875
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(255, 255, 255)"
+            },
+            "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+          }
+        ],
+        "focusEvents": [
+          {
+            "sequence": 0,
+            "from": "body",
+            "to": "#shipping-country",
+            "tag": "input"
+          }
+        ],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": null
+    },
+    {
+      "id": "step-2",
+      "screenshot": "step-2.png",
+      "aria": "step-2.aria.yml",
+      "ax": "step-2.ax.json",
+      "dom": "step-2.dom.html",
+      "state": {
+        "focus": {
+          "selector": "#billing-country",
+          "tag": "input",
+          "role": "combobox",
+          "nameHint": "Billing country (optional)",
+          "bbox": {
+            "x": 290,
+            "y": 431.296875,
+            "width": 480,
+            "height": 40
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "solid",
+            "width": "3px",
+            "color": "rgb(22, 77, 180)"
+          },
+          "html": "<input aria-describedby=\"billing-country__assistiveHint\" aria-expanded=\"true\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+        },
+        "nodes": [
+          {
+            "selector": "#shipping-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Shipping country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 328.5,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#shipping-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryUnited KingdomFrance",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" selected=\"\">United Kingdom</option><option value=\"fr\">France</option></select>"
+          },
+          {
+            "selector": "#billing-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Billing country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 431.296875,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "solid",
+              "width": "3px",
+              "color": "rgb(22, 77, 180)"
+            },
+            "html": "<input aria-describedby=\"billing-country__assistiveHint\" aria-expanded=\"true\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#billing-country__option--0",
+            "tag": "li",
+            "role": "option",
+            "nameHint": "Germany",
+            "bbox": {
+              "x": 292,
+              "y": 471.296875,
+              "width": 472,
+              "height": 35
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(11, 12, 12)"
+            },
+            "html": "<li aria-selected=\"false\" class=\"autocomplete__option\" id=\"billing-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">Germany</li>"
+          },
+          {
+            "selector": "#billing-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryGermanyItaly",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"billing-country-select\" name=\"billing_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"de\" selected=\"\">Germany</option><option value=\"it\">Italy</option></select>"
+          },
+          {
+            "selector": "#save",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Save delivery preferences",
+            "bbox": {
+              "x": 290,
+              "y": 538.296875,
+              "width": 250.3125,
+              "height": 56.796875
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(255, 255, 255)"
+            },
+            "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+          }
+        ],
+        "focusEvents": [
+          {
+            "sequence": 0,
+            "from": "body",
+            "to": "#shipping-country",
+            "tag": "input"
+          },
+          {
+            "sequence": 1,
+            "from": "#shipping-country",
+            "to": "#billing-country",
+            "tag": "input"
+          }
+        ],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": null
+    },
+    {
+      "id": "step-3",
+      "screenshot": "step-3.png",
+      "aria": "step-3.aria.yml",
+      "ax": "step-3.ax.json",
+      "dom": "step-3.dom.html",
+      "state": {
+        "focus": {
+          "selector": "#billing-country",
+          "tag": "input",
+          "role": "combobox",
+          "nameHint": "Billing country (optional)",
+          "bbox": {
+            "x": 290,
+            "y": 431.296875,
+            "width": 480,
+            "height": 40
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "solid",
+            "width": "3px",
+            "color": "rgb(22, 77, 180)"
+          },
+          "html": "<input aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+        },
+        "nodes": [
+          {
+            "selector": "#shipping-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Shipping country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 328.5,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#shipping-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryUnited KingdomFrance",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" selected=\"\">United Kingdom</option><option value=\"fr\">France</option></select>"
+          },
+          {
+            "selector": "#billing-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Billing country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 431.296875,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "solid",
+              "width": "3px",
+              "color": "rgb(22, 77, 180)"
+            },
+            "html": "<input aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default autocomplete__input--focused\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#billing-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryGermanyItaly",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"billing-country-select\" name=\"billing_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"de\" selected=\"\">Germany</option><option value=\"it\">Italy</option></select>"
+          },
+          {
+            "selector": "#save",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Save delivery preferences",
+            "bbox": {
+              "x": 290,
+              "y": 538.296875,
+              "width": 250.3125,
+              "height": 56.796875
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(255, 255, 255)"
+            },
+            "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+          }
+        ],
+        "focusEvents": [
+          {
+            "sequence": 0,
+            "from": "body",
+            "to": "#shipping-country",
+            "tag": "input"
+          },
+          {
+            "sequence": 1,
+            "from": "#shipping-country",
+            "to": "#billing-country",
+            "tag": "input"
+          }
+        ],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": null
+    },
+    {
+      "id": "step-4",
+      "screenshot": "step-4.png",
+      "aria": "step-4.aria.yml",
+      "ax": "step-4.ax.json",
+      "dom": "step-4.dom.html",
+      "state": {
+        "focus": {
+          "selector": "#save",
+          "tag": "button",
+          "role": null,
+          "nameHint": "Save delivery preferences",
+          "bbox": {
+            "x": 290,
+            "y": 501.296875,
+            "width": 250.3125,
+            "height": 56.796875
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "solid",
+            "width": "3px",
+            "color": "rgb(22, 77, 180)"
+          },
+          "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+        },
+        "nodes": [
+          {
+            "selector": "#shipping-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Shipping country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 328.5,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#shipping-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryUnited KingdomFrance",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" selected=\"\">United Kingdom</option><option value=\"fr\">France</option></select>"
+          },
+          {
+            "selector": "#billing-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Billing country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 431.296875,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#billing-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryGermanyItaly",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"billing-country-select\" name=\"billing_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"de\" selected=\"\">Germany</option><option value=\"it\">Italy</option></select>"
+          },
+          {
+            "selector": "#save",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Save delivery preferences",
+            "bbox": {
+              "x": 290,
+              "y": 501.296875,
+              "width": 250.3125,
+              "height": 56.796875
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "solid",
+              "width": "3px",
+              "color": "rgb(22, 77, 180)"
+            },
+            "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+          }
+        ],
+        "focusEvents": [
+          {
+            "sequence": 0,
+            "from": "body",
+            "to": "#shipping-country",
+            "tag": "input"
+          },
+          {
+            "sequence": 1,
+            "from": "#shipping-country",
+            "to": "#billing-country",
+            "tag": "input"
+          },
+          {
+            "sequence": 2,
+            "from": "#billing-country",
+            "to": "#save",
+            "tag": "button"
+          }
+        ],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": null
+    },
+    {
+      "id": "step-5",
+      "screenshot": "step-5.png",
+      "aria": "step-5.aria.yml",
+      "ax": "step-5.ax.json",
+      "dom": "step-5.dom.html",
+      "state": {
+        "focus": {
+          "selector": "#save",
+          "tag": "button",
+          "role": null,
+          "nameHint": "Save delivery preferences",
+          "bbox": {
+            "x": 290,
+            "y": 501.296875,
+            "width": 250.3125,
+            "height": 56.796875
+          },
+          "visible": true,
+          "inViewport": true,
+          "obscuredAtCenter": false,
+          "modal": null,
+          "disabled": false,
+          "inert": false,
+          "outline": {
+            "style": "solid",
+            "width": "3px",
+            "color": "rgb(22, 77, 180)"
+          },
+          "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+        },
+        "nodes": [
+          {
+            "selector": "#shipping-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Shipping country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 328.5,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#shipping-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryUnited KingdomFrance",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" selected=\"\">United Kingdom</option><option value=\"fr\">France</option></select>"
+          },
+          {
+            "selector": "#billing-country",
+            "tag": "input",
+            "role": "combobox",
+            "nameHint": "Billing country (optional)",
+            "bbox": {
+              "x": 290,
+              "y": 431.296875,
+              "width": 480,
+              "height": 40
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<input aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+          },
+          {
+            "selector": "#billing-country-select",
+            "tag": "select",
+            "role": null,
+            "nameHint": "No saved countryGermanyItaly",
+            "bbox": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0
+            },
+            "visible": false,
+            "inViewport": true,
+            "obscuredAtCenter": true,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "none",
+              "width": "3px",
+              "color": "rgb(0, 0, 0)"
+            },
+            "html": "<select id=\"billing-country-select\" name=\"billing_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"de\" selected=\"\">Germany</option><option value=\"it\">Italy</option></select>"
+          },
+          {
+            "selector": "#save",
+            "tag": "button",
+            "role": null,
+            "nameHint": "Save delivery preferences",
+            "bbox": {
+              "x": 290,
+              "y": 501.296875,
+              "width": 250.3125,
+              "height": 56.796875
+            },
+            "visible": true,
+            "inViewport": true,
+            "obscuredAtCenter": false,
+            "modal": null,
+            "disabled": false,
+            "inert": false,
+            "outline": {
+              "style": "solid",
+              "width": "3px",
+              "color": "rgb(22, 77, 180)"
+            },
+            "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+          }
+        ],
+        "focusEvents": [
+          {
+            "sequence": 0,
+            "from": "body",
+            "to": "#shipping-country",
+            "tag": "input"
+          },
+          {
+            "sequence": 1,
+            "from": "#shipping-country",
+            "to": "#billing-country",
+            "tag": "input"
+          },
+          {
+            "sequence": 2,
+            "from": "#billing-country",
+            "to": "#save",
+            "tag": "button"
+          }
+        ],
+        "overflow": 0,
+        "dialogs": []
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          "aria-allowed-attr",
+          "aria-conditional-attr",
+          "aria-deprecated-role",
+          "aria-hidden-body",
+          "aria-prohibited-attr",
+          "aria-required-attr",
+          "aria-roles",
+          "aria-valid-attr-value",
+          "aria-valid-attr",
+          "autocomplete-valid",
+          "button-name",
+          "color-contrast",
+          "document-title",
+          "duplicate-id-aria",
+          "form-field-multiple-labels",
+          "html-has-lang",
+          "html-lang-valid",
+          "label",
+          "nested-interactive",
+          "target-size"
+        ],
+        "inapplicable": [
+          "area-alt",
+          "aria-braille-equivalent",
+          "aria-command-name",
+          "aria-hidden-focus",
+          "aria-input-field-name",
+          "aria-meter-name",
+          "aria-progressbar-name",
+          "aria-required-children",
+          "aria-required-parent",
+          "aria-tab-name",
+          "aria-toggle-field-name",
+          "aria-tooltip-name",
+          "avoid-inline-spacing",
+          "blink",
+          "bypass",
+          "definition-list",
+          "dlitem",
+          "frame-focusable-content",
+          "frame-title-unique",
+          "frame-title",
+          "html-xml-lang-mismatch",
+          "image-alt",
+          "input-button-name",
+          "input-image-alt",
+          "label-content-name-mismatch",
+          "link-in-text-block",
+          "link-name",
+          "list",
+          "listitem",
+          "marquee",
+          "meta-refresh",
+          "meta-viewport",
+          "object-alt",
+          "role-img-alt",
+          "scrollable-region-focusable",
+          "select-name",
+          "server-side-image-map",
+          "summary-name",
+          "svg-img-alt",
+          "td-headers-attr",
+          "th-has-data-cells",
+          "valid-lang",
+          "video-caption",
+          "no-autoplay-audio"
+        ]
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "networkFailures": [],
+  "checks": [
+    {
+      "assertion": {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          ""
+        ]
+      },
+      "pass": false,
+      "observed": [
+        "gb"
+      ]
+    },
+    {
+      "assertion": {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          ""
+        ]
+      },
+      "pass": false,
+      "observed": [
+        "de"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "assertion": {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "shipping_country",
+        "value": [
+          ""
+        ]
+      },
+      "pass": false,
+      "observed": [
+        "gb"
+      ]
+    },
+    {
+      "assertion": {
+        "kind": "form-data",
+        "selector": "#preferences",
+        "name": "billing_country",
+        "value": [
+          ""
+        ]
+      },
+      "pass": false,
+      "observed": [
+        "de"
+      ]
+    }
+  ],
+  "forbidden": [],
+  "failure": {
+    "step": 6,
+    "category": "VERIFICATION",
+    "message": "Final postcondition failed or forbidden state occurred"
+  },
+  "focusGraph": {
+    "nodes": [
+      {
+        "selector": "#shipping-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Shipping country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 328.5,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(0, 0, 0)"
+        },
+        "html": "<input aria-expanded=\"false\" aria-controls=\"shipping-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"shipping-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      {
+        "selector": "#shipping-country__option--0",
+        "tag": "li",
+        "role": "option",
+        "nameHint": "United Kingdom",
+        "bbox": {
+          "x": 292,
+          "y": 368.5,
+          "width": 472,
+          "height": 35
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(11, 12, 12)"
+        },
+        "html": "<li aria-selected=\"false\" class=\"autocomplete__option\" id=\"shipping-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">United Kingdom</li>"
+      },
+      {
+        "selector": "#shipping-country-select",
+        "tag": "select",
+        "role": null,
+        "nameHint": "No saved countryUnited KingdomFrance",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "visible": false,
+        "inViewport": true,
+        "obscuredAtCenter": true,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(0, 0, 0)"
+        },
+        "html": "<select id=\"shipping-country-select\" name=\"shipping_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"gb\" selected=\"\">United Kingdom</option><option value=\"fr\">France</option></select>"
+      },
+      {
+        "selector": "#billing-country",
+        "tag": "input",
+        "role": "combobox",
+        "nameHint": "Billing country (optional)",
+        "bbox": {
+          "x": 290,
+          "y": 431.296875,
+          "width": 480,
+          "height": 40
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(0, 0, 0)"
+        },
+        "html": "<input aria-expanded=\"false\" aria-controls=\"billing-country__listbox\" aria-autocomplete=\"both\" autocomplete=\"off\" class=\"autocomplete__input autocomplete__input--default\" id=\"billing-country\" name=\"\" placeholder=\"\" type=\"text\" role=\"combobox\" style=\"\">"
+      },
+      {
+        "selector": "#billing-country__option--0",
+        "tag": "li",
+        "role": "option",
+        "nameHint": "Germany",
+        "bbox": {
+          "x": 292,
+          "y": 471.296875,
+          "width": 472,
+          "height": 35
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(11, 12, 12)"
+        },
+        "html": "<li aria-selected=\"false\" class=\"autocomplete__option\" id=\"billing-country__option--0\" role=\"option\" tabindex=\"-1\" aria-posinset=\"1\" aria-setsize=\"1\">Germany</li>"
+      },
+      {
+        "selector": "#billing-country-select",
+        "tag": "select",
+        "role": null,
+        "nameHint": "No saved countryGermanyItaly",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "visible": false,
+        "inViewport": true,
+        "obscuredAtCenter": true,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "none",
+          "width": "3px",
+          "color": "rgb(0, 0, 0)"
+        },
+        "html": "<select id=\"billing-country-select\" name=\"billing_country\" style=\"display: none;\"><option value=\"\">No saved country</option><option value=\"de\" selected=\"\">Germany</option><option value=\"it\">Italy</option></select>"
+      },
+      {
+        "selector": "#save",
+        "tag": "button",
+        "role": null,
+        "nameHint": "Save delivery preferences",
+        "bbox": {
+          "x": 290,
+          "y": 501.296875,
+          "width": 250.3125,
+          "height": 56.796875
+        },
+        "visible": true,
+        "inViewport": true,
+        "obscuredAtCenter": false,
+        "modal": null,
+        "disabled": false,
+        "inert": false,
+        "outline": {
+          "style": "solid",
+          "width": "3px",
+          "color": "rgb(22, 77, 180)"
+        },
+        "html": "<button id=\"save\" type=\"submit\">Save delivery preferences</button>"
+      }
+    ],
+    "edges": [
+      {
+        "sequence": 0,
+        "from": "body",
+        "to": "#shipping-country",
+        "tag": "input"
+      },
+      {
+        "sequence": 1,
+        "from": "#shipping-country",
+        "to": "#billing-country",
+        "tag": "input"
+      },
+      {
+        "sequence": 2,
+        "from": "#billing-country",
+        "to": "#save",
+        "tag": "button"
+      }
+    ],
+    "findings": [],
+    "note": "Observed transitions only. Name hints are DOM-derived; authoritative semantics are in AX artifacts. Center-point obstruction is a heuristic."
+  },
+  "scope": {
+    "tested": [
+      "keyboard interaction attempted",
+      "AX semantics captured",
+      "axe WCAG A/AA rules executed",
+      "explicit functional postconditions evaluated"
+    ],
+    "untested": [
+      "real screen readers",
+      "all WCAG criteria",
+      "cognitive usability",
+      "platform assistive technology",
+      "unlisted journeys"
+    ],
+    "note": "Zero axe violations does not mean full accessibility. Reflow profiles use equivalent CSS viewport widths, not actual browser zoom."
+  }
+}

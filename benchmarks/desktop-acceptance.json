@@ -1,0 +1,92 @@
+{
+  "completedAt": "2026-10-21T04:30:09.139Z",
+  "scope": "New author-created browser app fixed after implementation. Not an external production case. No model runs or implementation tuning used this case before this commitment.",
+  "taskHash": "ff44cbecda6003b2fe3aa21f28408b8b3937c7baa07309846927ab0a24c67b80",
+  "sourceHash": "5d4d1a9185dfa2e47037735b6d9273a86d58a617f77c53593e5eec96f887299a",
+  "positive": {
+    "runId": "9557d06e-87f7-464a-8f9f-16c60b8e2347",
+    "model": {
+      "provider": "Nebius Token Factory",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-b8ef6b653cc33793149c022b831d1c2d",
+      "promptHash": "1c76455bb63f8a07b1a3bf0122cf2c7dfdc2b256ceb8ea917a4f225f04daa912",
+      "schemaVersion": 2,
+      "structuredOutput": false,
+      "latencyMs": 7096,
+      "usage": {
+        "completion_tokens": 2704,
+        "prompt_tokens": 3129,
+        "total_tokens": 5833,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2252,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 3129
+      },
+      "pricing": {
+        "prompt": "0.000001",
+        "completion": "0.000003",
+        "image": "0",
+        "price_per_video_second": "0",
+        "request": "0",
+        "price_per_minute": "0",
+        "input_cache_read": null
+      },
+      "reservedCreditUsd": 0.047805,
+      "budgetScope": "desktop-quality-20261021",
+      "cacheHit": false,
+      "retries": 0,
+      "attemptedCompletions": 1,
+      "responseFile": "response-23c225856eb76dda95908a5bc8254f91897e9c1c766c2d26812b85dbe73991df-5.json"
+    },
+    "verdict": "VERIFIED_PASS",
+    "keyboard": "VERIFIED_PASS",
+    "functional": "VERIFIED_PASS",
+    "patchValidation": {
+      "gitApplyCheck": true,
+      "candidateBytesMatch": true,
+      "contextLines": 3
+    },
+    "proofIntegrity": true,
+    "attempts": 1,
+    "url": "http://127.0.0.1:4317/project.html?run=9557d06e-87f7-464a-8f9f-16c60b8e2347"
+  },
+  "negative": {
+    "runId": "31fcf0e9-d189-436b-84ba-d43b3aaf42a6",
+    "provenance": "Human-authored corruption appended to the model candidate; no inference for this control.",
+    "verdict": "VERIFIED_FAIL",
+    "keyboard": "VERIFIED_FAIL",
+    "functional": "VERIFIED_FAIL",
+    "reasons": [
+      "Exact journey did not complete after repair",
+      "Task evidence is missing or contradicts the verdict",
+      "Functional regression baseline/replay failed or missing",
+      "Functional output changed"
+    ],
+    "failedAssertions": [
+      {
+        "assertion": {
+          "kind": "attribute",
+          "selector": "#estimate",
+          "name": "data-rate",
+          "value": "community"
+        },
+        "pass": false,
+        "observed": "standard"
+      }
+    ],
+    "proofIntegrity": true,
+    "url": "http://127.0.0.1:4317/project.html?run=31fcf0e9-d189-436b-84ba-d43b3aaf42a6"
+  },
+  "originalUnchanged": true,
+  "implementationUnchangedSinceCommitment": true,
+  "browserErrors": []
+}

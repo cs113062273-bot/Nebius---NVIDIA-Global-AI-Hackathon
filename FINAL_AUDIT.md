@@ -1,5 +1,7 @@
 # Local build audit — 2026-10-20
 
+> Historical snapshot dated 2026-10-20, kept unchanged below. Live Nemotron inference on Nebius has since been run and recorded; see README.md and the published runs in `public/evidence/`.
+
 Status: local functionality delivered; competition submission incomplete.
 
 Product update after this audit: added a bundled, explicitly recorded three-case presentation (scanner-clean keyboard failure, wrong functional result rejected, historical focus loss) with before/after screenshots, source changes and a presentation view. The original measured counts below are unchanged. The update added no automated test suite; a focused browser smoke check exercised case switching, presentation exit and 320-pixel layout. See `docs/competitive_landscape.md` for the competition-driven priority correction. Live inference remains untested.

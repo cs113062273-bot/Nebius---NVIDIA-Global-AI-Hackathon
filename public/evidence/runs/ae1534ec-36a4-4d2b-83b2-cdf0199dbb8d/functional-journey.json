@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "id": "native-billing-pointer",
+  "title": "Preserve the selected billing country in native form data",
+  "goal": "Native form data must match the visible country choices; preserve the other country.",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Edit billing country",
+      "action": {
+        "kind": "click",
+        "selector": "#billing-country"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Choose Italy",
+      "action": {
+        "kind": "type",
+        "text": "Italy",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Confirm the suggested country",
+      "action": {
+        "kind": "click",
+        "selector": "#billing-country__option--0"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save preferences",
+      "action": {
+        "kind": "click",
+        "selector": "#save"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "shipping_country",
+      "value": [
+        "gb"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "billing_country",
+      "value": [
+        "it"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "shipping_country",
+      "value": [
+        "gb"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "billing_country",
+      "value": [
+        "it"
+      ]
+    }
+  ],
+  "forbidden": []
+}

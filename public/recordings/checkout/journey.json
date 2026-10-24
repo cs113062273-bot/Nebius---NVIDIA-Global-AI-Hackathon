@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "id": "checkout-keyboard",
+  "title": "Complete a checkout",
+  "goal": "Order confirmed · Field bag · $84",
+  "source": "benchmark",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach task trigger",
+      "action": {
+        "kind": "seek",
+        "selector": "#open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open dialog and move focus into it",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#field"
+        },
+        {
+          "kind": "ax",
+          "role": "dialog",
+          "name": "Place order"
+        }
+      ]
+    },
+    {
+      "title": "Move backward inside dialog",
+      "action": {
+        "kind": "press",
+        "key": "Shift+Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#close"
+        }
+      ]
+    },
+    {
+      "title": "Contain backward focus in dialog",
+      "action": {
+        "kind": "press",
+        "key": "Shift+Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#action"
+        }
+      ]
+    },
+    {
+      "title": "Contain forward focus in dialog",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#close"
+        }
+      ]
+    },
+    {
+      "title": "Escape closes dialog and restores trigger",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#panel",
+          "value": false
+        },
+        {
+          "kind": "focus",
+          "selector": "#open"
+        }
+      ]
+    },
+    {
+      "title": "Reopen dialog for original task",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#field"
+        }
+      ]
+    },
+    {
+      "title": "Reach input",
+      "action": {
+        "kind": "seek",
+        "selector": "#field",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Enter task data",
+      "action": {
+        "kind": "type",
+        "text": "judge@example.com"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach primary action",
+      "action": {
+        "kind": "seek",
+        "selector": "#action",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Place order",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Order confirmed · Field bag · $84"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Order confirmed · Field bag · $84"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-input",
+      "value": "judge@example.com"
+    }
+  ],
+  "forbidden": []
+}

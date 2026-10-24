@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "id": "pikaday-dst-pointer",
+  "title": "Available weekday selection preserves actual booking dates",
+  "goal": "Weekends are closed. Arrow keys move by calendar days (ArrowLeft/Right one day, ArrowUp/Down one week) in the user time zone, including across daylight-saving changes, then skip closed days in the same direction. Preserve pointer selection and the other field.",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "timezone": "Europe/London",
+  "steps": [
+    {
+      "title": "Open pickup calendar",
+      "action": {
+        "kind": "click",
+        "selector": "#pickup"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Select an available weekday",
+      "action": {
+        "kind": "click",
+        "selector": ".pika-single:not(.is-hidden) button[data-pika-year=\"2026\"][data-pika-month=\"9\"][data-pika-day=\"22\"]"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save booking dates",
+      "action": {
+        "kind": "click",
+        "selector": "#save"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-22"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-26"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-22"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-26"
+      ]
+    }
+  ],
+  "forbidden": []
+}

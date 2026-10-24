@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-24T10:52:05.956Z",
+  "modelRun": "c3158127-dba3-43b3-8dcc-981dc00e071f",
+  "attempt": 2,
+  "inferenceCalls": 0,
+  "rechecks": {
+    "clear-shipping": {
+      "kind": "repair",
+      "run": "ed4b61c6-3c4a-4b84-8a5d-1e5a9aa1c9eb",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "clear-billing": {
+      "kind": "repair",
+      "run": "6b8be951-29ac-45df-8aaa-379293b5f68b",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "unrecognized-or-blank": {
+      "kind": "repair",
+      "run": "67e901e9-00ef-43bd-8ca4-27d422ed179d",
+      "verdict": "VERIFIED_FAIL",
+      "reasons": [
+        "Keyboard candidate: failed · #preferences billing_country: expected [\"\"], observed [\"de\"]",
+        "Task evidence is missing or contradicts the verdict"
+      ],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "single-line-markup": {
+      "kind": "repair",
+      "run": "0cf6e4b4-677b-4839-860f-60a0c96c7775",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    }
+  }
+}

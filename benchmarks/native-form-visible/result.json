@@ -1,0 +1,104 @@
+{
+  "completedAt": "2026-10-24T06:51:25.679Z",
+  "modelRun": "a66884e3-0c53-4bc9-8703-d0e06a4d43ca",
+  "verification": {
+    "verdict": "VERIFIED_FAIL",
+    "reasons": [
+      "Keyboard candidate: failed · #preferences billing_country: expected [\"\"], observed [\"de\"]",
+      "Task evidence is missing or contradicts the verdict"
+    ],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_FAIL",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "withheldTitlesAbsentFromRequests": true,
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: functional_risks: Invalid input: expected array, received string; functional_risks: Too big: expected string to have <=10 characters; verification_requirements: Invalid input: expected array, received string; verification_requirements: Too big: expected string to have <=10 characters",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-314b390d0cd0000be5c59ba957204a1e",
+      "usage": {
+        "completion_tokens": 6407,
+        "prompt_tokens": 25109,
+        "total_tokens": 31516,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5674,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 25109
+      },
+      "latencyMs": 22964
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-e0b376cd409d3a81f78b2a7f3559f845",
+      "usage": {
+        "completion_tokens": 4783,
+        "prompt_tokens": 25271,
+        "total_tokens": 30054,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4079,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 25271
+      },
+      "latencyMs": 16920
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-34e9c7e8be5562074ddfd0aca19b85d7",
+      "usage": {
+        "completion_tokens": 2548,
+        "prompt_tokens": 26161,
+        "total_tokens": 28709,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1900,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 16864,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 26161
+      },
+      "latencyMs": 10387
+    }
+  ]
+}

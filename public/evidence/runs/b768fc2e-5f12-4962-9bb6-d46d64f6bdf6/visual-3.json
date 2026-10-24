@@ -1,0 +1,8 @@
+{
+  "pass": true,
+  "changedRatio": 0.002015625,
+  "maximumChangedRatio": 0.15,
+  "width": 1280,
+  "height": 800,
+  "scope": "Coarse initial-page pixel change gate. Allows legitimate small accessibility changes. Does not establish visual equivalence at every state."
+}

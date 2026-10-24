@@ -1,0 +1,25 @@
+{
+  "root_cause": "The accessible-autocomplete widget does not reset the underlying select's value when the user enters a value that does not match any option (including blank/whitespace), causing the previously selected value to be submitted.",
+  "repair_strategy": "Add a MutationObserver that watches the DOM and ensures that if the combobox input's trimmed value does not correspond to any option, the underlying select's value is set to empty string.",
+  "edits": [
+    {
+      "path": "app.js",
+      "sha256": "c0cd5c1ac1020b4313357444a74cdf86be52c9c19abbcf2686cfb28fdc7531b2",
+      "before": "for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});\ndocument.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());",
+      "after": "for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});\ndocument.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());\n\n// Ensure that typing an unrecognized or blank value clears the underlying select.\nconst observer = new MutationObserver(() => {\n  document.querySelectorAll('#shipping-country, #billing-country').forEach(select => {\n    // Find the associated combobox input (created by accessible-autocomplete)\n    const input = select.parentElement.querySelector('input[role=\"combobox\"]');\n    if (!input) return;\n    const val = input.value.trim();\n    let matched = false;\n    for (const option of select.options) {\n      if (option.value === val || option.textContent.trim() === val) {\n        matched = true;\n        break;\n      }\n    }\n    if (!matched && select.value !== '') {\n      select.value = '';\n    }\n  });\n});\nobserver.observe(document.body, { childList: true, subtree: true });"
+    }
+  ],
+  "expected_accessibility_effect": "No adverse effect; keyboard and mouse selection of listed items continues to work because those actions set validChoiceMade true and the observer will not alter the select when a match exists. Screen readers will observe the select reflecting the current visible value.",
+  "functional_risks": [
+    "Potential interference if the library itself updates the select asynchronously causing double assignment.",
+    "Observer performance impact if the DOM changes frequently.",
+    "Risk if the library changes DOM structure and our query fails to locate the input."
+  ],
+  "verification_requirements": [
+    "Entering a recognized country sets the select to its code.",
+    "Entering an unrecognized string or whitespace leaves the select empty.",
+    "Pressing Save after such entry results in an empty submitted value.",
+    "Normal selection via arrow keys and Enter still works and updates the select correctly.",
+    "The observer does not cause infinite loops or stale values."
+  ]
+}

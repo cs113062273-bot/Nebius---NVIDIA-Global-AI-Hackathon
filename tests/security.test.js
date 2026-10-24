@@ -6,6 +6,13 @@ import http from 'node:http';
 import { contained } from '../src/files.js';
 import { allowedSource,applyPlan } from '../src/repair.js';
 import { createApp } from '../src/server.js';
+import { validateProjectFiles } from '../src/project.js';
+
+test('Project imports reject hidden paths, duplicate files and embedded credentials before staging',()=>{
+ const index={path:'index.html',content:'<!doctype html><html><body></body></html>'};
+ for(const extra of [{path:'../app.js',content:''},{path:'.env.js',content:''},{path:'src/CON.js',content:''},{path:'INDEX.html',content:''},{path:'app.js',content:'Bearer '+'x'.repeat(30)}])assert.throws(()=>validateProjectFiles([index,extra]));
+ assert.ok(validateProjectFiles([index,{path:'src/app.js',content:'export const ready=true;'}])>0);
+});
 import { fixtureServer } from '../src/static.js';
 import { digest,Journey } from '../src/schema.js';
 import { journeyFor } from '../src/catalog.js';
@@ -16,7 +23,7 @@ test('Sensitive and infrastructure paths are not editable',()=>{for(const file o
 test('Model cannot add an unlocalized file or a no-op',async()=>{const dir=await temp();try{const source='const x = 1;';await fs.writeFile(path.join(dir,'app.js'),source);const plan={root_cause:'x',repair_strategy:'x',edits:[{path:'app.js',sha256:digest(source),before:source,after:source}],expected_accessibility_effect:'x',functional_risks:[],verification_requirements:['replay']};await assert.rejects(applyPlan(dir,plan,[]),/allowlist/);await assert.rejects(applyPlan(dir,plan,['app.js']),/No-op/);}finally{await cleanup(dir);}});
 test('Journey schemas bound actions, data and navigation paths',()=>{const j=journeyFor('account');for(const modified of [{...j,path:'//evil.example/'},{...j,path:'http://evil.example'},{...j,steps:Array(41).fill(j.steps[0])},{...j,steps:[{title:'Flood',action:{kind:'seek',selector:'#action',maxTabs:999999}}]},{...j,steps:[{title:'Inject',action:{kind:'type',text:'x'.repeat(501)}}]}])assert.throws(()=>Journey.parse(modified));});
 test('Public service requires a substantial judge token',async()=>{const dir=await temp();try{await assert.rejects(createApp({artifactRoot:dir,publicMode:true,token:''}),/DEMO_TOKEN/);}finally{await cleanup(dir);}});
-test('Static application server never serves dotenv or arbitrary data files',async()=>{const dir=await temp();let server;try{await fs.writeFile(path.join(dir,'.env'),'SAMPLE_SECRET=not-real');await fs.writeFile(path.join(dir,'data.json'),'{"private":true}');server=await fixtureServer(dir);assert.equal((await fetch(server.origin+'/.env')).status,404);assert.equal((await fetch(server.origin+'/data.json')).status,404);}finally{if(server)await server.close();await cleanup(dir);}});
+test('Static application server excludes hidden files and serves selected JSON assets',async()=>{const dir=await temp();let server;try{await fs.writeFile(path.join(dir,'.env'),'SAMPLE_SECRET=not-real');await fs.writeFile(path.join(dir,'data.json'),'{"items":[]}');server=await fixtureServer(dir);assert.equal((await fetch(server.origin+'/.env')).status,404);assert.equal((await fetch(server.origin+'/data.json')).status,200);}finally{if(server)await server.close();await cleanup(dir);}});
 test('API rejects cross-origin writes, arbitrary repositories, traversal and remote Host',async()=>{const dir=await temp(),app=await createApp({artifactRoot:dir});await new Promise(r=>app.server.listen(0,'127.0.0.1',r));const origin=`http://127.0.0.1:${app.server.address().port}`;try{
   assert.equal((await fetch(origin+'/api/runs',{method:'POST',headers:{Origin:'https://evil.example','Content-Type':'application/json'},body:'{}'})).status,403);
   assert.equal((await fetch(origin+'/api/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fixture:'checkout',mode:'reference',repo:'https://evil.example/repo'})})).status,400);

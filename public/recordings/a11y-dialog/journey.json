@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "id": "historical-dialog-keyboard",
+  "title": "Restore focus after closing a real dialog",
+  "goal": "Focus returns to the opener",
+  "source": "benchmark",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach notice trigger",
+      "action": {
+        "kind": "seek",
+        "selector": "#open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open notice",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#dialog"
+        }
+      ]
+    },
+    {
+      "title": "Dismiss notice and return to the opener",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#open"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#open"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#dialog",
+      "name": "aria-hidden",
+      "value": "true"
+    }
+  ],
+  "forbidden": []
+}

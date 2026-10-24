@@ -1,0 +1,7 @@
+{
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "uncertain": [],
+  "newRules": [],
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

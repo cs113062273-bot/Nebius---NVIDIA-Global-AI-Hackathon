@@ -1,0 +1,21 @@
+{
+  "root_cause": "The default onConfirm handler in enhanceSelectElement only updates the select element when the entered text matches an option. If the text is unrecognized or empty, it does nothing, leaving the previous selection intact. This violates the requirement that unrecognized or cleared entries should submit no saved country (empty value).",
+  "repair_strategy": "Provide a custom onConfirm handler for each enhanced select that explicitly clears the selection (sets the empty option) when the confirmed text does not match any option.",
+  "edits": [
+    {
+      "path": "app.js",
+      "sha256": "c30f79b8979a8d326c48de077074e081c30011f726524bcb32383da7074ce489",
+      "before": "for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});",
+      "after": "for (const id of ['shipping-country','billing-country']) {\n  const select = document.getElementById(id);\n  accessibleAutocomplete.enhanceSelectElement({\n    selectElement: select,\n    onConfirm: function(text) {\n      const options = select.options;\n      let found = false;\n      for (let i = 0; i < options.length; i++) {\n        if (options[i].textContent === text) {\n          options[i].selected = true;\n          found = true;\n          break;\n        }\n      }\n      if (!found) {\n        for (let i = 0; i < options.length; i++) {\n          if (options[i].value === \"\") {\n            options[i].selected = true;\n            break;\n          }\n        }\n      }\n    }\n  });\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Screen reader users will hear the correct saved country after form submission; the combobox will announce the cleared state appropriately.",
+  "functional_risks": [
+    "The custom onConfirm must not interfere with valid selections (keyboard/pointer).",
+    "It must handle case where the library passes undefined for no match."
+  ],
+  "verification_requirements": [
+    "Existing regression guards should pass (partial match saves France, destination autocomplete works).",
+    "The journey should result in empty shipping_country and billing_country."
+  ]
+}

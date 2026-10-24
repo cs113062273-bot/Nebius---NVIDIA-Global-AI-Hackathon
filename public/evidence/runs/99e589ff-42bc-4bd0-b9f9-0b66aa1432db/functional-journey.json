@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "micromodal-reservation-output",
+  "title": "Preserve the independent reservation record",
+  "goal": "Confirm the selected workspace and email remain unchanged.",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open booking",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Choose email",
+      "action": {
+        "kind": "click",
+        "selector": "#email"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Enter booking email",
+      "action": {
+        "kind": "type",
+        "text": "visitor@example.com"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Confirm reservation",
+      "action": {
+        "kind": "click",
+        "selector": "#confirm"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Reserved: Studio A"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-workspace",
+      "value": "studio-a"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-email",
+      "value": "visitor@example.com"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#receipt",
+      "value": "Reserved: Studio A"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-workspace",
+      "value": "studio-a"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#receipt",
+      "name": "data-email",
+      "value": "visitor@example.com"
+    }
+  ],
+  "forbidden": []
+}

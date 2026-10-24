@@ -1,0 +1,22 @@
+{
+  "pass": false,
+  "checks": [
+    {
+      "file": "app.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "pikaday.js",
+      "pass": false,
+      "kind": "syntax",
+      "message": "JavaScript syntax check failed"
+    }
+  ],
+  "scope": "Static HTML structure and JavaScript syntax (classic or ESM) only; no framework compilation claim."
+}

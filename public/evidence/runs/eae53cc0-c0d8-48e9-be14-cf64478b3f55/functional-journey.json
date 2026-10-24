@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": "pikaday-return-pointer",
+  "title": "Available weekday selection preserves actual booking dates",
+  "goal": "Weekends are unavailable. Arrow navigation must skip them and preserve the other date. Pointer selection of an available weekday must continue working.",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open return calendar",
+      "action": {
+        "kind": "click",
+        "selector": "#return"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Select an available weekday",
+      "action": {
+        "kind": "click",
+        "selector": ".pika-single:not(.is-hidden) button[data-pika-year=\"2026\"][data-pika-month=\"9\"][data-pika-day=\"27\"]"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save booking dates",
+      "action": {
+        "kind": "click",
+        "selector": "#save"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-27"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-27"
+      ]
+    }
+  ],
+  "forbidden": []
+}

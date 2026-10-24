@@ -1,0 +1,95 @@
+{
+  "completedAt": "2026-10-21T06:44:54.230Z",
+  "modelRun": "d2eb947c-deed-44c9-9381-b444438a5c11",
+  "verification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": true,
+      "category": null,
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "requestId": "chatcmpl-231fcd68b0d71c74f91f45459309adff",
+        "promptHash": "1f69af4e5a6e31469a70d643cffaa3f9a00651e76463fa4ea53bb21fc9d44029",
+        "schemaVersion": 2,
+        "structuredOutput": false,
+        "latencyMs": 22550,
+        "usage": {
+          "completion_tokens": 7867,
+          "prompt_tokens": 10387,
+          "total_tokens": 18254,
+          "completion_tokens_details": {
+            "accepted_prediction_tokens": null,
+            "audio_tokens": null,
+            "reasoning_tokens": 7382,
+            "rejected_prediction_tokens": null
+          },
+          "prompt_tokens_details": {
+            "audio_tokens": null,
+            "cached_tokens": 0,
+            "multimodal_tokens": null
+          },
+          "prompt_cache_hit_tokens": 0,
+          "prompt_cache_miss_tokens": 10387
+        },
+        "pricing": {
+          "prompt": "0.000001",
+          "completion": "0.000003",
+          "image": "0",
+          "price_per_video_second": "0",
+          "request": "0",
+          "price_per_minute": "0",
+          "input_cache_read": null
+        },
+        "reservedCreditUsd": 0.06536600000000001,
+        "budgetScope": "usefulness-20261021",
+        "cacheHit": false,
+        "retries": 0,
+        "attemptedCompletions": 1,
+        "responseFile": "response-1156166a759a56992f111dffb6d17f0a646a0521e3a8b516d7ed9fbbf3c3c31e-12.json",
+        "requestFile": "request-1156166a759a56992f111dffb6d17f0a646a0521e3a8b516d7ed9fbbf3c3c31e-12.json"
+      }
+    }
+  ],
+  "transferRun": "12b01ae9-a19c-4d84-b4dc-acc3a1da82d0",
+  "negativeRun": "050ef18e-84ea-4891-b43a-f1d1f41698a4",
+  "transferVerification": {
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_PASS",
+      "functionalOutputUnchanged": true
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  },
+  "negativeVerification": {
+    "verdict": "VERIFIED_FAIL",
+    "reasons": [
+      "Independent functional candidate: failed · #preferences shipping_country: expected [\"fr\"], observed [\"gb\"]",
+      "Functional output changed"
+    ],
+    "uncertain": [],
+    "newRules": [],
+    "gates": {
+      "keyboard": "VERIFIED_PASS",
+      "independentFunctional": "VERIFIED_FAIL",
+      "functionalOutputUnchanged": false
+    },
+    "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+  }
+}

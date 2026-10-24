@@ -1,0 +1,15 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · #preferences billing_country: expected [\"\"], observed [\"de\"]",
+    "Task evidence is missing or contradicts the verdict"
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_FAIL",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

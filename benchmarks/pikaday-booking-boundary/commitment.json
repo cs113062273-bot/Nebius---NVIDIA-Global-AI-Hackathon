@@ -1,0 +1,31 @@
+{
+  "fixedAt": "2026-10-21T07:34:36.586Z",
+  "repository": "https://github.com/Pikaday/Pikaday",
+  "issue": "https://github.com/Pikaday/Pikaday/issues/955",
+  "revision": "9a90eea5cdbc48784d3a909ddb36e052c16bf25d",
+  "sourceHashes": {
+    "LICENSE.txt": "bac76ec786e2d7ceab9c046d6c765abb57536a40f51e807bd4dc279fb4134c17",
+    "app.js": "bbf65796046091db966c94e4cb4a8121cfcb1d6b60e4b7b6cba19d8a639dd981",
+    "index.html": "ab2d54dd31cb433616a48ff39bfb6cb863e4bed4ae41f7c0ed9575da850e5cb8",
+    "pikaday.css": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+    "pikaday.js": "6bedcf62f5a30e8d4071a2580e60f8d2f3877180e7d133c11686a8267df90bc3",
+    "style.css": "b04872e24cfb0fa272b2c096755abf99d1746c834923fc43f55341eb290744ae"
+  },
+  "upstreamFiles": [
+    "pikaday.css",
+    "LICENSE.txt"
+  ],
+  "previousModelRun": "65c8e7d5-3d35-41c7-a80f-3696a6273451",
+  "previousModelAttempt": 2,
+  "taskHash": "3f7ec3555d44d5f75ffaeb13d034841e90ce3c7dbc233758b1d662274f6a394e",
+  "withheldTaskHash": "5b3910fcaa237b2eb6e45628c3caf2995bdfc0fe102ce1c8bbaa065dc2930c70",
+  "implementation": {
+    "src/engine.js": "88f3cd39de200c98df517575368dd512c0d7b44feb282eb4966f2f33799c8447",
+    "src/nebius.js": "fbb9ca956415320957f0d50d1cf5831fb4b229fac26e4e1266af1af18825edce",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "0e2990f5afcbe4969da7d33964c102b67c43ac9d45df0c1768af3048dfaa1e64",
+    "src/schema.js": "7043e8bd63f4e92a0cac709d6a6add679d9c8f37f2032e9a42e0479f6f1d28d5",
+    "src/verifier.js": "c6cb974d7dbd7034bd8dc5f376f78e2df8a5ff9c95bdf833d9d130812493b17b"
+  },
+  "provenance": "Post-hoc author-created range-boundary variant of model run 65c8e7d5 attempt 2. The author only added a pickup maxDate and explanatory consumer text; Pikaday JS is byte-identical to that model candidate. Its disabled-boundary flaw was reproduced before this new inference. This is a separate real model follow-up, not a blind test or part of the previous run autonomous loop."
+}

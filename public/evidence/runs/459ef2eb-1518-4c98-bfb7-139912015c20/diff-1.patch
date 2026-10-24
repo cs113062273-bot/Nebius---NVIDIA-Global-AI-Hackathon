@@ -1,0 +1,45 @@
+diff --git a/pikaday.js b/pikaday.js
+index d092cc3..8d270e5 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -914,13 +914,12 @@
+             // skip disabled days
+             var opts = this._o;
+             var maxIter = 366;
++            var found = false;
+             while (maxIter--) {
+                 if (opts.minDate && newDay < opts.minDate) {
+-                    newDay = opts.minDate;
+                     break;
+                 }
+                 if (opts.maxDate && newDay > opts.maxDate) {
+-                    newDay = opts.maxDate;
+                     break;
+                 }
+                 var disabled = false;
+@@ -931,7 +930,10 @@
+                 if (opts.disableDayFn && opts.disableDayFn(newDay)) {
+                     disabled = true;
+                 }
+-                if (!disabled) break;
++                if (!disabled) {
++                    found = true;
++                    break;
++                }
+                 // move one more day in the same direction
+                 if (sign === 'add') {
+                     newDay = new Date(newDay.valueOf() + 24*60*60*1000);
+@@ -939,9 +941,12 @@
+                     newDay = new Date(newDay.valueOf() - 24*60*60*1000);
+                 }
+             }
++            if (!found) {
++                newDay = day;
++            }
+ 
+             this.setDate(newDay);
+-        },
++        }
+ 
+         adjustCalendars: function() {
+             this.calendars[0] = adjustCalendar(this.calendars[0]);

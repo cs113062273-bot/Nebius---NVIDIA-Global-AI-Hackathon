@@ -1,0 +1,13 @@
+diff --git a/micromodal.js b/micromodal.js
+index a290f08..221130a 100644
+--- a/micromodal.js
++++ b/micromodal.js
+@@ -138,7 +138,7 @@ const MicroModal = (() => {
+ 
+     getFocusableNodes () {
+       const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)
+-      return Array(...nodes)
++      return Array.from(nodes).filter(node => !node.closest('[hidden]') && !node.hasAttribute('hidden'))
+     }
+ 
+     /**

@@ -1,0 +1,31 @@
+{
+  "completedAt": "2026-10-21T07:24:57.243Z",
+  "modelRun": "fef8da72-c446-4116-b69c-fc0c2c655472",
+  "verification": {
+    "verdict": "INCONCLUSIVE",
+    "reasons": [
+      "PROPOSAL: The operation was aborted due to timeout"
+    ]
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "The operation was aborted due to timeout",
+      "provenance": {
+        "provider": "Nebius Token Factory",
+        "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+        "status": "FAILED_OR_UNCERTAIN",
+        "attemptedCompletions": 1,
+        "requestId": null,
+        "finishReason": null,
+        "usage": null,
+        "responseFile": null,
+        "requestFile": "request-8d5638c4c9e66bc473b61df0a07321398cd58078f384571f01bd6e0d2f5c1ba0-13.json",
+        "latencyMs": 120010
+      }
+    }
+  ],
+  "transferRun": null
+}

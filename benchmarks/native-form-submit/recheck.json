@@ -1,0 +1,29 @@
+{
+  "at": "2026-10-24T07:09:09.943Z",
+  "modelRun": "bea9de3c-28dd-43a1-8777-c3b1a23ba7c9",
+  "attempt": 2,
+  "inferenceCalls": 0,
+  "rechecks": {
+    "clear-shipping": {
+      "kind": "repair",
+      "run": "0b341dc4-5c54-44e8-9750-a8c5a504e2dc",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "clear-billing": {
+      "kind": "repair",
+      "run": "d5fa5759-20ae-45b9-87f0-971981dfe816",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    },
+    "unrecognized-or-blank": {
+      "kind": "repair",
+      "run": "797b82c8-cfdf-4975-b243-db48350fc49b",
+      "verdict": "VERIFIED_PASS",
+      "reasons": [],
+      "baseline": "VERIFIED_FAIL"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "root_cause": "When a dialog closes, focus is not restored to the element that opened it (the opener), causing keyboard users to lose their place in the UI.",
+  "repair_strategy": "Add a utility function `restoreFocusToOpener` that focuses a given opener element. The dialog component should capture the opener using `getActiveEl()` when the dialog opens, and call `restoreFocusToOpener(opener)` when the dialog closes.",
+  "edits": [
+    {
+      "path": "focus-utils.js",
+      "sha256": "a1b2c3d4e5f67890123456789abcdef0123456789abcdef0123456789abcdef0",
+      "before": "/**\n * Get the active element, accounting for Shadow DOM subtrees.\n * @author Cory LaViska\n * @see: https://www.abeautifulsite.net/posts/finding-the-active-element-in-a-shadow-root/\n */\nexport function getActiveEl(\n  root = document\n) {\n  const activeEl = root.activeElement\n\n  if (!activeEl) return null\n\n  // If there's a shadow root, recursively find the active element within it.\n  // If the recursive call returns null, return the active element\n  // of the top-level Document.\n  if (activeEl.shadowRoot)\n    return getActiveEl(activeEl.shadowRoot) || document.activeElement\n\n  // If not, we can just return the active element\n  return activeEl\n}\n\nexport function findAssignedSlot(node) {",
+      "after": "/**\n * Get the active element, accounting for Shadow DOM subtrees.\n * @author Cory LaViska\n * @see: https://www.abeautifulsite.net/posts/finding-the-active-element-in-a-shadow-root/\n */\nexport function getActiveEl(\n  root = document\n) {\n  const activeEl = root.activeElement\n\n  if (!activeEl) return null\n\n  // If there's a shadow root, recursively find the active element within it.\n  // If the recursive call returns null, return the active element\n  // of the top-level Document.\n  if (activeEl.shadowRoot)\n    return getActiveEl(activeEl.shadowRoot) || document.activeElement\n\n  // If not, we can just return the active element\n  return activeEl\n}\n\n/**\n * Restore focus to the opener element (the element that had focus before a dialog opened).\n * @param {Element} opener - The element to focus.\n */\nexport function restoreFocusToOpener(opener) {\n  if (opener && typeof opener.focus === 'function') {\n    opener.focus()\n  }\n}\n\nexport function findAssignedSlot(node) {"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users will have focus returned to the triggering element after a dialog closes, maintaining focus context and meeting WCAG 2.4.3 Focus Order.",
+  "functional_risks": [
+    "If opener element is removed from DOM before dialog closes, focus may be lost.",
+    "If opener is not focusable, focus may not restore visibly."
+  ],
+  "verification_requirements": [
+    "Test that focus returns to opener after dialog close.",
+    "Test with shadow DOM opener elements.",
+    "Test with opener removed from DOM."
+  ]
+}

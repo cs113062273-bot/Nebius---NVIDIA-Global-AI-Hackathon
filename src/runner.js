@@ -6,9 +6,9 @@ import { Journey, digest } from './schema.js';
 import { json } from './files.js';
 
 export class Barrier extends Error { constructor(message, category = 'BROWSER_ACTION') { super(message); this.category = category; } }
-const environment = profile => ({
+const environment = (profile, timezoneId = 'UTC') => ({
   viewport: { width: profile === 'reflow-400' ? 320 : profile === 'reflow-200' ? 640 : 1280, height: 800 },
-  locale: 'en-US', timezoneId: 'UTC', colorScheme: 'light',
+  locale: 'en-US', timezoneId, colorScheme: 'light',
   reducedMotion: profile === 'reduced-motion' ? 'reduce' : 'no-preference', forcedColors: profile === 'forced-colors' ? 'active' : 'none',
   serviceWorkers: 'block', acceptDownloads: false, deviceScaleFactor: 1
 });
@@ -35,6 +35,14 @@ export async function assertPage(page, assertion) {
       case 'visible': observed = await loc.isVisible(); pass = observed === assertion.value; break;
       case 'text': observed = (await loc.textContent())?.trim(); pass = observed === assertion.value; break;
       case 'attribute': observed = await loc.getAttribute(assertion.name); pass = observed === assertion.value; break;
+      case 'form-data':
+        observed = await loc.evaluate((el, name) => {
+          if (!(el instanceof HTMLFormElement)) throw new Error('Form-data assertions require a form element');
+          const values = new FormData(el).getAll(name);
+          if (values.some(value => typeof value !== 'string')) throw new Error('File fields require a separate file assertion');
+          return values;
+        }, assertion.name);
+        pass = JSON.stringify(observed) === JSON.stringify(assertion.value); break;
       case 'focus': observed = await loc.evaluate(el => el === document.activeElement); pass = observed; break;
       case 'ax': observed = await page.getByRole(assertion.role, { name: assertion.name, exact: true }).count(); pass = observed === 1 && await page.getByRole(assertion.role, { name: assertion.name, exact: true }).isVisible(); break;
       case 'overflow': observed = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth); pass = observed <= assertion.maximum; break;
@@ -111,7 +119,7 @@ export function focusGraph(checkpoints) {
   return { nodes: [...nodes.values()], edges, findings, note: 'Observed transitions only. Name hints are DOM-derived; authoritative semantics are in AX artifacts. Center-point obstruction is a heuristic.' };
 }
 export async function executeJourney({ browser, origin, journey: input, dir, deadlineMs = 45000 }) {
-  const journey = Journey.parse(input), env = environment(journey.profile);
+  const journey = Journey.parse(input), env = environment(journey.profile, journey.timezone);
   await fs.mkdir(dir, { recursive: true });
   const result = { verdict: 'INCONCLUSIVE', journeyHash: digest(journey), environment: env, browser: browser.version(), steps: [], checkpoints: [], consoleErrors: [], networkFailures: [], checks: [], functional: [], forbidden: [], failure: null };
   const context = await browser.newContext(env);
@@ -159,6 +167,7 @@ export async function executeJourney({ browser, origin, journey: input, dir, dea
         } else if (a.kind === 'press') await page.keyboard.press(a.key);
         else if (a.kind === 'type') {
           if (!await page.evaluate(() => document.activeElement?.matches('input:not([disabled]),textarea:not([disabled]),[contenteditable="true"]'))) throw new Barrier('Typing target is not an editable focused element', 'FOCUS');
+          if(a.replace){await page.keyboard.press('ControlOrMeta+A');await page.keyboard.press('Backspace');}
           await page.keyboard.type(a.text);
         } else if (a.kind === 'click') await page.locator(a.selector).click();
         entry.assertions = await checkAssertions(page, step.assertions);

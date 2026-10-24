@@ -1,0 +1,362 @@
+{
+  "title": "Evidence history · request failures, model repairs & author-added range check",
+  "runIds": [
+    "5b0c2db0-6309-435d-8362-ca223ff2f672",
+    "fef8da72-c446-4116-b69c-fc0c2c655472",
+    "65c8e7d5-3d35-41c7-a80f-3696a6273451",
+    "770f858a-7b0a-42a1-94b3-132c4cc0c1b6",
+    "459ef2eb-1518-4c98-bfb7-139912015c20",
+    "374ef458-3f62-4074-8691-c476d43c863f",
+    "eae53cc0-c0d8-48e9-be14-cf64478b3f55",
+    "e211fc5c-5553-4c01-acf6-80a865ffb891",
+    "cbb88e80-22b1-481b-a774-0d7dea9486f3",
+    "38bb7c9f-7385-4170-ab7a-57d9ef79f1a6",
+    "8572d4e8-fff9-47c9-92d2-ff6a9d00b181",
+    "83c2bc19-69dc-4c53-911d-da39dd7a1954",
+    "397c4bac-572a-4e0a-9ede-30c1e290e702",
+    "a18bb581-77a2-4f9b-84cc-33ef841243e9"
+  ],
+  "scope": "One pre-request refusal, one timed-out Ultra request, then two separate Super repair runs with two and three proposals. The closed-range variant was added by the author after the first repair passed. Final browser checks reuse the model component without new inference. This is not one six-round autonomous repair or a blind evaluation.",
+  "sourceNote": "Public Pikaday issue #955, pinned original JS/CSS and an author-created weekday-booking consumer. The author added the closed-range variant after reviewing the first patch. Original requests, rejected proposals and verdicts remain unchanged.",
+  "upstream": "https://github.com/Pikaday/Pikaday/issues/955",
+  "upstreamLabel": "Public disabled-date keyboard issue #955",
+  "steps": [
+    {
+      "title": "Frozen reproduction using the original component",
+      "kind": "Author-created consumer; unmodified pinned upstream component",
+      "at": "2026-10-21T07:19:00.968Z",
+      "description": "ArrowRight from Friday 23 October selected closed Saturday 24 October. Pointer selection of an available weekday passed. The backward task was fixed before inference, omitted from the model task requirements, with its source markup visible.",
+      "links": [
+        {
+          "href": "./project.html?run=5b0c2db0-6309-435d-8362-ca223ff2f672#project-result",
+          "label": "Inspect original failure and pre-request refusal"
+        }
+      ],
+      "evidence": {
+        "revision": "9a90eea5cdbc48784d3a909ddb36e052c16bf25d",
+        "taskHash": "4bc452ecef556f32f4d84f01ff0116f902c381c209bb4d9c323e4881c5ebf76e",
+        "withheldTaskHash": "446f9e8777ffee3256242410b780363729414c52ed5880c084d475ac30629a9d",
+        "sourceHashes": {
+          "LICENSE.txt": "bac76ec786e2d7ceab9c046d6c765abb57536a40f51e807bd4dc279fb4134c17",
+          "app.js": "6a74936352c921e30a34ab68f90a79aa142d40073a5c12d4ee0c4f5976be1df1",
+          "index.html": "10f2f15edad67b8c32b12e31a7c0c39e752da679b6eb2489ca43d9f273c32770",
+          "pikaday.css": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+          "pikaday.js": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+          "style.css": "b04872e24cfb0fa272b2c096755abf99d1746c834923fc43f55341eb290744ae"
+        }
+      }
+    },
+    {
+      "title": "The unchanged pipeline stops before inference",
+      "kind": "Recorded limitation; zero model requests",
+      "at": "2026-10-21T07:19:10.626Z",
+      "description": "The original model-context limit rejected the dense calendar evidence. This result is INCONCLUSIVE, with no browser candidate and no model request.",
+      "links": [
+        {
+          "href": "./project.html?run=5b0c2db0-6309-435d-8362-ca223ff2f672#project-result",
+          "label": "Inspect the retained refusal"
+        }
+      ]
+    },
+    {
+      "title": "Author fixes generic model-context preparation",
+      "kind": "Human implementation change; source and tasks unchanged",
+      "at": "2026-10-21T07:22:52.978Z",
+      "description": "Repeated DOM HTML is removed from the bounded control inventory while concrete failing checks and complete allowlisted source are retained. Keyboard guidance is task-neutral. No date-specific repair rule was added.",
+      "links": [
+        {
+          "href": "./project.html?run=fef8da72-c446-4116-b69c-fc0c2c655472#project-result",
+          "label": "Inspect the next run"
+        }
+      ],
+      "evidence": {
+        "previousRun": "5b0c2db0-6309-435d-8362-ca223ff2f672",
+        "previousImplementation": {
+          "src/engine.js": "88f3cd39de200c98df517575368dd512c0d7b44feb282eb4966f2f33799c8447",
+          "src/nebius.js": "7aaa941327629f3b3c44b1c82bb1e862fd0a21521b9418bd07cba7da05651625",
+          "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+          "src/runner.js": "0e2990f5afcbe4969da7d33964c102b67c43ac9d45df0c1768af3048dfaa1e64",
+          "src/schema.js": "7043e8bd63f4e92a0cac709d6a6add679d9c8f37f2032e9a42e0479f6f1d28d5",
+          "src/verifier.js": "c6cb974d7dbd7034bd8dc5f376f78e2df8a5ff9c95bdf833d9d130812493b17b"
+        },
+        "currentImplementation": {
+          "src/engine.js": "88f3cd39de200c98df517575368dd512c0d7b44feb282eb4966f2f33799c8447",
+          "src/nebius.js": "fbb9ca956415320957f0d50d1cf5831fb4b229fac26e4e1266af1af18825edce",
+          "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+          "src/runner.js": "0e2990f5afcbe4969da7d33964c102b67c43ac9d45df0c1768af3048dfaa1e64",
+          "src/schema.js": "7043e8bd63f4e92a0cac709d6a6add679d9c8f37f2032e9a42e0479f6f1d28d5",
+          "src/verifier.js": "c6cb974d7dbd7034bd8dc5f376f78e2df8a5ff9c95bdf833d9d130812493b17b"
+        },
+        "requestDryRun": {
+          "characters": 61044,
+          "reservedTokens": 75777
+        }
+      }
+    },
+    {
+      "title": "Ultra request times out",
+      "kind": "Provider request attempted; no response recorded",
+      "at": "2026-10-21T07:22:53.387Z",
+      "description": "The request exceeded its two-minute deadline. Its usage is unknown and its budget reservation was retained. It remains INCONCLUSIVE and is not a successful model execution.",
+      "links": [
+        {
+          "href": "./project.html?run=fef8da72-c446-4116-b69c-fc0c2c655472#project-result",
+          "label": "Inspect timeout provenance"
+        }
+      ]
+    },
+    {
+      "title": "Super repairs weekday navigation",
+      "kind": "Real uncached model run; two proposals",
+      "at": "2026-10-21T07:26:26.232Z",
+      "description": "Attempt 1 was rejected for invalid response fields before browser verification. Attempt 2 changed Pikaday’s date arithmetic and passed forward keyboard and independent pointer selection. The unchanged component also passed the precommitted backward task. A later range probe found a remaining flaw.",
+      "links": [
+        {
+          "href": "./project.html?run=65c8e7d5-3d35-41c7-a80f-3696a6273451&attempt=1#project-result",
+          "label": "Rejected first proposal"
+        },
+        {
+          "href": "./project.html?run=65c8e7d5-3d35-41c7-a80f-3696a6273451&attempt=2#project-result",
+          "label": "First weekday repair"
+        },
+        {
+          "href": "./project.html?run=770f858a-7b0a-42a1-94b3-132c4cc0c1b6#project-result",
+          "label": "First backward check"
+        }
+      ],
+      "evidence": {
+        "run": "65c8e7d5-3d35-41c7-a80f-3696a6273451",
+        "attempt": 2,
+        "requests": [
+          {
+            "attempt": 1,
+            "requestId": "chatcmpl-5488cea048b9b9809b9e9504ec8c7710",
+            "category": "PROPOSAL",
+            "verified": false
+          },
+          {
+            "attempt": 2,
+            "requestId": "chatcmpl-299c9f6239f3fdc144f0bb117c4eebc3",
+            "category": null,
+            "verified": true
+          }
+        ],
+        "componentHash": "6bedcf62f5a30e8d4071a2580e60f8d2f3877180e7d133c11686a8267df90bc3"
+      }
+    },
+    {
+      "title": "Author adds a closed upper-bound variant after the pass",
+      "kind": "Post-hoc human scenario; not a blind test",
+      "at": "2026-10-21T07:34:36.586Z",
+      "description": "The author configured a pickup maxDate on closed Saturday 24 October. The first repaired component still selected Saturday instead of preserving Friday. Only consumer configuration/text changed; the component remained byte-identical to the first model candidate.",
+      "links": [
+        {
+          "href": "./project.html?run=65c8e7d5-3d35-41c7-a80f-3696a6273451&attempt=2#project-result",
+          "label": "Inspect source model attempt"
+        },
+        {
+          "href": "./project.html?run=459ef2eb-1518-4c98-bfb7-139912015c20#project-result",
+          "label": "Inspect the follow-up baseline"
+        }
+      ],
+      "evidence": {
+        "sourceRun": "65c8e7d5-3d35-41c7-a80f-3696a6273451",
+        "sourceAttempt": 2,
+        "sourceHashes": {
+          "LICENSE.txt": "bac76ec786e2d7ceab9c046d6c765abb57536a40f51e807bd4dc279fb4134c17",
+          "app.js": "bbf65796046091db966c94e4cb4a8121cfcb1d6b60e4b7b6cba19d8a639dd981",
+          "index.html": "ab2d54dd31cb433616a48ff39bfb6cb863e4bed4ae41f7c0ed9575da850e5cb8",
+          "pikaday.css": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+          "pikaday.js": "6bedcf62f5a30e8d4071a2580e60f8d2f3877180e7d133c11686a8267df90bc3",
+          "style.css": "b04872e24cfb0fa272b2c096755abf99d1746c834923fc43f55341eb290744ae"
+        },
+        "probe": {
+          "at": "2026-10-21T07:31:12.363Z",
+          "kind": "Post-hoc author review probe; no inference",
+          "sourceRun": "65c8e7d5-3d35-41c7-a80f-3696a6273451",
+          "sourceAttempt": 2,
+          "condition": "Last available day is Friday Oct23; maxDate is closed Saturday Oct24. ArrowRight must preserve Friday.",
+          "expected": "2026-10-23",
+          "observed": "2026-10-24",
+          "pass": false
+        }
+      }
+    },
+    {
+      "title": "A separate model run fixes the closed boundary",
+      "kind": "Real uncached model follow-up; three proposals",
+      "at": "2026-10-21T07:34:38.012Z",
+      "description": "Attempt 1 failed JavaScript syntax checking; attempt 2 failed exact patch application; neither reached browser verification. Attempt 3 fixed the component’s boundary handling and passed both gates. Already-working reverse and pointer paths were preserved.",
+      "links": [
+        {
+          "href": "./project.html?run=459ef2eb-1518-4c98-bfb7-139912015c20&attempt=1#project-result",
+          "label": "Inspect automatic rejection feedback"
+        },
+        {
+          "href": "./project.html?run=459ef2eb-1518-4c98-bfb7-139912015c20&attempt=3#project-result",
+          "label": "Inspect the successful follow-up"
+        }
+      ],
+      "evidence": {
+        "run": "459ef2eb-1518-4c98-bfb7-139912015c20",
+        "attempt": 3,
+        "requests": [
+          {
+            "attempt": 1,
+            "requestId": "chatcmpl-6c6acbedf5905979611503e126e501aa",
+            "category": "BUILD",
+            "verified": false
+          },
+          {
+            "attempt": 2,
+            "requestId": "chatcmpl-de9d146f0e9487a30fe2179021faf20e",
+            "category": "APPLICATION",
+            "verified": false
+          },
+          {
+            "attempt": 3,
+            "requestId": "chatcmpl-48ad31eedeaf7bff279c5c2ad4b78d75",
+            "category": null,
+            "verified": true
+          }
+        ],
+        "componentHash": "86adae7e6b934af216fc65b90e3e8b99c90263dd035acd47cc2b717640cd4b9a"
+      }
+    },
+    {
+      "title": "Final same component passes both original directions",
+      "kind": "Fresh-browser rechecks; no new inference or human repair code",
+      "at": "2026-10-21T07:39:26.186Z",
+      "description": "The author copied the final model component into the original consumer. Forward and backward tasks, each with independent pointer selection, passed. The downloadable patch is cumulative against the original component. Post-hoc review also checked closed minimum/maximum dates, no later availability, a custom weekday closure and a month boundary.",
+      "links": [
+        {
+          "href": "./project.html?run=374ef458-3f62-4074-8691-c476d43c863f#project-result",
+          "label": "Final forward validation and patch"
+        },
+        {
+          "href": "./project.html?run=eae53cc0-c0d8-48e9-be14-cf64478b3f55#project-result",
+          "label": "Final backward validation"
+        }
+      ],
+      "evidence": {
+        "sourceRun": "459ef2eb-1518-4c98-bfb7-139912015c20",
+        "sourceAttempt": 3,
+        "componentHash": "86adae7e6b934af216fc65b90e3e8b99c90263dd035acd47cc2b717640cd4b9a",
+        "patchReview": {
+          "at": "2026-10-21T07:40:31.676Z",
+          "browser": "155.0.8059.85",
+          "method": "Installed Chrome, clean headless profiles; post-hoc targeted model-patch review probes, no inference.",
+          "sourceRun": "459ef2eb-1518-4c98-bfb7-139912015c20",
+          "sourceAttempt": 3,
+          "componentHash": "86adae7e6b934af216fc65b90e3e8b99c90263dd035acd47cc2b717640cd4b9a",
+          "checks": [
+            {
+              "condition": "closed maximum",
+              "expected": "2026-10-23",
+              "observed": "2026-10-23",
+              "pass": true
+            },
+            {
+              "condition": "closed minimum",
+              "expected": "2026-10-26",
+              "observed": "2026-10-26",
+              "pass": true
+            },
+            {
+              "condition": "all later dates closed",
+              "expected": "2026-10-23",
+              "observed": "2026-10-23",
+              "pass": true
+            },
+            {
+              "condition": "normal forward",
+              "expected": "2026-10-26",
+              "observed": "2026-10-26",
+              "pass": true
+            },
+            {
+              "condition": "normal reverse",
+              "expected": "2026-10-23",
+              "observed": "2026-10-23",
+              "pass": true
+            },
+            {
+              "condition": "custom weekday closed",
+              "expected": "2026-10-28",
+              "observed": "2026-10-28",
+              "pass": true
+            },
+            {
+              "condition": "month boundary",
+              "expected": "2026-11-02",
+              "observed": "2026-11-02",
+              "pass": true
+            }
+          ]
+        }
+      }
+    },
+    {
+      "title": "Independent review: ArrowDown loses a day in London",
+      "kind": "Reviewer probe and post-hoc task; no inference",
+      "at": "2026-10-24T06:50:11.722Z",
+      "evidence": {
+        "commitment": "benchmarks/pikaday-booking-dst/commitment.json",
+        "sourceHashes": {
+          "LICENSE.txt": "bac76ec786e2d7ceab9c046d6c765abb57536a40f51e807bd4dc279fb4134c17",
+          "app.js": "6a74936352c921e30a34ab68f90a79aa142d40073a5c12d4ee0c4f5976be1df1",
+          "index.html": "10f2f15edad67b8c32b12e31a7c0c39e752da679b6eb2489ca43d9f273c32770",
+          "pikaday.css": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+          "pikaday.js": "86adae7e6b934af216fc65b90e3e8b99c90263dd035acd47cc2b717640cd4b9a",
+          "style.css": "b04872e24cfb0fa272b2c096755abf99d1746c834923fc43f55341eb290744ae"
+        },
+        "taskHash": "6d770ecc81df2774c4ddb121b6a17201a4a5af0b86ff02b1f7f0093e2cc13ae2",
+        "withheldTaskHash": "f70bc42dfa1a5ed6d0e016c41a8873fab799c7a834fc277a5aaa4d37db868578"
+      },
+      "description": "The runner now accepts a declared browser time zone. In Europe/London, ArrowDown from Friday 23 October 2026 selected Thursday 29 October because Pikaday adds 24-hour blocks across the end of British Summer Time. The defect is in the pinned upstream component and survived the earlier model patches. UTC, London and closed-range checks were frozen as withheld checks.",
+      "links": []
+    },
+    {
+      "title": "Ultra proposals rejected before the browser",
+      "kind": "Real uncached model run; two proposals",
+      "at": "2026-10-24T07:10:30.765Z",
+      "description": "Both proposals rewrote a line inside the region they were replacing, so the preimage did not match the source and nothing was applied. A third request was stopped by the local token ceiling before any call.",
+      "links": [
+        {
+          "href": "./project.html?run=e211fc5c-5553-4c01-acf6-80a865ffb891&attempt=1#project-result",
+          "label": "Inspect the rejected proposals"
+        }
+      ]
+    },
+    {
+      "title": "Super switches to calendar-day arithmetic",
+      "kind": "Real uncached model run; two proposals",
+      "at": "2026-10-24T07:14:02.692Z",
+      "description": "Attempt 1 was truncated during reasoning. Attempt 2 replaced millisecond offsets with setDate in both the jump and the closed-day skip. Withheld UTC forward/backward, London forward/backward and closed-range checks passed as full runs, and London ArrowUp stayed correct. Review note: parseInt was removed, which is safe for the component's numeric keyboard calls but would change string arguments passed to the public adjustDate method.",
+      "links": [
+        {
+          "href": "./project.html?run=cbb88e80-22b1-481b-a774-0d7dea9486f3&attempt=2#project-result",
+          "label": "Inspect the daylight-saving repair"
+        },
+        {
+          "href": "./project.html?run=83c2bc19-69dc-4c53-911d-da39dd7a1954#project-result",
+          "label": "Withheld London forward"
+        },
+        {
+          "href": "./project.html?run=a18bb581-77a2-4f9b-84cc-33ef841243e9#project-result",
+          "label": "Withheld closed range"
+        }
+      ],
+      "evidence": {
+        "run": "cbb88e80-22b1-481b-a774-0d7dea9486f3",
+        "attempt": 2,
+        "model": "nvidia/nemotron-3-super-120b-a12b",
+        "requestId": "chatcmpl-0bedce3168b722db2c2f88da16899442",
+        "usage": {
+          "prompt": 17859,
+          "completion": 7300
+        }
+      }
+    }
+  ]
+}

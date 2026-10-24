@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-21T07:31:12.363Z",
+  "kind": "Post-hoc author review probe; no inference",
+  "sourceRun": "65c8e7d5-3d35-41c7-a80f-3696a6273451",
+  "sourceAttempt": 2,
+  "condition": "Last available day is Friday Oct23; maxDate is closed Saturday Oct24. ArrowRight must preserve Friday.",
+  "expected": "2026-10-23",
+  "observed": "2026-10-24",
+  "pass": false
+}

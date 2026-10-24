@@ -1,0 +1,159 @@
+{
+  "fixedAt": "2026-10-21T06:44:13.946Z",
+  "repository": "https://github.com/alphagov/accessible-autocomplete",
+  "revision": "a4e8637ddb5423b64622d59a852b30a451266f91",
+  "issue": "https://github.com/alphagov/accessible-autocomplete/issues/777",
+  "sourceHashes": {
+    "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+    "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+    "app.js": "c0cd5c1ac1020b4313357444a74cdf86be52c9c19abbcf2686cfb28fdc7531b2",
+    "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+    "index.html": "71dd957392336c3af33f9e8bef51136bd4c7e88bce5b121d846053e6542c89e8",
+    "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+  },
+  "taskHash": "9c7dc9e659baf4f45b020d431e6a2522c304dba798c52ec89e1c16dccbf4ef0a",
+  "withheldTaskHash": "ed0fe460da493819d8630a591a2780a8690b31895528e418133d4e631280633d",
+  "implementation": {
+    "src/engine.js": "88f3cd39de200c98df517575368dd512c0d7b44feb282eb4966f2f33799c8447",
+    "src/nebius.js": "7aaa941327629f3b3c44b1c82bb1e862fd0a21521b9418bd07cba7da05651625",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "0e2990f5afcbe4969da7d33964c102b67c43ac9d45df0c1768af3048dfaa1e64",
+    "src/schema.js": "7043e8bd63f4e92a0cac709d6a6add679d9c8f37f2032e9a42e0479f6f1d28d5",
+    "src/verifier.js": "c6cb974d7dbd7034bd8dc5f376f78e2df8a5ff9c95bdf833d9d130812493b17b"
+  },
+  "provenance": "Author-created consumer of unmodified pinned GOV.UK component; publicly reported stale-select bug. No receipt/output instrumentation. Browser FormData at the final checkpoint, not a network/server persistence claim. Billing acceptance steps are committed before inference, omitted from model task requirements, but billing markup is visible in source. Not a blind evaluation.",
+  "baseline": {
+    "journey": {
+      "verdict": "VERIFIED_FAIL",
+      "checks": [
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              ""
+            ]
+          },
+          "pass": false,
+          "observed": [
+            "gb"
+          ]
+        },
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "de"
+          ]
+        }
+      ]
+    },
+    "functionalJourney": {
+      "verdict": "VERIFIED_PASS",
+      "checks": [
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "fr"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "fr"
+          ]
+        },
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "de"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "de"
+          ]
+        }
+      ]
+    },
+    "withheldJourney": {
+      "verdict": "VERIFIED_FAIL",
+      "checks": [
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "gb"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "gb"
+          ]
+        },
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              ""
+            ]
+          },
+          "pass": false,
+          "observed": [
+            "de"
+          ]
+        }
+      ]
+    },
+    "withheldFunctionalJourney": {
+      "verdict": "VERIFIED_PASS",
+      "checks": [
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "shipping_country",
+            "value": [
+              "gb"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "gb"
+          ]
+        },
+        {
+          "assertion": {
+            "kind": "form-data",
+            "selector": "#preferences",
+            "name": "billing_country",
+            "value": [
+              "it"
+            ]
+          },
+          "pass": true,
+          "observed": [
+            "it"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "fixedAt": "2026-10-21T07:19:00.968Z",
+  "repository": "https://github.com/Pikaday/Pikaday",
+  "issue": "https://github.com/Pikaday/Pikaday/issues/955",
+  "revision": "9a90eea5cdbc48784d3a909ddb36e052c16bf25d",
+  "sourceHashes": {
+    "LICENSE.txt": "bac76ec786e2d7ceab9c046d6c765abb57536a40f51e807bd4dc279fb4134c17",
+    "app.js": "6a74936352c921e30a34ab68f90a79aa142d40073a5c12d4ee0c4f5976be1df1",
+    "index.html": "10f2f15edad67b8c32b12e31a7c0c39e752da679b6eb2489ca43d9f273c32770",
+    "pikaday.css": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+    "pikaday.js": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+    "style.css": "b04872e24cfb0fa272b2c096755abf99d1746c834923fc43f55341eb290744ae"
+  },
+  "upstreamFiles": [
+    "pikaday.js",
+    "pikaday.css",
+    "LICENSE.txt"
+  ],
+  "taskHash": "4bc452ecef556f32f4d84f01ff0116f902c381c209bb4d9c323e4881c5ebf76e",
+  "withheldTaskHash": "446f9e8777ffee3256242410b780363729414c52ed5880c084d475ac30629a9d",
+  "implementation": {
+    "src/engine.js": "88f3cd39de200c98df517575368dd512c0d7b44feb282eb4966f2f33799c8447",
+    "src/nebius.js": "7aaa941327629f3b3c44b1c82bb1e862fd0a21521b9418bd07cba7da05651625",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "0e2990f5afcbe4969da7d33964c102b67c43ac9d45df0c1768af3048dfaa1e64",
+    "src/schema.js": "7043e8bd63f4e92a0cac709d6a6add679d9c8f37f2032e9a42e0479f6f1d28d5",
+    "src/verifier.js": "c6cb974d7dbd7034bd8dc5f376f78e2df8a5ff9c95bdf833d9d130812493b17b"
+  },
+  "provenance": "Unmodified pinned Pikaday JS/CSS and author-created equipment-booking consumer of publicly reported disabled-date keyboard issue #955. Weekend closure and skip-navigation requirement are authored acceptance conditions. Fixed October 2026 dates avoid clock-dependent assertions. Return/backward steps committed before inference and omitted from task requirements, but their markup/configuration is visible. Not blind or production-customer evidence. Same repair implementation as the native autocomplete experiment."
+}

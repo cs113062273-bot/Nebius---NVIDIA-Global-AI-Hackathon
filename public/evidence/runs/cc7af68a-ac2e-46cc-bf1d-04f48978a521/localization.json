@@ -1,0 +1,47 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "open",
+      "email",
+      "close",
+      "body",
+      "Reserve Studio A",
+      "Email",
+      "Confirm reservation",
+      "Cancel reservation",
+      "Try again"
+    ],
+    "sha256": "47dc7a3d6f25738410ad1031488bf3f14977055cc484c7475e3c0bd7f1178ce8"
+  },
+  {
+    "path": "micromodal.js",
+    "score": 3,
+    "signals": [
+      "open",
+      "close",
+      "body"
+    ],
+    "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c"
+  },
+  {
+    "path": "style.css",
+    "score": 3,
+    "signals": [
+      "open",
+      "close",
+      "body"
+    ],
+    "sha256": "0041b8336952d3dc7d0d42867982e44cf0dcc710e2252f0684668fe02e680b55"
+  },
+  {
+    "path": "app.js",
+    "score": 2,
+    "signals": [
+      "email",
+      "close"
+    ],
+    "sha256": "926929af01272a0021d6c264c422e899141fd6133a885af89a526a20ac40559b"
+  }
+]

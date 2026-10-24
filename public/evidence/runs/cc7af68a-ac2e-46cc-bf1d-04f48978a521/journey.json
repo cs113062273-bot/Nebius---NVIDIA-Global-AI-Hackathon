@@ -1,0 +1,164 @@
+{
+  "version": 1,
+  "id": "micromodal-hidden-focus",
+  "title": "Reserve a workspace without escaping the dialog",
+  "goal": "Move both ways through visible dialog controls, preserve the fixed Cancel button and finish the reservation.",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach booking opener",
+      "action": {
+        "kind": "seek",
+        "selector": "#open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Enter to #email",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#email"
+        }
+      ]
+    },
+    {
+      "title": "Enter booking email",
+      "action": {
+        "kind": "type",
+        "text": "visitor@example.com"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Shift+Tab to #close",
+      "action": {
+        "kind": "press",
+        "key": "Shift+Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#close"
+        }
+      ]
+    },
+    {
+      "title": "Tab to #email",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#email"
+        }
+      ]
+    },
+    {
+      "title": "Tab to #confirm",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#confirm"
+        }
+      ]
+    },
+    {
+      "title": "Tab to #close",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#close"
+        }
+      ]
+    },
+    {
+      "title": "Tab to #email",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#email"
+        }
+      ]
+    },
+    {
+      "title": "Tab to #confirm",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#confirm"
+        }
+      ]
+    },
+    {
+      "title": "Confirm and return to opener",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#open"
+        },
+        {
+          "kind": "attribute",
+          "selector": "#booking",
+          "name": "aria-hidden",
+          "value": "true"
+        },
+        {
+          "kind": "visible",
+          "selector": "#receipt",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#receipt",
+      "value": true
+    },
+    {
+      "kind": "attribute",
+      "selector": "#booking",
+      "name": "aria-hidden",
+      "value": "true"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#receipt",
+      "value": true
+    }
+  ],
+  "forbidden": []
+}

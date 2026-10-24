@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "pikaday-pickup-keyboard",
+  "title": "Keep the current date when the range ends on a closed day",
+  "goal": "Weekends are unavailable. Arrow navigation must skip disabled days within the configured min/max range. If no available date remains in that direction, preserve the current valid date. Never clamp onto a disabled boundary or commit a disabled date after the search limit. Preserve the other field and normal pointer selection.",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach pickup date",
+      "action": {
+        "kind": "seek",
+        "selector": "#pickup",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move forward to the next available date, skipping closed weekends",
+      "action": {
+        "kind": "press",
+        "key": "ArrowRight"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach Save",
+      "action": {
+        "kind": "seek",
+        "selector": "#save",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save booking dates",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-26"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "pickup_date",
+      "value": [
+        "2026-10-23"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "return_date",
+      "value": [
+        "2026-10-26"
+      ]
+    }
+  ],
+  "forbidden": []
+}

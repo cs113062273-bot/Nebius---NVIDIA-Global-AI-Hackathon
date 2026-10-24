@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "id": "a11y-dialog",
+      "runId": "fa95dcbd-3dd6-4451-9cd9-aafd690606e8",
+      "path": "recordings/a11y-dialog/data.json",
+      "title": "Real defect · a11y-dialog",
+      "kind": "Pinned open-source defect · reconstructed notice task · model-authored repair"
+    },
+    {
+      "id": "checkout",
+      "runId": "f79fedbc-405f-4f47-9297-1ece840b5d09",
+      "path": "recordings/checkout/data.json",
+      "title": "Synthetic checkout",
+      "kind": "Synthetic checkout · model-authored repair"
+    }
+  ],
+  "assets": [
+    {
+      "path": "recordings/a11y-dialog/before/initial.png",
+      "sha256": "7e83288bca3860b15ec082dbade0480bc73eaf15a29ae5ee4d6125c90a03e8e4"
+    },
+    {
+      "path": "recordings/a11y-dialog/before/step-0.png",
+      "sha256": "b88c7f9e1dccad260b8ec83b93afc2ad54957b17717b089e2c45745765a03314"
+    },
+    {
+      "path": "recordings/a11y-dialog/before/step-1.png",
+      "sha256": "a2cccbaadc00ea422b4924d2d9f524f0bbc2721993daab839b2e68870ca9a7ee"
+    },
+    {
+      "path": "recordings/a11y-dialog/before/step-2.png",
+      "sha256": "7e83288bca3860b15ec082dbade0480bc73eaf15a29ae5ee4d6125c90a03e8e4"
+    },
+    {
+      "path": "recordings/a11y-dialog/after-1/initial.png",
+      "sha256": "7e83288bca3860b15ec082dbade0480bc73eaf15a29ae5ee4d6125c90a03e8e4"
+    },
+    {
+      "path": "recordings/a11y-dialog/after-1/step-0.png",
+      "sha256": "b88c7f9e1dccad260b8ec83b93afc2ad54957b17717b089e2c45745765a03314"
+    },
+    {
+      "path": "recordings/a11y-dialog/after-1/step-1.png",
+      "sha256": "a2cccbaadc00ea422b4924d2d9f524f0bbc2721993daab839b2e68870ca9a7ee"
+    },
+    {
+      "path": "recordings/a11y-dialog/after-1/step-2.png",
+      "sha256": "b88c7f9e1dccad260b8ec83b93afc2ad54957b17717b089e2c45745765a03314"
+    },
+    {
+      "path": "recordings/a11y-dialog/journey.json",
+      "sha256": "7264d338296673fdd0123afb47a0fd2f2773eed958bd70b18638cbe812e8c55f"
+    },
+    {
+      "path": "recordings/a11y-dialog/verification.json",
+      "sha256": "6f244155dec2a3916352039279b61e322367f90584735f4840e82aed6dbbff1a"
+    },
+    {
+      "path": "recordings/a11y-dialog/provenance.json",
+      "sha256": "15db80ba45f86a533183aa5f69d5b165ba9b165111f66ee9babbe11c647e40ce"
+    },
+    {
+      "path": "recordings/a11y-dialog/manifest.json",
+      "sha256": "7929e2d7c4d8c636484eb48cd767f54ec19579283a3d457606c0e8abce7b173f"
+    },
+    {
+      "path": "recordings/a11y-dialog/plan-1.json",
+      "sha256": "505866edada73c90007ec777b5b718fba3fdc6dea4dd8c8fbae444b7815ac794"
+    },
+    {
+      "path": "recordings/a11y-dialog/diff-1.patch",
+      "sha256": "edee82be77df3c34c2de5c6d59b092f0455a5b5b68dc17427c1e39ad5a7e4bd7"
+    },
+    {
+      "path": "recordings/checkout/before/initial.png",
+      "sha256": "0a6664a7bc29b258489361798e2205567839c37e7c46fd7c910cd2d73fd95a5f"
+    },
+    {
+      "path": "recordings/checkout/before/step-0.png",
+      "sha256": "3d0f2d96ce007a0226d93df7c8e13179c44f82cc53b27d158684189e8b5f32de"
+    },
+    {
+      "path": "recordings/checkout/before/step-1.png",
+      "sha256": "b91918a7c922dfbb2d3bbabf6b0528b16640fd4313f114f0c29417df63456b33"
+    },
+    {
+      "path": "recordings/checkout/after-1/initial.png",
+      "sha256": "0a6664a7bc29b258489361798e2205567839c37e7c46fd7c910cd2d73fd95a5f"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-0.png",
+      "sha256": "3d0f2d96ce007a0226d93df7c8e13179c44f82cc53b27d158684189e8b5f32de"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-1.png",
+      "sha256": "c0561e4ca92d71aac6fb1ee463914800e64daa7d3dcfaddb4482bf8453973bb4"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-2.png",
+      "sha256": "85a33950c6e4a6ed49fe00924d840f8ce73f890ab1b89d12cf2b9546baae7b5a"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-3.png",
+      "sha256": "409b34d430fe70f71ada2a25c94e0e841a4b4323009bf7b60bd612c6ac241029"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-4.png",
+      "sha256": "cebf1af061e09689b9beec5ad30d9ba65961b01ab35b185d48660d58c309ee23"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-5.png",
+      "sha256": "3e1761d5d73a2361d66e6c3e746e532848c5d32a975f8f5eff6887781070713b"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-6.png",
+      "sha256": "c0561e4ca92d71aac6fb1ee463914800e64daa7d3dcfaddb4482bf8453973bb4"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-7.png",
+      "sha256": "c0561e4ca92d71aac6fb1ee463914800e64daa7d3dcfaddb4482bf8453973bb4"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-8.png",
+      "sha256": "d437f615dea8b9bc4e9bc050d6021e40ce79d8a7603364ec3512383ee5ee4dc1"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-9.png",
+      "sha256": "4c893c0c324ed1ab5167a0965f620e7592366af5a6c725d13183cef53bd4e089"
+    },
+    {
+      "path": "recordings/checkout/after-1/step-10.png",
+      "sha256": "8972ce3634ad4db3999e2ad8412323f07f31a54bff00f7807728a5abd0ae3bc1"
+    },
+    {
+      "path": "recordings/checkout/journey.json",
+      "sha256": "5518f5e9f8558e207c560217f8a4d942b6324836c85df1b8f834dff859502f75"
+    },
+    {
+      "path": "recordings/checkout/verification.json",
+      "sha256": "6f244155dec2a3916352039279b61e322367f90584735f4840e82aed6dbbff1a"
+    },
+    {
+      "path": "recordings/checkout/provenance.json",
+      "sha256": "94a03472360defca97a85a2471db93a29518ef531be45f246df85ac29f13b8b9"
+    },
+    {
+      "path": "recordings/checkout/manifest.json",
+      "sha256": "22a1c86072821d1aba486df0e47d940dac9c10f3f33512d1279e6af3bbd7d41a"
+    },
+    {
+      "path": "recordings/checkout/plan-1.json",
+      "sha256": "90b739176ce5f6e94b6e1f068954f6d0f6dae9332c89c9a32be5793033a8c6fa"
+    },
+    {
+      "path": "recordings/checkout/diff-1.patch",
+      "sha256": "e95f63ce4ab18894c1697884e706e71100a167e4f2cd71660087db2799ffee84"
+    }
+  ]
+}

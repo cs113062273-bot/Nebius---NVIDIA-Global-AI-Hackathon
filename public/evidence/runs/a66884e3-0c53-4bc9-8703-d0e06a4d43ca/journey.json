@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "id": "native-visible-keyboard",
+  "title": "Unrecognized or blank countries must not save an old code",
+  "goal": "Saving must submit exactly what each country field shows. A listed country submits its code. An empty, blank or unrecognized entry submits no saved country (an empty value). Keyboard and pointer selection of listed countries must keep working.",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach shipping country",
+      "action": {
+        "kind": "seek",
+        "selector": "#shipping-country",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Enter a country that is not listed",
+      "action": {
+        "kind": "type",
+        "text": "Atlantis",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach billing country",
+      "action": {
+        "kind": "seek",
+        "selector": "#billing-country",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Replace billing with blank spaces",
+      "action": {
+        "kind": "type",
+        "text": "   ",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach Save",
+      "action": {
+        "kind": "seek",
+        "selector": "#save",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save preferences",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "shipping_country",
+      "value": [
+        ""
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "billing_country",
+      "value": [
+        ""
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "shipping_country",
+      "value": [
+        ""
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#preferences",
+      "name": "billing_country",
+      "value": [
+        ""
+      ]
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,3 @@
+const formatDate=date=>[date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');
+for(const id of ['pickup','return']){const field=document.getElementById(id),[year,month,day]=field.value.split('-').map(Number);new Pikaday({field,firstDay:1,defaultDate:new Date(year,month-1,day),setDefaultDate:true,disableDayFn:date=>date.getDay()===0||date.getDay()===6,toString:formatDate,parse:value=>{const parts=value.split('-').map(Number);return new Date(parts[0],parts[1]-1,parts[2]);}});}
+document.getElementById('booking').addEventListener('submit',event=>event.preventDefault());

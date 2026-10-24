@@ -1,0 +1,629 @@
+{
+  "at": "2026-10-24T10:54:00.164Z",
+  "inferenceCalls": 0,
+  "method": "Fresh Chromium context per scenario (UTC, en-US). Visible text is the trimmed input value after the interaction; the expected code maps that text to the listed option (unlisted or empty text maps to no saved country). Submission uses Enter on Save, or the implicit submission already triggered from inside the field.",
+  "summary": {
+    "original component (pretty-printed options)": "5/11 consistent",
+    "previous final repair bea9de3c#2 (pretty-printed options)": "0/11 consistent",
+    "new repair c3158127#2 (pretty-printed options)": "11/11 consistent",
+    "new repair c3158127#2 (single-line options)": "11/11 consistent"
+  },
+  "results": [
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Save without editing",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Type \"france\", Enter inside the field",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Type \"France \" (trailing space), Enter inside the field",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "de"
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Type unlisted \"Atlantis\", Enter inside the field",
+      "visible": {
+        "shipping": "Atlantis",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "de"
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Clear shipping, Enter inside the field",
+      "visible": {
+        "shipping": "",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "de"
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Clear billing, Enter inside the field",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": ""
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "de"
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Type \"Fra\", Tab away",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Type \"Fra\", Escape, Tab away",
+      "visible": {
+        "shipping": "Fra",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Type \"It\", ArrowDown, Enter",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Italy"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "it"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Type \"Ita\", Enter inside the field",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Italy"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "it"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "original component (pretty-printed options)",
+      "scenario": "Choose France, then retype unlisted \"Germ\"",
+      "visible": {
+        "shipping": "Germ",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Save without editing",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Type \"france\", Enter inside the field",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Type \"France \" (trailing space), Enter inside the field",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Type unlisted \"Atlantis\", Enter inside the field",
+      "visible": {
+        "shipping": "Atlantis",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Clear shipping, Enter inside the field",
+      "visible": {
+        "shipping": "",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Clear billing, Enter inside the field",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": ""
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Type \"Fra\", Tab away",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Type \"Fra\", Escape, Tab away",
+      "visible": {
+        "shipping": "Fra",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Type \"It\", ArrowDown, Enter",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Italy"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Type \"Ita\", Enter inside the field",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Italy"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "previous final repair bea9de3c#2 (pretty-printed options)",
+      "scenario": "Choose France, then retype unlisted \"Germ\"",
+      "visible": {
+        "shipping": "Germ",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": ""
+      },
+      "consistent": false,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Save without editing",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Type \"france\", Enter inside the field",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Type \"France \" (trailing space), Enter inside the field",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Type unlisted \"Atlantis\", Enter inside the field",
+      "visible": {
+        "shipping": "Atlantis",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Clear shipping, Enter inside the field",
+      "visible": {
+        "shipping": "",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Clear billing, Enter inside the field",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": ""
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": ""
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Type \"Fra\", Tab away",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Type \"Fra\", Escape, Tab away",
+      "visible": {
+        "shipping": "Fra",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Type \"It\", ArrowDown, Enter",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Italy"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "it"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Type \"Ita\", Enter inside the field",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Italy"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "it"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (pretty-printed options)",
+      "scenario": "Choose France, then retype unlisted \"Germ\"",
+      "visible": {
+        "shipping": "Germ",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Save without editing",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Type \"france\", Enter inside the field",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Type \"France \" (trailing space), Enter inside the field",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Type unlisted \"Atlantis\", Enter inside the field",
+      "visible": {
+        "shipping": "Atlantis",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Clear shipping, Enter inside the field",
+      "visible": {
+        "shipping": "",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Clear billing, Enter inside the field",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": ""
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": ""
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Type \"Fra\", Tab away",
+      "visible": {
+        "shipping": "France",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "fr",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Type \"Fra\", Escape, Tab away",
+      "visible": {
+        "shipping": "Fra",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Type \"It\", ArrowDown, Enter",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Italy"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "it"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Type \"Ita\", Enter inside the field",
+      "visible": {
+        "shipping": "United Kingdom",
+        "billing": "Italy"
+      },
+      "submitted": {
+        "shipping": "gb",
+        "billing": "it"
+      },
+      "consistent": true,
+      "errors": []
+    },
+    {
+      "source": "new repair c3158127#2 (single-line options)",
+      "scenario": "Choose France, then retype unlisted \"Germ\"",
+      "visible": {
+        "shipping": "Germ",
+        "billing": "Germany"
+      },
+      "submitted": {
+        "shipping": "",
+        "billing": "de"
+      },
+      "consistent": true,
+      "errors": []
+    }
+  ]
+}

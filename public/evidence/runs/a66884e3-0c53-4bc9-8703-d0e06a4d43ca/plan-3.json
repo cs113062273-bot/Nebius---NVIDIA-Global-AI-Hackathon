@@ -1,0 +1,25 @@
+{
+  "root_cause": "The accessible-autocomplete widget does not reset the underlying select's value when the user enters a value that does not match any option (including blank/whitespace), causing the previously selected value to be submitted.",
+  "repair_strategy": "On form submission, for each enhanced select, compare the associated combobox input's trimmed value with the select's options; if no match, set the select's value to empty string.",
+  "edits": [
+    {
+      "path": "app.js",
+      "sha256": "c0cd5c1ac1020b4313357444a74cdf86be52c9c19abbcf2686cfb28fdc7531b2",
+      "before": "for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});\ndocument.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());\n",
+      "after": "for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});\ndocument.getElementById('preferences').addEventListener('submit',event=>{\n  event.preventDefault();\n  for(const id of ['shipping-country','billing-country']){\n    const input = document.getElementById(id);\n    const select = document.getElementById(id+'-select');\n    if(!input || !select) continue;\n    const val = input.value.trim();\n    let matched = false;\n    for(const option of select.options){\n      if(option.value === val || option.textContent.trim() === val){\n        matched = true;\n        break;\n      }\n    }\n    if(!matched){\n      select.value = '';\n    }\n  }\n});\n"
+    }
+  ],
+  "expected_accessibility_effect": "No adverse effect; keyboard and mouse selection of listed items continues to work because those actions set a valid choice and the submit handler will not alter the select when a match exists. Screen readers will observe the select reflecting the current visible value.",
+  "functional_risks": [
+    "Potential interference if the library itself updates the select asynchronously causing double assignment.",
+    "Risk if the library changes DOM structure and our query fails to locate the input or select.",
+    "Minimal performance impact due to simple loop on submit."
+  ],
+  "verification_requirements": [
+    "Entering a recognized country sets the select to its code.",
+    "Entering an unrecognized string or whitespace leaves the select empty.",
+    "Pressing Save after such entry results in an empty submitted value.",
+    "Normal selection via arrow keys and Enter still works and updates the select correctly.",
+    "The handler does not cause infinite loops or stale values."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · #preferences shipping_country: expected [\"\"], observed [\"gb\"]",
+    "Task evidence is missing or contradicts the verdict",
+    "Regression guard \"Guard · the plain pickup-city autocomplete keeps working\": inconclusive · #search destination: expected [\"zzz\"], observed [\"\",\"\"]"
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_FAIL",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true,
+    "regressionGuards": "1/2"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

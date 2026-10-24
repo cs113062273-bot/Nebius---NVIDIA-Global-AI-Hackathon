@@ -1,0 +1,35 @@
+diff --git a/app.js b/app.js
+index c32feb5..5580222 100644
+--- a/app.js
++++ b/app.js
+@@ -1,4 +1,30 @@
+ for(const id of ['shipping-country','billing-country'])accessibleAutocomplete.enhanceSelectElement({selectElement:document.getElementById(id)});
+ document.getElementById('preferences').addEventListener('submit',event=>event.preventDefault());
++
++// Sync country selects with autocomplete input
++document.querySelectorAll('select[name="shipping_country"], select[name="billing_country"]').forEach(select => {
++  const wrapper = select.previousElementSibling;
++  if (wrapper && wrapper.matches('.autocomplete__wrapper')) {
++    const input = wrapper.querySelector('input[role="combobox"]');
++    const labelToValue = {};
++    select.querySelectorAll('option').forEach(opt => {
++      labelToValue[opt.textContent.trim()] = opt.value;
++    });
++    const handle = () => {
++      const val = input.value.trim();
++      const mapped = labelToValue[val];
++      if (mapped !== undefined) {
++        select.value = mapped;
++      } else {
++        select.value = '';
++      }
++    };
++    input.addEventListener('input', () => setTimeout(handle, 0));
++    input.addEventListener('change', () => setTimeout(handle, 0));
++    input.addEventListener('blur', () => setTimeout(handle, 0));
++  }
++});
++accessibleAutocomplete({element:document.getElementById('destination-field'),id:'destination',name:'destination',source:['Paris','Lyon','Berlin','Rome']});
++document.getElementById('search').addEventListener('submit',event=>event.preventDefault());
+ accessibleAutocomplete({element:document.getElementById('destination-field'),id:'destination',name:'destination',source:['Paris','Lyon','Berlin','Rome']});
+ document.getElementById('search').addEventListener('submit',event=>event.preventDefault());

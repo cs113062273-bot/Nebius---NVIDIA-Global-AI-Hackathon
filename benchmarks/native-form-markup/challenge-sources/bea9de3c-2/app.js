@@ -1,0 +1,57 @@
+for (const id of ['shipping-country','billing-country']) {
+  const select = document.getElementById(id);
+  accessibleAutocomplete.enhanceSelectElement({
+    selectElement: select,
+    onConfirm: function(text) {
+      const options = select.options;
+      let found = false;
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].textContent === text) {
+          options[i].selected = true;
+          found = true;
+          break;
+        }
+      }
+      if (!found) {
+        for (let i = 0; i < options.length; i++) {
+          if (options[i].value === "") {
+            options[i].selected = true;
+            break;
+          }
+        }
+      }
+    }
+  });
+}
+
+function updateSelectFromCombobox(comboboxId) {
+  const input = document.getElementById(comboboxId);
+  const select = document.getElementById(comboboxId + '-select');
+  if (!input || !select) return;
+  const value = input.value;
+  let found = false;
+  for (let i = 0; i < select.options.length; i++) {
+    if (select.options[i].textContent === value) {
+      select.options[i].selected = true;
+      found = true;
+      break;
+    }
+  }
+  if (!found) {
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === "") {
+        select.options[i].selected = true;
+        break;
+      }
+    }
+  }
+}
+
+document.getElementById('preferences').addEventListener('submit', function(event) {
+  event.preventDefault();
+  updateSelectFromCombobox('shipping-country');
+  updateSelectFromCombobox('billing-country');
+});
+
+accessibleAutocomplete({element:document.getElementById('destination-field'),id:'destination',name:'destination',source:['Paris','Lyon','Berlin','Rome']});
+document.getElementById('search').addEventListener('submit',event=>event.preventDefault());

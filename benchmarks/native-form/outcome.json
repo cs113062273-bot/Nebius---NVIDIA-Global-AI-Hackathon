@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-21T06:51:48.354Z",
+  "modelRun": "d2eb947c-deed-44c9-9381-b444438a5c11",
+  "modelCalls": 1,
+  "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+  "requestId": "chatcmpl-231fcd68b0d71c74f91f45459309adff",
+  "promptTokens": 10387,
+  "completionTokens": 7867,
+  "estimatedSponsorCreditUsd": 0.033988,
+  "estimateNote": "Actual recorded tokens multiplied by returned catalog prices; not a billing statement.",
+  "candidateHashes": {
+    "LICENSE.txt": "3fab1ab2cfe4cb6f3bffda6cb74f88bb7663376238536a3cb53d2d18d9320d54",
+    "accessible-autocomplete.js": "876870ee2a6772b1f69eba109beb1ca932ab6b295259ccc9c04f206589744f45",
+    "app.js": "00bbd8d5d4d29208dc04fd2e3de37991f81a00854a859c08252ef98f185a4779",
+    "autocomplete.css": "4b7a52dc010881834198a8bbf420982bdcf64616bb14dc16cba70e02b098c8c1",
+    "index.html": "71dd957392336c3af33f9e8bef51136bd4c7e88bce5b121d846053e6542c89e8",
+    "style.css": "1df07d4d351edce6618d4e93c107436208067007bfac6aee4f951c2e5cd9432c"
+  },
+  "transferRun": "12b01ae9-a19c-4d84-b4dc-acc3a1da82d0",
+  "transferCandidateByteIdentical": true,
+  "withheldTaskRequirementsAbsentFromRequest": true,
+  "negativeRun": "050ef18e-84ea-4891-b43a-f1d1f41698a4",
+  "negativeGate": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_FAIL",
+    "functionalOutputUnchanged": false
+  },
+  "sourceAndFrozenImplementationUnchanged": true,
+  "proofIntegrity": "All three new runs and both selected historical controls pass.",
+  "scope": "Author-created consumer of unmodified pinned GOV.UK component; publicly reported stale-select bug. No receipt/output instrumentation. Browser FormData at the final checkpoint, not a network/server persistence claim. Billing acceptance steps are committed before inference, omitted from model task requirements, but billing markup is visible in source. Not a blind evaluation."
+}
