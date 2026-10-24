@@ -126,6 +126,22 @@ function renderAttemptSummary(){
  text('#reason-provenance',clarified?`This display explains recorded assertions. Some original verifier wording is clarified here; the original record below and downloaded proof are unchanged. Functional baseline: ${label(status(run.functionalBefore))}; candidate: ${label(functional)}.`:'');
  $('#reason-provenance').hidden=!clarified;$('#original-verifier').hidden=!a;text('#original-verifier-record',JSON.stringify(raw,null,2));
  for(const b of document.querySelectorAll('.attempt-select'))b.setAttribute('aria-pressed',String(Number(b.dataset.attempt)===a?.attempt));
+ renderModelCall(run,a);
+}
+// Shows the recorded Nebius request behind the selected attempt; replays and human candidates say no call was made.
+function renderModelCall(run,a){
+ const box=$('#model-call'),p=a?.provenance;box.replaceChildren();box.hidden=!a;if(!a)return;
+ const line=(value,className)=>{const el=document.createElement('p');el.textContent=value;if(className)el.className=className;box.append(el);};
+ const heading=document.createElement('h3');heading.textContent=`Model call · attempt ${a.attempt}`;box.append(heading);
+ if(!p?.requestId&&!p?.requestFile){line(p?.status==='RECORDED_PLAN_REPLAY'?`No new model call: replay of recorded request ${p.originalRequestId}.`:p?.status==='REFERENCE_NOT_AI'?'No model call: this candidate is human-supplied or a browser-only replay of an earlier patch.':'No model request was made for this attempt.');return;}
+ const n=v=>Number(v).toLocaleString('en-US'),u=p.usage,reasoning=u?.completion_tokens_details?.reasoning_tokens;
+ line(`${p.model} · ${p.provider||'Nebius Token Factory'} · request ${p.requestId||'not returned'} · ${u?`${n(u.prompt_tokens)} prompt + ${n(u.completion_tokens)} completion tokens${reasoning?` (${n(reasoning)} reasoning)`:''}`:'no usage recorded'}${p.latencyMs?` · ${(p.latencyMs/1000).toFixed(1)} s`:''}${p.cacheHit?' · cached response, no new call':''}`,'model-meta');
+ if(p.status==='FAILED_OR_UNCERTAIN')line(`No usable proposal${p.finishReason?` (finish reason: ${p.finishReason})`:''}: ${a.failure||'see the raw files'}`);
+ if(a.plan?.root_cause)line('Model diagnosis: '+a.plan.root_cause);
+ if(a.plan?.repair_strategy)line('Model strategy: '+a.plan.repair_strategy);
+ const links=document.createElement('p');links.className='evidence-links';
+ for(const [label,file,present]of [['Raw request',`model-request-${a.attempt}.json`,p.requestFile],['Raw response',`model-response-${a.attempt}.json`,p.responseFile]])if(present){const link=document.createElement('a');link.href=artifact(run,file);link.textContent=label+' →';links.append(link);}
+ if(links.childNodes.length)box.append(links);
 }
 function showCheckpoint(){
  if(!lastRun)return;const run=lastRun,a=selectedAttempt(),info=pathInfo(run,a,$('#result-path').value),{before,after,task}=info,step=Number($('#result-step').value);
