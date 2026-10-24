@@ -6,7 +6,7 @@
 
 ## 先掌握現況
 
-工作區：`C:\Users\chinh\Desktop\Nebius---NVIDIA-Global-AI-Hackathon`
+工作區：本 repository 根目錄
 
 遠端：`https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon.git`
 
