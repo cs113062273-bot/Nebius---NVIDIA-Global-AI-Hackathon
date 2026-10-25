@@ -1,14 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { ROOT } from '../src/catalog.js';
-import { json, listFiles, readJson } from '../src/files.js';
-import { digest } from '../src/schema.js';
-import { verifyProof } from '../src/proof.js';
-import { proofArchive } from '../src/archive.js';
+import { json, readJson } from '../src/files.js';
+import { publishRun } from '../src/publish.js';
 import { liveCases, humanPatch, benchmarkVersions, openCases } from '../src/live.js';
 
 // Publishes recorded runs as a read-only, backend-free evidence bundle under public/evidence.
-// Every copied artifact must match its run manifest hash; run.json is a reduced, path-sanitized view.
+// Each run goes through publishRun (src/publish.js): manifest-checked copies and a reduced run.json.
 const runs = path.join(ROOT, 'artifacts', 'runs'), out = path.join(ROOT, 'public', 'evidence');
 const r = (id, label, extra = {}) => ({ id, label, ...extra });
 const groups = [
@@ -29,24 +27,16 @@ const groups = [
  { title: 'MicroModal · hidden-node focus routing', summary: 'Earlier case on MicroModal #295 with a published human patch and model repairs.',
   runs: [r('99e589ff-42bc-4bd0-b9f9-0b66aa1432db', 'Nemotron repair'), r('2d7de911-90df-47ae-a9dd-4e0a36d2c206', 'Nemotron repair · CSS-hidden retry'), r('120c8bdb-63d5-4577-aa8b-afdab144aeff', 'Published human patch vs author-added control'), r('56a72234-ccfe-4c02-b6b3-897db6d0f245', 'Human reference replay'), r('cc7af68a-ac2e-46cc-bf1d-04f48978a521', 'Human reference replay (rejected)')] }
 ];
-const textFile = /\.(json|patch|md)$/;
-const keep = file => !/^candidate-/.test(file) && !/\.(dom\.html|ax\.json|axe\.json|aria\.yml|focus\.json)$/.test(file) && file !== 'provenance.json' && !file.endsWith('/result.json') && (file.endsWith('.png') || !file.includes('/'));
-const credential = /(?:Bearer\s+[A-Za-z0-9._-]{20,}|gh[pousr]_[A-Za-z0-9]{20,}|v1\.[A-Za-z0-9_-]{60,}\.[A-Za-z0-9_-]{30,})/;
-// Reduced journey result: the viewer needs captures, focus and assertions, not DOM inventories.
-const slim = result => result && {
- ...result,
- checkpoints: result.checkpoints?.map(c => ({ id: c.id, screenshot: c.screenshot, state: { focus: c.state?.focus && { selector: c.state.focus.selector, tag: c.state.focus.tag, bbox: c.state.focus.bbox }, dialogs: c.state?.dialogs }, axe: c.axe && { violations: c.axe.violations.map(v => ({ id: v.id, impact: v.impact, nodes: v.nodes.length })) } })),
- steps: result.steps?.map(s => ({ ...s, before: s.before && { selector: s.before.selector }, after: s.after && { selector: s.after.selector } })),
- focusGraph: result.focusGraph && { findings: result.focusGraph.findings, note: result.focusGraph.note }
-};
-const slimAll = list => list?.map(slim);
-const sanitize = text => text.split(ROOT.replaceAll('\\', '\\\\')).join('.').split(ROOT.replaceAll('\\', '/')).join('.').split(ROOT).join('.');
 
 // Real-bug benchmark: every recorded blind run, plus the case list and maintainers' diffs for the live page.
 const realbugs = await liveCases(), realbugsOut = path.join(ROOT, 'public', 'realbugs');
 await fs.rm(realbugsOut, { recursive: true, force: true });
 for (const c of realbugs) { await fs.mkdir(path.join(realbugsOut, c.id), { recursive: true }); await fs.writeFile(path.join(realbugsOut, c.id, 'human.patch'), await humanPatch(c.id)); }
 await json(path.join(realbugsOut, 'index.json'), { generatedAt: new Date().toISOString(), enabled: false, cases: realbugs, benchmark: await benchmarkVersions() });
+// Passed every browser check and were rejected on review; kept because they explain the later gates.
+groups.unshift({ title: 'Passed the browser, rejected on review', summary: 'Model patches that satisfied every frozen check but were not real fixes. The first two name the test page’s own element ids inside library code, which led to the version 6 overfitting gate.',
+ runs: [r('05c9906c-ae05-44df-97a4-52a433fdf9a7', 'Bootstrap 5 modal (engine v3) · hardcodes #confirm-close and #confirm-delete in modal.js', { attempt: 1, proof: true }),
+  r('7e0e462e-2418-4f6b-b6d1-2c6f89456331', 'Bootstrap 6 drawer (engine v5) · hardcodes #filters-close in drawer.ts', { attempt: 1, proof: true })] });
 // Open upstream bugs: the recorded run and, when the browser accepted one, Nemotron's patch as a download.
 const openbugs = await openCases(), openOut = path.join(ROOT, 'public', 'openbugs');
 await fs.rm(openOut, { recursive: true, force: true });
@@ -55,35 +45,21 @@ for (const c of openbugs) if (c.recorded?.passedOn) { await fs.mkdir(path.join(o
 await json(path.join(openOut, 'index.json'), { generatedAt: new Date().toISOString(), cases: openbugs });
 const recordedOpen = openbugs.filter(c => c.recorded);
 if (recordedOpen.length) groups.unshift({ title: 'Open upstream bugs · Nemotron repairs', summary: "Each library is pinned at its current head, where a reported keyboard bug is still unfixed. There is no maintainers' fix to compare; the bug must reproduce while the pointer path and every guard pass. Super first, Ultra after a rejection.",
- runs: recordedOpen.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })) });
+ runs: [...recordedOpen.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })),
+  ...openbugs.flatMap(c => c.replays.map(x => r(x.run, `Replay without inference · run ${x.fromRun.slice(0, 8)} attempt ${x.attempt} against: ${c.title}`)))] });
 const recordedRealbugs = realbugs.filter(c => c.recorded);
 if (recordedRealbugs.length) groups.unshift({ title: 'Real upstream bugs · blind Nemotron runs', summary: "Each library is pinned just before a published maintainer fix. The maintainers' fix passes the frozen task; Nemotron gets only the buggy source, Super first and Ultra after a rejection.",
  runs: recordedRealbugs.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })) });
-await fs.rm(path.join(out, 'runs'), { recursive: true, force: true });
+// Daily live runs were made in CI and exist only in public/; keep their evidence folders.
+const liveRuns = new Set(((await readJson(path.join(ROOT, 'public', 'live-runs', 'index.json')).catch(() => ({ runs: [] }))).runs || []).map(x => x.run));
+for (const entry of await fs.readdir(path.join(out, 'runs')).catch(() => [])) if (!liveRuns.has(entry)) await fs.rm(path.join(out, 'runs', entry), { recursive: true, force: true });
 const index = { generatedAt: new Date().toISOString(), note: 'Read-only published evidence. Screenshots, plans, diffs and raw model requests/responses are byte-identical to the run manifests. run.json is a reduced, path-sanitized view; complete archives are attached where marked.', groups: [] };
 let bytes = 0;
 for (const group of groups) {
  const entries = [];
  for (const item of group.runs) {
-  const dir = path.join(runs, item.id), proof = await verifyProof(dir);
-  if (!proof.pass) throw new Error(`Proof integrity failed for ${item.id}`);
-  const run = await readJson(path.join(dir, 'run.json')), manifest = await readJson(path.join(dir, 'manifest.json')), target = path.join(out, 'runs', item.id);
-  for (const file of await listFiles(dir)) {
-   if (!keep(file)) continue;
-   const buffer = await fs.readFile(path.join(dir, file));
-   if (file !== 'manifest.json' && file !== 'run.json' && manifest.files[file] !== digest(buffer)) throw new Error(`Manifest mismatch ${item.id}/${file}`);
-   if (file === 'run.json') continue;
-   if (textFile.test(file) && credential.test(buffer.toString('utf8'))) throw new Error(`Credential-like text in ${item.id}/${file}`);
-   await fs.mkdir(path.dirname(path.join(target, file)), { recursive: true }); await fs.writeFile(path.join(target, file), buffer); bytes += buffer.length;
-  }
-  const view = { ...run, before: slim(run.before), after: slim(run.after), functionalBefore: slim(run.functionalBefore), functionalAfter: slim(run.functionalAfter), ...(run.guardsBefore ? { guardsBefore: slimAll(run.guardsBefore) } : {}),
-   attempts: run.attempts.map(a => ({ ...a, after: slim(a.after), functionalAfter: slim(a.functionalAfter), ...(a.guardsAfter ? { guardsAfter: slimAll(a.guardsAfter) } : {}) })),
-   evidenceView: { reduced: true, removed: ['checkpoint DOM inventories', 'axe pass lists', 'focus event logs'], proof: !!item.proof } };
-  const text = sanitize(JSON.stringify(view));
-  if (/C:[\\/]+Users|chinh/i.test(text) || credential.test(text)) throw new Error(`Local path or credential in ${item.id}/run.json`);
-  await fs.writeFile(path.join(target, 'run.json'), text); bytes += text.length;
-  if (item.proof) { const archive = await proofArchive(dir, manifest); await fs.writeFile(path.join(target, 'proof.tar.gz'), archive); bytes += archive.length; }
-  const models = [...new Set(run.attempts.map(a => a.provenance?.model).filter(Boolean))];
+  const published = await publishRun(path.join(runs, item.id), path.join(out, 'runs', item.id), { proof: item.proof }), { run, manifest, models } = published;
+  bytes += published.bytes;
   entries.push({ id: item.id, label: item.label, attempt: item.attempt, verdict: run.verification?.verdict || 'NOT_TESTED',
    execution: run.mode === 'nebius' ? `${run.attempts.length} Nemotron proposal${run.attempts.length > 1 ? 's' : ''} · ${models.join(', ') || 'no response'}` : run.source?.execution === 'fresh-browser-recheck' ? 'browser-only recheck · no inference' : 'human-supplied candidate · no inference',
    rootHash: manifest.rootHash, proofArchive: !!item.proof });

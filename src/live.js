@@ -39,10 +39,13 @@ export async function openCases() {
     const root = path.join(OPEN_CASES, entry.name), meta = await readJson(path.join(root, 'case.json')).catch(() => null), commitment = await readJson(path.join(root, 'commitment.json')).catch(() => null);
     if (!meta || commitment?.screen?.verdict !== 'REPRODUCED') continue;
     const results = [];
-    for (const f of (await fs.readdir(path.join(root, 'results')).catch(() => [])).sort()) results.push(await readJson(path.join(root, 'results', f)));
+    const files = (await fs.readdir(path.join(root, 'results')).catch(() => [])).sort(), replays = [];
+    for (const f of files) if (f.startsWith('auto-')) results.push(await readJson(path.join(root, 'results', f)));
+    // Earlier model patches replayed against this stricter task in the browser, without inference.
+    for (const f of files) if (f.startsWith('replay-')) { const r = await readJson(path.join(root, 'results', f)); replays.push({ run: r.replayRun, verdict: r.verdict, fromCase: r.fromCase, fromRun: r.fromRun, attempt: r.attempt, engine: r.engine }); }
     // First run on the frozen implementation; runs on earlier engines stay in results/ as history.
     const recorded = results.find(r => frozen && r.implementation === frozen) || results.at(-1) || null;
-    out.push({ id: entry.name, title: meta.title, summary: meta.summary, library: meta.library, category: meta.category || null, repository: meta.repository, issue: meta.issue, pinnedCommit: meta.pinnedCommit, status: meta.status, pendingHumanFix: meta.pendingHumanFix || null, pendingHumanCheck: await readJson(path.join(root, 'pending-human-check.json')).catch(() => null), review: await readJson(path.join(root, 'review.json')).catch(() => null), expectedBehaviour: meta.expectedBehaviour || null,
+    out.push({ id: entry.name, title: meta.title, summary: meta.summary, library: meta.library, category: meta.category || null, repository: meta.repository, issue: meta.issue, pinnedCommit: meta.pinnedCommit, status: meta.status, derivedFrom: meta.derivedFrom || null, addedAfterReview: meta.addedAfterReview || null, replays, pendingHumanFix: meta.pendingHumanFix || null, pendingHumanCheck: await readJson(path.join(root, 'pending-human-check.json')).catch(() => null), review: await readJson(path.join(root, 'review.json')).catch(() => null), expectedBehaviour: meta.expectedBehaviour || null,
       recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null) } });
   }
   return out.sort((a, b) => a.library.localeCompare(b.library) || a.id.localeCompare(b.id));

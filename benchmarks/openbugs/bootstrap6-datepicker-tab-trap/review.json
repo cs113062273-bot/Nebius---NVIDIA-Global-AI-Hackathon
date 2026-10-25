@@ -1,12 +1,11 @@
 {
   "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-  "reviewedAt": "2026-10-25T18:20:28.715Z",
-  "run": "9c87e810-82f4-4ac7-b108-c1658a430f5c",
-  "verdict": "Removes the trap, but changes how the calendar opens",
-  "summary": "The calendar no longer opens on focus; it opens on click, Enter or Space. With nothing shown on focus, Tab moves on normally.",
+  "reviewedAt": "2026-10-25T18:34:11.811Z",
+  "run": "af77a4aa-da7c-4790-8ecb-eee8a78cc33b",
+  "verdict": "Rejected on review: it breaks the calendar",
+  "summary": "The patch passes input mode as false to vanilla-calendar-pro. That removes the Tab trap, but after a click the calendar is no longer visible (0 of 35 days visible, against 35 before the patch).",
   "caveats": [
-    "This changes the component's opening behaviour, which the frozen task does not cover.",
-    "Space in the date field now opens the calendar instead of typing a space.",
-    "The underlying fault is that vanilla-calendar-pro treats the calendar as shown when it is not rendered; a maintainer would more likely fix that state than stop opening on focus. Not suitable to propose upstream as it is; the reproduction is the useful part to report."
+    "The frozen pointer path never opened the calendar, so the browser gate could not see this.",
+    "A stricter case, bootstrap6-datepicker-tab-trap-with-picker, adds a pointer guard for it; the patch is replayed there without inference."
   ]
 }

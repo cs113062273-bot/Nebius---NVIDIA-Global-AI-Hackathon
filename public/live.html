@@ -1,12 +1,17 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tabstitch · Real bugs, live repair</title><meta name="tabstitch-live" content=""><link rel="icon" type="image/svg+xml" href="./favicon.svg"><link rel="stylesheet" href="./live.css"></head><body>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tabstitch · Real bugs</title><meta name="tabstitch-live" content=""><link rel="icon" type="image/svg+xml" href="./favicon.svg"><link rel="stylesheet" href="./live.css"></head><body>
 <a class="skip" href="#cases">Skip to the bugs</a>
 <header class="bar"><a class="brand" href="./">↹ tabstitch</a><nav aria-label="Main"><a href="./live.html" aria-current="page">Live repair</a><a href="./live.html#scoreboard">Scoreboard</a><a href="./project.html?evidence#evidence-index">All recorded runs</a><a href="https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon">Source ↗</a></nav><span id="mode" class="mode">CONNECTING…</span></header>
 <main>
 <section class="hero">
  <p class="eyebrow">REAL UPSTREAM BUGS · NVIDIA NEMOTRON ON NEBIUS TOKEN FACTORY · REAL BROWSER VERDICT</p>
  <h1>Pick a bug maintainers fixed by hand.<br><em>Watch Nemotron fix it blind.</em></h1>
- <p class="lede">Each bug below was reported and fixed in a real open-source library. Tabstitch pins the code from just before the fix and freezes the user's keyboard task. The maintainers' own fix must pass that task first, so the test is fair. Nemotron then gets only the buggy source. Nemotron 3 Super tries first. If the browser rejects its patch, Nemotron 3 Ultra gets the exact failure. Chromium replays every path and gives the verdict, not the model.</p>
+ <p class="lede">Each bug was reported in a real open-source library. For bugs the maintainers already fixed, Tabstitch pins the code from just before the fix and freezes the user's keyboard task; the maintainers' own fix must pass that task first, so the test is fair, and Nemotron gets only the buggy source. Bugs <a href="#open">still unfixed upstream</a> are reproduced on the library's current code. Nemotron 3 Super tries first; if the browser rejects its patch, Nemotron 3 Ultra gets the exact failure. Chromium replays every path and gives the verdict, not the model.</p>
  <dl class="stats" id="stats" aria-live="polite"></dl>
+</section>
+
+<section id="daily" class="daily" hidden aria-labelledby="daily-title">
+ <div class="section-head"><h2 id="daily-title">Latest live run</h2><p class="small" id="daily-note"></p></div>
+ <div id="daily-list"></div>
 </section>
 
 <section id="run" class="run" hidden aria-labelledby="run-title">

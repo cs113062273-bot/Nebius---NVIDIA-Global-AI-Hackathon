@@ -1,0 +1,56 @@
+name: Daily live Nemotron run
+
+# During judging, one fresh Nemotron repair per day on a rotating real or open bug, capped at
+# US$0.50. The run's evidence is committed under public/ and the judge site is redeployed, so the
+# site always shows a run made that day. Pushes by GITHUB_TOKEN do not trigger pages.yml, so this
+# workflow deploys the site itself.
+on:
+  schedule:
+    - cron: '17 3 1-15 12 *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Repair one bug with Nemotron
+        env:
+          NEBIUS_API_KEY: ${{ secrets.NEBIUS_API_KEY }}
+          TABSTITCH_MAX_USD: '0.5'
+        run: node scripts/daily-live.mjs
+      - name: Commit the run's evidence
+        run: |
+          git config user.name "tabstitch-daily"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/live-runs public/evidence/runs
+          git commit -m "Daily live Nemotron run $(date -u +%F)"
+          git pull --rebase
+          git push
+      - run: node scripts/build-demo.js
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: artifacts/judge-demo
+  deploy:
+    needs: run
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

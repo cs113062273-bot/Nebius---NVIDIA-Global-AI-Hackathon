@@ -1,0 +1,10 @@
+{
+  "completedAt": "2026-10-25T18:35:07.175Z",
+  "replayRun": "75379ffb-f2f7-4595-970c-9cf248b2fafc",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "fromCase": "Tab must leave a datepicker input for the next field",
+  "fromRun": "9c87e810-82f4-4ac7-b108-c1658a430f5c",
+  "attempt": 3,
+  "engine": "browser replay, no inference"
+}

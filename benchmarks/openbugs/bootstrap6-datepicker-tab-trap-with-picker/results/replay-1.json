@@ -1,0 +1,12 @@
+{
+  "completedAt": "2026-10-25T18:34:59.605Z",
+  "replayRun": "80798166-e3a2-41d9-978b-c2afd8c61a02",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+  ],
+  "fromCase": "Tab must leave a datepicker input for the next field",
+  "fromRun": "af77a4aa-da7c-4790-8ecb-eee8a78cc33b",
+  "attempt": 1,
+  "engine": "browser replay, no inference"
+}

@@ -5,7 +5,7 @@ const LIVE_URL=document.querySelector('meta[name="tabstitch-live"]')?.content||'
 const MODEL={'nemotron-3-super-120b-a12b':'Nemotron 3 Super','Nemotron-3-Ultra-550b-a55b':'Nemotron 3 Ultra'};
 const modelName=id=>MODEL[String(id||'').split('/').pop()]||String(id||'Nemotron').split('/').pop();
 const STAGES=[['reproduce','Reproduce the bug',['PREPARING','BASELINE_RUNNING','FAILURE_CONFIRMED']],['locate','Find the source',['LOCALIZING']],['propose','Nemotron proposes a patch',['PLANNING_REPAIR']],['apply','Apply in an isolated copy',['PATCHING','BUILDING']],['replay','Replay in Chromium',['REPLAYING','VERIFYING']],['verdict','Verdict',['VERIFIED','FAILED','INCONCLUSIVE']]];
-let api=false,data=null,open=[],watching=null,clock=null;
+let api=false,data=null,open=[],daily=null,watching=null,clock=null;
 
 async function getJson(url,options){const r=await fetch(url,options);const body=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(body.error||`HTTP ${r.status}`),{status:r.status,body});return body;}
 const artifactUrl=(run,file)=>run.__static?`./evidence/runs/${run.id}/${file}`:`./api/runs/${run.id}/artifacts/${file}`;
@@ -15,7 +15,8 @@ async function boot(){
   try{data=await getJson('./api/live');api=true;}
   catch{try{data=await getJson('./realbugs/index.json');}catch{$('#mode').textContent='OFFLINE';notice('The bug list could not be loaded.');return;}}
   try{open=api&&data.open?data.open:(await getJson('./openbugs/index.json')).cases;}catch{open=[];}
-  renderMode();renderStats();renderOpen();renderCases();renderScoreboard();
+  try{daily=await getJson('./live-runs/index.json');}catch{daily=null;}
+  renderMode();renderDaily();renderStats();renderOpen();renderCases();renderScoreboard();
   const wanted=new URLSearchParams(location.search).get('case');if(wanted){const c=[...data.cases,...open].find(c=>c.id===wanted);if(c)void showRecorded(c);}
   if(api&&data.active)void watch(data.active.id,data.cases.find(c=>c.id===data.active.case),{live:true});
 }
@@ -32,6 +33,16 @@ function renderStats(){
   const items=[[String(cases.length),'real upstream bugs'],[String(libs.size),'libraries'],[`${cases.length}/${cases.length}`,"maintainers' fixes pass the frozen task"],[runs.length?`${passed.length}/${runs.length}`:'—','repaired blind by Nemotron']];
   $('#stats').replaceChildren(...items.map(([v,l])=>el('div',{},el('dt',{text:v}),el('dd',{text:l}))));
 }
+// Fresh runs made by GitHub Actions on the date shown (daily during judging), newest first.
+function renderDaily(){
+  const runs=daily?.runs||[];$('#daily').hidden=!runs.length;if(!runs.length)return;
+  $('#daily-note').textContent=daily.note||'';
+  $('#daily-list').replaceChildren(...runs.slice(0,5).map(x=>el('article',{class:'daily-run'},
+    el('p',{class:'case-lib'},el('span',{class:'mono',text:x.date}),el('span',{class:'tag',text:x.kind==='open'?'still open upstream':'fixed upstream, run blind'})),
+    el('h3',{},el('a',{href:`./project.html?run=${x.run}${x.passedOn?'&attempt='+x.passedOn:''}#project-result`,text:`${x.library} · ${x.title}`})),
+    el('p',{class:`case-status ${x.verdict==='VERIFIED_PASS'?'ok':'no'}`,text:x.verdict==='VERIFIED_PASS'?`Repaired on attempt ${x.passedOn} · ${modelName(x.models[x.passedOn-1])} · US$${x.costUsd.toFixed(3)}`:`Not repaired · ${x.models.length} attempt${x.models.length>1?'s':''} · US$${x.costUsd.toFixed(3)}`}),
+    x.actionsRun?el('p',{class:'small'},el('a',{href:x.actionsRun,text:'GitHub Actions log for this run ↗'})):null)));
+}
 // Bugs that are still open upstream: no maintainers' fix exists, so the card links the pending one if any.
 function renderOpen(){
   const box=$('#open-list');box.replaceChildren();$('#open').hidden=!open.length;
@@ -45,7 +56,9 @@ function renderOpen(){
       el('h3',{text:c.title}),el('p',{class:'case-sum',text:c.summary}),
       el('p',{class:'case-upstream',text:c.status}),
       ...(c.expectedBehaviour?[el('p',{class:'case-note',text:c.expectedBehaviour})]:[]),
-      el('p',{class:'case-src'},el('a',{href:c.issue,text:'Open issue ↗'}),...(c.pendingHumanFix?[' · ',el('a',{href:c.pendingHumanFix,text:'Pending human fix ↗'}),' · ',el('a',{href:`./openbugs/${c.id}/pending-human.patch`,text:'its diff'})]:[])),
+      ...(c.addedAfterReview?[el('p',{class:'case-note added',text:c.addedAfterReview})]:[]),
+      ...(c.replays?.length?[el('ul',{class:'case-replays'},...c.replays.map(x=>el('li',{},el('a',{href:`./project.html?run=${x.run}#project-result`,text:`Replay of run ${x.fromRun.slice(0,8)} attempt ${x.attempt}`}),`: ${x.verdict==='VERIFIED_PASS'?'passes the stricter task':'rejected by the stricter task'} (browser only, no inference)`)))]:[]),
+      el('p',{class:'case-src'},el('a',{href:c.issue,text:c.issue.includes('/issues?q=')?'Not reported yet · issues searched ↗':'Open issue ↗'}),...(c.pendingHumanFix?[' · ',el('a',{href:c.pendingHumanFix,text:'Pending human fix ↗'}),' · ',el('a',{href:`./openbugs/${c.id}/pending-human.patch`,text:'its diff'})]:[])),
       ...(c.pendingHumanCheck?[el('p',{class:'case-note',text:c.pendingHumanCheck.keyboard==='VERIFIED_PASS'?'The pending human fix also passes this frozen task, so the task is fair. It was fetched only for comparison and never sent to the model.':c.pendingHumanCheck.note})]:[]),
       el('p',{class:`case-status ${r?.verdict==='VERIFIED_PASS'?'ok':r?'no':''}`,text:status}),
       // Human reading of the patch after the browser verdict, only shown for the run it reviewed.
@@ -162,6 +175,7 @@ function attemptCard(run,a){
   if(a.diff){const pre=el('pre',{class:'diff',text:'Loading diff…'});card.append(pre);void fetch(artifactUrl(run,a.diff)).then(r=>r.ok?r.text():'Diff unavailable').then(t=>{pre.replaceChildren(...t.split('\n').map(line=>el('span',{class:line.startsWith('+')&&!line.startsWith('+++')?'add':line.startsWith('-')&&!line.startsWith('---')?'del':line.startsWith('@@')?'hunk':'',text:line+'\n'})));});}
   const outcome=ok?'The browser accepted it: keyboard task, independent pointer path'+(run.guards?.length?` and ${run.guards.length} regression guard${run.guards.length>1?'s':''}`:'')+' all pass.'
     :a.category==='APPLICATION'?`Rejected before running: ${a.failure}. The error goes back to the next attempt.`
+    :a.category==='OVERFIT'?`Rejected before running: the patch only works on this test page. ${a.failure} That goes back to the next attempt.`
     :a.category==='VERIFICATION'?`Rejected by the browser: ${(a.verification?.reasons||[]).slice(0,1).join('; ')}. That failure goes back to the next attempt.`
     :a.category?`${a.category}: ${a.failure||''}`:null;
   if(outcome)card.append(el('p',{class:'outcome',text:outcome}));

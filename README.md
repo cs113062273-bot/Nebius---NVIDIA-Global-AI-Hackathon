@@ -93,6 +93,9 @@ A candidate passes only when all of these hold in fresh Chromium contexts:
 3. Every regression guard that passed on the original still passes, without runtime errors.
 4. Assertions read native browser `FormData`, not display text.
 5. The patch touches only allowlisted, hash-matched files, matches its preimage exactly once, parses, adds no new axe findings and keeps the initial page visually stable.
+6. Component code is not fitted to the test page. A patch that makes a library file name one of the page's element ids (for example `querySelector('#filters-close')` inside `drawer.ts`) is rejected before the browser runs and sent back to the model. Application files that already refer to the page's ids are exempt. This gate exists because two earlier patches passed every browser check by doing exactly that.
+
+When a key press does not do what the task expects, the model also gets the browser's key trace: which element received each key, whether a listener cancelled it, and whether a dialog's `cancel` event could be cancelled at all.
 
 The four verdicts are `VERIFIED_PASS`, `VERIFIED_FAIL`, `INCONCLUSIVE` and `NOT_TESTED`. Timeouts, truncated or malformed output, syntax errors and patches that cannot be applied stop before the browser and are shown as **not executed**. They never inherit another attempt's pass.
 

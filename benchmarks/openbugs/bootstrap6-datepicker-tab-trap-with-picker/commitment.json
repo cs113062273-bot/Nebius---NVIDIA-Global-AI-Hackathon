@@ -1,0 +1,27 @@
+{
+  "fixedAt": "2026-10-25T18:32:57.083Z",
+  "sourceHashes": {
+    "LICENSE": "bc0cd18d94c028f1c0b62ec9fdaddcb9921c1e07c29cf52dc7df8cca9daf2488",
+    "dist/css/bootstrap.min.css": "678508b198d9b1b8877e338f419fdada00024be2bcc638a539dd724856095112",
+    "index.html": "52f9f613d12cc93eb8cd347b982f89d842293b2c445d2795d1d0510c98c59504",
+    "js/src/base-component.ts": "13e2e303241874c49eb8d739e2900655f94b7d673ad7694591b776fbd089f886",
+    "js/src/datepicker.ts": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+    "js/src/dom/data.ts": "4626f638b542f3e6db0173b8e3e164cf9a3a9ea5840c763688b19d64a4d3ca34",
+    "js/src/dom/event-handler.ts": "87e970cca1e8190a049f450c2fe122eefec7c068ee6ce9352362d1c729bcb851",
+    "js/src/dom/manipulator.ts": "6af45216558c43f292e487524da0ba33d0d8a3ffd8e188e9e467e5cdca141411",
+    "js/src/util/config.ts": "6074cf2ebda4e0f966f31908ad21939fe27339426722c5f08b18a45464fc5602",
+    "js/src/util/index.ts": "796f788b24065a562b6b8e132dcd0eaf748c95bf699996315de9aa0406f9b3d2",
+    "vendor/vanilla-calendar-pro/LICENSE": "b95f659670e7f7af29dedc3e69c1deaeee1267757729ad391318aba94108774d",
+    "vendor/vanilla-calendar-pro/index.js": "e85bbcc14e85bfc01298803c28aa22db05e9350203b99e76691f134c1dcb3531"
+  },
+  "taskHash": "7d1f8f84450a1cf92f05181ab925dc84de1118f13844f2a2cf83250b6191a7a4",
+  "screen": {
+    "verdict": "REPRODUCED",
+    "verdicts": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guard-0": "VERIFIED_PASS",
+      "guard-1": "VERIFIED_PASS"
+    }
+  }
+}

@@ -1,12 +1,11 @@
 {
-  "reviewer": "Project author, after the browser verdict. This is a reading of the attempts, not another test.",
-  "reviewedAt": "2026-10-25T18:21:59.102Z",
-  "run": "b3b43a4f-f049-4964-855e-969215dc9a48",
-  "verdict": "Not repaired",
-  "summary": "All three proposals were rejected at the third Escape press. Nemotron attributed the failure to the modal flag or to the event wrapper; it never found the actual cause.",
+  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewedAt": "2026-10-25T18:34:11.812Z",
+  "run": "8c28f644-3bef-49ed-bebf-c95413cee13a",
+  "verdict": "Sound, and close to the pending human fix",
+  "summary": "Nemotron diagnosed that the cancel event becomes non-cancelable, and now cancels the Escape keydown whenever keyboard is false, for modal dialogs too, so no close request is sent. Pending pull request #43077 makes the same change.",
   "caveats": [
-    "Escape is not user activation, so after the first press Chromium fires cancel with cancelable=false and preventDefault() has no effect.",
-    "Pending pull request #43077 cancels the Escape keydown instead, which keeps the close request from being sent; it passes this task.",
-    "The frozen task reported the step and the dialog state, but nothing in the evidence shows that cancel was not cancelable. Exposing that would be an engine change, not a retry."
+    "The human fix also plays the static-backdrop bounce on each press for modal dialogs and keeps the cancel handler as a fallback for close requests that do not come from a key; the model patch does neither.",
+    "Version 5 failed this case three times. The difference in version 6 is the key trace, which shows cancel arriving with cancelable=false."
   ]
 }

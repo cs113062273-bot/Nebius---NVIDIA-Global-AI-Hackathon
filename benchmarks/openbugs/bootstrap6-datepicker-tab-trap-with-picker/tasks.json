@@ -1,0 +1,201 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "bs6-datepicker-tab-leaves-field",
+    "title": "Tab out of the departure date to the passengers field",
+    "goal": "Tab moves focus from the date field to the next field, as in any form",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach the departure date",
+        "action": {
+          "kind": "seek",
+          "selector": "#departure"
+        }
+      },
+      {
+        "title": "Press Tab",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#passengers"
+          }
+        ]
+      },
+      {
+        "title": "Change the passengers",
+        "action": {
+          "kind": "type",
+          "text": "2",
+          "replace": true
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#passengers"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#booking",
+        "name": "passengers",
+        "value": [
+          "2"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "focus",
+        "selector": "#passengers"
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "bs6-datepicker-pointer-passengers",
+    "title": "Change the passengers with the pointer",
+    "goal": "Editing another field and saving submits the saved departure date",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Click passengers",
+        "action": {
+          "kind": "click",
+          "selector": "#passengers"
+        }
+      },
+      {
+        "title": "Change the passengers",
+        "action": {
+          "kind": "type",
+          "text": "3",
+          "replace": true
+        }
+      },
+      {
+        "title": "Save",
+        "action": {
+          "kind": "click",
+          "selector": "#save"
+        }
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#sent",
+        "value": "departure=2026-10-22&passengers=3"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#booking",
+        "name": "departure",
+        "value": [
+          "2026-10-22"
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "bs6-datepicker-escape-closes",
+      "title": "Escape still closes the calendar",
+      "goal": "With the calendar open, Escape closes it and Tab then reaches the passengers field",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        {
+          "title": "Reach the departure date",
+          "action": {
+            "kind": "seek",
+            "selector": "#departure"
+          }
+        },
+        {
+          "title": "Close the calendar",
+          "action": {
+            "kind": "press",
+            "key": "Escape"
+          }
+        },
+        {
+          "title": "Reach passengers",
+          "action": {
+            "kind": "seek",
+            "selector": "#passengers"
+          }
+        }
+      ],
+      "success": [
+        {
+          "kind": "focus",
+          "selector": "#passengers"
+        }
+      ],
+      "functional": [
+        {
+          "kind": "focus",
+          "selector": "#passengers"
+        }
+      ],
+      "forbidden": []
+    },
+    {
+      "version": 1,
+      "id": "bs6-datepicker-click-shows-calendar",
+      "title": "Clicking the date field still shows the calendar",
+      "goal": "A pointer user who clicks the departure date sees the month and can pick a day",
+      "source": "authored",
+      "profile": "pointer",
+      "path": "/",
+      "steps": [
+        {
+          "title": "Click the departure date",
+          "action": {
+            "kind": "click",
+            "selector": "#departure"
+          },
+          "assertions": [
+            {
+              "kind": "visible",
+              "selector": "[data-vc-date=\"2026-10-25\"] button",
+              "value": true
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "visible",
+          "selector": "[data-vc-date=\"2026-10-25\"] button",
+          "value": true
+        }
+      ],
+      "functional": [
+        {
+          "kind": "focus",
+          "selector": "#departure"
+        }
+      ],
+      "forbidden": []
+    }
+  ]
+}
