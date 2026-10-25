@@ -1,6 +1,7 @@
 import http from 'node:http';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { stripTypeScriptTypes } from 'node:module';
 import { contained } from './files.js';
 
 export const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.svg': 'image/svg+xml', '.txt': 'text/plain; charset=utf-8', '.patch': 'text/plain; charset=utf-8', '.md': 'text/plain; charset=utf-8', '.yml': 'text/plain; charset=utf-8' };
@@ -20,13 +21,30 @@ export async function serveFile(res, root, name, { fixture = false, attachment =
     res.end(recorder&&name.endsWith('.html')?Buffer.from(bytes.toString('utf8').replace(/<head([^>]*)>/i,'<head$1><script src="/__tabstitch_recorder.js"></script>')):bytes);
   } catch { res.writeHead(404); res.end('Not found'); }
 }
+// TypeScript sources import each other as `./x.js`. When x.js does not exist but x.ts does, the
+// browser gets x.ts with its types erased (Node's own stripping, no bundler); line numbers stay.
+async function serveSource(res, root, name, recorder) {
+  if (name.endsWith('.js')) {
+    const js = await contained(root, name).then(f => fs.stat(f)).then(st => st.isFile(), () => false);
+    if (!js) {
+      try {
+        const ts = await contained(root, name.slice(0, -3) + '.ts'), stat = await fs.stat(ts);
+        if (stat.isFile() && stat.size <= 2_000_000) {
+          const code = stripTypeScriptTypes(await fs.readFile(ts, 'utf8'), { mode: 'strip' });
+          res.writeHead(200, { 'Content-Type': 'text/javascript', 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'no-store' }); res.end(code); return;
+        }
+      } catch { res.writeHead(404); res.end('Not found'); return; }
+    }
+  }
+  return serveFile(res, root, name, { fixture: true, recorder });
+}
 export async function fixtureServer(root, {recorder=null}={}) {
   const server = http.createServer((req, res) => {
     let name;
     try { name = decodeURIComponent(new URL(req.url, 'http://local').pathname).slice(1) || 'index.html'; } catch { res.writeHead(400); res.end(); return; }
     if(recorder&&name==='__tabstitch_recorder.js'){res.writeHead(200,{'Content-Type':'text/javascript','Cache-Control':'no-store'});res.end(recorder);return;}
     if(name.split('/').some(part=>part.startsWith('.')) || !['.html','.css','.js','.json','.png','.svg','.jpg','.jpeg','.webp','.gif','.ico','.woff2','.woff','.ttf','.txt'].includes(path.extname(name).toLowerCase())) { res.writeHead(404);res.end('Not found');return; }
-    void serveFile(res, root, name, { fixture: true,recorder });
+    void serveSource(res, root, name, recorder);
   });
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   return { origin: `http://127.0.0.1:${server.address().port}`, close: () => new Promise((resolve, reject) => server.close(e => e ? reject(e) : resolve())) };

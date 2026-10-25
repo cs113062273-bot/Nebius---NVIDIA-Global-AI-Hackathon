@@ -17,6 +17,38 @@ Start at **See the verified repair**, then **Browse all 73 recorded runs**. Ever
 
 [**Pull request #1**](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/pull/1) is a live run of the CI check in [`.github/workflows/tabstitch.yml`](.github/workflows/tabstitch.yml). The change replaces the example shop's native dialog with a slide-in panel that works with a mouse but no longer moves keyboard focus. The workflow replayed the frozen task in Chromium and found the failure. Nemotron 3 Super's first patch was rejected because closing the panel did not return focus; that failure went back to the model. Nemotron 3 Ultra's second patch passed the keyboard task and the pointer path, and the verified diff was posted on the pull request. Fork pull requests never receive the Nebius key, and each repair is capped at US$0.50.
 
+## Use it in your repository
+
+Add the action to any project that builds to static HTML, CSS and JavaScript or TypeScript. Commit a task file that describes one keyboard task, an independent pointer path and, optionally, regression guards (see [`examples/checkout/.tabstitch/tasks.json`](examples/checkout/.tabstitch/tasks.json)).
+
+```yaml
+# .github/workflows/keyboard.yml
+on: pull_request
+permissions: { contents: read, pull-requests: write }
+jobs:
+  keyboard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # - run: npm ci && npm run build   # if the site needs a build step
+      - uses: cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon@main
+        with:
+          site: dist
+          tasks: .tabstitch/tasks.json
+          nebius-api-key: ${{ secrets.NEBIUS_API_KEY }}   # omit to check without repairing
+          max-usd: '0.5'
+```
+
+No task file yet? Describe the task in one sentence and let Nemotron 3 Nano draft it from the page's real controls:
+
+```sh
+node src/cli.js draft dist --describe "Open the checkout dialog with the keyboard, enter a delivery note and place the order" --tasks .tabstitch/tasks.json
+```
+
+The draft is saved only if the keyboard task, the pointer path and every guard pass on the current build; failures go back to Nano, up to three times. The draft is saved with `"source": "model"`, and `check` and `repair` refuse model-written tasks: read it, then change the source to `"authored"` to accept it as the frozen oracle that later repairs must satisfy.
+
+Every pull request replays the frozen tasks in Chromium. If one breaks, Nemotron proposes a patch (Super first, Ultra after a rejection) and the browser-verified diff is posted on the pull request, with the proof archive as a build artifact. Pull requests from forks never receive the key, so they are only checked. The `verified-patch` output gives later steps the patch path.
+
 ## The problem
 
 Keyboard and form fixes often look right and still submit the wrong data. In the pinned [GOV.UK accessible-autocomplete](https://github.com/alphagov/accessible-autocomplete/issues/777), clearing a saved country leaves the field empty on screen while the hidden `<select>` still submits `gb`. Accessibility scanners report nothing; the user's data is wrong.

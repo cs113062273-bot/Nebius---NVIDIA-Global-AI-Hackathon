@@ -30,6 +30,23 @@ export async function liveCases() {
   }
   return out.sort((a, b) => a.library.localeCompare(b.library) || a.id.localeCompare(b.id));
 }
+// Open upstream bugs: reproduced on the library's current head, with no maintainers' fix to compare.
+export const OPEN_CASES = path.join(ROOT, 'benchmarks', 'openbugs');
+export async function openCases() {
+  const out = [], frozen = (await readJson(path.join(CASES, 'summary.json')).catch(() => null))?.implementation;
+  for (const entry of await fs.readdir(OPEN_CASES, { withFileTypes: true }).catch(() => [])) {
+    if (!entry.isDirectory()) continue;
+    const root = path.join(OPEN_CASES, entry.name), meta = await readJson(path.join(root, 'case.json')).catch(() => null), commitment = await readJson(path.join(root, 'commitment.json')).catch(() => null);
+    if (!meta || commitment?.screen?.verdict !== 'REPRODUCED') continue;
+    const results = [];
+    for (const f of (await fs.readdir(path.join(root, 'results')).catch(() => [])).sort()) results.push(await readJson(path.join(root, 'results', f)));
+    // First run on the frozen implementation; runs on earlier engines stay in results/ as history.
+    const recorded = results.find(r => frozen && r.implementation === frozen) || results.at(-1) || null;
+    out.push({ id: entry.name, title: meta.title, summary: meta.summary, library: meta.library, category: meta.category || null, repository: meta.repository, issue: meta.issue, pinnedCommit: meta.pinnedCommit, status: meta.status, pendingHumanFix: meta.pendingHumanFix || null, pendingHumanCheck: await readJson(path.join(root, 'pending-human-check.json')).catch(() => null), review: await readJson(path.join(root, 'review.json')).catch(() => null), expectedBehaviour: meta.expectedBehaviour || null,
+      recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null) } });
+  }
+  return out.sort((a, b) => a.library.localeCompare(b.library) || a.id.localeCompare(b.id));
+}
 // Score of every frozen engine version, with the author's note on what changed.
 export async function benchmarkVersions() {
   const summary = await readJson(path.join(CASES, 'summary.json')).catch(() => null), notes = await readJson(path.join(CASES, 'versions.json')).catch(() => ({}));

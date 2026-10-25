@@ -1,3 +1,4 @@
+import { stripTypeScriptTypes } from 'node:module';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import vm from 'node:vm';
@@ -32,13 +33,18 @@ export async function localize(root, evidence) {
     const imports=[...from.source.matchAll(/(?:from\s*|import\s*\(\s*|import\s*|src\s*=\s*)['"]([^'"]+)['"]/g)];
     for(const match of imports){
       const specifier=match[1].split(/[?#]/)[0];if(/^(?:[a-z]+:|\/\/|\/)/i.test(specifier))continue;
-      const file=path.posix.normalize(path.posix.join(path.posix.dirname(from.path),specifier));
-      if(!sources.has(file)||candidates.some(c=>c.path===file))continue;
+      // Resolve like a browser import map or bundler would: as written, extensionless, TypeScript or index.
+      const base=path.posix.normalize(path.posix.join(path.posix.dirname(from.path),specifier));
+      const file=[base,base+'.js',base+'.ts',base.endsWith('.js')?base.slice(0,-3)+'.ts':null,base+'/index.js',base+'/index.ts'].find(f=>f&&sources.has(f));
+      if(!file||candidates.some(c=>c.path===file))continue;
       const source=sources.get(file),candidate={path:file,score:Math.max(1,from.score-.5),signals:['Imported runtime dependency of '+from.path],sha256:digest(source),source};
       candidates.push(candidate);queue.push(candidate);
     }
   }
-  return candidates.sort((a,b)=>b.score-a.score).slice(0,5);
+  // Component internals sit several imports deep, so keep up to ten files within a fixed source budget.
+  const kept=[];let chars=0;
+  for(const c of candidates.sort((a,b)=>b.score-a.score)){if(kept.length>=10||chars+c.source.length>120000)continue;kept.push(c);chars+=c.source.length;}
+  return kept;
 }
 export async function referencePlan(beforeRoot, referenceRoot) {
   const edits = [];
@@ -159,10 +165,15 @@ export async function buildStatic(root) {
         checks.push({file,pass:result.status===0,kind:'syntax',...(result.status===0?{}:{message:'JavaScript syntax check failed'})});
       }
     }
+    if(file.endsWith('.ts')) {
+      let code=null;try{code=stripTypeScriptTypes(await fs.readFile(await contained(root,file),'utf8'),{mode:'strip'});}catch{}
+      const result=code===null?{status:1}:spawnSync(process.execPath,['--input-type=module','--check'],{input:code,encoding:'utf8',timeout:5000,windowsHide:true,maxBuffer:20000,env:{}});
+      checks.push({file,pass:result.status===0,kind:'syntax',...(result.status===0?{}:{message:'TypeScript is not erasable or its JavaScript has a syntax error'})});
+    }
     if(file.endsWith('.html')) {
       const html = await fs.readFile(await contained(root,file),'utf8');
       checks.push({file,pass:/<!doctype html>/i.test(html) && /<html[\s>]/i.test(html) && /<body[\s>]/i.test(html),kind:'document-structure'});
     }
   }
-  return {pass:checks.length>0 && checks.every(c=>c.pass),checks,scope:'Static HTML structure and JavaScript syntax (classic or ESM) only; no framework compilation claim.'};
+  return {pass:checks.length>0 && checks.every(c=>c.pass),checks,scope:'Static HTML structure, JavaScript syntax (classic or ESM) and erasable TypeScript only; no framework compilation claim.'};
 }

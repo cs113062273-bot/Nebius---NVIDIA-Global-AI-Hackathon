@@ -12,7 +12,7 @@ import { readJson, listFiles, contained,hashTree } from './files.js';
 import { proofArchive } from './archive.js';
 import { verifyProof } from './proof.js';
 import { ProjectRequest, stageProject, validateProjectFiles, fileBytes } from './project.js';
-import { liveCases, benchmarkVersions, loadCase, humanPatch, LiveLedger, spend, liveLimits, liveConfigured, LIVE_SCOPE, LIVE_MODELS, WORST_RUN_USD } from './live.js';
+import { liveCases, openCases, benchmarkVersions, loadCase, humanPatch, LiveLedger, spend, liveLimits, liveConfigured, LIVE_SCOPE, LIVE_MODELS, WORST_RUN_USD } from './live.js';
 
 const Request=z.object({fixture:z.enum(fixtures.map(f=>f.id)),mode:z.enum(['reference','nebius','recorded'])}).strict();
 // Guards join the confirmed contract only when present, so earlier confirmations keep their hash.
@@ -138,7 +138,7 @@ export async function createApp({artifactRoot=path.join(ROOT,'artifacts','runs')
       if(pathname==='/favicon.ico')return await serveFile(res,path.join(ROOT,'public'),'favicon.svg');
       if(pathname==='/api/live'){
         let budget=null;try{const s=spend(JSON.parse(await fs.readFile(ledger.file,'utf8')));budget={...s,totalLimitUsd:limits.totalUsd,dailyLimitUsd:limits.dailyUsd};}catch{/* No ledger yet. */}
-        return send(res,200,{enabled:live.enabled,reason:live.reason,active:live.active,budget,models:LIVE_MODELS,cases:await liveCases(),benchmark:await benchmarkVersions()});
+        return send(res,200,{enabled:live.enabled,reason:live.reason,active:live.active,budget,models:LIVE_MODELS,cases:await liveCases(),open:await openCases(),benchmark:await benchmarkVersions()});
       }
       const livePatch=pathname.match(/^\/api\/live\/cases\/([a-z0-9-]{1,80})\/human\.patch$/);
       if(livePatch){try{const patch=await humanPatch(livePatch[1]);res.writeHead(200,{'Content-Type':'text/plain; charset=utf-8','X-Content-Type-Options':'nosniff','Cache-Control':'no-store'});res.end(patch);}catch{send(res,404,{error:'Unknown case'});}return;}

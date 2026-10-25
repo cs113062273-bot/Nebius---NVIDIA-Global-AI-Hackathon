@@ -5,7 +5,7 @@ const LIVE_URL=document.querySelector('meta[name="tabstitch-live"]')?.content||'
 const MODEL={'nemotron-3-super-120b-a12b':'Nemotron 3 Super','Nemotron-3-Ultra-550b-a55b':'Nemotron 3 Ultra'};
 const modelName=id=>MODEL[String(id||'').split('/').pop()]||String(id||'Nemotron').split('/').pop();
 const STAGES=[['reproduce','Reproduce the bug',['PREPARING','BASELINE_RUNNING','FAILURE_CONFIRMED']],['locate','Find the source',['LOCALIZING']],['propose','Nemotron proposes a patch',['PLANNING_REPAIR']],['apply','Apply in an isolated copy',['PATCHING','BUILDING']],['replay','Replay in Chromium',['REPLAYING','VERIFYING']],['verdict','Verdict',['VERIFIED','FAILED','INCONCLUSIVE']]];
-let api=false,data=null,watching=null,clock=null;
+let api=false,data=null,open=[],watching=null,clock=null;
 
 async function getJson(url,options){const r=await fetch(url,options);const body=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(body.error||`HTTP ${r.status}`),{status:r.status,body});return body;}
 const artifactUrl=(run,file)=>run.__static?`./evidence/runs/${run.id}/${file}`:`./api/runs/${run.id}/artifacts/${file}`;
@@ -14,8 +14,9 @@ const humanPatchUrl=id=>api?`./api/live/cases/${id}/human.patch`:`./realbugs/${i
 async function boot(){
   try{data=await getJson('./api/live');api=true;}
   catch{try{data=await getJson('./realbugs/index.json');}catch{$('#mode').textContent='OFFLINE';notice('The bug list could not be loaded.');return;}}
-  renderMode();renderStats();renderCases();renderScoreboard();
-  const wanted=new URLSearchParams(location.search).get('case');if(wanted){const c=data.cases.find(c=>c.id===wanted);if(c)void showRecorded(c);}
+  try{open=api&&data.open?data.open:(await getJson('./openbugs/index.json')).cases;}catch{open=[];}
+  renderMode();renderStats();renderOpen();renderCases();renderScoreboard();
+  const wanted=new URLSearchParams(location.search).get('case');if(wanted){const c=[...data.cases,...open].find(c=>c.id===wanted);if(c)void showRecorded(c);}
   if(api&&data.active)void watch(data.active.id,data.cases.find(c=>c.id===data.active.case),{live:true});
 }
 function renderMode(){
@@ -30,6 +31,26 @@ function renderStats(){
   const cases=data.cases,libs=new Set(cases.map(c=>c.repository.replace(/\/+$/,'').toLowerCase())),runs=cases.filter(c=>c.recorded),passed=runs.filter(c=>c.recorded.verdict==='VERIFIED_PASS');
   const items=[[String(cases.length),'real upstream bugs'],[String(libs.size),'libraries'],[`${cases.length}/${cases.length}`,"maintainers' fixes pass the frozen task"],[runs.length?`${passed.length}/${runs.length}`:'—','repaired blind by Nemotron']];
   $('#stats').replaceChildren(...items.map(([v,l])=>el('div',{},el('dt',{text:v}),el('dd',{text:l}))));
+}
+// Bugs that are still open upstream: no maintainers' fix exists, so the card links the pending one if any.
+function renderOpen(){
+  const box=$('#open-list');box.replaceChildren();$('#open').hidden=!open.length;
+  for(const c of open){
+    const r=c.recorded,status=r?(r.verdict==='VERIFIED_PASS'?`Repaired on attempt ${r.passedOn} · ${modelName(r.models[r.passedOn-1])} · browser-verified`:`Not repaired (${r.models.length} attempts)`):'Reproduced · no run yet';
+    const actions=el('div',{class:'case-actions'});
+    if(r){const b=el('button',{class:'primary',type:'button',text:'Watch the repair'});b.onclick=()=>void showRecorded(c);actions.append(b);}
+    if(r?.passedOn)actions.append(el('a',{class:'secondary',href:`./openbugs/${c.id}/nemotron.patch`,download:`${c.id}.patch`,text:'Download the patch'}));
+    box.append(el('article',{class:'case open'},
+      el('p',{class:'case-lib'},el('span',{text:c.library}),c.category?el('span',{class:'tag',text:c.category}):null),
+      el('h3',{text:c.title}),el('p',{class:'case-sum',text:c.summary}),
+      el('p',{class:'case-upstream',text:c.status}),
+      ...(c.expectedBehaviour?[el('p',{class:'case-note',text:c.expectedBehaviour})]:[]),
+      el('p',{class:'case-src'},el('a',{href:c.issue,text:'Open issue ↗'}),...(c.pendingHumanFix?[' · ',el('a',{href:c.pendingHumanFix,text:'Pending human fix ↗'}),' · ',el('a',{href:`./openbugs/${c.id}/pending-human.patch`,text:'its diff'})]:[])),
+      ...(c.pendingHumanCheck?[el('p',{class:'case-note',text:c.pendingHumanCheck.keyboard==='VERIFIED_PASS'?'The pending human fix also passes this frozen task, so the task is fair. It was fetched only for comparison and never sent to the model.':c.pendingHumanCheck.note})]:[]),
+      el('p',{class:`case-status ${r?.verdict==='VERIFIED_PASS'?'ok':r?'no':''}`,text:status}),
+      // Human reading of the patch after the browser verdict, only shown for the run it reviewed.
+      ...(c.review&&r&&c.review.run===r.run?[el('details',{class:'case-review'},el('summary',{text:`Patch review: ${c.review.verdict}`}),el('p',{text:c.review.summary}),el('ul',{},...c.review.caveats.map(t=>el('li',{text:t}))),el('p',{class:'case-note',text:c.review.reviewer}))]:[]),actions));
+  }
 }
 function renderCases(){
   const list=$('#case-list');list.replaceChildren();
@@ -86,7 +107,7 @@ async function watch(id,c,{live=false,recorded=null}={}){
   const token=Symbol();watching=token;
   $('#run').hidden=false;$('#run-kind').textContent=live?'LIVE RUN · NEW NEMOTRON CALLS ON NEBIUS TOKEN FACTORY':'RECORDED RUN · REPLAYED FROM ITS EVENT LOG, NO NEW CALLS';
   $('#run-title').textContent=c?.title||'Repair';$('#run-summary').textContent=c?.summary||'';
-  $('#run-links').replaceChildren(...(c?[el('a',{href:c.issue,text:'Reported issue ↗'}),' · ',el('span',{class:'mono',text:`${c.library} @ ${c.buggyCommit.slice(0,7)} (before the fix)`})]:[]));
+  $('#run-links').replaceChildren(...(c?[el('a',{href:c.issue,text:'Reported issue ↗'}),' · ',el('span',{class:'mono',text:c.buggyCommit?`${c.library} @ ${c.buggyCommit.slice(0,7)} (before the fix)`:`${c.library} @ ${c.pinnedCommit.slice(0,7)} (current head, unfixed)`})]:[]));
   for(const s of ['#baseline','#verdict'])$(s).hidden=true;$('#attempts').replaceChildren();$('#human').open=false;
   $('#run').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
   clearInterval(clock);
@@ -157,7 +178,8 @@ function renderVerdict(run,c){
     $('#focus-before').textContent=`focus: ${before.state?.focus?.selector||'—'}`;$('#focus-after').textContent=`focus: ${after.state?.focus?.selector||'—'}`;
     $('#shot-before').alt=`Before: focus on ${before.state?.focus?.selector||'nothing'}`;$('#shot-after').alt=`After: focus on ${after.state?.focus?.selector||'nothing'}`;}
   else $('#compare').hidden=true;
-  if(c){$('#human').hidden=false;$('#human').ontoggle=()=>{if($('#human').open&&$('#human-diff').dataset.case!==c.id){$('#human-diff').dataset.case=c.id;void fetch(humanPatchUrl(c.id)).then(r=>r.ok?r.text():'Unavailable').then(t=>{$('#human-diff').textContent=t;});}};}
+  $('#human').hidden=true;
+  if(c?.fixCommit){$('#human').hidden=false;$('#human').ontoggle=()=>{if($('#human').open&&$('#human-diff').dataset.case!==c.id){$('#human-diff').dataset.case=c.id;void fetch(humanPatchUrl(c.id)).then(r=>r.ok?r.text():'Unavailable').then(t=>{$('#human-diff').textContent=t;});}};}
   $('#full-evidence').href=`./project.html?run=${run.id}${a?.verified?'&attempt='+a.attempt:''}#project-result`;
 }
 void boot();

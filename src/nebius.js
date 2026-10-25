@@ -84,6 +84,25 @@ export class NebiusClient {
     const cached=path.join(this.dir,`cache-${key}.json`);
     try { if(fresh)throw Object.assign(new Error('Fresh inference requested'),{code:'ENOENT'});const entry=await readJson(cached);return {plan:RepairPlan.parse(entry.plan),provenance:{...entry.provenance,cacheHit:true,attemptedCompletions:0}}; }
     catch(error) { if(error.code!=='ENOENT') throw error; }
+    const {value:plan,provenance}=await this.budgetedCall({model,entry,system:SYSTEM,content,key,maxOutput,reservation,purpose:'bounded-accessibility-repair',structured,schema,schemaVersion:2,parse:v=>RepairPlan.parse(normalizeAdvisory(v))});
+    const {responseFile,requestFile,...stored}=provenance;await json(cached,{plan,provenance:stored});
+    return {plan,provenance};
+  }
+  // Budgeted JSON completion for task drafts: the same catalog check, price ceiling, ledger and
+  // archived raw request and response as repairs; the caller's parser validates the answer.
+  async completeJson({ model, system, content, purpose, parse }) {
+    this.requireLive();
+    if(!model || !/^nvidia\//i.test(model) || !/nemotron/i.test(model)) throw new Error('Select an NVIDIA Nemotron model from the current authenticated catalog');
+    const entry=(await this.models()).find(m=>m.id===model);
+    if(!entry) throw new Error('Configured NVIDIA model unavailable in account catalog');
+    if(content.length>240000) throw new Error('Draft evidence exceeds inference budget');
+    await fs.mkdir(this.dir,{recursive:true});
+    const maxOutput=this.maxOutput(),reservation=Buffer.byteLength(content+system)+maxOutput+2000;
+    return this.budgetedCall({model,entry,system,content,key:digest({model,content,purpose}),maxOutput,reservation,purpose,parse});
+  }
+  // Reserves against the call, token and USD ceilings under a lock, records the call in the ledger
+  // and archives the raw request and response whether or not the answer parses.
+  async budgetedCall({ model, entry, system, content, key, maxOutput, reservation, purpose, structured=false, schema=null, schemaVersion=null, parse }) {
     const lockPath=path.join(this.dir,'budget.lock');
     const lock=await fs.open(lockPath,'wx').catch(()=>{throw new Error('Inference budget is busy or locked; refusing unaccounted call');});
     try {
@@ -100,11 +119,11 @@ export class NebiusClient {
         const spent=ledger.entries.filter(e=>e.budgetScope===budgetScope).reduce((sum,e)=>sum+Number(e.reservedCreditUsd??Infinity),0);
         if(!Number.isFinite(spent)||spent+reservedCreditUsd>ceiling)throw new Error('Sponsor-credit USD ceiling reached before request');
       }
-      const record={purpose:'bounded-accessibility-repair',model,key,structuredOutput:structured,reservedTokens:reservation,budgetScope,reservedCreditUsd,pricing:entry.pricing,status:'RESERVED',at:new Date().toISOString(),retries:0};
+      const record={purpose,model,key,structuredOutput:structured,reservedTokens:reservation,budgetScope,reservedCreditUsd,pricing:entry.pricing,status:'RESERVED',at:new Date().toISOString(),retries:0};
       ledger.calls++;ledger.reservedTokens+=reservation;ledger.entries.push(record);await json(ledgerPath,ledger);
       const started=performance.now();
       try {
-        const body={model,temperature:0,max_tokens:maxOutput,messages:[{role:'system',content:SYSTEM},{role:'user',content}]};
+        const body={model,temperature:0,max_tokens:maxOutput,messages:[{role:'system',content:system},{role:'user',content}]};
         if(structured) body.response_format={type:'json_schema',json_schema:{name:'accessibility_repair',strict:true,schema}};
         if(this.env.NEBIUS_REASONING_EFFORT) body.reasoning_effort=this.env.NEBIUS_REASONING_EFFORT;
         record.requestFile=`request-${key}-${ledger.calls}.json`;
@@ -119,11 +138,11 @@ export class NebiusClient {
         await json(path.join(this.dir,record.responseFile),{at:record.at,model,requestId:record.requestId,finishReason:record.finishReason,usage:record.usage,latencyMs:record.latencyMs,structuredOutput:structured,content:String(choice.message?.content??''),reasoning:String(choice.message?.reasoning_content??choice.message?.reasoning??'')});
         if(choice.finish_reason==='length') throw new Error('Model output truncated at max_tokens; reasoning may have consumed the output limit');
         if(choice.finish_reason!=='stop') throw new Error('Incomplete or unsupported model completion');
-        const plan=RepairPlan.parse(normalizeAdvisory(extractJson(choice.message?.content)));
+        const value=parse(extractJson(choice.message?.content));
         record.status='COMPLETED';
-        const provenance={provider:'Nebius Token Factory',model,requestId:record.requestId,promptHash:digest(content),schemaVersion:2,structuredOutput:structured,latencyMs:record.latencyMs,usage:record.usage,pricing:entry.pricing,reservedCreditUsd,budgetScope,cacheHit:false,retries:0,attemptedCompletions:1};
-        await json(cached,{plan,provenance});await json(ledgerPath,ledger);
-        return {plan,provenance:{...provenance,responseFile:record.responseFile,requestFile:record.requestFile}};
+        const provenance={provider:'Nebius Token Factory',model,requestId:record.requestId,promptHash:digest(content),...(schemaVersion?{schemaVersion}:{}),structuredOutput:structured,latencyMs:record.latencyMs,usage:record.usage,pricing:entry.pricing,reservedCreditUsd,budgetScope,cacheHit:false,retries:0,attemptedCompletions:1};
+        await json(ledgerPath,ledger);
+        return {value,provenance:{...provenance,responseFile:record.responseFile,requestFile:record.requestFile}};
       } catch(error) {record.status='FAILED_OR_UNCERTAIN';record.error=/^(Nebius|Model)/.test(error.message)?error.message.slice(0,400):'Invalid/failed model completion';await json(ledgerPath,ledger);error.provenance={provider:'Nebius Token Factory',model,status:'FAILED_OR_UNCERTAIN',attemptedCompletions:1,requestId:record.requestId||null,finishReason:record.finishReason||null,usage:record.usage||null,responseFile:record.responseFile||null,requestFile:record.requestFile||null,latencyMs:record.latencyMs||Math.round(performance.now()-started)};throw error;}
     } finally {await lock.close();await fs.unlink(lockPath);}
   }

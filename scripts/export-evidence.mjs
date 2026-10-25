@@ -5,7 +5,7 @@ import { json, listFiles, readJson } from '../src/files.js';
 import { digest } from '../src/schema.js';
 import { verifyProof } from '../src/proof.js';
 import { proofArchive } from '../src/archive.js';
-import { liveCases, humanPatch, benchmarkVersions } from '../src/live.js';
+import { liveCases, humanPatch, benchmarkVersions, openCases } from '../src/live.js';
 
 // Publishes recorded runs as a read-only, backend-free evidence bundle under public/evidence.
 // Every copied artifact must match its run manifest hash; run.json is a reduced, path-sanitized view.
@@ -47,6 +47,15 @@ const realbugs = await liveCases(), realbugsOut = path.join(ROOT, 'public', 'rea
 await fs.rm(realbugsOut, { recursive: true, force: true });
 for (const c of realbugs) { await fs.mkdir(path.join(realbugsOut, c.id), { recursive: true }); await fs.writeFile(path.join(realbugsOut, c.id, 'human.patch'), await humanPatch(c.id)); }
 await json(path.join(realbugsOut, 'index.json'), { generatedAt: new Date().toISOString(), enabled: false, cases: realbugs, benchmark: await benchmarkVersions() });
+// Open upstream bugs: the recorded run and, when the browser accepted one, Nemotron's patch as a download.
+const openbugs = await openCases(), openOut = path.join(ROOT, 'public', 'openbugs');
+await fs.rm(openOut, { recursive: true, force: true });
+for (const c of openbugs) if (c.pendingHumanFix) { await fs.mkdir(path.join(openOut, c.id), { recursive: true }); await fs.copyFile(path.join(ROOT, 'benchmarks', 'openbugs', c.id, 'pending-human-fix.patch'), path.join(openOut, c.id, 'pending-human.patch')); }
+for (const c of openbugs) if (c.recorded?.passedOn) { await fs.mkdir(path.join(openOut, c.id), { recursive: true }); await fs.copyFile(path.join(runs, c.recorded.run, `diff-${c.recorded.passedOn}.patch`), path.join(openOut, c.id, 'nemotron.patch')); }
+await json(path.join(openOut, 'index.json'), { generatedAt: new Date().toISOString(), cases: openbugs });
+const recordedOpen = openbugs.filter(c => c.recorded);
+if (recordedOpen.length) groups.unshift({ title: 'Open upstream bugs · Nemotron repairs', summary: "Each library is pinned at its current head, where a reported keyboard bug is still unfixed. There is no maintainers' fix to compare; the bug must reproduce while the pointer path and every guard pass. Super first, Ultra after a rejection.",
+ runs: recordedOpen.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })) });
 const recordedRealbugs = realbugs.filter(c => c.recorded);
 if (recordedRealbugs.length) groups.unshift({ title: 'Real upstream bugs · blind Nemotron runs', summary: "Each library is pinned just before a published maintainer fix. The maintainers' fix passes the frozen task; Nemotron gets only the buggy source, Super first and Ultra after a rejection.",
  runs: recordedRealbugs.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })) });

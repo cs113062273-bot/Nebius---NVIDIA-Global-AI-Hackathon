@@ -1,0 +1,159 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "order-keyboard",
+    "title": "Open order dialog keyboard",
+    "goal": "Open the order dialog with the keyboard, type a delivery note, place the order and see the confirmation",
+    "source": "model",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Seek open button",
+        "action": {
+          "kind": "seek",
+          "selector": "#open",
+          "maxTabs": 1
+        },
+        "assertions": []
+      },
+      {
+        "title": "Press Enter to open",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Type delivery note",
+        "action": {
+          "kind": "type",
+          "text": "Leave at door"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Press Enter to submit",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "visible",
+        "selector": "#receipt",
+        "value": true
+      },
+      {
+        "kind": "focus",
+        "selector": "#field"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "visible",
+        "selector": "#receipt",
+        "value": true
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "order-pointer",
+    "title": "Open order dialog pointer",
+    "goal": "Open the order dialog with the pointer, type a delivery note, place the order and see the confirmation",
+    "source": "model",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Click open button",
+        "action": {
+          "kind": "click",
+          "selector": "#open"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Click field",
+        "action": {
+          "kind": "click",
+          "selector": "#field"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Type delivery note",
+        "action": {
+          "kind": "type",
+          "text": "Leave at door"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Click place order",
+        "action": {
+          "kind": "click",
+          "selector": "#action"
+        },
+        "assertions": []
+      }
+    ],
+    "success": [
+      {
+        "kind": "visible",
+        "selector": "#receipt",
+        "value": true
+      }
+    ],
+    "functional": [
+      {
+        "kind": "visible",
+        "selector": "#receipt",
+        "value": true
+      }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "guard-open-dialog",
+      "title": "Open order dialog (guard)",
+      "goal": "Open dialog to verify existing behavior",
+      "source": "model",
+      "profile": "pointer",
+      "path": "/",
+      "steps": [
+        {
+          "title": "Click to open",
+          "action": {
+            "kind": "click",
+            "selector": "#open"
+          },
+          "assertions": []
+        }
+      ],
+      "success": [
+        {
+          "kind": "visible",
+          "selector": "#panel",
+          "value": true
+        }
+      ],
+      "functional": [
+        {
+          "kind": "visible",
+          "selector": "#panel",
+          "value": true
+        }
+      ],
+      "forbidden": []
+    }
+  ]
+}

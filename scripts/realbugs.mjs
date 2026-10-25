@@ -11,11 +11,11 @@ import {verifyProof} from '../src/proof.js';
 // maintainer fix, wraps it in an author-written consumer page and freezes a browser task.
 // `screen` proves the task fails on the buggy source and passes with the maintainers' own
 // fix (no inference). `run` gives Nemotron only the buggy source; the human fix is never sent.
-const BASE=path.resolve('benchmarks','realbugs'),SCOPE='realbugs-20261025',USD_CEILING='15';
+const BASE=path.resolve('benchmarks','realbugs'),SCOPE='realbugs-20261025',USD_CEILING='20';
 const ROUTE={super:'nvidia/nemotron-3-super-120b-a12b',ultra:'nvidia/Nemotron-3-Ultra-550b-a55b'};
 // Everyday calls go to Super; a rejected patch escalates to Ultra with the browser's failure attached.
 const POLICIES={auto:[ROUTE.super,ROUTE.ultra,ROUTE.ultra],super:[ROUTE.super,ROUTE.super,ROUTE.super],ultra:[ROUTE.ultra,ROUTE.ultra,ROUTE.ultra]};
-const implementationFiles=['src/engine.js','src/nebius.js','src/repair.js','src/runner.js','src/schema.js','src/verifier.js'];
+const implementationFiles=['src/engine.js','src/nebius.js','src/repair.js','src/runner.js','src/schema.js','src/static.js','src/verifier.js'];
 const [mode,id,policy='auto']=process.argv.slice(2);
 const write=async(file,value,flag='wx')=>fs.writeFile(file,JSON.stringify(value,null,2)+'\n',{flag});
 // Run settings are part of the frozen implementation: changing a limit is a new scoreboard, not a retry.
