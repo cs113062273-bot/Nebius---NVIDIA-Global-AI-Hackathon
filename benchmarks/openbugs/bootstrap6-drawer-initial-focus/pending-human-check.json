@@ -1,0 +1,6 @@
+{
+  "checkedAt": "2026-10-25T18:15:47.598Z",
+  "pullRequest": "https://github.com/twbs/bootstrap/pull/43139",
+  "applied": null,
+  "note": "The pending human fix changes scss/_drawer.scss. This case serves the published 6.0.0-alpha.1 stylesheet, so the SCSS change was not compiled or checked here."
+}

@@ -1,0 +1,18 @@
+{
+  "fixedAt": "2026-10-25T17:44:26.969Z",
+  "sourceHashes": {
+    "LICENSE": "bac76ec786e2d7ceab9c046d6c765abb57536a40f51e807bd4dc279fb4134c17",
+    "css/pikaday.css": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+    "index.html": "fc1f6648a36966455447c1b3311f7c26d3466e0471aebf95f583c75f81e234c9",
+    "pikaday.js": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75"
+  },
+  "taskHash": "ec54c7dde7b2817260fd43c9b94b81944bd6c73b468153bc7947261eca03b4dd",
+  "screen": {
+    "verdict": "REPRODUCED",
+    "verdicts": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guard-0": "VERIFIED_PASS"
+    }
+  }
+}

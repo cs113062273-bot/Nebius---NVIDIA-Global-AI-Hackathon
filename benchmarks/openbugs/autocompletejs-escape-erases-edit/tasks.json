@@ -1,0 +1,47 @@
+{
+  "journey": {
+    "version": 1, "id": "autocomplete-escape-keeps-edit", "title": "Dismiss suggestions with Escape while editing a saved city",
+    "goal": "Escape closes the suggestion list and keeps the city the user typed",
+    "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      { "title": "Reach the delivery city", "action": { "kind": "seek", "selector": "#city" } },
+      { "title": "Type a new city", "action": { "kind": "type", "text": "Porto", "replace": true },
+        "assertions": [ { "kind": "visible", "selector": "#city-list", "value": true } ] },
+      { "title": "Dismiss the suggestions", "action": { "kind": "press", "key": "Escape" },
+        "assertions": [ { "kind": "visible", "selector": "#city-list", "value": false }, { "kind": "focus", "selector": "#city" },
+          { "kind": "form-data", "selector": "#profile", "name": "city", "value": ["Porto"] } ] }
+    ],
+    "success": [ { "kind": "form-data", "selector": "#profile", "name": "city", "value": ["Porto"] } ],
+    "functional": [ { "kind": "focus", "selector": "#city" } ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "autocomplete-pointer-pick-city", "title": "Pick a suggested city with the pointer",
+    "goal": "Typing part of a name and clicking a suggestion saves that city",
+    "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      { "title": "Click the delivery city", "action": { "kind": "click", "selector": "#city" } },
+      { "title": "Type part of a city", "action": { "kind": "type", "text": "Bra", "replace": true } },
+      { "title": "Choose Braga", "action": { "kind": "click", "selector": "#city-list li:first-child" } }
+    ],
+    "success": [ { "kind": "form-data", "selector": "#profile", "name": "city", "value": ["Braga"] } ],
+    "functional": [ { "kind": "form-data", "selector": "#profile", "name": "city", "value": ["Braga"] } ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "autocomplete-keyboard-select", "title": "ArrowDown and Enter still select a suggestion",
+      "goal": "Typing Fa, ArrowDown and Enter saves Faro",
+      "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        { "title": "Reach the delivery city", "action": { "kind": "seek", "selector": "#city" } },
+        { "title": "Type part of a city", "action": { "kind": "type", "text": "Fa", "replace": true } },
+        { "title": "Highlight the first suggestion", "action": { "kind": "press", "key": "ArrowDown" } },
+        { "title": "Choose it", "action": { "kind": "press", "key": "Enter" } }
+      ],
+      "success": [ { "kind": "form-data", "selector": "#profile", "name": "city", "value": ["Faro"] } ],
+      "functional": [ { "kind": "focus", "selector": "#city" } ],
+      "forbidden": []
+    }
+  ]
+}

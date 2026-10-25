@@ -6,7 +6,7 @@ import { json, hashTree, readJson } from './files.js';
 import { getFixture, fixturePath, journeyFor, ROOT } from './catalog.js';
 import { fixtureServer } from './static.js';
 import { launchBrowser, executeJourney } from './runner.js';
-import { localize, applyReference, applyPlan, buildStatic } from './repair.js';
+import { localize, applyReference, applyPlan, buildStatic, taskSpecificEdits } from './repair.js';
 import { verifyRepair } from './verifier.js';
 import { createProof } from './proof.js';
 import { NebiusClient } from './nebius.js';
@@ -74,6 +74,10 @@ export async function runRepair({fixture='checkout',mode='reference',artifactRoo
         const patch=mode==='reference'?await applyReference(candidate,referenceRoot||fixturePath(fixture,'reference'),{staticProject:!!sourceRoot,runtimeOnly:fixtureInfo.kind==='historical'}):await applyPlan(candidate,plan,candidates.map(c=>c.path));
         record.patchValidation=patch.patchValidation;record.changes=patch.changes;record.diff=`diff-${attempt}.patch`;
         await fs.writeFile(path.join(dir,`diff-${attempt}.patch`),patch.patch);
+        if(mode!=='reference'){
+          const fitted=await taskSpecificEdits(original,candidate,patch.changes.map(c=>c.path),[journey,functionalJourney,...guards]);
+          if(fitted.length){const error=new Error(`Patch hardcodes the test page into component code: ${fitted.slice(0,4).map(f=>`${f.path} now names #${f.id}`).join('; ')}. Component code must work on any page that uses it; repair the component's behaviour without referring to this page's ids.`);error.category='OVERFIT';throw error;}
+        }
         await move('BUILDING','Validate static JavaScript syntax and HTML structure');
         const build=await buildStatic(candidate);await json(path.join(dir,`build-${attempt}.json`),build);
         if(!build.pass){const error=new Error('Candidate build failed: '+JSON.stringify(build.checks.filter(c=>!c.pass)));error.category='BUILD';throw error;}
@@ -88,7 +92,7 @@ export async function runRepair({fixture='checkout',mode='reference',artifactRoo
         run.verification=verifyRepair({before,after,functionalBefore,functionalAfter,patchChanged:patch.changed>0,build,visual,oracleHash:run.journeyHash,guards,guardsBefore,guardsAfter});
         Object.assign(record,{verified:run.verification.verdict==='VERIFIED_PASS',category:run.verification.reasons.length?'VERIFICATION':null,verification:run.verification,afterDir:run.afterDir,after,functionalAfter,...(guards.length?{guardsAfter}:{}),elapsedMs:Math.round(performance.now()-attemptStarted)});
         const failedAssertions=[...after.steps.flatMap(s=>s.assertions),...after.checks,...after.functional,...functionalAfter.checks,...functionalAfter.functional,...guardsAfter.flatMap(r=>[...r.checks,...r.functional])].filter(a=>!a.pass);
-        history.push({attempt,previous_plan:plan,failure:{category:'VERIFICATION',message:[...run.verification.reasons,...run.verification.uncertain].join('; '),stepFailure:after.failure},observed:{focus:after.checkpoints.at(-1)?.state.focus,failedAssertions,pointerFailure:functionalAfter.failure,...(guards.length?{guardFailures:guardsAfter.map((r,i)=>r.verdict==='VERIFIED_PASS'?null:{guard:guards[i].title,failure:r.failure,consoleErrors:r.consoleErrors.slice(0,3)}).filter(Boolean)}:{})},instruction:'Return a corrected full proposal against ORIGINAL hashes. Preserve both frozen tasks and their exact outcomes.'});
+        history.push({attempt,previous_plan:plan,failure:{category:'VERIFICATION',message:[...run.verification.reasons,...run.verification.uncertain].join('; '),stepFailure:after.failure},observed:{focus:after.checkpoints.at(-1)?.state.focus,keyEvents:after.checkpoints.at(-1)?.state.keyEvents,failedAssertions,pointerFailure:functionalAfter.failure,...(guards.length?{guardFailures:guardsAfter.map((r,i)=>r.verdict==='VERIFIED_PASS'?null:{guard:guards[i].title,failure:r.failure,consoleErrors:r.consoleErrors.slice(0,3)}).filter(Boolean)}:{})},instruction:'Return a corrected full proposal against ORIGINAL hashes. Preserve both frozen tasks and their exact outcomes.'});
         if(record.verified){await move('VERIFIED','Verified only for the tested journey and conditions');break;}
         if(attempt===cap){await move(run.verification.verdict==='INCONCLUSIVE'?'INCONCLUSIVE':'FAILED','Repair attempt limit reached');break;}
         }catch(error){
@@ -99,8 +103,8 @@ export async function runRepair({fixture='checkout',mode='reference',artifactRoo
           Object.assign(record,{category,failure:message,elapsedMs:Math.round(performance.now()-attemptStarted)});
           history.push({attempt,previous_plan:record.plan,failure:{category,message},instruction:category==='TRUNCATED'?'Output was discarded; return concise minimal edits and diagnosis within the same output budget.':'Fix the reported error. Return a complete replacement proposal targeting the immutable original allowlist and hashes.'});
           // Retry only actual proposal/application/build failures. Never retry uncertain transport or exhausted budgets.
-          const recoverable=['TRUNCATED','APPLICATION','BUILD'].includes(category)||category==='PROPOSAL'&&(error.name==='ZodError'||error.name==='SyntaxError'||/JSON|Model returned|Incomplete or unsupported model/.test(message));
-          if(attempt===cap||!recoverable){const rejected=['APPLICATION','BUILD'].includes(category);run.verification={verdict:rejected?'VERIFIED_FAIL':'INCONCLUSIVE',reasons:[category+': '+message]};await move(rejected?'FAILED':'INCONCLUSIVE','Stopped: '+category);break;}
+          const recoverable=['TRUNCATED','APPLICATION','BUILD','OVERFIT'].includes(category)||category==='PROPOSAL'&&(error.name==='ZodError'||error.name==='SyntaxError'||/JSON|Model returned|Incomplete or unsupported model/.test(message));
+          if(attempt===cap||!recoverable){const rejected=['APPLICATION','BUILD','OVERFIT'].includes(category);run.verification={verdict:rejected?'VERIFIED_FAIL':'INCONCLUSIVE',reasons:[category+': '+message]};await move(rejected?'FAILED':'INCONCLUSIVE','Stopped: '+category);break;}
         }finally{record.elapsedMs=Math.round(performance.now()-attemptStarted);if(record.provenance?.responseFile){const raw=path.join(artifactRoot,'..','inference',record.provenance.responseFile);await fs.copyFile(raw,path.join(dir,`model-response-${attempt}.json`));}if(record.provenance?.requestFile)await fs.copyFile(path.join(artifactRoot,'..','inference',record.provenance.requestFile),path.join(dir,`model-request-${attempt}.json`));await persist();}
       }
     }

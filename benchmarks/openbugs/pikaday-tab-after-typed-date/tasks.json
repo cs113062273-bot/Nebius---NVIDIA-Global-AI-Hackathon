@@ -1,0 +1,211 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "pikaday-type-date-then-tab",
+    "title": "Type a check-in date, then Tab to the guests field",
+    "goal": "After typing a date and pressing Tab, focus stays on the next field so the user can keep filling the form",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach the check-in field",
+        "action": {
+          "kind": "seek",
+          "selector": "#checkin"
+        }
+      },
+      {
+        "title": "Type a new date",
+        "action": {
+          "kind": "type",
+          "text": "2026-12-04"
+        }
+      },
+      {
+        "title": "Move to the guests field",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#guests"
+          }
+        ]
+      },
+      {
+        "title": "Enter the number of guests",
+        "action": {
+          "kind": "type",
+          "text": "2"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#guests"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#booking",
+        "name": "checkin",
+        "value": [
+          "2026-12-04"
+        ]
+      },
+      {
+        "kind": "form-data",
+        "selector": "#booking",
+        "name": "guests",
+        "value": [
+          "2"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#booking",
+        "name": "checkin",
+        "value": [
+          "2026-12-04"
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "pikaday-pointer-pick-day",
+    "title": "Pick a check-in day with the pointer",
+    "goal": "Clicking a day fills the check-in date and the guests field still takes input",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Open the calendar",
+        "action": {
+          "kind": "click",
+          "selector": "#checkin"
+        }
+      },
+      {
+        "title": "Choose 25 November",
+        "action": {
+          "kind": "click",
+          "selector": ".pika-button[data-pika-year=\"2026\"][data-pika-month=\"10\"][data-pika-day=\"25\"]"
+        },
+        "assertions": [
+          {
+            "kind": "form-data",
+            "selector": "#booking",
+            "name": "checkin",
+            "value": [
+              "2026-11-25"
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Click the guests field",
+        "action": {
+          "kind": "click",
+          "selector": "#guests"
+        }
+      },
+      {
+        "title": "Enter the number of guests",
+        "action": {
+          "kind": "type",
+          "text": "3"
+        }
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#booking",
+        "name": "guests",
+        "value": [
+          "3"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#booking",
+        "name": "checkin",
+        "value": [
+          "2026-11-25"
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "pikaday-page-month-keeps-field-focus",
+      "title": "Paging months with the pointer keeps keyboard focus in the date field",
+      "goal": "After clicking Next month, focus is back in the date field so arrow keys and typing keep working",
+      "source": "authored",
+      "profile": "pointer",
+      "path": "/",
+      "steps": [
+        {
+          "title": "Open the calendar",
+          "action": {
+            "kind": "click",
+            "selector": "#checkin"
+          }
+        },
+        {
+          "title": "Show next month",
+          "action": {
+            "kind": "click",
+            "selector": ".pika-next"
+          },
+          "assertions": [
+            {
+              "kind": "focus",
+              "selector": "#checkin"
+            }
+          ]
+        },
+        {
+          "title": "Move one day forward",
+          "action": {
+            "kind": "press",
+            "key": "ArrowRight"
+          },
+          "assertions": [
+            {
+              "kind": "focus",
+              "selector": "#checkin"
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "focus",
+          "selector": "#checkin"
+        }
+      ],
+      "functional": [
+        {
+          "kind": "focus",
+          "selector": "#checkin"
+        }
+      ],
+      "forbidden": []
+    }
+  ]
+}

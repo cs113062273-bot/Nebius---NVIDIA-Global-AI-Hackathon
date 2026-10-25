@@ -154,6 +154,23 @@ export async function applyReference(root, referenceRoot, {staticProject=false,r
   for(const c of changes){const file=await contained(root,c.path,{existing:false});if(c.after===null)await fs.unlink(file);else{await fs.mkdir(path.dirname(file),{recursive:true});await fs.writeFile(file,c.after);}}
   return result;
 }
+// Component code must work on any page. A non-HTML file that named none of the task's element ids
+// before the patch is component code; a patch that makes it name one is fitted to the test page.
+// Application files that already refer to the page's ids are left alone.
+const escapeRegExp = text => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+export async function taskSpecificEdits(originalRoot, candidateRoot, files, journeys) {
+  const ids = new Set();
+  for (const j of journeys) for (const s of [...j.steps.flatMap(s => [s.action, ...s.assertions]), ...j.success, ...j.functional, ...j.forbidden])
+    for (const m of String(s.selector || '').matchAll(/#([A-Za-z][\w-]{2,})/g)) ids.add(m[1]);
+  const named = (text, id) => new RegExp(`['"\`#]${escapeRegExp(id)}(?![\\w-])`).test(text), findings = [];
+  for (const file of files) {
+    if (/\.html?$/i.test(file)) continue;
+    const before = await fs.readFile(path.join(originalRoot, file), 'utf8').catch(() => ''), after = await fs.readFile(path.join(candidateRoot, file), 'utf8').catch(() => '');
+    if ([...ids].some(id => named(before, id))) continue;
+    for (const id of ids) if (named(after, id)) findings.push({ path: file, id });
+  }
+  return findings;
+}
 export async function buildStatic(root) {
   const checks=[];
   for(const file of await listFiles(root)) {

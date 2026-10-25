@@ -1,0 +1,13 @@
+{
+  "title": "Tab after typing a date must move to the next field, not jump back into the date field",
+  "library": "Pikaday",
+  "repository": "https://github.com/Pikaday/Pikaday",
+  "issue": "https://github.com/Pikaday/Pikaday/issues/827",
+  "pinnedCommit": "9a90eea5cdbc48784d3a909ddb36e052c16bf25d",
+  "status": "Open since January 2019. The repository was archived, so no upstream fix will ship.",
+  "summary": "Typing a date and pressing Tab fires change; Pikaday redraws and, one millisecond later, focuses the date field again, so the next field loses focus and the user's typing lands in the wrong place.",
+  "category": "Focus loss",
+  "upstreamFiles": ["LICENSE", "css/pikaday.css", "pikaday.js"],
+  "license": "MIT",
+  "consumer": "Author-written cabin booking form around the unchanged pikaday.js and pikaday.css at pinnedCommit (the head of the archived repository)."
+}

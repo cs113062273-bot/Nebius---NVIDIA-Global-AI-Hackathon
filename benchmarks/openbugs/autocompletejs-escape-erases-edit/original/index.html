@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Delivery profile</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="dist/css/autoComplete.css">
+<style>
+body{font:16px system-ui,sans-serif;margin:32px;color:#1d1d1d;background:#fff}
+main{max-width:560px}
+label{display:block;margin:16px 0 4px;font-weight:600}
+button[type=submit]{margin-top:20px;font:inherit;padding:8px 16px}
+:focus-visible{outline:3px solid #0b5fff;outline-offset:2px}
+#status{margin-top:16px;min-height:1.4em}
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "./src/services/configure": "./src/services/configure.js",
+    "./src/services/extend": "./src/services/extend.js",
+    "./src/services/init": "./src/services/init.js",
+    "./src/services/start": "./src/services/start.js",
+    "./src/helpers/eventEmitter": "./src/helpers/eventEmitter.js",
+    "./src/helpers/io": "./src/helpers/io.js",
+    "./src/controllers/dataController": "./src/controllers/dataController.js",
+    "./src/controllers/eventController": "./src/controllers/eventController.js",
+    "./src/controllers/listController": "./src/controllers/listController.js",
+    "./src/controllers/searchController": "./src/controllers/searchController.js"
+  }
+}
+</script>
+</head>
+<body>
+<main>
+<h1>Delivery profile</h1>
+<form id="profile" action="#" novalidate>
+  <label for="city">Delivery city</label>
+  <input id="city" name="city" autocomplete="off" spellcheck="false" value="Lisbon">
+  <button id="submit" type="submit">Save profile</button>
+  <p id="status" role="status"></p>
+</form>
+</main>
+<script type="module">
+// The upstream source imports modules without file extensions; the import map above resolves them.
+import autoComplete from './src/autoComplete.js';
+const form = document.getElementById('profile');
+window.cityPicker = new autoComplete({
+  name: 'City suggestions',
+  selector: '#city',
+  data: { src: ['Aveiro', 'Braga', 'Coimbra', 'Faro', 'Lisbon', 'Porto', 'Portimão'] },
+  resultsList: { id: 'city-list' },
+  events: { input: { selection: event => { window.cityPicker.input.value = event.detail.selection.value; } } }
+});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('status').textContent = 'Saved ' + new FormData(form).get('city');
+});
+window.__ready = true;
+</script>
+</body>
+</html>

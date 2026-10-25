@@ -1,0 +1,30 @@
+{
+  "title": "Tab must leave a datepicker input for the next field",
+  "library": "Bootstrap 6.0 alpha (datepicker, TypeScript source)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues?q=is%3Aissue%20datepicker",
+  "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+  "status": "Not found among Bootstrap's open or closed issues when pinned. Reproduced in headless Chromium 156 and in desktop Chrome 155, both with this source and with the published 6.0.0-alpha.1 bundle and stylesheet. Not yet reported upstream.",
+  "summary": "When the field is reached with Tab, the calendar does not open, but vanilla-calendar-pro treats it as shown: on the next Tab it cancels the key and focuses the first control of a calendar that is not in the page, so focus stays in the date field. Escape is the only way out, and it drops focus to the page body.",
+  "category": "Keyboard trap",
+  "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.ts",
+    "js/src/datepicker.ts",
+    "js/src/dom/data.ts",
+    "js/src/dom/event-handler.ts",
+    "js/src/dom/manipulator.ts",
+    "js/src/util/config.ts",
+    "js/src/util/index.ts",
+    "vendor/vanilla-calendar-pro/LICENSE",
+    "vendor/vanilla-calendar-pro/index.js"
+  ],
+  "dependencies": [
+    "dist/css/bootstrap.min.css: the published 6.0.0-alpha.1 stylesheet from npm (MIT)",
+    "vendor/vanilla-calendar-pro/index.js: vanilla-calendar-pro 3.4.0 index.mjs from npm (MIT), Bootstrap's peer dependency, mapped with an import map. It is outside the editable source, so a repair has to be made in Bootstrap's TypeScript."
+  ],
+  "license": "MIT",
+  "consumer": "Author-written booking change form around the unchanged TypeScript source at pinnedCommit, served with types erased by Node's built-in stripping."
+}

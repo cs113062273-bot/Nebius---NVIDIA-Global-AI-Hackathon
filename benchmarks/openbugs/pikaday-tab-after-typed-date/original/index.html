@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cabin booking</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/pikaday.css">
+<style>
+body{font:16px system-ui,sans-serif;margin:32px;color:#1d1d1d;background:#fff}
+main{max-width:560px}
+label{display:block;margin:16px 0 4px;font-weight:600}
+input{font:inherit;padding:8px;border:1px solid #555;border-radius:4px;width:260px}
+button[type=submit]{margin-top:20px;font:inherit;padding:8px 16px}
+:focus-visible{outline:3px solid #0b5fff;outline-offset:2px}
+#status{margin-top:16px;min-height:1.4em}
+</style>
+</head>
+<body>
+<main>
+<h1>Book a cabin</h1>
+<form id="booking" action="#" novalidate>
+  <label for="checkin">Check-in (yyyy-mm-dd)</label>
+  <input id="checkin" name="checkin" autocomplete="off">
+  <label for="guests">Guests</label>
+  <input id="guests" name="guests" inputmode="numeric" autocomplete="off">
+  <button id="submit" type="submit">Book</button>
+  <p id="status" role="status"></p>
+</form>
+</main>
+<script src="pikaday.js"></script>
+<script>
+const pad = n => String(n).padStart(2, '0');
+window.checkinPicker = new Pikaday({
+  field: document.getElementById('checkin'),
+  defaultDate: new Date(2026, 10, 20),
+  onDraw: picker => picker.el.querySelectorAll('.pika-title[role=heading]').forEach(title => title.setAttribute('aria-level', '2')),
+  toString: date => date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()),
+  parse: value => {
+    const parts = value.split('-').map(Number);
+    return parts.length === 3 && parts.every(Number.isFinite) ? new Date(parts[0], parts[1] - 1, parts[2]) : null;
+  }
+});
+const form = document.getElementById('booking');
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  const data = new FormData(form);
+  document.getElementById('status').textContent = 'Booked ' + data.get('checkin') + ' for ' + data.get('guests');
+});
+window.__ready = true;
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "title": "Passing through a prefilled datepicker must not change the date the form submits",
+  "library": "Bootstrap 6.0 alpha (datepicker, TypeScript source)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues/43149",
+  "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+  "status": "Open. Fixes are proposed in pull requests #43150 and #43151, not merged at pinnedCommit. They are never sent to the model.",
+  "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43150",
+  "summary": "The datepicker instance is created on focusin and immediately rewrites the input with a locale string, so a saved 2026-10-22 is submitted as 10/22/2026 although the user never picked a date.",
+  "category": "Wrong submitted data",
+  "expectedBehaviour": "Only the part of the issue every proposal agrees on: focusing and leaving the field without picking keeps the submitted value 2026-10-22. What a newly picked date should submit is still being decided upstream and is not tested.",
+  "upstreamFiles": ["LICENSE", "dist/css/bootstrap.min.css", "js/src/base-component.ts", "js/src/datepicker.ts", "js/src/dom/data.ts", "js/src/dom/event-handler.ts", "js/src/dom/manipulator.ts", "js/src/util/config.ts", "js/src/util/index.ts", "vendor/vanilla-calendar-pro/LICENSE", "vendor/vanilla-calendar-pro/index.js"],
+  "dependencies": ["dist/css/bootstrap.min.css: the published 6.0.0-alpha.1 stylesheet from npm (MIT)", "vendor/vanilla-calendar-pro/index.js: vanilla-calendar-pro 3.4.0 index.mjs from npm (MIT), Bootstrap's peer dependency, mapped with an import map"],
+  "license": "MIT",
+  "consumer": "Author-written booking change form around the unchanged TypeScript source at pinnedCommit, served with types erased by Node's built-in stripping. Escape closes the calendar because Tab is trapped (see the separate tab-trap case)."
+}

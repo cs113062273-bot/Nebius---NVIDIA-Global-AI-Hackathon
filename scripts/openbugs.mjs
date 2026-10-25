@@ -13,7 +13,7 @@ import {launchBrowser,executeJourney} from '../src/runner.js';
 // still unfixed. There is no maintainers' fix to screen against, so `screen` proves the reverse:
 // on the unchanged source the keyboard task fails while the pointer path and every guard pass.
 // `run` then asks Nemotron for a patch with the same routing and gates as the real-bug benchmark.
-const BASE=path.resolve('benchmarks','openbugs'),SCOPE='openbugs-20261026',USD_CEILING='5';
+const BASE=path.resolve('benchmarks','openbugs'),SCOPE='openbugs-20261026',USD_CEILING='8';
 const ROUTE=['nvidia/nemotron-3-super-120b-a12b','nvidia/Nemotron-3-Ultra-550b-a55b','nvidia/Nemotron-3-Ultra-550b-a55b'];
 const [mode,id]=process.argv.slice(2);
 // Same frozen implementation as the real-bug benchmark, so both scoreboards name one engine version.

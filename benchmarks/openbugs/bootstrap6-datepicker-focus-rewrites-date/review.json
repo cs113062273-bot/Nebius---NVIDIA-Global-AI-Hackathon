@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewedAt": "2026-10-25T18:20:28.714Z",
+  "run": "bfef3326-518e-4f03-bc0e-a8bda9d3169d",
+  "verdict": "Works, different trade-off from the pending human fix",
+  "summary": "The input now holds the ISO date, and the locale-formatted text is only written to a separate display element.",
+  "caveats": [
+    "An input-mode datepicker now shows 2026-10-22 instead of the locale format, so users lose the localized display.",
+    "Pending pull request #43150 keeps the localized text visible and submits the ISO date through a hidden input. Both pass this task; the human design is the better user experience."
+  ]
+}

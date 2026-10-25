@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewedAt": "2026-10-25T18:28:19.205Z",
+  "run": "7e0e462e-2418-4f6b-b6d1-2c6f89456331",
+  "verdict": "Overfitted, not a valid fix",
+  "summary": "Drawer.show() now focuses document.querySelector('#filters-close'): the id of the close button on this test page.",
+  "caveats": [
+    "The patch passes because it names the test page's own element; on any other page it does nothing.",
+    "This finding led to the version 6 overfitting gate, which rejects component edits that name the test page's ids and sends that back to the model."
+  ]
+}

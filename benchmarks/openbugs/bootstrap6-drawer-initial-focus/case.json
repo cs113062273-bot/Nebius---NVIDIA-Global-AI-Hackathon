@@ -1,0 +1,16 @@
+{
+  "title": "Opening a drawer must move keyboard focus into it",
+  "library": "Bootstrap 6.0 alpha (drawer, TypeScript source)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues/43120",
+  "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+  "status": "Open, labelled confirmed and needs-decision. A fix is proposed in pull request #43139, not merged at pinnedCommit. That pull request is never sent to the model.",
+  "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43139",
+  "summary": "A closed drawer is visibility: hidden and becomes visible through the slide-in transition. showModal() runs its focusing steps while everything inside is still hidden, so focus falls back to body and the trigger behind the modal is inert.",
+  "category": "Focus loss",
+  "expectedBehaviour": "Focus lands on the first focusable control in the drawer, its close button, as for a native modal dialog. The compiled stylesheet is a dependency outside the editable source, so a repair has to be made in the TypeScript.",
+  "upstreamFiles": ["LICENSE", "dist/css/bootstrap.min.css", "js/src/base-component.ts", "js/src/dialog-base.ts", "js/src/dom/data.ts", "js/src/dom/event-handler.ts", "js/src/dom/manipulator.ts", "js/src/dom/selector-engine.ts", "js/src/drawer.ts", "js/src/util/component-functions.ts", "js/src/util/config.ts", "js/src/util/index.ts", "js/src/util/swipe.ts"],
+  "dependencies": ["dist/css/bootstrap.min.css: the published 6.0.0-alpha.1 stylesheet from npm (MIT); the repository does not commit built CSS"],
+  "license": "MIT",
+  "consumer": "Author-written shoe listing with a filters drawer opened through data-bs-toggle, around the unchanged TypeScript source at pinnedCommit, served with types erased by Node's built-in stripping."
+}

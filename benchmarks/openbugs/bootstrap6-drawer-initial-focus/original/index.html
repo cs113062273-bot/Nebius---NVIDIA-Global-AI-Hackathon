@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trail shoes</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="dist/css/bootstrap.min.css">
+</head>
+<body class="p-4">
+<main class="container" style="max-width:48rem">
+  <h1 class="h3 mb-3">Trail shoes</h1>
+  <button type="button" class="btn-solid theme-primary" id="filters-open" data-bs-toggle="drawer" data-bs-target="#filters">Filters</button>
+  <p class="mt-3">Showing: <output id="applied">All shoes</output></p>
+</main>
+<dialog class="drawer drawer-start" id="filters" aria-labelledby="filters-title">
+  <div class="drawer-header">
+    <h2 class="drawer-title h5" id="filters-title">Filters</h2>
+    <button type="button" class="btn-close" id="filters-close" data-bs-dismiss="drawer" aria-label="Close"></button>
+  </div>
+  <div class="drawer-body">
+    <form id="filter-form">
+      <label class="d-block mb-2"><input type="checkbox" id="in-stock" name="stock" value="in"> In stock</label>
+      <label class="d-block mb-3"><input type="checkbox" id="waterproof" name="feature" value="waterproof"> Waterproof</label>
+      <button type="button" class="btn-solid theme-primary" id="apply">Show results</button>
+    </form>
+  </div>
+</dialog>
+<script type="module">
+import Drawer from './js/src/drawer.js';
+const form = document.getElementById('filter-form');
+document.getElementById('apply').addEventListener('click', () => {
+  const picked = [...new FormData(form).values()];
+  document.getElementById('applied').textContent = picked.length ? picked.join(', ') : 'All shoes';
+  Drawer.getOrCreateInstance('#filters').hide();
+});
+window.__ready = true;
+</script>
+</body>
+</html>

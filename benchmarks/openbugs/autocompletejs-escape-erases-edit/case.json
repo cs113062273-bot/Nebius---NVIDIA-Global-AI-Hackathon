@@ -1,0 +1,14 @@
+{
+  "title": "Escape must close the suggestion list without erasing what the user typed",
+  "library": "autoComplete.js",
+  "repository": "https://github.com/TarekRaafat/autoComplete.js",
+  "issue": "https://github.com/TarekRaafat/autoComplete.js/issues/402",
+  "pinnedCommit": "4bc4bad6da87b4546cf70a248553e4e4b03672a6",
+  "status": "Open. The maintainer tracks the change for v11 in issue #485; no fix is merged at pinnedCommit (the current head).",
+  "summary": "Pressing Escape to dismiss suggestions sets the input value to an empty string, so a user editing a saved field loses their text.",
+  "category": "Lost user input",
+  "expectedBehaviour": "As proposed by the maintainer in #485: Escape closes the list only and keeps the input. The reporter of #402 suggested restoring the earlier value instead; this task follows the maintainer's plan.",
+  "upstreamFiles": ["LICENSE", "dist/css/autoComplete.css", "dist/css/images/search.svg", "dist/css/images/magnifier.svg", "src/autoComplete.js", "src/controllers/dataController.js", "src/controllers/eventController.js", "src/controllers/listController.js", "src/controllers/searchController.js", "src/helpers/eventEmitter.js", "src/helpers/io.js", "src/services/configure.js", "src/services/extend.js", "src/services/init.js", "src/services/start.js"],
+  "license": "Apache-2.0",
+  "consumer": "Author-written delivery profile form around the unchanged upstream ES module source at pinnedCommit; an import map resolves its extensionless imports."
+}

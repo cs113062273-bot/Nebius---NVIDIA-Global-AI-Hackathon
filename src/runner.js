@@ -78,7 +78,7 @@ async function inspect(page) {
         outline: { style: s.outlineStyle, width: s.outlineWidth, color: s.outlineColor }, html: el.outerHTML.slice(0, 1800) };
     };
     return { focus: info(document.activeElement), nodes: [...document.querySelectorAll('button,a[href],input,select,textarea,[tabindex],[role="button"],[role="checkbox"]')].slice(0, 250).map(info),
-      focusEvents: window.__focusEvents || [], overflow: document.documentElement.scrollWidth - innerWidth,
+      focusEvents: window.__focusEvents || [], keyEvents: (window.__keyEvents || []).slice(-20), overflow: document.documentElement.scrollWidth - innerWidth,
       dialogs: [...document.querySelectorAll('dialog[open], [role="dialog"][aria-modal="true"]')].filter(el => el.getBoundingClientRect().width > 0).map(el => ({ id: el.id, containsFocus: el.contains(document.activeElement) })) };
   });
 }
@@ -141,6 +141,13 @@ export async function executeJourney({ browser, origin, journey: input, dir, dea
         const to = el.id ? '#' + el.id : el.tagName.toLowerCase();
         window.__focusEvents.push({ sequence: window.__focusEvents.length, from, to, tag: el.tagName.toLowerCase() });
       });
+      // Key and dialog close-request outcomes, read after every listener has run: whether a key was
+      // cancelled, and whether a dialog's cancel event could be cancelled at all. Passive; changes nothing.
+      window.__keyEvents = [];
+      const name = el => el?.id ? '#' + el.id : el?.tagName?.toLowerCase() || null, log = entry => { window.__keyEvents.push(entry); if (window.__keyEvents.length > 40) window.__keyEvents.shift(); };
+      window.addEventListener('keydown', e => setTimeout(() => log({ type: 'keydown', key: e.key, target: name(e.target), defaultPrevented: e.defaultPrevented })), true);
+      document.addEventListener('cancel', e => setTimeout(() => log({ type: 'cancel', target: name(e.target), cancelable: e.cancelable, defaultPrevented: e.defaultPrevented })), true);
+      document.addEventListener('close', e => setTimeout(() => log({ type: 'close', target: name(e.target) })), true);
     });
     page = await context.newPage(); page.setDefaultTimeout(2500); page.setDefaultNavigationTimeout(8000);
     page.on('pageerror', e => result.consoleErrors.push(e.message.slice(0, 1000)));

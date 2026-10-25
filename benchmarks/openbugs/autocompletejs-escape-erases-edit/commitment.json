@@ -1,0 +1,30 @@
+{
+  "fixedAt": "2026-10-25T17:47:31.208Z",
+  "sourceHashes": {
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "dist/css/autoComplete.css": "e2529cb598d5bb4a9b39998380f62f16fd1fda4742ae87ff487650d7486be32d",
+    "dist/css/images/magnifier.svg": "04932890728a8530a951aa5c528c7128ced8d85eaec52de0375d4c8fe015eee5",
+    "dist/css/images/search.svg": "138d50669ccb63b900ed99febbd68ed780eff7ffd9befc676c92a57fb89838b4",
+    "index.html": "48f4ddd1b4e39618682369c8ad0247bb95ee8601eff8de68294361750cefdefe",
+    "src/autoComplete.js": "0242c0d6b3ddd74aa1f7f193124688b1e6bc61635a4ff086e56c9200d8032f04",
+    "src/controllers/dataController.js": "510f074038c78d6e14aea8859a0374bd36498509834176098175141dce106713",
+    "src/controllers/eventController.js": "254868b221cad0e883fc7ff6b032108865da8eb56bd6883bb523d2e0de478514",
+    "src/controllers/listController.js": "913fcec2ffc448fd458cae19dd873623256f7e1c1ba3eab15225d68f74351f8f",
+    "src/controllers/searchController.js": "0c9a86b624b1ef53beb3479575ba9632ea79e4eb2d42d3f829edb5330e2fa0b2",
+    "src/helpers/eventEmitter.js": "809b63bfe489cbe354a2a9b525db4d4a5a764cf162eb8ee124367811b9d4571e",
+    "src/helpers/io.js": "353bb04992e073028a97763d2bac3ccd1614f359b26588f7cfa8f980270c7a4e",
+    "src/services/configure.js": "1cb7ab28c7fbc3828738645b089d420a9fda84b130286a042c98d23a46e97f71",
+    "src/services/extend.js": "dc86a82b06de5a03751314ad35d1abe3dea41d10b685d3335ccf174962ce0d69",
+    "src/services/init.js": "ae4e7bb3a634484bd99cd7d379fa57c996707b058921598683cdc6f77ad16327",
+    "src/services/start.js": "a3d009eae6653e38428572f61c058b85c3fd86802ff2bd0a6a34820854b398a8"
+  },
+  "taskHash": "0b3096b2a8242a62eb896d9ce1ca4c0610ae55b6d761050b8ed7a6c95cdbde59",
+  "screen": {
+    "verdict": "REPRODUCED",
+    "verdicts": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guard-0": "VERIFIED_PASS"
+    }
+  }
+}

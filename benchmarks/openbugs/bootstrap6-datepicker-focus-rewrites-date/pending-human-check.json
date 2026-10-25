@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-10-25T18:15:47.598Z",
+  "pullRequest": "https://github.com/twbs/bootstrap/pull/43150",
+  "applied": "js/src changes only (tests and docs omitted)",
+  "keyboard": "VERIFIED_PASS",
+  "pointer": "VERIFIED_PASS",
+  "guards": [],
+  "note": "The pending human fix passes the same frozen task. It was fetched for comparison and is never part of a model request."
+}

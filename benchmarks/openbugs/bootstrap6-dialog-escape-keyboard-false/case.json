@@ -1,0 +1,15 @@
+{
+  "title": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+  "library": "Bootstrap 6.0 alpha (dialog, TypeScript source)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues/43070",
+  "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+  "status": "Open and labelled confirmed. A maintainer-side fix is proposed in pull request #43077, not merged at pinnedCommit. That pull request is never sent to the model; it is kept for comparison after it merges.",
+  "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43077",
+  "summary": "keyboard: false only calls preventDefault() on the native cancel event. Escape does not count as user activation, so after a few presses Chromium fires cancel with cancelable=false and the dialog closes anyway.",
+  "category": "Unwanted dismissal",
+  "upstreamFiles": ["LICENSE", "dist/css/bootstrap.min.css", "js/src/base-component.ts", "js/src/dialog-base.ts", "js/src/dialog.ts", "js/src/dom/data.ts", "js/src/dom/event-handler.ts", "js/src/dom/manipulator.ts", "js/src/dom/selector-engine.ts", "js/src/util/component-functions.ts", "js/src/util/config.ts", "js/src/util/index.ts"],
+  "dependencies": ["dist/css/bootstrap.min.css: the published 6.0.0-alpha.1 stylesheet from npm (MIT); the repository does not commit built CSS"],
+  "license": "MIT",
+  "consumer": "Author-written payment confirmation page around the unchanged TypeScript source at pinnedCommit, served with types erased by Node's built-in stripping. The page turns off the dialog transition and moves focus on shown.bs.dialog, so that the separate initial-focus issue #43120 does not affect this task."
+}

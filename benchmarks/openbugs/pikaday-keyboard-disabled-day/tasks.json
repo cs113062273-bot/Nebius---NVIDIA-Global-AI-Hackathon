@@ -1,0 +1,171 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "pikaday-arrow-skips-closed-day",
+    "title": "Move to the next open day with the arrow key",
+    "goal": "From Friday 20 November, ArrowRight selects Monday 23 November, never a closed weekend day",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Reach the appointment field",
+        "action": {
+          "kind": "seek",
+          "selector": "#day"
+        }
+      },
+      {
+        "title": "Move one day forward",
+        "action": {
+          "kind": "press",
+          "key": "ArrowRight"
+        },
+        "assertions": [
+          {
+            "kind": "form-data",
+            "selector": "#appointment",
+            "name": "day",
+            "value": [
+              "2026-11-23"
+            ]
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#appointment",
+        "name": "day",
+        "value": [
+          "2026-11-23"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "focus",
+        "selector": "#day"
+      }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "pikaday-pointer-open-day",
+    "title": "Pick an open day with the pointer",
+    "goal": "A weekday can be clicked; the saved day changes to it",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      {
+        "title": "Open the calendar",
+        "action": {
+          "kind": "click",
+          "selector": "#day"
+        }
+      },
+      {
+        "title": "Choose Wednesday 25 November",
+        "action": {
+          "kind": "click",
+          "selector": ".pika-button[data-pika-year=\"2026\"][data-pika-month=\"10\"][data-pika-day=\"25\"]"
+        }
+      }
+    ],
+    "success": [
+      {
+        "kind": "form-data",
+        "selector": "#appointment",
+        "name": "day",
+        "value": [
+          "2026-11-25"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "form-data",
+        "selector": "#appointment",
+        "name": "day",
+        "value": [
+          "2026-11-25"
+        ]
+      }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "pikaday-arrows-between-open-days",
+      "title": "Arrow keys still move between open days",
+      "goal": "ArrowLeft from Friday selects Thursday, and ArrowDown selects the Thursday a week later",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        {
+          "title": "Reach the appointment field",
+          "action": {
+            "kind": "seek",
+            "selector": "#day"
+          }
+        },
+        {
+          "title": "Move one day back",
+          "action": {
+            "kind": "press",
+            "key": "ArrowLeft"
+          },
+          "assertions": [
+            {
+              "kind": "form-data",
+              "selector": "#appointment",
+              "name": "day",
+              "value": [
+                "2026-11-19"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Move one week forward",
+          "action": {
+            "kind": "press",
+            "key": "ArrowDown"
+          },
+          "assertions": [
+            {
+              "kind": "form-data",
+              "selector": "#appointment",
+              "name": "day",
+              "value": [
+                "2026-11-26"
+              ]
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "form-data",
+          "selector": "#appointment",
+          "name": "day",
+          "value": [
+            "2026-11-26"
+          ]
+        }
+      ],
+      "functional": [
+        {
+          "kind": "focus",
+          "selector": "#day"
+        }
+      ],
+      "forbidden": []
+    }
+  ]
+}

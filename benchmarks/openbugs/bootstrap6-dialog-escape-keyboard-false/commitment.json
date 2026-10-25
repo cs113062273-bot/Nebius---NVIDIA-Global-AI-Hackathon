@@ -1,0 +1,27 @@
+{
+  "fixedAt": "2026-10-25T17:51:51.355Z",
+  "sourceHashes": {
+    "LICENSE": "bc0cd18d94c028f1c0b62ec9fdaddcb9921c1e07c29cf52dc7df8cca9daf2488",
+    "dist/css/bootstrap.min.css": "678508b198d9b1b8877e338f419fdada00024be2bcc638a539dd724856095112",
+    "index.html": "88081e6ddde937a5c986474dfb6589c5e2b4ed365920ea0cfdb8238356e18840",
+    "js/src/base-component.ts": "13e2e303241874c49eb8d739e2900655f94b7d673ad7694591b776fbd089f886",
+    "js/src/dialog-base.ts": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+    "js/src/dialog.ts": "16989db59c2e78b51585f6417b789941649412c96b88897df4069d4e3ae4a39b",
+    "js/src/dom/data.ts": "4626f638b542f3e6db0173b8e3e164cf9a3a9ea5840c763688b19d64a4d3ca34",
+    "js/src/dom/event-handler.ts": "87e970cca1e8190a049f450c2fe122eefec7c068ee6ce9352362d1c729bcb851",
+    "js/src/dom/manipulator.ts": "6af45216558c43f292e487524da0ba33d0d8a3ffd8e188e9e467e5cdca141411",
+    "js/src/dom/selector-engine.ts": "7e58a9f1aaf1a8d78474d923faed2f79035b9372fa494d518da4ba77568f8f3b",
+    "js/src/util/component-functions.ts": "6ed9fc25bd5efecebfbdb29a88f7932b3af4b4966f80eb1147da58ad6d262d04",
+    "js/src/util/config.ts": "6074cf2ebda4e0f966f31908ad21939fe27339426722c5f08b18a45464fc5602",
+    "js/src/util/index.ts": "796f788b24065a562b6b8e132dcd0eaf748c95bf699996315de9aa0406f9b3d2"
+  },
+  "taskHash": "ff9415bf075735f97ee1fb9a4e14636edf20bcdb0dc9bfd983ede2a9e73005e2",
+  "screen": {
+    "verdict": "REPRODUCED",
+    "verdicts": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guard-0": "VERIFIED_PASS"
+    }
+  }
+}

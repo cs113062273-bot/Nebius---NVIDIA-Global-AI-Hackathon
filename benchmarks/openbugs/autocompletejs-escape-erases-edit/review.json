@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewedAt": "2026-10-25T18:20:28.713Z",
+  "run": "e012a3ba-7454-4b1b-9e94-404ed28783f2",
+  "verdict": "Sound",
+  "summary": "Escape now only closes the list, which is the default the maintainer proposes in #485.",
+  "caveats": [
+    "The clear event is no longer emitted on Escape; code that listened for it there will not be called.",
+    "#485 also proposes a clearOnEscape option for the old behaviour; the patch does not add it, so an upstream pull request would need that option."
+  ]
+}
