@@ -13,6 +13,10 @@ Start at **See the verified repair**, then **Browse all 73 recorded runs**. Ever
 
 **Result on the current frozen engine: 20 of 26 repaired**, each verified in Chromium against the keyboard task, an independent pointer path and regression guards. The maintainers' fix is never sent. An automatic check flags any line the fix added that also appears in a request: in the current version it flagged Bootstrap licence headers, imports and constants that the buggy source already contains, plus two lines Nemotron wrote itself in an earlier attempt and got back as history. The six failures were all rejected by the browser, not left unresolved. Earlier engine versions keep their own scores on the page (7/8, then 19/26). Changing the engine or a run limit counts as a new version, and every case is rerun. This is one run per case on one engine, not a general repair rate.
 
+## In a pull request
+
+[**Pull request #1**](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/pull/1) is a live run of the CI check in [`.github/workflows/tabstitch.yml`](.github/workflows/tabstitch.yml). The change replaces the example shop's native dialog with a slide-in panel that works with a mouse but no longer moves keyboard focus. The workflow replayed the frozen task in Chromium and found the failure. Nemotron 3 Super's first patch was rejected because closing the panel did not return focus; that failure went back to the model. Nemotron 3 Ultra's second patch passed the keyboard task and the pointer path, and the verified diff was posted on the pull request. Fork pull requests never receive the Nebius key, and each repair is capped at US$0.50.
+
 ## The problem
 
 Keyboard and form fixes often look right and still submit the wrong data. In the pinned [GOV.UK accessible-autocomplete](https://github.com/alphagov/accessible-autocomplete/issues/777), clearing a saved country leaves the field empty on screen while the hidden `<select>` still submits `gb`. Accessibility scanners report nothing; the user's data is wrong.
