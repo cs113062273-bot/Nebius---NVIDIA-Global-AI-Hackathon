@@ -6,3 +6,4 @@
 *.md text eol=lf
 # Pinned upstream sources are hashed byte-for-byte; never convert line endings.
 benchmarks/realbugs/** -text
+benchmarks/openbugs/** -text
