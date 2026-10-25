@@ -1,0 +1,59 @@
+{
+  "fixedAt": "2026-10-25T13:29:59.570Z",
+  "sourceHashes": {
+    "LICENSE": "53d2513c8df48a817d70537cc906b8e9c7bf2513328ff66847894773e615b37e",
+    "dist/css/bootstrap.min.css": "fb1763b59f9f5764294b5af9fa5250835ae608282fe6f2f2213a5952aacf1fbf",
+    "index.html": "60f9c30eaf2574c405d38683a298cad18c74b612a5860995a330a93d1aec35fc",
+    "js/src/base-component.js": "09bbfc45c4b6e1439bb8916a2af866f9a00c84f5d8aa843d5b32b3bddeac338c",
+    "js/src/dom/data.js": "ef15ca97a901434c306e044d51df73f21e920f5084d2872d528c34d8cf981028",
+    "js/src/dom/event-handler.js": "974b866421effbb5c305821eae59a49e65f9d10e1eb484775bcd9734527cebaa",
+    "js/src/dom/manipulator.js": "0b166ffc6dc288c57fefab9c73c0664a84b7e613cc9e904157ff45a5b1771545",
+    "js/src/dom/selector-engine.js": "8d5aa86675802f6c825bf31ad85ccf97a690d2414e1ff59c58ae0a98c3fe652e",
+    "js/src/offcanvas.js": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d",
+    "js/src/util/backdrop.js": "f19a9a6ec4e32d0d71ffdb9926205e0da431b33513b13147e8ca829e90f4a6b1",
+    "js/src/util/component-functions.js": "60c405489812fb679b00923e9d9e28bbd5bafad822d68a0ce58d7b951ecb32b3",
+    "js/src/util/config.js": "c2082738cd051516d35bc611f97430ef5e38143be7ae8d72b333b6ad8d8916a9",
+    "js/src/util/focustrap.js": "f7bbd09ce32c3fcc1814193706a2b5b1ee5e1feecfe420b6e49991fb974ed673",
+    "js/src/util/index.js": "6f7cb91b17496c3606cc8b485063063f374b8956d8b83fe503bb6084d15a7536",
+    "js/src/util/scrollbar.js": "6cbc0fb09329984ba01330aca9e00ce6c359d1863b60e8788453d72d8c3ee2bf"
+  },
+  "humanFixHashes": {
+    "LICENSE": "53d2513c8df48a817d70537cc906b8e9c7bf2513328ff66847894773e615b37e",
+    "dist/css/bootstrap.min.css": "fb1763b59f9f5764294b5af9fa5250835ae608282fe6f2f2213a5952aacf1fbf",
+    "index.html": "60f9c30eaf2574c405d38683a298cad18c74b612a5860995a330a93d1aec35fc",
+    "js/src/base-component.js": "09bbfc45c4b6e1439bb8916a2af866f9a00c84f5d8aa843d5b32b3bddeac338c",
+    "js/src/dom/data.js": "ef15ca97a901434c306e044d51df73f21e920f5084d2872d528c34d8cf981028",
+    "js/src/dom/event-handler.js": "974b866421effbb5c305821eae59a49e65f9d10e1eb484775bcd9734527cebaa",
+    "js/src/dom/manipulator.js": "0b166ffc6dc288c57fefab9c73c0664a84b7e613cc9e904157ff45a5b1771545",
+    "js/src/dom/selector-engine.js": "8d5aa86675802f6c825bf31ad85ccf97a690d2414e1ff59c58ae0a98c3fe652e",
+    "js/src/offcanvas.js": "da0f642187fb652f9067e71a93e847302719fb2759678ed4d1997a0875b79871",
+    "js/src/util/backdrop.js": "f19a9a6ec4e32d0d71ffdb9926205e0da431b33513b13147e8ca829e90f4a6b1",
+    "js/src/util/component-functions.js": "60c405489812fb679b00923e9d9e28bbd5bafad822d68a0ce58d7b951ecb32b3",
+    "js/src/util/config.js": "c2082738cd051516d35bc611f97430ef5e38143be7ae8d72b333b6ad8d8916a9",
+    "js/src/util/focustrap.js": "f7bbd09ce32c3fcc1814193706a2b5b1ee5e1feecfe420b6e49991fb974ed673",
+    "js/src/util/index.js": "6f7cb91b17496c3606cc8b485063063f374b8956d8b83fe503bb6084d15a7536",
+    "js/src/util/scrollbar.js": "6cbc0fb09329984ba01330aca9e00ce6c359d1863b60e8788453d72d8c3ee2bf"
+  },
+  "humanFixFiles": [
+    "js/src/offcanvas.js"
+  ],
+  "taskHash": "8f3e6d4f7af9d589fd2bb168316c4e164c6b7efc4ab29b0fd98e4e63999ec960",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "99bf7b0b-058c-4b59-a64f-8f452ec83a79",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": []
+    }
+  }
+}

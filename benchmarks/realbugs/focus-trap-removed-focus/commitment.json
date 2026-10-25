@@ -1,0 +1,41 @@
+{
+  "fixedAt": "2026-10-25T13:29:49.513Z",
+  "sourceHashes": {
+    "LICENSE": "b8d0347312c547c22802b39e495bc8f75d1a27bd69a51950fe5dcf8529b05070",
+    "index.html": "055c0550de662971fe9cedda11a3cfa87aef8f7264d198e304ddb4324c566634",
+    "index.js": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+    "upstream-dependency/tabbable/LICENSE": "8e714750725e75c8b31172ef84c0805f94873f86e3b5cfca8a948553f0778fa1",
+    "upstream-dependency/tabbable/index.js": "e557a47eb647af3bd0b9c4a844eacf72886c9fdd398e52feebe660fe162e885e"
+  },
+  "humanFixHashes": {
+    "LICENSE": "b8d0347312c547c22802b39e495bc8f75d1a27bd69a51950fe5dcf8529b05070",
+    "index.html": "055c0550de662971fe9cedda11a3cfa87aef8f7264d198e304ddb4324c566634",
+    "index.js": "a5fa5278ac9f361c6880399aa9610a1e2aea4605a054607b05bc73c24d66ad2f",
+    "upstream-dependency/tabbable/LICENSE": "8e714750725e75c8b31172ef84c0805f94873f86e3b5cfca8a948553f0778fa1",
+    "upstream-dependency/tabbable/index.js": "e557a47eb647af3bd0b9c4a844eacf72886c9fdd398e52feebe660fe162e885e"
+  },
+  "humanFixFiles": [
+    "index.js"
+  ],
+  "taskHash": "248d74be26f47f548e0f7386e667e67a11583c0ffd3f0e37a7f7dfae89a5aeab",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "cd73bcb1-b6ac-4439-8a2a-0b3e9318952b",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

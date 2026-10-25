@@ -1,0 +1,147 @@
+{
+  "journey": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-offcanvas-backdrop-keyboard",
+    "title": "Read the policy help panel with the keyboard",
+    "goal": "Focus moves into the open panel and Tab stays inside it",
+    "profile": "keyboard",
+    "steps": [
+      {
+        "title": "Reach the help button",
+        "action": {
+          "kind": "seek",
+          "selector": "#open-help"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Open the help panel",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#help-text"
+          }
+        ]
+      },
+      {
+        "title": "Tab to the panel's close button",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#help-close"
+          }
+        ]
+      },
+      {
+        "title": "Tab again without leaving the panel",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#help-close"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "focus",
+        "selector": "#help-close"
+      },
+      {
+        "kind": "visible",
+        "selector": "#help-text"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "visible",
+        "selector": "#help-text"
+      },
+      {
+        "kind": "form-data",
+        "selector": "#report",
+        "name": "amount",
+        "value": [
+          "38.50"
+        ]
+      }
+    ]
+  },
+  "functionalJourney": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-offcanvas-backdrop-pointer",
+    "title": "Open and close the policy help panel",
+    "goal": "The panel opens and its close button hides it",
+    "profile": "pointer",
+    "steps": [
+      {
+        "title": "Open help",
+        "action": {
+          "kind": "click",
+          "selector": "#open-help"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#help-text"
+          }
+        ]
+      },
+      {
+        "title": "Close help",
+        "action": {
+          "kind": "click",
+          "selector": "#help-close"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#help-text",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "visible",
+        "selector": "#help-text",
+        "value": false
+      }
+    ],
+    "functional": [
+      {
+        "kind": "visible",
+        "selector": "#help-text",
+        "value": false
+      },
+      {
+        "kind": "form-data",
+        "selector": "#report",
+        "name": "amount",
+        "value": [
+          "38.50"
+        ]
+      }
+    ]
+  },
+  "guards": []
+}

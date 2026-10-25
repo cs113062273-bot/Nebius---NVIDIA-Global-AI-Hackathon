@@ -5,6 +5,7 @@ import { json, listFiles, readJson } from '../src/files.js';
 import { digest } from '../src/schema.js';
 import { verifyProof } from '../src/proof.js';
 import { proofArchive } from '../src/archive.js';
+import { liveCases, humanPatch } from '../src/live.js';
 
 // Publishes recorded runs as a read-only, backend-free evidence bundle under public/evidence.
 // Every copied artifact must match its run manifest hash; run.json is a reduced, path-sanitized view.
@@ -41,6 +42,14 @@ const slim = result => result && {
 const slimAll = list => list?.map(slim);
 const sanitize = text => text.split(ROOT.replaceAll('\\', '\\\\')).join('.').split(ROOT.replaceAll('\\', '/')).join('.').split(ROOT).join('.');
 
+// Real-bug benchmark: every recorded blind run, plus the case list and maintainers' diffs for the live page.
+const realbugs = await liveCases(), realbugsOut = path.join(ROOT, 'public', 'realbugs');
+await fs.rm(realbugsOut, { recursive: true, force: true });
+for (const c of realbugs) { await fs.mkdir(path.join(realbugsOut, c.id), { recursive: true }); await fs.writeFile(path.join(realbugsOut, c.id, 'human.patch'), await humanPatch(c.id)); }
+await json(path.join(realbugsOut, 'index.json'), { generatedAt: new Date().toISOString(), enabled: false, cases: realbugs });
+const recordedRealbugs = realbugs.filter(c => c.recorded);
+if (recordedRealbugs.length) groups.unshift({ title: 'Real upstream bugs · blind Nemotron runs', summary: "Each library is pinned just before a published maintainer fix. The maintainers' fix passes the frozen task; Nemotron gets only the buggy source, Super first and Ultra after a rejection.",
+ runs: recordedRealbugs.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })) });
 await fs.rm(path.join(out, 'runs'), { recursive: true, force: true });
 const index = { generatedAt: new Date().toISOString(), note: 'Read-only published evidence. Screenshots, plans, diffs and raw model requests/responses are byte-identical to the run manifests. run.json is a reduced, path-sanitized view; complete archives are attached where marked.', groups: [] };
 let bytes = 0;

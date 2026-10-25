@@ -1,0 +1,159 @@
+// Live repair viewer. On a live host it starts budget-capped Nemotron runs and streams them;
+// on the static judge site it replays the recorded blind run for each real bug.
+const $=s=>document.querySelector(s),el=(tag,attrs={},...kids)=>{const n=document.createElement(tag);for(const [k,v]of Object.entries(attrs))if(v!=null)k==='class'?n.className=v:k==='text'?n.textContent=v:n.setAttribute(k,v);n.append(...kids.filter(k=>k!=null));return n;};
+const LIVE_URL=document.querySelector('meta[name="tabstitch-live"]')?.content||'';
+const MODEL={'nemotron-3-super-120b-a12b':'Nemotron 3 Super','Nemotron-3-Ultra-550b-a55b':'Nemotron 3 Ultra'};
+const modelName=id=>MODEL[String(id||'').split('/').pop()]||String(id||'Nemotron').split('/').pop();
+const STAGES=[['reproduce','Reproduce the bug',['PREPARING','BASELINE_RUNNING','FAILURE_CONFIRMED']],['locate','Find the source',['LOCALIZING']],['propose','Nemotron proposes a patch',['PLANNING_REPAIR']],['apply','Apply in an isolated copy',['PATCHING','BUILDING']],['replay','Replay in Chromium',['REPLAYING','VERIFYING']],['verdict','Verdict',['VERIFIED','FAILED','INCONCLUSIVE']]];
+let api=false,data=null,watching=null,clock=null;
+
+async function getJson(url,options){const r=await fetch(url,options);const body=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(body.error||`HTTP ${r.status}`),{status:r.status,body});return body;}
+const artifactUrl=(run,file)=>run.__static?`./evidence/runs/${run.id}/${file}`:`./api/runs/${run.id}/artifacts/${file}`;
+const humanPatchUrl=id=>api?`./api/live/cases/${id}/human.patch`:`./realbugs/${id}/human.patch`;
+
+async function boot(){
+  try{data=await getJson('./api/live');api=true;}
+  catch{try{data=await getJson('./realbugs/index.json');}catch{$('#mode').textContent='OFFLINE';notice('The bug list could not be loaded.');return;}}
+  renderMode();renderStats();renderCases();renderScoreboard();
+  const wanted=new URLSearchParams(location.search).get('case');if(wanted){const c=data.cases.find(c=>c.id===wanted);if(c)void showRecorded(c);}
+  if(api&&data.active)void watch(data.active.id,data.cases.find(c=>c.id===data.active.case),{live:true});
+}
+function renderMode(){
+  const m=$('#mode');
+  if(api&&data.enabled){m.textContent='● LIVE · SPONSOR CREDITS';m.className='mode live';}
+  else if(api){m.textContent='RECORDED · LIVE PAUSED';m.className='mode';}
+  else{m.textContent='RECORDED RUNS';m.className='mode';}
+  const b=data.budget;
+  $('#budget').textContent=api&&data.enabled&&b?`Live budget today: US$${Math.max(0,b.dailyLimitUsd-b.todayUsd).toFixed(2)} of ${b.dailyLimitUsd.toFixed(2)} left · total cap US$${b.totalLimitUsd.toFixed(0)}`:api?(data.reason||''):LIVE_URL?'':'Showing recorded runs. Each recorded run made real Nemotron calls when it was captured; viewing makes none.';
+}
+function renderStats(){
+  const cases=data.cases,libs=new Set(cases.map(c=>c.repository.replace(/\/+$/,'').toLowerCase())),runs=cases.filter(c=>c.recorded),passed=runs.filter(c=>c.recorded.verdict==='VERIFIED_PASS');
+  const items=[[String(cases.length),'real upstream bugs'],[String(libs.size),'libraries'],[`${cases.length}/${cases.length}`,"maintainers' fixes pass the frozen task"],[runs.length?`${passed.length}/${runs.length}`:'—','repaired blind by Nemotron']];
+  $('#stats').replaceChildren(...items.map(([v,l])=>el('div',{},el('dt',{text:v}),el('dd',{text:l}))));
+}
+function renderCases(){
+  const list=$('#case-list');list.replaceChildren();
+  for(const c of data.cases){
+    const r=c.recorded,status=r?(r.verdict==='VERIFIED_PASS'?`Recorded: repaired on attempt ${r.passedOn} · ${modelName(r.models[r.passedOn-1])}`:`Recorded: not repaired (${r.models.length} attempts)`):'No recorded run yet';
+    const actions=el('div',{class:'case-actions'});
+    if(api&&data.enabled){const b=el('button',{class:'primary',type:'button',text:'Repair live with Nemotron'});b.onclick=()=>void startLive(c,b);actions.append(b);}
+    else if(LIVE_URL)actions.append(el('a',{class:'primary',href:`${LIVE_URL}/live.html?case=${c.id}`,text:'Repair live ↗'}));
+    if(r){const b=el('button',{class:api&&data.enabled?'secondary':'primary',type:'button',text:'Watch the recorded run'});b.onclick=()=>void showRecorded(c);actions.append(b);}
+    list.append(el('article',{class:'case'},
+      el('p',{class:'case-lib'},el('span',{text:c.library}),c.category?el('span',{class:'tag',text:c.category}):null),
+      el('h3',{text:c.title}),el('p',{class:'case-sum',text:c.summary}),
+      el('p',{class:'case-src'},el('a',{href:c.issue,text:'Reported issue ↗'}),' · ',el('a',{href:c.fixUrl||`${c.repository}/commit/${c.fixCommit}`,text:`Maintainers' fix ${c.fixCommit.slice(0,7)} ↗`})),
+      el('p',{class:`case-status ${r?.verdict==='VERIFIED_PASS'?'ok':r?'no':''}`,text:status}),actions));
+  }
+}
+function renderScoreboard(){
+  const rows=$('#score-rows');rows.replaceChildren();
+  for(const c of data.cases){const r=c.recorded;
+    rows.append(el('tr',{},el('td',{text:c.library}),el('td',{},el('a',{href:c.issue,text:c.title})),el('td',{class:'ok',text:'Pass'}),
+      el('td',{class:r?.verdict==='VERIFIED_PASS'?'ok':r?'no':'',text:r?(r.verdict==='VERIFIED_PASS'?'Verified pass':r.verdict==='VERIFIED_FAIL'?'Rejected':'Inconclusive'):'Not run'}),
+      el('td',{text:r?.passedOn?`${r.passedOn} · ${modelName(r.models[r.passedOn-1])}`:'—'}),
+      el('td',{},r?el('a',{href:`./project.html?run=${r.run}${r.passedOn?'&attempt='+r.passedOn:''}#project-result`,text:'Evidence'}):'—')));}
+}
+// Crop a 1280×720 capture to the focused element so the result is visible at a glance.
+function focusShot(img,src,state,tone){
+  const fig=img.parentElement;fig.querySelector('.ring')?.remove();img.removeAttribute('style');fig.classList.add('shot');
+  const box=state?.focus?.bbox;img.onload=()=>{
+    const W=img.naturalWidth,H=img.naturalHeight;if(!box||!W||box.width*box.height>W*H*.5){img.removeAttribute('style');return;}
+    const cw=Math.min(W,Math.max(560,box.width*2.4)),ch=cw*9/16,cx=Math.min(Math.max(0,box.x+box.width/2-cw/2),W-cw),cy=Math.min(Math.max(0,box.y+box.height/2-ch/2),Math.max(0,H-ch));
+    const frame=img.closest('.crop');frame.style.aspectRatio=`${cw} / ${ch}`;Object.assign(img.style,{width:`${W/cw*100}%`,maxWidth:'none',marginLeft:`${-cx/cw*100}%`,marginTop:`${-cy/cw*100}%`});
+    const ring=el('span',{class:`ring ${tone}`});Object.assign(ring.style,{left:`${(box.x-cx-4)/cw*100}%`,top:`${(box.y-cy-4)/ch*100}%`,width:`${(box.width+8)/cw*100}%`,height:`${(box.height+8)/ch*100}%`});frame.append(ring);
+  };img.src=src;
+}
+function notice(text){const n=$('#notice');n.textContent=text;n.hidden=!text;}
+
+async function startLive(c,button){
+  button.disabled=true;notice('');
+  try{const {id}=await getJson('./api/live/runs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({case:c.id})});await watch(id,c,{live:true});}
+  catch(e){notice(e.message);if(e.body?.active){const a=data.cases.find(x=>x.id===e.body.active.case);if(a)void watch(e.body.active.id,a,{live:true});}}
+  finally{button.disabled=false;try{data={...data,...await getJson('./api/live')};renderMode();}catch{}}
+}
+async function showRecorded(c){
+  const r=c.recorded;if(!r)return;
+  let run;try{run=await getJson(`./evidence/runs/${r.run}/run.json`);run.__static=true;}catch{notice('This recorded run is not in the published evidence bundle.');return;}
+  await watch(run.id,c,{recorded:run});
+}
+// Recorded runs are revealed stage by stage from their own event log; nothing is re-executed.
+async function watch(id,c,{live=false,recorded=null}={}){
+  const token=Symbol();watching=token;
+  $('#run').hidden=false;$('#run-kind').textContent=live?'LIVE RUN · NEW NEMOTRON CALLS ON NEBIUS TOKEN FACTORY':'RECORDED RUN · REPLAYED FROM ITS EVENT LOG, NO NEW CALLS';
+  $('#run-title').textContent=c?.title||'Repair';$('#run-summary').textContent=c?.summary||'';
+  $('#run-links').replaceChildren(...(c?[el('a',{href:c.issue,text:'Reported issue ↗'}),' · ',el('span',{class:'mono',text:`${c.library} @ ${c.buggyCommit.slice(0,7)} (before the fix)`})]:[]));
+  for(const s of ['#baseline','#verdict'])$(s).hidden=true;$('#attempts').replaceChildren();$('#human').open=false;
+  $('#run').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  clearInterval(clock);
+  if(recorded){
+    const events=recorded.events||[];
+    for(let i=1;i<=events.length;i++){if(watching!==token)return;render({...recorded,events:events.slice(0,i),state:events[i-1].state,__partial:i<events.length},c);$('#run-clock').textContent=`${((Date.parse(events[i-1].at)-Date.parse(events[0].at))/1000).toFixed(1)} s`;await new Promise(r=>setTimeout(r,matchMedia('(prefers-reduced-motion: reduce)').matches?0:450));}
+    return;
+  }
+  const t0=Date.now();clock=setInterval(()=>{$('#run-clock').textContent=`${((Date.now()-t0)/1000).toFixed(1)} s`;},100);
+  for(;;){
+    if(watching!==token)return;
+    let run;try{run=await getJson(`./api/runs/${id}`);}catch{await new Promise(r=>setTimeout(r,1500));continue;}
+    render(run,c);
+    if(run.completedAt){clearInterval(clock);if(run.elapsedMs)$('#run-clock').textContent=`${(run.elapsedMs/1000).toFixed(1)} s`;try{data={...data,...await getJson('./api/live')};renderMode();}catch{}return;}
+    await new Promise(r=>setTimeout(r,1000));
+  }
+}
+const seen=(run,states)=>run.events?.some(e=>states.includes(e.state));
+function render(run,c){
+  const current=run.state,last=STAGES.findIndex(([, ,s])=>s.includes(current));
+  $('#run-state').textContent={VERIFIED:'Verified pass',FAILED:'Not repaired',INCONCLUSIVE:'Inconclusive'}[current]||STAGES[last]?.[1]||'Starting';
+  $('#run-state').className=`state ${current==='VERIFIED'?'ok':current==='FAILED'||current==='INCONCLUSIVE'?'no':'busy'}`;
+  $('#pipeline').replaceChildren(...STAGES.map(([key,label,states],i)=>{const done=i<last||seen(run,['VERIFIED'])&&key==='verdict',active=i===last&&!['VERIFIED','FAILED','INCONCLUSIVE'].includes(current);
+    const n=key==='propose'?run.events?.filter(e=>e.state==='PLANNING_REPAIR').length:0;
+    return el('li',{class:done?'done':active?'active':i===last?'end':'' ,'aria-current':active?'step':null},el('span',{class:'dot'}),el('span',{text:label+(n>1?` ×${n}`:'')}));}));
+  // Baseline: the frozen keyboard task fails on the buggy upstream source.
+  if(run.before&&seen(run,['FAILURE_CONFIRMED','LOCALIZING','PLANNING_REPAIR','FAILED','INCONCLUSIVE','VERIFIED'])){
+    const b=run.before,step=b.steps?.find(s=>s.result!=='VERIFIED_PASS'),fail=step?.assertions?.find(a=>!a.pass),cp=b.checkpoints?.at(-1);
+    $('#baseline').hidden=false;if(cp?.screenshot){focusShot($('#baseline-shot'),artifactUrl(run,`before/${cp.screenshot}`),cp.state,'bad');$('#baseline-shot').alt=`Buggy page after the keyboard task; focus on ${cp.state?.focus?.selector||'nothing'}`;}
+    $('#baseline-caption').textContent=`Buggy source · focus on ${cp?.state?.focus?.selector||'—'}`;
+    $('#baseline-text').textContent=step?`Step ${step.index+1}, “${step.title}”: ${describe(fail,step)}.`:(b.failure?.message||'The keyboard task fails.');
+    $('#baseline-task').textContent='Frozen keys: '+(run.journey?.steps||[]).map(s=>s.action.kind==='press'?s.action.key:s.action.kind==='seek'?`Tab→${s.action.selector}`:s.action.kind==='type'?`type “${s.action.text}”`:s.action.kind).join(' · ');
+  }
+  const box=$('#attempts');box.replaceChildren(...(run.attempts||[]).map(a=>attemptCard(run,a)));
+  if(['VERIFIED','FAILED','INCONCLUSIVE'].includes(current)&&!run.__partial)renderVerdict(run,c);
+}
+function describe(fail,step){
+  if(!fail)return 'the expected state did not occur';const a=fail.assertion;
+  if(a.kind==='focus')return `focus should be on ${a.selector}, but it is on ${step.after?.selector||'nothing'}`;
+  if(a.kind==='form-data')return `the form should submit ${a.name}=${JSON.stringify(a.value)}, but submits ${JSON.stringify(fail.observed)}`;
+  if(a.kind==='attribute')return `${a.selector} ${a.name} should be ${JSON.stringify(a.value)}, observed ${JSON.stringify(fail.observed)}`;
+  if(a.kind==='visible')return `${a.selector} should be ${a.value?'visible':'hidden'}`;
+  if(a.kind==='text')return `${a.selector} should read “${a.value}”, observed “${fail.observed}”`;
+  return `${a.kind} check failed`;
+}
+function attemptCard(run,a){
+  const p={...a.provenance,model:a.provenance?.model||data?.models?.[a.attempt-1]},u=p.usage,ok=a.verified,pending=!a.category&&!a.verified&&!a.verification;
+  const card=el('article',{class:`attempt ${ok?'a-ok':pending?'a-busy':'a-no'}`},
+    el('header',{},el('span',{class:'model',text:`Attempt ${a.attempt} · ${modelName(p.model)}`}),el('span',{class:'mono',text:[p.latencyMs?`${(p.latencyMs/1000).toFixed(1)} s`:null,u?.total_tokens?`${u.total_tokens.toLocaleString()} tokens`:null,p.requestId?p.requestId.slice(0,18)+'…':null].filter(Boolean).join(' · ')})));
+  if(a.plan){card.append(el('h4',{text:'What Nemotron found'}),el('p',{text:a.plan.root_cause}),el('h4',{text:'What it changed'}),el('p',{text:a.plan.repair_strategy}));}
+  else if(pending)card.append(el('p',{class:'thinking',text:`${modelName(p.model||'')} is reading the source and the browser's failure report…`}));
+  if(a.diff){const pre=el('pre',{class:'diff',text:'Loading diff…'});card.append(pre);void fetch(artifactUrl(run,a.diff)).then(r=>r.ok?r.text():'Diff unavailable').then(t=>{pre.replaceChildren(...t.split('\n').map(line=>el('span',{class:line.startsWith('+')&&!line.startsWith('+++')?'add':line.startsWith('-')&&!line.startsWith('---')?'del':line.startsWith('@@')?'hunk':'',text:line+'\n'})));});}
+  const outcome=ok?'The browser accepted it: keyboard task, independent pointer path'+(run.guards?.length?` and ${run.guards.length} regression guard${run.guards.length>1?'s':''}`:'')+' all pass.'
+    :a.category==='APPLICATION'?`Rejected before running: ${a.failure}. The error goes back to the next attempt.`
+    :a.category==='VERIFICATION'?`Rejected by the browser: ${(a.verification?.reasons||[]).slice(0,1).join('; ')}. That failure goes back to the next attempt.`
+    :a.category?`${a.category}: ${a.failure||''}`:null;
+  if(outcome)card.append(el('p',{class:'outcome',text:outcome}));
+  return card;
+}
+function renderVerdict(run,c){
+  const v=run.verification?.verdict,ok=v==='VERIFIED_PASS',a=run.attempts?.find(x=>x.verified)||run.attempts?.at(-1);
+  $('#verdict').hidden=false;$('#verdict').className=`verdict ${ok?'ok':'no'}`;
+  $('#verdict-badge').textContent=ok?'VERIFIED PASS':v==='VERIFIED_FAIL'?'NOT REPAIRED':'INCONCLUSIVE';
+  $('#verdict-title').textContent=ok?`Repaired on attempt ${a.attempt} by ${modelName(a.provenance?.model)}.`:'No patch passed every gate. Nothing is accepted.';
+  $('#verdict-text').textContent=ok?'The same frozen keys now reach the expected result in a fresh browser. The pointer path still produces the same outcome. No new automated-rule findings and no console errors. This verdict covers only these checks.':(run.verification?.reasons||[]).slice(0,3).join(' · ');
+  const before=run.before?.checkpoints?.at(-1),after=a?.after?.checkpoints?.at(-1)||run.after?.checkpoints?.at(-1);
+  if(ok&&before?.screenshot&&after?.screenshot){$('#compare').hidden=false;focusShot($('#shot-before'),artifactUrl(run,`before/${before.screenshot}`),before.state,'bad');focusShot($('#shot-after'),artifactUrl(run,`${a.afterDir||run.afterDir}/${after.screenshot}`),after.state,'good');
+    $('#focus-before').textContent=`focus: ${before.state?.focus?.selector||'—'}`;$('#focus-after').textContent=`focus: ${after.state?.focus?.selector||'—'}`;
+    $('#shot-before').alt=`Before: focus on ${before.state?.focus?.selector||'nothing'}`;$('#shot-after').alt=`After: focus on ${after.state?.focus?.selector||'nothing'}`;}
+  else $('#compare').hidden=true;
+  if(c){$('#human').hidden=false;$('#human').ontoggle=()=>{if($('#human').open&&$('#human-diff').dataset.case!==c.id){$('#human-diff').dataset.case=c.id;void fetch(humanPatchUrl(c.id)).then(r=>r.ok?r.text():'Unavailable').then(t=>{$('#human-diff').textContent=t;});}};}
+  $('#full-evidence').href=`./project.html?run=${run.id}${a?.verified?'&attempt='+a.attempt:''}#project-result`;
+}
+void boot();

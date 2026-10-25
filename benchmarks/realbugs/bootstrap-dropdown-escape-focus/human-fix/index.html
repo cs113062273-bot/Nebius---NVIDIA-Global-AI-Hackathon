@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice actions</title>
+<link rel="stylesheet" href="dist/css/bootstrap.min.css">
+<script type="importmap">{"imports":{"/js/src/base-component":"/js/src/base-component.js","/js/src/dom/data":"/js/src/dom/data.js","/js/src/dom/event-handler":"/js/src/dom/event-handler.js","/js/src/dom/manipulator":"/js/src/dom/manipulator.js","/js/src/dom/selector-engine":"/js/src/dom/selector-engine.js","/js/src/util/index":"/js/src/util/index.js","@popperjs/core":"/vendor/popperjs-core/index.js"}}</script>
+</head>
+<body class="p-4">
+<main class="container" style="max-width:40rem">
+  <h1 class="h3 mb-3">Invoice INV-2041</h1>
+  <p>Amount due: 1,240.00 EUR</p>
+  <div class="dropdown mb-3">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="actions-toggle" data-bs-toggle="dropdown" aria-expanded="false">Invoice actions</button>
+    <ul class="dropdown-menu" id="actions-menu" aria-labelledby="actions-toggle">
+      <li><button class="dropdown-item" type="button" id="action-send" data-action="Sent reminder">Send reminder</button></li>
+      <li><button class="dropdown-item" type="button" id="action-download" data-action="Downloaded PDF">Download PDF</button></li>
+      <li><button class="dropdown-item" type="button" id="action-archive" data-action="Archived">Archive</button></li>
+    </ul>
+  </div>
+  <p>Last action: <output id="last-action">None</output></p>
+  <button class="btn btn-outline-secondary" type="button" id="pay">Record payment</button>
+</main>
+<script type="module">
+import Dropdown from './js/src/dropdown.js';
+document.querySelectorAll('[data-action]').forEach(item => item.addEventListener('click', () => {
+  document.querySelector('#last-action').textContent = item.dataset.action;
+}));
+window.__ready = true;
+</script>
+</body>
+</html>

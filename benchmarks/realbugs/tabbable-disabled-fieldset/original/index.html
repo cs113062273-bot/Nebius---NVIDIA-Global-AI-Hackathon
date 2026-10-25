@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Delivery address</title>
+<link rel="icon" href="data:,">
+<style>
+body{font:18px system-ui,sans-serif;margin:0;padding:32px;color:#111;background:#fff}
+button,input,select{font:inherit}
+button{padding:10px 16px}
+input,select{padding:6px;border:1px solid #555}
+:focus{outline:3px solid #0050c8;outline-offset:2px}
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center}
+.backdrop[hidden]{display:none}
+.panel{background:#fff;padding:24px;max-width:460px;width:90%;border-radius:6px}
+fieldset{border:1px solid #555;margin:0 0 16px}
+</style>
+</head>
+<body>
+<main>
+  <h1>Checkout</h1>
+  <p id="status">No delivery address yet.</p>
+  <button id="open" type="button">Add delivery address</button>
+</main>
+<div class="backdrop" id="backdrop" hidden>
+  <div class="panel" id="address-dialog" role="dialog" aria-modal="true" aria-labelledby="address-title">
+    <h2 id="address-title">Delivery address</h2>
+    <fieldset id="speed-group" disabled>
+      <legend>Delivery speed</legend>
+      <label for="speed">Available once an address is saved</label><br>
+      <select id="speed"><option>Standard</option><option>Express</option></select>
+    </fieldset>
+    <p><label for="street">Street address</label><br><input id="street" type="text" autocomplete="street-address"></p>
+    <button id="save" type="button">Save address</button>
+    <button id="cancel" type="button">Cancel</button>
+  </div>
+</div>
+<script type="importmap">{"imports":{"tabbable":"./src/index.js"}}</script>
+<script type="module">
+import { createFocusTrap } from './upstream-dependency/focus-trap/index.js';
+const backdrop = document.getElementById('backdrop');
+const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; } });
+document.getElementById('open').addEventListener('click', () => { backdrop.hidden = false; trap.activate(); });
+document.getElementById('cancel').addEventListener('click', () => trap.deactivate());
+document.getElementById('save').addEventListener('click', () => {
+  const street = document.getElementById('street').value.trim();
+  document.getElementById('status').textContent = street ? 'Delivering to ' + street + '.' : 'Delivery address saved without a street.';
+  trap.deactivate();
+});
+window.__ready = true;
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Basket</title>
+<link rel="icon" href="data:,">
+<style>
+body{font:18px system-ui,sans-serif;margin:0;padding:32px;color:#111;background:#fff}
+button{font:inherit;padding:8px 14px}
+:focus{outline:3px solid #0050c8;outline-offset:2px}
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center}
+.backdrop[hidden]{display:none}
+.panel{background:#fff;padding:24px;max-width:440px;width:90%;border-radius:6px}
+.panel header{display:flex;justify-content:space-between;align-items:center}
+#items li{display:flex;justify-content:space-between;align-items:center;margin:6px 0}
+</style>
+</head>
+<body>
+<main>
+  <h1>Garden store</h1>
+  <button id="open" type="button">View basket</button>
+</main>
+<div class="backdrop" id="backdrop" hidden>
+  <div class="panel" id="basket" role="dialog" aria-modal="true" aria-labelledby="basket-title">
+    <header>
+      <h2 id="basket-title">Basket</h2>
+      <button id="close" type="button" aria-label="Close basket">&times;</button>
+    </header>
+    <p id="count">3 items</p>
+    <ul id="items">
+      <li id="item-1">Hand trowel <button id="remove-1" type="button" aria-label="Remove hand trowel">Remove</button></li>
+      <li id="item-2">Pruning shears <button id="remove-2" type="button" aria-label="Remove pruning shears">Remove</button></li>
+      <li id="item-3">Kneeling pad <button id="remove-3" type="button" aria-label="Remove kneeling pad">Remove</button></li>
+    </ul>
+  </div>
+</div>
+<script type="importmap">{"imports":{"tabbable":"./upstream-dependency/tabbable/index.js"}}</script>
+<script type="module">
+import { createFocusTrap } from './index.js';
+const backdrop = document.getElementById('backdrop');
+const trap = createFocusTrap('#basket', { onDeactivate: () => { backdrop.hidden = true; } });
+document.getElementById('open').addEventListener('click', () => { backdrop.hidden = false; trap.activate(); });
+document.getElementById('close').addEventListener('click', () => trap.deactivate());
+document.getElementById('items').addEventListener('click', event => {
+  const button = event.target.closest('button');
+  if (!button) return;
+  button.closest('li').remove();
+  const left = document.querySelectorAll('#items li').length;
+  document.getElementById('count').textContent = left + (left === 1 ? ' item' : ' items');
+});
+window.__ready = true;
+</script>
+</body>
+</html>

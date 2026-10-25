@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>City museum</title>
+<link rel="icon" href="data:,">
+<style>
+body{font:18px system-ui,sans-serif;margin:0;padding:24px 32px;color:#111;background:#fff}
+nav ul{list-style:none;margin:0;padding:0}
+#main-menu{display:flex;gap:4px;background:#1d2b44}
+#main-menu>li{position:relative}
+#main-menu a{display:block;padding:10px 16px;color:#fff;text-decoration:none;background:#1d2b44;white-space:nowrap}
+#main-menu ul{position:absolute;left:0;top:100%;min-width:180px;background:#1d2b44;z-index:1}
+#main-menu ul ul{left:100%;top:0}
+#main-menu li{position:relative}
+#main-menu ul:not(.show){display:none}
+#main-menu a:focus{outline:3px solid #ffbf47;outline-offset:-3px}
+#main-menu a[aria-expanded]::after{content:" \25BE"}
+</style>
+</head>
+<body>
+<nav id="site-nav" aria-label="Main">
+  <ul id="main-menu">
+    <li><a id="home" href="#home-page">Home</a></li>
+    <li><a id="about" href="#about-page">About</a>
+      <ul id="about-menu">
+        <li><a id="overview" href="#overview-page">Overview</a></li>
+        <li><a id="facts" href="#facts-page">Facts</a>
+          <ul id="facts-menu">
+            <li><a id="history" href="#history-page">History</a></li>
+            <li><a id="collection" href="#collection-page">Collection</a></li>
+          </ul>
+        </li>
+        <li><a id="staff" href="#staff-page">Staff</a></li>
+      </ul>
+    </li>
+    <li><a id="visit" href="#visit-page">Visit</a></li>
+  </ul>
+</nav>
+<main><h1>City museum</h1><p>Opening hours, exhibitions and history of the collection.</p></main>
+<script type="module">
+import Menubar from './src/menubar.js';
+new Menubar({ menuElement: document.getElementById('main-menu') });
+window.__ready = true;
+</script>
+</body>
+</html>

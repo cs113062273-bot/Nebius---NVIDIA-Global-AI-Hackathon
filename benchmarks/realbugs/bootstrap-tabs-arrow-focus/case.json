@@ -1,0 +1,26 @@
+{
+  "title": "Arrow keys in a tab list must move keyboard focus to the newly selected tab",
+  "library": "Bootstrap 5.2 (tab)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/pull/37200",
+  "fixUrl": "https://github.com/twbs/bootstrap/commit/d49d8ce583f6f12552f122122a99063738656cd9",
+  "buggyCommit": "0a5f6e078c9cb9ecca9ab90b3984c5f792a11bae",
+  "fixCommit": "d49d8ce583f6f12552f122122a99063738656cd9",
+  "summary": "Pressing ArrowRight selects the next tab and shows its panel, but focus stays on the previous tab, so the next arrow press re-selects the same tab and keyboard users cannot walk the tab list.",
+  "category": "Arrow-key navigation",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.js",
+    "js/src/dom/data.js",
+    "js/src/dom/event-handler.js",
+    "js/src/dom/manipulator.js",
+    "js/src/dom/selector-engine.js",
+    "js/src/tab.js",
+    "js/src/util/config.js",
+    "js/src/util/index.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written workspace settings page around the unchanged upstream source at buggyCommit; an import map adds the .js extensions Bootstrap's extensionless source imports need in a browser."
+}

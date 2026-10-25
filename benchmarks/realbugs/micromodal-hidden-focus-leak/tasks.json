@@ -1,0 +1,40 @@
+{
+  "journey": {
+    "version": 1, "id": "micromodal-hidden-leak-keyboard", "title": "Tab stays inside the upload dialog when it contains a hidden button",
+    "goal": "Tabbing past the last visible control wraps to the start of the dialog", "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach upload trigger", "action": {"kind": "seek", "selector": "#open"}},
+      {"title": "Open upload dialog", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "attribute", "selector": "#upload-modal", "name": "aria-hidden", "value": "false"}, {"kind": "focus", "selector": "#filename"}]},
+      {"title": "Move to Upload", "action": {"kind": "press", "key": "Tab"}, "assertions": [{"kind": "focus", "selector": "#upload"}]},
+      {"title": "Tab past the last visible control", "action": {"kind": "press", "key": "Tab"}, "assertions": [{"kind": "focus", "selector": "#modal-close"}]}
+    ],
+    "success": [{"kind": "focus", "selector": "#modal-close"}, {"kind": "attribute", "selector": "#upload-modal", "name": "aria-hidden", "value": "false"}],
+    "functional": [{"kind": "text", "selector": "#status", "value": "No report uploaded yet."}],
+    "forbidden": [{"kind": "focus", "selector": "#help"}]
+  },
+  "functionalJourney": {
+    "version": 1, "id": "micromodal-hidden-leak-pointer", "title": "Upload a report with the pointer",
+    "goal": "The dialog opens, uploads and closes", "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Open upload dialog", "action": {"kind": "click", "selector": "#open"}, "assertions": [{"kind": "attribute", "selector": "#upload-modal", "name": "aria-hidden", "value": "false"}]},
+      {"title": "Upload", "action": {"kind": "click", "selector": "#upload"}, "assertions": [{"kind": "attribute", "selector": "#upload-modal", "name": "aria-hidden", "value": "true"}]}
+    ],
+    "success": [{"kind": "text", "selector": "#status", "value": "Uploaded report.pdf."}],
+    "functional": [{"kind": "text", "selector": "#status", "value": "Uploaded report.pdf."}, {"kind": "attribute", "selector": "#upload-modal", "name": "aria-hidden", "value": "true"}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "micromodal-hidden-leak-escape", "title": "Escape closes the upload dialog and returns focus",
+      "goal": "Escape dismisses the dialog and focus returns to the trigger", "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach upload trigger", "action": {"kind": "seek", "selector": "#open"}},
+        {"title": "Open upload dialog", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "attribute", "selector": "#upload-modal", "name": "aria-hidden", "value": "false"}]},
+        {"title": "Dismiss with Escape", "action": {"kind": "press", "key": "Escape"}, "assertions": [{"kind": "attribute", "selector": "#upload-modal", "name": "aria-hidden", "value": "true"}]}
+      ],
+      "success": [{"kind": "focus", "selector": "#open"}],
+      "functional": [{"kind": "attribute", "selector": "#upload-modal", "name": "aria-hidden", "value": "true"}],
+      "forbidden": []
+    }
+  ]
+}

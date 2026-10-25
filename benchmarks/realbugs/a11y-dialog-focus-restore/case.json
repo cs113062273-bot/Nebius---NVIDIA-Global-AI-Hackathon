@@ -1,0 +1,16 @@
+{
+  "title": "Escape must return focus to the button that opened the dialog",
+  "library": "a11y-dialog",
+  "repository": "https://github.com/KittyGiraudel/a11y-dialog",
+  "issue": "https://github.com/KittyGiraudel/a11y-dialog/commit/6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+  "buggyCommit": "a7718bca32ede3c01c93a67da12f45a274011c4c",
+  "fixCommit": "6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+  "summary": "With opacity-based hiding, closing the dialog pulls focus back into the invisible dialog instead of the opener.",
+  "category": "Focus restoration",
+  "upstreamFiles": [
+    "src/a11y-dialog.js",
+    "src/a11y-dialog.ts"
+  ],
+  "split": "development",
+  "consumer": "Author-written notice page; upstream runtime is the pinned type-stripped JavaScript."
+}

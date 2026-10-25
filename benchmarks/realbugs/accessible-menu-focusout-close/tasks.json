@@ -1,0 +1,39 @@
+{
+  "journey": {
+    "version": 1, "id": "accessible-menu-focusout-keyboard", "title": "Tabbing out of the navigation closes the open dropdown",
+    "goal": "After a keyboard user leaves the navigation, the Shop dropdown no longer covers the page", "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach Shop", "action": {"kind": "seek", "selector": "#shop"}},
+      {"title": "Open Shop", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "attribute", "selector": "#shop", "name": "aria-expanded", "value": "true"}, {"kind": "visible", "selector": "#plants", "value": true}]},
+      {"title": "Tab out of the navigation to search", "action": {"kind": "seek", "selector": "#search"}, "assertions": [{"kind": "attribute", "selector": "#shop", "name": "aria-expanded", "value": "false"}, {"kind": "visible", "selector": "#plants", "value": false}]}
+    ],
+    "success": [{"kind": "focus", "selector": "#search"}, {"kind": "visible", "selector": "#plants", "value": false}],
+    "functional": [{"kind": "attribute", "selector": "#shop", "name": "aria-expanded", "value": "false"}],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "accessible-menu-focusout-pointer", "title": "Open the Shop dropdown with the pointer",
+    "goal": "Clicking Shop reveals its links", "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Open Shop", "action": {"kind": "click", "selector": "#shop"}, "assertions": [{"kind": "attribute", "selector": "#shop", "name": "aria-expanded", "value": "true"}]}
+    ],
+    "success": [{"kind": "visible", "selector": "#plants", "value": true}],
+    "functional": [{"kind": "attribute", "selector": "#shop", "name": "aria-expanded", "value": "true"}, {"kind": "visible", "selector": "#tools", "value": true}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "accessible-menu-focusout-escape", "title": "Escape closes the Shop dropdown and returns focus to Shop",
+      "goal": "Escape inside the dropdown closes it", "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach Shop", "action": {"kind": "seek", "selector": "#shop"}},
+        {"title": "Open Shop", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "attribute", "selector": "#shop", "name": "aria-expanded", "value": "true"}]},
+        {"title": "Move to Plants", "action": {"kind": "seek", "selector": "#plants"}},
+        {"title": "Close with Escape", "action": {"kind": "press", "key": "Escape"}, "assertions": [{"kind": "attribute", "selector": "#shop", "name": "aria-expanded", "value": "false"}]}
+      ],
+      "success": [{"kind": "focus", "selector": "#shop"}],
+      "functional": [{"kind": "visible", "selector": "#plants", "value": false}],
+      "forbidden": []
+    }
+  ]
+}

@@ -12,17 +12,54 @@ import { readJson, listFiles, contained,hashTree } from './files.js';
 import { proofArchive } from './archive.js';
 import { verifyProof } from './proof.js';
 import { ProjectRequest, stageProject, validateProjectFiles, fileBytes } from './project.js';
+import { liveCases, loadCase, humanPatch, LiveLedger, spend, liveLimits, liveConfigured, LIVE_SCOPE, LIVE_MODELS, WORST_RUN_USD } from './live.js';
 
 const Request=z.object({fixture:z.enum(fixtures.map(f=>f.id)),mode:z.enum(['reference','nebius','recorded'])}).strict();
 // Guards join the confirmed contract only when present, so earlier confirmations keep their hash.
 const taskDigest=t=>digest(t.guards?.length?{journey:t.journey,functionalJourney:t.functionalJourney,guards:t.guards}:{journey:t.journey,functionalJourney:t.functionalJourney});
 const send=(res,status,data)=>{res.writeHead(status,{'Content-Type':'application/json','X-Content-Type-Options':'nosniff','Cache-Control':'no-store'});res.end(JSON.stringify(data));};
 export async function createApp({artifactRoot=path.join(ROOT,'artifacts','runs'),publicMode=process.env.PUBLIC_DEMO==='true',token=process.env.DEMO_TOKEN||''}={}) {
-  if(publicMode && token.length<24)throw new Error('PUBLIC_DEMO requires a DEMO_TOKEN of at least 24 characters');
+  // Without a judge token a public host exposes only the budget-capped live runner and read-only evidence.
+  if(publicMode && token && token.length<24)throw new Error('DEMO_TOKEN must be at least 24 characters');
   await fs.mkdir(artifactRoot,{recursive:true});
   const runs=new Map();let active=false,closing=false,lastPublicStart=0;
   const previews=[];
   const confirmations=new Map();
+  const ledger=new LiveLedger({dir:path.join(artifactRoot,'..','inference')}),visitors=new Map(),limits=liveLimits();
+  const live={enabled:false,reason:'Live repair is not configured on this host',active:null};
+  if(liveConfigured()){
+    if(publicMode&&!ledger.remote())live.reason='Live repair needs a persistent budget ledger on a public host';
+    else try{await ledger.pull();Object.assign(live,{enabled:true,reason:null});}catch(error){live.reason='Budget ledger unavailable: '+error.message.slice(0,120);}
+  }
+  const visitor=req=>String(req.headers['x-forwarded-for']||'').split(',')[0].trim()||req.socket.remoteAddress||'unknown';
+  async function startLive(req,res){
+    if(!live.enabled)return send(res,503,{error:live.reason});
+    if(active)return send(res,429,{error:'Another repair is running. Watch it, or try again in a minute.',active:live.active});
+    const chunks=[];let bytes=0;for await(const c of req){bytes+=c.length;if(bytes>2048)return send(res,413,{error:'Request too large'});chunks.push(c);}
+    const input=z.object({case:z.string().regex(/^[a-z0-9-]{1,80}$/)}).strict().parse(JSON.parse(Buffer.concat(chunks).toString('utf8')));
+    const who=visitor(req),last=visitors.get(who)||0;
+    if(Date.now()-last<limits.perVisitorMs)return send(res,429,{error:`One live repair per visitor every ${Math.round(limits.perVisitorMs/60000)} minutes. Recorded runs stay available.`});
+    let c;try{c=await loadCase(input.case);}catch{return send(res,404,{error:'Unknown or unscreened case'});}
+    if(active)return send(res,429,{error:'Another repair is running.',active:live.active});
+    active=true;
+    let started=false;
+    try{
+      const book=await ledger.pull(),s=spend(book);
+      if(s.totalUsd+WORST_RUN_USD>limits.totalUsd){live.enabled=false;live.reason='The live budget for judging is used up. Recorded runs remain available.';return send(res,429,{error:live.reason});}
+      if(s.todayUsd+WORST_RUN_USD>limits.dailyUsd)return send(res,429,{error:"Today's live budget is used. Recorded runs remain available; live repair resumes tomorrow (UTC)."});
+      // The client refuses any call whose worst-case reservation would push this run past WORST_RUN_USD.
+      const reserved=book.entries.filter(e=>e.budgetScope===LIVE_SCOPE).reduce((sum,e)=>sum+Number(e.reservedCreditUsd||0),0);
+      Object.assign(process.env,{NEBIUS_BUDGET_SCOPE:LIVE_SCOPE,NEBIUS_MAX_CREDIT_USD:String(reserved+WORST_RUN_USD),NEBIUS_MAX_CALLS:String(book.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(book.reservedTokens+300000),NEBIUS_MAX_OUTPUT_TOKENS:'10000'});
+      const id=crypto.randomUUID();visitors.set(who,Date.now());live.active={id,case:input.case,startedAt:new Date().toISOString()};
+      runs.set(id,{id,state:'CREATED',events:[],fixture:'custom-project',mode:'nebius',source:{live:true,case:input.case}});lastPublicStart=Date.now();started=true;
+      send(res,202,{id});
+      void runRepair({id,artifactRoot,fixture:'custom-project',mode:'nebius',sourceRoot:c.original,journey:c.journey,functionalJourney:c.functionalJourney,guards:c.guards,maxAttempts:3,freshInference:true,models:LIVE_MODELS,
+        sourceMetadata:{kind:'source',live:true,case:input.case,name:c.meta.title,originalRoot:c.original,scope:`Live public run. Real upstream bug (${c.meta.issue}) at ${c.meta.buggyCommit}; blind to the maintainers' fix ${c.meta.fixCommit}. Super first, Ultra after a rejection.`},
+        onUpdate:r=>runs.set(id,structuredClone(r))}).then(r=>runs.set(id,r)).catch(()=>{runs.set(id,{id,state:'INCONCLUSIVE',fatal:true,source:{live:true,case:input.case},completedAt:new Date().toISOString(),verification:{verdict:'INCONCLUSIVE',reasons:['Run failed before initialization']}});})
+        .finally(async()=>{try{await ledger.push();}catch(error){live.enabled=false;live.reason='Budget ledger could not be saved; live repair paused: '+error.message.slice(0,120);}live.active=null;active=false;});
+    }catch(error){live.enabled=false;live.reason='Budget ledger unavailable: '+error.message.slice(0,120);return send(res,503,{error:live.reason});}
+    finally{if(!started)active=false;}
+  }
   for(const entry of await fs.readdir(artifactRoot,{withFileTypes:true})) {
     if(entry.isDirectory() && /^[a-z0-9-]{1,80}$/.test(entry.name)) {
       try {const r=await readJson(path.join(artifactRoot,entry.name,'run.json'));if(!r.completedAt){r.state='INCONCLUSIVE';r.verification={verdict:'INCONCLUSIVE',reasons:['Server restarted before completion']};}runs.set(r.id,r);}
@@ -38,6 +75,8 @@ export async function createApp({artifactRoot=path.join(ROOT,'artifacts','runs')
       if(req.method==='POST') {
         if(closing)return send(res,503,{error:'Server shutting down'});
         if(req.headers.origin && req.headers.origin!==`http://${host}` && req.headers.origin!==`https://${host}`)return send(res,403,{error:'Cross-origin writes blocked'});
+        if(pathname==='/api/live/runs'){if(!req.headers['content-type']?.startsWith('application/json'))return send(res,415,{error:'JSON required'});return await startLive(req,res);}
+        if(publicMode&&!token)return send(res,403,{error:'This public host only runs the budget-capped live repair'});
         if(publicMode){const provided=Buffer.from(req.headers.authorization?.replace(/^Bearer /,'')||''),expected=Buffer.from(token);if(provided.length!==expected.length || !timingSafeEqual(provided,expected))return send(res,401,{error:'Judge token required'});}
         if(pathname==='/api/project-task'){
           if(publicMode)return send(res,403,{error:'Task capture is local-only'});
@@ -97,6 +136,12 @@ export async function createApp({artifactRoot=path.join(ROOT,'artifacts','runs')
       }
       if(req.method!=='GET' && req.method!=='HEAD')return send(res,405,{error:'Method not allowed'});
       if(pathname==='/favicon.ico')return await serveFile(res,path.join(ROOT,'public'),'favicon.svg');
+      if(pathname==='/api/live'){
+        let budget=null;try{const s=spend(JSON.parse(await fs.readFile(ledger.file,'utf8')));budget={...s,totalLimitUsd:limits.totalUsd,dailyLimitUsd:limits.dailyUsd};}catch{/* No ledger yet. */}
+        return send(res,200,{enabled:live.enabled,reason:live.reason,active:live.active,budget,models:LIVE_MODELS,cases:await liveCases()});
+      }
+      const livePatch=pathname.match(/^\/api\/live\/cases\/([a-z0-9-]{1,80})\/human\.patch$/);
+      if(livePatch){try{const patch=await humanPatch(livePatch[1]);res.writeHead(200,{'Content-Type':'text/plain; charset=utf-8','X-Content-Type-Options':'nosniff','Cache-Control':'no-store'});res.end(patch);}catch{send(res,404,{error:'Unknown case'});}return;}
       if(pathname==='/api/config')return send(res,200,{fixtures,publicMode,liveConfigured:!!process.env.NEBIUS_API_KEY && process.env.LIVE_NEBIUS_TESTS==='true' && process.env.NEBIUS_SPONSOR_CREDITS_CONFIRMED==='true',model:process.env.NEBIUS_MODEL||null,active});
       const projectCase=pathname.match(/^\/api\/project-case\/(country-preferences|weekday-booking)$/);
       if(projectCase){
@@ -143,12 +188,14 @@ export async function createApp({artifactRoot=path.join(ROOT,'artifacts','runs')
         }
         if(match[2].startsWith('artifacts/')) {
           const file=match[2].slice(10);
-          if(!run.manifest?.files[file] && !['manifest.json'].includes(file))return send(res,404,{error:'Artifact not finalized'});
+          // A live run streams its captures, plans and diffs as they are written; everything else waits for the manifest.
+          const streaming=run.source?.live&&!run.manifest&&/^(?:(?:before|functional-before|after-\d|functional-after-\d|guard-(?:before|after)-[\d-]+)\/[a-z0-9-]+\.png|diff-\d\.patch|plan-\d\.json)$/.test(file);
+          if(!streaming&&!run.manifest?.files[file] && !['manifest.json'].includes(file))return send(res,404,{error:'Artifact not finalized'});
           return await serveFile(res,dir,file,{attachment:!file.endsWith('.png')});
         }
       }
       if(pathname.startsWith('/api/'))return send(res,404,{error:'Not found'});
-      const name=pathname==='/'?'index.html':pathname.slice(1);
+      const name=pathname==='/'?(process.env.TABSTITCH_LANDING||'index.html'):pathname.slice(1);
       return await serveFile(res,path.join(ROOT,'public'),name,{fixture:name.startsWith('previews/')});
     }catch(error){if(!res.headersSent)send(res,error instanceof z.ZodError || error instanceof SyntaxError || error instanceof URIError?400:500,{error:'Invalid request or unavailable resource'});else res.end();}
   });

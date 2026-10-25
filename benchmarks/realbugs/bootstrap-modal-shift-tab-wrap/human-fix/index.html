@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project settings</title>
+<link rel="stylesheet" href="dist/css/bootstrap.min.css">
+<script type="importmap">{"imports":{"/js/src/base-component":"/js/src/base-component.js","/js/src/dom/data":"/js/src/dom/data.js","/js/src/dom/event-handler":"/js/src/dom/event-handler.js","/js/src/dom/manipulator":"/js/src/dom/manipulator.js","/js/src/dom/selector-engine":"/js/src/dom/selector-engine.js","/js/src/util/backdrop":"/js/src/util/backdrop.js","/js/src/util/focustrap":"/js/src/util/focustrap.js","/js/src/util/index":"/js/src/util/index.js","/js/src/util/scrollbar":"/js/src/util/scrollbar.js"}}</script>
+</head>
+<body class="p-4">
+<main class="container" style="max-width:44rem">
+  <h1 class="h3 mb-3">Project: Harbor redesign</h1>
+  <p>Status: <output id="status">Active</output></p>
+  <button class="btn btn-outline-secondary me-2" type="button" id="rename">Rename project</button>
+  <button class="btn btn-danger" type="button" id="open-delete" data-bs-toggle="modal" data-bs-target="#confirm">Delete project</button>
+</main>
+<div class="modal" id="confirm" tabindex="-1" aria-labelledby="confirm-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="confirm-title">Delete this project?</h2>
+        <button type="button" class="btn-close" id="confirm-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>All boards and files in Harbor redesign will be removed.</p>
+        <label class="form-label" for="confirm-name">Type the project name to confirm</label>
+        <input class="form-control" id="confirm-name" autocomplete="off">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="confirm-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirm-delete" data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="module">
+import Modal from './js/src/modal.js';
+document.querySelector('#confirm-delete').addEventListener('click', () => {
+  document.querySelector('#status').textContent = 'Deleted';
+});
+window.__ready = true;
+</script>
+</body>
+</html>

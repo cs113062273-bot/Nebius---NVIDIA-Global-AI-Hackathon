@@ -13,7 +13,7 @@ import { NebiusClient } from './nebius.js';
 import { compareInitialScreenshots } from './visual.js';
 
 export const repairEvidence=(journey,before,latest)=>({title:journey.title,goal:journey.goal,environment:{timezone:before.environment?.timezoneId||'UTC',locale:before.environment?.locale||'en-US'},failure:latest?.failure || before.failure,observed:latest?.observed || before.checkpoints.at(-1)?.state,functional:journey.functional,requirements:journey.steps.map(s=>({action:s.action,assertions:s.assertions}))});
-export async function runRepair({fixture='checkout',mode='reference',artifactRoot=path.join(ROOT,'artifacts','runs'),id=randomUUID(),onUpdate=()=>{},planProvider,journey:customJourney,functionalJourney:customFunctional,sourceRoot,referenceRoot,sourceMetadata,maxAttempts=2,freshInference=false,guards:customGuards=[]}={}) {
+export async function runRepair({fixture='checkout',mode='reference',artifactRoot=path.join(ROOT,'artifacts','runs'),id=randomUUID(),onUpdate=()=>{},planProvider,journey:customJourney,functionalJourney:customFunctional,sourceRoot,referenceRoot,sourceMetadata,maxAttempts=2,freshInference=false,models=[],guards:customGuards=[]}={}) {
   const fixtureInfo=sourceRoot?{kind:'custom'}:getFixture(fixture);if(!['reference','nebius','provided','recorded'].includes(mode))throw new Error('Unsupported repair provider');
   if(sourceRoot&&mode==='recorded')throw new Error('Recorded model patches are tied to their original source snapshots');
   if(sourceRoot&&(!customJourney||!customFunctional||mode==='reference'&&!referenceRoot))throw new Error('A project requires frozen keyboard and functional journeys, plus edited source for patch verification');
@@ -66,7 +66,7 @@ export async function runRepair({fixture='checkout',mode='reference',artifactRoo
         else if(mode==='provided' && planProvider) {plan=await planProvider({candidates,before,history});provenance={provider:'injected-test-plan',status:'TEST_ONLY',calls:0};}
         else {
           const latest=history.at(-1);
-          ({plan,provenance}=await client.propose({candidates,evidence:{...repairEvidence(journey,before,latest),observed:latest?.observed||{state:before.checkpoints.at(-1)?.state,successChecks:before.checks,functionalChecks:before.functional,failedSteps:before.steps.filter(s=>s.result!=='VERIFIED_PASS')},functional: {keyboard:journey.functional,independent:functionalJourney.functional,...(guards.length?{regression_guards:guards.map(g=>({title:g.title,profile:g.profile,actions:g.steps.map(s=>s.action),must_hold:g.functional}))}:{})}},history,fresh:freshInference}));
+          ({plan,provenance}=await client.propose({candidates,evidence:{...repairEvidence(journey,before,latest),observed:latest?.observed||{state:before.checkpoints.at(-1)?.state,successChecks:before.checks,functionalChecks:before.functional,failedSteps:before.steps.filter(s=>s.result!=='VERIFIED_PASS')},functional: {keyboard:journey.functional,independent:functionalJourney.functional,...(guards.length?{regression_guards:guards.map(g=>({title:g.title,profile:g.profile,actions:g.steps.map(s=>s.action),must_hold:g.functional}))}:{})}},history,fresh:freshInference,model:models[Math.min(attempt,models.length)-1]}));
         }
         run.model=provenance;Object.assign(record,{plan,provenance});await json(path.join(dir,`plan-${attempt}.json`),plan);await persist();
         const candidate=path.join(dir,`candidate-${attempt}`);await fs.cp(original,candidate,{recursive:true,errorOnExist:true,force:false});

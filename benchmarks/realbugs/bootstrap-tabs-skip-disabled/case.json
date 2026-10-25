@@ -1,0 +1,26 @@
+{
+  "title": "Arrow keys in a tab list must skip disabled tabs",
+  "library": "Bootstrap 5.2 alpha (tab)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/pull/36169",
+  "fixUrl": "https://github.com/twbs/bootstrap/commit/5d9500bdfdd02b3b1d91df2be86b1723f517fc52",
+  "buggyCommit": "cca801683dfbc54dc7ae7a6ef6ce4361b071bc36",
+  "fixCommit": "5d9500bdfdd02b3b1d91df2be86b1723f517fc52",
+  "summary": "Pressing ArrowRight from the active tab selects the next tab even though it is disabled, showing its panel and leaving focus on a tab that is no longer selected.",
+  "category": "Disabled state",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.js",
+    "js/src/dom/data.js",
+    "js/src/dom/event-handler.js",
+    "js/src/dom/manipulator.js",
+    "js/src/dom/selector-engine.js",
+    "js/src/tab.js",
+    "js/src/util/config.js",
+    "js/src/util/index.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written workspace settings page (Notifications tab disabled) around the unchanged upstream source at buggyCommit; an import map adds the .js extensions Bootstrap's extensionless source imports need in a browser."
+}

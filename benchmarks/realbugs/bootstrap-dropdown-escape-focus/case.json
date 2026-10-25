@@ -1,0 +1,28 @@
+{
+  "title": "Escape must close the dropdown menu and return focus to its toggle button",
+  "library": "Bootstrap 5.1 (dropdown)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues/35496",
+  "fixUrl": "https://github.com/twbs/bootstrap/commit/c376cb07630f49ae2bbb464925afb3a2dbc5565e",
+  "buggyCommit": "4fd5539c75515527cb1335c31bbaf76209aab296",
+  "fixCommit": "c376cb07630f49ae2bbb464925afb3a2dbc5565e",
+  "summary": "After arrowing into a dropdown menu, pressing Escape hides the menu but leaves keyboard focus on the hidden item instead of the toggle button.",
+  "category": "Focus restoration",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.js",
+    "js/src/dom/data.js",
+    "js/src/dom/event-handler.js",
+    "js/src/dom/manipulator.js",
+    "js/src/dom/selector-engine.js",
+    "js/src/dropdown.js",
+    "js/src/util/index.js"
+  ],
+  "dependencies": [
+    "vendor/popperjs-core: @popperjs/core 2.11.0 dist/esm from the npm tarball (MIT), mapped with an import map"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written invoice actions page around the unchanged upstream source at buggyCommit; an import map adds the .js extensions Bootstrap's extensionless source imports need in a browser."
+}

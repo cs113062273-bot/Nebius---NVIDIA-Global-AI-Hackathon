@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Workspace settings</title>
+<link rel="stylesheet" href="dist/css/bootstrap.min.css">
+<script type="importmap">{"imports":{"/js/src/base-component":"/js/src/base-component.js","/js/src/dom/data":"/js/src/dom/data.js","/js/src/dom/event-handler":"/js/src/dom/event-handler.js","/js/src/dom/manipulator":"/js/src/dom/manipulator.js","/js/src/dom/selector-engine":"/js/src/dom/selector-engine.js","/js/src/util/config":"/js/src/util/config.js","/js/src/util/index":"/js/src/util/index.js"}}</script>
+</head>
+<body class="p-4">
+<main class="container" style="max-width:44rem">
+  <h1 class="h3 mb-3">Workspace settings</h1>
+  <ul class="nav nav-tabs mt-3" id="settings-tabs" role="tablist">
+    <li class="nav-item" role="presentation"><button class="nav-link active" id="tab-account" data-bs-toggle="tab" data-bs-target="#pane-account" type="button" role="tab" aria-controls="pane-account" aria-selected="true">Account</button></li>
+    <li class="nav-item" role="presentation"><button class="nav-link" id="tab-notifications" data-bs-toggle="tab" data-bs-target="#pane-notifications" type="button" role="tab" aria-controls="pane-notifications" aria-selected="false" disabled>Notifications</button></li>
+    <li class="nav-item" role="presentation"><button class="nav-link" id="tab-billing" data-bs-toggle="tab" data-bs-target="#pane-billing" type="button" role="tab" aria-controls="pane-billing" aria-selected="false">Billing</button></li>
+  </ul>
+  <div class="tab-content border border-top-0 p-3" id="settings-panes">
+    <div class="tab-pane active" id="pane-account" role="tabpanel" aria-labelledby="tab-account" tabindex="0">
+      <label class="form-label" for="account-name">Workspace name</label>
+      <input class="form-control" id="account-name" value="Northwind Ops">
+    </div>
+    <div class="tab-pane" id="pane-notifications" role="tabpanel" aria-labelledby="tab-notifications" tabindex="0">
+      <div class="form-check"><input class="form-check-input" type="checkbox" id="notify-email" checked><label class="form-check-label" for="notify-email">Email me weekly summaries</label></div>
+    </div>
+    <div class="tab-pane" id="pane-billing" role="tabpanel" aria-labelledby="tab-billing" tabindex="0">
+      <p id="billing-plan">Plan: Team, billed monthly</p>
+    </div>
+  </div>
+</main>
+<script type="module">
+import Tab from './js/src/tab.js';
+window.__ready = true;
+</script>
+</body>
+</html>

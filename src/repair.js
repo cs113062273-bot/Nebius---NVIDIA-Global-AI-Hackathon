@@ -56,17 +56,32 @@ export async function referencePlan(beforeRoot, referenceRoot) {
   }
   return RepairPlan.parse({root_cause:'Reference source supplied by fixture author; no model diagnosis.',repair_strategy:'Replay a known reference patch to exercise the deterministic verifier.',edits,expected_accessibility_effect:'Restore the seeded keyboard path.',functional_risks:['The reference patch can still fail verification.'],verification_requirements:['Replay the frozen keyboard journey and pointer functional baseline.']});
 }
+// Models sometimes double-escape newlines inside JSON strings or drop the source's CRLF.
+// Each fallback is a deterministic re-encoding of the same text and must still match exactly once.
+const unescapeJson = text => text.replace(/\\(\\|n|r|t|"|')/g, (_, c) => ({ n: '\n', r: '\r', t: '\t' })[c] ?? c);
+export function resolvePreimage(current, before, after) {
+  const unique = text => current.split(text).length === 2, crlf = current.includes('\r\n');
+  const eol = text => text.replace(/\r*\n/g, crlf ? '\r\n' : '\n');
+  const variants = [['as-written', before, after]];
+  if (!before.includes('\n') && /\\[nrt]/.test(before)) variants.push(['escaped-newlines', unescapeJson(before), unescapeJson(after)]);
+  for (const [label, b, a] of variants) {
+    if (unique(b)) return { before: b, after: a, normalization: label === 'as-written' ? null : label };
+    if (unique(eol(b))) return { before: eol(b), after: eol(a), normalization: label === 'as-written' ? 'line-endings' : label + '+line-endings' };
+  }
+  throw new Error('Patch preimage must match exactly once');
+}
 export async function applyPlan(root, rawPlan, allowedFiles) {
-  const plan = RepairPlan.parse(rawPlan), staged = new Map(); let changed = 0, size=0;
+  const plan = RepairPlan.parse(rawPlan), staged = new Map(), normalizations = []; let changed = 0, size=0;
   for(const edit of plan.edits) {
     if(!allowedSource(edit.path) || !allowedFiles.includes(edit.path)) throw new Error('Edit outside localized allowlist');
     const file = await contained(root,edit.path);
     const original = await fs.readFile(file,'utf8');
     if(digest(original)!==edit.sha256) throw new Error('Stale source preimage');
     const current = staged.get(file)?.after ?? original;
-    if(current.split(edit.before).length!==2) throw new Error('Patch preimage must match exactly once');
-    const after = current.replace(edit.before,()=>edit.after);
-    size += Math.abs(after.length-current.length) + edit.before.length + edit.after.length;
+    const resolved = resolvePreimage(current, edit.before, edit.after);
+    if(resolved.normalization) normalizations.push({path:edit.path,normalization:resolved.normalization});
+    const after = current.replace(resolved.before,()=>resolved.after);
+    size += Math.abs(after.length-current.length) + resolved.before.length + resolved.after.length;
     if(size>40000 || after.length>80000 || staged.size>=5 && !staged.has(file)) throw new Error('Patch scope exceeds bounds');
     staged.set(file,{path:edit.path,before:original,after});
   }
@@ -75,7 +90,9 @@ export async function applyPlan(root, rawPlan, allowedFiles) {
   // Validate every preimage before any write. Only disposable copies are accepted by the orchestrator.
   for(const [file,value] of staged) await fs.writeFile(file,value.after);
   changed=changes.length;
-  return checkedDiff(changes);
+  const result = await checkedDiff(changes);
+  if(normalizations.length) result.patchValidation = {...result.patchValidation, normalizations};
+  return result;
 }
 export async function applyReference(root, referenceRoot, {staticProject=false,runtimeOnly=false}={}) {
   const names=new Set([...await listFiles(root),...await listFiles(referenceRoot)]),changes=[];

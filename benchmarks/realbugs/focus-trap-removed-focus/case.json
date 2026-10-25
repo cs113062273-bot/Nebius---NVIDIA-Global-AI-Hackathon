@@ -1,0 +1,15 @@
+{
+  "title": "When the focused control inside a focus trap removes itself, focus must stay inside the trap",
+  "library": "focus-trap",
+  "repository": "https://github.com/focus-trap/focus-trap",
+  "issue": "https://github.com/focus-trap/focus-trap/pull/932",
+  "fixUrl": "https://github.com/focus-trap/focus-trap/commit/fce60b3a737759c6e0e787d3fa1603f2cb86300a",
+  "buggyCommit": "0eca669477eb3e25c197809efbbbd8fc451eb346",
+  "fixCommit": "fce60b3a737759c6e0e787d3fa1603f2cb86300a",
+  "summary": "Pressing a Show all button that removes itself drops keyboard focus to the page body behind the open dialog.",
+  "category": "Focus trap",
+  "upstreamFiles": ["index.js", "LICENSE"],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written store search page around the unchanged upstream ES module index.js at buggyCommit; its tabbable dependency is the unchanged tabbable v6.1.2 src/index.js (MIT) in upstream-dependency/, resolved with an import map."
+}

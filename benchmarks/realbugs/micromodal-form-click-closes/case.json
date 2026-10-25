@@ -1,0 +1,15 @@
+{
+  "title": "Activating a form control inside a modal must not close the modal",
+  "library": "micromodal",
+  "repository": "https://github.com/ghosh/micromodal",
+  "issue": "https://github.com/ghosh/micromodal/issues/487",
+  "fixUrl": "https://github.com/ghosh/micromodal/commit/c2c7d1563fc24775abd8b3fd8ba79ae85ccafe47",
+  "buggyCommit": "98e003a01a6821a309f6feebc3a298e1cf472baa",
+  "fixCommit": "c2c7d1563fc24775abd8b3fd8ba79ae85ccafe47",
+  "summary": "Pressing Space on a checkbox inside the modal closes the modal and leaves the checkbox unticked, because the overlay close trigger matches every click inside it.",
+  "category": "Form value",
+  "upstreamFiles": ["lib/src/index.js", "LICENSE.md"],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written newsletter preferences page around the unchanged upstream ES module source lib/src/index.js at buggyCommit."
+}

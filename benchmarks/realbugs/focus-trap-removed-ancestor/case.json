@@ -1,0 +1,15 @@
+{
+  "title": "When a list row containing the focused button is removed inside a focus trap, focus must stay inside the trap",
+  "library": "focus-trap",
+  "repository": "https://github.com/focus-trap/focus-trap",
+  "issue": "https://github.com/focus-trap/focus-trap/issues/1660",
+  "fixUrl": "https://github.com/focus-trap/focus-trap/commit/b70e8d918e1d2ab4dbf21fec468dab7b69fece27",
+  "buggyCommit": "567dbe1169c96c8a5a81ec2ae548eb1d03262438",
+  "fixCommit": "b70e8d918e1d2ab4dbf21fec468dab7b69fece27",
+  "summary": "Pressing Remove on a basket row deletes the row and drops keyboard focus to the page body behind the open dialog.",
+  "category": "Focus trap",
+  "upstreamFiles": ["index.js", "LICENSE"],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written basket page around the unchanged upstream ES module index.js at buggyCommit; its tabbable dependency is the unchanged tabbable v6.4.0 src/index.js (MIT) in upstream-dependency/, resolved with an import map."
+}

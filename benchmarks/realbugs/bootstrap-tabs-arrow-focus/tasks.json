@@ -1,0 +1,201 @@
+{
+  "journey": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-tabs-arrow-keyboard",
+    "title": "Walk the settings tabs with arrow keys",
+    "goal": "Each arrow press selects and focuses the next tab",
+    "profile": "keyboard",
+    "steps": [
+      {
+        "title": "Reach the Account tab",
+        "action": {
+          "kind": "seek",
+          "selector": "#tab-account"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Move to Notifications",
+        "action": {
+          "kind": "press",
+          "key": "ArrowRight"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#tab-notifications",
+            "name": "aria-selected",
+            "value": "true"
+          },
+          {
+            "kind": "focus",
+            "selector": "#tab-notifications"
+          }
+        ]
+      },
+      {
+        "title": "Move to Billing",
+        "action": {
+          "kind": "press",
+          "key": "ArrowRight"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#tab-billing",
+            "name": "aria-selected",
+            "value": "true"
+          },
+          {
+            "kind": "focus",
+            "selector": "#tab-billing"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "focus",
+        "selector": "#tab-billing"
+      },
+      {
+        "kind": "visible",
+        "selector": "#billing-plan"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "attribute",
+        "selector": "#tab-billing",
+        "name": "aria-selected",
+        "value": "true"
+      },
+      {
+        "kind": "visible",
+        "selector": "#account-name",
+        "value": false
+      }
+    ]
+  },
+  "functionalJourney": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-tabs-arrow-pointer",
+    "title": "Switch settings sections with the mouse",
+    "goal": "Clicking a tab shows its panel",
+    "profile": "pointer",
+    "steps": [
+      {
+        "title": "Open Billing",
+        "action": {
+          "kind": "click",
+          "selector": "#tab-billing"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#tab-billing",
+            "name": "aria-selected",
+            "value": "true"
+          },
+          {
+            "kind": "visible",
+            "selector": "#billing-plan"
+          }
+        ]
+      },
+      {
+        "title": "Return to Account",
+        "action": {
+          "kind": "click",
+          "selector": "#tab-account"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#tab-account",
+            "name": "aria-selected",
+            "value": "true"
+          },
+          {
+            "kind": "visible",
+            "selector": "#account-name"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "visible",
+        "selector": "#account-name"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "attribute",
+        "selector": "#tab-account",
+        "name": "aria-selected",
+        "value": "true"
+      },
+      {
+        "kind": "visible",
+        "selector": "#billing-plan",
+        "value": false
+      }
+    ]
+  },
+  "guards": [
+    {
+      "version": 1,
+      "source": "authored",
+      "path": "/",
+      "forbidden": [],
+      "id": "bootstrap-tabs-arrow-panel-guard",
+      "title": "Tab from the active tab into its panel",
+      "goal": "Tab leaves the tab list for the active panel",
+      "profile": "keyboard",
+      "steps": [
+        {
+          "title": "Reach the Account tab",
+          "action": {
+            "kind": "seek",
+            "selector": "#tab-account"
+          },
+          "assertions": []
+        },
+        {
+          "title": "Tab into the Account panel",
+          "action": {
+            "kind": "press",
+            "key": "Tab"
+          },
+          "assertions": [
+            {
+              "kind": "focus",
+              "selector": "#pane-account"
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "focus",
+          "selector": "#pane-account"
+        }
+      ],
+      "functional": [
+        {
+          "kind": "attribute",
+          "selector": "#tab-account",
+          "name": "aria-selected",
+          "value": "true"
+        }
+      ]
+    }
+  ]
+}

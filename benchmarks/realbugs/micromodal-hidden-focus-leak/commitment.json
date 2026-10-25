@@ -1,0 +1,37 @@
+{
+  "fixedAt": "2026-10-25T13:26:36.837Z",
+  "sourceHashes": {
+    "LICENSE.md": "dbea8f3f615dceaaf0bdc386990302144d56f8e49164ca0e11fb475804aae2f2",
+    "index.html": "83bb455f24a186d6b1de61d1a51c55e05d813d1716179b03d479b09d82e70be9",
+    "lib/src/index.js": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c"
+  },
+  "humanFixHashes": {
+    "LICENSE.md": "dbea8f3f615dceaaf0bdc386990302144d56f8e49164ca0e11fb475804aae2f2",
+    "index.html": "83bb455f24a186d6b1de61d1a51c55e05d813d1716179b03d479b09d82e70be9",
+    "lib/src/index.js": "ae7ac37f5522ee9170f0dd77d04b4e9042975300c0b5fe09d020836085142a8f"
+  },
+  "humanFixFiles": [
+    "lib/src/index.js"
+  ],
+  "taskHash": "0809e95e65cd677566e680851ffce49115dc2c7c3f2ffd8ddbadaf6131bd01c3",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "1e53cc4b-1b50-4cd0-8e03-6491a5a7adce",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

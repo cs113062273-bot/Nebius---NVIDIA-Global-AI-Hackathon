@@ -1,0 +1,41 @@
+{
+  "journey": {
+    "version": 1, "id": "tabbable-fieldset-keyboard", "title": "Opening the address dialog puts focus on the first usable field",
+    "goal": "A keyboard user can open the dialog, type an address and save it", "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach address trigger", "action": {"kind": "seek", "selector": "#open"}},
+      {"title": "Open address dialog", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "visible", "selector": "#address-dialog", "value": true}, {"kind": "focus", "selector": "#street"}]},
+      {"title": "Type street", "action": {"kind": "type", "text": "12 Elm Street"}},
+      {"title": "Move to Save", "action": {"kind": "press", "key": "Tab"}, "assertions": [{"kind": "focus", "selector": "#save"}]},
+      {"title": "Save address", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "visible", "selector": "#address-dialog", "value": false}]}
+    ],
+    "success": [{"kind": "text", "selector": "#status", "value": "Delivering to 12 Elm Street."}, {"kind": "focus", "selector": "#open"}],
+    "functional": [{"kind": "text", "selector": "#status", "value": "Delivering to 12 Elm Street."}],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "tabbable-fieldset-pointer", "title": "Save the address dialog with the pointer",
+    "goal": "The dialog opens, saves and closes", "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Open address dialog", "action": {"kind": "click", "selector": "#open"}, "assertions": [{"kind": "visible", "selector": "#address-dialog", "value": true}]},
+      {"title": "Save address", "action": {"kind": "click", "selector": "#save"}, "assertions": [{"kind": "visible", "selector": "#address-dialog", "value": false}]}
+    ],
+    "success": [{"kind": "text", "selector": "#status", "value": "Delivery address saved without a street."}],
+    "functional": [{"kind": "text", "selector": "#status", "value": "Delivery address saved without a street."}, {"kind": "visible", "selector": "#address-dialog", "value": false}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "tabbable-fieldset-escape", "title": "Escape closes the address dialog and returns focus",
+      "goal": "Escape dismisses the dialog and focus returns to the trigger", "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach address trigger", "action": {"kind": "seek", "selector": "#open"}},
+        {"title": "Open address dialog", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "visible", "selector": "#address-dialog", "value": true}]},
+        {"title": "Dismiss with Escape", "action": {"kind": "press", "key": "Escape"}, "assertions": [{"kind": "visible", "selector": "#address-dialog", "value": false}]}
+      ],
+      "success": [{"kind": "focus", "selector": "#open"}],
+      "functional": [{"kind": "text", "selector": "#status", "value": "No delivery address yet."}],
+      "forbidden": []
+    }
+  ]
+}

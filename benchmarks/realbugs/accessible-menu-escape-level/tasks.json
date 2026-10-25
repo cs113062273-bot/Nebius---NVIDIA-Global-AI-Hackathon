@@ -1,0 +1,43 @@
+{
+  "journey": {
+    "version": 1, "id": "accessible-menu-escape-keyboard", "title": "Escape closes only the innermost open submenu",
+    "goal": "Escape in the Facts submenu returns to Facts while the About submenu stays open", "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach the menubar", "action": {"kind": "seek", "selector": "#home"}},
+      {"title": "Move to About", "action": {"kind": "press", "key": "ArrowRight"}, "assertions": [{"kind": "focus", "selector": "#about"}]},
+      {"title": "Open About", "action": {"kind": "press", "key": "ArrowDown"}, "assertions": [{"kind": "focus", "selector": "#overview"}, {"kind": "attribute", "selector": "#about", "name": "aria-expanded", "value": "true"}]},
+      {"title": "Move to Facts", "action": {"kind": "press", "key": "ArrowDown"}, "assertions": [{"kind": "focus", "selector": "#facts"}]},
+      {"title": "Open Facts", "action": {"kind": "press", "key": "ArrowRight"}, "assertions": [{"kind": "focus", "selector": "#history"}, {"kind": "attribute", "selector": "#facts", "name": "aria-expanded", "value": "true"}]},
+      {"title": "Close the Facts submenu", "action": {"kind": "press", "key": "Escape"}, "assertions": [{"kind": "focus", "selector": "#facts"}, {"kind": "attribute", "selector": "#facts", "name": "aria-expanded", "value": "false"}, {"kind": "attribute", "selector": "#about", "name": "aria-expanded", "value": "true"}]}
+    ],
+    "success": [{"kind": "focus", "selector": "#facts"}, {"kind": "visible", "selector": "#facts", "value": true}, {"kind": "visible", "selector": "#history", "value": false}],
+    "functional": [{"kind": "attribute", "selector": "#facts", "name": "aria-expanded", "value": "false"}],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "accessible-menu-escape-pointer", "title": "Open nested submenus with the pointer",
+    "goal": "About and Facts submenus open on click", "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Open About", "action": {"kind": "click", "selector": "#about"}, "assertions": [{"kind": "attribute", "selector": "#about", "name": "aria-expanded", "value": "true"}]},
+      {"title": "Open Facts", "action": {"kind": "click", "selector": "#facts"}, "assertions": [{"kind": "attribute", "selector": "#facts", "name": "aria-expanded", "value": "true"}]}
+    ],
+    "success": [{"kind": "visible", "selector": "#history", "value": true}],
+    "functional": [{"kind": "attribute", "selector": "#about", "name": "aria-expanded", "value": "true"}, {"kind": "attribute", "selector": "#facts", "name": "aria-expanded", "value": "true"}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "accessible-menu-escape-first-level", "title": "Escape in a first-level submenu returns to the menubar",
+      "goal": "Escape in the About submenu closes it and focuses About", "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach the menubar", "action": {"kind": "seek", "selector": "#home"}},
+        {"title": "Move to About", "action": {"kind": "press", "key": "ArrowRight"}, "assertions": [{"kind": "focus", "selector": "#about"}]},
+        {"title": "Open About", "action": {"kind": "press", "key": "ArrowDown"}, "assertions": [{"kind": "focus", "selector": "#overview"}]},
+        {"title": "Close About", "action": {"kind": "press", "key": "Escape"}, "assertions": [{"kind": "focus", "selector": "#about"}, {"kind": "attribute", "selector": "#about", "name": "aria-expanded", "value": "false"}]}
+      ],
+      "success": [{"kind": "focus", "selector": "#about"}],
+      "functional": [{"kind": "visible", "selector": "#overview", "value": false}],
+      "forbidden": []
+    }
+  ]
+}

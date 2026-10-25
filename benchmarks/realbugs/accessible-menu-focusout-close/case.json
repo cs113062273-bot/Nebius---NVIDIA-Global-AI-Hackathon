@@ -1,0 +1,15 @@
+{
+  "title": "An open disclosure-navigation dropdown must close when keyboard focus moves out of the navigation",
+  "library": "accessible-menu",
+  "repository": "https://github.com/NickDJM/accessible-menu",
+  "issue": "https://github.com/NickDJM/accessible-menu/issues/354",
+  "fixUrl": "https://github.com/NickDJM/accessible-menu/commit/54a3a5753771edfffc0b2b656162f415f5a0c462",
+  "buggyCommit": "eb9c3a4eca7689482e4d597524c5212f70460b89",
+  "fixCommit": "54a3a5753771edfffc0b2b656162f415f5a0c462",
+  "summary": "After opening the Shop dropdown and tabbing on to the page's search field, the dropdown stays open over the content.",
+  "category": "Menu keyboard navigation",
+  "upstreamFiles": ["src/disclosureMenu.js", "src/disclosureMenuItem.js", "src/disclosureMenuToggle.js", "src/_baseMenu.js", "src/_baseMenuItem.js", "src/_baseMenuToggle.js", "src/eventHandlers.js", "src/domHelpers.js", "src/validate.js", "LICENSE"],
+  "license": "ISC",
+  "split": "holdout",
+  "consumer": "Author-written garden centre navigation page around the unchanged upstream ES module sources in src/ at buggyCommit (the fix commit also rebuilt dist/, which is not used)."
+}

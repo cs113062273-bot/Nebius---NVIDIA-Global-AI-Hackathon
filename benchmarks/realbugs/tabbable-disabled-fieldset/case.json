@@ -1,0 +1,15 @@
+{
+  "title": "Form fields inside a disabled fieldset must not be treated as tabbable, so a focus-trapped dialog focuses its first usable field",
+  "library": "tabbable",
+  "repository": "https://github.com/focus-trap/tabbable",
+  "issue": "https://github.com/focus-trap/tabbable/issues/413",
+  "fixUrl": "https://github.com/focus-trap/tabbable/commit/1d5fcb51d9eb21994c82a2f03010bc0d017cfff2",
+  "buggyCommit": "cc8b7b2bc4319b672d0e6053b34c732168dd035c",
+  "fixCommit": "1d5fcb51d9eb21994c82a2f03010bc0d017cfff2",
+  "summary": "Opening the delivery address dialog leaves keyboard focus behind on the page, because the trap tries to focus a select inside a disabled fieldset.",
+  "category": "Disabled state",
+  "upstreamFiles": ["src/index.js", "LICENSE"],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written checkout page around the unchanged upstream ES module src/index.js at buggyCommit; the dialog uses the unchanged focus-trap v6.6.0 index.js (MIT, contemporaneous release depending on tabbable ^5.2.0) in upstream-dependency/, resolved with an import map."
+}

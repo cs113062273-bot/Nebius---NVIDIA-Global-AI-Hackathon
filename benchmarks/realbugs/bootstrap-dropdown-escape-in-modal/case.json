@@ -1,0 +1,29 @@
+{
+  "title": "Escape on a closed dropdown toggle inside a modal must close the modal",
+  "library": "Bootstrap 5.0 (dropdown, modal)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues/33465",
+  "fixUrl": "https://github.com/twbs/bootstrap/commit/f36f8344533d3179b8d82af96e005b3106d9ab46",
+  "buggyCommit": "6e7f1a9a347f4cc38a8973044440afa52f2cffcd",
+  "fixCommit": "f36f8344533d3179b8d82af96e005b3106d9ab46",
+  "summary": "When focus is on a closed dropdown button inside a modal, the dropdown swallows the Escape key, so keyboard users cannot dismiss the modal.",
+  "category": "Escape key",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.js",
+    "js/src/dom/data.js",
+    "js/src/dom/event-handler.js",
+    "js/src/dom/manipulator.js",
+    "js/src/dom/selector-engine.js",
+    "js/src/dropdown.js",
+    "js/src/modal.js",
+    "js/src/util/index.js"
+  ],
+  "dependencies": [
+    "vendor/popperjs-core: @popperjs/core 2.9.1 dist/esm from the npm tarball (MIT), mapped with an import map"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written file sharing dialog page around the unchanged upstream source at buggyCommit; an import map adds the .js extensions Bootstrap's extensionless source imports need in a browser."
+}

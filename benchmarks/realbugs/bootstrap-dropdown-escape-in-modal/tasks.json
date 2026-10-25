@@ -1,0 +1,249 @@
+{
+  "journey": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-dropdown-modal-escape-keyboard",
+    "title": "Dismiss the share dialog with Escape",
+    "goal": "Escape closes the dialog while focus is on the access button",
+    "profile": "keyboard",
+    "steps": [
+      {
+        "title": "Reach Share",
+        "action": {
+          "kind": "seek",
+          "selector": "#open-share"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Open the share dialog",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#access-toggle"
+          }
+        ]
+      },
+      {
+        "title": "Tab to the access button",
+        "action": {
+          "kind": "seek",
+          "selector": "#access-toggle",
+          "maxTabs": 3
+        },
+        "assertions": []
+      },
+      {
+        "title": "Press Escape to dismiss the dialog",
+        "action": {
+          "kind": "press",
+          "key": "Escape"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#access-toggle",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "visible",
+        "selector": "#share-title",
+        "value": false
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#shared-with",
+        "value": "Only you"
+      }
+    ]
+  },
+  "functionalJourney": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-dropdown-modal-escape-pointer",
+    "title": "Share the file with the finance team",
+    "goal": "Choosing an access level and saving updates the file's sharing",
+    "profile": "pointer",
+    "steps": [
+      {
+        "title": "Open the share dialog",
+        "action": {
+          "kind": "click",
+          "selector": "#open-share"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#access-toggle"
+          }
+        ]
+      },
+      {
+        "title": "Open the access menu",
+        "action": {
+          "kind": "click",
+          "selector": "#access-toggle"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#access-team"
+          }
+        ]
+      },
+      {
+        "title": "Choose Finance team",
+        "action": {
+          "kind": "click",
+          "selector": "#access-team"
+        },
+        "assertions": [
+          {
+            "kind": "text",
+            "selector": "#access-level",
+            "value": "Finance team"
+          }
+        ]
+      },
+      {
+        "title": "Save",
+        "action": {
+          "kind": "click",
+          "selector": "#share-save"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#share-title",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#shared-with",
+        "value": "Finance team"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#shared-with",
+        "value": "Finance team"
+      },
+      {
+        "kind": "visible",
+        "selector": "#share-title",
+        "value": false
+      }
+    ]
+  },
+  "guards": [
+    {
+      "version": 1,
+      "source": "authored",
+      "path": "/",
+      "forbidden": [],
+      "id": "bootstrap-dropdown-modal-escape-menu-guard",
+      "title": "Escape inside the open access menu closes only the menu",
+      "goal": "The first Escape closes the menu and keeps the dialog open",
+      "profile": "keyboard",
+      "steps": [
+        {
+          "title": "Reach Share",
+          "action": {
+            "kind": "seek",
+            "selector": "#open-share"
+          },
+          "assertions": []
+        },
+        {
+          "title": "Open the share dialog",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": [
+            {
+              "kind": "visible",
+              "selector": "#access-toggle"
+            }
+          ]
+        },
+        {
+          "title": "Tab to the access button",
+          "action": {
+            "kind": "seek",
+            "selector": "#access-toggle",
+            "maxTabs": 3
+          },
+          "assertions": []
+        },
+        {
+          "title": "Open the access menu",
+          "action": {
+            "kind": "press",
+            "key": "ArrowDown"
+          },
+          "assertions": [
+            {
+              "kind": "visible",
+              "selector": "#access-team"
+            }
+          ]
+        },
+        {
+          "title": "Close the menu with Escape",
+          "action": {
+            "kind": "press",
+            "key": "Escape"
+          },
+          "assertions": [
+            {
+              "kind": "visible",
+              "selector": "#access-team",
+              "value": false
+            },
+            {
+              "kind": "focus",
+              "selector": "#access-toggle"
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "focus",
+          "selector": "#access-toggle"
+        }
+      ],
+      "functional": [
+        {
+          "kind": "visible",
+          "selector": "#access-toggle"
+        },
+        {
+          "kind": "text",
+          "selector": "#shared-with",
+          "value": "Only you"
+        }
+      ]
+    }
+  ]
+}

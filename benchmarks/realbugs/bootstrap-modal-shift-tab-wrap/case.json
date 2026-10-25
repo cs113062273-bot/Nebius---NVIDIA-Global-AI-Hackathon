@@ -1,0 +1,28 @@
+{
+  "title": "Shift+Tab from the first control in a modal must wrap to the modal's last control",
+  "library": "Bootstrap 5.0 (modal)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues/28481",
+  "fixUrl": "https://github.com/twbs/bootstrap/commit/7646f6bd33a03132e446fb060880bbf051a1639f",
+  "buggyCommit": "85364745831ba5513ee7e940fe571cb4268810b8",
+  "fixCommit": "7646f6bd33a03132e446fb060880bbf051a1639f",
+  "summary": "Pressing Shift+Tab on the first control of an open modal throws focus back to the modal container instead of wrapping to the last control, so keyboard users can never move backwards through the dialog.",
+  "category": "Focus trap",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.js",
+    "js/src/dom/data.js",
+    "js/src/dom/event-handler.js",
+    "js/src/dom/manipulator.js",
+    "js/src/dom/selector-engine.js",
+    "js/src/modal.js",
+    "js/src/util/backdrop.js",
+    "js/src/util/focustrap.js",
+    "js/src/util/index.js",
+    "js/src/util/scrollbar.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written delete-confirmation page around the unchanged upstream source at buggyCommit; an import map adds the .js extensions Bootstrap's extensionless source imports need in a browser."
+}

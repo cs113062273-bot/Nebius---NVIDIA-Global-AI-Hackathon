@@ -1,0 +1,46 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tabstitch · Real bugs, live repair</title><meta name="tabstitch-live" content=""><link rel="icon" type="image/svg+xml" href="./favicon.svg"><link rel="stylesheet" href="./live.css"></head><body>
+<a class="skip" href="#cases">Skip to the bugs</a>
+<header class="bar"><a class="brand" href="./">↹ tabstitch</a><nav aria-label="Main"><a href="./live.html" aria-current="page">Live repair</a><a href="./live.html#scoreboard">Scoreboard</a><a href="./project.html?evidence#evidence-index">All recorded runs</a><a href="https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon">Source ↗</a></nav><span id="mode" class="mode">CONNECTING…</span></header>
+<main>
+<section class="hero">
+ <p class="eyebrow">REAL UPSTREAM BUGS · NVIDIA NEMOTRON ON NEBIUS TOKEN FACTORY · REAL BROWSER VERDICT</p>
+ <h1>Pick a bug maintainers fixed by hand.<br><em>Watch Nemotron fix it blind.</em></h1>
+ <p class="lede">Each bug below was reported and fixed in a real open-source library. Tabstitch pins the code from just before the fix and freezes the user's keyboard task. The maintainers' own fix must pass that task first, so the test is fair. Nemotron then gets only the buggy source. Nemotron 3 Super tries first. If the browser rejects its patch, Nemotron 3 Ultra gets the exact failure. Chromium replays every path and gives the verdict, not the model.</p>
+ <dl class="stats" id="stats" aria-live="polite"></dl>
+</section>
+
+<section id="run" class="run" hidden aria-labelledby="run-title">
+ <div class="run-head"><div><p class="eyebrow" id="run-kind">LIVE RUN</p><h2 id="run-title"></h2><p id="run-summary" class="run-summary"></p><p class="run-links" id="run-links"></p></div><div class="run-meta"><span id="run-clock" class="clock">0.0 s</span><span id="run-state" class="state">Starting</span></div></div>
+ <ol class="pipeline" id="pipeline" aria-label="Repair stages"></ol>
+ <div class="baseline" id="baseline" hidden>
+  <figure><span class="crop"><img id="baseline-shot" alt="" width="640" height="360"></span><figcaption id="baseline-caption"></figcaption></figure>
+  <div><h3>The bug, reproduced</h3><p id="baseline-text"></p><p class="mono" id="baseline-task"></p></div>
+ </div>
+ <div id="attempts" class="attempts"></div>
+ <div id="verdict" class="verdict" hidden>
+  <div class="verdict-head"><span id="verdict-badge" class="badge"></span><h3 id="verdict-title"></h3></div>
+  <p id="verdict-text"></p>
+  <div class="compare" id="compare" hidden>
+   <figure><figcaption>Before · same keys</figcaption><span class="crop"><img id="shot-before" alt="" width="640" height="360"></span><p class="mono" id="focus-before"></p></figure>
+   <figure><figcaption>After Nemotron's patch</figcaption><span class="crop"><img id="shot-after" alt="" width="640" height="360"></span><p class="mono" id="focus-after"></p></figure>
+  </div>
+  <details class="human" id="human"><summary>Compare with the maintainers' own fix</summary><p>This is the published upstream change. It was used only to check the task before the run, and it was never sent to the model.</p><pre id="human-diff">Loading…</pre></details>
+  <p class="verdict-links"><a id="full-evidence" href="#">Full evidence: every capture, the raw model request and response, and a proof archive →</a></p>
+ </div>
+</section>
+
+<section id="cases" class="cases" aria-labelledby="cases-title">
+ <div class="section-head"><h2 id="cases-title">Real bugs</h2><p id="budget" class="budget" aria-live="polite"></p></div>
+ <p id="notice" class="notice" hidden role="status"></p>
+ <div id="case-list" class="case-list"></div>
+</section>
+
+<section id="scoreboard" class="scoreboard" aria-labelledby="score-title">
+ <div class="section-head"><h2 id="score-title">Scoreboard</h2><p class="small">One blind run per bug, routed Super → Ultra, recorded before this page was published.</p></div>
+ <div class="table-wrap"><table><thead><tr><th scope="col">Library</th><th scope="col">Bug</th><th scope="col">Maintainers' fix passes the task</th><th scope="col">Nemotron, blind</th><th scope="col">Passed on</th><th scope="col">Evidence</th></tr></thead><tbody id="score-rows"></tbody></table></div>
+ <p class="fine">Verified only for the frozen tasks and recorded conditions. The page around each library is author-written; the library code is the unmodified upstream source from before the fix. Public fixes may appear in model training data, so a pass shows the verify loop working on real code. It does not prove the model never saw the fix. Each run's raw request is checked for lines unique to the maintainers' fix.</p>
+</section>
+</main>
+<footer class="foot"><span>↹ tabstitch</span><span>Model output is untrusted. The browser decides.</span></footer>
+<script src="./live.js" type="module"></script>
+</body></html>

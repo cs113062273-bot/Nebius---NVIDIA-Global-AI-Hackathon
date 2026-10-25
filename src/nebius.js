@@ -70,9 +70,9 @@ export class NebiusClient {
     const reservation=Buffer.byteLength(content+SYSTEM)+maxOutput+2000;
     return {content,schema,maxOutput,reservation};
   }
-  async propose({ candidates, evidence, history = [],fresh=false }) {
+  async propose({ candidates, evidence, history = [],fresh=false,model:override }) {
     this.requireLive();
-    const model=this.env.NEBIUS_MODEL;
+    const model=override||this.env.NEBIUS_MODEL;
     if(!model || !/^nvidia\//i.test(model) || !/nemotron/i.test(model)) throw new Error('Select an NVIDIA Nemotron model from the current authenticated catalog');
     const entry=(await this.models()).find(m=>m.id===model);
     if(!entry) throw new Error('Configured NVIDIA model unavailable in account catalog');

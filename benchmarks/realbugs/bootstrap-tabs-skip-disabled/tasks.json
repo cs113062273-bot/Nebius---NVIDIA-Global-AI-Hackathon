@@ -1,0 +1,192 @@
+{
+  "journey": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-tabs-disabled-keyboard",
+    "title": "Arrow past a disabled settings tab",
+    "goal": "ArrowRight skips the disabled tab and selects the next enabled one",
+    "profile": "keyboard",
+    "steps": [
+      {
+        "title": "Reach the Account tab",
+        "action": {
+          "kind": "seek",
+          "selector": "#tab-account"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Move right past the disabled Notifications tab",
+        "action": {
+          "kind": "press",
+          "key": "ArrowRight"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#tab-billing",
+            "name": "aria-selected",
+            "value": "true"
+          },
+          {
+            "kind": "focus",
+            "selector": "#tab-billing"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "focus",
+        "selector": "#tab-billing"
+      },
+      {
+        "kind": "visible",
+        "selector": "#billing-plan"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "attribute",
+        "selector": "#tab-notifications",
+        "name": "aria-selected",
+        "value": "false"
+      },
+      {
+        "kind": "visible",
+        "selector": "#notify-email",
+        "value": false
+      }
+    ]
+  },
+  "functionalJourney": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-tabs-disabled-pointer",
+    "title": "Switch settings sections with the mouse",
+    "goal": "Clicking a tab shows its panel",
+    "profile": "pointer",
+    "steps": [
+      {
+        "title": "Open Billing",
+        "action": {
+          "kind": "click",
+          "selector": "#tab-billing"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#tab-billing",
+            "name": "aria-selected",
+            "value": "true"
+          },
+          {
+            "kind": "visible",
+            "selector": "#billing-plan"
+          }
+        ]
+      },
+      {
+        "title": "Return to Account",
+        "action": {
+          "kind": "click",
+          "selector": "#tab-account"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#tab-account",
+            "name": "aria-selected",
+            "value": "true"
+          },
+          {
+            "kind": "visible",
+            "selector": "#account-name"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "visible",
+        "selector": "#account-name"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "attribute",
+        "selector": "#tab-account",
+        "name": "aria-selected",
+        "value": "true"
+      },
+      {
+        "kind": "visible",
+        "selector": "#billing-plan",
+        "value": false
+      }
+    ]
+  },
+  "guards": [
+    {
+      "version": 1,
+      "source": "authored",
+      "path": "/",
+      "forbidden": [],
+      "id": "bootstrap-tabs-disabled-left-guard",
+      "title": "Arrow left wraps to the last tab",
+      "goal": "ArrowLeft from the first tab selects Billing",
+      "profile": "keyboard",
+      "steps": [
+        {
+          "title": "Reach the Account tab",
+          "action": {
+            "kind": "seek",
+            "selector": "#tab-account"
+          },
+          "assertions": []
+        },
+        {
+          "title": "Wrap left to Billing",
+          "action": {
+            "kind": "press",
+            "key": "ArrowLeft"
+          },
+          "assertions": [
+            {
+              "kind": "attribute",
+              "selector": "#tab-billing",
+              "name": "aria-selected",
+              "value": "true"
+            },
+            {
+              "kind": "focus",
+              "selector": "#tab-billing"
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "focus",
+          "selector": "#tab-billing"
+        }
+      ],
+      "functional": [
+        {
+          "kind": "attribute",
+          "selector": "#tab-billing",
+          "name": "aria-selected",
+          "value": "true"
+        },
+        {
+          "kind": "visible",
+          "selector": "#billing-plan"
+        }
+      ]
+    }
+  ]
+}

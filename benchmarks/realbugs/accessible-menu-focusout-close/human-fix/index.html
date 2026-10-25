@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Garden centre</title>
+<link rel="icon" href="data:,">
+<style>
+body{font:18px system-ui,sans-serif;margin:0;padding:24px 32px;color:#111;background:#fff}
+nav ul{list-style:none;margin:0;padding:0}
+#nav-menu{display:flex;gap:4px;background:#1f3d2b}
+#nav-menu>li{position:relative}
+#nav-menu a,#nav-menu button{display:block;padding:10px 16px;color:#fff;text-decoration:none;background:#1f3d2b;border:0;font:inherit;cursor:pointer;white-space:nowrap}
+#nav-menu ul{position:absolute;left:0;top:100%;min-width:180px;background:#1f3d2b;z-index:1}
+#nav-menu ul:not(.show){display:none}
+#nav-menu a:focus,#nav-menu button:focus{outline:3px solid #ffbf47;outline-offset:-3px}
+#nav-menu button[aria-expanded]::after{content:" \25BE"}
+main{margin-top:24px}
+input{font:inherit;padding:6px;border:1px solid #555}
+:focus{outline:3px solid #0050c8;outline-offset:2px}
+</style>
+</head>
+<body>
+<nav id="site-nav" aria-label="Main">
+  <ul id="nav-menu">
+    <li><a id="home" href="#home-page">Home</a></li>
+    <li><a id="contact" href="#contact-page">Contact</a></li>
+    <li><button id="shop" type="button">Shop</button>
+      <ul id="shop-menu">
+        <li><a id="plants" href="#plants-page">Plants</a></li>
+        <li><a id="tools" href="#tools-page">Tools</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+<main>
+  <h1>Garden centre</h1>
+  <p><label for="search">Search the shop</label><br><input id="search" type="search"></p>
+</main>
+<script type="module">
+import DisclosureMenu from './src/disclosureMenu.js';
+new DisclosureMenu({ menuElement: document.getElementById('nav-menu') });
+window.__ready = true;
+</script>
+</body>
+</html>

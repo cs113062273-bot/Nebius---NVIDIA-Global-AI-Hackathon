@@ -1,0 +1,41 @@
+{
+  "journey": {
+    "version": 1, "id": "focus-trap-removed-keyboard", "title": "Focus stays in the results dialog after Show all removes itself",
+    "goal": "Activating a control that removes itself keeps keyboard focus inside the trapped dialog", "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach search results trigger", "action": {"kind": "seek", "selector": "#open"}},
+      {"title": "Open results", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "visible", "selector": "#results", "value": true}, {"kind": "focus", "selector": "#close"}]},
+      {"title": "Move to Show all", "action": {"kind": "press", "key": "Tab"}, "assertions": [{"kind": "focus", "selector": "#more"}]},
+      {"title": "Show all results", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "text", "selector": "#count", "value": "4 of 4 results"}, {"kind": "visible", "selector": "#results:focus-within", "value": true}]}
+    ],
+    "success": [{"kind": "visible", "selector": "#results:focus-within", "value": true}, {"kind": "visible", "selector": "#results", "value": true}],
+    "functional": [{"kind": "text", "selector": "#count", "value": "4 of 4 results"}],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "focus-trap-removed-pointer", "title": "Show all results with the pointer",
+    "goal": "The dialog opens, lists every result and closes", "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Open results", "action": {"kind": "click", "selector": "#open"}, "assertions": [{"kind": "visible", "selector": "#results", "value": true}]},
+      {"title": "Show all results", "action": {"kind": "click", "selector": "#more"}, "assertions": [{"kind": "text", "selector": "#count", "value": "4 of 4 results"}]},
+      {"title": "Close results", "action": {"kind": "click", "selector": "#close"}, "assertions": [{"kind": "visible", "selector": "#results", "value": false}]}
+    ],
+    "success": [{"kind": "visible", "selector": "#results", "value": false}],
+    "functional": [{"kind": "text", "selector": "#count", "value": "4 of 4 results"}, {"kind": "visible", "selector": "#results", "value": false}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "focus-trap-removed-escape", "title": "Escape closes results and returns focus",
+      "goal": "Escape dismisses the dialog and focus returns to the trigger", "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach search results trigger", "action": {"kind": "seek", "selector": "#open"}},
+        {"title": "Open results", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "focus", "selector": "#close"}]},
+        {"title": "Dismiss with Escape", "action": {"kind": "press", "key": "Escape"}, "assertions": [{"kind": "visible", "selector": "#results", "value": false}]}
+      ],
+      "success": [{"kind": "focus", "selector": "#open"}],
+      "functional": [{"kind": "visible", "selector": "#results", "value": false}],
+      "forbidden": []
+    }
+  ]
+}

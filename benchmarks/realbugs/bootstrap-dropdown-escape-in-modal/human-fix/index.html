@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Share document</title>
+<link rel="stylesheet" href="dist/css/bootstrap.min.css">
+<script type="importmap">{"imports":{"/js/src/base-component":"/js/src/base-component.js","/js/src/dom/data":"/js/src/dom/data.js","/js/src/dom/event-handler":"/js/src/dom/event-handler.js","/js/src/dom/manipulator":"/js/src/dom/manipulator.js","/js/src/dom/selector-engine":"/js/src/dom/selector-engine.js","/js/src/util/index":"/js/src/util/index.js","@popperjs/core":"/vendor/popperjs-core/index.js"}}</script>
+</head>
+<body class="p-4">
+<main class="container" style="max-width:44rem">
+  <h1 class="h3 mb-3">Q3 budget.xlsx</h1>
+  <p>Shared with: <output id="shared-with">Only you</output></p>
+  <button class="btn btn-primary" type="button" id="open-share" data-bs-toggle="modal" data-bs-target="#share">Share</button>
+</main>
+<div class="modal" id="share" tabindex="-1" aria-labelledby="share-title" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title h5" id="share-title">Share Q3 budget.xlsx</h2>
+      </div>
+      <div class="modal-body">
+        <p class="mb-2">Who can open this file?</p>
+        <div class="dropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="access-toggle" data-bs-toggle="dropdown" aria-expanded="false">Access: <span id="access-level">Only you</span></button>
+          <ul class="dropdown-menu" aria-labelledby="access-toggle">
+            <li><button class="dropdown-item" type="button" id="access-team" data-level="Finance team">Finance team</button></li>
+            <li><button class="dropdown-item" type="button" id="access-org" data-level="Everyone at Northwind">Everyone at Northwind</button></li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="share-cancel" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="share-save" data-bs-dismiss="modal">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="module">
+import Modal from './js/src/modal.js';
+import Dropdown from './js/src/dropdown.js';
+document.querySelectorAll('[data-level]').forEach(item => item.addEventListener('click', () => {
+  document.querySelector('#access-level').textContent = item.dataset.level;
+}));
+document.querySelector('#share-save').addEventListener('click', () => {
+  document.querySelector('#shared-with').textContent = document.querySelector('#access-level').textContent;
+});
+window.__ready = true;
+</script>
+</body>
+</html>

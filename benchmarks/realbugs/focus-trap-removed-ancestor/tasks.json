@@ -1,0 +1,42 @@
+{
+  "journey": {
+    "version": 1, "id": "focus-trap-ancestor-keyboard", "title": "Focus stays in the basket dialog after removing a row",
+    "goal": "Removing the row that holds the focused button keeps keyboard focus inside the trapped dialog", "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach basket trigger", "action": {"kind": "seek", "selector": "#open"}},
+      {"title": "Open basket", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "visible", "selector": "#basket", "value": true}, {"kind": "focus", "selector": "#close"}]},
+      {"title": "Move to the first Remove button", "action": {"kind": "press", "key": "Tab"}, "assertions": [{"kind": "focus", "selector": "#remove-1"}]},
+      {"title": "Remove the hand trowel", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "text", "selector": "#count", "value": "2 items"}, {"kind": "visible", "selector": "#basket:focus-within", "value": true}]}
+    ],
+    "success": [{"kind": "visible", "selector": "#basket:focus-within", "value": true}, {"kind": "visible", "selector": "#basket", "value": true}],
+    "functional": [{"kind": "text", "selector": "#count", "value": "2 items"}],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "focus-trap-ancestor-pointer", "title": "Remove a basket row with the pointer",
+    "goal": "The basket opens, removes a row and closes", "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Open basket", "action": {"kind": "click", "selector": "#open"}, "assertions": [{"kind": "visible", "selector": "#basket", "value": true}]},
+      {"title": "Remove pruning shears", "action": {"kind": "click", "selector": "#remove-2"}, "assertions": [{"kind": "text", "selector": "#count", "value": "2 items"}]},
+      {"title": "Close basket", "action": {"kind": "click", "selector": "#close"}, "assertions": [{"kind": "visible", "selector": "#basket", "value": false}]}
+    ],
+    "success": [{"kind": "visible", "selector": "#basket", "value": false}],
+    "functional": [{"kind": "text", "selector": "#count", "value": "2 items"}, {"kind": "visible", "selector": "#basket", "value": false}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "focus-trap-ancestor-wrap", "title": "Tab wraps inside the basket",
+      "goal": "Tab from the last Remove button returns to the close button", "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach basket trigger", "action": {"kind": "seek", "selector": "#open"}},
+        {"title": "Open basket", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "focus", "selector": "#close"}]},
+        {"title": "Move backwards to the last Remove button", "action": {"kind": "press", "key": "Shift+Tab"}, "assertions": [{"kind": "focus", "selector": "#remove-3"}]},
+        {"title": "Wrap forwards", "action": {"kind": "press", "key": "Tab"}, "assertions": [{"kind": "focus", "selector": "#close"}]}
+      ],
+      "success": [{"kind": "focus", "selector": "#close"}],
+      "functional": [{"kind": "text", "selector": "#count", "value": "3 items"}],
+      "forbidden": []
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "title": "A non-modal offcanvas panel that allows page scrolling must not trap keyboard focus",
+  "library": "Bootstrap 5.0 (offcanvas)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/pull/33677",
+  "fixUrl": "https://github.com/twbs/bootstrap/commit/079f2cd90c247225eb71dff4d514faf50f653416",
+  "buggyCommit": "0bbe45cd977ae69f11b4cdd55e5d5be08e4a137a",
+  "fixCommit": "079f2cd90c247225eb71dff4d514faf50f653416",
+  "summary": "With body scrolling enabled and no backdrop, every attempt to Tab to a page control behind the open offcanvas pulls focus back into the panel, so keyboard users cannot use the page while the panel is open.",
+  "category": "Focus trap",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.js",
+    "js/src/dom/data.js",
+    "js/src/dom/event-handler.js",
+    "js/src/dom/manipulator.js",
+    "js/src/dom/selector-engine.js",
+    "js/src/offcanvas.js",
+    "js/src/util/backdrop.js",
+    "js/src/util/index.js",
+    "js/src/util/scrollbar.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written expense report page with a scroll-enabled, backdrop-free help panel around the unchanged upstream source at buggyCommit; transitions are disabled in page CSS and an import map adds the .js extensions Bootstrap's extensionless source imports need in a browser."
+}

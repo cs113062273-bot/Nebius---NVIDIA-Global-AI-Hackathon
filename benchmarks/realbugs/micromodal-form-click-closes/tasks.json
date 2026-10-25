@@ -1,0 +1,40 @@
+{
+  "journey": {
+    "version": 1, "id": "micromodal-form-keyboard", "title": "Ticking a checkbox inside the preferences dialog keeps it open",
+    "goal": "Space ticks the checkbox and the dialog stays open", "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach preferences trigger", "action": {"kind": "seek", "selector": "#open"}},
+      {"title": "Open preferences", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "false"}, {"kind": "focus", "selector": "#weekly"}]},
+      {"title": "Tick weekly digest", "action": {"kind": "press", "key": "Space"}, "assertions": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "false"}, {"kind": "form-data", "selector": "#prefs", "name": "digest", "value": ["weekly"]}]}
+    ],
+    "success": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "false"}, {"kind": "form-data", "selector": "#prefs", "name": "digest", "value": ["weekly"]}, {"kind": "focus", "selector": "#weekly"}],
+    "functional": [{"kind": "form-data", "selector": "#prefs", "name": "digest", "value": ["weekly"]}],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "micromodal-form-pointer", "title": "Open and close preferences with the pointer",
+    "goal": "The dialog opens and the close button dismisses it", "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Open preferences", "action": {"kind": "click", "selector": "#open"}, "assertions": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "false"}]},
+      {"title": "Close preferences", "action": {"kind": "click", "selector": "#modal-close"}, "assertions": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "true"}]}
+    ],
+    "success": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "true"}],
+    "functional": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "true"}, {"kind": "form-data", "selector": "#prefs", "name": "digest", "value": []}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "micromodal-form-done", "title": "Done closes the preferences dialog from the keyboard",
+      "goal": "Activating Done dismisses the dialog and focus returns to the trigger", "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach preferences trigger", "action": {"kind": "seek", "selector": "#open"}},
+        {"title": "Open preferences", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "false"}]},
+        {"title": "Reach Done", "action": {"kind": "seek", "selector": "#done"}},
+        {"title": "Activate Done", "action": {"kind": "press", "key": "Enter"}, "assertions": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "true"}]}
+      ],
+      "success": [{"kind": "focus", "selector": "#open"}],
+      "functional": [{"kind": "attribute", "selector": "#prefs-modal", "name": "aria-hidden", "value": "true"}],
+      "forbidden": []
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "title": "An offcanvas panel opened with a backdrop must keep keyboard focus inside the panel",
+  "library": "Bootstrap 5.2 (offcanvas)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues/36596",
+  "fixUrl": "https://github.com/twbs/bootstrap/commit/713d7140f18514c916f75be34e809ebe00c1691c",
+  "buggyCommit": "8bb68b04b35765c30038923bd620ee28b21553c8",
+  "fixCommit": "713d7140f18514c916f75be34e809ebe00c1691c",
+  "summary": "With body scrolling and a backdrop both enabled, opening the offcanvas leaves focus on the page behind the backdrop, so Tab moves through obscured page controls instead of the panel.",
+  "category": "Focus trap",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.js",
+    "js/src/dom/data.js",
+    "js/src/dom/event-handler.js",
+    "js/src/dom/manipulator.js",
+    "js/src/dom/selector-engine.js",
+    "js/src/offcanvas.js",
+    "js/src/util/backdrop.js",
+    "js/src/util/component-functions.js",
+    "js/src/util/config.js",
+    "js/src/util/focustrap.js",
+    "js/src/util/index.js",
+    "js/src/util/scrollbar.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written expense report page with a scroll-enabled, backdrop-enabled help panel around the unchanged upstream source at buggyCommit; transitions are disabled in page CSS and an import map adds the .js extensions Bootstrap's extensionless source imports need in a browser."
+}

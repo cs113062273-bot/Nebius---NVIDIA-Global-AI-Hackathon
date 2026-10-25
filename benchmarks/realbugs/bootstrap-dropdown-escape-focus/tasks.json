@@ -1,0 +1,212 @@
+{
+  "journey": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-dropdown-escape-keyboard",
+    "title": "Close the invoice actions menu with Escape",
+    "goal": "Escape closes the menu and focus returns to the toggle",
+    "profile": "keyboard",
+    "steps": [
+      {
+        "title": "Reach the actions toggle",
+        "action": {
+          "kind": "seek",
+          "selector": "#actions-toggle"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Open the menu with ArrowDown",
+        "action": {
+          "kind": "press",
+          "key": "ArrowDown"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#actions-toggle",
+            "name": "aria-expanded",
+            "value": "true"
+          },
+          {
+            "kind": "focus",
+            "selector": "#action-send"
+          }
+        ]
+      },
+      {
+        "title": "Close the menu with Escape",
+        "action": {
+          "kind": "press",
+          "key": "Escape"
+        },
+        "assertions": [
+          {
+            "kind": "attribute",
+            "selector": "#actions-toggle",
+            "name": "aria-expanded",
+            "value": "false"
+          },
+          {
+            "kind": "focus",
+            "selector": "#actions-toggle"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "focus",
+        "selector": "#actions-toggle"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "visible",
+        "selector": "#actions-menu",
+        "value": false
+      },
+      {
+        "kind": "text",
+        "selector": "#last-action",
+        "value": "None"
+      }
+    ]
+  },
+  "functionalJourney": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-dropdown-escape-pointer",
+    "title": "Archive the invoice from the actions menu",
+    "goal": "The chosen action runs and the menu closes",
+    "profile": "pointer",
+    "steps": [
+      {
+        "title": "Open the menu",
+        "action": {
+          "kind": "click",
+          "selector": "#actions-toggle"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#action-archive"
+          }
+        ]
+      },
+      {
+        "title": "Choose Archive",
+        "action": {
+          "kind": "click",
+          "selector": "#action-archive"
+        },
+        "assertions": [
+          {
+            "kind": "text",
+            "selector": "#last-action",
+            "value": "Archived"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#last-action",
+        "value": "Archived"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#last-action",
+        "value": "Archived"
+      },
+      {
+        "kind": "visible",
+        "selector": "#actions-menu",
+        "value": false
+      }
+    ]
+  },
+  "guards": [
+    {
+      "version": 1,
+      "source": "authored",
+      "path": "/",
+      "forbidden": [],
+      "id": "bootstrap-dropdown-escape-choose-keyboard",
+      "title": "Choose an action with the keyboard",
+      "goal": "Arrow keys move through items and Enter runs one",
+      "profile": "keyboard",
+      "steps": [
+        {
+          "title": "Reach the actions toggle",
+          "action": {
+            "kind": "seek",
+            "selector": "#actions-toggle"
+          },
+          "assertions": []
+        },
+        {
+          "title": "Open the menu",
+          "action": {
+            "kind": "press",
+            "key": "ArrowDown"
+          },
+          "assertions": [
+            {
+              "kind": "focus",
+              "selector": "#action-send"
+            }
+          ]
+        },
+        {
+          "title": "Move to Download PDF",
+          "action": {
+            "kind": "press",
+            "key": "ArrowDown"
+          },
+          "assertions": [
+            {
+              "kind": "focus",
+              "selector": "#action-download"
+            }
+          ]
+        },
+        {
+          "title": "Run Download PDF",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": [
+            {
+              "kind": "text",
+              "selector": "#last-action",
+              "value": "Downloaded PDF"
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "text",
+          "selector": "#last-action",
+          "value": "Downloaded PDF"
+        }
+      ],
+      "functional": [
+        {
+          "kind": "text",
+          "selector": "#last-action",
+          "value": "Downloaded PDF"
+        }
+      ]
+    }
+  ]
+}

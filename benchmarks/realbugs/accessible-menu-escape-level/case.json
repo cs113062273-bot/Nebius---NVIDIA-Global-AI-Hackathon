@@ -1,0 +1,15 @@
+{
+  "title": "Escape in a nested menubar submenu must close only that submenu and return focus to its parent item",
+  "library": "accessible-menu",
+  "repository": "https://github.com/NickDJM/accessible-menu",
+  "issue": "https://github.com/NickDJM/accessible-menu/issues/533",
+  "fixUrl": "https://github.com/NickDJM/accessible-menu/commit/cfb4dc85f57e59c3e1ca3c8835618101a6e818b9",
+  "buggyCommit": "4b8e65db81f40c0c032db1c8567615bbe3da32f6",
+  "fixCommit": "cfb4dc85f57e59c3e1ca3c8835618101a6e818b9",
+  "summary": "Pressing Escape inside a second-level submenu collapses every open submenu and throws focus back to the top-level menubar item.",
+  "category": "Menu keyboard navigation",
+  "upstreamFiles": ["src/menubar.js", "src/menubarItem.js", "src/menubarToggle.js", "src/_baseMenu.js", "src/_baseMenuItem.js", "src/_baseMenuToggle.js", "src/eventHandlers.js", "src/domHelpers.js", "src/validate.js", "LICENSE"],
+  "license": "ISC",
+  "split": "holdout",
+  "consumer": "Author-written museum navigation page around the unchanged upstream ES module sources in src/ at buggyCommit."
+}

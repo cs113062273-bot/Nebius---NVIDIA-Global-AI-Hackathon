@@ -1,0 +1,238 @@
+{
+  "journey": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-modal-shift-tab-keyboard",
+    "title": "Move backwards through the delete confirmation",
+    "goal": "Shift+Tab from the first control wraps to the Delete button",
+    "profile": "keyboard",
+    "steps": [
+      {
+        "title": "Reach Delete project",
+        "action": {
+          "kind": "seek",
+          "selector": "#open-delete"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Open the confirmation",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#confirm-name"
+          }
+        ]
+      },
+      {
+        "title": "Tab to the first control",
+        "action": {
+          "kind": "press",
+          "key": "Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#confirm-close"
+          }
+        ]
+      },
+      {
+        "title": "Shift+Tab backwards",
+        "action": {
+          "kind": "press",
+          "key": "Shift+Tab"
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#confirm-delete"
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "focus",
+        "selector": "#confirm-delete"
+      },
+      {
+        "kind": "visible",
+        "selector": "#confirm-name"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "visible",
+        "selector": "#confirm-name"
+      },
+      {
+        "kind": "text",
+        "selector": "#status",
+        "value": "Active"
+      }
+    ]
+  },
+  "functionalJourney": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-modal-shift-tab-pointer",
+    "title": "Delete the project with the mouse",
+    "goal": "Confirming deletes the project and closes the modal",
+    "profile": "pointer",
+    "steps": [
+      {
+        "title": "Open the confirmation",
+        "action": {
+          "kind": "click",
+          "selector": "#open-delete"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#confirm-name"
+          }
+        ]
+      },
+      {
+        "title": "Confirm deletion",
+        "action": {
+          "kind": "click",
+          "selector": "#confirm-delete"
+        },
+        "assertions": [
+          {
+            "kind": "text",
+            "selector": "#status",
+            "value": "Deleted"
+          },
+          {
+            "kind": "visible",
+            "selector": "#confirm-name",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "text",
+        "selector": "#status",
+        "value": "Deleted"
+      }
+    ],
+    "functional": [
+      {
+        "kind": "text",
+        "selector": "#status",
+        "value": "Deleted"
+      },
+      {
+        "kind": "visible",
+        "selector": "#confirm-name",
+        "value": false
+      }
+    ]
+  },
+  "guards": [
+    {
+      "version": 1,
+      "source": "authored",
+      "path": "/",
+      "forbidden": [],
+      "id": "bootstrap-modal-shift-tab-forward-guard",
+      "title": "Tab forwards through the confirmation and cancel",
+      "goal": "Forward Tab order reaches Cancel, which closes the modal",
+      "profile": "keyboard",
+      "steps": [
+        {
+          "title": "Reach Delete project",
+          "action": {
+            "kind": "seek",
+            "selector": "#open-delete"
+          },
+          "assertions": []
+        },
+        {
+          "title": "Open the confirmation",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": [
+            {
+              "kind": "visible",
+              "selector": "#confirm-name"
+            }
+          ]
+        },
+        {
+          "title": "Tab to the name field",
+          "action": {
+            "kind": "seek",
+            "selector": "#confirm-name",
+            "maxTabs": 3
+          },
+          "assertions": []
+        },
+        {
+          "title": "Type the project name",
+          "action": {
+            "kind": "type",
+            "text": "Harbor"
+          },
+          "assertions": []
+        },
+        {
+          "title": "Tab to Cancel",
+          "action": {
+            "kind": "press",
+            "key": "Tab"
+          },
+          "assertions": [
+            {
+              "kind": "focus",
+              "selector": "#confirm-cancel"
+            }
+          ]
+        },
+        {
+          "title": "Cancel",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": [
+            {
+              "kind": "visible",
+              "selector": "#confirm-name",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "visible",
+          "selector": "#confirm-name",
+          "value": false
+        }
+      ],
+      "functional": [
+        {
+          "kind": "text",
+          "selector": "#status",
+          "value": "Active"
+        }
+      ]
+    }
+  ]
+}

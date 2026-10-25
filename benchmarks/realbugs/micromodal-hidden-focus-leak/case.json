@@ -1,0 +1,19 @@
+{
+  "title": "Tabbing past the last visible control of a modal must wrap inside the modal even when it contains hidden buttons",
+  "library": "micromodal",
+  "repository": "https://github.com/ghosh/micromodal",
+  "issue": "https://github.com/ghosh/micromodal/issues/295",
+  "fixUrl": "https://github.com/ghosh/micromodal/commit/70dfd4320d9e0e535be432f57c698c75e230d0b3",
+  "buggyCommit": "777dbcbeaf6314da0a3669f2b5ed9cdd66e6fc8a",
+  "fixCommit": "70dfd4320d9e0e535be432f57c698c75e230d0b3",
+  "summary": "A modal with a display:none Try again button lets Tab escape from the last visible control to the page behind the modal.",
+  "category": "Focus trap",
+  "upstreamFiles": [
+    "lib/src/index.js",
+    "LICENSE.md"
+  ],
+  "license": "MIT",
+  "split": "development",
+  "consumer": "Author-written report upload page around the unchanged upstream ES module source lib/src/index.js at buggyCommit.",
+  "splitNote": "MicroModal #295 was used in earlier Tabstitch experiments (benchmarks/component-recovery), so it is not a holdout case."
+}

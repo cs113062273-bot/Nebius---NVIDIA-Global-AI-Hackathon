@@ -1,0 +1,53 @@
+{
+  "fixedAt": "2026-10-25T13:35:30.002Z",
+  "sourceHashes": {
+    "LICENSE": "4bf784433056d5b3c57afe7316aace572f6722249bc18cf3efc35a4bb04f13b2",
+    "index.html": "58b93a85673d2c038153160fdd86b6bde94e6b594e1a20c64dc49d315fbad7b1",
+    "src/_baseMenu.js": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+    "src/_baseMenuItem.js": "cdbd485d00d8b4f5c608f3aa9d76b094e557add67df641b87811140fb86c98f2",
+    "src/_baseMenuToggle.js": "0484a45026a7476380c2c8e3bb36f6ae0035755ac2483a9902524f0fbb656322",
+    "src/disclosureMenu.js": "ca4cd96d5ab9b2275e2c8f4989766af90595913fd63bb25320c2b0b8853b564b",
+    "src/disclosureMenuItem.js": "c15765186f21759a2360db2f13c397cee54109d7e41b4614b0bc3180caa89a7d",
+    "src/disclosureMenuToggle.js": "b193752a9d86584234a58c31407e6e272f6ea9e2908eb42a4b893872db4149e0",
+    "src/domHelpers.js": "8f5c1617c49509f4951b5a940fab452796612e49ddf99b93bd91495b1b439971",
+    "src/eventHandlers.js": "156bd922307e1995be11210d1d228bbd01a80acbeb150e5ade5ec6890ec52bf1",
+    "src/validate.js": "ae8639e06f8316a4bbe256af59836908694758f38098d73e156cf1cb031bad47"
+  },
+  "humanFixHashes": {
+    "LICENSE": "4bf784433056d5b3c57afe7316aace572f6722249bc18cf3efc35a4bb04f13b2",
+    "index.html": "58b93a85673d2c038153160fdd86b6bde94e6b594e1a20c64dc49d315fbad7b1",
+    "src/_baseMenu.js": "9d023376cd0e37f3fff6dd35dd453dca4f48f1575181c94178c1addc713efa7f",
+    "src/_baseMenuItem.js": "cdbd485d00d8b4f5c608f3aa9d76b094e557add67df641b87811140fb86c98f2",
+    "src/_baseMenuToggle.js": "0484a45026a7476380c2c8e3bb36f6ae0035755ac2483a9902524f0fbb656322",
+    "src/disclosureMenu.js": "ca4cd96d5ab9b2275e2c8f4989766af90595913fd63bb25320c2b0b8853b564b",
+    "src/disclosureMenuItem.js": "c15765186f21759a2360db2f13c397cee54109d7e41b4614b0bc3180caa89a7d",
+    "src/disclosureMenuToggle.js": "b193752a9d86584234a58c31407e6e272f6ea9e2908eb42a4b893872db4149e0",
+    "src/domHelpers.js": "8f5c1617c49509f4951b5a940fab452796612e49ddf99b93bd91495b1b439971",
+    "src/eventHandlers.js": "156bd922307e1995be11210d1d228bbd01a80acbeb150e5ade5ec6890ec52bf1",
+    "src/validate.js": "ae8639e06f8316a4bbe256af59836908694758f38098d73e156cf1cb031bad47"
+  },
+  "humanFixFiles": [
+    "src/_baseMenu.js"
+  ],
+  "taskHash": "91b4b016a3b6c28d1ef2eb1e85127e69a52b097d1632944445a08cc3787bcb25",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "06ec9c99-8063-426b-bf48-3b3742505e23",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "journey": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-offcanvas-scroll-keyboard",
+    "title": "Keep editing the report with the help panel open",
+    "goal": "Tab can reach the amount field while the non-modal panel is open",
+    "profile": "keyboard",
+    "steps": [
+      {
+        "title": "Reach the help button",
+        "action": {
+          "kind": "seek",
+          "selector": "#open-help"
+        },
+        "assertions": []
+      },
+      {
+        "title": "Open the help panel",
+        "action": {
+          "kind": "press",
+          "key": "Enter"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#help-text"
+          }
+        ]
+      },
+      {
+        "title": "Tab to the amount field",
+        "action": {
+          "kind": "seek",
+          "selector": "#amount",
+          "maxTabs": 6
+        },
+        "assertions": [
+          {
+            "kind": "focus",
+            "selector": "#amount"
+          }
+        ]
+      },
+      {
+        "title": "Correct the amount",
+        "action": {
+          "kind": "type",
+          "text": "41.20",
+          "replace": true
+        },
+        "assertions": [
+          {
+            "kind": "form-data",
+            "selector": "#report",
+            "name": "amount",
+            "value": [
+              "41.20"
+            ]
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "focus",
+        "selector": "#amount"
+      },
+      {
+        "kind": "form-data",
+        "selector": "#report",
+        "name": "amount",
+        "value": [
+          "41.20"
+        ]
+      }
+    ],
+    "functional": [
+      {
+        "kind": "visible",
+        "selector": "#help-text"
+      },
+      {
+        "kind": "form-data",
+        "selector": "#report",
+        "name": "amount",
+        "value": [
+          "41.20"
+        ]
+      }
+    ]
+  },
+  "functionalJourney": {
+    "version": 1,
+    "source": "authored",
+    "path": "/",
+    "forbidden": [],
+    "id": "bootstrap-offcanvas-scroll-pointer",
+    "title": "Open and close the policy help panel",
+    "goal": "The panel opens and its close button hides it",
+    "profile": "pointer",
+    "steps": [
+      {
+        "title": "Open help",
+        "action": {
+          "kind": "click",
+          "selector": "#open-help"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#help-text"
+          }
+        ]
+      },
+      {
+        "title": "Close help",
+        "action": {
+          "kind": "click",
+          "selector": "#help-close"
+        },
+        "assertions": [
+          {
+            "kind": "visible",
+            "selector": "#help-text",
+            "value": false
+          }
+        ]
+      }
+    ],
+    "success": [
+      {
+        "kind": "visible",
+        "selector": "#help-text",
+        "value": false
+      }
+    ],
+    "functional": [
+      {
+        "kind": "visible",
+        "selector": "#help-text",
+        "value": false
+      },
+      {
+        "kind": "form-data",
+        "selector": "#report",
+        "name": "amount",
+        "value": [
+          "38.50"
+        ]
+      }
+    ]
+  },
+  "guards": [
+    {
+      "version": 1,
+      "source": "authored",
+      "path": "/",
+      "forbidden": [],
+      "id": "bootstrap-offcanvas-scroll-close-guard",
+      "title": "Close the help panel from the keyboard",
+      "goal": "The panel's close button is reachable and closes it",
+      "profile": "keyboard",
+      "steps": [
+        {
+          "title": "Reach the help button",
+          "action": {
+            "kind": "seek",
+            "selector": "#open-help"
+          },
+          "assertions": []
+        },
+        {
+          "title": "Open the help panel",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": [
+            {
+              "kind": "visible",
+              "selector": "#help-text"
+            }
+          ]
+        },
+        {
+          "title": "Tab to Close help",
+          "action": {
+            "kind": "seek",
+            "selector": "#help-close",
+            "maxTabs": 3
+          },
+          "assertions": []
+        },
+        {
+          "title": "Close the panel",
+          "action": {
+            "kind": "press",
+            "key": "Enter"
+          },
+          "assertions": [
+            {
+              "kind": "visible",
+              "selector": "#help-text",
+              "value": false
+            }
+          ]
+        }
+      ],
+      "success": [
+        {
+          "kind": "visible",
+          "selector": "#help-text",
+          "value": false
+        }
+      ],
+      "functional": [
+        {
+          "kind": "form-data",
+          "selector": "#report",
+          "name": "amount",
+          "value": [
+            "38.50"
+          ]
+        }
+      ]
+    }
+  ]
+}

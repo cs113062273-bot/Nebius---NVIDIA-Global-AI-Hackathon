@@ -1,0 +1,55 @@
+{
+  "fixedAt": "2026-10-25T13:30:49.549Z",
+  "sourceHashes": {
+    "LICENSE": "5b30317c9c35bb6f05101c501de866cc6852ab9b655dcf5941733f6644c3ebd0",
+    "dist/css/bootstrap.min.css": "0d4f6240127cf5d1cfda2caeb0283efb4c9c879e43031f102fa3fc09853ae1b2",
+    "index.html": "e5127d6fca2c59a8007140e024eeefa4a1e9ccf9c8c9ee7cdbf12fd8dc6dc651",
+    "js/src/base-component.js": "75d79edd9292ac63d023ec39e014b613f8839cf157113cd45314d81c88ac0fd3",
+    "js/src/dom/data.js": "2246c6d65bc1ec929db176ad2c6d7e6ea282370a9e57f2099b3dbbeabf8b3a06",
+    "js/src/dom/event-handler.js": "4f8ce09df4933a51cf88c6b88d6372e55e13451912cd84e57cf0e6595e317d2e",
+    "js/src/dom/manipulator.js": "71e9ccebf0a4286393399f9106d0051ffc32dbae212abe39e0739f8f9d0bf608",
+    "js/src/dom/selector-engine.js": "95d0292b19e61340346547b89a82d0cb4de08b3f65d58506c7c8f259627e5805",
+    "js/src/offcanvas.js": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+    "js/src/util/backdrop.js": "5fec2addfd748487284ef3b367d7b74c8f901b1c2ef533a2a52523a392e36cca",
+    "js/src/util/index.js": "ef39c843d3859c05ec5db9340e67c34559863b0c839ee59e72d1baeee2f23e1c",
+    "js/src/util/scrollbar.js": "9bf2959419294f39a2ef927c67f4b751ebbc4fb1d7b1949eec3553902c09cb92"
+  },
+  "humanFixHashes": {
+    "LICENSE": "5b30317c9c35bb6f05101c501de866cc6852ab9b655dcf5941733f6644c3ebd0",
+    "dist/css/bootstrap.min.css": "0d4f6240127cf5d1cfda2caeb0283efb4c9c879e43031f102fa3fc09853ae1b2",
+    "index.html": "e5127d6fca2c59a8007140e024eeefa4a1e9ccf9c8c9ee7cdbf12fd8dc6dc651",
+    "js/src/base-component.js": "75d79edd9292ac63d023ec39e014b613f8839cf157113cd45314d81c88ac0fd3",
+    "js/src/dom/data.js": "2246c6d65bc1ec929db176ad2c6d7e6ea282370a9e57f2099b3dbbeabf8b3a06",
+    "js/src/dom/event-handler.js": "4f8ce09df4933a51cf88c6b88d6372e55e13451912cd84e57cf0e6595e317d2e",
+    "js/src/dom/manipulator.js": "71e9ccebf0a4286393399f9106d0051ffc32dbae212abe39e0739f8f9d0bf608",
+    "js/src/dom/selector-engine.js": "95d0292b19e61340346547b89a82d0cb4de08b3f65d58506c7c8f259627e5805",
+    "js/src/offcanvas.js": "6b684030656e50b5a323313929c0d1c68a0f6ca009da48ce774f9a6393c0d772",
+    "js/src/util/backdrop.js": "5fec2addfd748487284ef3b367d7b74c8f901b1c2ef533a2a52523a392e36cca",
+    "js/src/util/index.js": "ef39c843d3859c05ec5db9340e67c34559863b0c839ee59e72d1baeee2f23e1c",
+    "js/src/util/scrollbar.js": "9bf2959419294f39a2ef927c67f4b751ebbc4fb1d7b1949eec3553902c09cb92"
+  },
+  "humanFixFiles": [
+    "js/src/offcanvas.js"
+  ],
+  "taskHash": "f35e54cd506b7608c492040b26140dd8327bf241a523ad2c615f3840cdabd9e4",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "7c36e31c-5304-46e9-878a-f36acfe75d0d",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

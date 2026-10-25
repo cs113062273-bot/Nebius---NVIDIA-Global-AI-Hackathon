@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-25T13:19:56.453Z",
+  "policy": "auto",
+  "modelRun": "ca6f50d4-df65-444b-ab8a-4751a9b23ef4",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Patch preimage must match exactly once",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-14fb018f1a13115a6bc7fc7f5121442f",
+      "usage": {
+        "completion_tokens": 6872,
+        "prompt_tokens": 13481,
+        "total_tokens": 20353,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5149,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 13481
+      },
+      "latencyMs": 26951,
+      "reservedCreditUsd": 0.0257547
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-942e269a89b70b7ceaaead355cea41fd",
+      "usage": {
+        "completion_tokens": 6497,
+        "prompt_tokens": 15195,
+        "total_tokens": 21692,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4886,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 15195
+      },
+      "latencyMs": 16837,
+      "reservedCreditUsd": 0.09204000000000001
+    }
+  ]
+}

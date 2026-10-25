@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Store search</title>
+<link rel="icon" href="data:,">
+<style>
+body{font:18px system-ui,sans-serif;margin:0;padding:32px;color:#111;background:#fff}
+button{font:inherit;padding:10px 16px}
+:focus{outline:3px solid #0050c8;outline-offset:2px}
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center}
+.backdrop[hidden]{display:none}
+.panel{background:#fff;padding:24px;max-width:440px;width:90%;border-radius:6px}
+.panel header{display:flex;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+<main>
+  <h1>Garden store</h1>
+  <button id="open" type="button">Search results for “trowel”</button>
+</main>
+<div class="backdrop" id="backdrop" hidden>
+  <div class="panel" id="results" role="dialog" aria-modal="true" aria-labelledby="results-title">
+    <header>
+      <h2 id="results-title">Results</h2>
+      <button id="close" type="button" aria-label="Close results">&times;</button>
+    </header>
+    <p id="count">2 of 4 results</p>
+    <ul id="list"><li>Hand trowel</li><li>Transplanting trowel</li></ul>
+    <button id="more" type="button">Show all 4 results</button>
+  </div>
+</div>
+<script type="importmap">{"imports":{"tabbable":"./upstream-dependency/tabbable/index.js"}}</script>
+<script type="module">
+import { createFocusTrap } from './index.js';
+const backdrop = document.getElementById('backdrop');
+const trap = createFocusTrap('#results', { onDeactivate: () => { backdrop.hidden = true; } });
+document.getElementById('open').addEventListener('click', () => { backdrop.hidden = false; trap.activate(); });
+document.getElementById('close').addEventListener('click', () => trap.deactivate());
+document.getElementById('more').addEventListener('click', event => {
+  for (const name of ['Steel trowel', 'Pointing trowel']) { const li = document.createElement('li'); li.textContent = name; document.getElementById('list').append(li); }
+  document.getElementById('count').textContent = '4 of 4 results';
+  event.currentTarget.remove();
+});
+window.__ready = true;
+</script>
+</body>
+</html>
