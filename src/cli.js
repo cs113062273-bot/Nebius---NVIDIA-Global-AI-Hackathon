@@ -46,7 +46,7 @@ if (command === 'check') {
 }
 
 // repair: the budget is per CI run and enforced before every call from catalog prices.
-Object.assign(process.env, { NEBIUS_BUDGET_SCOPE: 'ci', NEBIUS_MAX_CREDIT_USD: process.env.TABSTITCH_MAX_USD || '0.5', NEBIUS_MAX_CALLS: '3', NEBIUS_MAX_TOTAL_TOKENS: '300000', NEBIUS_MAX_OUTPUT_TOKENS: process.env.NEBIUS_MAX_OUTPUT_TOKENS || '10000', LIVE_NEBIUS_TESTS: 'true', NEBIUS_SPONSOR_CREDITS_CONFIRMED: process.env.NEBIUS_SPONSOR_CREDITS_CONFIRMED || 'true' });
+Object.assign(process.env, { NEBIUS_BUDGET_SCOPE: 'ci', NEBIUS_MAX_CREDIT_USD: process.env.TABSTITCH_MAX_USD || '0.5', NEBIUS_MAX_CALLS: '3', NEBIUS_MAX_TOTAL_TOKENS: '900000', NEBIUS_MAX_OUTPUT_TOKENS: process.env.NEBIUS_MAX_OUTPUT_TOKENS || '32000', LIVE_NEBIUS_TESTS: 'true', NEBIUS_SPONSOR_CREDITS_CONFIRMED: process.env.NEBIUS_SPONSOR_CREDITS_CONFIRMED || 'true' });
 const run = await runRepair({ fixture: 'custom-project', mode: 'nebius', sourceRoot: root, journey: tasks.journey, functionalJourney: tasks.functionalJourney, guards: tasks.guards, maxAttempts: 3, freshInference: true, models: LIVE_MODELS, artifactRoot: path.join(out, 'runs'), sourceMetadata: { kind: 'source', name: label, originalRoot: root, scope: 'CI repair of a pull request build' } });
 const dir = path.join(out, 'runs', run.id), ok = run.verification?.verdict === 'VERIFIED_PASS', win = run.attempts.find(a => a.verified);
 if ((await verifyProof(dir)).pass) await fs.writeFile(path.join(out, 'proof.tar.gz'), await proofArchive(dir, run.manifest));

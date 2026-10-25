@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-25T16:32:31.456Z",
+  "policy": "auto",
+  "modelRun": "5751a07a-e9fa-449d-8b69-f83f4167586a",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-bd88c03e0e05c0b42f086e6510a856dc",
+      "usage": {
+        "completion_tokens": 6553,
+        "prompt_tokens": 4479,
+        "total_tokens": 11032,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5725,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4479
+      },
+      "latencyMs": 33459,
+      "reservedCreditUsd": 0.033828
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-66cd336a7f0174eac203df4f23208f85",
+      "usage": {
+        "completion_tokens": 8954,
+        "prompt_tokens": 4895,
+        "total_tokens": 13849,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7584,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4895
+      },
+      "latencyMs": 22315,
+      "reservedCreditUsd": 0.114637
+    }
+  ]
+}

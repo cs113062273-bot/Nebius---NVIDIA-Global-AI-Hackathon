@@ -1,0 +1,25 @@
+{
+  "root_cause": "Escape key in a submenu incorrectly closes all submenus instead of only the current submenu because the handler calls this.elements.rootMenu.closeChildren().",
+  "repair_strategy": "Replace the Escape handler in the non-top-level menu's _handleKeyup to close only the current submenu via its parent menu's toggle and move focus to that toggle, preserving parent submenu state.",
+  "edits": [
+    {
+      "path": "src/menubar.js",
+      "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864",
+      "before": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.rootMenu.closeChildren();\n          this.elements.rootMenu.focusCurrentChild();\n        }",
+      "after": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          // Close this submenu via its toggle in the parent menu.\n          const parentMenu = this.elements.parentMenu;\n          if (parentMenu) {\n            const toggle = parentMenu.currentMenuItem.elements.toggle;\n            toggle.close();\n            // Move focus to the toggle (parent menu item)\n            parentMenu.focusCurrentChild();\n          } else {\n            // Fallback: close all children and focus controller (should not happen)\n            this.closeChildren();\n            this.focusController();\n          }\n        }"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close only the innermost open submenu and return focus to its parent menubar item, keeping any parent submenus open as required.",
+  "functional_risks": [
+    "If parentMenu is null (unlikely), the fallback behaves as before, closing all submenus.",
+    "If currentMenuItem.elements.toggle is missing, toggle.close() could throw; however this condition only occurs for legitimate submenu items.",
+    "Multiple nested submenus: Escape will close only the current submenu, which is correct behavior."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape while focus is on History (inside Facts submenu) results in focus on #facts, #facts aria-expanded false, and #about aria-expanded true.",
+    "Verify that Escape while focus is on Overview (inside About submenu) returns focus to #about and closes Overview.",
+    "Verify that Escape while focus is on #about (menubar item with submenu open) closes About submenu and returns focus to the menubar.",
+    "Verify that Escape when no submenu is open does not produce unexpected focus changes.",
+    "Ensure other keyboard navigation (ArrowRight, ArrowDown, etc.) continues to work as specified."
+  ]
+}

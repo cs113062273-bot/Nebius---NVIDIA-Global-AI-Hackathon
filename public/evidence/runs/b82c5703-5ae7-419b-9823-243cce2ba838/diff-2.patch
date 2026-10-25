@@ -1,0 +1,15 @@
+diff --git a/js/src/modal.js b/js/src/modal.js
+index 4ce910d..0a137e4 100644
+--- a/js/src/modal.js
++++ b/js/src/modal.js
+@@ -292,6 +292,10 @@ class Modal extends BaseComponent {
+   _setEscapeEvent() {
+     if (this._isShown) {
+       EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {
++        // Ignore Escape if it originates from within an open dropdown menu
++        if (event.key === ESCAPE_KEY && event.target.closest('.dropdown-menu.show')) {
++          return
++        }
+         if (this._config.keyboard && event.key === ESCAPE_KEY) {
+           event.preventDefault()
+           this.hide()

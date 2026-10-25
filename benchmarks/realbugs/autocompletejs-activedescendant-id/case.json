@@ -1,0 +1,29 @@
+{
+  "title": "The combobox's aria-activedescendant must reference the highlighted suggestion element",
+  "library": "autoComplete.js",
+  "repository": "https://github.com/TarekRaafat/autoComplete.js",
+  "issue": "https://github.com/TarekRaafat/autoComplete.js/commit/ec706d39c045b3ca9a75d71546610dcf466d26a4",
+  "fixUrl": "https://github.com/TarekRaafat/autoComplete.js/commit/ec706d39c045b3ca9a75d71546610dcf466d26a4",
+  "buggyCommit": "de0356005310bd2af2b1a5d97add43908bac6c6f",
+  "fixCommit": "ec706d39c045b3ca9a75d71546610dcf466d26a4",
+  "summary": "Arrowing through suggestions sets aria-activedescendant to the suggestion's text instead of its element id, so screen readers cannot announce the highlighted option.",
+  "category": "Combobox state",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/autoComplete.css",
+    "dist/css/images/search.svg",
+    "src/autoComplete.js",
+    "src/components/Input.js",
+    "src/components/Item.js",
+    "src/components/List.js",
+    "src/controllers/dataController.js",
+    "src/controllers/listController.js",
+    "src/controllers/navigationController.js",
+    "src/services/search.js",
+    "src/utils/debouncer.js",
+    "src/utils/eventEmitter.js"
+  ],
+  "license": "Apache-2.0",
+  "split": "holdout",
+  "consumer": "Author-written click-and-collect store picker around the unchanged upstream ES module source at buggyCommit; an import map resolves the extensionless imports in that source."
+}

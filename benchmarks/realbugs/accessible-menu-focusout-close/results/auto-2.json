@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-25T16:20:41.659Z",
+  "policy": "auto",
+  "modelRun": "5eb5b7fc-d3c2-4336-80f6-0a698f910c93",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 1,
+  "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-c379e60f1b5c183b6f5c8b79bd41f8de",
+      "usage": {
+        "completion_tokens": 4471,
+        "prompt_tokens": 23924,
+        "total_tokens": 28395,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3730,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 23924
+      },
+      "latencyMs": 27695,
+      "reservedCreditUsd": 0.054355799999999996
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-579fb8b2fd16cd745528fafd8c02f9a0",
+      "usage": {
+        "completion_tokens": 5981,
+        "prompt_tokens": 24368,
+        "total_tokens": 30349,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5238,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 24368
+      },
+      "latencyMs": 16278,
+      "reservedCreditUsd": 0.18349300000000002
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Book a site visit</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="dist/css/datepicker.css">
+<style>
+body{font:16px system-ui,sans-serif;margin:32px;color:#1d1d1d;background:#fff}
+main{max-width:520px}
+label{display:block;margin:16px 0 4px;font-weight:600}
+input{font:inherit;padding:8px;border:1px solid #555;border-radius:4px;width:260px}
+button[type=submit]{margin-top:20px;font:inherit;padding:8px 16px}
+:focus-visible{outline:3px solid #0b5fff;outline-offset:2px}
+#status{margin-top:16px;min-height:1.4em}
+</style>
+</head>
+<body>
+<main>
+<h1>Book a site visit</h1>
+<form id="visit-form" action="#" novalidate>
+  <label for="contact">Contact name</label>
+  <input id="contact" name="contact" autocomplete="name" value="Ana Ruiz">
+  <label for="visit-date">Visit date (yyyy-mm-dd)</label>
+  <input id="visit-date" name="visit" autocomplete="off" value="2024-03-15">
+  <label for="notes">Access notes</label>
+  <input id="notes" name="notes" autocomplete="off">
+  <button id="submit" type="submit">Request visit</button>
+  <p id="status" role="status"></p>
+</form>
+</main>
+<script type="module">
+import Datepicker from './js/Datepicker.js';
+const form = document.getElementById('visit-form');
+window.picker = new Datepicker(document.getElementById('visit-date'), {format: 'yyyy-mm-dd'});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('status').textContent = 'Requested ' + new FormData(form).get('visit');
+});
+window.__ready = true;
+</script>
+</body>
+</html>

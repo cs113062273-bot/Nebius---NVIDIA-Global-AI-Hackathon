@@ -1,0 +1,23 @@
+{
+  "root_cause": "The MutationObserver's checkDomRemoval function only checks if the focused node is directly in the removedNodes list. When a parent element (like <li>) is removed, the focused button inside it is not directly in removedNodes, so the trap fails to detect the removal and doesn't restore focus into the dialog.",
+  "repair_strategy": "Modify checkDomRemoval to also check if any removed node contains the focused node (using Node.contains), so that removal of an ancestor element triggers focus restoration.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };",
+      "after": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode || node.contains(state.mostRecentlyFocusedNode);\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains trapped inside the dialog after a row containing the focused button is removed, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by preventing focus loss to the page body.",
+  "functional_risks": [
+    "Minimal: only adds a contains() check on the focused node's ancestor chain.",
+    "No change to focus order, initial focus, or escape behavior."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: open dialog, Tab to first remove button, Enter to remove row, verify focus stays in dialog (#basket:focus-within).",
+    "Verify Tab wraps to next focusable element inside dialog.",
+    "Verify Shift+Tab wraps backward inside dialog.",
+    "Verify Escape key closes dialog and returns focus to trigger button."
+  ]
+}

@@ -68,7 +68,32 @@ export function resolvePreimage(current, before, after) {
     if (unique(b)) return { before: b, after: a, normalization: label === 'as-written' ? null : label };
     if (unique(eol(b))) return { before: eol(b), after: eol(a), normalization: label === 'as-written' ? 'line-endings' : label + '+line-endings' };
   }
+  // Last resort: the same lines with only their surrounding whitespace misremembered. The whole
+  // line sequence must occur exactly once; unchanged lines keep the source's own indentation.
+  for (const [label, b, a] of variants) {
+    const block = indentInsensitive(current, b, a, crlf);
+    if (block) return { ...block, normalization: (label === 'as-written' ? '' : label + '+') + 'indentation' };
+  }
   throw new Error('Patch preimage must match exactly once');
+}
+function indentInsensitive(current, before, after, crlf) {
+  const want = before.split(/\r*\n/), trimmed = want.map(l => l.trim());
+  while (trimmed.length && !trimmed[0]) { trimmed.shift(); want.shift(); }
+  while (trimmed.length && !trimmed.at(-1)) { trimmed.pop(); want.pop(); }
+  if (trimmed.filter(Boolean).length < 2) return null;
+  const lines = current.split('\n'), clean = lines.map(l => l.replace(/\r$/, '')), starts = [];
+  for (let i = 0, offset = 0; i < lines.length; offset += lines[i].length + 1, i++) starts.push(offset);
+  const hits = [];
+  for (let i = 0; i + trimmed.length <= clean.length && hits.length < 2; i++) if (trimmed.every((t, k) => clean[i + k].trim() === t)) hits.push(i);
+  if (hits.length !== 1) return null;
+  const at = hits[0], source = clean.slice(at, at + trimmed.length), lead = l => l.match(/^\s*/)[0];
+  const known = new Map(want.map((l, k) => [l, source[k]]));
+  let shift = null;
+  const rewritten = after.split(/\r*\n/).map(l => {
+    if (known.has(l)) { shift = [lead(l), lead(known.get(l))]; return known.get(l); }
+    return shift && l.startsWith(shift[0]) ? shift[1] + l.slice(shift[0].length) : l;
+  });
+  return { before: source.join(crlf ? '\r\n' : '\n'), after: rewritten.join(crlf ? '\r\n' : '\n') };
 }
 export async function applyPlan(root, rawPlan, allowedFiles) {
   const plan = RepairPlan.parse(rawPlan), staged = new Map(), normalizations = []; let changed = 0, size=0;

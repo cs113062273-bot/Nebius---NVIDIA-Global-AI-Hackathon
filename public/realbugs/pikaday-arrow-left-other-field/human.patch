@@ -1,0 +1,12 @@
+diff --git a/pikaday.js b/pikaday.js
+index ba7aca0..743ea02 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -524,7 +524,6 @@
+                         }
+                         break;
+                     case 37:
+-                        e.preventDefault();
+                         self.adjustDate('subtract', 1);
+                         break;
+                     case 38:

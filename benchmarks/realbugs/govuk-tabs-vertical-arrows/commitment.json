@@ -1,0 +1,45 @@
+{
+  "fixedAt": "2026-10-25T13:30:20.863Z",
+  "sourceHashes": {
+    "LICENSE": "c652f35b1f2e5b88eb49f1e8a935eec79b4761a81666ace576e1af723f4a9238",
+    "index.html": "24e8e15758ccfc9f3b17cadc01108c076cd71ab50482434408642d3a3ece9dfb",
+    "packages/govuk-frontend/src/govuk/common/index.js": "675d8cf2c459d25b8c1e1860136ef96f53d9b7fa9f3aca62db3926190d793933",
+    "packages/govuk-frontend/src/govuk/common/normalise-string.js": "e0e8d8bb3d470b4ea064b89c146cc04bfb8445ec892434a5dbcc0356f39c3823",
+    "packages/govuk-frontend/src/govuk/components/tabs/tabs.js": "efec2dbc261636f1987a68ade80173d751d99359fe13cc0106084220e96e3698",
+    "packages/govuk-frontend/src/govuk/errors/index.js": "a61eb5bd02d2ff80f9d87f72bb5bf2d5634c16b0b2f5f8054eee9f4280b2637a",
+    "packages/govuk-frontend/src/govuk/govuk-frontend-component.js": "2018374c21241d2dfc9c57fcecdaa6ced3dda27dd3d6a789c0a58674da3a22dd"
+  },
+  "humanFixHashes": {
+    "LICENSE": "c652f35b1f2e5b88eb49f1e8a935eec79b4761a81666ace576e1af723f4a9238",
+    "index.html": "24e8e15758ccfc9f3b17cadc01108c076cd71ab50482434408642d3a3ece9dfb",
+    "packages/govuk-frontend/src/govuk/common/index.js": "675d8cf2c459d25b8c1e1860136ef96f53d9b7fa9f3aca62db3926190d793933",
+    "packages/govuk-frontend/src/govuk/common/normalise-string.js": "e0e8d8bb3d470b4ea064b89c146cc04bfb8445ec892434a5dbcc0356f39c3823",
+    "packages/govuk-frontend/src/govuk/components/tabs/tabs.js": "094b38c15ca137770b76457b134c61ede0b3b6b8b0f0957eebaf5a0274af4884",
+    "packages/govuk-frontend/src/govuk/errors/index.js": "a61eb5bd02d2ff80f9d87f72bb5bf2d5634c16b0b2f5f8054eee9f4280b2637a",
+    "packages/govuk-frontend/src/govuk/govuk-frontend-component.js": "2018374c21241d2dfc9c57fcecdaa6ced3dda27dd3d6a789c0a58674da3a22dd"
+  },
+  "humanFixFiles": [
+    "packages/govuk-frontend/src/govuk/components/tabs/tabs.js"
+  ],
+  "taskHash": "c17f750c96c6aa947e0ec8c9a47e1b87585999cdfadb24703aa8172a6691c8b7",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "ee96cce4-3c72-44de-9dc6-0dee61068737",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

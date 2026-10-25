@@ -1,0 +1,19 @@
+{
+  "title": "ArrowLeft must keep moving the caret in other text fields while a calendar is shown",
+  "library": "Pikaday",
+  "repository": "https://github.com/Pikaday/Pikaday",
+  "issue": "https://github.com/Pikaday/Pikaday/pull/710",
+  "fixUrl": "https://github.com/Pikaday/Pikaday/commit/f52cf7058c0def6fa6776179a78cde2612b1d7b1",
+  "buggyCommit": "2dc35f0e4d6525de534ce7145f37ae5914d81f23",
+  "fixCommit": "f52cf7058c0def6fa6776179a78cde2612b1d7b1",
+  "summary": "With a calendar visible, pressing ArrowLeft in any other text field is swallowed, so the user cannot move the caret back to correct their text.",
+  "category": "Text editing",
+  "upstreamFiles": [
+    "LICENSE",
+    "css/pikaday.css",
+    "pikaday.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written grocery delivery form with an inline Pikaday calendar around the unchanged upstream pikaday.js at buggyCommit."
+}

@@ -1,0 +1,26 @@
+diff --git a/lib/src/index.js b/lib/src/index.js
+index d4e2d21..697ebba 100644
+--- a/lib/src/index.js
++++ b/lib/src/index.js
+@@ -138,6 +138,7 @@ const MicroModal = (() => {
+     onKeydown (event) {
+       if (event.keyCode === 27) this.closeModal(event) // esc
+       if (event.keyCode === 9) this.retainFocus(event) // tab
++      if (event.keyCode === 32) event.stopPropagation(); // space
+     }
+ 
+     getFocusableNodes () {
+@@ -163,8 +164,11 @@ const MicroModal = (() => {
+         return !node.hasAttribute(this.config.closeTrigger)
+       })
+ 
+-      if (nodesWhichAreNotCloseTargets.length > 0) nodesWhichAreNotCloseTargets[0].focus()
+-      if (nodesWhichAreNotCloseTargets.length === 0) focusableNodes[0].focus()
++      if (nodesWhichAreNotCloseTargets.length > 0) {
++        nodesWhichAreNotCloseTargets[0].focus()
++      } else if (nodesWhichAreNotCloseTargets.length === 0) {
++        focusableNodes[0].focus()
++      }
+     }
+ 
+     retainFocus (event) {

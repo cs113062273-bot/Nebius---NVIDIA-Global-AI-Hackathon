@@ -1,0 +1,45 @@
+{
+  "fixedAt": "2026-10-25T13:35:03.138Z",
+  "sourceHashes": {
+    "LICENSE": "95c8d0bb94a2dcdd47d93089d2ebb9c5322b829409610ca5269b90f800470de5",
+    "index.html": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+    "packages/nhsuk-frontend/src/nhsuk/common/index.js": "c3f5581a9a5fd9765b10781540c625e0b81d7db842c3fa6ddbff0cb18578bc61",
+    "packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.js": "4012155e040f87452e3823fe2386a512498b69c1f91780efeddfba19e4aeb972",
+    "packages/nhsuk-frontend/src/nhsuk/component.js": "6ac32b24fb8eb8549bd59dae38827ff53a3184c952b568af07c7b1ba66193d86",
+    "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js": "b12e3c7a52e09c981155d2f727c5eb8358d420a487177c9a1e722c19da4c8af0",
+    "packages/nhsuk-frontend/src/nhsuk/errors/index.js": "c8841b8026047b83816d136b2e381b8615da9a58f7cd9de0f4b0a69ce711d7a3"
+  },
+  "humanFixHashes": {
+    "LICENSE": "95c8d0bb94a2dcdd47d93089d2ebb9c5322b829409610ca5269b90f800470de5",
+    "index.html": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+    "packages/nhsuk-frontend/src/nhsuk/common/index.js": "c3f5581a9a5fd9765b10781540c625e0b81d7db842c3fa6ddbff0cb18578bc61",
+    "packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.js": "4012155e040f87452e3823fe2386a512498b69c1f91780efeddfba19e4aeb972",
+    "packages/nhsuk-frontend/src/nhsuk/component.js": "6ac32b24fb8eb8549bd59dae38827ff53a3184c952b568af07c7b1ba66193d86",
+    "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js": "22876e59d737c9438c56d8c792f2b304ee28320eab4c7bf1f4ce4d4d341bb561",
+    "packages/nhsuk-frontend/src/nhsuk/errors/index.js": "c8841b8026047b83816d136b2e381b8615da9a58f7cd9de0f4b0a69ce711d7a3"
+  },
+  "humanFixFiles": [
+    "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js"
+  ],
+  "taskHash": "8a5c3baf09b0d645cd019635b99194ac511a406a61b5c6e5fad3a680dd1ce297",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "2b36fa59-dedb-4a08-94f1-d47a5f9038ea",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

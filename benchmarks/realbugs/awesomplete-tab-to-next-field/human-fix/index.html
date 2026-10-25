@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Conference registration</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="awesomplete.css">
+<style>
+body{font:16px system-ui,sans-serif;margin:32px;color:#1d1d1d;background:#fff}
+main{max-width:520px}
+label{display:block;margin:16px 0 4px;font-weight:600}
+input{font:inherit;padding:8px;border:1px solid #555;border-radius:4px;width:260px}
+button[type=submit]{margin-top:20px;font:inherit;padding:8px 16px}
+:focus-visible{outline:3px solid #0b5fff;outline-offset:2px}
+#status{margin-top:16px;min-height:1.4em}
+</style>
+</head>
+<body>
+<main>
+<h1>Conference registration</h1>
+<form id="register-form" action="#" novalidate>
+  <label for="attendee">Full name</label>
+  <input id="attendee" name="attendee" autocomplete="name" value="Mei Tanaka">
+  <label for="city">Departure city</label>
+  <input id="city" name="city" autocomplete="off">
+  <label for="dietary">Dietary requirements</label>
+  <input id="dietary" name="dietary" autocomplete="off">
+  <button id="submit" type="submit">Register</button>
+  <p id="status" role="status"></p>
+</form>
+</main>
+<script src="awesomplete.js"></script>
+<script>
+const form = document.getElementById('register-form');
+window.cityPicker = new Awesomplete(document.getElementById('city'), {
+  list: ['Barcelona', 'Berlin', 'Bern', 'Bordeaux', 'Bratislava', 'Brussels', 'Bucharest', 'Budapest']
+});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('status').textContent = 'Registered from ' + new FormData(form).get('city');
+});
+window.__ready = true;
+</script>
+</body>
+</html>

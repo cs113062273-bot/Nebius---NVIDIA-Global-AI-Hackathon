@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" class="govuk-template">
+<head>
+<meta charset="utf-8">
+<title>Apply for a fishing licence</title>
+<link rel="icon" href="data:,">
+<style>
+body{margin:0;font:19px/1.3 Arial,sans-serif;color:#0b0c0c;background:#fff}
+.govuk-width-container{max-width:960px;margin:0 30px}
+.govuk-header{background:#0b0c0c;color:#fff;border-bottom:10px solid #1d70b8}
+.govuk-header__container{display:flex;flex-wrap:wrap;align-items:baseline;padding:10px 0}
+.govuk-header__logo{margin-right:30px;font-weight:700;font-size:28px}
+.govuk-header__content{flex:1}
+.govuk-header__link{color:#fff;text-decoration:none}
+.govuk-header__link:hover{text-decoration:underline}
+.govuk-header__link--service-name{display:inline-block;font-weight:700;font-size:22px;margin-bottom:10px}
+.govuk-header__menu-button{display:none;font:inherit;color:#fff;background:none;border:0;float:right}
+.govuk-header__navigation{margin:0;padding:0;list-style:none}
+.govuk-header__navigation-item{display:inline-block;margin-right:15px;padding:5px 0}
+@media (max-width:40.0525em){
+  .govuk-header__menu-button{display:inline-block}
+  .js-enabled .govuk-header__navigation{display:none}
+  .js-enabled .govuk-header__navigation--open{display:block}
+  .govuk-header__navigation-item{display:block}
+}
+main{padding:30px 0}
+h1{font-size:32px;margin:0 0 20px}
+section{margin-bottom:20px}
+:focus{outline:3px solid #fd0;outline-offset:0;background:#fd0;color:#0b0c0c}
+</style>
+<script type="importmap">
+{"imports":{"/src/govuk/vendor/polyfills/Event":"/src/govuk/vendor/polyfills/Event.js","/src/govuk/vendor/polyfills/Window":"/src/govuk/vendor/polyfills/Window.js","/src/govuk/vendor/polyfills/Element":"/src/govuk/vendor/polyfills/Element.js","/src/govuk/vendor/polyfills/Document":"/src/govuk/vendor/polyfills/Document.js","/src/govuk/vendor/polyfills/Object/defineProperty":"/src/govuk/vendor/polyfills/Object/defineProperty.js","/src/govuk/vendor/polyfills/Element/prototype/classList":"/src/govuk/vendor/polyfills/Element/prototype/classList.js","/src/govuk/vendor/polyfills/DOMTokenList":"/src/govuk/vendor/polyfills/DOMTokenList.js","/src/govuk/vendor/polyfills/Function/prototype/bind":"/src/govuk/vendor/polyfills/Function/prototype/bind.js"}}
+</script>
+</head>
+<body class="govuk-template__body js-enabled">
+<header class="govuk-header" role="banner" data-module="govuk-header" id="site-header">
+  <div class="govuk-header__container govuk-width-container">
+    <div class="govuk-header__logo">
+      <a href="#main-content" class="govuk-header__link govuk-header__link--homepage" id="home-link"><span class="govuk-header__logotype-text">GOV.UK</span></a>
+    </div>
+    <div class="govuk-header__content">
+      <a href="#main-content" class="govuk-header__link govuk-header__link--service-name" id="service-link">Apply for a fishing licence</a>
+      <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" id="menu-button" aria-controls="navigation" aria-label="Show or hide navigation menu">Menu</button>
+      <nav>
+        <ul id="navigation" class="govuk-header__navigation" aria-label="Navigation menu">
+          <li class="govuk-header__navigation-item govuk-header__navigation-item--active"><a class="govuk-header__link" href="#apply" id="nav-apply">Apply</a></li>
+          <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="#renew" id="nav-renew">Renew a licence</a></li>
+          <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="#rules" id="nav-rules">Fishing rules</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+<div class="govuk-width-container">
+<main class="govuk-main-wrapper" id="main-content">
+  <h1>Apply for a fishing licence</h1>
+  <section id="apply"><h2>Apply</h2><p>You need a licence to fish for salmon, trout, freshwater fish, smelt or eel.</p></section>
+  <section id="renew"><h2>Renew a licence</h2><p>You can renew up to 30 days before your licence ends.</p></section>
+  <section id="rules"><h2>Fishing rules</h2><p>Check close seasons and catch limits before you fish.</p></section>
+</main>
+</div>
+<script type="module">
+import Header from './src/govuk/components/header/header.js'
+new Header(document.querySelector('[data-module="govuk-header"]')).init()
+</script>
+</body>
+</html>

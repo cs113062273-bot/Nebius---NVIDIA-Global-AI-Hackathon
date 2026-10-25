@@ -1,0 +1,39 @@
+{
+  "fixedAt": "2026-10-25T13:40:23.044Z",
+  "sourceHashes": {
+    "LICENSE": "bac76ec786e2d7ceab9c046d6c765abb57536a40f51e807bd4dc279fb4134c17",
+    "css/pikaday.css": "f8cb0856a98f2c8c193e42dbb3e3097833ea27b5b8d1a4e0d581b2ef7e94ea09",
+    "index.html": "4cf4183a11d7c6ca380c6caeb6e7649b7898c26108f466ed3c3758609e716bf6",
+    "pikaday.js": "662123ec9f429dee9cffaacfcf89b05ed9c3c30a78d33ecfd113e6778349cc77"
+  },
+  "humanFixHashes": {
+    "LICENSE": "bac76ec786e2d7ceab9c046d6c765abb57536a40f51e807bd4dc279fb4134c17",
+    "css/pikaday.css": "f8cb0856a98f2c8c193e42dbb3e3097833ea27b5b8d1a4e0d581b2ef7e94ea09",
+    "index.html": "4cf4183a11d7c6ca380c6caeb6e7649b7898c26108f466ed3c3758609e716bf6",
+    "pikaday.js": "f981a76a4e707281a54f667489de3941c8bb43053eb54d07c55e678fb6618c2b"
+  },
+  "humanFixFiles": [
+    "pikaday.js"
+  ],
+  "taskHash": "4963cadb221822b3e07dfaecc112847cfa46b5a9bde425ccb2d854d726fb8918",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "69df69ba-9d14-472d-8f3f-4f7692c6546f",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

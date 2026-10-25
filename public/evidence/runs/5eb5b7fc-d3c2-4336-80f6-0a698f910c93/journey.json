@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "id": "accessible-menu-focusout-keyboard",
+  "title": "Tabbing out of the navigation closes the open dropdown",
+  "goal": "After a keyboard user leaves the navigation, the Shop dropdown no longer covers the page",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach Shop",
+      "action": {
+        "kind": "seek",
+        "selector": "#shop",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open Shop",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#shop",
+          "name": "aria-expanded",
+          "value": "true"
+        },
+        {
+          "kind": "visible",
+          "selector": "#plants",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Tab out of the navigation to search",
+      "action": {
+        "kind": "seek",
+        "selector": "#search",
+        "maxTabs": 24
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#shop",
+          "name": "aria-expanded",
+          "value": "false"
+        },
+        {
+          "kind": "visible",
+          "selector": "#plants",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#search"
+    },
+    {
+      "kind": "visible",
+      "selector": "#plants",
+      "value": false
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#shop",
+      "name": "aria-expanded",
+      "value": "false"
+    }
+  ],
+  "forbidden": []
+}

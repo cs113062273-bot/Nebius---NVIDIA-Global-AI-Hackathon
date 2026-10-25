@@ -1,0 +1,30 @@
+{
+  "root_cause": "The setFocusToFirstNode method contains a variable name typo (nodesWhichAreNotCloseTargets vs nodesWhichAreNotCloseTargets) causing a ReferenceError when the modal opens. This prevents focus from moving to the checkbox, leaving focus on the trigger button. When Space is pressed, the trigger button receives the event and clicks, causing the modal to re-initialize but the focus error persists, and the modal's aria-hidden attribute becomes true (closed). Additionally, the Space key event is not handled in onKeydown, allowing it to propagate and potentially trigger unwanted behavior.",
+  "repair_strategy": "Fix the variable name typo in setFocusToFirstNode to ensure focus moves to the first non-close-target focusable element (the checkbox). Add a Space key handler in onKeydown that stops propagation to prevent the Space key from bubbling to any ancestor listeners that might close the modal. This ensures that pressing Space on the checkbox toggles it and keeps the modal open.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "    onKeydown (event) {\n      if (event.keyCode === 27) this.closeModal(event) // esc\n      if (event.keyCode === 9) this.retainFocus(event) // tab\n    }",
+      "after": "    onKeydown (event) {\n      if (event.keyCode === 27) this.closeModal(event) // esc\n      if (event.keyCode === 9) this.retainFocus(event) // tab\n      if (event.keyCode === 32) event.stopPropagation(); // space\n    }"
+    },
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "    setFocusToFirstNode () {\n      if (this.config.disableFocus) return\n\n      const focusableNodes = this.getFocusableNodes()\n\n      // no focusable nodes\n      if (focusableNodes.length === 0) return\n\n      // remove nodes on whose click, the modal closes\n      // could not think of a better name :(\n      const nodesWhichAreNotCloseTargets = focusableNodes.filter(node => {\n        return !node.hasAttribute(this.config.closeTrigger)\n      })\n\n      if (nodesWhichAreNotCloseTargets.length > 0) nodesWhichAreNotCloseTargets[0].focus()\n      if (nodesWhichAreNotCloseTargets.length === 0) focusableNodes[0].focus()\n    }",
+      "after": "    setFocusToFirstNode () {\n      if (this.config.disableFocus) return\n\n      const focusableNodes = this.getFocusableNodes()\n\n      // no focusable nodes\n      if (focusableNodes.length === 0) return\n\n      // remove nodes on whose click, the modal closes\n      // could not think of a better name :(\n      const nodesWhichAreNotCloseTargets = focusableNodes.filter(node => {\n        return !node.hasAttribute(this.config.closeTrigger)\n      })\n\n      if (nodesWhichAreNotCloseTargets.length > 0) {\n        nodesWhichAreNotCloseTargets[0].focus()\n      } else if (nodesWhichAreNotCloseTargets.length === 0) {\n        focusableNodes[0].focus()\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Space on a checkbox within the preferences dialog will toggle the checkbox without closing the dialog, keeping focus inside the modal and preserving the dialog's open state (aria-hidden remains false).",
+  "functional_risks": [
+    "The fix to setFocusToFirstNode may affect other modals that rely on the previous (buggy) behavior, but the previous behavior was broken.",
+    "The Space key stopPropagation may interfere with custom Space-based shortcuts that rely on event propagation within the modal.",
+    "If other components depend on Space key bubbling from inner elements, they will no longer receive the event."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Space on the weekly or product offers checkbox toggles the corresponding checkbox and the modal remains open (aria-hidden stays false).",
+    "Confirm that pressing Space on the close button (×) or the Done button still closes the modal via their click handlers.",
+    "Ensure Escape key continues to close the modal and restore focus to the opener button.",
+    "Ensure Tab key trapping still works correctly within the modal (focus loops within modal)."
+  ]
+}

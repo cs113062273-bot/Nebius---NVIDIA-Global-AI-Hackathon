@@ -1,0 +1,33 @@
+[
+  {
+    "path": "index.html",
+    "score": 8,
+    "signals": [
+      "actions-toggle",
+      "action-send",
+      "body",
+      "Invoice actions",
+      "Send reminder",
+      "Download PDF",
+      "Archive",
+      "Record payment"
+    ],
+    "sha256": "6753892a37b4dec485fcf06b07a12b42ca680c5549a27ad09620c6db6f43a37d"
+  },
+  {
+    "path": "js/src/dropdown.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "fc69a61b69ae1fa2c2bb923fdc393dd2742925e8af996376df5f98e38f8d810e"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "8a9c39e48d932c90c5a32d3f647876b5bd49419fa1300aef69b86fb55c8f16fe"
+  }
+]

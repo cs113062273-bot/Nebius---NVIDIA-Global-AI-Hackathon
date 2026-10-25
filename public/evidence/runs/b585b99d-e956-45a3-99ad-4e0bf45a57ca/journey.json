@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "id": "tabbable-fieldset-keyboard",
+  "title": "Opening the address dialog puts focus on the first usable field",
+  "goal": "A keyboard user can open the dialog, type an address and save it",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach address trigger",
+      "action": {
+        "kind": "seek",
+        "selector": "#open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open address dialog",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#address-dialog",
+          "value": true
+        },
+        {
+          "kind": "focus",
+          "selector": "#street"
+        }
+      ]
+    },
+    {
+      "title": "Type street",
+      "action": {
+        "kind": "type",
+        "text": "12 Elm Street"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to Save",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#save"
+        }
+      ]
+    },
+    {
+      "title": "Save address",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#address-dialog",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Delivering to 12 Elm Street."
+    },
+    {
+      "kind": "focus",
+      "selector": "#open"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Delivering to 12 Elm Street."
+    }
+  ],
+  "forbidden": []
+}

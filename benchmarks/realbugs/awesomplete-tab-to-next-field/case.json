@@ -1,0 +1,19 @@
+{
+  "title": "One Tab press must move from an autocomplete field with open suggestions to the next form field",
+  "library": "awesomplete",
+  "repository": "https://github.com/LeaVerou/awesomplete",
+  "issue": "https://github.com/LeaVerou/awesomplete/issues/17255",
+  "fixUrl": "https://github.com/LeaVerou/awesomplete/commit/96cddba0d4223403783a2eec9cc7c5aa64c6fff3",
+  "buggyCommit": "0c58da5fe55848b3f6ebe3fee94918706994fed4",
+  "fixCommit": "96cddba0d4223403783a2eec9cc7c5aa64c6fff3",
+  "summary": "With suggestions open, Tab sends focus into the suggestion list instead of the next field, so keyboard users must press Tab twice.",
+  "category": "Focus order",
+  "upstreamFiles": [
+    "LICENSE",
+    "awesomplete.css",
+    "awesomplete.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written conference registration form around the unchanged upstream awesomplete.js at buggyCommit."
+}

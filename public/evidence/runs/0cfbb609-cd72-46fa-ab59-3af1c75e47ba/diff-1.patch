@@ -1,0 +1,12 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 6fa3ea3..a9be41e 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -200,6 +200,7 @@ class Dropdown extends BaseComponent {
+     this._menu.classList.remove(CLASS_NAME_SHOW)
+     this._element.classList.remove(CLASS_NAME_SHOW)
+     this._element.setAttribute('aria-expanded', 'false')
++    this._element.focus();
+     Manipulator.removeDataAttribute(this._menu, 'popper')
+     EventHandler.trigger(this._element, EVENT_HIDDEN, relatedTarget)
+   }

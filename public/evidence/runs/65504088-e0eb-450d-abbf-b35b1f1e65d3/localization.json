@@ -1,0 +1,34 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "tab-account",
+      "tab-billing",
+      "body",
+      "Account",
+      "Notifications",
+      "Billing",
+      "Workspace name",
+      "Email me weekly summaries",
+      "Plan: Team, billed monthly"
+    ],
+    "sha256": "3d05846f4b99ead5a274043e23c4a43d19aad8f72342a805fe87a0935933fd6c"
+  },
+  {
+    "path": "js/src/tab.js",
+    "score": 8.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "7ad4e9f0424d0d4b95bcf399a1639e44cfec200c874382dc7a8b34016a74228f"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "2388f5400d77a02592a84bf56d0a73b1c67daf78f1b2b48c906a91fb29c05a71"
+  }
+]

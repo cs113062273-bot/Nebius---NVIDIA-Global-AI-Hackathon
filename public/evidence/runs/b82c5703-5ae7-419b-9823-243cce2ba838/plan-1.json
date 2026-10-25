@@ -1,0 +1,24 @@
+{
+  "root_cause": "The dropdown's keydown handler calls event.stopPropagation() for Escape, preventing the modal's escape listener from receiving the event and thus the modal does not close.",
+  "repair_strategy": "Modify Dropdown.dataApiKeydownHandler to prevent default for Escape but only stop propagation for non‑Escape keys, allowing the event to bubble to the modal while still closing the dropdown menu.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    event.preventDefault()\n    event.stopPropagation()\n\n    if (isDisabled(this)) {",
+      "after": "    event.preventDefault()\n    if (event.key !== ESCAPE_KEY) {\n      event.stopPropagation()\n    }\n\n    if (isDisabled(this)) {"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape while focus is on the access toggle button will now close the share modal, making the button invisible as required.",
+  "functional_risks": [
+    "Potential change to dropdown Escape behavior if other scripts rely on the event not propagating.",
+    "Ensuring that arrow keys and Space still work correctly within the dropdown after the conditional stopPropagation."
+  ],
+  "verification_requirements": [
+    "Verify that Escape closes the modal when focus is on the access toggle button.",
+    "Verify that the dropdown menu closes when Escape is pressed.",
+    "Verify that Escape still closes the dropdown when the modal is not open.",
+    "Verify that ArrowUp, ArrowDown, and Space keys still function correctly inside the dropdown.",
+    "Verify that modal closing via Escape works when focus is elsewhere inside the modal."
+  ]
+}

@@ -1,0 +1,33 @@
+diff --git a/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js b/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
+index 1571266..721a3fb 100644
+--- a/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
++++ b/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
+@@ -89,8 +89,12 @@ export class Checkboxes extends Component {
+   unCheckAllInputsExcept($input) {
+     const { checkboxExclusiveGroup: exclusiveGroup } = $input.dataset
+ 
++    const selectorGroup = exclusiveGroup
++      ? `[data-checkbox-exclusive-group="${exclusiveGroup}"]`
++      : `[name="${$input.name}"]`
++
+     const allInputsWithSameName = document.querySelectorAll(
+-      `input[type="checkbox"][name="${$input.name}"]`
++      `input[type="checkbox"]${selectorGroup}`
+     )
+ 
+     allInputsWithSameName.forEach(($inputWithSameName) => {
+@@ -116,9 +120,13 @@ export class Checkboxes extends Component {
+   unCheckExclusiveInputs($input) {
+     const { checkboxExclusiveGroup: exclusiveGroup } = $input.dataset
+ 
++    const selectorGroup = exclusiveGroup
++      ? `[data-checkbox-exclusive-group="${exclusiveGroup}"]`
++      : `[name="${$input.name}"]`
++
+     const allInputsWithSameNameAndExclusiveBehaviour =
+       document.querySelectorAll(
+-        `input[type="checkbox"][data-checkbox-exclusive][name="${$input.name}"]`
++        `input[type="checkbox"][data-checkbox-exclusive]${selectorGroup}`
+       )
+ 
+     allInputsWithSameNameAndExclusiveBehaviour.forEach(($exclusiveInput) => {

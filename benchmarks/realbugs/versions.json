@@ -1,0 +1,8 @@
+{
+  "note": "Each frozen implementation is scored on its own: one auto run per screened case, first run on that version. Changing the engine or a run limit starts a new version; every case is rerun and earlier scores stay listed.",
+  "versions": {
+    "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0": "First frozen engine, run while the case set was still being built. No indentation-insensitive patch matching.",
+    "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5": "Adds indentation-insensitive patch matching. Output limit 12,000 tokens, prompt limit 96,000 characters: three Ultra replies were cut off before the patch and one case was never sent.",
+    "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd": "Output limit 32,000 tokens, prompt limit 240,000 characters, five-minute call timeout. All 26 cases rerun."
+  }
+}

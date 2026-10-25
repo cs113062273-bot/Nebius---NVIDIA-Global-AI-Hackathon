@@ -5,7 +5,7 @@ import { json, listFiles, readJson } from '../src/files.js';
 import { digest } from '../src/schema.js';
 import { verifyProof } from '../src/proof.js';
 import { proofArchive } from '../src/archive.js';
-import { liveCases, humanPatch } from '../src/live.js';
+import { liveCases, humanPatch, benchmarkVersions } from '../src/live.js';
 
 // Publishes recorded runs as a read-only, backend-free evidence bundle under public/evidence.
 // Every copied artifact must match its run manifest hash; run.json is a reduced, path-sanitized view.
@@ -46,7 +46,7 @@ const sanitize = text => text.split(ROOT.replaceAll('\\', '\\\\')).join('.').spl
 const realbugs = await liveCases(), realbugsOut = path.join(ROOT, 'public', 'realbugs');
 await fs.rm(realbugsOut, { recursive: true, force: true });
 for (const c of realbugs) { await fs.mkdir(path.join(realbugsOut, c.id), { recursive: true }); await fs.writeFile(path.join(realbugsOut, c.id, 'human.patch'), await humanPatch(c.id)); }
-await json(path.join(realbugsOut, 'index.json'), { generatedAt: new Date().toISOString(), enabled: false, cases: realbugs });
+await json(path.join(realbugsOut, 'index.json'), { generatedAt: new Date().toISOString(), enabled: false, cases: realbugs, benchmark: await benchmarkVersions() });
 const recordedRealbugs = realbugs.filter(c => c.recorded);
 if (recordedRealbugs.length) groups.unshift({ title: 'Real upstream bugs · blind Nemotron runs', summary: "Each library is pinned just before a published maintainer fix. The maintainers' fix passes the frozen task; Nemotron gets only the buggy source, Super first and Ultra after a rejection.",
  runs: recordedRealbugs.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })) });

@@ -1,0 +1,27 @@
+diff --git a/src/govuk/components/radios/radios.js b/src/govuk/components/radios/radios.js
+index 659c970..2dfc654 100644
+--- a/src/govuk/components/radios/radios.js
++++ b/src/govuk/components/radios/radios.js
+@@ -34,6 +34,7 @@ Radios.prototype.init = function () {
+ 
+   // Handle events
+   $module.addEventListener('click', this.handleClick.bind(this))
++  $module.addEventListener('change', this.handleChange.bind(this))
+ }
+ 
+ Radios.prototype.setAttributes = function ($input) {
+@@ -57,4 +58,14 @@ Radios.prototype.handleClick = function (event) {
+   }.bind(this))
+ }
+ 
++Radios.prototype.handleChange = function (event) {
++  var $input = event.target
++  // If a radio with aria-controls, handle change
++  var isRadio = $input.getAttribute('type') === 'radio'
++  var hasAriaControls = $input.getAttribute('aria-controls')
++  if (isRadio && hasAriaControls) {
++    this.setAttributes($input)
++  }
++}
++
+ export default Radios

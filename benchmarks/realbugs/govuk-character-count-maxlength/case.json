@@ -1,0 +1,26 @@
+{
+  "title": "Typing past a character limit must keep the text and say how many characters are too many",
+  "library": "GOV.UK Frontend",
+  "repository": "https://github.com/alphagov/govuk-frontend",
+  "issue": "https://github.com/alphagov/govuk-frontend/pull/2590",
+  "fixUrl": "https://github.com/alphagov/govuk-frontend/commit/28711ec3cd0bb60031d80e763d03b0dda8fc3032",
+  "buggyCommit": "b83607025b9c68afb7d24b2c55048e6df8268a17",
+  "fixCommit": "28711ec3cd0bb60031d80e763d03b0dda8fc3032",
+  "summary": "The character count leaves the textarea's hard maxlength in place, so typing is silently cut off at the limit and the user is never told the text is too long.",
+  "category": "Form value",
+  "upstreamFiles": [
+    "LICENSE",
+    "src/govuk/components/character-count/character-count.js",
+    "src/govuk/vendor/polyfills/Document.js",
+    "src/govuk/vendor/polyfills/DOMTokenList.js",
+    "src/govuk/vendor/polyfills/Element/prototype/classList.js",
+    "src/govuk/vendor/polyfills/Element.js",
+    "src/govuk/vendor/polyfills/Event.js",
+    "src/govuk/vendor/polyfills/Function/prototype/bind.js",
+    "src/govuk/vendor/polyfills/Object/defineProperty.js",
+    "src/govuk/vendor/polyfills/Window.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written problem-report form around the unchanged upstream character count source at buggyCommit; an import map resolves the upstream extensionless relative imports to the pinned .js files."
+}

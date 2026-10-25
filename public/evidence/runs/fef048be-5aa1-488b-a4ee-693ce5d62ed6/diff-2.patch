@@ -1,0 +1,17 @@
+diff --git a/pikaday.js b/pikaday.js
+index ba7aca0..946efdc 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -513,6 +513,12 @@
+         self._onKeyChange = function(e)
+         {
+             e = e || window.event;
++            var target = e.target || e.srcElement;
++            if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT' || target.isContentEditable)) {
++                if (target !== opts.field) {
++                    return;
++                }
++            }
+ 
+             if (self.isVisible()) {
+ 

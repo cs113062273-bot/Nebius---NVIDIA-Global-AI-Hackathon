@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "id": "bootstrap-dropdown-modal-escape-pointer",
+  "title": "Share the file with the finance team",
+  "goal": "Choosing an access level and saving updates the file's sharing",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the share dialog",
+      "action": {
+        "kind": "click",
+        "selector": "#open-share"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#access-toggle",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Open the access menu",
+      "action": {
+        "kind": "click",
+        "selector": "#access-toggle"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#access-team",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Choose Finance team",
+      "action": {
+        "kind": "click",
+        "selector": "#access-team"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#access-level",
+          "value": "Finance team"
+        }
+      ]
+    },
+    {
+      "title": "Save",
+      "action": {
+        "kind": "click",
+        "selector": "#share-save"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#share-title",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#shared-with",
+      "value": "Finance team"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#shared-with",
+      "value": "Finance team"
+    },
+    {
+      "kind": "visible",
+      "selector": "#share-title",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,50 @@
+{
+  "journey": {
+    "version": 1, "id": "pikaday-edit-note-with-arrow-left", "title": "Correct a typo in the driver note with the left arrow",
+    "goal": "While the calendar is on the page, ArrowLeft in another text field still moves the caret so the user can fix their text",
+    "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach the driver note", "action": {"kind": "seek", "selector": "#notes"}},
+      {"title": "Type the note without a space", "action": {"kind": "type", "text": "Gate4"}},
+      {"title": "Move the caret back one character", "action": {"kind": "press", "key": "ArrowLeft"}},
+      {"title": "Insert the missing space", "action": {"kind": "type", "text": " "},
+       "assertions": [{"kind": "form-data", "selector": "#slot-form", "name": "notes", "value": ["Gate 4"]}]}
+    ],
+    "success": [{"kind": "form-data", "selector": "#slot-form", "name": "notes", "value": ["Gate 4"]}],
+    "functional": [{"kind": "focus", "selector": "#notes"}],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "pikaday-pointer-pick-day", "title": "Pick a delivery day with the pointer",
+    "goal": "Clicking a day in the calendar fills the delivery day",
+    "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Choose 20 March", "action": {"kind": "click", "selector": ".pika-button[data-pika-month=\"2\"][data-pika-day=\"20\"]"},
+       "assertions": [{"kind": "form-data", "selector": "#slot-form", "name": "delivery", "value": ["2024-03-20"]}]},
+      {"title": "Write a note", "action": {"kind": "click", "selector": "#notes"}},
+      {"title": "Type the note", "action": {"kind": "type", "text": "Back door"}},
+      {"title": "Book the slot", "action": {"kind": "click", "selector": "#submit"},
+       "assertions": [{"kind": "text", "selector": "#status", "value": "Booked 2024-03-20"}]}
+    ],
+    "success": [{"kind": "text", "selector": "#status", "value": "Booked 2024-03-20"}],
+    "functional": [{"kind": "form-data", "selector": "#slot-form", "name": "delivery", "value": ["2024-03-20"]}, {"kind": "form-data", "selector": "#slot-form", "name": "notes", "value": ["Back door"]}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "pikaday-arrow-keys-in-date-field", "title": "Move the delivery day with arrow keys",
+      "goal": "Arrow keys in the delivery day field still move the selected day",
+      "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach the delivery day", "action": {"kind": "seek", "selector": "#delivery-date"}},
+        {"title": "Go back one day", "action": {"kind": "press", "key": "ArrowLeft"},
+         "assertions": [{"kind": "form-data", "selector": "#slot-form", "name": "delivery", "value": ["2024-03-14"]}]},
+        {"title": "Go forward one week", "action": {"kind": "press", "key": "ArrowDown"},
+         "assertions": [{"kind": "form-data", "selector": "#slot-form", "name": "delivery", "value": ["2024-03-21"]}]}
+      ],
+      "success": [{"kind": "form-data", "selector": "#slot-form", "name": "delivery", "value": ["2024-03-21"]}],
+      "functional": [{"kind": "form-data", "selector": "#slot-form", "name": "delivery", "value": ["2024-03-21"]}],
+      "forbidden": []
+    }
+  ]
+}

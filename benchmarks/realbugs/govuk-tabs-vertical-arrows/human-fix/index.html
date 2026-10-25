@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en" class="govuk-template">
+<head>
+<meta charset="utf-8">
+<title>Planning applications</title>
+<link rel="icon" href="data:,">
+<style>
+:root{--govuk-frontend-breakpoint-mobile:20em;--govuk-frontend-breakpoint-tablet:40.0625em;--govuk-frontend-breakpoint-desktop:48.0625em}
+body{margin:0;font:19px/1.3 Arial,sans-serif;color:#0b0c0c;background:#fff}
+.govuk-width-container{max-width:960px;margin:0 30px;padding:30px 0}
+h1{font-size:32px;margin:0 0 20px}
+.govuk-tabs__title{display:none}
+.govuk-tabs__list{display:flex;margin:0;padding:0;list-style:none;border-bottom:1px solid #b1b4b6}
+.govuk-tabs__list-item{margin-right:5px;padding:10px 20px;background:#f3f2f1}
+.govuk-tabs__list-item--selected{background:#fff;border:1px solid #b1b4b6;border-bottom:0;margin-bottom:-1px}
+.govuk-tabs__tab{color:#1d70b8}
+.govuk-tabs__list-item--selected .govuk-tabs__tab{color:#0b0c0c;text-decoration:none}
+.govuk-tabs__panel{padding:20px;border:1px solid #b1b4b6;border-top:0}
+.govuk-frontend-supported .govuk-tabs__panel--hidden{display:none}
+:focus{outline:3px solid #fd0;outline-offset:0}
+</style>
+<script type="importmap">
+{"imports":{"/packages/govuk-frontend/src/govuk/common/index.mjs":"/packages/govuk-frontend/src/govuk/common/index.js","/packages/govuk-frontend/src/govuk/common/normalise-string.mjs":"/packages/govuk-frontend/src/govuk/common/normalise-string.js","/packages/govuk-frontend/src/govuk/errors/index.mjs":"/packages/govuk-frontend/src/govuk/errors/index.js","/packages/govuk-frontend/src/govuk/govuk-frontend-component.mjs":"/packages/govuk-frontend/src/govuk/govuk-frontend-component.js"}}
+</script>
+</head>
+<body class="govuk-template__body govuk-frontend-supported">
+<div class="govuk-width-container">
+<main class="govuk-main-wrapper" id="main-content">
+<h1>Planning applications near you</h1>
+<div class="govuk-tabs" data-module="govuk-tabs" id="applications-tabs">
+  <h2 class="govuk-tabs__title">Contents</h2>
+  <ul class="govuk-tabs__list">
+    <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#past-day">Past day</a></li>
+    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#past-week">Past week</a></li>
+    <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#past-month">Past month</a></li>
+  </ul>
+  <div class="govuk-tabs__panel" id="past-day">
+    <h2>Past day</h2>
+    <p>2 applications: a rear extension on Mill Lane and a change of use at 4 High Street.</p>
+    <p><a href="#map" id="day-map">View these applications on a map</a></p>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-week">
+    <h2>Past week</h2>
+    <p>9 applications, including a new school entrance on Station Road.</p>
+  </div>
+  <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="past-month">
+    <h2>Past month</h2>
+    <p>31 applications across the district.</p>
+  </div>
+</div>
+<p id="map">Map view is available on request.</p>
+</main>
+</div>
+<script type="module">
+import { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'
+new Tabs(document.getElementById('applications-tabs'))
+</script>
+</body>
+</html>

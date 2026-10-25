@@ -1,0 +1,31 @@
+{
+  "root_cause": "The radios component only updates conditional visibility on click events within its own module, missing keyboard-driven change events on radios outside the module but in the same radio group (same name), causing conditionals to remain visible when focus moves via arrow keys.",
+  "repair_strategy": "Add a document-level change event listener for the radio group name in each Radios instance, which triggers an update of all conditional fields in that module based on the checked state of its radios. This ensures keyboard navigation across modules updates visibility correctly.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.init = function () {\n  var $module = this.$module\n  var $inputs = this.$inputs\n\n  /**\n  * Loop over all items with [data-controls]\n  * Check if they have a matching conditional reveal\n  * If they do, assign attributes.\n  **/\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('data-aria-controls')\n\n    // Check if input controls anything\n    // Check if content exists, before setting attributes.\n    if (!controls || !$module.querySelector('#' + controls)) {\n      return\n    }\n\n    // If we have content that is controlled, set attributes.\n    $input.setAttribute('aria-controls', controls)\n    $input.removeAttribute('data-aria-controls')\n    this.setAttributes($input)\n  }.bind(this))\n\n  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "Radios.prototype.init = function () {\n  var $module = this.$module\n  var $inputs = this.$inputs\n\n  /**\n  * Loop over all items with [data-controls]\n  * Check if they have a matching conditional reveal\n  * If they do, assign attributes.\n  **/\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('data-aria-controls')\n\n    // Check if input controls anything\n    // Check if content exists, before setting attributes.\n    if (!controls || !$module.querySelector('#' + controls)) {\n      return\n    }\n\n    // If we have content that is controlled, set attributes.\n    $input.setAttribute('aria-controls', controls)\n    $input.removeAttribute('data-aria-controls')\n    this.setAttributes($input)\n  }.bind(this))\n\n  // Handle events\n  var radioName = $inputs[0] && $inputs[0].getAttribute('name')\n  if (radioName) {\n    this._radioName = radioName\n    this._boundUpdateAll = this.updateAll.bind(this)\n    document.addEventListener('change', this._boundUpdateAll)\n  }\n  $module.addEventListener('click', this.handleClick.bind(this))\n}"
+    },
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.setAttributes = function ($input) {\n  var inputIsChecked = $input.checked\n  $input.setAttribute('aria-expanded', inputIsChecked)\n\n  var $content = this.$module.querySelector('#' + $input.getAttribute('aria-controls'))\n  if ($content) {\n    $content.classList.toggle('govuk-radios__conditional--hidden', !inputIsChecked)\n  }\n}\n\nRadios.prototype.handleClick = function (event) {",
+      "after": "Radios.prototype.setAttributes = function ($input) {\n  var inputIsChecked = $input.checked\n  $input.setAttribute('aria-expanded', inputIsChecked)\n\n  var $content = this.$module.querySelector('#' + $input.getAttribute('aria-controls'))\n  if ($content) {\n    $content.classList.toggle('govuk-radios__conditional--hidden', !inputIsChecked)\n  }\n}\n\nRadios.prototype.updateAll = function () {\n  nodeListForEach(this.$inputs, function ($input) {\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nRadios.prototype.handleClick = function (event) {"
+    }
+  ],
+  "expected_accessibility_effect": "Arrow key navigation between radios in the same group but across modules will correctly show/hide associated conditional fields, meeting WCAG 2.1.1 Keyboard and 2.4.3 Focus Order.",
+  "functional_risks": [
+    "Multiple Radios instances for the same radio group will each add a document change listener, causing duplicate updates (idempotent, minimal impact).",
+    "The document change listener fires for any radio with the same name, potentially updating modules that don't contain that radio (harmless).",
+    "If other code relies on the exact timing of change events, the additional listener could affect order (unlikely)."
+  ],
+  "verification_requirements": [
+    "Verify that selecting a radio via arrow keys updates aria-expanded and hides/shows the correct conditional field.",
+    "Verify that clicking a radio continues to work as before.",
+    "Ensure form values update correctly for both keyboard and mouse interaction.",
+    "Confirm no regression in existing click‑based behavior for other radios on the page.",
+    "Test that opting out after selecting Text message hides the mobile number field."
+  ]
+}

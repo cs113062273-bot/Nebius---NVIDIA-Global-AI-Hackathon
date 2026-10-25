@@ -1,0 +1,54 @@
+{
+  "journey": {
+    "version": 1, "id": "awesomplete-tab-past-suggestions", "title": "Tab from the city field to dietary requirements",
+    "goal": "While suggestions are shown, one Tab press moves focus to the next form field",
+    "source": "authored", "profile": "keyboard", "path": "/",
+    "steps": [
+      {"title": "Reach the departure city field", "action": {"kind": "seek", "selector": "#city"}},
+      {"title": "Type the start of a city", "action": {"kind": "type", "text": "Ber"},
+       "assertions": [{"kind": "visible", "selector": "#awesomplete_list_1", "value": true}]},
+      {"title": "Tab to the next field", "action": {"kind": "press", "key": "Tab"},
+       "assertions": [{"kind": "focus", "selector": "#dietary"}]},
+      {"title": "Type dietary requirements", "action": {"kind": "type", "text": "Vegetarian"},
+       "assertions": [{"kind": "form-data", "selector": "#register-form", "name": "dietary", "value": ["Vegetarian"]}]}
+    ],
+    "success": [{"kind": "focus", "selector": "#dietary"}, {"kind": "form-data", "selector": "#register-form", "name": "dietary", "value": ["Vegetarian"]}],
+    "functional": [{"kind": "visible", "selector": "#awesomplete_list_1", "value": false}],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1, "id": "awesomplete-pointer-pick", "title": "Choose a departure city with the pointer",
+    "goal": "Typing and clicking a suggestion fills the city field",
+    "source": "authored", "profile": "pointer", "path": "/",
+    "steps": [
+      {"title": "Focus the city field", "action": {"kind": "click", "selector": "#city"}},
+      {"title": "Type the start of a city", "action": {"kind": "type", "text": "Bud"},
+       "assertions": [{"kind": "visible", "selector": "#awesomplete_list_1", "value": true}]},
+      {"title": "Click Budapest", "action": {"kind": "click", "selector": "#awesomplete_list_1 li:first-child"},
+       "assertions": [{"kind": "form-data", "selector": "#register-form", "name": "city", "value": ["Budapest"]}]},
+      {"title": "Register", "action": {"kind": "click", "selector": "#submit"},
+       "assertions": [{"kind": "text", "selector": "#status", "value": "Registered from Budapest"}]}
+    ],
+    "success": [{"kind": "text", "selector": "#status", "value": "Registered from Budapest"}],
+    "functional": [{"kind": "form-data", "selector": "#register-form", "name": "city", "value": ["Budapest"]}],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1, "id": "awesomplete-keyboard-pick", "title": "Choose a suggestion with arrow keys and Enter",
+      "goal": "ArrowDown highlights a suggestion and Enter fills the field without leaving it",
+      "source": "authored", "profile": "keyboard", "path": "/",
+      "steps": [
+        {"title": "Reach the departure city field", "action": {"kind": "seek", "selector": "#city"}},
+        {"title": "Type the start of a city", "action": {"kind": "type", "text": "Bru"}},
+        {"title": "Highlight Brussels", "action": {"kind": "press", "key": "ArrowDown"},
+         "assertions": [{"kind": "attribute", "selector": "#awesomplete_list_1 li:first-child", "name": "aria-selected", "value": "true"}]},
+        {"title": "Choose it", "action": {"kind": "press", "key": "Enter"},
+         "assertions": [{"kind": "form-data", "selector": "#register-form", "name": "city", "value": ["Brussels"]}]}
+      ],
+      "success": [{"kind": "form-data", "selector": "#register-form", "name": "city", "value": ["Brussels"]}, {"kind": "focus", "selector": "#city"}, {"kind": "text", "selector": "#status", "value": ""}],
+      "functional": [{"kind": "form-data", "selector": "#register-form", "name": "city", "value": ["Brussels"]}],
+      "forbidden": []
+    }
+  ]
+}

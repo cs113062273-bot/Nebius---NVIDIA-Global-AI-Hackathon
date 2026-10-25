@@ -1,0 +1,75 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "nhsuk-exclusive-none-unique-names-keyboard",
+    "title": "Choose 'No symptoms' after ticking symptoms with the keyboard",
+    "goal": "Ticking the exclusive 'No, I do not have any of these symptoms' answer clears the symptoms ticked earlier",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      { "title": "Reach the cough answer", "action": { "kind": "seek", "selector": "#symptoms-cough" } },
+      { "title": "Tick cough", "action": { "kind": "press", "key": "Space" } },
+      { "title": "Reach the temperature answer", "action": { "kind": "seek", "selector": "#symptoms-fever", "maxTabs": 3 } },
+      { "title": "Tick high temperature", "action": { "kind": "press", "key": "Space" } },
+      { "title": "Reach the no-symptoms answer", "action": { "kind": "seek", "selector": "#symptoms-none", "maxTabs": 4 } },
+      { "title": "Tick no symptoms", "action": { "kind": "press", "key": "Space" },
+        "assertions": [ { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[cough]", "value": [] } ] }
+    ],
+    "success": [
+      { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[cough]", "value": [] },
+      { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[fever]", "value": [] },
+      { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[none]", "value": ["yes"] }
+    ],
+    "functional": [
+      { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[none]", "value": ["yes"] }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "nhsuk-symptoms-pointer",
+    "title": "Tick two symptoms with a pointer",
+    "goal": "Both ticked symptoms are submitted and no-symptoms stays clear",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      { "title": "Tick cough", "action": { "kind": "click", "selector": "#symptoms-cough" } },
+      { "title": "Tick high temperature", "action": { "kind": "click", "selector": "#symptoms-fever" } }
+    ],
+    "success": [
+      { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[fever]", "value": ["yes"] }
+    ],
+    "functional": [
+      { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[cough]", "value": ["yes"] },
+      { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[fever]", "value": ["yes"] },
+      { "kind": "form-data", "selector": "#symptoms-form", "name": "symptoms[none]", "value": [] }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "nhsuk-exclusive-shared-name-keyboard",
+      "title": "Choose 'Do not contact me' after ticking a contact method",
+      "goal": "The exclusive answer in a shared-name group clears the method ticked earlier",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        { "title": "Reach text message", "action": { "kind": "seek", "selector": "#contact-text" } },
+        { "title": "Tick text message", "action": { "kind": "press", "key": "Space" } },
+        { "title": "Reach do not contact", "action": { "kind": "seek", "selector": "#contact-none", "maxTabs": 3 } },
+        { "title": "Tick do not contact", "action": { "kind": "press", "key": "Space" } }
+      ],
+      "success": [
+        { "kind": "form-data", "selector": "#symptoms-form", "name": "contact", "value": ["none"] }
+      ],
+      "functional": [
+        { "kind": "form-data", "selector": "#symptoms-form", "name": "contact", "value": ["none"] }
+      ],
+      "forbidden": []
+    }
+  ]
+}

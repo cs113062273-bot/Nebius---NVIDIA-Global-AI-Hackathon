@@ -1,0 +1,1051 @@
+{
+  "generatedAt": "2026-10-25T16:41:37.345Z",
+  "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+  "cases": 26,
+  "eligible": 26,
+  "autoRuns": 26,
+  "autoVerified": 20,
+  "versions": [
+    {
+      "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+      "current": false,
+      "autoRuns": 8,
+      "autoVerified": 7,
+      "firstRun": "4e97cc07-a1fd-4ce3-a113-493e59404af7"
+    },
+    {
+      "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+      "current": false,
+      "autoRuns": 26,
+      "autoVerified": 19,
+      "firstRun": "0ec1e535-f4e3-4277-884d-7fb988dae261"
+    },
+    {
+      "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+      "current": true,
+      "autoRuns": 26,
+      "autoVerified": 20,
+      "firstRun": "05c9906c-ae05-44df-97a4-52a433fdf9a7"
+    }
+  ],
+  "rows": [
+    {
+      "id": "a11y-dialog-focus-restore",
+      "title": "Escape must return focus to the button that opened the dialog",
+      "library": "a11y-dialog",
+      "issue": "https://github.com/KittyGiraudel/a11y-dialog/commit/6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+      "fixCommit": "6367c03a9a6dfd1edffe9f8132142f61ad0ad9c9",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "b1323d20-7eca-4307-9122-1028cfb7b60a",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": null,
+          "run": "ca6f50d4-df65-444b-ab8a-4751a9b23ef4",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 42045,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+          "run": "a339e8bc-2e16-4340-86da-f00b9292084a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 19042,
+          "leaked": 0
+        },
+        {
+          "file": "auto-3.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "8aa4d85c-5dce-409f-9a1b-5ce880963186",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 18696,
+          "leaked": 0
+        },
+        {
+          "file": "auto-4.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "9d7c0841-4a71-4c6c-800d-fc81b8dd0824",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 17886,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "accessible-menu-escape-level",
+      "title": "Escape in a nested menubar submenu must close only that submenu and return focus to its parent item",
+      "library": "accessible-menu",
+      "issue": "https://github.com/NickDJM/accessible-menu/issues/533",
+      "fixCommit": "cfb4dc85f57e59c3e1ca3c8835618101a6e818b9",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "1ddb58be-6a35-4d54-8a86-699a73fa82be",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "27b17e4e-7bbe-4fcd-9aba-b09f705986a3",
+          "verdict": "INCONCLUSIVE",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 1,
+          "tokens": 0,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "2a92a6ee-db6e-4be2-bc8d-cbdcc18d0465",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 34583,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "accessible-menu-focusout-close",
+      "title": "An open disclosure-navigation dropdown must close when keyboard focus moves out of the navigation",
+      "library": "accessible-menu",
+      "issue": "https://github.com/NickDJM/accessible-menu/issues/354",
+      "fixCommit": "54a3a5753771edfffc0b2b656162f415f5a0c462",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "06ec9c99-8063-426b-bf48-3b3742505e23",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "958e7817-cd38-4249-9ca3-a1bb81066624",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 30387,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "5eb5b7fc-d3c2-4336-80f6-0a698f910c93",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 58744,
+          "leaked": 1
+        }
+      ]
+    },
+    {
+      "id": "autocompletejs-activedescendant-id",
+      "title": "The combobox's aria-activedescendant must reference the highlighted suggestion element",
+      "library": "autoComplete.js",
+      "issue": "https://github.com/TarekRaafat/autoComplete.js/commit/ec706d39c045b3ca9a75d71546610dcf466d26a4",
+      "fixCommit": "ec706d39c045b3ca9a75d71546610dcf466d26a4",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "c3735af7-f04f-4263-ae33-3b8de7bc02bb",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "c5422728-c54e-4e1d-9264-c88340faa740",
+          "verdict": "INCONCLUSIVE",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 41829,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "d8dac98e-551a-4a12-92ca-21215e39ad44",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 10122,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "autocompletejs-stale-keyboard-selection",
+      "title": "Enter must choose the suggestion that is highlighted after the search is refined",
+      "library": "autoComplete.js",
+      "issue": "https://github.com/TarekRaafat/autoComplete.js/pull/177",
+      "fixCommit": "ca5e38df2b66e88e1507f6d152f1aca3daad55ea",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "6aafa56d-ec50-45bf-9b7a-4d6ce3365d33",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "532fb6ce-292b-41fd-90d4-af517ff2341a",
+          "verdict": "INCONCLUSIVE",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 40414,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "7309c28b-03ae-4c75-80a2-e8c57ed56954",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 3,
+          "tokens": 37137,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "awesomplete-tab-to-next-field",
+      "title": "One Tab press must move from an autocomplete field with open suggestions to the next form field",
+      "library": "awesomplete",
+      "issue": "https://github.com/LeaVerou/awesomplete/issues/17255",
+      "fixCommit": "96cddba0d4223403783a2eec9cc7c5aa64c6fff3",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "256b1a25-6338-457b-aa33-b902a0006e54",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "0ec1e535-f4e3-4277-884d-7fb988dae261",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 12796,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "4d55e5c3-653c-4421-9bdb-72040c537087",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 11876,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "bootstrap-dropdown-escape-focus",
+      "title": "Escape must close the dropdown menu and return focus to its toggle button",
+      "library": "Bootstrap 5.1 (dropdown)",
+      "issue": "https://github.com/twbs/bootstrap/issues/35496",
+      "fixCommit": "c376cb07630f49ae2bbb464925afb3a2dbc5565e",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "05000179-773a-42b0-be97-19f6cca1b123",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+          "run": "6810f7c0-d22b-4539-97b7-339106d7239a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 13367,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "c5e9755f-d8b0-48dd-b55d-157332013474",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 14505,
+          "leaked": 0
+        },
+        {
+          "file": "auto-3.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "0cfbb609-cd72-46fa-ab59-3af1c75e47ba",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 14299,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "bootstrap-dropdown-escape-in-modal",
+      "title": "Escape on a closed dropdown toggle inside a modal must close the modal",
+      "library": "Bootstrap 5.0 (dropdown, modal)",
+      "issue": "https://github.com/twbs/bootstrap/issues/33465",
+      "fixCommit": "f36f8344533d3179b8d82af96e005b3106d9ab46",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "85f9651a-6cb2-433a-a6fd-838c123c3058",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+          "run": "83212959-71c4-4b2b-b5a6-96e4f49e885b",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 61447,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "a68a00f9-e5e9-450d-bd6c-186c2227aedc",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 23466,
+          "leaked": 0
+        },
+        {
+          "file": "auto-3.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "b82c5703-5ae7-419b-9823-243cce2ba838",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 66852,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "bootstrap-modal-shift-tab-wrap",
+      "title": "Shift+Tab from the first control in a modal must wrap to the modal's last control",
+      "library": "Bootstrap 5.0 (modal)",
+      "issue": "https://github.com/twbs/bootstrap/issues/28481",
+      "fixCommit": "7646f6bd33a03132e446fb060880bbf051a1639f",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "c21cb036-3711-4490-8214-d204193f5f5a",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+          "run": "56eea483-bd93-4b5b-b558-3d57ba29966d",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 40827,
+          "leaked": 9
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "a10c0b95-86ef-4b2d-867a-bf6a906a19fa",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 62201,
+          "leaked": 9
+        },
+        {
+          "file": "auto-3.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "05c9906c-ae05-44df-97a4-52a433fdf9a7",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 23804,
+          "leaked": 9
+        }
+      ]
+    },
+    {
+      "id": "bootstrap-offcanvas-backdrop-focus-trap",
+      "title": "An offcanvas panel opened with a backdrop must keep keyboard focus inside the panel",
+      "library": "Bootstrap 5.2 (offcanvas)",
+      "issue": "https://github.com/twbs/bootstrap/issues/36596",
+      "fixCommit": "713d7140f18514c916f75be34e809ebe00c1691c",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "99bf7b0b-058c-4b59-a64f-8f452ec83a79",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+          "run": "7f51056a-b052-409d-8d4f-a73dbf6f04a0",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 11282,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "61cc2834-10c2-4d60-9018-b918e27b6619",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 12744,
+          "leaked": 0
+        },
+        {
+          "file": "auto-3.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "17d16fd4-7da4-4337-80f9-fa6c6bacad36",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 12442,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "bootstrap-offcanvas-scroll-focus-release",
+      "title": "A non-modal offcanvas panel that allows page scrolling must not trap keyboard focus",
+      "library": "Bootstrap 5.0 (offcanvas)",
+      "issue": "https://github.com/twbs/bootstrap/pull/33677",
+      "fixCommit": "079f2cd90c247225eb71dff4d514faf50f653416",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "7c36e31c-5304-46e9-878a-f36acfe75d0d",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+          "run": "83089a9d-36ae-4406-baa6-130789ea71f1",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 15266,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "9a0a8432-d2cd-483b-9827-b1b748f43f4a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 13314,
+          "leaked": 0
+        },
+        {
+          "file": "auto-3.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "a753f5dd-d875-449c-a908-e76b923239fb",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 3,
+          "tokens": 38821,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "bootstrap-tabs-arrow-focus",
+      "title": "Arrow keys in a tab list must move keyboard focus to the newly selected tab",
+      "library": "Bootstrap 5.2 (tab)",
+      "issue": "https://github.com/twbs/bootstrap/pull/37200",
+      "fixCommit": "d49d8ce583f6f12552f122122a99063738656cd9",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "6f1c7b4b-9102-439e-9908-26a1f904befe",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+          "run": "e7bd3638-24c8-413a-bc37-87adef7c46fe",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 15410,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "f1192b7f-ed24-45e5-a824-e0dad0690dfb",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 12913,
+          "leaked": 0
+        },
+        {
+          "file": "auto-3.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "d4ef08cf-554a-4449-8657-2c135daa60c2",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 11846,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "bootstrap-tabs-skip-disabled",
+      "title": "Arrow keys in a tab list must skip disabled tabs",
+      "library": "Bootstrap 5.2 alpha (tab)",
+      "issue": "https://github.com/twbs/bootstrap/pull/36169",
+      "fixCommit": "5d9500bdfdd02b3b1d91df2be86b1723f517fc52",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "ca54db63-5ea3-4fc6-8ad3-157b257aa32c",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
+          "run": "4e97cc07-a1fd-4ce3-a113-493e59404af7",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 17161,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "5a7c5c91-0260-4e5b-ba7a-eedfc6709ae3",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 24973,
+          "leaked": 0
+        },
+        {
+          "file": "auto-3.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "65504088-e0eb-450d-abbf-b35b1f1e65d3",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 16789,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "focus-trap-removed-ancestor",
+      "title": "When a list row containing the focused button is removed inside a focus trap, focus must stay inside the trap",
+      "library": "focus-trap",
+      "issue": "https://github.com/focus-trap/focus-trap/issues/1660",
+      "fixCommit": "b70e8d918e1d2ab4dbf21fec468dab7b69fece27",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "d5ceebfc-80bd-4580-83a8-a48c27697bc6",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "81546841-9c40-4a49-bc54-d1cbe99dcb8b",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 36404,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "9eaaafb0-3a27-4a70-af5d-5a6365e7b1ae",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 62879,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "focus-trap-removed-focus",
+      "title": "When the focused control inside a focus trap removes itself, focus must stay inside the trap",
+      "library": "focus-trap",
+      "issue": "https://github.com/focus-trap/focus-trap/pull/932",
+      "fixCommit": "fce60b3a737759c6e0e787d3fa1603f2cb86300a",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "cd73bcb1-b6ac-4439-8a2a-0b3e9318952b",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "24b9e3de-a88c-4de4-bd7d-2e0f84eabb0e",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 49046,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "224829bd-1065-4140-89ce-2c088f21f058",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 40766,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "govuk-character-count-maxlength",
+      "title": "Typing past a character limit must keep the text and say how many characters are too many",
+      "library": "GOV.UK Frontend",
+      "issue": "https://github.com/alphagov/govuk-frontend/pull/2590",
+      "fixCommit": "28711ec3cd0bb60031d80e763d03b0dda8fc3032",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "87e39e0a-911d-43fd-a03d-47ee81666625",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "e95677e3-9ae4-4fc4-bc6b-9cc8f322043b",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 8212,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "5fef0640-0a0a-4184-b3dc-57a2c4aaf5e6",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 7689,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "govuk-header-nav-aria-hidden",
+      "title": "Header navigation links that are visible on a desktop-width page must not be hidden from screen readers",
+      "library": "GOV.UK Frontend",
+      "issue": "https://github.com/alphagov/govuk-frontend/issues/1966",
+      "fixCommit": "98ccef39a701f89f9395e4ac93654f74ea1d89f5",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "a01bb35f-60a6-4508-8f54-1ad4c1e482ed",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "658234ce-ecce-4526-bde4-c11daad301e7",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 7397,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "8ba7fa95-52dc-431f-93ed-af6ae5b8d96c",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 8091,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "govuk-radios-conditional-multiple-groups",
+      "title": "Moving to a radio in another group with the same name must hide the conditional question that no longer applies",
+      "library": "GOV.UK Frontend",
+      "issue": "https://github.com/alphagov/govuk-frontend/pull/1497",
+      "fixCommit": "db3ac4a2a45c9bfc3b76a898af7c7947aa9ee57a",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "848a8b7a-0764-40d9-91ed-6d7fe9f78f39",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "252bbf4a-c0e6-470b-b56a-41430a5ca93f",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 3,
+          "tokens": 35757,
+          "leaked": 1
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "5751a07a-e9fa-449d-8b69-f83f4167586a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 24881,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "govuk-tabs-vertical-arrows",
+      "title": "The up and down arrow keys must not switch between horizontal tabs",
+      "library": "GOV.UK Frontend",
+      "issue": "https://github.com/alphagov/govuk-frontend/pull/5158",
+      "fixCommit": "d18d4ec265938a1b2afa51e81f5dbe67fb1fe202",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "ee96cce4-3c72-44de-9dc6-0dee61068737",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "74a21e86-e76f-46b8-9df6-dc5851789f84",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 31155,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "c9c60d50-ad8a-43cd-a707-5ab5e6d0e12f",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 35291,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "micromodal-form-click-closes",
+      "title": "Activating a form control inside a modal must not close the modal",
+      "library": "micromodal",
+      "issue": "https://github.com/ghosh/micromodal/issues/487",
+      "fixCommit": "c2c7d1563fc24775abd8b3fd8ba79ae85ccafe47",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "4202b573-f40f-4c27-85d5-cde5932842a1",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "ead611c1-d83e-4124-b6f3-d81c79aa4622",
+          "verdict": "INCONCLUSIVE",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 50962,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "cc12214f-1c01-49fe-841a-94b5b0b4d2e4",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 49325,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "micromodal-hidden-focus-leak",
+      "title": "Tabbing past the last visible control of a modal must wrap inside the modal even when it contains hidden buttons",
+      "library": "micromodal",
+      "issue": "https://github.com/ghosh/micromodal/issues/295",
+      "fixCommit": "70dfd4320d9e0e535be432f57c698c75e230d0b3",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "1e53cc4b-1b50-4cd0-8e03-6491a5a7adce",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "a145d09c-6eb0-4d24-8317-0008d0f727d3",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 16564,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "45e828ec-e8e8-4429-a0a5-b78a6b123fea",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 11022,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "nhsuk-checkboxes-exclusive-unique-names",
+      "title": "Ticking a 'None of these' checkbox must clear the other answers in its group even when each checkbox has its own name",
+      "library": "NHS.UK frontend",
+      "issue": "https://github.com/nhsuk/nhsuk-frontend/pull/1525",
+      "fixCommit": "fa1dc4a57df47884ab6c77a5c19756ba5dba1b3f",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "2b36fa59-dedb-4a08-94f1-d47a5f9038ea",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "d66054a9-1ef4-4bf7-aa35-fbb0e4e89340",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 3,
+          "tokens": 27838,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "9f50e85d-cea8-4a30-9c10-83c226f8d84f",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 23311,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "pikaday-arrow-left-other-field",
+      "title": "ArrowLeft must keep moving the caret in other text fields while a calendar is shown",
+      "library": "Pikaday",
+      "issue": "https://github.com/Pikaday/Pikaday/pull/710",
+      "fixCommit": "f52cf7058c0def6fa6776179a78cde2612b1d7b1",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "69df69ba-9d14-472d-8f3f-4f7692c6546f",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "496ee43a-20f5-4923-961e-aa40593c63c7",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 41740,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "fef048be-5aa1-488b-a4ee-693ce5d62ed6",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 45520,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "tabbable-disabled-fieldset",
+      "title": "Form fields inside a disabled fieldset must not be treated as tabbable, so a focus-trapped dialog focuses its first usable field",
+      "library": "tabbable",
+      "issue": "https://github.com/focus-trap/tabbable/issues/413",
+      "fixCommit": "1d5fcb51d9eb21994c82a2f03010bc0d017cfff2",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "83b8eb31-ef77-4bce-9b63-47ee6b76b7d8",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "4f9618b0-b14a-4987-ada1-f0a995dfddeb",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 3,
+          "tokens": 47779,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "b585b99d-e956-45a3-99ad-4e0bf45a57ca",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 47613,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "vanillajs-datepicker-invalid-date-blur",
+      "title": "Tabbing out of a date field with an out-of-range date must close the calendar",
+      "library": "vanillajs-datepicker",
+      "issue": "https://github.com/mymth/vanillajs-datepicker/commit/90155e60cfe7c1039298596cc7cce7f0ecab2373",
+      "fixCommit": "90155e60cfe7c1039298596cc7cce7f0ecab2373",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "b0d35143-a165-4155-974e-8ed35cce340b",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "5d37c9fa-3e74-49e0-85e1-c4e8b03d7cc9",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 57333,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "8a56dfe1-16af-477c-89d8-b6eebd41360d",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 52296,
+          "leaked": 0
+        }
+      ]
+    },
+    {
+      "id": "vanillajs-datepicker-tab-next-field",
+      "title": "Pressing Tab in an open date field must move focus to the next form field",
+      "library": "vanillajs-datepicker",
+      "issue": "https://github.com/mymth/vanillajs-datepicker/issues/156",
+      "fixCommit": "1533350d5ea7d790ea36fcdaf4bcbfd170ddcfab",
+      "screen": "VERIFIED_PASS",
+      "screenRun": "961c7d87-daa3-473c-a685-2fb1b27248ae",
+      "results": [
+        {
+          "file": "auto-1.json",
+          "policy": "auto",
+          "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+          "run": "52cf4cea-0159-404b-b3c6-1e8e816cb245",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 23592,
+          "leaked": 0
+        },
+        {
+          "file": "auto-2.json",
+          "policy": "auto",
+          "implementation": "e4179877b102e5e6f343b71aa378602eaf3c4552509f27afbce0879182ee7edd",
+          "run": "90a59955-28d5-4b50-bdce-96441a7efab4",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 22828,
+          "leaked": 0
+        }
+      ]
+    }
+  ]
+}

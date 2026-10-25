@@ -1,0 +1,22 @@
+{
+  "title": "The up and down arrow keys must not switch between horizontal tabs",
+  "library": "GOV.UK Frontend",
+  "repository": "https://github.com/alphagov/govuk-frontend",
+  "issue": "https://github.com/alphagov/govuk-frontend/pull/5158",
+  "fixUrl": "https://github.com/alphagov/govuk-frontend/commit/d18d4ec265938a1b2afa51e81f5dbe67fb1fe202",
+  "buggyCommit": "239465930198219aec9cfb0adc80ac3e8e08d1df",
+  "fixCommit": "d18d4ec265938a1b2afa51e81f5dbe67fb1fe202",
+  "summary": "Pressing the down arrow on a tab to move on through the page instead switches to the next tab, which a reported NVDA user experienced as being trapped in the tab list.",
+  "category": "Arrow-key navigation",
+  "upstreamFiles": [
+    "LICENSE",
+    "packages/govuk-frontend/src/govuk/common/index.js",
+    "packages/govuk-frontend/src/govuk/common/normalise-string.js",
+    "packages/govuk-frontend/src/govuk/components/tabs/tabs.js",
+    "packages/govuk-frontend/src/govuk/errors/index.js",
+    "packages/govuk-frontend/src/govuk/govuk-frontend-component.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written planning applications page around the unchanged upstream Tabs source at buggyCommit; upstream .mjs modules are saved byte-for-byte as .js and an import map redirects their .mjs relative imports."
+}

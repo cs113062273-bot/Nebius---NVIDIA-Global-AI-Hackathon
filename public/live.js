@@ -53,6 +53,10 @@ function renderScoreboard(){
       el('td',{class:r?.verdict==='VERIFIED_PASS'?'ok':r?'no':'',text:r?(r.verdict==='VERIFIED_PASS'?'Verified pass':r.verdict==='VERIFIED_FAIL'?'Rejected':'Inconclusive'):'Not run'}),
       el('td',{text:r?.passedOn?`${r.passedOn} · ${modelName(r.models[r.passedOn-1])}`:'—'}),
       el('td',{},r?el('a',{href:`./project.html?run=${r.run}${r.passedOn?'&attempt='+r.passedOn:''}#project-result`,text:'Evidence'}):'—')));}
+  // Earlier engine versions stay on the page: a rerun after a change must not hide the previous score.
+  const b=data.benchmark,box=$('#versions');if(!b?.versions?.length){box.hidden=true;return;}
+  box.hidden=false;box.replaceChildren(el('h3',{text:'Engine versions'}),...(b.note?[el('p',{class:'small',text:b.note})]:[]),
+    el('ol',{},...[...b.versions].reverse().map(v=>el('li',{class:v.current?'current':''},el('strong',{text:`${v.verified}/${v.runs}`}),el('span',{class:'small',text:` ${v.id}${v.current?' · this table':''}${v.runs<v.eligible?` · ${v.runs} of ${v.eligible} cases run`:''}`}),...(v.note?[el('p',{text:v.note})]:[])))));
 }
 // Crop a 1280×720 capture to the focused element so the result is visible at a glance.
 function focusShot(img,src,state,tone){

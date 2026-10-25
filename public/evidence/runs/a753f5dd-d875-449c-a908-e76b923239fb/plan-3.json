@@ -1,0 +1,23 @@
+{
+  "root_cause": "The offcanvas component unconditionally sets aria-modal='true' and role='dialog' when shown, and unconditionally calls _enforceFocusOnElement after the transition ends. This traps focus inside the offcanvas via a focusin event listener even when the backdrop is disabled (data-bs-backdrop='false'), preventing tab navigation to the amount field within the allowed number of tab presses.",
+  "repair_strategy": "Make the offcanvas respect the backdrop setting: only apply aria-modal and role='dialog' when backdrop is true, and only enforce focus trapping (_enforceFocusOnElement) when backdrop is true. When backdrop is false, keep the offcanvas non-modal so focus can leave it naturally, allowing users to tab to the amount field.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "    this._element.removeAttribute('aria-hidden')\n    this._element.setAttribute('aria-modal', true)\n    this._element.setAttribute('role', 'dialog')\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      this._enforceFocusOnElement(this._element)\n    }",
+      "after": "    this._element.removeAttribute('aria-hidden')\n    if (this._config.backdrop) {\n      this._element.setAttribute('aria-modal', true)\n      this._element.setAttribute('role', 'dialog')\n    }\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      if (this._config.backdrop) {\n        this._enforceFocusOnElement(this._element)\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Users can tab from the help trigger to the amount field in two tab presses when the non-modal help panel is open, satisfying WCAG 2.4.3 (focus order) and 2.1.1 (keyboard).",
+  "functional_risks": [
+    "When backdrop is true, the offcanvas must remain modal; the conditional ensures attributes and focus trapping are still applied.",
+    "Removing the attributes and focus trapping when backdrop is false may change how assistive technologies announce the offcanvas, but this aligns with the intended non-modal behavior.",
+    "Ensure that the hide method continues to safely remove the attributes (removeAttribute is harmless if they were never set)."
+  ],
+  "verification_requirements": [
+    "With data-bs-backdrop='false', verify that focus reaches #amount within ≤2 tab presses after opening the offcanvas.",
+    "With data-bs-backdrop='true' (or default), verify that focus is trapped inside the offcanvas and cannot tab to #amount until it is closed.",
+    "Confirm that the offcanvas still opens, closes, and responds to the Close help button and Escape key as expected."
+  ]
+}

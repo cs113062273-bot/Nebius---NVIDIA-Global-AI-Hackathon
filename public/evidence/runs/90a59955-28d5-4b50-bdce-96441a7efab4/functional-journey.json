@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "id": "datepicker-pointer-pick",
+  "title": "Pick a visit date with the pointer",
+  "goal": "Clicking a day in the calendar fills the visit date field",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the calendar",
+      "action": {
+        "kind": "click",
+        "selector": "#visit-date"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": ".datepicker-picker",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Choose 20 March",
+      "action": {
+        "kind": "click",
+        "selector": ".datepicker-cell[data-date=\"1710892800000\"]"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#visit-form",
+          "name": "visit",
+          "value": [
+            "2024-03-20"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Submit the request",
+      "action": {
+        "kind": "click",
+        "selector": "#submit"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#status",
+          "value": "Requested 2024-03-20"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Requested 2024-03-20"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#visit-form",
+      "name": "visit",
+      "value": [
+        "2024-03-20"
+      ]
+    }
+  ],
+  "forbidden": []
+}

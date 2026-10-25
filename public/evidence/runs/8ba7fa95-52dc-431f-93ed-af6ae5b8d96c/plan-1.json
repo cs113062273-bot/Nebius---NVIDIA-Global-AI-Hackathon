@@ -1,0 +1,21 @@
+{
+  "root_cause": "The header component incorrectly sets aria-hidden=true on the navigation menu when the page loads at desktop widths, causing the navigation links to be excluded from the accessibility tree.",
+  "repair_strategy": "Modify the syncState method to only apply aria-hidden when the menu button is visible (i.e., in mobile/viewport where the navigation is hidden via CSS), preserving the default accessible state on desktop.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  this.$menu.setAttribute('aria-hidden', !isVisible)\n}",
+      "after": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  // Only manage aria-hidden when menu button is visible (mobile)\n  if (this.$menuButton.offsetWidth || this.$menuButton.offsetHeight) {\n    this.$menu.setAttribute('aria-hidden', !isVisible)\n  }\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links will be exposed as links in the accessibility tree, enabling screen reader and keyboard users to discover and activate them.",
+  "functional_risks": [
+    "If the visibility check fails, the navigation could remain hidden from assistive technology on mobile when opened, or remain visible on desktop when it should be hidden. The check uses offsetWidth/offsetHeight which reliably reflects the button's CSS display state."
+  ],
+  "verification_requirements": [
+    "After the fix, the ax assertion for the 'Apply' link must pass (role link, name 'Apply').",
+    "When the menu button is clicked in a narrow viewport, the navigation's aria-hidden attribute should toggle between true (closed) and false (open).",
+    "Ensure no regression in the visual presentation of the header across breakpoints."
+  ]
+}

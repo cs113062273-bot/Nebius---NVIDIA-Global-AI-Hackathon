@@ -1,0 +1,31 @@
+[
+  {
+    "path": "index.html",
+    "score": 13,
+    "signals": [
+      "open",
+      "upload-modal",
+      "filename",
+      "upload",
+      "modal-close",
+      "body",
+      "help",
+      "Upload report",
+      "Close upload dialog",
+      "File name",
+      "Upload",
+      "Try again"
+    ],
+    "sha256": "83bb455f24a186d6b1de61d1a51c55e05d813d1716179b03d479b09d82e70be9"
+  },
+  {
+    "path": "lib/src/index.js",
+    "score": 3,
+    "signals": [
+      "open",
+      "modal-close",
+      "body"
+    ],
+    "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c"
+  }
+]

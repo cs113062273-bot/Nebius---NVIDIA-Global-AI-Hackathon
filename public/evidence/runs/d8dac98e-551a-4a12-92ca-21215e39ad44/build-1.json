@@ -1,0 +1,61 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "src/autoComplete.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/components/Input.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/components/Item.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/components/List.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/controllers/dataController.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/controllers/listController.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/controllers/navigationController.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/services/search.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/utils/debouncer.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/utils/eventEmitter.js",
+      "pass": true,
+      "kind": "syntax"
+    }
+  ],
+  "scope": "Static HTML structure and JavaScript syntax (classic or ESM) only; no framework compilation claim."
+}

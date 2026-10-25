@@ -1,0 +1,67 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "govuk-character-count-over-limit-keyboard",
+    "title": "Type past the limit and be told how many characters are too many",
+    "goal": "The whole summary is kept and the count tells the user it is 4 characters too long",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      { "title": "Reach the summary field", "action": { "kind": "seek", "selector": "#summary" } },
+      { "title": "Type a summary longer than the limit", "action": { "kind": "type", "text": "The search box ignores my postcode" },
+        "assertions": [ { "kind": "form-data", "selector": "#report-form", "name": "summary", "value": ["The search box ignores my postcode"] } ] }
+    ],
+    "success": [
+      { "kind": "form-data", "selector": "#report-form", "name": "summary", "value": ["The search box ignores my postcode"] },
+      { "kind": "text", "selector": "#summary-group .govuk-character-count__status", "value": "You have 4 characters too many" }
+    ],
+    "functional": [
+      { "kind": "focus", "selector": "#summary" }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "govuk-character-count-under-limit-pointer",
+    "title": "Write a short summary with a pointer",
+    "goal": "A summary under the limit is kept and the remaining count is shown",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      { "title": "Focus the summary field", "action": { "kind": "click", "selector": "#summary" } },
+      { "title": "Type a short summary", "action": { "kind": "type", "text": "Map does not load" } }
+    ],
+    "success": [
+      { "kind": "text", "selector": "#summary-group .govuk-character-count__status", "value": "You have 13 characters remaining" }
+    ],
+    "functional": [
+      { "kind": "form-data", "selector": "#report-form", "name": "summary", "value": ["Map does not load"] },
+      { "kind": "text", "selector": "#summary-group .govuk-character-count__status", "value": "You have 13 characters remaining" }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "govuk-character-count-at-limit-keyboard",
+      "title": "Type exactly up to the limit",
+      "goal": "Thirty characters are accepted and the count shows none remaining",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        { "title": "Reach the summary field", "action": { "kind": "seek", "selector": "#summary" } },
+        { "title": "Type thirty characters", "action": { "kind": "type", "text": "Map does not load on my phone." } }
+      ],
+      "success": [
+        { "kind": "text", "selector": "#summary-group .govuk-character-count__status", "value": "You have 0 characters remaining" }
+      ],
+      "functional": [
+        { "kind": "form-data", "selector": "#report-form", "name": "summary", "value": ["Map does not load on my phone."] }
+      ],
+      "forbidden": []
+    }
+  ]
+}

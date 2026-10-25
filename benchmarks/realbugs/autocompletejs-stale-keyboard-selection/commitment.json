@@ -1,0 +1,59 @@
+{
+  "fixedAt": "2026-10-25T13:33:58.477Z",
+  "sourceHashes": {
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "dist/css/autoComplete.css": "266ab578334a14157b878978c1c39fca5dd5371228de4b12f9b27a4bd4f4d7c4",
+    "dist/css/images/search.svg": "138d50669ccb63b900ed99febbd68ed780eff7ffd9befc676c92a57fb89838b4",
+    "index.html": "30e6dc5acb97f22f060a7f3724c48897222b4d268e58472b91ac067a71dba221",
+    "src/autoComplete.js": "0d0d446adae1a014da3d8ab13ee99cb73e0094218b8a48458756f2145b850fea",
+    "src/components/Input.js": "f9e6efde61816f182dd0489a87488229bc8a7935ec152791eba6b65b85fc64f7",
+    "src/components/Item.js": "830a843ec6e4f15ea970843ac054d244a8e088ab01d658aa73927fbc95efe183",
+    "src/components/List.js": "8ecd3932d23c8204beca6563b67996fa657e666d0cee4d45aba951ef0b69a58b",
+    "src/controllers/dataController.js": "229e24fefe78810274e8f090bbca43af6c6be97a4c5b4c06974359b0d2cedf91",
+    "src/controllers/listController.js": "e4798fd60aa7911a54bbc686e7886ccf426e29287ae838d434c6bbf763e79ffe",
+    "src/controllers/navigationController.js": "cb38337c041e8e0543c4f7b31666374956d6dc85011604e12ff127c9bf67ddde",
+    "src/services/search.js": "d80ac393f4e1b186745c6ab0868d283d5025ed5c538f88c94ad633495be8ec05",
+    "src/utils/debouncer.js": "c7d98bb5dc5a76439008ab8e608a89ee0e6d73a3233c8804db0a143b05232075",
+    "src/utils/eventEmitter.js": "d242f32952aa9a43f56b87d7eed2867c4f7ee314a9fdd1791cd427ad75d72ac9"
+  },
+  "humanFixHashes": {
+    "LICENSE": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "dist/css/autoComplete.css": "266ab578334a14157b878978c1c39fca5dd5371228de4b12f9b27a4bd4f4d7c4",
+    "dist/css/images/search.svg": "138d50669ccb63b900ed99febbd68ed780eff7ffd9befc676c92a57fb89838b4",
+    "index.html": "30e6dc5acb97f22f060a7f3724c48897222b4d268e58472b91ac067a71dba221",
+    "src/autoComplete.js": "0d0d446adae1a014da3d8ab13ee99cb73e0094218b8a48458756f2145b850fea",
+    "src/components/Input.js": "f9e6efde61816f182dd0489a87488229bc8a7935ec152791eba6b65b85fc64f7",
+    "src/components/Item.js": "830a843ec6e4f15ea970843ac054d244a8e088ab01d658aa73927fbc95efe183",
+    "src/components/List.js": "8ecd3932d23c8204beca6563b67996fa657e666d0cee4d45aba951ef0b69a58b",
+    "src/controllers/dataController.js": "229e24fefe78810274e8f090bbca43af6c6be97a4c5b4c06974359b0d2cedf91",
+    "src/controllers/listController.js": "e4798fd60aa7911a54bbc686e7886ccf426e29287ae838d434c6bbf763e79ffe",
+    "src/controllers/navigationController.js": "544a6a7ecd04ea719d9bf6716fb9c0acfebb74222c3ab61322443f26217083f8",
+    "src/services/search.js": "d80ac393f4e1b186745c6ab0868d283d5025ed5c538f88c94ad633495be8ec05",
+    "src/utils/debouncer.js": "c7d98bb5dc5a76439008ab8e608a89ee0e6d73a3233c8804db0a143b05232075",
+    "src/utils/eventEmitter.js": "d242f32952aa9a43f56b87d7eed2867c4f7ee314a9fdd1791cd427ad75d72ac9"
+  },
+  "humanFixFiles": [
+    "src/controllers/navigationController.js"
+  ],
+  "taskHash": "75cc2aeeb4c3204d221806dfba1584075f7566c70fef8ace3d166748c80b139a",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "6aafa56d-ec50-45bf-9b7a-4d6ce3365d33",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

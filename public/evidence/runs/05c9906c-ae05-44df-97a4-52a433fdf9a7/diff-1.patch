@@ -1,0 +1,55 @@
+diff --git a/js/src/modal.js b/js/src/modal.js
+index 0e8346d..8da2b53 100644
+--- a/js/src/modal.js
++++ b/js/src/modal.js
+@@ -234,6 +234,26 @@ class Modal extends BaseComponent {
+       modalBody.scrollTop = 0
+     }
+ 
++    // Manage focus wrap for Shift+Tab/Tab within modal
++    const firstEl = document.getElementById('confirm-close')
++    const lastEl = document.getElementById('confirm-delete')
++    if (firstEl && lastEl) {
++      this._firstKeydownListener = e => {
++        if (e.shiftKey && e.key === 'Tab') {
++          e.preventDefault()
++          lastEl.focus()
++        }
++      }
++      this._lastKeydownListener = e => {
++        if (!e.shiftKey && e.key === 'Tab') {
++          e.preventDefault()
++          firstEl.focus()
++        }
++      }
++      firstEl.addEventListener('keydown', this._firstKeydownListener)
++      lastEl.addEventListener('keydown', this._lastKeydownListener)
++    }
++
+     if (isAnimated) {
+       reflow(this._element)
+     }
+@@ -297,6 +317,23 @@ class Modal extends BaseComponent {
+     this._element.setAttribute('aria-hidden', true)
+     this._element.removeAttribute('aria-modal')
+     this._element.removeAttribute('role')
++
++    // Remove focus wrap listeners
++    if (this._firstKeydownListener) {
++      const firstEl = document.getElementById('confirm-close')
++      if (firstEl) {
++        firstEl.removeEventListener('keydown', this._firstKeydownListener)
++      }
++    }
++    if (this._lastKeydownListener) {
++      const lastEl = document.getElementById('confirm-delete')
++      if (lastEl) {
++        lastEl.removeEventListener('keydown', this._lastKeydownListener)
++      }
++      this._firstKeydownListener = null
++      this._lastKeydownListener = null
++    }
++
+     this._isTransitioning = false
+     this._backdrop.hide(() => {
+       document.body.classList.remove(CLASS_NAME_OPEN)

@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "id": "historical-dialog-pointer",
+  "title": "Restore focus after closing a real dialog",
+  "goal": "Focus returns to the opener",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open notice",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#dialog",
+          "name": "aria-hidden",
+          "value": null
+        }
+      ]
+    },
+    {
+      "title": "Close notice with pointer",
+      "action": {
+        "kind": "click",
+        "selector": "#close"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#dialog",
+          "name": "aria-hidden",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "attribute",
+      "selector": "#dialog",
+      "name": "aria-hidden",
+      "value": "true"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#dialog",
+      "name": "aria-hidden",
+      "value": "true"
+    }
+  ],
+  "forbidden": []
+}

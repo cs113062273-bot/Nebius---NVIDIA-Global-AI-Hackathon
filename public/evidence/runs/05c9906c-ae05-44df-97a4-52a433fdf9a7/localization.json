@@ -1,0 +1,53 @@
+[
+  {
+    "path": "index.html",
+    "score": 12,
+    "signals": [
+      "open-delete",
+      "confirm-name",
+      "confirm-close",
+      "confirm-delete",
+      "body",
+      "confirm",
+      "Rename project",
+      "Delete project",
+      "Close",
+      "Type the project name to confirm",
+      "Cancel",
+      "Delete"
+    ],
+    "sha256": "7f568907f270dee6ada3a5d9fa392f4458ef98ddda6b768ab16fdbb55b50acb1"
+  },
+  {
+    "path": "js/src/dom/manipulator.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "0a204740c8b4e8ec6aaa6f440d1382b7e9dd67a1c102a40e5a854e09e26c1503"
+  },
+  {
+    "path": "js/src/modal.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283"
+  },
+  {
+    "path": "js/src/util/backdrop.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "682dd404ecc1d19c8d5541579c897f73de7b54fd52b70d36cb447a450982bab1"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "78c7fb2da79e452d5951928ec48036b4fcb45208b442eeff923a52d4276e78e2"
+  }
+]

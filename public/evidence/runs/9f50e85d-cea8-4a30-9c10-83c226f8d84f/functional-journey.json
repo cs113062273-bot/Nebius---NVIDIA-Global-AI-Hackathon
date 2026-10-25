@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "id": "nhsuk-symptoms-pointer",
+  "title": "Tick two symptoms with a pointer",
+  "goal": "Both ticked symptoms are submitted and no-symptoms stays clear",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Tick cough",
+      "action": {
+        "kind": "click",
+        "selector": "#symptoms-cough"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Tick high temperature",
+      "action": {
+        "kind": "click",
+        "selector": "#symptoms-fever"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#symptoms-form",
+      "name": "symptoms[fever]",
+      "value": [
+        "yes"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#symptoms-form",
+      "name": "symptoms[cough]",
+      "value": [
+        "yes"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#symptoms-form",
+      "name": "symptoms[fever]",
+      "value": [
+        "yes"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#symptoms-form",
+      "name": "symptoms[none]",
+      "value": []
+    }
+  ],
+  "forbidden": []
+}

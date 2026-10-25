@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" class="govuk-template">
+<head>
+<meta charset="utf-8">
+<title>Report a problem</title>
+<link rel="icon" href="data:,">
+<style>
+body{margin:0;font:19px/1.3 Arial,sans-serif;color:#0b0c0c;background:#fff}
+.govuk-width-container{max-width:960px;margin:0 30px;padding:30px 0}
+h1{font-size:32px;margin:0 0 20px}
+.govuk-label{display:block;font-weight:700;margin-bottom:5px}
+.govuk-hint{color:#505a5f;margin-bottom:15px}
+.govuk-textarea{display:block;box-sizing:border-box;width:100%;max-width:640px;font:inherit;padding:5px;border:2px solid #0b0c0c}
+.govuk-textarea--error{border-color:#d4351c}
+.govuk-error-message{color:#d4351c;font-weight:700}
+.govuk-character-count__message{margin-top:5px}
+.govuk-character-count__message--disabled{visibility:hidden}
+.govuk-visually-hidden{position:absolute!important;width:1px!important;height:1px!important;margin:0!important;padding:0!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important;border:0!important}
+.govuk-button{font:inherit;padding:8px 10px;margin-top:20px;background:#00703c;color:#fff;border:0;box-shadow:0 2px 0 #002d18}
+:focus{outline:3px solid #fd0;outline-offset:0}
+</style>
+<script type="importmap">
+{"imports":{"/src/govuk/vendor/polyfills/Function/prototype/bind":"/src/govuk/vendor/polyfills/Function/prototype/bind.js","/src/govuk/vendor/polyfills/Object/defineProperty":"/src/govuk/vendor/polyfills/Object/defineProperty.js","/src/govuk/vendor/polyfills/Event":"/src/govuk/vendor/polyfills/Event.js","/src/govuk/vendor/polyfills/Window":"/src/govuk/vendor/polyfills/Window.js","/src/govuk/vendor/polyfills/Element":"/src/govuk/vendor/polyfills/Element.js","/src/govuk/vendor/polyfills/Document":"/src/govuk/vendor/polyfills/Document.js","/src/govuk/vendor/polyfills/Element/prototype/classList":"/src/govuk/vendor/polyfills/Element/prototype/classList.js","/src/govuk/vendor/polyfills/DOMTokenList":"/src/govuk/vendor/polyfills/DOMTokenList.js"}}
+</script>
+</head>
+<body class="govuk-template__body js-enabled">
+<div class="govuk-width-container">
+<main class="govuk-main-wrapper" id="main-content">
+<h1>Report a problem with this page</h1>
+<form id="report-form" action="#" novalidate>
+  <!-- A hard maxlength is kept for users without JavaScript; the character count is meant to lift it. -->
+  <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="30" id="summary-group">
+    <label class="govuk-label" for="summary">Summary of the problem</label>
+    <div id="summary-hint" class="govuk-hint">Keep it short. You will be told if it is too long.</div>
+    <textarea class="govuk-textarea govuk-js-character-count" id="summary" name="summary" rows="4" maxlength="30" aria-describedby="summary-info summary-hint"></textarea>
+    <div id="summary-info" class="govuk-hint govuk-character-count__message" aria-live="polite">You can enter up to 30 characters</div>
+  </div>
+  <button type="button" class="govuk-button" id="send">Send report</button>
+</form>
+</main>
+</div>
+<script type="module">
+import CharacterCount from './src/govuk/components/character-count/character-count.js'
+new CharacterCount(document.getElementById('summary-group')).init()
+</script>
+</body>
+</html>

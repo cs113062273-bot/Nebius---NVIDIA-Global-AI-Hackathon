@@ -1,0 +1,39 @@
+{
+  "fixedAt": "2026-10-25T13:29:41.102Z",
+  "sourceHashes": {
+    "LICENSE": "3358ef750899fd62ec44637f2a23719a89bb7a8a0b4225d72488d2483359cf1d",
+    "awesomplete.css": "5ae718965f4c9f6144ebc9511eb4e9070cd60be45adc8784a24d2b7b84c19a07",
+    "awesomplete.js": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6",
+    "index.html": "bb3f8d0223976f74edc431bb1a4b0f304d0514a19ac11c5d88f69440ac673de0"
+  },
+  "humanFixHashes": {
+    "LICENSE": "3358ef750899fd62ec44637f2a23719a89bb7a8a0b4225d72488d2483359cf1d",
+    "awesomplete.css": "5ae718965f4c9f6144ebc9511eb4e9070cd60be45adc8784a24d2b7b84c19a07",
+    "awesomplete.js": "5f5b922b7945bf4a58487080ef075bf7e2734c953063886276cd386d760803f8",
+    "index.html": "bb3f8d0223976f74edc431bb1a4b0f304d0514a19ac11c5d88f69440ac673de0"
+  },
+  "humanFixFiles": [
+    "awesomplete.js"
+  ],
+  "taskHash": "cb3a537d186b8c7105359fdac2004d824dfda26ff2aebb80099f3e0c127d1e50",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "256b1a25-6338-457b-aa33-b902a0006e54",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

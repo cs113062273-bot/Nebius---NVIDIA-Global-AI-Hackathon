@@ -12,7 +12,7 @@ import { readJson, listFiles, contained,hashTree } from './files.js';
 import { proofArchive } from './archive.js';
 import { verifyProof } from './proof.js';
 import { ProjectRequest, stageProject, validateProjectFiles, fileBytes } from './project.js';
-import { liveCases, loadCase, humanPatch, LiveLedger, spend, liveLimits, liveConfigured, LIVE_SCOPE, LIVE_MODELS, WORST_RUN_USD } from './live.js';
+import { liveCases, benchmarkVersions, loadCase, humanPatch, LiveLedger, spend, liveLimits, liveConfigured, LIVE_SCOPE, LIVE_MODELS, WORST_RUN_USD } from './live.js';
 
 const Request=z.object({fixture:z.enum(fixtures.map(f=>f.id)),mode:z.enum(['reference','nebius','recorded'])}).strict();
 // Guards join the confirmed contract only when present, so earlier confirmations keep their hash.
@@ -49,7 +49,7 @@ export async function createApp({artifactRoot=path.join(ROOT,'artifacts','runs')
       if(s.todayUsd+WORST_RUN_USD>limits.dailyUsd)return send(res,429,{error:"Today's live budget is used. Recorded runs remain available; live repair resumes tomorrow (UTC)."});
       // The client refuses any call whose worst-case reservation would push this run past WORST_RUN_USD.
       const reserved=book.entries.filter(e=>e.budgetScope===LIVE_SCOPE).reduce((sum,e)=>sum+Number(e.reservedCreditUsd||0),0);
-      Object.assign(process.env,{NEBIUS_BUDGET_SCOPE:LIVE_SCOPE,NEBIUS_MAX_CREDIT_USD:String(reserved+WORST_RUN_USD),NEBIUS_MAX_CALLS:String(book.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(book.reservedTokens+300000),NEBIUS_MAX_OUTPUT_TOKENS:'10000'});
+      Object.assign(process.env,{NEBIUS_BUDGET_SCOPE:LIVE_SCOPE,NEBIUS_MAX_CREDIT_USD:String(reserved+WORST_RUN_USD),NEBIUS_MAX_CALLS:String(book.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(book.reservedTokens+900000),NEBIUS_MAX_OUTPUT_TOKENS:'32000'});
       const id=crypto.randomUUID();visitors.set(who,Date.now());live.active={id,case:input.case,startedAt:new Date().toISOString()};
       runs.set(id,{id,state:'CREATED',events:[],fixture:'custom-project',mode:'nebius',source:{live:true,case:input.case}});lastPublicStart=Date.now();started=true;
       send(res,202,{id});
@@ -138,7 +138,7 @@ export async function createApp({artifactRoot=path.join(ROOT,'artifacts','runs')
       if(pathname==='/favicon.ico')return await serveFile(res,path.join(ROOT,'public'),'favicon.svg');
       if(pathname==='/api/live'){
         let budget=null;try{const s=spend(JSON.parse(await fs.readFile(ledger.file,'utf8')));budget={...s,totalLimitUsd:limits.totalUsd,dailyLimitUsd:limits.dailyUsd};}catch{/* No ledger yet. */}
-        return send(res,200,{enabled:live.enabled,reason:live.reason,active:live.active,budget,models:LIVE_MODELS,cases:await liveCases()});
+        return send(res,200,{enabled:live.enabled,reason:live.reason,active:live.active,budget,models:LIVE_MODELS,cases:await liveCases(),benchmark:await benchmarkVersions()});
       }
       const livePatch=pathname.match(/^\/api\/live\/cases\/([a-z0-9-]{1,80})\/human\.patch$/);
       if(livePatch){try{const patch=await humanPatch(livePatch[1]);res.writeHead(200,{'Content-Type':'text/plain; charset=utf-8','X-Content-Type-Options':'nosniff','Cache-Control':'no-store'});res.end(patch);}catch{send(res,404,{error:'Unknown case'});}return;}

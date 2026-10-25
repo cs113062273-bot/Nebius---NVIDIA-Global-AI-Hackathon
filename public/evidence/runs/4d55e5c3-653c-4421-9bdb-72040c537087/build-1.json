@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "awesomplete.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    }
+  ],
+  "scope": "Static HTML structure and JavaScript syntax (classic or ESM) only; no framework compilation claim."
+}

@@ -1,0 +1,21 @@
+{
+  "root_cause": "The offcanvas element has data-bs-scroll=\"true\", which prevents activation of the focus trap when the offcanvas is shown, allowing focus to escape to the underlying page when tabbing from the close button.",
+  "repair_strategy": "Change data-bs-scroll=\"true\" to data-bs-scroll=\"false\" (or remove the attribute) so that the offcanvas defaults to scroll:false, enabling the focus trap to activate and keep focus inside the panel.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "60f9c30eaf2574c405d38683a298cad18c74b612a5860995a330a93d1aec35fc",
+      "before": "  <button class=\"btn btn-outline-primary mb-3\" type=\"button\" id=\"open-help\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#help\" aria-controls=\"help\">Policy help</button>\n  <div class=\"offcanvas offcanvas-end\" data-bs-scroll=\"true\" data-bs-backdrop=\"true\" tabindex=\"-1\" id=\"help\" aria-labelledby=\"help-title\">\n    <div class=\"offcanvas-header\">\n",
+      "after": "  <button class=\"btn btn-outline-primary mb-3\" type=\"button\" id=\"open-help\" data-bs-toggle=\"offcanvas\" data-bs-target=\"#help\" aria-controls=\"help\">Policy help</button>\n  <div class=\"offcanvas offcanvas-end\" data-bs-scroll=\"false\" data-bs-backdrop=\"true\" tabindex=\"-1\" id=\"help\" aria-labelledby=\"help-title\">\n    <div class=\"offcanvas-header\">\n"
+    }
+  ],
+  "expected_accessibility_effect": "When the help panel is open, pressing Tab while focus is on the close button will keep focus inside the offcanvas, wrapping to the first focusable element (the close button) instead of moving focus to the underlying Amount input.",
+  "functional_risks": [
+    "Setting data-bs-scroll=\"false\" will cause the offcanvas to hide the page's scrolling when opened, which may prevent users from scrolling the background content while the panel is visible."
+  ],
+  "verification_requirements": [
+    "After opening the help panel with Enter, pressing Tab twice should keep focus on the #help-close button (or cycle within the offcanvas).",
+    "The help panel should still be dismissible via the Escape key or the close button.",
+    "Verify that the offcanvas still functions correctly (show/hide, backdrop clicks) with the changed scroll attribute."
+  ]
+}

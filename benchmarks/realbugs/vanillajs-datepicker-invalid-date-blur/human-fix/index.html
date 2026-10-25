@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Change delivery date</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="dist/css/datepicker.css">
+<style>
+body{font:16px system-ui,sans-serif;margin:32px;color:#1d1d1d;background:#fff}
+main{max-width:520px}
+label{display:block;margin:16px 0 4px;font-weight:600}
+input{font:inherit;padding:8px;border:1px solid #555;border-radius:4px;width:260px}
+button[type=submit]{margin-top:20px;font:inherit;padding:8px 16px}
+:focus-visible{outline:3px solid #0b5fff;outline-offset:2px}
+#status{margin-top:16px;min-height:1.4em}
+</style>
+</head>
+<body>
+<main>
+<h1>Change delivery date</h1>
+<p>Order 48213 &middot; two boxes</p>
+<form id="delivery-form" action="#" novalidate>
+  <label for="delivery-date">Delivery date (yyyy-mm-dd, May or June 2024)</label>
+  <input id="delivery-date" name="delivery" autocomplete="off" value="2024-05-10">
+  <label for="instructions">Delivery instructions</label>
+  <input id="instructions" name="instructions" autocomplete="off">
+  <button id="submit" type="submit">Save changes</button>
+  <p id="status" role="status"></p>
+</form>
+</main>
+<script type="module">
+import Datepicker from './js/Datepicker.js';
+const form = document.getElementById('delivery-form');
+window.picker = new Datepicker(document.getElementById('delivery-date'), {format: 'yyyy-mm-dd', minDate: '2024-05-01', maxDate: '2024-06-30'});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('status').textContent = 'Delivery set for ' + new FormData(form).get('delivery');
+});
+window.__ready = true;
+</script>
+</body>
+</html>

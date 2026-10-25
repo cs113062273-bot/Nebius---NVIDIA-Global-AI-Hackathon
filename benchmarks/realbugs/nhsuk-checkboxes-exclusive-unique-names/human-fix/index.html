@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Check your symptoms</title>
+<link rel="icon" href="data:,">
+<style>
+body{margin:0;font:19px/1.4 Arial,sans-serif;color:#212b32;background:#f0f4f5}
+.nhsuk-width-container{max-width:960px;margin:0 32px;padding:32px 0}
+.nhsuk-fieldset{border:0;margin:0 0 32px;padding:0}
+.nhsuk-fieldset__legend{font-weight:700;font-size:26px;margin-bottom:8px}
+.nhsuk-hint{color:#4c6272;margin-bottom:16px}
+.nhsuk-checkboxes__item{display:flex;align-items:center;margin-bottom:8px}
+.nhsuk-checkboxes__input{width:32px;height:32px;margin:0 12px 0 0}
+.nhsuk-checkboxes__divider{margin:0 0 8px 8px}
+.nhsuk-button{font:inherit;font-weight:600;padding:10px 16px;background:#007f3b;color:#fff;border:0;border-radius:4px;box-shadow:0 4px 0 #00401e}
+:focus{outline:4px solid #212b32;box-shadow:0 0 0 8px #ffeb3b}
+</style>
+<script type="importmap">
+{"imports":{"/packages/nhsuk-frontend/src/nhsuk/common/index.mjs":"/packages/nhsuk-frontend/src/nhsuk/common/index.js","/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.mjs":"/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.js","/packages/nhsuk-frontend/src/nhsuk/component.mjs":"/packages/nhsuk-frontend/src/nhsuk/component.js","/packages/nhsuk-frontend/src/nhsuk/errors/index.mjs":"/packages/nhsuk-frontend/src/nhsuk/errors/index.js"}}
+</script>
+</head>
+<body class="nhsuk-frontend-supported">
+<div class="nhsuk-width-container">
+<main class="nhsuk-main-wrapper" id="maincontent">
+<form id="symptoms-form" action="#" novalidate>
+  <div class="nhsuk-form-group">
+    <fieldset class="nhsuk-fieldset" aria-describedby="symptoms-hint">
+      <legend class="nhsuk-fieldset__legend">Do you have any of these symptoms?</legend>
+      <div class="nhsuk-hint" id="symptoms-hint">Select all that apply</div>
+      <!-- Each answer is posted as its own field, so the inputs have unique names and share an exclusive group. -->
+      <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes" id="symptoms-checkboxes">
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="symptoms-cough" name="symptoms[cough]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="symptoms-cough">A new continuous cough</label>
+        </div>
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="symptoms-fever" name="symptoms[fever]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="symptoms-fever">A high temperature</label>
+        </div>
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="symptoms-taste" name="symptoms[taste]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="symptoms-taste">A loss or change to your sense of smell or taste</label>
+        </div>
+        <div class="nhsuk-checkboxes__divider">or</div>
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="symptoms-none" name="symptoms[none]" type="checkbox" value="yes" data-checkbox-exclusive data-checkbox-exclusive-group="symptoms">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="symptoms-none">No, I do not have any of these symptoms</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="nhsuk-form-group">
+    <fieldset class="nhsuk-fieldset" aria-describedby="contact-hint">
+      <legend class="nhsuk-fieldset__legend">How can we contact you?</legend>
+      <div class="nhsuk-hint" id="contact-hint">Select all that apply</div>
+      <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes" id="contact-checkboxes">
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="contact-text" name="contact" type="checkbox" value="text">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="contact-text">Text message</label>
+        </div>
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="contact-email" name="contact" type="checkbox" value="email">
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="contact-email">Email</label>
+        </div>
+        <div class="nhsuk-checkboxes__divider">or</div>
+        <div class="nhsuk-checkboxes__item">
+          <input class="nhsuk-checkboxes__input" id="contact-none" name="contact" type="checkbox" value="none" data-checkbox-exclusive>
+          <label class="nhsuk-label nhsuk-checkboxes__label" for="contact-none">Do not contact me</label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <button class="nhsuk-button" type="button" id="continue">Continue</button>
+</form>
+</main>
+</div>
+<script type="module">
+import { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'
+initCheckboxes()
+</script>
+</body>
+</html>

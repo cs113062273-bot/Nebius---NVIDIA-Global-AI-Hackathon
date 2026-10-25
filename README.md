@@ -5,7 +5,13 @@
 Tabstitch repairs keyboard and form bugs in web pages with **NVIDIA Nemotron on Nebius Token Factory**, then lets a real browser decide whether the patch works. A developer freezes what must keep working: the keyboard task, the data the form must submit, an independent pointer path and regression guards. Nemotron proposes bounded source edits in a disposable copy. Chromium replays every path. Any patch that passes the task but changes the submitted data or breaks a guarded behaviour is rejected, and the concrete failure goes back to the model.
 
 **Judge site (read-only, no setup):** https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/
-Start at **See the verified repair**, then **Browse all 47 recorded runs**. Every page shows recorded browser captures, assertions, diffs and the raw model request and response. Viewing makes no model call.
+Start at **See the verified repair**, then **Browse all 73 recorded runs**. Every page shows recorded browser captures, assertions, diffs and the raw model request and response. Viewing makes no model call.
+
+## Real bugs, repaired blind
+
+[**Real bugs, live**](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html) lists 26 keyboard and form bugs that were reported and fixed by hand in 12 open-source libraries (Bootstrap, GOV.UK Frontend, NHS.UK frontend, focus-trap, tabbable, MicroModal, a11y-dialog, accessible-menu, Pikaday, vanillajs-datepicker, Awesomplete, autoComplete.js). Each library is pinned at the commit before the maintainers' fix, and a browser task is frozen. The maintainers' own fix must pass that task first (26/26). Nemotron then gets only the buggy source: Super first, Ultra after a rejection, at most three proposals.
+
+**Result on the current frozen engine: 20 of 26 repaired**, each verified in Chromium against the keyboard task, an independent pointer path and regression guards. The maintainers' fix is never sent. An automatic check flags any line the fix added that also appears in a request: in the current version it flagged Bootstrap licence headers, imports and constants that the buggy source already contains, plus two lines Nemotron wrote itself in an earlier attempt and got back as history. The six failures were all rejected by the browser, not left unresolved. Earlier engine versions keep their own scores on the page (7/8, then 19/26). Changing the engine or a run limit counts as a new version, and every case is rerun. This is one run per case on one engine, not a general repair rate.
 
 ## The problem
 

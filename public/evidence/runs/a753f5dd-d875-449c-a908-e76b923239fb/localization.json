@@ -1,0 +1,51 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "open-help",
+      "help-text",
+      "amount",
+      "body",
+      "help",
+      "Policy help",
+      "Amount (EUR)",
+      "Submit report",
+      "Close help"
+    ],
+    "sha256": "e5127d6fca2c59a8007140e024eeefa4a1e9ccf9c8c9ee7cdbf12fd8dc6dc651"
+  },
+  {
+    "path": "js/src/offcanvas.js",
+    "score": 8.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7"
+  },
+  {
+    "path": "js/src/util/backdrop.js",
+    "score": 2,
+    "signals": [
+      "body",
+      "help"
+    ],
+    "sha256": "5fec2addfd748487284ef3b367d7b74c8f901b1c2ef533a2a52523a392e36cca"
+  },
+  {
+    "path": "js/src/dom/manipulator.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "71e9ccebf0a4286393399f9106d0051ffc32dbae212abe39e0739f8f9d0bf608"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "ef39c843d3859c05ec5db9340e67c34559863b0c839ee59e72d1baeee2f23e1c"
+  }
+]

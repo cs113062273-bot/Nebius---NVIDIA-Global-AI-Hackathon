@@ -1,0 +1,23 @@
+{
+  "root_cause": "The exclusive 'No symptoms' checkbox includes data-checkbox-exclusive-group=\"symptoms\" alongside data-checkbox-exclusive, unlike the working 'Do not contact me' checkbox which has only data-checkbox-exclusive. This likely causes the NHSUK checkboxes module to treat the exclusive option as a regular group member rather than the exclusive control, preventing it from clearing other symptom checkboxes when selected.",
+  "repair_strategy": "Remove the data-checkbox-exclusive-group attribute from the exclusive 'No symptoms' checkbox so only the symptom checkboxes carry the group marker, matching the pattern used by the working contact checkboxes.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+      "before": "          <input class=\"nhsuk-checkboxes__input\" id=\"symptoms-none\" name=\"symptoms[none]\" type=\"checkbox\" value=\"yes\" data-checkbox-exclusive data-checkbox-exclusive-group=\"symptoms\">",
+      "after": "          <input class=\"nhsuk-checkboxes__input\" id=\"symptoms-none\" name=\"symptoms[none]\" type=\"checkbox\" value=\"yes\" data-checkbox-exclusive>"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can select 'No, I do not have any of these symptoms' and have any previously selected symptom checkboxes automatically cleared, meeting exclusive choice behavior and preserving form data integrity.",
+  "functional_risks": [
+    "If the module relies on the exclusive checkbox having the group attribute for group identification, this could break the behavior.",
+    "Ensure the change does not affect visual styling or form validation."
+  ],
+  "verification_requirements": [
+    "Verify that selecting the exclusive option via mouse or keyboard clears any previously selected symptom checkboxes.",
+    "Verify that selecting a symptom after the exclusive option clears the exclusive option.",
+    "Confirm that form submission reflects the correct values for symptoms[none] and symptom checkboxes.",
+    "Ensure the contact checkboxes exclusive behavior remains unchanged."
+  ]
+}

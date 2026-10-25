@@ -1,0 +1,13 @@
+diff --git a/index.html b/index.html
+index 0605973..0866126 100644
+--- a/index.html
++++ b/index.html
+@@ -29,7 +29,7 @@ h1{font-size:32px;margin:0 0 20px}
+ <h1>Planning applications near you</h1>
+ <div class="govuk-tabs" data-module="govuk-tabs" id="applications-tabs">
+   <h2 class="govuk-tabs__title">Contents</h2>
+-  <ul class="govuk-tabs__list">
++  <ul class="govuk-tabs__list" role="tablist" aria-orientation="horizontal" data-orientation="horizontal">
+     <li class="govuk-tabs__list-item govuk-tabs__list-item--selected"><a class="govuk-tabs__tab" href="#past-day">Past day</a></li>
+     <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#past-week">Past week</a></li>
+     <li class="govuk-tabs__list-item"><a class="govuk-tabs__tab" href="#past-month">Past month</a></li>

@@ -1,0 +1,21 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index af9981d..3a7d647 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -200,7 +200,15 @@ export default class Datepicker {
+     // set up picekr element
+     const picker = this.picker = new Picker(this);
+ 
+-    const keydownListener = [element, 'keydown', onKeydown.bind(null, this)];
++    const self = this;
++    function datepickerKeydown(event) {
++      if (event.key === 'Tab' && self.active) {
++        self.hide();
++        return;
++      }
++      onKeydown(self, event);
++    }
++    const keydownListener = [element, 'keydown', datepickerKeydown];
+     if (inputField) {
+       registerListeners(this, [
+         keydownListener,

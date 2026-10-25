@@ -1,0 +1,34 @@
+diff --git a/src/govuk/components/radios/radios.js b/src/govuk/components/radios/radios.js
+index 659c970..3df5118 100644
+--- a/src/govuk/components/radios/radios.js
++++ b/src/govuk/components/radios/radios.js
+@@ -33,6 +33,12 @@ Radios.prototype.init = function () {
+   }.bind(this))
+ 
+   // Handle events
++  var radioName = $inputs[0] && $inputs[0].getAttribute('name')
++  if (radioName) {
++    this._radioName = radioName
++    this._boundUpdateAll = this.updateAll.bind(this)
++    document.addEventListener('change', this._boundUpdateAll)
++  }
+   $module.addEventListener('click', this.handleClick.bind(this))
+ }
+ 
+@@ -46,6 +52,16 @@ Radios.prototype.setAttributes = function ($input) {
+   }
+ }
+ 
++Radios.prototype.updateAll = function () {
++  nodeListForEach(this.$inputs, function ($input) {
++    var isRadio = $input.getAttribute('type') === 'radio'
++    var hasAriaControls = $input.getAttribute('aria-controls')
++    if (isRadio && hasAriaControls) {
++      this.setAttributes($input)
++    }
++  }.bind(this))
++}
++
+ Radios.prototype.handleClick = function (event) {
+   nodeListForEach(this.$inputs, function ($input) {
+     // If a radio with aria-controls, handle click

@@ -1,0 +1,13 @@
+diff --git a/js/src/offcanvas.js b/js/src/offcanvas.js
+index 34616eb..30a9a45 100644
+--- a/js/src/offcanvas.js
++++ b/js/src/offcanvas.js
+@@ -114,7 +114,7 @@ class Offcanvas extends BaseComponent {
+     this._element.classList.add(CLASS_NAME_SHOWING)
+ 
+     const completeCallBack = () => {
+-      if (!this._config.scroll) {
++      if (!this._config.scroll || this._config.backdrop) {
+         this._focustrap.activate()
+       }
+ 

@@ -1,0 +1,80 @@
+{
+  "fixedAt": "2026-10-25T13:28:19.946Z",
+  "sourceHashes": {
+    "LICENSE": "fc128e54c03aa96a27de02d0bb9c468a6869faca42c62942abcdffa25eaa3810",
+    "dist/css/datepicker.css": "baf383feae31b713efbb294f763b35b655189d27710777d18ca8b73db3a2cc6b",
+    "index.html": "65aed401079db321848a7aaac961422c238e1349153fe346168aea0cb390dfc8",
+    "js/Datepicker.js": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+    "js/events/functions.js": "a48e1d5c3e3bcc9fa8b1f14b421d3b030a932536e9935199a7fe82965776da95",
+    "js/events/inputFieldListeners.js": "b5d662277a2c4401346edb0f8089ac7b6f23a2cc280804a227dd2d67a8c4c291",
+    "js/events/otherListeners.js": "fc8af84fc8fcecb13bd78c10dd6ceac5e733262f69581a02277b3a068d6ae53d",
+    "js/events/pickerListeners.js": "fff68db8aa10ab33fe9e393aa1bf6d56953fae94f88632e1e65ca602d44500cf",
+    "js/i18n/base-locales.js": "b687f8c2767e03947e51a4ed014c361e6c910aa5c9f4e7aa8794284a342f285f",
+    "js/lib/date-format.js": "3c95fb2a8e554079a6a0b6271538c56c759d000cfc2a4efca223c672cc402b11",
+    "js/lib/date.js": "3c53b5495323eedf8ac8787efffd12e116be0c0569b5561bff156756ab6a4ac8",
+    "js/lib/dom.js": "8db7c72950b2eddb71c980dbd2bacb91d248735440301da5930b7e76657a6eff",
+    "js/lib/event.js": "4a2562ae67f9dcc7dc35c64612d0578fa536294e5baca278cf3031aea4a9782b",
+    "js/lib/utils.js": "5df55530c927cb95f7f1bc4511bb78245e4bd6895c8593cdf852cc685850b2bc",
+    "js/options/defaultOptions.js": "65bf2e949acc385b03fc28d893e42166705f14618c6a1f6a984785a82d5c9f84",
+    "js/options/processOptions.js": "d7178a14b173f2a018f63682634973dd11315f7b837e159c32931e6b74713027",
+    "js/picker/Picker.js": "b72869d034bca737e9d5ad1dd7cdc899083a7c1202b5619323d76aaa6ac5beaf",
+    "js/picker/templates/calendarWeeksTemplate.js": "0121ed7fbdb4b1159f4a8693a0d58aae36d41c3e0aa9507e488c3ad2dbca1d12",
+    "js/picker/templates/daysTemplate.js": "abecc0b10922679e66f5ddd9e6d20e18c07cfaad91a86f4258ff726b6f88260f",
+    "js/picker/templates/pickerTemplate.js": "0fde4184b1cc3d49b9393de56787c380ad0bc140f56a6a1d632552da95d07c66",
+    "js/picker/views/DaysView.js": "83ce9ba1985b0e7550f2f19fbbfd1b12e410e618bd65cb290616abcb3e70f444",
+    "js/picker/views/MonthsView.js": "c500e402a5a64ae36157ede435922685a693fd102636da0cdfff97d9536aa79e",
+    "js/picker/views/View.js": "ad64012d3c871d129702fbfdc6949a206aa2fe6789e6d2d345889635730e3581",
+    "js/picker/views/YearsView.js": "70e7c96ea82753c9c5da7f2bce11793855e5194d5f049fb456e0ae9cc5c80ee4"
+  },
+  "humanFixHashes": {
+    "LICENSE": "fc128e54c03aa96a27de02d0bb9c468a6869faca42c62942abcdffa25eaa3810",
+    "dist/css/datepicker.css": "baf383feae31b713efbb294f763b35b655189d27710777d18ca8b73db3a2cc6b",
+    "index.html": "65aed401079db321848a7aaac961422c238e1349153fe346168aea0cb390dfc8",
+    "js/Datepicker.js": "fe339493edff7e6be7fbb74b4f33280eba7440759e53481480cce01678673c20",
+    "js/events/functions.js": "6ce416d8e26e0bbf334723ee70c082530083bbb36107ff2914d5b4330ed817e5",
+    "js/events/inputFieldListeners.js": "b5d662277a2c4401346edb0f8089ac7b6f23a2cc280804a227dd2d67a8c4c291",
+    "js/events/otherListeners.js": "fc8af84fc8fcecb13bd78c10dd6ceac5e733262f69581a02277b3a068d6ae53d",
+    "js/events/pickerListeners.js": "fff68db8aa10ab33fe9e393aa1bf6d56953fae94f88632e1e65ca602d44500cf",
+    "js/i18n/base-locales.js": "b687f8c2767e03947e51a4ed014c361e6c910aa5c9f4e7aa8794284a342f285f",
+    "js/lib/date-format.js": "3c95fb2a8e554079a6a0b6271538c56c759d000cfc2a4efca223c672cc402b11",
+    "js/lib/date.js": "3c53b5495323eedf8ac8787efffd12e116be0c0569b5561bff156756ab6a4ac8",
+    "js/lib/dom.js": "8db7c72950b2eddb71c980dbd2bacb91d248735440301da5930b7e76657a6eff",
+    "js/lib/event.js": "4a2562ae67f9dcc7dc35c64612d0578fa536294e5baca278cf3031aea4a9782b",
+    "js/lib/utils.js": "5df55530c927cb95f7f1bc4511bb78245e4bd6895c8593cdf852cc685850b2bc",
+    "js/options/defaultOptions.js": "65bf2e949acc385b03fc28d893e42166705f14618c6a1f6a984785a82d5c9f84",
+    "js/options/processOptions.js": "d7178a14b173f2a018f63682634973dd11315f7b837e159c32931e6b74713027",
+    "js/picker/Picker.js": "b72869d034bca737e9d5ad1dd7cdc899083a7c1202b5619323d76aaa6ac5beaf",
+    "js/picker/templates/calendarWeeksTemplate.js": "0121ed7fbdb4b1159f4a8693a0d58aae36d41c3e0aa9507e488c3ad2dbca1d12",
+    "js/picker/templates/daysTemplate.js": "abecc0b10922679e66f5ddd9e6d20e18c07cfaad91a86f4258ff726b6f88260f",
+    "js/picker/templates/pickerTemplate.js": "0fde4184b1cc3d49b9393de56787c380ad0bc140f56a6a1d632552da95d07c66",
+    "js/picker/views/DaysView.js": "83ce9ba1985b0e7550f2f19fbbfd1b12e410e618bd65cb290616abcb3e70f444",
+    "js/picker/views/MonthsView.js": "c500e402a5a64ae36157ede435922685a693fd102636da0cdfff97d9536aa79e",
+    "js/picker/views/View.js": "ad64012d3c871d129702fbfdc6949a206aa2fe6789e6d2d345889635730e3581",
+    "js/picker/views/YearsView.js": "70e7c96ea82753c9c5da7f2bce11793855e5194d5f049fb456e0ae9cc5c80ee4"
+  },
+  "humanFixFiles": [
+    "js/Datepicker.js",
+    "js/events/functions.js"
+  ],
+  "taskHash": "69c052037afcd3967c532a6b196b166baacb48df7e42441ff44599558a221ef6",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "b0d35143-a165-4155-974e-8ed35cce340b",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

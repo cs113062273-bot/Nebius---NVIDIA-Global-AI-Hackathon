@@ -1,0 +1,24 @@
+{
+  "root_cause": "The getNextActiveElement utility does not skip disabled elements, causing arrow key navigation to move focus to disabled tabs.",
+  "repair_strategy": "Update getNextActiveElement to iterate in the requested direction, skipping any elements where isDisabled returns true, while preserving wrapping behavior and providing a fallback to the original element if no enabled elements are found.",
+  "edits": [
+    {
+      "path": "js/src/util/index.js",
+      "sha256": "2388f5400d77a02592a84bf56d0a73b1c67daf78f1b2b48c906a91fb29c05a71",
+      "before": "/**\n * Return the previous/next element of a list.\n *\n * @param {array} list    The list of elements\n * @param activeElement   The active element\n * @param shouldGetNext   Choose to get next or previous element\n * @param isCycleAllowed\n * @return {Element|elem} The proper element\n */\nconst getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed) => {\n  const listLength = list.length\n  let index = list.indexOf(activeElement)\n\n  // if the element does not exist in the list return an element\n  // depending on the direction and if cycle is allowed\n  if (index === -1) {\n    return !shouldGetNext && isCycleAllowed ? list[listLength - 1] : list[0]\n  }\n\n  index += shouldGetNext ? 1 : -1\n\n  if (isCycleAllowed) {\n    index = (index + listLength) % listLength\n  }\n\n  return list[Math.max(0, Math.min(index, listLength - 1))]\n}\n",
+      "after": "/**\n * Return the previous/next element of a list.\n *\n * @param {array} list    The list of elements\n * @param activeElement   The active element\n * @param shouldGetNext   Choose to get next or previous element\n * @param isCycleAllowed\n * @return {Element|elem} The proper element\n */\nconst getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed) => {\n  const listLength = list.length\n  let index = list.indexOf(activeElement)\n\n  // if the element does not exist in the list return an element\n  // depending on the direction and if cycle is allowed\n  if (index === -1) {\n    return !shouldGetNext && isCycleAllowed ? list[listLength - 1] : list[0]\n  }\n\n  let steps = 0\n  let nextIndex = index\n  while (steps < listLength) {\n    nextIndex += shouldGetNext ? 1 : -1\n    if (isCycleAllowed) {\n      nextIndex = (nextIndex + listLength) % listLength\n    } else {\n      if (nextIndex < 0 || nextIndex >= listLength) {\n        // reached end without cycling\n        break\n      }\n    }\n    if (!isDisabled(list[nextIndex])) {\n      return list[nextIndex]\n    }\n    steps++\n  }\n  // fallback: return original element\n  return list[index]\n}\n"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight will now move focus from the Account tab to the Billing tab, skipping the disabled Notifications tab, resulting in the Billing tab being selected and its panel becoming visible.",
+  "functional_risks": [
+    "Altered navigation behavior for other components that use getNextActiveElement (e.g., dropdowns, navbars) if they relied on disabled items being focusable.",
+    "Possible infinite loop if all elements in a list are disabled (mitigated by step count limit).",
+    "Fallback to original element may produce unexpected focus when no enabled items exist."
+  ],
+  "verification_requirements": [
+    "Verify ArrowRight skips disabled Notifications tab and selects Billing tab.",
+    "Verify ArrowLeft wraps from Account to Billing when Notifications is disabled.",
+    "Ensure tab navigation works correctly when no tabs are disabled.",
+    "Confirm that other widgets using getNextActiveElement (e.g., dropdown menus) retain expected behavior."
+  ]
+}

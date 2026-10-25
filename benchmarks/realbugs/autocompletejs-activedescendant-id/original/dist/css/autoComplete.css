@@ -1,0 +1,161 @@
+.autoCompleteJS_wrapper {
+  position: relative;
+  display: inline-block;
+  width: 370px;
+}
+
+#autoCompleteJS {
+  height: 3rem;
+  width: 370px;
+  margin: 0;
+  padding: 0 2rem 0 3.2rem;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+  color: rgba(255, 122, 122, 0.3);
+  /* caret-color: rgb(255, 122, 122); */
+  outline: none;
+  border-radius: 10rem;
+  border: 0;
+  border: 0.05rem solid rgba(255, 122, 122, 0.5);
+  background-image: url(./images/search.svg);
+  background-size: 1.4rem;
+  background-position: left 1.05rem top 0.8rem;
+  background-repeat: no-repeat;
+  background-origin: border-box;
+  background-color: #fff;
+  transition: all 0.4s ease;
+  -webkit-transition: all -webkit-transform 0.4s ease;
+}
+
+#autoCompleteJS::placeholder {
+  color: rgba(255, 122, 122, 0.5);
+  transition: all 0.3s ease;
+  -webkit-transition: all -webkit-transform 0.3s ease;
+}
+
+#autoCompleteJS:hover::placeholder {
+  color: rgba(255, 122, 122, 0.6);
+  transition: all 0.3s ease;
+  -webkit-transition: all -webkit-transform 0.3s ease;
+}
+
+#autoCompleteJS:focus::placeholder {
+  padding: 0.1rem 0.6rem;
+  font-size: 0.95rem;
+  color: rgba(255, 122, 122, 0.4);
+}
+
+#autoCompleteJS:focus::selection {
+  background-color: rgba(255, 122, 122, 0.15);
+}
+
+#autoCompleteJS::selection {
+  background-color: rgba(255, 122, 122, 0.15);
+}
+
+#autoCompleteJS:hover {
+  color: rgba(255, 122, 122, 0.8);
+  transition: all 0.3s ease;
+  -webkit-transition: all -webkit-transform 0.3s ease;
+}
+
+#autoCompleteJS:focus {
+  color: rgba(255, 122, 122, 1);
+  border: 0.06rem solid rgba(255, 122, 122, 0.8);
+  /* box-shadow: 0 0 30px 5px rgba(255, 122, 122, 0.15); */
+}
+
+#autoCompleteJS_list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 0;
+  margin-top: 0.5rem;
+  border-radius: 0.6rem;
+  background-color: #fff;
+  /* box-shadow: 0 20px 50px 20px rgba(123, 123, 123, 0.15); */
+  /* box-shadow: 0 10px 30px 0 rgba(123, 123, 123, 0.15); */
+  box-shadow: 0 3px 6px rgba(149, 157, 165, 0.15);
+  border: 1px solid rgba(33, 33, 33, 0.07);
+  z-index: 1000;
+  outline: none;
+}
+
+.autoCompleteJS_result {
+  margin: 0.3rem;
+  padding: 0.3rem 0.5rem;
+  list-style: none;
+  text-align: left;
+  font-size: 1rem;
+  color: #212121;
+  transition: all 0.1s ease-in-out;
+  border-radius: 0.35rem;
+  background-color: rgba(255, 255, 255, 1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* border-bottom: 1px solid #eaecef; */
+  transition: all 0.2s ease;
+}
+
+.autoCompleteJS_result::selection {
+  color: rgba(#ffffff, 0);
+  background-color: rgba(#ffffff, 0);
+}
+
+.autoCompleteJS_result:hover {
+  cursor: pointer;
+  /* background-color: #eee; */
+  background-color: rgba(255, 122, 122, 0.15);
+}
+
+.autoCompleteJS_highlighted {
+  color: rgba(255, 122, 122, 1);
+  font-weight: bold;
+}
+
+.autoCompleteJS_highlighted::selection {
+  color: rgba(#ffffff, 0);
+  background-color: rgba(#ffffff, 0);
+}
+
+.autoCompleteJS_selected {
+  cursor: pointer;
+  /* background-color: #eee; */
+  background-color: rgba(255, 122, 122, 0.15);
+}
+
+@media only screen and (max-width: 600px) {
+  .autoCompleteJS_wrapper {
+    width: 320px;
+  }
+
+  #autoCompleteJS {
+    width: 18rem;
+    background-size: 1.6rem;
+    background-position: left 1.1rem top 0.75rem;
+  }
+
+  #autoCompleteJS_list {
+    margin: 10px;
+  }
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  #autoCompleteJS {
+    border-width: 1px;
+  }
+}
+
+@-moz-document url-prefix() {
+  #autoCompleteJS {
+    background-size: 1.2rem;
+    background-origin: border-box;
+    border-width: 1px;
+    background-position: left 1.1rem top 0.8rem;
+  }
+}

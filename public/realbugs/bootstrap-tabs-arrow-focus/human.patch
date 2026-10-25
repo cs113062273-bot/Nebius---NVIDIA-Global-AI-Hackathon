@@ -1,0 +1,12 @@
+diff --git a/js/src/tab.js b/js/src/tab.js
+index 1d6d68d..2f18037 100644
+--- a/js/src/tab.js
++++ b/js/src/tab.js
+@@ -161,6 +161,7 @@ class Tab extends BaseComponent {
+     const nextActiveElement = getNextActiveElement(this._getChildren().filter(element => !isDisabled(element)), event.target, isNext, true)
+ 
+     if (nextActiveElement) {
++      nextActiveElement.focus({ preventScroll: true })
+       Tab.getOrCreateInstance(nextActiveElement).show()
+     }
+   }

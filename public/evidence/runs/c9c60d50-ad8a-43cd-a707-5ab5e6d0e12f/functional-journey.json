@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "id": "govuk-tabs-select-pointer",
+  "title": "Choose the Past week tab with a pointer",
+  "goal": "Clicking Past week shows its panel and hides Past day",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Choose Past week",
+      "action": {
+        "kind": "click",
+        "selector": "a[href='#past-week']"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#past-week",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#past-week",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#past-week",
+      "value": true
+    },
+    {
+      "kind": "visible",
+      "selector": "#past-day",
+      "value": false
+    },
+    {
+      "kind": "attribute",
+      "selector": "a[href='#past-week']",
+      "name": "aria-selected",
+      "value": "true"
+    }
+  ],
+  "forbidden": []
+}

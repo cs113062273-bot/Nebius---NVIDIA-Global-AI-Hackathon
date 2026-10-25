@@ -18,7 +18,9 @@ const POLICIES={auto:[ROUTE.super,ROUTE.ultra,ROUTE.ultra],super:[ROUTE.super,RO
 const implementationFiles=['src/engine.js','src/nebius.js','src/repair.js','src/runner.js','src/schema.js','src/verifier.js'];
 const [mode,id,policy='auto']=process.argv.slice(2);
 const write=async(file,value,flag='wx')=>fs.writeFile(file,JSON.stringify(value,null,2)+'\n',{flag});
-const implementation=async()=>Object.fromEntries(await Promise.all(implementationFiles.map(async f=>[f,digest(await fs.readFile(f))])));
+// Run settings are part of the frozen implementation: changing a limit is a new scoreboard, not a retry.
+const CONFIG={maxOutputTokens:32000,maxPromptChars:240000,timeoutMs:300000,policies:POLICIES};
+const implementation=async()=>({...Object.fromEntries(await Promise.all(implementationFiles.map(async f=>[f,digest(await fs.readFile(f))]))),config:digest(CONFIG)});
 
 async function load(caseId){
   const root=path.join(BASE,caseId),meta=await readJson(path.join(root,'case.json')),raw=await readJson(path.join(root,'tasks.json'));
@@ -53,7 +55,7 @@ if(mode==='screen'){
   const c=await load(id),commitment=await committed(c),models=POLICIES[policy];assert.ok(models,'Policy must be auto, super or ultra');
   Object.assign(process.env,parseEnv(await fs.readFile('.env','utf8')));
   const ledger=await readJson('artifacts/inference/budget.json');
-  Object.assign(process.env,{NEBIUS_MAX_CALLS:String(ledger.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(ledger.reservedTokens+400000),NEBIUS_MAX_CREDIT_USD:USD_CEILING,NEBIUS_BUDGET_SCOPE:SCOPE,NEBIUS_MAX_OUTPUT_TOKENS:process.env.REALBUGS_MAX_OUTPUT||'12000'});
+  Object.assign(process.env,{NEBIUS_MAX_CALLS:String(ledger.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(ledger.reservedTokens+900000),NEBIUS_MAX_CREDIT_USD:USD_CEILING,NEBIUS_BUDGET_SCOPE:SCOPE,NEBIUS_MAX_OUTPUT_TOKENS:String(CONFIG.maxOutputTokens),NEBIUS_TIMEOUT_MS:String(CONFIG.timeoutMs)});
   const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:3,freshInference:true,models,
     sourceMetadata:{kind:'source',name:c.meta.title,originalRoot:c.original,scope:`Real upstream bug (${c.meta.issue}) at ${c.meta.buggyCommit}. Blind to the maintainers' fix ${c.meta.fixCommit}; routing ${policy}.`}});
   assert.equal((await verifyProof(`artifacts/runs/${run.id}`)).pass,true);await committed(c);
@@ -68,13 +70,18 @@ if(mode==='screen'){
 }else if(mode==='summary'){
   const rows=[];
   for(const caseId of (await fs.readdir(BASE,{withFileTypes:true})).filter(d=>d.isDirectory()).map(d=>d.name).sort()){
+    if(!await Promise.all(['case.json','tasks.json'].map(f=>fs.access(path.join(BASE,caseId,f)))).then(()=>true,()=>false))continue;
     const c=await load(caseId),commitment=await readJson(path.join(c.root,'commitment.json')).catch(()=>null);
     const results=[];for(const f of (await fs.readdir(path.join(c.root,'results')).catch(()=>[])).sort())results.push({file:f,...await readJson(path.join(c.root,'results',f))});
     rows.push({id:caseId,title:c.meta.title,library:c.meta.library,issue:c.meta.issue,fixCommit:c.meta.fixCommit,screen:commitment?.screen?.verdict||'NOT_SCREENED',screenRun:commitment?.screen?.run||null,
-      results:results.map(r=>({file:r.file,policy:r.policy,run:r.modelRun,verdict:r.verdict,passedOn:r.attempts.find(a=>a.verified)?.attempt||null,passedModel:r.attempts.find(a=>a.verified)?.model||null,attempts:r.attempts.length,tokens:r.attempts.reduce((s,a)=>s+(a.usage?.total_tokens||0),0),leaked:r.humanFixLinesInRequest}))});
+      results:results.map(r=>({file:r.file,policy:r.policy,implementation:r.implementation||null,run:r.modelRun,verdict:r.verdict,passedOn:r.attempts.find(a=>a.verified)?.attempt||null,passedModel:r.attempts.find(a=>a.verified)?.model||null,attempts:r.attempts.length,tokens:r.attempts.reduce((s,a)=>s+(a.usage?.total_tokens||0),0),leaked:r.humanFixLinesInRequest}))});
   }
-  const eligible=rows.filter(r=>r.screen==='VERIFIED_PASS'),first=eligible.map(r=>r.results.find(x=>x.policy==='auto')).filter(Boolean);
-  const summary={generatedAt:new Date().toISOString(),cases:rows.length,eligible:eligible.length,autoRuns:first.length,autoVerified:first.filter(r=>r.verdict==='VERIFIED_PASS').length,rows};
+  // The scoreboard counts one run per case with the current, frozen implementation; earlier runs stay listed as history.
+  const current=digest(await implementation()),eligible=rows.filter(r=>r.screen==='VERIFIED_PASS'),first=eligible.map(r=>r.results.filter(x=>x.policy==='auto'&&x.implementation===current).at(0)).filter(Boolean);
+  // Every earlier frozen implementation keeps its own score, so a rerun never hides the previous result.
+  const hashes=[...new Set(eligible.flatMap(r=>r.results.filter(x=>x.policy==='auto'&&x.implementation).map(x=>x.implementation)))];
+  const versions=hashes.map(h=>{const runs=eligible.map(r=>r.results.find(x=>x.policy==='auto'&&x.implementation===h)).filter(Boolean);return {implementation:h,current:h===current,autoRuns:runs.length,autoVerified:runs.filter(r=>r.verdict==='VERIFIED_PASS').length,firstRun:runs.map(r=>r.run).sort()[0]};});
+  const summary={generatedAt:new Date().toISOString(),implementation:current,cases:rows.length,eligible:eligible.length,autoRuns:first.length,autoVerified:first.filter(r=>r.verdict==='VERIFIED_PASS').length,versions,rows};
   await write(path.join(BASE,'summary.json'),summary,'w');
   console.log(JSON.stringify({cases:summary.cases,eligible:summary.eligible,autoRuns:summary.autoRuns,autoVerified:summary.autoVerified},null,1));
   for(const r of rows)console.log(r.id.padEnd(34),r.screen.padEnd(14),r.results.map(x=>`${x.policy}:${x.verdict}${x.passedOn?'@'+x.passedOn:''}`).join(' '));

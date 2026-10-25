@@ -1,0 +1,13 @@
+diff --git a/index.html b/index.html
+index 1c67742..6683970 100644
+--- a/index.html
++++ b/index.html
+@@ -34,7 +34,7 @@ footer{margin-top:40px}
+       </div>
+       <p><label for="filename">File name</label><br><input id="filename" type="text" value="report.pdf"></p>
+       <button id="upload" type="button">Upload</button>
+-      <button id="retry" class="retry" type="button">Try again</button>
++      <button id="retry" class="retry" type="button" aria-hidden="true">Try again</button>
+     </div>
+   </div>
+ </div>

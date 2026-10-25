@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "id": "accessible-menu-focusout-pointer",
+  "title": "Open the Shop dropdown with the pointer",
+  "goal": "Clicking Shop reveals its links",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open Shop",
+      "action": {
+        "kind": "click",
+        "selector": "#shop"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#shop",
+          "name": "aria-expanded",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#plants",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#shop",
+      "name": "aria-expanded",
+      "value": "true"
+    },
+    {
+      "kind": "visible",
+      "selector": "#tools",
+      "value": true
+    }
+  ],
+  "forbidden": []
+}

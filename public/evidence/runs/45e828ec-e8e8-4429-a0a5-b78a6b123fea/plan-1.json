@@ -1,0 +1,23 @@
+{
+  "root_cause": "The visually hidden retry button remained focusable according to Micromodal's focusable node list (due to matching selectors despite CSS display:none), causing the script to treat it as a focusable element after the Upload button. Consequently, the Tab keypress from Upload did not trigger the focus‑wrapping logic, allowing focus to escape the modal to the Help link outside.",
+  "repair_strategy": "Add aria-hidden=\"true\" to the retry button so that Micromodal's getFocusableNodes excludes it, aligning the script's focusable set with the browser's actual tab order. This makes the Upload button the last focusable element inside the dialog, enabling the existing focus‑wrapping behavior to move focus back to the first element (Close button) on Tab.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "83bb455f24a186d6b1de61d1a51c55e05d813d1716179b03d479b09d82e70be9",
+      "before": "      <button id=\"upload\" type=\"button\">Upload</button>\n      <button id=\"retry\" class=\"retry\" type=\"button\">Try again</button>",
+      "after": "      <button id=\"upload\" type=\"button\">Upload</button>\n      <button id=\"retry\" class=\"retry\" type=\"button\" aria-hidden=\"true\">Try again</button>"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users will remain trapped within the modal when tabbing forward, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order). The modal’s focus order will be: Open button → File name input → Upload button → Close button → (wrap).",
+  "functional_risks": [
+    "None; the button remains visually hidden and non‑functional, so adding aria-hidden does not affect appearance or any existing functionality."
+  ],
+  "verification_requirements": [
+    "After opening the modal, pressing Tab moves focus from #filename to #upload.",
+    "Pressing Tab again moves focus from #upload to #modal-close.",
+    "Escape key still closes the modal and returns focus to the trigger button.",
+    "Status text updates correctly after an upload action.",
+    "No regression in other modal interactions (e.g., Shift+Tab works as expected)."
+  ]
+}

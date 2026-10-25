@@ -1,0 +1,23 @@
+[
+  {
+    "path": "index.html",
+    "score": 6,
+    "signals": [
+      "fruit",
+      "order-form",
+      "body",
+      "Main fruit",
+      "Add to order",
+      "Fruit suggestions"
+    ],
+    "sha256": "30e6dc5acb97f22f060a7f3724c48897222b4d268e58472b91ac067a71dba221"
+  },
+  {
+    "path": "src/autoComplete.js",
+    "score": 5.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "0d0d446adae1a014da3d8ab13ee99cb73e0094218b8a48458756f2145b850fea"
+  }
+]

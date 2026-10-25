@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Click and collect</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="dist/css/autoComplete.css">
+<style>
+body{font:16px system-ui,sans-serif;margin:32px;color:#1d1d1d;background:#fff}
+main{max-width:560px}
+label{display:block;margin:16px 0 6px;font-weight:600}
+input{font:inherit;padding:8px;border:1px solid #555;border-radius:4px;width:300px}
+button[type=submit]{margin-top:24px;font:inherit;padding:8px 16px}
+:focus-visible{outline:3px solid #0b5fff;outline-offset:2px}
+#status{margin-top:16px;min-height:1.4em}
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "./src/components/Input": "./src/components/Input.js",
+    "./src/components/Item": "./src/components/Item.js",
+    "./src/components/List": "./src/components/List.js",
+    "./src/controllers/dataController": "./src/controllers/dataController.js",
+    "./src/controllers/listController": "./src/controllers/listController.js",
+    "./src/controllers/navigationController": "./src/controllers/navigationController.js",
+    "./src/services/search": "./src/services/search.js",
+    "./src/utils/debouncer": "./src/utils/debouncer.js",
+    "./src/utils/eventEmitter": "./src/utils/eventEmitter.js"
+  }
+}
+</script>
+</head>
+<body>
+<main>
+<h1>Click and collect</h1>
+<p>Choose the store where you will pick up order 7731.</p>
+<template id="pickup-template">
+<form id="pickup-form" action="#" novalidate>
+  <label for="store">Pickup store</label>
+  <input id="store" name="store" autocomplete="off" spellcheck="false">
+  <button id="submit" type="submit">Confirm store</button>
+  <p id="status" role="status"></p>
+</form>
+</template>
+</main>
+<script type="module">
+// The upstream source imports modules without file extensions; the import map above resolves them.
+import autoComplete from './src/autoComplete.js';
+window.storePicker = new autoComplete({
+  name: 'Store suggestions',
+  selector: '#store',
+  data: {
+    src: [{name: 'Market Street'}, {name: 'Marina Park'}, {name: 'Maple Avenue'}, {name: 'Harbour Mall'}, {name: 'Station Square'}],
+    key: ['name']
+  },
+  onSelection: feedback => { document.getElementById('store').value = feedback.selection.value.name; }
+});
+// This upstream revision attaches once it observes the field being added to the document, so the form is rendered after setup.
+document.querySelector('main').append(document.getElementById('pickup-template').content.cloneNode(true));
+const form = document.getElementById('pickup-form');
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('status').textContent = 'Pickup at ' + new FormData(form).get('store');
+});
+window.__ready = true;
+</script>
+</body>
+</html>

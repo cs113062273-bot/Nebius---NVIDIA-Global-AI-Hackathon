@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "micromodal-hidden-leak-keyboard",
+  "title": "Tab stays inside the upload dialog when it contains a hidden button",
+  "goal": "Tabbing past the last visible control wraps to the start of the dialog",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach upload trigger",
+      "action": {
+        "kind": "seek",
+        "selector": "#open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open upload dialog",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#upload-modal",
+          "name": "aria-hidden",
+          "value": "false"
+        },
+        {
+          "kind": "focus",
+          "selector": "#filename"
+        }
+      ]
+    },
+    {
+      "title": "Move to Upload",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#upload"
+        }
+      ]
+    },
+    {
+      "title": "Tab past the last visible control",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#modal-close"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#modal-close"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#upload-modal",
+      "name": "aria-hidden",
+      "value": "false"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "No report uploaded yet."
+    }
+  ],
+  "forbidden": [
+    {
+      "kind": "focus",
+      "selector": "#help"
+    }
+  ]
+}

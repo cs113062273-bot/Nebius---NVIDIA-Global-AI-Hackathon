@@ -1,0 +1,19 @@
+{
+  "completedAt": "2026-10-25T13:43:25.026Z",
+  "policy": "auto",
+  "modelRun": "27b17e4e-7bbe-4fcd-9aba-b09f705986a3",
+  "verdict": "INCONCLUSIVE",
+  "reasons": [
+    "PROPOSAL: Focused evidence exceeds inference budget; localize more narrowly"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Focused evidence exceeds inference budget; localize more narrowly"
+    }
+  ]
+}

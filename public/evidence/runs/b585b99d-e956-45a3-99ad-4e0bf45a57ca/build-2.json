@@ -1,0 +1,21 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "src/index.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "upstream-dependency/focus-trap/index.js",
+      "pass": true,
+      "kind": "syntax"
+    }
+  ],
+  "scope": "Static HTML structure and JavaScript syntax (classic or ESM) only; no framework compilation claim."
+}

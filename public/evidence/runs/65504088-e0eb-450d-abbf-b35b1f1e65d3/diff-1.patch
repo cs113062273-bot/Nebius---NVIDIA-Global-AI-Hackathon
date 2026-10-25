@@ -1,0 +1,36 @@
+diff --git a/js/src/util/index.js b/js/src/util/index.js
+index 4e52fd3..92ad9b8 100644
+--- a/js/src/util/index.js
++++ b/js/src/util/index.js
+@@ -303,13 +303,25 @@ const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed
+     return !shouldGetNext && isCycleAllowed ? list[listLength - 1] : list[0]
+   }
+ 
+-  index += shouldGetNext ? 1 : -1
+-
+-  if (isCycleAllowed) {
+-    index = (index + listLength) % listLength
++  let steps = 0
++  let nextIndex = index
++  while (steps < listLength) {
++    nextIndex += shouldGetNext ? 1 : -1
++    if (isCycleAllowed) {
++      nextIndex = (nextIndex + listLength) % listLength
++    } else {
++      if (nextIndex < 0 || nextIndex >= listLength) {
++        // reached end without cycling
++        break
++      }
++    }
++    if (!isDisabled(list[nextIndex])) {
++      return list[nextIndex]
++    }
++    steps++
+   }
+-
+-  return list[Math.max(0, Math.min(index, listLength - 1))]
++  // fallback: return original element
++  return list[index]
+ }
+ 
+ export {

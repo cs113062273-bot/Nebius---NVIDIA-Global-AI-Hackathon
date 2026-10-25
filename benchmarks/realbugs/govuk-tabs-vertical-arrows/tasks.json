@@ -1,0 +1,73 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "govuk-tabs-arrow-down-keyboard",
+    "title": "Press the down arrow on a tab without being switched to another tab",
+    "goal": "The down arrow leaves the Past day tab selected and its panel shown, as only left and right arrows move between horizontal tabs",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      { "title": "Reach the selected tab", "action": { "kind": "seek", "selector": "a[href='#past-day']" } },
+      { "title": "Press the down arrow to read on", "action": { "kind": "press", "key": "ArrowDown" },
+        "assertions": [ { "kind": "visible", "selector": "#past-day", "value": true } ] }
+    ],
+    "success": [
+      { "kind": "focus", "selector": "a[href='#past-day']" },
+      { "kind": "attribute", "selector": "a[href='#past-day']", "name": "aria-selected", "value": "true" },
+      { "kind": "visible", "selector": "#past-day", "value": true },
+      { "kind": "visible", "selector": "#past-week", "value": false }
+    ],
+    "functional": [
+      { "kind": "visible", "selector": "#past-day", "value": true }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "govuk-tabs-select-pointer",
+    "title": "Choose the Past week tab with a pointer",
+    "goal": "Clicking Past week shows its panel and hides Past day",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      { "title": "Choose Past week", "action": { "kind": "click", "selector": "a[href='#past-week']" },
+        "assertions": [ { "kind": "visible", "selector": "#past-week", "value": true } ] }
+    ],
+    "success": [
+      { "kind": "visible", "selector": "#past-week", "value": true }
+    ],
+    "functional": [
+      { "kind": "visible", "selector": "#past-week", "value": true },
+      { "kind": "visible", "selector": "#past-day", "value": false },
+      { "kind": "attribute", "selector": "a[href='#past-week']", "name": "aria-selected", "value": "true" }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "govuk-tabs-arrow-right-keyboard",
+      "title": "Move to the next tab with the right arrow",
+      "goal": "The right arrow selects and focuses Past week",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        { "title": "Reach the selected tab", "action": { "kind": "seek", "selector": "a[href='#past-day']" } },
+        { "title": "Press the right arrow", "action": { "kind": "press", "key": "ArrowRight" },
+          "assertions": [ { "kind": "focus", "selector": "a[href='#past-week']" } ] },
+        { "title": "Press the left arrow", "action": { "kind": "press", "key": "ArrowLeft" },
+          "assertions": [ { "kind": "focus", "selector": "a[href='#past-day']" } ] }
+      ],
+      "success": [
+        { "kind": "visible", "selector": "#past-day", "value": true }
+      ],
+      "functional": [
+        { "kind": "attribute", "selector": "a[href='#past-day']", "name": "aria-selected", "value": "true" }
+      ],
+      "forbidden": []
+    }
+  ]
+}

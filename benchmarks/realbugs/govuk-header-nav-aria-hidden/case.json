@@ -1,0 +1,26 @@
+{
+  "title": "Header navigation links that are visible on a desktop-width page must not be hidden from screen readers",
+  "library": "GOV.UK Frontend",
+  "repository": "https://github.com/alphagov/govuk-frontend",
+  "issue": "https://github.com/alphagov/govuk-frontend/issues/1966",
+  "fixUrl": "https://github.com/alphagov/govuk-frontend/commit/98ccef39a701f89f9395e4ac93654f74ea1d89f5",
+  "buggyCommit": "1c483eed4cfc09aea86c03cb208132c0d7c3b14d",
+  "fixCommit": "98ccef39a701f89f9395e4ac93654f74ea1d89f5",
+  "summary": "On wide screens the header script marks the always-visible navigation aria-hidden, so screen reader users cannot find the links that keyboard focus still lands on.",
+  "category": "ARIA state",
+  "upstreamFiles": [
+    "LICENSE",
+    "src/govuk/components/header/header.js",
+    "src/govuk/vendor/polyfills/Document.js",
+    "src/govuk/vendor/polyfills/DOMTokenList.js",
+    "src/govuk/vendor/polyfills/Element/prototype/classList.js",
+    "src/govuk/vendor/polyfills/Element.js",
+    "src/govuk/vendor/polyfills/Event.js",
+    "src/govuk/vendor/polyfills/Function/prototype/bind.js",
+    "src/govuk/vendor/polyfills/Object/defineProperty.js",
+    "src/govuk/vendor/polyfills/Window.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written fishing licence service page around the unchanged upstream header source at buggyCommit (released in v3.9.0); an import map resolves the upstream extensionless relative imports to the pinned .js files."
+}

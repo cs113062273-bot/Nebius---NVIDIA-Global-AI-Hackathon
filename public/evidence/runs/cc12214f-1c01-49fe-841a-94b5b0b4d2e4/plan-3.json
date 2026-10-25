@@ -1,0 +1,49 @@
+{
+  "root_cause": "The modal fails to open because the initialization function has multiple bugs: generateTriggerMap uses an array instead of an object, init uses undefined variables (triggerAttr, targetModal), and getFocusableNodes passes an array to querySelectorAll causing a TypeError. Additionally, the Space key event propagates and closes the modal when pressing Space on a checkbox.",
+  "repair_strategy": "Fix generateTriggerMap to return an object, fix init to properly create Modal instances for each modal and register triggers without showing, fix getFocusableNodes to join selectors into a string, fix setFocusToFirstNode to use if-else for clarity, and add a Space key handler in onKeydown to stop propagation.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "  const generateTriggerMap = (triggers, triggerAttr) => {\n    const triggerMap = []\n\n    triggers.forEach(trigger => {\n      const targetModal = trigger.attributes[triggerAttr].value\n      if (triggerMap[targetModal] === undefined) triggerMap[targetModal] = []\n      triggerMap[targetModal].push(trigger)\n    })\n\n    return triggerMap\n  }",
+      "after": "  const generateTriggerMap = (triggers, triggerAttr) => {\n    const triggerMap = {}\n\n    triggers.forEach(trigger => {\n      const targetModal = trigger.attributes[triggerAttr].value\n      if (triggerMap[targetModal] === undefined) triggerMap[targetModal] = []\n      triggerMap[targetModal].push(trigger)\n    })\n\n    return triggerMap\n  }"
+    },
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "  const init = config => {\n    // Create an config object with default openTrigger\n    const options = Object.assign({}, { openTrigger: 'data-micromodal-trigger' }, config)\n\n    // Collects all the nodes with the trigger\n    const triggers = [...document.querySelectorAll(`[${ options.openTrigger }]`)]\n\n    // Makes a mappings of modals with their triggers\n    const triggerMap = generateTriggerMap(triggers, triggerAttr)\n\n    // Checks if modals and triggers exist in dom\n    if (options.debugMode === true && validateModalPresence(targetModal) === false) return\n\n    // clear events in case previous modal wasn't close\n    if (activeModal) activeModal.removeEventListeners()\n\n    // stores reference to active modal\n    activeModal = new Modal(options) // eslint-disable-line no-new\n    activeModal.showModal()\n  }",
+      "after": "  const init = config => {\n    const options = Object.assign({}, { openTrigger: 'data-micromodal-trigger' }, config)\n    const triggers = [...document.querySelectorAll(`[${options.openTrigger}]`)]\n    const triggerMap = generateTriggerMap(triggers, options.openTrigger)\n    if (options.debugMode === true) {\n      for (const targetModal in triggerMap) {\n        if (!validateModalPresence(targetModal)) return\n      }\n    }\n    if (activeModal) activeModal.removeEventListeners()\n    for (const targetModal in triggerMap) {\n      const triggersForModal = triggerMap[targetModal]\n      const modalOptions = Object.assign({}, options, { targetModal, triggers: triggersForModal })\n      new Modal(modalOptions) // eslint-disable-line no-new\n    }\n  }"
+    },
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes)\n    }",
+      "after": "    getFocusableNodes () {\n      const selector = FOCUSABLE_ELEMENTS.join(',')\n      const nodes = this.modal.querySelectorAll(selector)\n      return Array.from(nodes)\n    }"
+    },
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "    setFocusToFirstNode () {\n      if (this.config.disableFocus) return\n\n      const focusableNodes = this.getFocusableNodes()\n\n      // no focusable nodes\n      if (focusableNodes.length === 0) return\n\n      // remove nodes on whose click, the modal closes\n      // could not think of a better name :(\n      const nodesWhichAreNotCloseTargets = focusableNodes.filter(node => {\n        return !node.hasAttribute(this.config.closeTrigger)\n      })\n\n      if (nodesWhichAreNotCloseTargets.length > 0) nodesWhichAreNotCloseTargets[0].focus()\n      if (nodesWhichAreNotCloseTargets.length === 0) focusableNodes[0].focus()\n    }",
+      "after": "    setFocusToFirstNode () {\n      if (this.config.disableFocus) return\n\n      const focusableNodes = this.getFocusableNodes()\n\n      // no focusable nodes\n      if (focusableNodes.length === 0) return\n\n      // remove nodes on whose click, the modal closes\n      // could not think of a better name :(\n      const nodesWhichAreNotCloseTargets = focusableNodes.filter(node => {\n        return !node.hasAttribute(this.config.closeTrigger)\n      })\n\n      if (nodesWhichAreNotCloseTargets.length > 0) {\n        nodesWhichAreNotCloseTargets[0].focus()\n      } else if (nodesWhichAreNotCloseTargets.length === 0) {\n        focusableNodes[0].focus()\n      }\n    }"
+    },
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "    onKeydown (event) {\n      if (event.keyCode === 27) this.closeModal(event) // esc\n      if (event.keyCode === 9) this.retainFocus(event) // tab\n    }",
+      "after": "    onKeydown (event) {\n      if (event.keyCode === 27) this.closeModal(event) // esc\n      if (event.keyCode === 9) this.retainFocus(event) // tab\n      if (event.keyCode === 32) event.stopPropagation() // space\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Enter on the trigger opens the modal, focus moves to the first checkbox, pressing Space toggles the checkbox without closing the modal, and the modal stays open (aria-hidden remains false).",
+  "functional_risks": [
+    "Changes to init may affect multiple modal handling if more modals are added.",
+    "The Space key stopPropagation may interfere with custom Space-based shortcuts that rely on event propagation within the modal.",
+    "If other components depend on Space key bubbling from inner elements, they will no longer receive the event."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Enter on the trigger opens the modal (aria-hidden becomes false).",
+    "Verify that focus moves to the weekly checkbox after opening.",
+    "Verify that pressing Space on the weekly checkbox toggles it and the modal stays open.",
+    "Verify that pressing Escape closes the modal and restores focus to the trigger.",
+    "Verify that Tab key trapping works within the modal."
+  ]
+}

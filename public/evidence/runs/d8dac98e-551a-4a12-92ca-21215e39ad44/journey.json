@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "id": "autocomplete-active-option-reference",
+  "title": "Arrow through store suggestions with the active option announced",
+  "goal": "While arrowing through suggestions, the input's aria-activedescendant names the highlighted option element",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the store field",
+      "action": {
+        "kind": "seek",
+        "selector": "#store",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type ma",
+      "action": {
+        "kind": "type",
+        "text": "ma"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#autoCompleteJS_result_1",
+          "value": "Marina Park"
+        }
+      ]
+    },
+    {
+      "title": "Highlight the first suggestion",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#autoCompleteJS_result_0",
+          "name": "aria-selected",
+          "value": "true"
+        },
+        {
+          "kind": "attribute",
+          "selector": "#store",
+          "name": "aria-activedescendant",
+          "value": "autoCompleteJS_result_0"
+        }
+      ]
+    },
+    {
+      "title": "Highlight the second suggestion",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#autoCompleteJS_result_1",
+          "name": "aria-selected",
+          "value": "true"
+        },
+        {
+          "kind": "attribute",
+          "selector": "#store",
+          "name": "aria-activedescendant",
+          "value": "autoCompleteJS_result_1"
+        }
+      ]
+    },
+    {
+      "title": "Choose it",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#pickup-form",
+          "name": "store",
+          "value": [
+            "Marina Park"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#pickup-form",
+      "name": "store",
+      "value": [
+        "Marina Park"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#pickup-form",
+      "name": "store",
+      "value": [
+        "Marina Park"
+      ]
+    }
+  ],
+  "forbidden": []
+}

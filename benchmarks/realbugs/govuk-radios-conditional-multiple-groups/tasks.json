@@ -1,0 +1,76 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "govuk-radios-multiple-groups-keyboard",
+    "title": "Opt out of reminders with the keyboard after choosing Text message",
+    "goal": "Arrowing from Text message to the opt-out answer hides the mobile number field that no longer applies",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      { "title": "Reach the reminder radios", "action": { "kind": "seek", "selector": "#reminder" } },
+      { "title": "Move to Text message", "action": { "kind": "press", "key": "ArrowDown" },
+        "assertions": [ { "kind": "visible", "selector": "#conditional-reminder-2", "value": true } ] },
+      { "title": "Move to the opt-out answer", "action": { "kind": "press", "key": "ArrowDown" },
+        "assertions": [ { "kind": "focus", "selector": "#reminder-none" }, { "kind": "visible", "selector": "#conditional-reminder-2", "value": false } ] }
+    ],
+    "success": [
+      { "kind": "visible", "selector": "#conditional-reminder-2", "value": false },
+      { "kind": "visible", "selector": "#conditional-reminder", "value": false }
+    ],
+    "functional": [
+      { "kind": "form-data", "selector": "#reminder-form", "name": "reminder", "value": ["none"] }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "govuk-radios-channel-pointer",
+    "title": "Switch reminder channel with a pointer",
+    "goal": "Choosing Email then Text message shows only the mobile number field",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      { "title": "Choose Email", "action": { "kind": "click", "selector": "#reminder" },
+        "assertions": [ { "kind": "visible", "selector": "#conditional-reminder", "value": true } ] },
+      { "title": "Choose Text message", "action": { "kind": "click", "selector": "#reminder-2" },
+        "assertions": [ { "kind": "visible", "selector": "#conditional-reminder", "value": false } ] }
+    ],
+    "success": [
+      { "kind": "visible", "selector": "#conditional-reminder-2", "value": true }
+    ],
+    "functional": [
+      { "kind": "visible", "selector": "#conditional-reminder-2", "value": true },
+      { "kind": "visible", "selector": "#conditional-reminder", "value": false },
+      { "kind": "form-data", "selector": "#reminder-form", "name": "reminder", "value": ["text"] }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "govuk-radios-channel-keyboard",
+      "title": "Choose Email with the keyboard and enter an address",
+      "goal": "Selecting Email reveals the email address field and the address is kept",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        { "title": "Reach the reminder radios", "action": { "kind": "seek", "selector": "#reminder" } },
+        { "title": "Choose Email", "action": { "kind": "press", "key": "Space" },
+          "assertions": [ { "kind": "visible", "selector": "#conditional-reminder", "value": true } ] },
+        { "title": "Move to the email field", "action": { "kind": "seek", "selector": "#reminder-email", "maxTabs": 3 } },
+        { "title": "Enter an email address", "action": { "kind": "type", "text": "sam@example.org" } }
+      ],
+      "success": [
+        { "kind": "visible", "selector": "#conditional-reminder", "value": true }
+      ],
+      "functional": [
+        { "kind": "form-data", "selector": "#reminder-form", "name": "reminder", "value": ["email"] },
+        { "kind": "form-data", "selector": "#reminder-form", "name": "reminder-email", "value": ["sam@example.org"] }
+      ],
+      "forbidden": []
+    }
+  ]
+}

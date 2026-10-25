@@ -1,0 +1,81 @@
+{
+  "fixedAt": "2026-10-25T13:24:54.580Z",
+  "sourceHashes": {
+    "LICENSE": "fc128e54c03aa96a27de02d0bb9c468a6869faca42c62942abcdffa25eaa3810",
+    "dist/css/datepicker.css": "65d55d5069bb294decd378d2ceef0501ea45b370e28a87f15255f673aca45a85",
+    "index.html": "8cbcb674a7a1ff21bd30080aaf698a95d01b13e0509e6c5fd55ac5f954f0329c",
+    "js/Datepicker.js": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+    "js/events/elementListeners.js": "04306a025893ae94572cc9093c127650740c20f0b245af36c4ff60efd968033f",
+    "js/events/functions.js": "ece3bdac191d5e04daa4efdb1b51da81b9ddf1f796f0b4571428ac113cab8583",
+    "js/events/otherListeners.js": "e455ad95dd77a232ecc7b0148d3e01529e17f088c6d492317a7de5a98d91bece",
+    "js/events/pickerListeners.js": "0cf1f771824e1e5d62ea69819d3fc355c0b33d72ffcabaa795c2a7f44fece8eb",
+    "js/i18n/base-locales.js": "602b63fdd73d4e7e4808f9999f01f2838d42c1d953d088c5e32470a9a7732676",
+    "js/lib/date-format.js": "3c95fb2a8e554079a6a0b6271538c56c759d000cfc2a4efca223c672cc402b11",
+    "js/lib/date.js": "e8183e21d921df2e92fc4aba576fe20a24b4aed0beba9f43880c5918201c24d3",
+    "js/lib/dom.js": "89d39d990e3e1b3173c36d75596cf33c2706a6a17a7f2cb6627b4c59993cc194",
+    "js/lib/event.js": "42e773edd789a832d15bb40c2ad29850c6fba9ce3133adc419a41a74e7733f48",
+    "js/lib/utils.js": "5868de206854ee77f9d1a87890308b213062c84a511c396b6844082df6ffe6e9",
+    "js/options/defaultOptions.js": "af7f4bdb67de4f9bc7099f1ae2327405ddea3ea2e238181e21a721b3c29221b5",
+    "js/options/processOptions.js": "a51e6c679e9a528ca80a2e21b56a20b06c109a1d79e9ea0612cf6a22e0f4965f",
+    "js/options/shortcutKeys.js": "7f0a2e1e07d65bdf2dc9100a58cf424fe1ca7f8f136a5701c0fc5b7a91381c8a",
+    "js/picker/Picker.js": "bdad6c1434285abe75a3ea29c3be21b923eb1d7c828d09d29f38bf07e1d76ba2",
+    "js/picker/templates/daysTemplate.js": "bd679469373bc59f5f13cc6ce88d564371c4e4f89d61020409440e0fa709ea1a",
+    "js/picker/templates/pickerTemplate.js": "05424dbceec33627682085d12365da38d469609c9bc189b0e0fecebc360cc903",
+    "js/picker/templates/weekNumbersTemplate.js": "d590e9648276046251d2a81595441204d7cff1d3ed5eff98d70ea086e49f3893",
+    "js/picker/views/DaysView.js": "59ccbe7967ef24296a3da2cb1ce1184bfa8df22e4093452e53612b729025a200",
+    "js/picker/views/MonthsView.js": "7af3f6f58727fb139b50f2d1fa5b4e7eab6c9b0ecc8fd9cf7e2771135e1568f2",
+    "js/picker/views/View.js": "b65e187a7a0466cb3ba484c942a66977dbd19bacb764d7cadaaa0053fd97f5d5",
+    "js/picker/views/YearsView.js": "353f576eb05cb1a69e8fbf868f11f145287d14bd487b7f6d27df739326b8bb2e"
+  },
+  "humanFixHashes": {
+    "LICENSE": "fc128e54c03aa96a27de02d0bb9c468a6869faca42c62942abcdffa25eaa3810",
+    "dist/css/datepicker.css": "65d55d5069bb294decd378d2ceef0501ea45b370e28a87f15255f673aca45a85",
+    "index.html": "8cbcb674a7a1ff21bd30080aaf698a95d01b13e0509e6c5fd55ac5f954f0329c",
+    "js/Datepicker.js": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+    "js/events/elementListeners.js": "04306a025893ae94572cc9093c127650740c20f0b245af36c4ff60efd968033f",
+    "js/events/functions.js": "ece3bdac191d5e04daa4efdb1b51da81b9ddf1f796f0b4571428ac113cab8583",
+    "js/events/otherListeners.js": "e455ad95dd77a232ecc7b0148d3e01529e17f088c6d492317a7de5a98d91bece",
+    "js/events/pickerListeners.js": "0cf1f771824e1e5d62ea69819d3fc355c0b33d72ffcabaa795c2a7f44fece8eb",
+    "js/i18n/base-locales.js": "602b63fdd73d4e7e4808f9999f01f2838d42c1d953d088c5e32470a9a7732676",
+    "js/lib/date-format.js": "3c95fb2a8e554079a6a0b6271538c56c759d000cfc2a4efca223c672cc402b11",
+    "js/lib/date.js": "e8183e21d921df2e92fc4aba576fe20a24b4aed0beba9f43880c5918201c24d3",
+    "js/lib/dom.js": "89d39d990e3e1b3173c36d75596cf33c2706a6a17a7f2cb6627b4c59993cc194",
+    "js/lib/event.js": "42e773edd789a832d15bb40c2ad29850c6fba9ce3133adc419a41a74e7733f48",
+    "js/lib/utils.js": "5868de206854ee77f9d1a87890308b213062c84a511c396b6844082df6ffe6e9",
+    "js/options/defaultOptions.js": "af7f4bdb67de4f9bc7099f1ae2327405ddea3ea2e238181e21a721b3c29221b5",
+    "js/options/processOptions.js": "a51e6c679e9a528ca80a2e21b56a20b06c109a1d79e9ea0612cf6a22e0f4965f",
+    "js/options/shortcutKeys.js": "7f0a2e1e07d65bdf2dc9100a58cf424fe1ca7f8f136a5701c0fc5b7a91381c8a",
+    "js/picker/Picker.js": "bdad6c1434285abe75a3ea29c3be21b923eb1d7c828d09d29f38bf07e1d76ba2",
+    "js/picker/templates/daysTemplate.js": "bd679469373bc59f5f13cc6ce88d564371c4e4f89d61020409440e0fa709ea1a",
+    "js/picker/templates/pickerTemplate.js": "7b94f4ac534ef7d568b81cc7871de815defa03c4cf59091f5ee3854d3ee923a5",
+    "js/picker/templates/weekNumbersTemplate.js": "d590e9648276046251d2a81595441204d7cff1d3ed5eff98d70ea086e49f3893",
+    "js/picker/views/DaysView.js": "59ccbe7967ef24296a3da2cb1ce1184bfa8df22e4093452e53612b729025a200",
+    "js/picker/views/MonthsView.js": "7af3f6f58727fb139b50f2d1fa5b4e7eab6c9b0ecc8fd9cf7e2771135e1568f2",
+    "js/picker/views/View.js": "b65e187a7a0466cb3ba484c942a66977dbd19bacb764d7cadaaa0053fd97f5d5",
+    "js/picker/views/YearsView.js": "353f576eb05cb1a69e8fbf868f11f145287d14bd487b7f6d27df739326b8bb2e"
+  },
+  "humanFixFiles": [
+    "js/picker/templates/pickerTemplate.js"
+  ],
+  "taskHash": "a65b8a7e53db09676df26ac0322ff6646aef4bba7a98008ce2f41120f64b26a3",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "9c0b8f3381362851abb441c217c5fca62d59edc29438a2ac0c817d47cabb4657",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "961c7d87-daa3-473c-a685-2fb1b27248ae",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

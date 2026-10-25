@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "id": "micromodal-form-pointer",
+  "title": "Open and close preferences with the pointer",
+  "goal": "The dialog opens and the close button dismisses it",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open preferences",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#prefs-modal",
+          "name": "aria-hidden",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "title": "Close preferences",
+      "action": {
+        "kind": "click",
+        "selector": "#modal-close"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#prefs-modal",
+          "name": "aria-hidden",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "attribute",
+      "selector": "#prefs-modal",
+      "name": "aria-hidden",
+      "value": "true"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#prefs-modal",
+      "name": "aria-hidden",
+      "value": "true"
+    },
+    {
+      "kind": "form-data",
+      "selector": "#prefs",
+      "name": "digest",
+      "value": []
+    }
+  ],
+  "forbidden": []
+}

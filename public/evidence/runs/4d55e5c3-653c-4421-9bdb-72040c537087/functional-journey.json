@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "awesomplete-pointer-pick",
+  "title": "Choose a departure city with the pointer",
+  "goal": "Typing and clicking a suggestion fills the city field",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Focus the city field",
+      "action": {
+        "kind": "click",
+        "selector": "#city"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type the start of a city",
+      "action": {
+        "kind": "type",
+        "text": "Bud"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#awesomplete_list_1",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Click Budapest",
+      "action": {
+        "kind": "click",
+        "selector": "#awesomplete_list_1 li:first-child"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#register-form",
+          "name": "city",
+          "value": [
+            "Budapest"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Register",
+      "action": {
+        "kind": "click",
+        "selector": "#submit"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#status",
+          "value": "Registered from Budapest"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Registered from Budapest"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#register-form",
+      "name": "city",
+      "value": [
+        "Budapest"
+      ]
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,35 @@
+diff --git a/src/autoComplete.js b/src/autoComplete.js
+index 2bf515c..09dfd8e 100644
+--- a/src/autoComplete.js
++++ b/src/autoComplete.js
+@@ -200,6 +200,30 @@ export default class autoComplete {
+       this.inputField.removeEventListener(eventType, this.hook);
+       this.inputField.addEventListener(eventType, this.hook);
+     });
++    // Handle Enter key to select highlighted suggestion
++    this.inputField.addEventListener('keydown', (event) => {
++      if (event.key === 'Enter' && this.inputField.getAttribute('aria-expanded') === 'true') {
++        const activeId = this.inputField.getAttribute('aria-activedescendant');
++        if (activeId) {
++          const activeEl = document.getElementById(activeId);
++          if (activeEl) {
++            const value = activeEl.textContent.trim();
++            if (this.onSelection) {
++              this.onSelection({ selection: { value } });
++            }
++          }
++        }
++        // Close the list
++        this.inputField.setAttribute('aria-expanded', 'false');
++        closeAllLists(this);
++        event.preventDefault();
++      }
++    });
++    /**
++     * @emits {init} Emits Event on Initialization
++     **/
++    eventEmitter(this.inputField, null, "init");
++  }
+     /**
+      * @emits {init} Emits Event on Initialization
+      **/

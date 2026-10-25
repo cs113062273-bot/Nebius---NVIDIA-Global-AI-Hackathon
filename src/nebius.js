@@ -56,7 +56,7 @@ export class NebiusClient {
     return (data.data || []).filter(m=>typeof m.id==='string' && /^nvidia\//i.test(m.id) && /nemotron/i.test(m.id)).map(m=>({id:m.id,features:Array.isArray(m.supported_features)?m.supported_features:[],pricing:m.pricing||null}));
   }
   async catalog() { return (await this.catalogEntries()).map(m=>m.id); }
-  maxOutput() { return Math.min(16000,Math.max(256,Number(this.env.NEBIUS_MAX_OUTPUT_TOKENS||3000))); }
+  maxOutput() { return Math.min(32000,Math.max(256,Number(this.env.NEBIUS_MAX_OUTPUT_TOKENS||3000))); }
   // Pure request construction: no network, usable for budget dry runs.
   prepare({ candidates, evidence, history = [] }) {
     const compact = { schema_version:1, task:{ title:evidence.title,goal:evidence.goal },...(evidence.environment?{environment:evidence.environment}:{}),failure:evidence.failure,
@@ -78,7 +78,7 @@ export class NebiusClient {
     if(!entry) throw new Error('Configured NVIDIA model unavailable in account catalog');
     const structured=entry.features.includes('structured_outputs');
     const {content,schema,maxOutput,reservation}=this.prepare({candidates,evidence,history});
-    if(content.length>96000) throw new Error('Focused evidence exceeds inference budget; localize more narrowly');
+    if(content.length>240000) throw new Error('Focused evidence exceeds inference budget; localize more narrowly');
     await fs.mkdir(this.dir,{recursive:true});
     const key=digest({model,content,structured,schema:2});
     const cached=path.join(this.dir,`cache-${key}.json`);
@@ -109,7 +109,7 @@ export class NebiusClient {
         if(this.env.NEBIUS_REASONING_EFFORT) body.reasoning_effort=this.env.NEBIUS_REASONING_EFFORT;
         record.requestFile=`request-${key}-${ledger.calls}.json`;
         await json(path.join(this.dir,record.requestFile),{purpose:record.purpose,at:record.at,promptHash:digest(content),request:body});
-        const response=await this.transport(BASE+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+this.env.NEBIUS_API_KEY,'Content-Type':'application/json'},redirect:'error',signal:AbortSignal.timeout(Number(this.env.NEBIUS_TIMEOUT_MS||120000)),body:JSON.stringify(body)});
+        const response=await this.transport(BASE+'/chat/completions',{method:'POST',headers:{Authorization:'Bearer '+this.env.NEBIUS_API_KEY,'Content-Type':'application/json'},redirect:'error',signal:AbortSignal.timeout(Number(this.env.NEBIUS_TIMEOUT_MS||300000)),body:JSON.stringify(body)});
         record.latencyMs=Math.round(performance.now()-started);
         if(!response.ok) throw new Error(`Nebius completion HTTP ${response.status}: ${(await response.text().catch(()=>'')).slice(0,300)}`);
         const data=await boundedJson(response);

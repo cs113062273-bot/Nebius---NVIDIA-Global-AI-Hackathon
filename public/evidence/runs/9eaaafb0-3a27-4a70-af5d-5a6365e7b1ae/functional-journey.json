@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "id": "focus-trap-ancestor-pointer",
+  "title": "Remove a basket row with the pointer",
+  "goal": "The basket opens, removes a row and closes",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open basket",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#basket",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Remove pruning shears",
+      "action": {
+        "kind": "click",
+        "selector": "#remove-2"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#count",
+          "value": "2 items"
+        }
+      ]
+    },
+    {
+      "title": "Close basket",
+      "action": {
+        "kind": "click",
+        "selector": "#close"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#basket",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#basket",
+      "value": false
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#count",
+      "value": "2 items"
+    },
+    {
+      "kind": "visible",
+      "selector": "#basket",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

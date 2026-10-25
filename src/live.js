@@ -12,10 +12,10 @@ export const CASES = path.join(ROOT, 'benchmarks', 'realbugs');
 export const LIVE_SCOPE = 'live-judge';
 export const LIVE_MODELS = ['nvidia/nemotron-3-super-120b-a12b', 'nvidia/Nemotron-3-Ultra-550b-a55b', 'nvidia/Nemotron-3-Ultra-550b-a55b'];
 // Worst case for one run: three calls at the output ceiling plus a large prompt, at Ultra prices.
-export const WORST_RUN_USD = 0.3;
+export const WORST_RUN_USD = 0.5;
 
 export async function liveCases() {
-  const out = [];
+  const out = [], frozen = (await readJson(path.join(CASES, 'summary.json')).catch(() => null))?.implementation;
   for (const entry of await fs.readdir(CASES, { withFileTypes: true }).catch(() => [])) {
     if (!entry.isDirectory()) continue;
     const root = path.join(CASES, entry.name);
@@ -23,11 +23,17 @@ export async function liveCases() {
     if (!meta || commitment?.screen?.verdict !== 'VERIFIED_PASS') continue;
     const results = [];
     for (const f of (await fs.readdir(path.join(root, 'results')).catch(() => [])).sort()) results.push(await readJson(path.join(root, 'results', f)));
-    const recorded = results.filter(r => r.policy === 'auto').at(-1) || results.at(-1) || null;
+    // Same rule as the benchmark scoreboard: the first auto run on the frozen implementation.
+    const auto = results.filter(r => r.policy === 'auto'), recorded = auto.find(r => frozen && r.implementation === frozen) || auto.at(-1) || results.at(-1) || null;
     out.push({ id: entry.name, title: meta.title, summary: meta.summary, library: meta.library, category: meta.category || null, repository: meta.repository, issue: meta.issue, fixUrl: meta.fixUrl || null, fixCommit: meta.fixCommit, buggyCommit: meta.buggyCommit, split: meta.split || 'holdout', screenRun: commitment.screen.run,
       recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null) } });
   }
   return out.sort((a, b) => a.library.localeCompare(b.library) || a.id.localeCompare(b.id));
+}
+// Score of every frozen engine version, with the author's note on what changed.
+export async function benchmarkVersions() {
+  const summary = await readJson(path.join(CASES, 'summary.json')).catch(() => null), notes = await readJson(path.join(CASES, 'versions.json')).catch(() => ({}));
+  return { note: notes.note || null, versions: (summary?.versions || []).map(v => ({ id: v.implementation.slice(0, 8), current: v.current, runs: v.autoRuns, verified: v.autoVerified, eligible: summary.eligible, note: notes.versions?.[v.implementation] || null })) };
 }
 export async function loadCase(id) {
   if (!/^[a-z0-9-]{1,80}$/.test(id)) throw new Error('Unknown case');

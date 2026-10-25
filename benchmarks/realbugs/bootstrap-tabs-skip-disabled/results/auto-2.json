@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-25T13:53:26.420Z",
+  "policy": "auto",
+  "modelRun": "5a7c5c91-0260-4e5b-ba7a-eedfc6709ae3",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "c985a43a428df1b6f4e1b51ad5fad3346a75d84bec19c183aa6f6f958594e2d5",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-6e31c253cd3b4dfd0a8745c4f8ece94d",
+      "usage": {
+        "completion_tokens": 3944,
+        "prompt_tokens": 9372,
+        "total_tokens": 13316,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3362,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 9372
+      },
+      "latencyMs": 17663,
+      "reservedCreditUsd": 0.021263699999999996
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-1b371d76a44f69f632f67929bcb61c5a",
+      "usage": {
+        "completion_tokens": 2649,
+        "prompt_tokens": 9008,
+        "total_tokens": 11657,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1891,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 9008
+      },
+      "latencyMs": 8963,
+      "reservedCreditUsd": 0.07011500000000001
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "title": "Ticking a 'None of these' checkbox must clear the other answers in its group even when each checkbox has its own name",
+  "library": "NHS.UK frontend",
+  "repository": "https://github.com/nhsuk/nhsuk-frontend",
+  "issue": "https://github.com/nhsuk/nhsuk-frontend/pull/1525",
+  "fixUrl": "https://github.com/nhsuk/nhsuk-frontend/commit/fa1dc4a57df47884ab6c77a5c19756ba5dba1b3f",
+  "buggyCommit": "3f76db3a94da50a04a3cdf70fef2f17e278e23e8",
+  "fixCommit": "fa1dc4a57df47884ab6c77a5c19756ba5dba1b3f",
+  "summary": "When symptoms are posted as separately named fields in one exclusive group, ticking 'No, I do not have any of these symptoms' leaves the earlier symptoms ticked, so contradictory answers are submitted.",
+  "category": "Form value",
+  "upstreamFiles": [
+    "LICENSE",
+    "packages/nhsuk-frontend/src/nhsuk/common/index.js",
+    "packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.js",
+    "packages/nhsuk-frontend/src/nhsuk/component.js",
+    "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js",
+    "packages/nhsuk-frontend/src/nhsuk/errors/index.js"
+  ],
+  "license": "MIT",
+  "split": "holdout",
+  "consumer": "Author-written symptom checker form around the unchanged upstream checkboxes source at buggyCommit; upstream .mjs modules are saved byte-for-byte as .js and an import map redirects their .mjs relative imports."
+}

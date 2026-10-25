@@ -1,0 +1,29 @@
+{
+  "title": "Enter must choose the suggestion that is highlighted after the search is refined",
+  "library": "autoComplete.js",
+  "repository": "https://github.com/TarekRaafat/autoComplete.js",
+  "issue": "https://github.com/TarekRaafat/autoComplete.js/pull/177",
+  "fixUrl": "https://github.com/TarekRaafat/autoComplete.js/commit/ca5e38df2b66e88e1507f6d152f1aca3daad55ea",
+  "buggyCommit": "3ddb104a00d48a1f8b809195c8cc65f747d72284",
+  "fixCommit": "ca5e38df2b66e88e1507f6d152f1aca3daad55ea",
+  "summary": "After navigating suggestions and then typing more, Enter selects a different suggestion from the one shown as highlighted.",
+  "category": "Form value",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/autoComplete.css",
+    "dist/css/images/search.svg",
+    "src/autoComplete.js",
+    "src/components/Input.js",
+    "src/components/Item.js",
+    "src/components/List.js",
+    "src/controllers/dataController.js",
+    "src/controllers/listController.js",
+    "src/controllers/navigationController.js",
+    "src/services/search.js",
+    "src/utils/debouncer.js",
+    "src/utils/eventEmitter.js"
+  ],
+  "license": "Apache-2.0",
+  "split": "holdout",
+  "consumer": "Author-written smoothie order form around the unchanged upstream ES module source at buggyCommit; an import map resolves the extensionless imports in that source."
+}

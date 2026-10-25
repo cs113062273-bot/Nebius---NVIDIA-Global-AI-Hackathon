@@ -1,0 +1,55 @@
+{
+  "fixedAt": "2026-10-25T13:40:52.198Z",
+  "sourceHashes": {
+    "LICENSE": "c652f35b1f2e5b88eb49f1e8a935eec79b4761a81666ace576e1af723f4a9238",
+    "index.html": "34aaa9ab14ca45254e7c2deedcdc7e50476f54a7264750d5a18fa063e59a1685",
+    "src/govuk/common.js": "1cc1e2a84c89e7b8e5f90cb11a8e25d54ac8a0bcda29367407eb7bbbb0610539",
+    "src/govuk/components/radios/radios.js": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+    "src/govuk/vendor/polyfills/DOMTokenList.js": "583b115ff785d2b5b0556a5d082b1d8a3d7343dc993c7c930ffbef40baff72ed",
+    "src/govuk/vendor/polyfills/Document.js": "73efb24a8a8610bde95890a39da63b6bf63bc9b8e545100280fe7a1920f77f54",
+    "src/govuk/vendor/polyfills/Element.js": "098c55b2594f5726364ef996e18009e4c014c63799d43d25844f7b8a166a3607",
+    "src/govuk/vendor/polyfills/Element/prototype/classList.js": "957a59e0da81514c53b5b4c705bc03794812ec5fe61928f440c0aabbfa6b7128",
+    "src/govuk/vendor/polyfills/Event.js": "1bc2d87f704be6361860670108ac7df1de48600a6892e7357dd4059c0c3b6d1b",
+    "src/govuk/vendor/polyfills/Function/prototype/bind.js": "cfa30156fc528621a42891aef9bcfec926aff4b5f2c7246f2210374091e987e1",
+    "src/govuk/vendor/polyfills/Object/defineProperty.js": "60380b5d24591c8deae38cde13069b52cd7b9fb881fbd1cc0cf539839d4ae9e0",
+    "src/govuk/vendor/polyfills/Window.js": "8f4d097821383f0ed781c80a935aaf87705ed38e8dae50d52ae0f823d6bfbd86"
+  },
+  "humanFixHashes": {
+    "LICENSE": "c652f35b1f2e5b88eb49f1e8a935eec79b4761a81666ace576e1af723f4a9238",
+    "index.html": "34aaa9ab14ca45254e7c2deedcdc7e50476f54a7264750d5a18fa063e59a1685",
+    "src/govuk/common.js": "1cc1e2a84c89e7b8e5f90cb11a8e25d54ac8a0bcda29367407eb7bbbb0610539",
+    "src/govuk/components/radios/radios.js": "e93082804795712cb750288570711f0c046c88b2692d98e1a3c658b89d79934e",
+    "src/govuk/vendor/polyfills/DOMTokenList.js": "583b115ff785d2b5b0556a5d082b1d8a3d7343dc993c7c930ffbef40baff72ed",
+    "src/govuk/vendor/polyfills/Document.js": "73efb24a8a8610bde95890a39da63b6bf63bc9b8e545100280fe7a1920f77f54",
+    "src/govuk/vendor/polyfills/Element.js": "098c55b2594f5726364ef996e18009e4c014c63799d43d25844f7b8a166a3607",
+    "src/govuk/vendor/polyfills/Element/prototype/classList.js": "957a59e0da81514c53b5b4c705bc03794812ec5fe61928f440c0aabbfa6b7128",
+    "src/govuk/vendor/polyfills/Event.js": "1bc2d87f704be6361860670108ac7df1de48600a6892e7357dd4059c0c3b6d1b",
+    "src/govuk/vendor/polyfills/Function/prototype/bind.js": "cfa30156fc528621a42891aef9bcfec926aff4b5f2c7246f2210374091e987e1",
+    "src/govuk/vendor/polyfills/Object/defineProperty.js": "60380b5d24591c8deae38cde13069b52cd7b9fb881fbd1cc0cf539839d4ae9e0",
+    "src/govuk/vendor/polyfills/Window.js": "8f4d097821383f0ed781c80a935aaf87705ed38e8dae50d52ae0f823d6bfbd86"
+  },
+  "humanFixFiles": [
+    "src/govuk/components/radios/radios.js"
+  ],
+  "taskHash": "50e5b67d1adb68f6bddc58eba56b36b9516ad71f1d73462d56a9d8cd629248be",
+  "implementation": {
+    "src/engine.js": "ecaae43f1bd20c7fb054da1ae3157ffc72f8d734977bd3a39196af507c645128",
+    "src/nebius.js": "6c53e750e55c6f26e1ff2dc9c5ec1a85218cac4b43d17964988f2e07eaccf862",
+    "src/repair.js": "f17f9de290c46577e3efb1c3a758f2d61dc8cb4de711c62c596a9f653eb05655",
+    "src/runner.js": "658d26476a4e1875c2f63c1a97f51c9848e3c8546e32be1e94a47b9469440444",
+    "src/schema.js": "341a2d3dba3adc80f2ce4a00e090f9f4882e6abe7e8b9a3836d2957f917d9006",
+    "src/verifier.js": "8f38cef03728932a71c60135dc5814762ab100b9e2206dd9a80cc1a4196f54bf"
+  },
+  "screen": {
+    "run": "848a8b7a-0764-40d9-91ed-6d7fe9f78f39",
+    "verdict": "VERIFIED_PASS",
+    "reasons": [],
+    "baseline": {
+      "keyboard": "VERIFIED_FAIL",
+      "pointer": "VERIFIED_PASS",
+      "guards": [
+        "VERIFIED_PASS"
+      ]
+    }
+  }
+}

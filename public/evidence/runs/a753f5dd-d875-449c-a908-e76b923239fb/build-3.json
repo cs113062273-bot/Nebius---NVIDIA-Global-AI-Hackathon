@@ -1,0 +1,56 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "js/src/base-component.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dom/data.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dom/event-handler.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dom/manipulator.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dom/selector-engine.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/offcanvas.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/util/backdrop.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/util/index.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/util/scrollbar.js",
+      "pass": true,
+      "kind": "syntax"
+    }
+  ],
+  "scope": "Static HTML structure and JavaScript syntax (classic or ESM) only; no framework compilation claim."
+}

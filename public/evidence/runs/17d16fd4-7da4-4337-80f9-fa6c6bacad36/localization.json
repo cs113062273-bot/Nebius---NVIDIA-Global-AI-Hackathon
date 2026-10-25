@@ -1,0 +1,50 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "open-help",
+      "help-text",
+      "help-close",
+      "body",
+      "amount",
+      "Policy help",
+      "Amount (EUR)",
+      "Submit report",
+      "Close help"
+    ],
+    "sha256": "60f9c30eaf2574c405d38683a298cad18c74b612a5860995a330a93d1aec35fc"
+  },
+  {
+    "path": "js/src/offcanvas.js",
+    "score": 8.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d"
+  },
+  {
+    "path": "js/src/util/backdrop.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "f19a9a6ec4e32d0d71ffdb9926205e0da431b33513b13147e8ca829e90f4a6b1"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "6f7cb91b17496c3606cc8b485063063f374b8956d8b83fe503bb6084d15a7536"
+  },
+  {
+    "path": "js/src/util/scrollbar.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "6cbc0fb09329984ba01330aca9e00ce6c359d1863b60e8788453d72d8c3ee2bf"
+  }
+]

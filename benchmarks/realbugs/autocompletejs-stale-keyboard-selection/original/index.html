@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Smoothie order</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="dist/css/autoComplete.css">
+<style>
+body{font:16px system-ui,sans-serif;margin:32px;color:#1d1d1d;background:#fff}
+main{max-width:560px}
+label{display:block;margin:16px 0 6px;font-weight:600}
+button[type=submit]{margin-top:24px;font:inherit;padding:8px 16px}
+:focus-visible{outline:3px solid #0b5fff;outline-offset:2px}
+#status{margin-top:16px;min-height:1.4em}
+</style>
+<script type="importmap">
+{
+  "imports": {
+    "./src/components/Input": "./src/components/Input.js",
+    "./src/components/Item": "./src/components/Item.js",
+    "./src/components/List": "./src/components/List.js",
+    "./src/controllers/dataController": "./src/controllers/dataController.js",
+    "./src/controllers/listController": "./src/controllers/listController.js",
+    "./src/controllers/navigationController": "./src/controllers/navigationController.js",
+    "./src/services/search": "./src/services/search.js",
+    "./src/utils/debouncer": "./src/utils/debouncer.js",
+    "./src/utils/eventEmitter": "./src/utils/eventEmitter.js"
+  }
+}
+</script>
+</head>
+<body>
+<main>
+<h1>Build your smoothie</h1>
+<form id="order-form" action="#" novalidate>
+  <label for="fruit">Main fruit</label>
+  <input id="fruit" name="fruit" autocomplete="off" spellcheck="false">
+  <button id="submit" type="submit">Add to order</button>
+  <p id="status" role="status"></p>
+</form>
+</main>
+<script type="module">
+// The upstream source imports modules without file extensions; the import map above resolves them.
+import autoComplete from './src/autoComplete.js';
+const form = document.getElementById('order-form');
+const input = document.getElementById('fruit');
+window.fruitPicker = new autoComplete({
+  name: 'Fruit suggestions',
+  selector: '#fruit',
+  data: {src: ['Banana', 'Bilberry', 'Blackberry', 'Blackcurrant', 'Blueberry', 'Boysenberry', 'Cranberry']},
+  onSelection: feedback => { input.value = feedback.selection.value; }
+});
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('status').textContent = 'Added ' + new FormData(form).get('fruit');
+});
+window.__ready = true;
+</script>
+</body>
+</html>
