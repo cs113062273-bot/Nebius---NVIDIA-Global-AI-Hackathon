@@ -95,6 +95,19 @@ function indentInsensitive(current, before, after, crlf) {
   });
   return { before: source.join(crlf ? '\r\n' : '\n'), after: rewritten.join(crlf ? '\r\n' : '\n') };
 }
+// Tells the model exactly why a preimage did not apply: which of its lines are not in the file and
+// the closest real lines, or where an ambiguous preimage occurs. It never applies anything itself.
+const bigrams = text => { const t = text.replace(/\s+/g, ' ').trim(), out = new Map(); for (let i = 0; i < t.length - 1; i++) out.set(t.slice(i, i + 2), (out.get(t.slice(i, i + 2)) || 0) + 1); return out; };
+const similarity = (a, b) => { let hit = 0, total = 0; for (const [k, n] of a) { hit += Math.min(n, b.get(k) || 0); total += n; } for (const n of b.values()) total += n; return total ? 2 * hit / total : 0; };
+export function preimageReport(current, before) {
+  const lines = current.split(/\r?\n/), trimmed = new Set(lines.map(l => l.trim())), count = current.split(before).length - 1;
+  if (count > 1) { const at = []; for (let i = 0, k = current.indexOf(before); k >= 0 && i < 4; i++, k = current.indexOf(before, k + 1)) at.push(current.slice(0, k).split('\n').length); return `before occurs ${count} times (lines ${at.join(', ')}); include surrounding lines so it matches exactly once.`; }
+  const missing = before.split(/\r?\n/).filter(l => l.trim() && !trimmed.has(l.trim()));
+  if (!missing.length) return 'before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source.';
+  const grams = lines.map(bigrams), report = missing.slice(0, 3).map(l => { const g = bigrams(l); let best = -1, score = 0; grams.forEach((x, i) => { const v = similarity(g, x); if (v > score) { score = v; best = i; } });
+    return `not in file: ${JSON.stringify(l.trim().slice(0, 160))}` + (best >= 0 && score > 0.5 ? `; closest is line ${best + 1}: ${JSON.stringify(lines[best].trim().slice(0, 160))}` : ''); });
+  return `before does not occur in the file. ${missing.length} of its lines are not in the source. ${report.join(' | ')}. Copy before verbatim from source_candidates.`;
+}
 export async function applyPlan(root, rawPlan, allowedFiles) {
   const plan = RepairPlan.parse(rawPlan), staged = new Map(), normalizations = []; let changed = 0, size=0;
   for(const edit of plan.edits) {
@@ -103,7 +116,9 @@ export async function applyPlan(root, rawPlan, allowedFiles) {
     const original = await fs.readFile(file,'utf8');
     if(digest(original)!==edit.sha256) throw new Error('Stale source preimage');
     const current = staged.get(file)?.after ?? original;
-    const resolved = resolvePreimage(current, edit.before, edit.after);
+    let resolved;
+    try { resolved = resolvePreimage(current, edit.before, edit.after); }
+    catch(error) { throw new Error(`Edit ${plan.edits.indexOf(edit)+1} (${edit.path}): ${preimageReport(current, edit.before)}`); }
     if(resolved.normalization) normalizations.push({path:edit.path,normalization:resolved.normalization});
     const after = current.replace(resolved.before,()=>resolved.after);
     size += Math.abs(after.length-current.length) + resolved.before.length + resolved.after.length;

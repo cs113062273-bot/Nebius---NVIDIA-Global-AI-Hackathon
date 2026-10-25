@@ -1,8 +1,9 @@
 name: Tabstitch keyboard check
 
-# Replays the example shop's frozen keyboard task on every pull request that touches it.
-# When the task breaks, Nemotron on Nebius proposes a patch (Super first, Ultra on rejection),
-# Chromium verifies it, and the result is posted on the pull request.
+# Replays the example shop's frozen keyboard task on every pull request that touches it, using
+# this repository's own action (action.yml) exactly as another project would. When the task
+# breaks, Nemotron on Nebius proposes a patch (Super first, Ultra on rejection), Chromium
+# verifies it, and the result is posted on the pull request.
 on:
   pull_request:
     paths: ['examples/**']
@@ -16,39 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      # Secrets are never given to pull requests from forks, so those only get the check.
+      - uses: ./
         with:
-          node-version: 24
-      - run: npm ci --ignore-scripts
-      - run: npx playwright install --with-deps chromium
-      - id: check
-        continue-on-error: true
-        run: node src/cli.js check examples/checkout --tasks examples/checkout/.tabstitch/tasks.json --out tabstitch-out
-      # Secrets are only available to branches of this repository, never to forks.
-      - id: repair
-        if: steps.check.outcome == 'failure' && github.event.pull_request.head.repo.full_name == github.repository
-        continue-on-error: true
-        env:
-          NEBIUS_API_KEY: ${{ secrets.NEBIUS_API_KEY }}
-          TABSTITCH_MAX_USD: '0.5'
-        run: node src/cli.js repair examples/checkout --tasks examples/checkout/.tabstitch/tasks.json --out tabstitch-out
-      - if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: tabstitch
-          path: |
-            tabstitch-out/*.md
-            tabstitch-out/fix.patch
-            tabstitch-out/proof.tar.gz
-          if-no-files-found: ignore
-      - if: steps.check.outcome == 'failure'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          body=tabstitch-out/check.md
-          [ -f tabstitch-out/repair.md ] && body=tabstitch-out/repair.md
-          gh pr comment ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --body-file "$body"
-      - if: steps.check.outcome == 'failure'
-        run: |
-          echo "The frozen keyboard task fails on this pull request."
-          exit 1
+          site: examples/checkout
+          tasks: examples/checkout/.tabstitch/tasks.json
+          nebius-api-key: ${{ secrets.NEBIUS_API_KEY }}
+          max-usd: '0.5'

@@ -1,0 +1,83 @@
+name: Tabstitch keyboard check
+description: Replay a frozen keyboard task in Chromium; when it breaks, NVIDIA Nemotron on Nebius proposes a patch that is kept only if the browser accepts it.
+branding:
+  icon: check-square
+  color: green
+
+inputs:
+  site:
+    description: Directory of the static build to test, relative to the workspace.
+    required: true
+  tasks:
+    description: Frozen task file (keyboard task, pointer path, optional guards).
+    default: .tabstitch/tasks.json
+  nebius-api-key:
+    description: Nebius Token Factory key. Without it the action only checks and reports.
+    default: ''
+  max-usd:
+    description: Hard ceiling for model spend in this run, from catalog prices.
+    default: '0.5'
+  comment:
+    description: Post the result on the pull request.
+    default: 'true'
+
+outputs:
+  passed:
+    description: "'true' when every frozen task passes on this build."
+    value: ${{ steps.check.outcome == 'success' }}
+  verified-patch:
+    description: Path of the browser-verified patch, empty when none passed.
+    value: ${{ steps.result.outputs.patch }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 24
+    - name: Install Tabstitch
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: npm ci --ignore-scripts --omit=dev && npx playwright install --with-deps chromium
+    - id: check
+      name: Replay the frozen tasks
+      shell: bash
+      continue-on-error: true
+      run: node "${{ github.action_path }}/src/cli.js" check "${{ inputs.site }}" --tasks "${{ inputs.tasks }}" --out "${{ runner.temp }}/tabstitch"
+    # Model output is untrusted: the patch is posted only after Chromium replays every frozen task.
+    - id: repair
+      name: Ask Nemotron for a verified patch
+      if: steps.check.outcome == 'failure' && inputs.nebius-api-key != ''
+      shell: bash
+      continue-on-error: true
+      env:
+        NEBIUS_API_KEY: ${{ inputs.nebius-api-key }}
+        TABSTITCH_MAX_USD: ${{ inputs.max-usd }}
+      run: node "${{ github.action_path }}/src/cli.js" repair "${{ inputs.site }}" --tasks "${{ inputs.tasks }}" --out "${{ runner.temp }}/tabstitch"
+    - id: result
+      shell: bash
+      run: |
+        out="${{ runner.temp }}/tabstitch"
+        [ -f "$out/fix.patch" ] && echo "patch=$out/fix.patch" >> "$GITHUB_OUTPUT" || echo "patch=" >> "$GITHUB_OUTPUT"
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: tabstitch
+        path: |
+          ${{ runner.temp }}/tabstitch/*.md
+          ${{ runner.temp }}/tabstitch/fix.patch
+          ${{ runner.temp }}/tabstitch/proof.tar.gz
+        if-no-files-found: ignore
+    - if: steps.check.outcome == 'failure' && inputs.comment == 'true' && github.event.pull_request.number
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        out="${{ runner.temp }}/tabstitch"; body="$out/check.md"
+        [ -f "$out/repair.md" ] && body="$out/repair.md"
+        gh pr comment ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --body-file "$body"
+    - if: steps.check.outcome == 'failure'
+      shell: bash
+      run: |
+        echo "The frozen keyboard task fails on this build."
+        exit 1
