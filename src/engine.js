@@ -13,7 +13,7 @@ import { NebiusClient } from './nebius.js';
 import { compareInitialScreenshots } from './visual.js';
 
 export const repairEvidence=(journey,before,latest)=>({title:journey.title,goal:journey.goal,environment:{timezone:before.environment?.timezoneId||'UTC',locale:before.environment?.locale||'en-US'},failure:latest?.failure || before.failure,observed:latest?.observed || before.checkpoints.at(-1)?.state,functional:journey.functional,requirements:journey.steps.map(s=>({action:s.action,assertions:s.assertions}))});
-export async function runRepair({fixture='checkout',mode='reference',artifactRoot=path.join(ROOT,'artifacts','runs'),id=randomUUID(),onUpdate=()=>{},planProvider,journey:customJourney,functionalJourney:customFunctional,sourceRoot,referenceRoot,sourceMetadata,maxAttempts=2,freshInference=false,models=[],guards:customGuards=[]}={}) {
+export async function runRepair({fixture='checkout',mode='reference',artifactRoot=path.join(ROOT,'artifacts','runs'),id=randomUUID(),onUpdate=()=>{},planProvider,journey:customJourney,functionalJourney:customFunctional,sourceRoot,referenceRoot,sourceMetadata,maxAttempts=2,freshInference=false,models=[],guards:customGuards=[],readOnly=[]}={}) {
   const fixtureInfo=sourceRoot?{kind:'custom'}:getFixture(fixture);if(!['reference','nebius','provided','recorded'].includes(mode))throw new Error('Unsupported repair provider');
   if(sourceRoot&&mode==='recorded')throw new Error('Recorded model patches are tied to their original source snapshots');
   if(sourceRoot&&(!customJourney||!customFunctional||mode==='reference'&&!referenceRoot))throw new Error('A project requires frozen keyboard and functional journeys, plus edited source for patch verification');
@@ -47,7 +47,9 @@ export async function runRepair({fixture='checkout',mode='reference',artifactRoo
       await move('LOCALIZING','Rank source candidates from selector/name evidence');
       // Historical snapshots ship type-stripped browser ESM alongside verbatim TS.
       // Give the model the runtime files only; do not imply that editing TS rebuilt JS.
-      const candidates=(await localize(original,before)).filter(c=>fixtureInfo.kind!=='historical'||c.path==='src/a11y-dialog.js');run.candidates=candidates.map(({source,...c})=>c);await json(path.join(dir,'localization.json'),run.candidates);
+      // Read-only files (a benchmark's author-built page) are shown for context but cannot be patched,
+      // so a pass has to change the component itself rather than work around it in the page.
+      const candidates=(await localize(original,before)).filter(c=>fixtureInfo.kind!=='historical'||c.path==='src/a11y-dialog.js').map(c=>readOnly.includes(c.path)?{...c,editable:false}:c);run.candidates=candidates.map(({source,...c})=>c);if(readOnly.length)run.readOnly=readOnly;await json(path.join(dir,'localization.json'),run.candidates);
       const client=new NebiusClient({dir:path.join(artifactRoot,'..','inference')});
       const history=[];
       const cap=mode==='reference'||mode==='recorded'?1:Math.min(3,Math.max(1,maxAttempts));
@@ -71,7 +73,7 @@ export async function runRepair({fixture='checkout',mode='reference',artifactRoo
         run.model=provenance;Object.assign(record,{plan,provenance});await json(path.join(dir,`plan-${attempt}.json`),plan);await persist();
         const candidate=path.join(dir,`candidate-${attempt}`);await fs.cp(original,candidate,{recursive:true,errorOnExist:true,force:false});
         await move('PATCHING','Validate allowlist, hashes, unique preimages and change bounds in isolated copy');
-        const patch=mode==='reference'?await applyReference(candidate,referenceRoot||fixturePath(fixture,'reference'),{staticProject:!!sourceRoot,runtimeOnly:fixtureInfo.kind==='historical'}):await applyPlan(candidate,plan,candidates.map(c=>c.path));
+        const patch=mode==='reference'?await applyReference(candidate,referenceRoot||fixturePath(fixture,'reference'),{staticProject:!!sourceRoot,runtimeOnly:fixtureInfo.kind==='historical'}):await applyPlan(candidate,plan,candidates.filter(c=>c.editable!==false).map(c=>c.path),{readOnly});
         record.patchValidation=patch.patchValidation;record.changes=patch.changes;record.diff=`diff-${attempt}.patch`;
         await fs.writeFile(path.join(dir,`diff-${attempt}.patch`),patch.patch);
         if(mode!=='reference'){

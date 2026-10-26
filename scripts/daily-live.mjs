@@ -49,7 +49,10 @@ const c = pick.kind === 'real' ? await loadCase(pick.id) : await openCase(pick.i
 const scope = issue ? `issue-${issue.number}` : `daily-${day}`;
 Object.assign(process.env, { NEBIUS_BUDGET_SCOPE: scope, NEBIUS_MAX_CREDIT_USD: MAX_USD, NEBIUS_MAX_CALLS: '3', NEBIUS_MAX_TOTAL_TOKENS: '900000', NEBIUS_MAX_OUTPUT_TOKENS: '32000', NEBIUS_TIMEOUT_MS: '300000', LIVE_NEBIUS_TESTS: 'true', NEBIUS_SPONSOR_CREDITS_CONFIRMED: 'true' });
 const started = Date.now();
-const run = await runRepair({ fixture: 'custom-project', mode: 'nebius', sourceRoot: c.original, journey: c.journey, functionalJourney: c.functionalJourney, guards: c.guards, maxAttempts: 3, freshInference: true, models: LIVE_MODELS,
+// As in the benchmarks, the author-built page is read-only: a pass has to fix the library.
+const upstream = (await readJson(path.join(ROOT, 'benchmarks', pick.kind === 'real' ? 'realbugs' : 'openbugs', pick.id, 'case.json'))).upstreamFiles || [];
+const readOnly = Object.keys(await hashTree(c.original)).filter(f => !upstream.includes(f));
+const run = await runRepair({ fixture: 'custom-project', mode: 'nebius', sourceRoot: c.original, readOnly, journey: c.journey, functionalJourney: c.functionalJourney, guards: c.guards, maxAttempts: 3, freshInference: true, models: LIVE_MODELS,
   sourceMetadata: { kind: 'source', name: `${issue ? `Live run requested in issue #${issue.number}` : 'Daily live run'} · ${pick.title}`, originalRoot: c.original, scope: `Fresh Nemotron run on ${day} in GitHub Actions; ${pick.kind === 'real' ? 'blind to the maintainers’ fix' : 'bug still unfixed upstream'}.` } });
 
 const dir = path.join(ROOT, 'artifacts', 'runs', run.id), target = path.join(ROOT, 'public', 'evidence', 'runs', run.id);

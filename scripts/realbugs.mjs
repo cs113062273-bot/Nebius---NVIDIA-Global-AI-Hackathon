@@ -20,7 +20,10 @@ const implementationFiles=['src/engine.js','src/nebius.js','src/repair.js','src/
 const [mode,id,policy='auto']=process.argv.slice(2);
 const write=async(file,value,flag='wx')=>fs.writeFile(file,JSON.stringify(value,null,2)+'\n',{flag});
 // Run settings are part of the frozen implementation: changing a limit is a new scoreboard, not a retry.
-const CONFIG={maxOutputTokens:32000,maxPromptChars:240000,timeoutMs:300000,policies:POLICIES};
+const CONFIG={maxOutputTokens:32000,maxPromptChars:240000,timeoutMs:300000,policies:POLICIES,pageReadOnly:true};
+// The library's own files are editable; the author-built page around it is read-only context.
+const pageFiles=async(original,upstream=[])=>Object.keys(await hashTree(original)).filter(f=>!upstream.includes(f));
+
 const implementation=async()=>({...Object.fromEntries(await Promise.all(implementationFiles.map(async f=>[f,digest(await fs.readFile(f))]))),config:digest(CONFIG)});
 
 async function load(caseId){
@@ -57,7 +60,7 @@ if(mode==='screen'){
   Object.assign(process.env,parseEnv(await fs.readFile('.env','utf8')));
   const ledger=await readJson('artifacts/inference/budget.json');
   Object.assign(process.env,{NEBIUS_MAX_CALLS:String(ledger.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(ledger.reservedTokens+900000),NEBIUS_MAX_CREDIT_USD:USD_CEILING,NEBIUS_BUDGET_SCOPE:SCOPE,NEBIUS_MAX_OUTPUT_TOKENS:String(CONFIG.maxOutputTokens),NEBIUS_TIMEOUT_MS:String(CONFIG.timeoutMs)});
-  const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:3,freshInference:true,models,
+  const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,readOnly:await pageFiles(c.original,c.meta.upstreamFiles),journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:3,freshInference:true,models,
     sourceMetadata:{kind:'source',name:c.meta.title,originalRoot:c.original,scope:`Real upstream bug (${c.meta.issue}) at ${c.meta.buggyCommit}. Blind to the maintainers' fix ${c.meta.fixCommit}; routing ${policy}.`}});
   assert.equal((await verifyProof(`artifacts/runs/${run.id}`)).pass,true);await committed(c);
   // The request must not contain any line the maintainers added.
