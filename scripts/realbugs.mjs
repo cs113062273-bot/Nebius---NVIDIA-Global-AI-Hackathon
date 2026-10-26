@@ -6,6 +6,7 @@ import {runRepair} from '../src/engine.js';
 import {hashTree,readJson} from '../src/files.js';
 import {Journey,digest} from '../src/schema.js';
 import {verifyProof} from '../src/proof.js';
+import {patchScope} from '../src/live.js';
 
 // Real-bug benchmark. Each case pins an upstream library at the commit before a published
 // maintainer fix, wraps it in an author-written consumer page and freezes a browser task.
@@ -76,15 +77,17 @@ if(mode==='screen'){
     rows.push({id:caseId,title:c.meta.title,library:c.meta.library,issue:c.meta.issue,fixCommit:c.meta.fixCommit,screen:commitment?.screen?.verdict||'NOT_SCREENED',screenRun:commitment?.screen?.run||null,
       results:results.map(r=>({file:r.file,policy:r.policy,implementation:r.implementation||null,run:r.modelRun,verdict:r.verdict,passedOn:r.attempts.find(a=>a.verified)?.attempt||null,passedModel:r.attempts.find(a=>a.verified)?.model||null,attempts:r.attempts.length,tokens:r.attempts.reduce((s,a)=>s+(a.usage?.total_tokens||0),0),leaked:r.humanFixLinesInRequest}))});
   }
+  // A pass that changes only the author-built page works around the library bug instead of fixing it.
+  for(const r of rows){const upstream=(await readJson(path.join(BASE,r.id,'case.json'))).upstreamFiles;for(const x of r.results)if(x.verdict==='VERIFIED_PASS')x.scope=await patchScope(x.run,x.passedOn,upstream);}
   // The scoreboard counts one run per case with the current, frozen implementation; earlier runs stay listed as history.
   const current=digest(await implementation()),eligible=rows.filter(r=>r.screen==='VERIFIED_PASS'),first=eligible.map(r=>r.results.filter(x=>x.policy==='auto'&&x.implementation===current).at(0)).filter(Boolean);
   // Every earlier frozen implementation keeps its own score, so a rerun never hides the previous result.
   const hashes=[...new Set(eligible.flatMap(r=>r.results.filter(x=>x.policy==='auto'&&x.implementation).map(x=>x.implementation)))];
   const versions=hashes.map(h=>{const runs=eligible.map(r=>r.results.find(x=>x.policy==='auto'&&x.implementation===h)).filter(Boolean);// Repeated runs on one engine (v9 onward): every auto run counts, none is picked.
     const all=eligible.map(r=>r.results.filter(x=>x.policy==='auto'&&x.implementation===h)),allRuns=all.flat();
-    return {implementation:h,current:h===current,autoRuns:runs.length,autoVerified:runs.filter(r=>r.verdict==='VERIFIED_PASS').length,firstRun:runs.map(r=>r.run).sort()[0],
-      allRuns:allRuns.length,allVerified:allRuns.filter(r=>r.verdict==='VERIFIED_PASS').length,casesRepairedOnce:all.filter(l=>l.some(r=>r.verdict==='VERIFIED_PASS')).length,maxRunsPerCase:Math.max(0,...all.map(l=>l.length))};});
-  const summary={generatedAt:new Date().toISOString(),implementation:current,cases:rows.length,eligible:eligible.length,autoRuns:first.length,autoVerified:first.filter(r=>r.verdict==='VERIFIED_PASS').length,versions,rows};
+    return {implementation:h,current:h===current,autoRuns:runs.length,autoVerified:runs.filter(r=>r.verdict==='VERIFIED_PASS').length,libraryVerified:runs.filter(r=>r.verdict==='VERIFIED_PASS'&&r.scope==='library').length,firstRun:runs.map(r=>r.run).sort()[0],
+      allRuns:allRuns.length,allVerified:allRuns.filter(r=>r.verdict==='VERIFIED_PASS').length,allLibraryVerified:allRuns.filter(r=>r.verdict==='VERIFIED_PASS'&&r.scope==='library').length,casesRepairedOnce:all.filter(l=>l.some(r=>r.verdict==='VERIFIED_PASS')).length,maxRunsPerCase:Math.max(0,...all.map(l=>l.length))};});
+  const summary={generatedAt:new Date().toISOString(),implementation:current,cases:rows.length,eligible:eligible.length,autoRuns:first.length,autoVerified:first.filter(r=>r.verdict==='VERIFIED_PASS').length,libraryVerified:first.filter(r=>r.verdict==='VERIFIED_PASS'&&r.scope==='library').length,versions,rows};
   await write(path.join(BASE,'summary.json'),summary,'w');
   console.log(JSON.stringify({cases:summary.cases,eligible:summary.eligible,autoRuns:summary.autoRuns,autoVerified:summary.autoVerified},null,1));
   for(const r of rows)console.log(r.id.padEnd(34),r.screen.padEnd(14),r.results.map(x=>`${x.policy}:${x.verdict}${x.passedOn?'@'+x.passedOn:''}`).join(' '));

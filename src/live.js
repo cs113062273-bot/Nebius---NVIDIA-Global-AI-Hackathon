@@ -9,6 +9,16 @@ import { Journey } from './schema.js';
 // (Super first, Ultra on rejection) and the same browser gates decide. Spend is capped in USD,
 // per day and in total, from the provider-reported usage, and the ledger survives restarts.
 export const CASES = path.join(ROOT, 'benchmarks', 'realbugs');
+// Where a passing patch made its change: in the library's own files (upstreamFiles), or only in the
+// author-built page around it. A page-only patch passes the task by working around the library bug.
+export async function patchScope(runId, attempt, upstreamFiles = []) {
+  if (!runId || !attempt) return null;
+  const read = dir => fs.readFile(path.join(ROOT, dir, runId, `diff-${attempt}.patch`), 'utf8');
+  const patch = await read(path.join('artifacts', 'runs')).catch(() => read(path.join('public', 'evidence', 'runs'))).catch(() => null);
+  if (patch === null) return null;
+  const files = [...patch.matchAll(/^diff --git a\/(\S+)/mg)].map(m => m[1]), upstream = new Set(upstreamFiles);
+  return files.some(f => upstream.has(f)) ? 'library' : files.length ? 'page' : null;
+}
 export const LIVE_SCOPE = 'live-judge';
 export const LIVE_MODELS = ['nvidia/nemotron-3-super-120b-a12b', 'nvidia/Nemotron-3-Ultra-550b-a55b', 'nvidia/Nemotron-3-Ultra-550b-a55b'];
 // Worst case for one run: three calls at the output ceiling plus a large prompt, at Ultra prices.
@@ -16,7 +26,7 @@ export const WORST_RUN_USD = 0.5;
 
 const byRunNumber = (a, b) => a.localeCompare(b, undefined, { numeric: true });
 // Every auto run on the frozen engine, first to last; the first is the scored one, the rest are repeats.
-const frozenRuns = (results, frozen) => results.filter(r => frozen && r.implementation === frozen && (r.policy || 'auto') === 'auto').map(r => ({ run: r.modelRun, verdict: r.verdict, passedOn: r.attempts.find(a => a.verified)?.attempt || null }));
+const frozenRuns = (results, frozen, upstream) => Promise.all(results.filter(r => frozen && r.implementation === frozen && (r.policy || 'auto') === 'auto').map(async r => { const passedOn = r.attempts.find(a => a.verified)?.attempt || null; return { run: r.modelRun, verdict: r.verdict, passedOn, scope: await patchScope(r.modelRun, passedOn, upstream) }; }));
 export async function liveCases() {
   const out = [], frozen = (await readJson(path.join(CASES, 'summary.json')).catch(() => null))?.implementation;
   for (const entry of await fs.readdir(CASES, { withFileTypes: true }).catch(() => [])) {
@@ -30,8 +40,8 @@ export async function liveCases() {
     // Same rule as the benchmark scoreboard: the first auto run on the frozen implementation.
     const auto = results.filter(r => r.policy === 'auto'), recorded = auto.find(r => frozen && r.implementation === frozen) || auto.at(-1) || results.at(-1) || null;
     out.push({ id: entry.name, title: meta.title, summary: meta.summary, library: meta.library, category: meta.category || null, repository: meta.repository, issue: meta.issue, fixUrl: meta.fixUrl || null, fixCommit: meta.fixCommit, buggyCommit: meta.buggyCommit, split: meta.split || 'holdout', screenRun: commitment.screen.run,
-      recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null) },
-      frozenRuns: frozenRuns(results, frozen) });
+      recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null), scope: await patchScope(recorded.modelRun, recorded.attempts.find(a => a.verified)?.attempt, meta.upstreamFiles) },
+      frozenRuns: await frozenRuns(results, frozen, meta.upstreamFiles) });
   }
   return out.sort((a, b) => a.library.localeCompare(b.library) || a.id.localeCompare(b.id));
 }
@@ -51,16 +61,16 @@ export async function openCases() {
     // First run on the frozen implementation; runs on earlier engines stay in results/ as history.
     const recorded = results.find(r => frozen && r.implementation === frozen) || results.at(-1) || null;
     out.push({ id: entry.name, title: meta.title, summary: meta.summary, library: meta.library, category: meta.category || null, repository: meta.repository, issue: meta.issue, pinnedCommit: meta.pinnedCommit, status: meta.status, derivedFrom: meta.derivedFrom || null, addedAfterReview: meta.addedAfterReview || null, replays, pendingHumanFix: meta.pendingHumanFix || null, pendingHumanCheck: await readJson(path.join(root, 'pending-human-check.json')).catch(() => null), review: await readJson(path.join(root, 'review.json')).catch(() => null), expectedBehaviour: meta.expectedBehaviour || null,
-      recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null) },
-      frozenRuns: frozenRuns(results, frozen) });
+      recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null), scope: await patchScope(recorded.modelRun, recorded.attempts.find(a => a.verified)?.attempt, meta.upstreamFiles) },
+      frozenRuns: await frozenRuns(results, frozen, meta.upstreamFiles) });
   }
   return out.sort((a, b) => a.library.localeCompare(b.library) || a.id.localeCompare(b.id));
 }
 // Score of every frozen engine version, with the author's note on what changed.
 export async function benchmarkVersions() {
   const summary = await readJson(path.join(CASES, 'summary.json')).catch(() => null), notes = await readJson(path.join(CASES, 'versions.json')).catch(() => ({}));
-  return { note: notes.note || null, versions: (summary?.versions || []).map(v => ({ id: v.implementation.slice(0, 8), current: v.current, runs: v.autoRuns, verified: v.autoVerified, eligible: summary.eligible, note: notes.versions?.[v.implementation] || null,
-    ...(v.maxRunsPerCase > 1 ? { repeats: { runs: v.allRuns, verified: v.allVerified, casesRepairedOnce: v.casesRepairedOnce, perCase: v.maxRunsPerCase } } : {}) })) };
+  return { note: notes.note || null, versions: (summary?.versions || []).map(v => ({ id: v.implementation.slice(0, 8), current: v.current, runs: v.autoRuns, verified: v.autoVerified, libraryVerified: v.libraryVerified ?? null, eligible: summary.eligible, note: notes.versions?.[v.implementation] || null,
+    ...(v.maxRunsPerCase > 1 ? { repeats: { runs: v.allRuns, verified: v.allVerified, libraryVerified: v.allLibraryVerified, casesRepairedOnce: v.casesRepairedOnce, perCase: v.maxRunsPerCase } } : {}) })) };
 }
 export async function loadCase(id) {
   if (!/^[a-z0-9-]{1,80}$/.test(id)) throw new Error('Unknown case');

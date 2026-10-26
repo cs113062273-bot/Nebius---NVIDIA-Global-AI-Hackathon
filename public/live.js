@@ -9,7 +9,9 @@ const runLive=id=>el('a',{class:'secondary run-live',href:issueUrl(id),target:'_
 const MODEL={'nemotron-3-super-120b-a12b':'Nemotron 3 Super','Nemotron-3-Ultra-550b-a55b':'Nemotron 3 Ultra'};
 // Repeated blind runs on the current engine: every one is listed, so a lucky run cannot stand alone.
 const repeats=c=>{const l=c.frozenRuns||[];if(l.length<2)return null;const ok=l.filter(x=>x.verdict==='VERIFIED_PASS').length;
-  return el('p',{class:'case-repeats small'},`Current engine, every blind run: repaired in ${ok} of ${l.length}: `,...l.flatMap((x,i)=>[i?' · ':'',el('a',{href:`./project.html?run=${x.run}${x.passedOn?'&attempt='+x.passedOn:''}#project-result`,text:`run ${i+1} ${x.verdict==='VERIFIED_PASS'?'✓':'✗'}`})]));};
+  return el('p',{class:'case-repeats small'},`Current engine, every blind run: repaired in ${ok} of ${l.length}: `,...l.flatMap((x,i)=>[i?' · ':'',el('a',{href:`./project.html?run=${x.run}${x.passedOn?'&attempt='+x.passedOn:''}#project-result`,text:`run ${i+1} ${x.verdict==='VERIFIED_PASS'?(x.scope==='page'?'✓ page workaround':'✓'):'✗'}`})]));};
+// Where the passing patch changed code: the library itself, or only the author-built page around it.
+const WHERE={library:' · fixed in the library code',page:' · worked around in the page; library unchanged'};
 const modelName=id=>MODEL[String(id||'').split('/').pop()]||String(id||'Nemotron').split('/').pop();
 const STAGES=[['reproduce','Reproduce the bug',['PREPARING','BASELINE_RUNNING','FAILURE_CONFIRMED']],['locate','Find the source',['LOCALIZING']],['propose','Nemotron proposes a patch',['PLANNING_REPAIR']],['apply','Apply in an isolated copy',['PATCHING','BUILDING']],['replay','Replay in Chromium',['REPLAYING','VERIFYING']],['verdict','Verdict',['VERIFIED','FAILED','INCONCLUSIVE']]];
 let api=false,data=null,open=[],daily=null,gates=null,watching=null,clock=null;
@@ -39,7 +41,7 @@ function renderMode(){
 }
 function renderStats(){
   const cases=data.cases,libs=new Set(cases.map(c=>c.repository.replace(/\/+$/,'').toLowerCase())),runs=cases.filter(c=>c.recorded),passed=runs.filter(c=>c.recorded.verdict==='VERIFIED_PASS');
-  const items=[[String(cases.length),'real upstream bugs'],[String(libs.size),'libraries'],[`${cases.length}/${cases.length}`,"maintainers' fixes pass the frozen task"],[runs.length?`${passed.length}/${runs.length}`:'—','repaired blind by Nemotron']];
+  const items=[[String(cases.length),'real upstream bugs'],[String(libs.size),'libraries'],[`${cases.length}/${cases.length}`,"maintainers' fixes pass the frozen task"],[runs.length?`${passed.length}/${runs.length}`:'—',`repaired blind by Nemotron${passed.some(c=>c.recorded.scope==='page')?` · ${passed.filter(c=>c.recorded.scope==='library').length} in the library code, ${passed.filter(c=>c.recorded.scope==='page').length} by a page workaround`:''}`]];
   $('#stats').replaceChildren(...items.map(([v,l])=>el('div',{},el('dt',{text:v}),el('dd',{text:l}))));
 }
 // Fresh runs made by GitHub Actions on the date shown (daily during judging), newest first.
@@ -56,7 +58,7 @@ function renderDaily(){
 function renderOpen(){
   const box=$('#open-list');box.replaceChildren();$('#open').hidden=!open.length;
   for(const c of open){
-    const r=c.recorded,status=r?(r.verdict==='VERIFIED_PASS'?`Repaired on attempt ${r.passedOn} · ${modelName(r.models[r.passedOn-1])} · browser-verified`:`Not repaired (${r.models.length} attempts)`):'Reproduced · no run yet';
+    const r=c.recorded,status=r?(r.verdict==='VERIFIED_PASS'?`Repaired on attempt ${r.passedOn} · ${modelName(r.models[r.passedOn-1])} · browser-verified${WHERE[r.scope]||''}`:`Not repaired (${r.models.length} attempts)`):'Reproduced · no run yet';
     const actions=el('div',{class:'case-actions'});
     if(r){const b=el('button',{class:'primary',type:'button',text:'Watch the repair'});b.onclick=()=>void showRecorded(c);actions.append(b);}
     if(r?.passedOn)actions.append(el('a',{class:'secondary',href:`./openbugs/${c.id}/nemotron.patch`,download:`${c.id}.patch`,text:'Download the patch'}));
@@ -78,7 +80,7 @@ function renderOpen(){
 function renderCases(){
   const list=$('#case-list');list.replaceChildren();
   for(const c of data.cases){
-    const r=c.recorded,status=r?(r.verdict==='VERIFIED_PASS'?`Recorded: repaired on attempt ${r.passedOn} · ${modelName(r.models[r.passedOn-1])}`:`Recorded: not repaired (${r.models.length} attempts)`):'No recorded run yet';
+    const r=c.recorded,status=r?(r.verdict==='VERIFIED_PASS'?`Recorded: repaired on attempt ${r.passedOn} · ${modelName(r.models[r.passedOn-1])}${WHERE[r.scope]||''}`:`Recorded: not repaired (${r.models.length} attempts)`):'No recorded run yet';
     const actions=el('div',{class:'case-actions'});
     if(api&&data.enabled){const b=el('button',{class:'primary',type:'button',text:'Repair live with Nemotron'});b.onclick=()=>void startLive(c,b);actions.append(b);}
     else if(LIVE_URL)actions.append(el('a',{class:'primary',href:`${LIVE_URL}/live.html?case=${c.id}`,text:'Repair live ↗'}));
@@ -95,13 +97,13 @@ function renderScoreboard(){
   const rows=$('#score-rows');rows.replaceChildren();
   for(const c of data.cases){const r=c.recorded;
     rows.append(el('tr',{},el('td',{text:c.library}),el('td',{},el('a',{href:c.issue,text:c.title})),el('td',{class:'ok',text:'Pass'}),
-      el('td',{class:r?.verdict==='VERIFIED_PASS'?'ok':r?'no':'',text:r?(r.verdict==='VERIFIED_PASS'?'Verified pass':r.verdict==='VERIFIED_FAIL'?'Rejected':'Inconclusive'):'Not run'}),
+      el('td',{class:r?.verdict==='VERIFIED_PASS'?'ok':r?'no':'',text:r?(r.verdict==='VERIFIED_PASS'?(r.scope==='page'?'Pass · page workaround':'Verified pass'):r.verdict==='VERIFIED_FAIL'?'Rejected':'Inconclusive'):'Not run'}),
       el('td',{text:r?.passedOn?`${r.passedOn} · ${modelName(r.models[r.passedOn-1])}`:'—'}),
       el('td',{},r?el('a',{href:`./project.html?run=${r.run}${r.passedOn?'&attempt='+r.passedOn:''}#project-result`,text:'Evidence'}):'—')));}
   // Earlier engine versions stay on the page: a rerun after a change must not hide the previous score.
   const b=data.benchmark,box=$('#versions');if(!b?.versions?.length){box.hidden=true;return;}
   box.hidden=false;box.replaceChildren(el('h3',{text:'Engine versions'}),...(b.note?[el('p',{class:'small',text:b.note})]:[]),
-    el('ol',{},...[...b.versions].reverse().map(v=>el('li',{class:v.current?'current':''},el('strong',{text:`${v.verified}/${v.runs}`}),el('span',{class:'small',text:` ${v.id}${v.current?' · this table':''}${v.runs<v.eligible?` · ${v.runs} of ${v.eligible} cases run`:''}`}),...(v.repeats?[el('span',{class:'small',text:` · ${v.repeats.perCase} blind runs per bug, all counted: ${v.repeats.verified} of ${v.repeats.runs} runs repaired, ${v.repeats.casesRepairedOnce} of ${v.eligible} bugs repaired at least once`})]:[]),...(v.note?[el('p',{text:v.note})]:[])))));
+    el('ol',{},...[...b.versions].reverse().map(v=>el('li',{class:v.current?'current':''},el('strong',{text:`${v.verified}/${v.runs}`}),...(v.libraryVerified!=null&&v.libraryVerified<v.verified?[el('span',{class:'small',text:` (${v.libraryVerified} in the library code)`})]:[]),el('span',{class:'small',text:` ${v.id}${v.current?' · this table':''}${v.runs<v.eligible?` · ${v.runs} of ${v.eligible} cases run`:''}`}),...(v.repeats?[el('span',{class:'small',text:` · ${v.repeats.perCase} blind runs per bug, all counted: ${v.repeats.verified} of ${v.repeats.runs} runs repaired (${v.repeats.libraryVerified} in the library code), ${v.repeats.casesRepairedOnce} of ${v.eligible} bugs repaired at least once`})]:[]),...(v.note?[el('p',{text:v.note})]:[])))));
 }
 // What the loop and the gates add, measured over every recorded blind run (scripts/gate-stats.mjs).
 function renderGates(){
@@ -110,7 +112,7 @@ function renderGates(){
   box.replaceChildren(el('h3',{text:'What the browser loop and the gates add'}),el('p',{class:'small',text:g.note}),
     el('dl',{class:'gate-stats'},
       el('div',{},el('dt',{text:`${g.firstTry}/${g.realRuns}`}),el('dd',{text:`repaired by Nemotron 3 Super's first patch (${pct(g.firstTry)})`})),
-      el('div',{},el('dt',{text:`${g.firstTry+g.withFeedback}/${g.realRuns}`}),el('dd',{text:`repaired once Chromium's failure report goes back to Nemotron (${pct(g.firstTry+g.withFeedback)})`})),
+      el('div',{},el('dt',{text:`${g.firstTry+g.withFeedback}/${g.realRuns}`}),el('dd',{text:`repaired once Chromium's failure report goes back to Nemotron (${pct(g.firstTry+g.withFeedback)})${g.libraryFixed!=null?`; ${g.libraryFixed} of those changed the library's own code, the rest only worked around the bug in the page`:''}`})),
       el('div',{},el('dt',{text:String(g.caughtAfterKeyboardPass)}),el('dd',{text:'patches made the reported keyboard task pass and were still rejected. A test of the reported bug alone would have accepted them.'}))),
     el('details',{class:'gate-caught'},el('summary',{text:`The ${g.caught.length} patches, on ${new Set(g.caught.map(c=>c.case)).size} bugs, that fixed the reported key and broke something else`}),
       el('ul',{},...Object.values(Object.groupBy(g.caught,c=>c.case)).map(list=>el('li',{},

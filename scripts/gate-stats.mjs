@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { readJson, json } from '../src/files.js';
 import { violationKeys } from '../src/verifier.js';
+import { patchScope } from '../src/live.js';
 
 // What each gate contributed, measured over every recorded blind run (real bugs, all engine
 // versions) and every open-bug run. No inference: it reads the run records the batches wrote.
@@ -57,11 +58,14 @@ for (const r of runs) for (const a of r.run.attempts) {
 }
 const real = runs.filter(r => r.kind === 'real');
 const passedOn = r => r.run.attempts.find(a => a.verified)?.attempt || null;
+// Passing runs whose patch changed the library's own files, not only the author-built page.
+let libraryFixed = 0;
+for (const r of real) if (passedOn(r) && await patchScope(r.run.id, passedOn(r), (await readJson(path.join(ROOT, 'benchmarks', 'realbugs', r.case, 'case.json'))).upstreamFiles) === 'library') libraryFixed++;
 const stats = {
   generatedAt: new Date().toISOString(),
   note: 'Fractions: every recorded blind run of the 26 real bugs, across all engine versions; a run is one bug on one engine version, up to three attempts (Super, then Ultra with the browser failure report). Rejected patches: real-bug and open-bug runs.',
   runs: runs.length, realRuns: real.length, attempts,
-  firstTry: count(real, r => passedOn(r) === 1), withFeedback: count(real, r => passedOn(r) > 1), notRepaired: count(real, r => !passedOn(r)),
+  firstTry: count(real, r => passedOn(r) === 1), withFeedback: count(real, r => passedOn(r) > 1), notRepaired: count(real, r => !passedOn(r)), libraryFixed,
   caughtAfterKeyboardPass: caught.length, caughtReasons: reasons, falseRejections, overfitRejected: overfit, unappliedPatches: unapplied,
   caught,
 };
