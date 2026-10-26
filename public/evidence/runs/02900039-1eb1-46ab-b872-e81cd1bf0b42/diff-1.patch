@@ -1,0 +1,20 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index af9981d..7d6f673 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -202,7 +202,15 @@ export default class Datepicker {
+ 
+     const keydownListener = [element, 'keydown', onKeydown.bind(null, this)];
+     if (inputField) {
++          // Create a new listener for the Tab key that hides the datepicker when active.
++          const tabListener = [inputField, 'keydown', (ev) => {
++            if (ev.key === 'Tab' && this.active) {
++              this.hide();
++            }
++          }];
++
+       registerListeners(this, [
++        tabListener,
+         keydownListener,
+         [inputField, 'focus', onFocus.bind(null, this)],
+         [inputField, 'mousedown', onMousedown.bind(null, this)],

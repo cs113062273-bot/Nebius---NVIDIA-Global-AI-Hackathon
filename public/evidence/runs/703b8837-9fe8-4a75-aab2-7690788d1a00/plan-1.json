@@ -1,0 +1,24 @@
+{
+  "root_cause": "The disclosure menu lacks a focusout handler to close when focus leaves the menu, so tabbing out of the navigation does not close the dropdown.",
+  "repair_strategy": "Add a focusout event listener to the menu element that checks if the related target is outside the menu; if so, blur the menu, close children, and close the controller (if present), mirroring the click-outside logic.",
+  "edits": [
+    {
+      "path": "src/disclosureMenu.js",
+      "sha256": "ca4cd96d5ab9b2275e2c8f4989766af90595913fd63bb25320c2b0b8853b564b",
+      "before": "  initialize() {\n    try {\n      super.initialize();\n\n      this._handleFocus();\n      this._handleClick();\n      this._handleHover();\n      this._handleKeydown();\n      this._handleKeyup();\n    } catch (error) {\n      console.error(error);\n    }\n  }\n\n",
+      "after": "  initialize() {\n    try {\n      super.initialize();\n\n      this._handleFocus();\n      this._handleClick();\n      this._handleHover();\n      this._handleKeydown();\n      this._handleKeyup();\n      this._handleFocusBlur();\n    } catch (error) {\n      console.error(error);\n    }\n  }\n\n  /**\n   * Handles focusout events to close the menu when focus leaves.\n   *\n   * @protected\n   */\n  _handleFocusBlur() {\n    this.dom.menu.addEventListener(\\\"focusout\\\", (event) => {\n      if (!this.dom.menu.contains(event.relatedTarget)) {\n        this.blur();\n        this.closeChildren();\n        if (this.elements.controller) {\n          this.elements.controller.close();\n        }\n      }\n    });\n  }\n\n  /**\n   * A flag to add optional keyboard support (Arrow keys, \\\"Home\\\", and \\\"End\\\") to the menu.\n   *\n   * This functions differently for root vs. submenus.\n   * Submenus will always inherit their root menu's optionalKeySupport.\n   *\n   * @type {boolean}\n   *\n   * @see _optionalSupport\n   */\n  get optionalKeySupport() {\n    return this.isTopLevel\n      ? this._optionalSupport\n      : this.elements.rootMenu.optionalKeySupport;\n  }\n\n"
+    }
+  ],
+  "expected_accessibility_effect": "When focus leaves the navigation (e.g., tabbing to the search input), the Shop dropdown will close, ensuring aria-expanded becomes false and the dropdown is hidden, meeting the expectation that tabbing out of the navigation closes the open dropdown.",
+  "functional_risks": [
+    "Potential premature closure if focus temporarily moves to a descendant outside the menu during widget interactions.",
+    "Risk of interfering with custom widgets that deliberately move focus outside the menu."
+  ],
+  "verification_requirements": [
+    "Tabbing from the shop button to the search input closes the dropdown (aria-expanded false, plants hidden).",
+    "Escape key still closes the dropdown and returns focus to the shop button.",
+    "Clicking outside the menu still closes it.",
+    "Keyboard navigation within the open menu (arrow keys, Tab) works without closing the dropdown.",
+    "Space/Enter on the shop button still toggles the dropdown."
+  ]
+}

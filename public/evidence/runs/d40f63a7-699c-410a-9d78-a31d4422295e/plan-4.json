@@ -1,0 +1,22 @@
+{
+  "root_cause": "The native dialog.showModal() does not reliably focus the autofocus element in this environment. Previous synchronous focus attempts in _showElement race with browser focus management, leaving focus on the trigger or body.",
+  "repair_strategy": "In DialogBase._show, after calling _showElement, yield to the microtask queue (await Promise.resolve()) then explicitly focus the autofocus element (or dialog fallback). This allows native focus management to complete before we set focus.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected async _show(relatedTarget?: HTMLElement): Promise<void> {\n    this._isTransitioning = true\n    this._onBeforeShow()\n\n    const { modal, preventBodyScroll } = this._getShowOptions()\n    this._showElement({ modal, preventBodyScroll })\n\n    await this._queueCallback(() => {\n      this._isTransitioning = false\n      EventHandler.trigger(\n        this._element,\n        this.constructor.eventName('shown'),\n        { relatedTarget }\n      )\n    }, this._element, this._isAnimated())\n  }",
+      "after": "  protected async _show(relatedTarget?: HTMLElement): Promise<void> {\n    this._isTransitioning = true\n    this._onBeforeShow()\n\n    const { modal, preventBodyScroll } = this._getShowOptions()\n    this._showElement({ modal, preventBodyScroll })\n\n    // Yield to allow native dialog focus management to complete, then ensure\n    // keyboard focus lands on the autofocus element (or dialog fallback).\n    await Promise.resolve()\n    const autofocus = this._element.querySelector('[autofocus]')\n    if (autofocus) {\n      (autofocus as HTMLElement).focus()\n    } else if (this._element !== document.activeElement) {\n      this._element.focus()\n    }\n\n    await this._queueCallback(() => {\n      this._isTransitioning = false\n      EventHandler.trigger(\n        this._element,\n        this.constructor.eventName('shown'),\n        { relatedTarget }\n      )\n    }, this._element, this._isAnimated())\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus moves into the drawer when opened, landing on the search field so users can immediately type or Tab to filters without a pointer.",
+  "functional_risks": [
+    "Potential focus theft if autofocus element is not focusable (mitigated by fallback to dialog).",
+    "Risk of double-focus if browser already moved focus (mitigated by yielding to microtask)."
+  ],
+  "verification_requirements": [
+    "After activating the drawer button with Enter, focus is on #filters-search.",
+    "Pressing Tab moves focus to #in-stock checkbox.",
+    "Closing the drawer with Escape returns focus to the trigger button."
+  ]
+}

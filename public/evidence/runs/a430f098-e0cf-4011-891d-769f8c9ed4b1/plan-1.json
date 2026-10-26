@@ -1,0 +1,24 @@
+{
+  "root_cause": "When the currently focused node inside the focus trap is removed from the DOM, the focus trap attempts to refocus that detached node, which fails, leaving focus outside the trap (on the body). This occurs because the trap's checkFocusIn handler does not verify that the mostRecentlyFocusedNode is still attached to the DOM and within the trap's containers before attempting to refocus it.",
+  "repair_strategy": "Modify the checkFocusIn handler to verify that the mostRecentlyFocusedNode is still contained within one of the trap's containers before attempting to refocus it. If it is not, fall back to focusing the initial focus node (as determined by the trap's initialization logic).",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n    }",
+      "after": "    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      // If the mostRecentlyFocusedNode is still in one of the containers, try to focus it.\n      // Otherwise, use the initial focus node.\n      if (state.mostRecentlyFocusedNode && state.containers.some(container => container.contains(state.mostRecentlyFocusedNode))) {\n        tryFocus(state.mostRecentlyFocusedNode);\n      } else {\n        tryFocus(getInitialFocusNode());\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "After activating the trap and removing the focused node (via the 'Show all' button), keyboard focus will remain trapped within the dialog, specifically moving to the close button (or initial focus node) when the focused node is removed. This ensures that subsequent tab navigation remains within the dialog.",
+  "functional_risks": [
+    "The trap might consume slightly more CPU when checking containment of the mostRecentlyFocusedNode on every focusin event that occurs outside the trap.",
+    "If the mostRecentlyFocusedNode is removed but another node in the trap becomes focused by the browser (unlikely), we might override that focus with the initial focus node. However, the scenario of a node being removed and the browser focusing another node in the trap is rare because the removal of the focused node typically causes the browser to focus the body or the next element in the DOM (which is likely outside the trap).",
+    "The container.contains check may not work correctly for nodes in shadow DOM if the trap is configured to use shadow DOM. However, the trap in the given usage does not enable shadow DOM support (no getShadowRoot option), so containers are plain DOM nodes and container.contains is sufficient."
+  ],
+  "verification_requirements": [
+    "Verify that after clicking the 'Show all 4 results' button (which removes itself), focus is retained within the results dialog (specifically, the close button should receive focus).",
+    "Verify that tab navigation continues to work within the dialog after the button removal.",
+    "Verify that the Escape key still closes the dialog and returns focus to the open button.",
+    "Verify that the initial state of the trap (before any node removal) still functions correctly."
+  ]
+}

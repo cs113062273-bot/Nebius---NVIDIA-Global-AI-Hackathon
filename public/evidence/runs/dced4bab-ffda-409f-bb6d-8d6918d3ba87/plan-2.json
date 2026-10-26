@@ -1,0 +1,20 @@
+{
+  "root_cause": "The Drawer component does not manage focus when opened via keyboard. After pressing Enter on the trigger button, the drawer opens but focus remains on the body instead of moving to the close button, violating keyboard accessibility requirements.",
+  "repair_strategy": "Add a 'shown' event listener in the Drawer constructor that focuses the dismiss button (selected via [data-bs-dismiss=\"drawer\"]) when the drawer finishes opening. This ensures keyboard users can immediately interact with the drawer or dismiss it.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  constructor(element?: string | Element | null, config?: Partial<DrawerConfig> | null) {\n    super(element, config)\n    this._swipeHelper = null\n    this._resizeObserver = null\n    this._resizeFrame = null\n    this._initResizeObserver()\n  }",
+      "after": "  constructor(element?: string | Element | null, config?: Partial<DrawerConfig> | null) {\n    super(element, config)\n    this._swipeHelper = null\n    this._resizeObserver = null\n    this._resizeFrame = null\n    this._initResizeObserver()\n\n    EventHandler.on(this._element, this.constructor.eventName('shown'), () => {\n      const dismissButton = this._element.querySelector('[data-bs-dismiss=\"drawer\"]') as HTMLElement\n      if (dismissButton) {\n        dismissButton.focus({ preventScroll: true })\n      }\n    })\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users opening the drawer will have focus immediately moved to the close button, enabling navigation of drawer contents or dismissal, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Minimal risk: only adds focus management on show. Could conflict if other code manages focus, but Bootstrap's pattern is to focus the dismiss button."
+  ],
+  "verification_requirements": [
+    "The existing journey test should pass: pressing Enter on #filters-open opens drawer and focuses #filters-close.",
+    "Verify that focus returns to the trigger button when the drawer is closed (already handled by data API)."
+  ]
+}

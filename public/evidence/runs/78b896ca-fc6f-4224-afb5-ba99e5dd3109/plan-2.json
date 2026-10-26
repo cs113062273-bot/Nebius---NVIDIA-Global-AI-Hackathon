@@ -1,0 +1,23 @@
+{
+  "root_cause": "When a focused element is removed from the DOM (e.g., its parent row is deleted), the MutationObserver's `checkDomRemoval` only checks if the focused node itself is in `mutation.removedNodes`. It does not detect when an ancestor of the focused node is removed, so the focus trap fails to restore focus into the dialog. The browser moves focus to <body>, and the trap's escape handling tries to refocus the now-detached node, which fails silently.",
+  "repair_strategy": "Enhance `checkDomRemoval` to detect when any removed node contains the focused node (ancestor removal) or when the focused node is no longer in the document. In either case, restore focus to the trap's initial focus node.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };",
+      "after": "  const checkDomRemoval = function (mutations) {\n    const focusedNode = state.mostRecentlyFocusedNode;\n    if (!focusedNode) return;\n    \n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === focusedNode || node.contains(focusedNode);\n      });\n    });\n\n    // Also check if focused node is no longer in the document\n    const isFocusedNodeDetached = !doc.contains(focusedNode);\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved || isFocusedNodeDetached) {\n      tryFocus(getInitialFocusNode());\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains trapped inside the dialog after a row containing the focused button is removed, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by preventing focus loss to the page body.",
+  "functional_risks": [
+    "MutationObserver may not be available in all test environments (SSR), but the code already guards this.",
+    "doc.contains() does not cross shadow DOM boundaries; if the trap operates inside a shadow root, the detached check may not fire. However, the ancestor-contains check covers the common case."
+  ],
+  "verification_requirements": [
+    "Run the provided journey: open dialog, Tab to first remove button, Enter to remove row, Tab again — focus must land on the next remove button.",
+    "Verify focus stays in dialog after removing any row (first, middle, last).",
+    "Verify Escape key still closes dialog.",
+    "Verify clicking backdrop still closes dialog."
+  ]
+}

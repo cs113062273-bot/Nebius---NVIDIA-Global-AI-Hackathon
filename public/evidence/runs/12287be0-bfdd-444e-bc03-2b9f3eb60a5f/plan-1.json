@@ -1,0 +1,22 @@
+{
+  "root_cause": "The header component unconditionally sets aria-hidden=true on the navigation menu during initialization, hiding it from assistive technology on desktop widths where the menu is visually visible.",
+  "repair_strategy": "Modify syncState to only apply aria-hidden when the menu button is actually visible (offsetParent non‑null), preserving the navigation's accessibility state on desktop while retaining the existing behavior for the mobile menu.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "/**\n * Sync menu state\n *\n * Sync the menu button class and the accessible state of the menu and the menu\n * button with the visible state of the menu\n *\n * @param {boolean} isVisible Whether the menu is currently visible\n */\nHeader.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  this.$menu.setAttribute('aria-hidden', !isVisible)\n}",
+      "after": "/**\n * Sync menu state\n *\n * Sync the menu button class and the accessible state of the menu and the menu\n * button with the visible state of the menu\n *\n * @param {boolean} isVisible Whether the menu is currently visible\n */\nHeader.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  if (this.$menuButton.offsetParent) {\n    this.$menu.setAttribute('aria-hidden', !isVisible)\n  }\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links will be exposed in the accessibility tree as links with correct names, allowing keyboard and screen‑reader users to reach them.",
+  "functional_risks": [
+    "If the menu button becomes visible via other means (e.g., custom styling), aria‑hidden may not be updated correctly.",
+    "Changing the conditional logic could affect edge cases where offsetParent is null but the menu is still visible (unlikely)."
+  ],
+  "verification_requirements": [
+    "After page load at desktop width, inspect the navigation ul and verify it has no aria-hidden attribute (or aria-hidden='false').",
+    "Tabbing from the home link should move focus to the 'Apply' link and the accessibility tree should show role link with name 'Apply'.",
+    "Resizing to mobile width and opening the menu should still hide/show the navigation correctly and update aria‑hidden appropriately."
+  ]
+}

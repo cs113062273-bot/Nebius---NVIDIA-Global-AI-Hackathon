@@ -1,0 +1,25 @@
+{
+  "root_cause": "The datepicker attaches a global keydown listener that handles ArrowLeft to navigate the calendar, preventing caret movement in other inputs when the picker is visible.",
+  "repair_strategy": "Modify the _onKeyChange handler to early‑exit if the active element is neither the associated input field nor a descendant of the picker container, allowing standard text field editing while preserving datepicker keyboard navigation when appropriate.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "662123ec9f429dee9cffaacfcf89b05ed9c3c30a78d33ecfd113e6778349cc77",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };\n",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n                // Ignore keyboard if focus is not inside the picker or its associated field\n                var active = document.activeElement;\n                if (opts.field && active !== opts.field && !self.el.contains(active)) {\n                    return;\n                }\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };\n"
+    }
+  ],
+  "expected_accessibility_effect": "Users can move the caret with ArrowLeft in any text field while the datepicker is open, and still navigate the calendar with arrow keys when the datepicker or its associated input is focused.",
+  "functional_risks": [
+    "Inline datepickers without an associated field may lose keyboard navigation if the click target is not within the picker container.",
+    "Custom triggers that are not the field or a descendant of the picker could inadvertently block navigation.",
+    "If the picker is used inside a shadow DOM or iframe, document.activeElement may not reflect internal focus, potentially affecting navigation."
+  ],
+  "verification_requirements": [
+    "Verify that ArrowLeft moves the caret in the #notes input when the calendar is visible.",
+    "Verify that ArrowLeft still changes the selected date when the delivery-date input or any part of the calendar is focused.",
+    "Verify that Enter and Esc still close the picker when appropriate.",
+    "Verify that tabbing into the calendar buttons allows ArrowLeft/Right to change dates.",
+    "Ensure no regression in month/year navigation via keyboard when the picker has focus."
+  ]
+}

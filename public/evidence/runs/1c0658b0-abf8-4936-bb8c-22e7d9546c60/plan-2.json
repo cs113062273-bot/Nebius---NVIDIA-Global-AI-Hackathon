@@ -1,0 +1,27 @@
+{
+  "root_cause": "The datepicker widget traps focus inside its popup when opened, preventing the Tab key from moving focus to the next form field. The keydown listener for the datepicker input does not allow the Tab key to bubble up, so focus remains trapped within the datepicker popup.",
+  "repair_strategy": "Modify the keydown listener registration in Datepicker.js to intercept the Tab key when the datepicker is active, hide the picker, and then allow the original keydown handler to run. This ensures that pressing Tab while the datepicker is open closes the popup and moves focus to the next focusable element (the access notes input).",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+      "before": "    const keydownListener = [element, 'keydown', onKeydown.bind(null, this)];\n    if (inputField) {\n      registerListeners(this, [\n        keydownListener,\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        // To detect a click on outside, just listening to mousedown is enough,\n        // no need to listen to touchstart.\n        // Actually, listening to touchstart can be a problem because, while\n        // mousedown is fired only on tapping but not on swiping/pinching,\n        // touchstart is fired on swiping/pinching as well.\n        // (issue #95)\n        [document, 'mousedown', onClickOutside.bind(null, this)],\n        [window, 'resize', picker.place.bind(picker)]\n      ]);\n    } else {\n      registerListeners(this, [keydownListener]);\n      this.show();\n    }",
+      "after": "    function keydownHandler(ev) {\n      if (ev.key === 'Tab' && this.active) {\n        this.hide();\n      }\n      onKeydown.call(this, ev);\n    }\n    const keydownListener = [element, 'keydown', keydownHandler.bind(this)];\n    if (inputField) {\n      registerListeners(this, [\n        keydownListener,\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        // To detect a click on outside, just listening to mousedown is enough,\n        // no need to listen to touchstart.\n        // Actually, listening to touchstart can be a problem because, while\n        // mousedown is fired only on tapping but not on swiping/pinching,\n        // touchstart is fired on swiping/pinching as well.\n        // (issue #95)\n        [document, 'mousedown', onClickOutside.bind(null, this)],\n        [window, 'resize', picker.place.bind(picker)]\n      ]);\n    } else {\n      registerListeners(this, [keydownListener]);\n      this.show();\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab from the visit date field will now move focus to the access notes field, allowing keyboard-only users to navigate the form sequentially without being trapped in the datepicker popup.",
+  "functional_risks": [
+    "Hiding the datepicker on Tab may interfere with users who rely on Tab to navigate within the datepicker grid (though typical datepicker navigation uses arrow keys, not Tab).",
+    "There is a low risk that some users expect Tab to move focus within the datepicker; however, the datepicker's documentation does not specify Tab behavior, and arrow keys remain functional for date selection.",
+    "Hiding on Tab could cause accidental closure if the user unintentionally presses Tab while interacting with the datepicker; but the user can reopen it by focusing the input again."
+  ],
+  "verification_requirements": [
+    "Tab from #visit-date moves focus to #notes when datepicker is open.",
+    "Arrow keys still function to change date within the datepicker.",
+    "Enter key still selects the focused date and closes the datepicker.",
+    "Escape key still closes the datepicker without changing date.",
+    "Clicking outside the datepicker still closes it.",
+    "The datepicker still opens when the visit-date input receives focus.",
+    "Form submission still works with selected date."
+  ]
+}

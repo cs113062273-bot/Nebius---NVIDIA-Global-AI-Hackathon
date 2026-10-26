@@ -1,0 +1,16 @@
+diff --git a/index.js b/index.js
+index 6d88fbd..9ca70b3 100644
+--- a/index.js
++++ b/index.js
+@@ -691,6 +691,11 @@ const createFocusTrap = function (elements, userOptions) {
+     const target = getActualTarget(event);
+     const targetContained = findContainerIndex(target, event) >= 0;
+ 
++    // If the MRU node is no longer attached, clear it.
++    if (state.mostRecentlyFocusedNode && !isNodeAttached(state.mostRecentlyFocusedNode)) {
++      state.mostRecentlyFocusedNode = null;
++    }
++
+     // In Firefox when you Tab out of an iframe the Document is briefly focused.
+     if (targetContained || target instanceof Document) {
+       if (targetContained) {

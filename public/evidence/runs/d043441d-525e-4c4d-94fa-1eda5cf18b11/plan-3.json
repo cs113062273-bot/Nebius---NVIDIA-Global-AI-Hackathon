@@ -1,0 +1,31 @@
+{
+  "root_cause": "The Vanilla Calendar Pro (VCP) library's `inputMode: true` captures the Tab keydown event on the date input and calls preventDefault(), blocking default focus traversal (WCAG 2.1.1). Setting `inputMode: false` restores Tab navigation but removes VCP's built-in click handling for the input, so clicking the date field no longer opens the calendar. The Bootstrap data API only shows the calendar on `focusin` for inputs, not on `click`, so a click on an already-focused input does not open the calendar.",
+  "repair_strategy": "Set `inputMode: false` in the VCP options to allow Tab key propagation. Additionally, modify the data API click handler to show the calendar for input elements without preventing the default focus behavior, ensuring pointer users can open the calendar by clicking the date field even when it is already focused.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      inputMode: !this._isInline,\n",
+      "after": "      inputMode: false,\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {\n  // Only handle if not an input (inputs use focusin)\n  // Skip inline datepickers (they're always visible)\n  if (this.tagName === 'INPUT' || this.dataset.bsInline === 'true') {\n    return\n  }\n\n  event.preventDefault()\n  Datepicker.getOrCreateInstance(this).toggle()\n})",
+      "after": "EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {\n  // Skip inline datepickers (they're always visible)\n  if (this.dataset.bsInline === 'true') {\n    return\n  }\n\n  // For inputs, show the calendar without preventing default (allow focus)\n  if (this.tagName === 'INPUT') {\n    Datepicker.getOrCreateInstance(this).show()\n    return\n  }\n\n  event.preventDefault()\n  Datepicker.getOrCreateInstance(this).toggle()\n})"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key moves focus from the date field to the next form field (#passengers) per WCAG 2.1.1, while clicking the date field opens the calendar for pointer users regardless of whether the input already has focus.",
+  "functional_risks": [
+    "Click handler might cause double show if focusin also fires (mitigated by show() being idempotent)",
+    "Inline datepickers unaffected (inputMode already false for inline)",
+    "Non-input datepickers retain existing toggle behavior with preventDefault"
+  ],
+  "verification_requirements": [
+    "Tab key press on focused date field moves focus to next form field (#passengers)",
+    "Clicking the date field shows the calendar (date button visible)",
+    "Clicking a date in the calendar updates the input field value correctly",
+    "Initial date value (2026-10-22) is properly parsed and displayed on load",
+    "Inline datepickers (if present) remain functional for mouse interaction"
+  ]
+}

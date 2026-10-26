@@ -1,6 +1,6 @@
 # Nebius Token Factory: what we observed
 
-All inference in Tabstitch runs on Nebius Token Factory through its OpenAI-compatible API: 801 calls from the development machine between 2026-10-21 and 2026-10-26, plus the live runs that GitHub Actions makes on request and once a day. At catalog prices that is about US$17.80, paid from sponsor credits. Aggregates are in [`public/inference-stats.json`](../public/inference-stats.json).
+All inference in Tabstitch runs on Nebius Token Factory through its OpenAI-compatible API: 1,248 calls from the development machine between 2026-10-21 and 2026-10-27, plus the live runs that GitHub Actions makes on request and once a day. At catalog prices that is about US$30.30, paid from sponsor credits. Aggregates are in [`public/inference-stats.json`](../public/inference-stats.json).
 
 ## What worked
 
@@ -12,8 +12,8 @@ All inference in Tabstitch runs on Nebius Token Factory through its OpenAI-compa
 
 ## What could be better
 
-- **Structured outputs corrupt code strings.** The catalog does not list `structured_outputs` for the Nemotron 3 models, and 62 of our completions did not parse into the schema we sent in the prompt. Token Factory does accept `response_format` with a strict JSON schema for Super and Ultra, and every reply parsed. But the code inside the strings came back damaged: newlines as a bare `n`, `%n` or nothing, and quotes as guillemets. Engine v10 used it and was stopped after 2 runs, because none of its 6 patches could be applied. We went back to the prompt-only schema and repair only bracket structure. Either a fix or a documented limitation would help.
-- **Latency varies widely for long prompts.** At a p50 prompt of about 14,000 tokens, Super's p90 latency was 66 s. Ultra was steadier. A published expected-latency figure per model would help set timeouts.
+- **Structured outputs corrupt code strings.** The catalog does not list `structured_outputs` for the Nemotron 3 models, and 95 of our completions did not parse into the schema we sent in the prompt. Token Factory does accept `response_format` with a strict JSON schema for Super and Ultra, and every reply parsed. But the code inside the strings came back damaged: newlines as a bare `n`, `%n` or nothing, and quotes as guillemets. Engine v10 used it and was stopped after 2 runs, because none of its 6 patches could be applied. We went back to the prompt-only schema and repair only bracket structure. Either a fix or a documented limitation would help.
+- **Latency varies widely for long prompts.** At a p50 prompt of about 14,000 tokens, Super's p90 latency was 71 s. Ultra was steadier. A published expected-latency figure per model would help set timeouts.
 - **Cost in the response.** The response reports tokens, not cost. We compute cost from catalog prices. A per-request cost field would make sponsor-credit accounting exact.
 
 ## Would we use it again

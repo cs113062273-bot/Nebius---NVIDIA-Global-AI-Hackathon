@@ -1,0 +1,36 @@
+diff --git a/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js b/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
+index 1571266..c4c0532 100644
+--- a/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
++++ b/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
+@@ -89,17 +89,22 @@ export class Checkboxes extends Component {
+   unCheckAllInputsExcept($input) {
+     const { checkboxExclusiveGroup: exclusiveGroup } = $input.dataset
+ 
+-    const allInputsWithSameName = document.querySelectorAll(
+-      `input[type="checkbox"][name="${$input.name}"]`
+-    )
++    let inputs
++    if (exclusiveGroup) {
++      inputs = document.querySelectorAll(
++        `input[type="checkbox"][data-checkbox-exclusive-group="${exclusiveGroup}"]`
++      )
++    } else {
++      inputs = document.querySelectorAll(
++        `input[type="checkbox"][name="${$input.name}"]`
++      )
++    }
+ 
+-    allInputsWithSameName.forEach(($inputWithSameName) => {
+-      const hasSameFormOwner = $input.form === $inputWithSameName.form
++    inputs.forEach(($otherInput) => {
++      const hasSameFormOwner = $input.form === $otherInput.form
+ 
+-      // Uncheck all with same exclusive group by default, otherwise fall back to
+-      // GOV.UK Frontend behaviour to uncheck all with the same name attribute
+-      if (hasSameFormOwner && $inputWithSameName !== $input) {
+-        this.setInputState($inputWithSameName, false, exclusiveGroup)
++      if (hasSameFormOwner && $otherInput !== $input) {
++        this.setInputState($otherInput, false, exclusiveGroup)
+       }
+     })
+   }

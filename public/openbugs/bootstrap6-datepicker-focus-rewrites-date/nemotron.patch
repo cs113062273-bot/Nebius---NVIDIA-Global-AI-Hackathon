@@ -1,21 +1,15 @@
 diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
-index e71d8df..8c217dd 100644
+index e71d8df..e4b72ee 100644
 --- a/js/src/datepicker.ts
 +++ b/js/src/datepicker.ts
-@@ -502,6 +502,16 @@ class Datepicker extends BaseComponent {
-     const locale = this._config.locale === 'default' ? undefined : this._config.locale
-     const { dateFormat } = this._config
+@@ -522,6 +522,10 @@ class Datepicker extends BaseComponent {
+     }
  
-+    // If we are using the input for display (no separate display element) and we are an input,
-+    // then we want to use ISO format for the value.
-+    if (!this._displayElement && this._isInput) {
-+      // Return ISO string: YYYY-MM-DD
-+      const year = date.getFullYear()
-+      const month = String(date.getMonth() + 1).padStart(2, '0')
-+      const day = String(date.getDate()).padStart(2, '0')
-+      return `${year}-${month}-${day}`
-+    }
-+
-     // Custom function formatter
-     if (typeof dateFormat === 'function') {
-       return dateFormat(date, locale)
+     if (dates.length === 1) {
++      // For input elements, keep the ISO format to avoid unexpected reformatting
++      if (this._isInput) {
++        return dates[0]
++      }
+       return this._formatDate(dates[0])
+     }
+ 

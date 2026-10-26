@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T13:57:33.791Z",
+  "policy": "auto",
+  "modelRun": "3d2b455b-1dda-457b-ac85-47742ee754bf",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "79a4d5608dd34a687092d5d5b848e507742623dff9821ab58a6b7cd66f6932c4",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-f030c399488d3b9a3390614233ca0d44",
+      "usage": {
+        "completion_tokens": 10694,
+        "prompt_tokens": 10022,
+        "total_tokens": 20716,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10155,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10022
+      },
+      "latencyMs": 61540,
+      "reservedCreditUsd": 0.0397632
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-01d2aec8457153c38c829dc7b14299cf",
+      "usage": {
+        "completion_tokens": 14482,
+        "prompt_tokens": 10554,
+        "total_tokens": 25036,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 11875,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10554
+      },
+      "latencyMs": 34835,
+      "reservedCreditUsd": 0.135029
+    }
+  ]
+}

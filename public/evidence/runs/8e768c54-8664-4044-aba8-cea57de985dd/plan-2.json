@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Drawer component's _getShowOptions returns modal: true for side drawers (due to backdrop: true default), causing showModal() to be used instead of show(). This centers the dialog natively, conflicts with side-drawer CSS positioning, and fails to trap focus in the side-positioned drawer, leaving focus on body.",
+  "repair_strategy": "Change Drawer._getShowOptions to always return modal: false for side drawers, so show() is used and _enforceFocus (in DialogBase._showElement) explicitly focuses the first focusable element (autofocus or close button).",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {\n    const useModal = Boolean(this._config.backdrop) || !this._config.scroll\n    return {\n      modal: useModal,\n      preventBodyScroll: !this._config.scroll\n    }\n  }",
+      "after": "  protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {\n    return {\n      modal: false,\n      preventBodyScroll: !this._config.scroll\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can open Sort and Filters drawers and immediately interact with controls (close button, search input, checkboxes) because focus moves into the drawer on open.",
+  "functional_risks": [
+    "If any Drawer variant requires modal behavior (centered, focus-trapped), it will lose that; but Drawer is documented for side drawers only.",
+    "Backdrop click handling remains unchanged (handled in DialogBase)."
+  ],
+  "verification_requirements": [
+    "Press Enter on #sort-open → Sort drawer opens, focus lands on #sort-close.",
+    "Press Escape → Sort drawer closes, focus returns to #sort-open.",
+    "Press Enter on #filters-open → Filters drawer opens, focus lands on #filters-search (autofocus).",
+    "Tab through Filters drawer controls (search, checkboxes, apply button) works.",
+    "Form submission updates #applied text and closes Filters drawer."
+  ]
+}

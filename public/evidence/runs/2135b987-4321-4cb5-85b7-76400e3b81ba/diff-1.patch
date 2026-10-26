@@ -1,0 +1,77 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..7c62067 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -552,14 +552,62 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                    {
++                        var step = -1;
++                        var date = self._d ? new Date(self._d.getTime()) : new Date();
++                        while(true){
++                            date.setDate(date.getDate() + step);
++                            if (self._o.minDate && date < self._o.minDate) {
++                                date = new Date(self._o.minDate);
++                                break;
++                            };
++                            if (self._o.maxDate && date > self._o.maxDate) {
++                                date = new Date(self._o.maxDate);
++                                break;
++                            };
++                            var disabled = false;
++                            if (self._o.disableWeekends) {
++                                var day = date.getDay();
++                                if (day===0 || day===6) disabled = true;
++                            };
++                            if (!disabled && self._o.disableDayFn && self._o.disableDayFn(date)){
++                                disabled = true;
++                            };
++                            if (!disabled) break;
++                        }
++                        self.setDate(date);
+                         break;
++            };
+                     case 38:
+                         self.adjustDate('subtract', 7);
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                    {
++                        var step = 1;
++                        var date = self._d ? new Date(self._d.getTime()) : new Date();
++                        while(true){
++                            date.setDate(date.getDate() + step);
++                            if (self._o.minDate && date < self._o.minDate) {
++                                date = new Date(self._o.minDate);
++                                break;
++                            };
++                            if (self._o.maxDate && date > self._o.maxDate) {
++                                date = new Date(self._o.maxDate);
++                                break;
++                            };
++                            var disabled = false;
++                            if (self._o.disableWeekends) {
++                                var day = date.getDay();
++                                if (day===0 || day===6) disabled = true;
++                            };
++                            if (!disabled && self._o.disableDayFn && self._o.disableDayFn(date)){
++                                disabled = true;
++                            };
++                            if (!disabled) break;
++                        }
++                        self.setDate(date);
+                         break;
++            };
+                     case 40:
+                         self.adjustDate('add', 7);
+                         break;
+@@ -571,6 +619,7 @@
+             }
+         };
+ 
++
+         self._parseFieldValue = function()
+         {
+             if (opts.parse) {

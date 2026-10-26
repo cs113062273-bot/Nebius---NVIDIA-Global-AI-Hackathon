@@ -1,0 +1,26 @@
+diff --git a/src/govuk/components/radios/radios.js b/src/govuk/components/radios/radios.js
+index 659c970..e89f89f 100644
+--- a/src/govuk/components/radios/radios.js
++++ b/src/govuk/components/radios/radios.js
+@@ -32,6 +32,21 @@ Radios.prototype.init = function () {
+     this.setAttributes($input)
+   }.bind(this))
+ 
++  // Listen for change events on all radios sharing the same name as any conditional radio
++  var names = {}
++  nodeListForEach($inputs, function ($input) {
++    if ($input.getAttribute('aria-controls')) {
++      names[$input.name] = true
++    }
++  }.bind(this))
++  
++  for (var name in names) {
++    var $allRadios = document.querySelectorAll('input[type="radio"][name="' + name + '"]')
++    nodeListForEach($allRadios, function ($radio) {
++      $radio.addEventListener('change', this.handleClick.bind(this))
++    }.bind(this))
++  }
++
+   // Handle events
+   $module.addEventListener('click', this.handleClick.bind(this))
+ }

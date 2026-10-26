@@ -1,0 +1,22 @@
+{
+  "root_cause": "The datepicker component was passing `inputMode: !this._isInline` to Vanilla Calendar Pro, causing non-inline calendars to enable input mode which traps the Tab key inside the calendar widget, preventing focus from moving to the next form field.",
+  "repair_strategy": "Set the `inputMode` option to `false` for all calendar instances to allow the Tab key to escape the calendar and move focus to the next focusable element in the form, while preserving other keyboard interactions within the calendar.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      inputMode: !this._isInline,\n",
+      "after": "      inputMode: false,\n"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab when the datepicker calendar is open will move focus to the next focusable element in the form (the passengers field) instead of being trapped in the calendar.",
+  "functional_risks": [
+    "Other keyboard navigation within the calendar (arrow keys, Enter, Escape) may be altered",
+    "Inline calendars may lose intended keyboard behavior if they relied on inputMode being true"
+  ],
+  "verification_requirements": [
+    "Verify Tab moves focus from departure date to passengers field when calendar is open",
+    "Verify arrow keys, Enter, and Escape still function correctly in the calendar",
+    "Verify inline calendars (if present) retain correct keyboard behavior"
+  ]
+}

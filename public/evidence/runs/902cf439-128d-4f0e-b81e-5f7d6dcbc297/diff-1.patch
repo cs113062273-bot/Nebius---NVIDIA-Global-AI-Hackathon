@@ -1,0 +1,30 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..f00aa41 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -97,6 +97,25 @@ class Drawer extends DialogBase {
+     super.dispose()
+   }
+ 
++  override async show(relatedTarget?: HTMLElement): Promise<void> {
++    await super.show(relatedTarget)
++    this._focusFirstFocusable()
++  }
++
++  // Private
++  protected _focusFirstFocusable(): void {
++    const focusTrigger = SelectorEngine.findOne('[data-bs-dismiss="drawer"]', this._element)
++    if (focusTrigger) {
++      focusTrigger.focus()
++      return
++    }
++    // fallback: make the drawer focusable
++    if (!this._element.hasAttribute('tabindex')) {
++      this._element.setAttribute('tabindex', '-1')
++    }
++    this._element.focus()
++  }
++
+   // Protected — hook overrides
+ 
+   protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {

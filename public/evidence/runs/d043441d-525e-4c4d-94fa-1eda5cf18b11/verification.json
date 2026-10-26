@@ -1,0 +1,6 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (js/src/datepicker.ts): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// Only handle if not an input (inputs use focusin)\"; closest is line 560: \"// Only handle if not an input (inputs use focus)\". Best alignment: before lines 3-10 match file lines 561-568. The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ]
+}

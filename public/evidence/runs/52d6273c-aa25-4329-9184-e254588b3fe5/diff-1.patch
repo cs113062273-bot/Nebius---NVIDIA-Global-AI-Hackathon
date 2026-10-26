@@ -1,0 +1,18 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..069fe00 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -512,8 +512,11 @@ class Datepicker extends BaseComponent {
+       return new Intl.DateTimeFormat(locale, dateFormat).format(date)
+     }
+ 
+-    // Default: locale-aware formatting
+-    return date.toLocaleDateString(locale)
++    // Default: ISO 8601 format (YYYY-MM-DD)
++    const year = date.getFullYear()
++    const month = String(date.getMonth() + 1).padStart(2, '0')
++    const day = String(date.getDate()).padStart(2, '0')
++    return `${year}-${month}-${day}`
+   }
+ 
+   protected _formatDateForInput(dates: string[]): string {

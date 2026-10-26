@@ -1,0 +1,31 @@
+{
+  "root_cause": "VCP's `inputMode: true` captures the Tab keydown event on the input and calls preventDefault(), blocking default focus traversal. The previous fix set `inputMode: false` which restored Tab navigation but broke click-to-show because VCP no longer handles click on the input element.",
+  "repair_strategy": "Set `inputMode: false` to allow Tab key propagation, and add a click handler on the input element that explicitly calls `show()` to open the calendar, preserving pointer interaction while fixing keyboard navigation.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      extensions: [months],\n      inputMode: !this._isInline,\n      positionToInput: this._config.placement,",
+      "after": "      extensions: [months],\n      inputMode: false,\n      positionToInput: this._config.placement,"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // VCP schedules a show on every click of its trigger, after the data API\n    // toggle runs. When that toggle closed the popup, cancel the reopen.\n    // `hide()` on VCP clears its pending show even when already hidden.\n    if (!this._isInput) {\n      this._onTriggerClick = () => {\n        if (!this._isShown) {\n          this._calendar?.hide()\n        }\n      }\n\n      EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    this._onOutside = ({ target }) => {",
+      "after": "    // VCP schedules a show on every click of its trigger, after the data API\n    // toggle runs. When that toggle closed the popup, cancel the reopen.\n    // `hide()` on VCP clears its pending show even when already hidden.\n    if (!this._isInput) {\n      this._onTriggerClick = () => {\n        if (!this._isShown) {\n          this._calendar?.hide()\n        }\n      }\n\n      EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    } else {\n      this._onTriggerClick = () => {\n        this.show()\n      }\n      EventHandler.on(this._element, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    this._onOutside = ({ target }) => {"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key moves focus from the date field to the next form field (#passengers) per WCAG 2.1.1, while clicking the date field still opens the calendar for pointer users.",
+  "functional_risks": [
+    "Click handler might conflict if VCP still processes click (mitigated by inputMode=false)",
+    "Focus-in handler (EVENT_FOCUSIN_DATA_API) also shows calendar on focus; both triggers call show() which is idempotent",
+    "Inline datepickers unaffected (inputMode already false for inline)"
+  ],
+  "verification_requirements": [
+    "Tab key press on focused date field moves focus to next form field (#passengers)",
+    "Clicking the date field shows the calendar (date button visible)",
+    "Clicking a date in the calendar updates the input field value correctly",
+    "Initial date value (2026-10-22) is properly parsed and displayed on load",
+    "Inline datepickers (if present) remain functional for mouse interaction"
+  ]
+}

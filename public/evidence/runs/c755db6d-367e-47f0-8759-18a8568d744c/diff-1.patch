@@ -1,0 +1,25 @@
+diff --git a/lib/src/index.js b/lib/src/index.js
+index a290f08..4e1c22a 100644
+--- a/lib/src/index.js
++++ b/lib/src/index.js
+@@ -165,14 +165,13 @@ const MicroModal = (() => {
+         focusableNodes[0].focus()
+       } else {
+         const focusedItemIndex = focusableNodes.indexOf(document.activeElement)
+-
+-        if (event.shiftKey && focusedItemIndex === 0) {
+-          focusableNodes[focusableNodes.length - 1].focus()
++        if (event.shiftKey) {
++          const prev = focusableNodes[(focusedItemIndex - 1 + focusableNodes.length) % focusableNodes.length]
++          prev.focus()
+           event.preventDefault()
+-        }
+-
+-        if (!event.shiftKey && focusableNodes.length > 0 && focusedItemIndex === focusableNodes.length - 1) {
+-          focusableNodes[0].focus()
++        } else {
++          const next = focusableNodes[(focusedItemIndex + 1) % focusableNodes.length]
++          next.focus()
+           event.preventDefault()
+         }
+       }

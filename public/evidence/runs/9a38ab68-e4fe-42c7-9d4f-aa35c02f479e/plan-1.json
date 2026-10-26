@@ -1,0 +1,21 @@
+{
+  "root_cause": "The tabbable utility incorrectly treats form controls inside a disabled fieldset as focusable because it only checks the element's own disabled property, not the inherited disabled state from a parent fieldset. This causes the focus trap to consider the disabled select as the first tabbable node, and attempting to focus it leaves focus unchanged.",
+  "repair_strategy": "Augment isNodeMatchingSelectorFocusable to also treat elements that match the ':disabled' pseudo-class (which includes those disabled via a parent fieldset) as not focusable.",
+  "edits": [
+    {
+      "path": "src/index.js",
+      "sha256": "8f69e239e7365811abad1130954bb9d4772c0f0e31c477f37f22a3644de78652",
+      "before": "const isNodeMatchingSelectorFocusable = function (options, node) {\n  if (\n    node.disabled ||\n    isHiddenInput(node) ||\n    isHidden(node, options.displayCheck) ||\n    /* For a details element with a summary, the summary element gets the focused  */\n    isDetailsWithSummary(node)\n  ) {\n    return false;\n  }\n  return true;\n};",
+      "after": "const isNodeMatchingSelectorFocusable = function (options, node) {\n  if (\n    node.disabled ||\n    isHiddenInput(node) ||\n    isHidden(node, options.displayCheck) ||\n    /* For a details element with a summary, the summary element gets the focused  */\n    isDetailsWithSummary(node) ||\n    matches.call(node, ':disabled')\n  ) {\n    return false;\n  }\n  return true;\n};"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users will now receive initial focus on the first usable field (#street) when opening the dialog, allowing them to type an address and save it.",
+  "functional_risks": [
+    "Potential side effects if any other code relies on the previous behavior of considering such elements focusable; however, matching ':disabled' aligns with browser's native disabled semantics, so risk is low."
+  ],
+  "verification_requirements": [
+    "After applying the edit, the journey step should pass: focus moves to #street after dialog opens.",
+    "Typing an address and saving updates the status accordingly.",
+    "Escape closes the dialog and returns focus to the opener button."
+  ]
+}

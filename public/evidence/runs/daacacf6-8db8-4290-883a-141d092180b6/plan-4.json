@@ -1,0 +1,26 @@
+{
+  "root_cause": "The drawer opens via showModal() but focus is not programmatically moved into the dialog in the test environment, leaving keyboard users unable to reach the close button or form controls.",
+  "repair_strategy": "In DialogBase._showElement, after showing the dialog, synchronously focus the first focusable element within the dialog, ensuring keyboard focus lands on the close button immediately when the drawer opens.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }",
+      "after": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n\n    // Move focus to the first focusable element for keyboard accessibility\n    const focusable = this._element.querySelector<HTMLElement>(\n      'button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])'\n    )\n    if (focusable) {\n      focusable.focus()\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When the drawer opens via keyboard (Enter on Filters button), focus immediately moves to the close button (#filters-close), allowing sequential Tab navigation through all form controls (#in-stock, #waterproof, #apply) without a pointer.",
+  "functional_risks": [
+    "If a dialog intentionally manages focus differently (e.g., expects focus on a specific element via autofocus), this could override that intention.",
+    "The focusable selector might not match all focusable element types (e.g., contenteditable, area, custom elements with tabindex).",
+    "If the dialog content is dynamically loaded, the first focusable element might not exist yet when the focus attempt runs."
+  ],
+  "verification_requirements": [
+    "After pressing Enter on #filters-open, focus must be on #filters-close.",
+    "Subsequent Tab presses must move focus to #in-stock, then #waterproof, then #apply.",
+    "Escape key must close the drawer and return focus to #filters-open.",
+    "Clicking Show results must update the applied output correctly.",
+    "Ensure the drawer still opens/closes correctly for mouse users.",
+    "Modal dialogs (showModal) should continue to work with browser auto-focus."
+  ]
+}

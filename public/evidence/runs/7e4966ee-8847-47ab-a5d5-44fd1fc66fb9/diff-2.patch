@@ -1,0 +1,14 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..dfd81e4 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -441,6 +441,9 @@ class Datepicker extends BaseComponent {
+ 
+         this._isShown = true
+         this._syncThemeAttribute(this._calendar.context.mainElement)
++        if (this._isInput) {
++          this._element.tabIndex = 0
++        }
+       },
+       onHide: () => {
+         this._isShown = false

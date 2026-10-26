@@ -1,0 +1,24 @@
+{
+  "verdict": "INCONCLUSIVE",
+  "reasons": [
+    "Keyboard candidate: inconclusive · Step 2 · #sort open: expected \"\", observed null",
+    "Task evidence is missing or contradicts the verdict",
+    "Independent functional candidate: inconclusive · #applied: expected \"waterproof\", observed \"All shoes\"",
+    "Replay has runtime/console errors",
+    "Functional replay has runtime/console errors",
+    "Regression guard \"Escape closes the drawer and returns focus to Filters\": inconclusive · Browser runtime/console/network errors require review",
+    "Regression guard \"Escape closes the drawer and returns focus to Filters\": runtime error · Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ],
+  "uncertain": [
+    "Replay evidence incomplete",
+    "Network failures require review"
+  ],
+  "newRules": [],
+  "gates": {
+    "keyboard": "INCONCLUSIVE",
+    "independentFunctional": "INCONCLUSIVE",
+    "functionalOutputUnchanged": true,
+    "regressionGuards": "0/1"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

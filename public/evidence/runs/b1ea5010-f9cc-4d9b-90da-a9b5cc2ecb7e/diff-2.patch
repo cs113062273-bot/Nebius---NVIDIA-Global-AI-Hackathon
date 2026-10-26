@@ -1,0 +1,34 @@
+diff --git a/src/index.js b/src/index.js
+index 713f73c..aabdb6c 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -171,13 +171,28 @@ const isNodeMatchingSelectorFocusable = function (options, node) {
+     isHiddenInput(node) ||
+     isHidden(node, options.displayCheck) ||
+     /* For a details element with a summary, the summary element gets the focused  */
+-    isDetailsWithSummary(node)
++    isDetailsWithSummary(node) ||
++    isInDisabledFieldset(node)
+   ) {
+     return false;
+   }
+   return true;
+ };
+ 
++const isInDisabledFieldset = function (node) {
++  // Form controls inside a disabled fieldset are not focusable,
++  // except those in the fieldset's first legend.
++  const fieldset = node.closest('fieldset[disabled]');
++  if (!fieldset) {
++    return false;
++  }
++  const legend = fieldset.querySelector('legend');
++  if (legend && legend.contains(node)) {
++    return false;
++  }
++  return true;
++};
++
+ const isNodeMatchingSelectorTabbable = function (options, node) {
+   if (
+     !isNodeMatchingSelectorFocusable(options, node) ||

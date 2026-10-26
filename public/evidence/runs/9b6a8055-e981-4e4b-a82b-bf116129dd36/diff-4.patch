@@ -1,0 +1,22 @@
+diff --git a/awesomplete.js b/awesomplete.js
+index 861abb9..47fe41a 100644
+--- a/awesomplete.js
++++ b/awesomplete.js
+@@ -90,6 +90,9 @@ var _ = function (input, o) {
+ 						evt.preventDefault();
+ 						me.select(undefined, undefined, evt);
+ 					}
++					else if (c === 9) { // Tab - close list and allow default tab navigation
++						me.close({ reason: "tab" });
++					}
+ 					else if (c === 27) { // Esc
+ 						me.close({ reason: "esc" });
+ 					}
+@@ -397,7 +400,6 @@ _.ITEM = function (text, input, item_id) {
+ 		innerHTML: html,
+ 		"role": "option",
+ 		"aria-selected": "false",
+-		"tabindex": '0', // for the Talkback screen reader
+ 		"id": "awesomplete_list_" + this.count + "_item_" + item_id
+ 	});
+ };

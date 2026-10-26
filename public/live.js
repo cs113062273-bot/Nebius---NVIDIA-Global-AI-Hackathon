@@ -64,12 +64,14 @@ function renderOpen(){
     if(r){const b=el('button',{class:'primary',type:'button',text:'Watch the repair'});b.onclick=()=>void showRecorded(c);actions.append(b);}
     if(r?.passedOn)actions.append(el('a',{class:'secondary',href:`./openbugs/${c.id}/nemotron.patch`,download:`${c.id}.patch`,text:'Download the patch'}));
     if(!api&&!LIVE_URL)actions.append(runLive(c.id));
-    box.append(el('article',{class:'case open'},
+    box.append(el('article',{class:'case open',id:`open-${c.id}`},
       el('p',{class:'case-lib'},el('span',{text:c.library}),c.category?el('span',{class:'tag',text:c.category}):null),
       el('h3',{text:c.title}),el('p',{class:'case-sum',text:c.summary}),
       el('p',{class:'case-upstream',text:c.status}),
       ...(c.expectedBehaviour?[el('p',{class:'case-note',text:c.expectedBehaviour})]:[]),
       ...(c.addedAfterReview?[el('p',{class:'case-note added',text:c.addedAfterReview})]:[]),
+      // A case that a stricter one replaced after review says so, so the easier task is not read as the last word.
+      ...open.filter(o=>o.derivedFrom===c.id).map(o=>el('p',{class:'case-note added'},'Superseded after review by a stricter task: ',el('a',{href:`#open-${o.id}`,text:o.title}),'.')),
       ...(c.replays?.length?[el('ul',{class:'case-replays'},...c.replays.map(x=>el('li',{},el('a',{href:`./project.html?run=${x.run}#project-result`,text:`Replay of run ${x.fromRun.slice(0,8)} attempt ${x.attempt}`}),`: ${x.verdict==='VERIFIED_PASS'?'passes the stricter task':'rejected by the stricter task'} (browser only, no inference)`)))]:[]),
       el('p',{class:'case-src'},el('a',{href:c.issue,text:c.issue.includes('/issues?q=')?'Not reported yet · issues searched ↗':/Found by Tabstitch and reported/.test(c.status||'')?`Reported upstream by Tabstitch · #${c.issue.split('/').pop()} ↗`:'Open issue ↗'}),...(c.pendingHumanFix?[' · ',el('a',{href:c.pendingHumanFix,text:'Pending human fix ↗'}),' · ',el('a',{href:`./openbugs/${c.id}/pending-human.patch`,text:'its diff'})]:[])),
       ...(c.pendingHumanCheck?[el('p',{class:'case-note',text:c.pendingHumanCheck.keyboard==='VERIFIED_PASS'?'The pending human fix also passes this frozen task, so the task is fair. It was fetched only for comparison and never sent to the model.':c.pendingHumanCheck.note})]:[]),

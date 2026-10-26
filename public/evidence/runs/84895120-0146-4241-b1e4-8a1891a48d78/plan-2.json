@@ -1,0 +1,24 @@
+{
+  "root_cause": "The header component's init() method unconditionally calls syncState() with the menu's --open class state. At desktop widths, the navigation is visually visible (CSS displays it) but lacks the --open class (only used for mobile), so syncState(false) sets aria-hidden=\"true\" on the navigation, hiding it from assistive technology despite being visible on screen.",
+  "repair_strategy": "Modify Header.prototype.init to detect mobile mode by checking if the menu button is visible (offsetWidth/Height > 0). In desktop mode (button hidden), explicitly set aria-hidden=\"false\" on the navigation and skip click handler registration. In mobile mode, retain existing toggle behavior.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.init = function () {\n  if (!this.$module || !this.$menuButton || !this.$menu) {\n    return\n  }\n\n  this.syncState(this.$menu.classList.contains('govuk-header__navigation--open'))\n  this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))\n}",
+      "after": "Header.prototype.init = function () {\n  if (!this.$module || !this.$menuButton || !this.$menu) {\n    return\n  }\n\n  // Check if menu button is visible (mobile mode)\n  var isMobile = this.$menuButton.offsetWidth > 0 || this.$menuButton.offsetHeight > 0\n\n  if (!isMobile) {\n    // Desktop: ensure menu is accessible\n    this.$menu.setAttribute('aria-hidden', 'false')\n    return\n  }\n\n  this.syncState(this.$menu.classList.contains('govuk-header__navigation--open'))\n  this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links in the header will be exposed as named links (role=\"link\" with accessible names \"Apply\", \"Renew a licence\", \"Fishing rules\") to assistive technology on desktop-width pages, allowing keyboard and screen reader users to reach and activate them.",
+  "functional_risks": [
+    "Mobile menu toggle behavior unchanged; only desktop initialization path altered.",
+    "Relies on offsetWidth/offsetHeight at init time; script runs at end of body so layout is ready.",
+    "No visual changes; only ARIA attribute correction."
+  ],
+  "verification_requirements": [
+    "At desktop width: navigation links have role=\"link\" and accessible names matching visible text.",
+    "At desktop width: navigation element has aria-hidden=\"false\".",
+    "At mobile width: menu button click toggles aria-hidden and aria-expanded correctly.",
+    "Keyboard navigation reaches all three header links in order."
+  ]
+}

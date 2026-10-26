@@ -1,0 +1,25 @@
+{
+  "root_cause": "The Tab key press on the departure date input is being prevented by a listener, likely added by Vanilla Calendar Pro when inputMode is true. This prevents focus from moving to the next field.",
+  "repair_strategy": "Set the inputMode option to false in the VCP calendar options to prevent VCP from adding a keydown listener that blocks Tab navigation, while preserving datepicker functionality.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      extensions: [months],\n      inputMode: !this._isInline,\n      positionToInput: this._config.placement,",
+      "after": "      extensions: [months],\n      inputMode: false,\n      positionToInput: this._config.placement,"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key will move focus from the departure date field to the passengers field as expected in a standard form.",
+  "functional_risks": [
+    "Vanilla Calendar Pro may alter keyboard behavior inside the calendar popup when inputMode is false",
+    "Datepicker may not respond to certain keyboard inputs as expected",
+    "Inline datepickers may be unaffected since inputMode was already false for inline mode"
+  ],
+  "verification_requirements": [
+    "Pressing Tab on the departure date field moves focus to the passengers field",
+    "Clicking the departure date field still opens the datepicker calendar",
+    "Selecting a date in the calendar updates the input and closes the calendar",
+    "Pressing Escape closes the calendar and returns focus to the departure date field",
+    "Tab navigation works correctly when the calendar is closed"
+  ]
+}

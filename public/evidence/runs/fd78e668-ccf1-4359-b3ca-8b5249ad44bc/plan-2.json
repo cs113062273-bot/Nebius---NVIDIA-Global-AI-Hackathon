@@ -1,0 +1,47 @@
+{
+  "root_cause": "The datepicker remains shown when tabbing out of the input, causing the Vanilla Calendar Pro to prevent the Tab key press to keep focus trapped within the calendar. The previous focusout listener hides the datepicker after focus leaves, but the keydown event is prevented before focus moves.",
+  "repair_strategy": "Add a keydown listener on the input (capture phase) that hides the datepicker when Tab is pressed while the calendar is shown, allowing the default tab behavior to proceed. Also retain the focusout listener to hide the datepicker when focus leaves via other means.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onFocusout: ((event: FocusEvent) => void) | null\n  protected declare _onKeydown: ((event: KeyboardEvent) => void) | null"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n    super(element, config)\n\n    this._calendar = null\n    this._isShown = false\n\n    this._initCalendar()\n  }",
+      "after": "  constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n    super(element, config)\n\n    this._calendar = null\n    this._isShown = false\n    this._onFocusout = null\n    this._onKeydown = null\n\n    this._initCalendar()\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    this._setupDismiss()\n\n    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()\n  }",
+      "after": "    this._setupDismiss()\n\n    // Hide datepicker when losing focus unless focus is moving to the calendar\n    this._onFocusout = (event: FocusEvent) => {\n      if (!this._isShown) {\n        return\n      }\n      const calendarMainElement = this._calendar?.context?.mainElement\n      if (calendarMainElement && calendarMainElement.contains(event.relatedTarget as Node)) {\n        return\n      }\n      this.hide()\n    }\n\n    EventHandler.on(this._element, 'focusout', this._onFocusout)\n\n    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)\n    EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)\n  }",
+      "after": "    EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)\n    EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)\n\n    // Hide datepicker on Tab key press from the input to allow focus to move to the next field\n    this._onKeydown = (event: KeyboardEvent) => {\n      if (this._isShown && event.key === 'Tab' && event.target === this._element) {\n        this.hide()\n      }\n    }\n    this._element.addEventListener('keydown', this._onKeydown, { capture: true })\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n\n    this._calendar = null\n    super.dispose()\n  }",
+      "after": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._onFocusout) {\n      EventHandler.off(this._element, 'focusout', this._onFocusout)\n      this._onFocusout = null\n    }\n\n    if (this._onKeydown) {\n      this._element.removeEventListener('keydown', this._onKeydown, { capture: true })\n      this._onKeydown = null\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n\n    this._calendar = null\n    super.dispose()\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key will now move focus from the departure date field to the passengers field as expected, while the datepicker is properly dismissed.",
+  "functional_risks": [
+    "Hiding the datepicker on keydown might interfere with keyboard navigation within the calendar if the user tabs from within the calendar? But the listener only triggers when the target is the input, so calendar internal tabbing is unaffected.",
+    "The focusout listener might hide the datepicker when clicking on the calendar? It checks relatedTarget to avoid that."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the departure date field moves focus to the passengers field.",
+    "Verify that the datepicker is hidden when focus leaves the input unless moving to the calendar.",
+    "Verify that clicking on a date in the calendar does not hide the calendar prematurely.",
+    "Verify that the datepicker still functions correctly for mouse users."
+  ]
+}

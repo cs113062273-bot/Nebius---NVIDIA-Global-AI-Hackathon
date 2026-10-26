@@ -1,0 +1,22 @@
+{
+  "root_cause": "The modal's click listener treats any click inside the modal as a close action because the overlay element, which is an ancestor of all inner content, carries the close‑trigger attribute.",
+  "repair_strategy": "Modify the click handler to close the modal only when the event target itself has the close‑trigger attribute, ensuring that only clicks on the overlay or explicit close buttons close the dialog.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "    onClick (event) {\n      if (event.target.closest(`[${ this.config.closeTrigger }]`)) {\n        event.preventDefault()\n        event.stopPropagation()\n        this.closeModal(event)\n      }\n    }",
+      "after": "    onClick (event) {\n      if (event.target.hasAttribute(`${ this.config.closeTrigger }`)) {\n        event.preventDefault()\n        event.stopPropagation()\n        this.closeModal(event)\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Users can interact with controls inside the modal (e.g., checkboxes) without inadvertently closing the dialog, preserving dialog state and focus as required.",
+  "functional_risks": [
+    "If any inner element incorrectly carries the close‑trigger attribute, it will no longer close the modal (but such elements should not exist).",
+    "The close button and overlay retain their closing behavior."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Enter on the open button opens the modal and moves focus to the first focusable element inside.",
+    "Verify that pressing Space on a checkbox toggles its state without closing the modal.",
+    "Verify that clicking the overlay or the close button closes the modal and restores focus to the trigger button."
+  ]
+}

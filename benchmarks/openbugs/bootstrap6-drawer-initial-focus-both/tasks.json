@@ -1,0 +1,250 @@
+{
+ "journey": {
+  "version": 1,
+  "id": "bs6-drawer-focus-moves-in",
+  "title": "Open and close the Sort drawer, then apply a filter from the drawer with an autofocus field, all with the keyboard",
+  "goal": "Opening the drawer moves focus into it, so the user can tick a filter and show results without a pointer",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+   {
+    "title": "Reach Sort",
+    "action": {
+     "kind": "seek",
+     "selector": "#sort-open"
+    }
+   },
+   {
+    "title": "Open the Sort drawer",
+    "action": {
+     "kind": "press",
+     "key": "Enter"
+    },
+    "assertions": [
+     {
+      "kind": "attribute",
+      "selector": "#sort",
+      "name": "open",
+      "value": ""
+     },
+     {
+      "kind": "focus",
+      "selector": "#sort-close"
+     }
+    ]
+   },
+   {
+    "title": "Close it with Escape",
+    "action": {
+     "kind": "press",
+     "key": "Escape"
+    },
+    "assertions": [
+     {
+      "kind": "attribute",
+      "selector": "#sort",
+      "name": "open",
+      "value": null
+     },
+     {
+      "kind": "focus",
+      "selector": "#sort-open"
+     }
+    ]
+   },
+   {
+    "title": "Reach Filters",
+    "action": {
+     "kind": "seek",
+     "selector": "#filters-open"
+    }
+   },
+   {
+    "title": "Open the drawer",
+    "action": {
+     "kind": "press",
+     "key": "Enter"
+    },
+    "assertions": [
+     {
+      "kind": "attribute",
+      "selector": "#filters",
+      "name": "open",
+      "value": ""
+     },
+     {
+      "kind": "focus",
+      "selector": "#filters-search"
+     }
+    ]
+   },
+   {
+    "title": "Move to In stock",
+    "action": {
+     "kind": "press",
+     "key": "Tab"
+    },
+    "assertions": [
+     {
+      "kind": "focus",
+      "selector": "#in-stock"
+     }
+    ]
+   },
+   {
+    "title": "Tick In stock",
+    "action": {
+     "kind": "press",
+     "key": "Space"
+    }
+   },
+   {
+    "title": "Move to Waterproof",
+    "action": {
+     "kind": "press",
+     "key": "Tab"
+    }
+   },
+   {
+    "title": "Move to Show results",
+    "action": {
+     "kind": "press",
+     "key": "Tab"
+    },
+    "assertions": [
+     {
+      "kind": "focus",
+      "selector": "#apply"
+     }
+    ]
+   },
+   {
+    "title": "Show results",
+    "action": {
+     "kind": "press",
+     "key": "Enter"
+    }
+   }
+  ],
+  "success": [
+   {
+    "kind": "text",
+    "selector": "#applied",
+    "value": "in"
+   }
+  ],
+  "functional": [
+   {
+    "kind": "form-data",
+    "selector": "#filter-form",
+    "name": "stock",
+    "value": [
+     "in"
+    ]
+   }
+  ],
+  "forbidden": []
+ },
+ "functionalJourney": {
+  "version": 1,
+  "id": "bs6-drawer-pointer-filter",
+  "title": "Apply a filter with the pointer",
+  "goal": "Clicking Filters, ticking Waterproof and clicking Show results applies the filter",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+   {
+    "title": "Open the drawer",
+    "action": {
+     "kind": "click",
+     "selector": "#filters-open"
+    }
+   },
+   {
+    "title": "Tick Waterproof",
+    "action": {
+     "kind": "click",
+     "selector": "#waterproof"
+    }
+   },
+   {
+    "title": "Show results",
+    "action": {
+     "kind": "click",
+     "selector": "#apply"
+    }
+   }
+  ],
+  "success": [
+   {
+    "kind": "text",
+    "selector": "#applied",
+    "value": "waterproof"
+   }
+  ],
+  "functional": [
+   {
+    "kind": "attribute",
+    "selector": "#filters",
+    "name": "open",
+    "value": null
+   }
+  ],
+  "forbidden": []
+ },
+ "guards": [
+  {
+   "version": 1,
+   "id": "bs6-drawer-escape-returns-focus",
+   "title": "Escape closes the drawer and returns focus to Filters",
+   "goal": "After opening the drawer with the pointer, Escape closes it and focus is back on the Filters button",
+   "source": "authored",
+   "profile": "pointer",
+   "path": "/",
+   "steps": [
+    {
+     "title": "Open the drawer",
+     "action": {
+      "kind": "click",
+      "selector": "#filters-open"
+     }
+    },
+    {
+     "title": "Press Escape",
+     "action": {
+      "kind": "press",
+      "key": "Escape"
+     },
+     "assertions": [
+      {
+       "kind": "attribute",
+       "selector": "#filters",
+       "name": "open",
+       "value": null
+      },
+      {
+       "kind": "focus",
+       "selector": "#filters-open"
+      }
+     ]
+    }
+   ],
+   "success": [
+    {
+     "kind": "text",
+     "selector": "#applied",
+     "value": "All shoes"
+    }
+   ],
+   "functional": [
+    {
+     "kind": "focus",
+     "selector": "#filters-open"
+    }
+   ],
+   "forbidden": []
+  }
+ ]
+}

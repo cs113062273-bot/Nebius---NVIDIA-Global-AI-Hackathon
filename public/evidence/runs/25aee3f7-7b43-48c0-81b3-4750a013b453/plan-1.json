@@ -1,0 +1,24 @@
+{
+  "root_cause": "Escape key hides the dropdown but does not return focus to the toggle button, leaving focus trapped in the menu.",
+  "repair_strategy": "Modify the _completeHide method to focus the toggle element after hiding the menu, ensuring focus returns to the button that opened the dropdown.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "fc69a61b69ae1fa2c2bb923fdc393dd2742925e8af996376df5f98e38f8d810e",
+      "before": "_completeHide(relatedTarget) {\n    const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE, relatedTarget)\n    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    // If this is a touch-enabled device we remove the extra\n    // empty mouseover listeners we added for iOS support\n    if ('ontouchstart' in document.documentElement) {\n      for (const elem of [].concat(...document.body.children)) {\n        EventHandler.off(elem, 'mouseover', noop)\n      }\n    }\n\n    if (this._popper) {\n      this._popper.destroy()\n    }\n\n    this._menu.classList.remove(CLASS_NAME_SHOW)\n    this._element.classList.remove(CLASS_NAME_SHOW)\n    this._element.setAttribute('aria-expanded', 'false')\n    Manipulator.removeDataAttribute(this._menu, 'popper')\n    EventHandler.trigger(this._element, EVENT_HIDDEN, relatedTarget)\n  }",
+      "after": "_completeHide(relatedTarget) {\n    const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE, relatedTarget)\n    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    // If this is a touch-enabled device we remove the extra\n    // empty mouseover listeners we added for iOS support\n    if ('ontouchstart' in document.documentElement) {\n      for (const elem of [].concat(...document.body.children)) {\n        EventHandler.off(elem, 'mouseover', noop)\n      }\n    }\n\n    if (this._popper) {\n      this._popper.destroy()\n    }\n\n    this._menu.classList.remove(CLASS_NAME_SHOW)\n    this._element.classList.remove(CLASS_NAME_SHOW)\n    this._element.setAttribute('aria-expanded', 'false')\n    this._element.focus()\n    Manipulator.removeDataAttribute(this._menu, 'popper')\n    EventHandler.trigger(this._element, EVENT_HIDDEN, relatedTarget)\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape will close the menu and move focus back to the actions-toggle button, restoring expected keyboard focus order.",
+  "functional_risks": [
+    "Focus may be shifted to the toggle when the menu is hidden via click outside or API calls, which could be unexpected for some use cases.",
+    "If the toggle is disabled or detached, focusing could throw an error; however the hide method already checks isDisabled."
+  ],
+  "verification_requirements": [
+    "Escape key closes menu (aria-expanded false) and focus returns to #actions-toggle.",
+    "ArrowDown opens menu and focuses first menu item.",
+    "Clicking a menu item updates last-action and does not break menu functionality.",
+    "Keyboard navigation within menu (ArrowUp/ArrowDown, Enter) continues to work.",
+    "Menu closes when clicking outside or toggling button again."
+  ]
+}

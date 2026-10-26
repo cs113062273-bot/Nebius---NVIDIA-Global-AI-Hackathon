@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Tabs component incorrectly maps the Down and Up arrow keys to activate the next and previous tabs, respectively, in a horizontal tab list where only left and right arrows should change the selected tab.",
+  "repair_strategy": "Modify the onTabKeydown method to only respond to left and right arrows (and their equivalents) for activation, and to ignore (but prevent default for) up and down arrows.",
+  "edits": [
+    {
+      "path": "packages/govuk-frontend/src/govuk/components/tabs/tabs.js",
+      "sha256": "efec2dbc261636f1987a68ade80173d751d99359fe13cc0106084220e96e3698",
+      "before": "  /**\n * Handle tab keydown event\n *\n * - Press right/down arrow for next tab\n * - Press left/up arrow for previous tab\n *\n * @private\n * @param {KeyboardEvent} event - Keydown event\n */\n  onTabKeydown(event) {\n    switch (event.key) {\n      // 'Left', 'Right', 'Up' and 'Down' required for Edge 16 support.\n      case 'ArrowLeft':\n      case 'ArrowUp':\n      case 'Left':\n      case 'Up':\n        this.activatePreviousTab()\n        event.preventDefault()\n        break\n      case 'ArrowRight':\n      case 'ArrowDown':\n      case 'Right':\n      case 'Down':\n        this.activateNextTab()\n        event.preventDefault()\n        break\n    }\n  }",
+      "after": "  /**\n * Handle tab keydown event\n *\n * - Press right arrow for next tab\n * - Press left arrow for previous tab\n * - Up and down arrows do nothing (prevent default to avoid scrolling)\n *\n * @private\n * @param {KeyboardEvent} event - Keydown event\n */\n  onTabKeydown(event) {\n    switch (event.key) {\n      case 'ArrowLeft':\n      case 'Left':\n        this.activatePreviousTab()\n        event.preventDefault()\n        break\n      case 'ArrowRight':\n      case 'Right':\n        this.activateNextTab()\n        event.preventDefault()\n        break\n      case 'ArrowUp':\n      case 'ArrowDown':\n      case 'Up':\n      case 'Down':\n        event.preventDefault()\n        break\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing the down arrow on a tab will no longer change the selected tab, allowing users to press down arrow without losing context, which is especially important for screen reader users who might use the down arrow to read the tab panel.",
+  "functional_risks": [
+    "Changing the key handling might affect users who expect the up and down arrows to move between tabs in a vertical tab list. However, the current implementation is for a horizontal tab list (as seen in the CSS and HTML) and the design pattern for horizontal tabs does not use up/down for navigation. This change aligns with the ARIA Authoring Practices Guide for tabs."
+  ],
+  "verification_requirements": [
+    "Verify that pressing the left arrow moves to the previous tab.",
+    "Verify that pressing the right arrow moves to the next tab.",
+    "Verify that pressing the down arrow does not change the selected tab and keeps focus on the current tab.",
+    "Verify that pressing the up arrow does not change the selected tab and keeps focus on the current tab.",
+    "Verify that the tab panels are shown/hidden appropriately when tabs are changed via left/right arrows.",
+    "Verify that the arrow key handling does not cause unexpected scrolling when the up/down arrows are pressed."
+  ]
+}

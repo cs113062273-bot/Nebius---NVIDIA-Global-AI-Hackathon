@@ -1,0 +1,23 @@
+{
+  "root_cause": "The Dialog class's static Default property (keyboard: true) overrides the instance-specific keyboard: false configuration during config merging, causing Escape key to be treated as enabled and dismiss the dialog. Additionally, the config merging occurs in the base constructor before the Dialog constructor can correct the config, so the dialog listeners are registered with the wrong keyboard setting.",
+  "repair_strategy": "Override the _getConfig method in the Dialog class to enforce keyboard: false when the caller explicitly passes keyboard: false, ensuring the merged config reflects the intended behavior before dialog listeners are initialized.",
+  "edits": [
+    {
+      "path": "js/src/dialog.ts",
+      "sha256": "16989db59c2e78b51585f6417b789941649412c96b88897df4069d4e3ae4a39b",
+      "before": "  // eslint-disable-next-line no-useless-constructor -- narrows the config param type\n  constructor(element?: string | Element | null, config?: Partial<DialogConfig> | null) {\n    super(element, config)\n  }\n\n  // Getters\n  static override get Default(): DialogConfig {\n    return Default\n  }",
+      "after": "  // eslint-disable-next-line no-useless-constructor -- narrows the config param type\n  constructor(element?: string | Element | null, config?: Partial<DialogConfig> | null) {\n    super(element, config)\n  }\n\n  protected override _getConfig(config?: Partial<DialogConfig> | null): DialogConfig {\n    const merged = super._getConfig(config) as DialogConfig\n    if (config?.keyboard === false) {\n      merged.keyboard = false\n    }\n    return merged\n  }\n\n  // Getters\n  static override get Default(): DialogConfig {\n    return Default\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will no longer close the dialog when opened with keyboard: false, allowing users to repeatedly press Escape to retain focus in the OTP field and complete the transfer.",
+  "functional_risks": [
+    "May affect other dialogs that rely on the default keyboard behavior if they inadvertently receive keyboard: false; but since the fix only applies when config explicitly sets keyboard: false, risk is low.",
+    "Potential risk if other code expects the Default to be respected and passes undefined; they will now get keyboard: false unintentionally. Mitigation: ensure callers intentionally pass keyboard: false."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape multiple times does not close the dialog.",
+    "Verify that the dialog can still be dismissed via the Cancel button or by submitting a valid OTP.",
+    "Verify that focus remains on the OTP input after Escape presses.",
+    "Verify that the dialog still responds to Escape when keyboard: true (default) if needed."
+  ]
+}

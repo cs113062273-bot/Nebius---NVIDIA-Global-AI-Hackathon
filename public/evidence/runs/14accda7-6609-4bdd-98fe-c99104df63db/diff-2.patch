@@ -1,0 +1,27 @@
+diff --git a/src/govuk/components/radios/radios.js b/src/govuk/components/radios/radios.js
+index 659c970..1561744 100644
+--- a/src/govuk/components/radios/radios.js
++++ b/src/govuk/components/radios/radios.js
+@@ -34,6 +34,22 @@ Radios.prototype.init = function () {
+ 
+   // Handle events
+   $module.addEventListener('click', this.handleClick.bind(this))
++  // Also handle change events from radios with the same name (even in other modules)
++  var radioNames = []
++  nodeListForEach($inputs, function ($input) {
++    var name = $input.getAttribute('name')
++    if (name && radioNames.indexOf(name) === -1) {
++      radioNames.push(name)
++    }
++  }.bind(this))
++  if (radioNames.length) {
++    document.addEventListener('change', function (event) {
++      var target = event.target
++      if (target && target.tagName === 'INPUT' && target.type === 'radio' && radioNames.indexOf(target.getAttribute('name')) !== -1) {
++        this.handleClick(event)
++      }
++    }.bind(this))
++  }
+ }
+ 
+ Radios.prototype.setAttributes = function ($input) {

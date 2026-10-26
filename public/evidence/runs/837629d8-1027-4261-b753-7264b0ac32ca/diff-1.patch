@@ -1,0 +1,27 @@
+diff --git a/js/src/offcanvas.js b/js/src/offcanvas.js
+index 2b6335b..d352b03 100644
+--- a/js/src/offcanvas.js
++++ b/js/src/offcanvas.js
+@@ -115,13 +115,19 @@ class Offcanvas extends BaseComponent {
+     }
+ 
+     this._element.removeAttribute('aria-hidden')
+-    this._element.setAttribute('aria-modal', true)
+-    this._element.setAttribute('role', 'dialog')
++    if (this._config.backdrop) {
++      this._element.setAttribute('aria-modal', true)
++      this._element.setAttribute('role', 'dialog')
++    }
+     this._element.classList.add(CLASS_NAME_SHOW)
+ 
+     const completeCallBack = () => {
+       EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })
+-      this._enforceFocusOnElement(this._element)
++      if (this._config.backdrop) {
++        this._enforceFocusOnElement(this._element)
++      } else {
++        this._element.focus()
++      }
+     }
+ 
+     const transitionDuration = getTransitionDurationFromElement(this._element)

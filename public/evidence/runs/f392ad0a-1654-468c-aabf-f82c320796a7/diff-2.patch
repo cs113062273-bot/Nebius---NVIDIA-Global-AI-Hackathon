@@ -1,0 +1,84 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..f6c5c32 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -9,6 +9,7 @@ import BaseComponent from './base-component.js'
+ import Data from './dom/data.js'
+ import EventHandler, { type BootstrapEvent } from './dom/event-handler.js'
+ import SelectorEngine from './dom/selector-engine.js'
++import { isDisabled, isVisible } from './util/index.js'
+ 
+ /**
+  * Constants
+@@ -42,12 +43,14 @@ class DialogBase extends BaseComponent {
+   protected declare _isTransitioning: boolean
+   protected declare _openedAsModal: boolean
+   protected declare _cancelHandler: (event: BootstrapEvent) => void
++  protected declare _lastFocusedTrigger: HTMLElement | null
+ 
+   constructor(element?: string | Element | null, config?: Partial<DialogBaseConfig> | null) {
+     super(element, config)
+ 
+     this._isTransitioning = false
+     this._openedAsModal = false
++    this._lastFocusedTrigger = null
+     this._addDialogListeners()
+   }
+ 
+@@ -66,7 +69,7 @@ class DialogBase extends BaseComponent {
+     if (!this._canShow(relatedTarget)) {
+       return
+     }
+-
++    this._lastFocusedTrigger = relatedTarget ?? null
+     await this._show(relatedTarget)
+   }
+ 
+@@ -180,6 +183,13 @@ class DialogBase extends BaseComponent {
+   }
+ 
+   protected _onAfterHide(): void {
++    if (this._lastFocusedTrigger) {
++      const trigger = this._lastFocusedTrigger
++      this._lastFocusedTrigger = null
++      if (isVisible(trigger) && !isDisabled(trigger)) {
++        trigger.focus({ preventScroll: true })
++      }
++    }
+     // No-op by default — Dialog overrides to remove nonmodal class
+   }
+ 
+@@ -217,6 +227,33 @@ class DialogBase extends BaseComponent {
+       // shift (and the ::backdrop covers the gutter instead of leaving a strip).
+       document.documentElement.classList.add(CLASS_NAME_OPEN)
+     }
++
++    // Move focus to the first focusable element inside the dialog
++    const autofocus = this._element.querySelector('[autofocus]')
++    if (autofocus) {
++      autofocus.focus({ preventScroll: true })
++    } else {
++      const focusableSelectors = [
++        'a[href]',
++        'area[href]',
++        'input:not([disabled]):not([type="hidden"])',
++        'select:not([disabled])',
++        'textarea:not([disabled])',
++        'button:not([disabled])',
++        'iframe',
++        'object',
++        'embed',
++        '[tabindex]:not([tabindex="-1"])',
++        '[contenteditable]'
++      ].join(',')
++      const focusable = this._element.querySelectorAll(focusableSelectors)
++      for (const el of focusable) {
++        if (isVisible(el) && !isDisabled(el as HTMLElement)) {
++          (el as HTMLElement).focus({ preventScroll: true })
++          break
++        }
++      }
++    }
+   }
+ 
+   protected _hideElement(): void {

@@ -1,0 +1,22 @@
+{
+  "root_cause": "The suggestion list items have tabindex='0', placing them in the tab order. When the list is open, pressing Tab moves focus into the first list item instead of skipping to the next form field.",
+  "repair_strategy": "Change the tabindex of list items from '0' to '-1' to remove them from the tab order while preserving ARIA roles and script-driven selection via arrow keys.",
+  "edits": [
+    {
+      "path": "awesomplete.js",
+      "sha256": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6",
+      "before": "    return $.create(\"li\", {\n        innerHTML: html,\n        \"role\": \"option\",\n        \"aria-selected\": \"false\",\n        \"tabindex\": '0', // for the Talkback screen reader\n        \"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n    });",
+      "after": "    return $.create(\"li\", {\n        innerHTML: html,\n        \"role\": \"option\",\n        \"aria-selected\": \"false\",\n        \"tabindex\": '-1', // for the Talkback screen reader\n        \"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n    });"
+    }
+  ],
+  "expected_accessibility_effect": "With the list open, a Tab press will move focus to the next focusable element (the dietary input), meeting WCAG 2.1.1 Keyboard and 2.4.3 Focus Order requirements.",
+  "functional_risks": [
+    "Talkback users who previously relied on tabbing into list items may need to use arrow keys; however arrow-key navigation and aria-activedescendant remain functional."
+  ],
+  "verification_requirements": [
+    "Verify that after typing 'Ber' in the city field, pressing Tab moves focus to the dietary input field.",
+    "Confirm that ArrowDown/ArrowUp still navigate suggestions and that Enter selects a highlighted suggestion.",
+    "Ensure the suggestion list closes when focus leaves the input (via Tab or blur).",
+    "Check that screen readers announce the currently selected suggestion via aria-activedescendant during arrow-key navigation."
+  ]
+}

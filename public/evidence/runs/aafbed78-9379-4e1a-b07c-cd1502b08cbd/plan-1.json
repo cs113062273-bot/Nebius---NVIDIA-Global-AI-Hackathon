@@ -1,0 +1,25 @@
+{
+  "root_cause": "The drawer does not move focus to its content when opened, leaving focus on the triggering button or body, preventing keyboard users from interacting with filters.",
+  "repair_strategy": "Override the show method in the Drawer class to focus the first focusable element (respecting autofocus) after the dialog is shown.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  // Public\n  override dispose(): void {\n    if (this._swipeHelper) {\n      this._swipeHelper.dispose()\n    }\n\n    if (this._resizeObserver) {\n      this._resizeObserver.disconnect()\n    }\n\n    if (this._resizeFrame !== null) {\n      cancelAnimationFrame(this._resizeFrame)\n    }\n\n    super.dispose()\n  }\n\n  // Protected — hook overrides",
+      "after": "  // Public\n  override dispose(): void {\n    if (this._swipeHelper) {\n      this._swipeHelper.dispose()\n    }\n\n    if (this._resizeObserver) {\n      this._resizeObserver.disconnect()\n    }\n\n    if (this._resizeFrame !== null) {\n      cancelAnimationFrame(this._resizeFrame)\n    }\n\n    super.dispose()\n  }\n\n  // Ensure focus moves to the first focusable element when shown\n  override show(relatedTarget?: HTMLElement): Promise<void> {\n    await super.show(relatedTarget)\n    const focusable = SelectorEngine.findOne(\n      '[autofocus], button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])',\n      this._element\n    ) ?? this._element\n    focusable.focus()\n  }\n\n  // Protected — hook overrides"
+    }
+  ],
+  "expected_accessibility_effect": "Focus will be moved into the drawer when opened, allowing keyboard users to tab to the close button, checkboxes, and apply button without needing a pointer.",
+  "functional_risks": [
+    "If the drawer already defines an autofocus attribute, our logic will respect it by selecting that element first.",
+    "If no focusable elements exist inside the drawer, focus will be set on the drawer itself, which is harmless.",
+    "Potential minor overhead from the selector lookup, but negligible."
+  ],
+  "verification_requirements": [
+    "After opening the drawer with Enter, focus should be on the first focusable element (e.g., #filters-close).",
+    "Subsequent Tab presses should move focus to the In stock checkbox, then Waterproof checkbox, then Apply button.",
+    "Escape key should close the drawer and return focus to the Filters toggle button.",
+    "Mouse interactions should continue to work as before.",
+    "The drawer should still be closable via the close button and backdrop click."
+  ]
+}

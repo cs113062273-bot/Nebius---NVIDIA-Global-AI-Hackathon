@@ -1,0 +1,30 @@
+diff --git a/js/src/modal.js b/js/src/modal.js
+index 0e8346d..8f35109 100644
+--- a/js/src/modal.js
++++ b/js/src/modal.js
+@@ -264,6 +264,25 @@ class Modal extends BaseComponent {
+       if (document !== event.target &&
+           this._element !== event.target &&
+           !this._element.contains(event.target)) {
++        // If focus left the modal, redirect to opposite end based on relatedTarget
++        const relatedTarget = event.relatedTarget
++        const isRelatedTargetInside = relatedTarget && this._element.contains(relatedTarget)
++        if (isRelatedTargetInside) {
++          const focusable = Array.from(this._element.querySelectorAll(
++            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
++          ))
++          .filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-disabled') !== 'true')
++          if (focusable.length) {
++            if (relatedTarget === focusable[0]) {
++              focusable[focusable.length - 1].focus()
++              return
++            }
++            if (relatedTarget === focusable[focusable.length - 1]) {
++              focusable[0].focus()
++              return
++            }
++          }
++        }
+         this._element.focus()
+       }
+     })

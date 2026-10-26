@@ -1,0 +1,22 @@
+{
+  "root_cause": "The confirm dialog is created with `keyboard: false` and `backdrop: 'static'`. The native `<dialog>` element fires a `cancel` event on each Escape press. The `_cancelHandler` in `dialog-base.ts` prevents the first two `cancel` events, but the third `cancel` event becomes non-cancelable (observed `cancelable: false`), so `preventDefault()` has no effect and the dialog closes. The existing keydown listener only handles Escape for non-modal dialogs, leaving modal dialogs with `keyboard: false` solely dependent on the `cancel` event handler, which fails on the third press.",
+  "repair_strategy": "Extend the existing keydown listener in `_addDialogListeners` to also intercept Escape on modal dialogs when `keyboard: false`. By calling `event.preventDefault()` and `event.stopImmediatePropagation()` on the keydown event, we prevent the native `cancel` event from firing in the first place, ensuring the dialog never closes via Escape.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())\n  EventHandler.on(this._element, `keydown${EVENT_KEY}`, event => {\n    if (event.key !== 'Escape' || this._openedAsModal) {\n      return\n    }\n\n    event.preventDefault()\n\n    if (!this._config.keyboard) {\n      return\n    }\n\n    this._onCancel()\n    this.hide()\n  })",
+      "after": "  // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())\n  // and for modal dialogs with keyboard: false to prevent the native cancel event.\n  EventHandler.on(this._element, `keydown${EVENT_KEY}`, event => {\n    if (event.key !== 'Escape') {\n      return\n    }\n\n    if (this._openedAsModal) {\n      if (!this._config.keyboard) {\n        event.preventDefault()\n        event.stopImmediatePropagation()\n      }\n      return\n    }\n\n    event.preventDefault()\n\n    if (!this._config.keyboard) {\n      return\n    }\n\n    this._onCancel()\n    this.hide()\n  })"
+    }
+  ],
+  "expected_accessibility_effect": "The confirm dialog (keyboard: false) will no longer close on any number of Escape presses, satisfying the requirement that Escape must not dismiss it. The help dialog (keyboard: true) continues to close on Escape as expected. Focus management and screen-reader behavior remain unchanged.",
+  "functional_risks": [
+    "If the native dialog's cancel event is fired independently of the keydown event (e.g., by a browser-internal mechanism), the keydown interception may not prevent the cancel event. However, the observed behavior suggests the cancel event is triggered by the keydown event, so stopping propagation should work.",
+    "The change adds a new code path for modal dialogs with keyboard: false; it must not affect modal dialogs with keyboard: true (they return early) or non-modal dialogs (they continue to work as before)."
+  ],
+  "verification_requirements": [
+    "Run the provided journey: the confirm dialog must remain open after three Escape presses (attribute 'open' present).",
+    "Run the regression guard for the help dialog: Escape must still close the help dialog.",
+    "Verify that the cancel button and backdrop clicks still work as expected."
+  ]
+}

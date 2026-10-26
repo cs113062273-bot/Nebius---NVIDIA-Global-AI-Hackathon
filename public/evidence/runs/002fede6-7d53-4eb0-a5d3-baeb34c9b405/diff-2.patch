@@ -1,0 +1,18 @@
+diff --git a/src/disclosureMenu.js b/src/disclosureMenu.js
+index 93ae08a..cc1b200 100644
+--- a/src/disclosureMenu.js
++++ b/src/disclosureMenu.js
+@@ -164,6 +164,13 @@ class DisclosureMenu extends BaseMenu {
+       this._handleHover();
+       this._handleKeydown();
+       this._handleKeyup();
++
++      // Close dropdown when focus leaves the menu
++      this.dom.menu.addEventListener('focusout', (event) => {
++        if (!this.dom.menu.contains(event.relatedTarget)) {
++          this.closeChildren();
++        }
++      });
+     } catch (error) {
+       console.error(error);
+     }

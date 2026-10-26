@@ -1,0 +1,25 @@
+{
+  "root_cause": "The radios component only listens for 'click' events on its module element. Keyboard navigation (ArrowDown) changes the checked radio via native browser behavior, which fires a 'change' event on the radio input but not a 'click' event. Since the two radio groups (channel-radios and optout-radios) are separate modules but share the same 'name' attribute, selecting the opt-out radio in one module unchecks the text-message radio in the other module without the first module receiving any event, so its conditional field remains visible.",
+  "repair_strategy": "Add a document-level 'change' event listener in each Radios instance that filters for radio inputs sharing any name used by that instance's radios. When such a change occurs, invoke the existing handleClick logic to update all conditional reveals in that module. This ensures keyboard, mouse, and assistive-tech selections all update visibility correctly, even across module boundaries.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  // Also handle change events from radios with the same name (even in other modules)\n  var radioNames = []\n  nodeListForEach($inputs, function ($input) {\n    var name = $input.getAttribute('name')\n    if (name && radioNames.indexOf(name) === -1) {\n      radioNames.push(name)\n    }\n  }.bind(this))\n  if (radioNames.length) {\n    document.addEventListener('change', function (event) {\n      var target = event.target\n      if (target && target.tagName === 'INPUT' && target.type === 'radio' && radioNames.indexOf(target.getAttribute('name')) !== -1) {\n        this.handleClick(event)\n      }\n    }.bind(this))\n  }\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate between all radio options using arrow keys and see conditional fields show/hide appropriately across module boundaries, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Both click and change events may fire for the same interaction, but setAttributes is idempotent, so no adverse effect.",
+    "Multiple Radios instances on the same page will each add a document change listener; they filter by name so only relevant changes trigger handleClick.",
+    "The handler only processes inputs with type radio and an aria-controls attribute, preventing unintended side effects on other form fields."
+  ],
+  "verification_requirements": [
+    "Verify that pressing ArrowDown from the Email radio to the Text message radio shows the mobile number field.",
+    "Verify that pressing ArrowDown from the Text message radio to the Opt‑out radio hides the mobile number field.",
+    "Verify that clicking a radio with mouse still updates the conditional content correctly.",
+    "Verify that pressing Space on a focused radio updates the conditional content.",
+    "Ensure no JavaScript errors are thrown in the console during these interactions."
+  ]
+}

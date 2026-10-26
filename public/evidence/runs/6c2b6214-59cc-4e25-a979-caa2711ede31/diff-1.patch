@@ -1,0 +1,18 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..4493722 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -65,6 +65,13 @@ class Drawer extends DialogBase {
+     this._resizeObserver = null
+     this._resizeFrame = null
+     this._initResizeObserver()
++
++    EventHandler.on(this._element, this.constructor.eventName('shown'), () => {
++      const dismissButton = this._element.querySelector('[data-bs-dismiss="drawer"]') as HTMLElement
++      if (dismissButton) {
++        dismissButton.focus({ preventScroll: true })
++      }
++    })
+   }
+ 
+   // Getters

@@ -1,0 +1,12 @@
+{
+  "completedAt": "2026-10-26T14:50:51.268Z",
+  "policy": "auto",
+  "modelRun": "2b7c7d31-602d-4703-84fa-e73835a133f4",
+  "verdict": "INCONCLUSIVE",
+  "reasons": [
+    "No reproducible keyboard failure with a passing functional baseline"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "79a4d5608dd34a687092d5d5b848e507742623dff9821ab58a6b7cd66f6932c4",
+  "attempts": []
+}

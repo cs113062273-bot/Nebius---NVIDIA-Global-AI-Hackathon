@@ -1,0 +1,20 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..1302726 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -250,6 +250,15 @@ class Datepicker extends BaseComponent {
+ 
+     this._setupDismiss()
+ 
++    // Allow Tab key to move focus out of the date input (VCP inputMode blocks Tab)
++    if (this._isInput) {
++      this._element.addEventListener('keydown', (event) => {
++        if (event.key === 'Tab') {
++          event.stopPropagation()
++        }
++      }, true) // capture phase to intercept before VCP's listener
++    }
++
+     // Set initial value if input has a value
+     if (this._isInput && this._element.value) {
+       this._parseInputValue()

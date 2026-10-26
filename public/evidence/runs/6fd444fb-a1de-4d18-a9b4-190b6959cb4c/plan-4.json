@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Radios component only listens for 'click' events within its own module element. Keyboard navigation between radio options in different module elements (but sharing the same name attribute) triggers 'change' events on the newly-selected radio, which belongs to a different Radios instance. The instance controlling the conditional fields never receives the event, so conditionals remain visible when they should be hidden.",
+  "repair_strategy": "In Radios.init(), after identifying radios with aria-controls, collect their name attributes. For each unique name, query all radios with that name document-wide and attach a 'change' event listener that calls handleClick. This ensures any keyboard or programmatic change to any radio in the same group updates conditional visibility for all modules using that name.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.init = function () {\n  var $module = this.$module\n  var $inputs = this.$inputs\n\n  /**\n  * Loop over all items with [data-controls]\n  * Check if they have a matching conditional reveal\n  * If they do, assign attributes.\n  **/\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('data-aria-controls')\n\n    // Check if input controls anything\n    // Check if content exists, before setting attributes.\n    if (!controls || !$module.querySelector('#' + controls)) {\n      return\n    }\n\n    // If we have content that is controlled, set attributes.\n    $input.setAttribute('aria-controls', controls)\n    $input.removeAttribute('data-aria-controls')\n    this.setAttributes($input)\n  }.bind(this))\n\n  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "Radios.prototype.init = function () {\n  var $module = this.$module\n  var $inputs = this.$inputs\n\n  /**\n  * Loop over all items with [data-controls]\n  * Check if they have a matching conditional reveal\n  * If they do, assign attributes.\n  **/\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('data-aria-controls')\n\n    // Check if input controls anything\n    // Check if content exists, before setting attributes.\n    if (!controls || !$module.querySelector('#' + controls)) {\n      return\n    }\n\n    // If we have content that is controlled, set attributes.\n    $input.setAttribute('aria-controls', controls)\n    $input.removeAttribute('data-aria-controls')\n    this.setAttributes($input)\n  }.bind(this))\n\n  // Listen for change events on all radios sharing the same name as any conditional radio\n  var names = {}\n  nodeListForEach($inputs, function ($input) {\n    if ($input.getAttribute('aria-controls')) {\n      names[$input.name] = true\n    }\n  }.bind(this))\n  \n  for (var name in names) {\n    var $allRadios = document.querySelectorAll('input[type=\"radio\"][name=\"' + name + '\"]')\n    nodeListForEach($allRadios, function ($radio) {\n      $radio.addEventListener('change', this.handleClick.bind(this))\n    }.bind(this))\n  }\n\n  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users arrowing between radio options across module boundaries will now correctly show/hide conditional fields (email address, mobile number) per WCAG 2.1.1 (Keyboard) and 4.1.2 (Name, Role, Value), matching the behavior for mouse users.",
+  "functional_risks": [
+    "Minimal: only adds change listeners on radios sharing names with conditional radios; no existing behavior altered for click interactions.",
+    "The change handler reuses handleClick which only acts on radio inputs with aria-controls in this module, avoiding side effects on other form controls.",
+    "Multiple Radios instances sharing a name will each attach listeners; handleClick is idempotent so duplicate calls are harmless."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: seek #reminder, ArrowDown to Text message, ArrowDown to opt-out; verify #conditional-reminder-2 becomes hidden.",
+    "Verify mouse clicks still toggle conditionals correctly in both modules.",
+    "Verify form data for reminder updates to 'none' on opt-out selection.",
+    "Verify Email and Text message conditionals still work with keyboard within the first module."
+  ]
+}

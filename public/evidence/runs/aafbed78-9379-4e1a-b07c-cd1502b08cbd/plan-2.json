@@ -1,0 +1,28 @@
+{
+  "root_cause": "The drawer.ts file has two issues causing TypeScript build failure: (1) missing import for the Data module used in _hideChildComponents, and (2) arrow functions in _initSwipe returning Promise<void> from hide() where SwipeConfig expects () => void, creating a type mismatch that the build system reports as a syntax error.",
+  "repair_strategy": "Add the missing Data import from './dom/data.js' and wrap each this.hide() call in a block statement () => { this.hide() } so the callback returns void, matching SwipeConfig callback signatures.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "import DialogBase, { type DialogBaseConfig } from './dialog-base.js'\nimport EventHandler from './dom/event-handler.js'\nimport SelectorEngine from './dom/selector-engine.js'\nimport Swipe, { type SwipeConfig } from './util/swipe.js'\nimport { enableDismissTrigger } from './util/component-functions.js'\nimport {\n  isDisabled,\n  isRTL,\n  isVisible\n} from './util/index.js'",
+      "after": "import DialogBase, { type DialogBaseConfig } from './dialog-base.js'\nimport EventHandler from './dom/event-handler.js'\nimport SelectorEngine from './dom/selector-engine.js'\nimport Swipe, { type SwipeConfig } from './util/swipe.js'\nimport { enableDismissTrigger } from './util/component-functions.js'\nimport Data from './dom/data.js'\nimport {\n  isDisabled,\n  isRTL,\n  isVisible\n} from './util/index.js'"
+    },
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  protected _initSwipe(): void {\n    if (this._swipeHelper || !Swipe.isSupported()) {\n      return\n    }\n\n    // Determine which swipe direction dismisses based on placement\n    const swipeConfig: Partial<SwipeConfig> = {}\n    const element = this._element\n\n    if (element.classList.contains('drawer-bottom')) {\n      swipeConfig.downCallback = () => this.hide()\n    } else if (element.classList.contains('drawer-top')) {\n      swipeConfig.upCallback = () => this.hide()\n    } else if (element.classList.contains('drawer-end')) {\n      // RTL: swipe left to dismiss end drawer\n      if (isRTL()) {\n        swipeConfig.leftCallback = () => this.hide()\n      } else {\n        swipeConfig.rightCallback = () => this.hide()\n      }\n    } else if (isRTL()) {\n      // drawer-start (default): swipe left to dismiss in RTL\n      swipeConfig.leftCallback = () => this.hide()\n    } else {\n      // drawer-start (default): swipe left to dismiss in LTR\n      swipeConfig.rightCallback = () => this.hide()\n    }\n\n    this._swipeHelper = new Swipe(element, swipeConfig)\n  }",
+      "after": "  protected _initSwipe(): void {\n    if (this._swipeHelper || !Swipe.isSupported()) {\n      return\n    }\n\n    // Determine which swipe direction dismisses based on placement\n    const swipeConfig: Partial<SwipeConfig> = {}\n    const element = this._element\n\n    if (element.classList.contains('drawer-bottom')) {\n      swipeConfig.downCallback = () => { this.hide() }\n    } else if (element.classList.contains('drawer-top')) {\n      swipeConfig.upCallback = () => { this.hide() }\n    } else if (element.classList.contains('drawer-end')) {\n      // RTL: swipe left to dismiss end drawer\n      if (isRTL()) {\n        swipeConfig.leftCallback = () => { this.hide() }\n      } else {\n        swipeConfig.rightCallback = () => { this.hide() }\n      }\n    } else if (isRTL()) {\n      // drawer-start (default): swipe left to dismiss in RTL\n      swipeConfig.leftCallback = () => { this.hide() }\n    } else {\n      // drawer-start (default): swipe left to dismiss in LTR\n      swipeConfig.rightCallback = () => { this.hide() }\n    }\n\n    this._swipeHelper = new Swipe(element, swipeConfig)\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Fixes the TypeScript build error so that subsequent accessibility fixes (e.g., focus management in drawer) can be compiled and verified.",
+  "functional_risks": [
+    "Swipe dismiss callbacks will call hide() but not await the returned promise; this matches the Swipe.execute behavior which does not await callbacks.",
+    "Adding the Data import has no runtime side effects; it only makes the existing _hideChildComponents code type-check correctly."
+  ],
+  "verification_requirements": [
+    "TypeScript compilation passes with no syntax or type errors in drawer.ts.",
+    "Drawer swipe-to-dismiss functionality still works (manual test).",
+    "Existing drawer open/close/toggle behavior unchanged."
+  ]
+}

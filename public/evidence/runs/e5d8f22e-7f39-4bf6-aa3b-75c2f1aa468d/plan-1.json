@@ -1,0 +1,23 @@
+{
+  "root_cause": "The Checkboxes component only attaches a click listener to the root element. Exclusive behavior (unchecking other boxes when a 'None of these' checkbox is checked) runs only in the click handler, so keyboard interaction (Space/Enter) that changes the checkbox state does not trigger the logic, leaving previously checked symptoms selected.",
+  "repair_strategy": "Replace the click event listener with a change event listener on the component root. The change event fires for both mouse and keyboard interactions, allowing the existing handleClick method to execute the exclusive logic whenever any checkbox's checked state changes.",
+  "edits": [
+    {
+      "path": "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js",
+      "sha256": "b12e3c7a52e09c981155d2f727c5eb8358d420a487177c9a1e722c19da4c8af0",
+      "before": "    // Handle events\n    this.$root.addEventListener('click', (event) => this.handleClick(event))",
+      "after": "    // Handle events\n    this.$root.addEventListener('change', (event) => this.handleClick(event))"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now select the 'No symptoms' exclusive checkbox and have any previously selected symptom checkboxes automatically cleared, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "The change event also fires for programmatic changes, but the component only acts when a checkbox becomes checked, so no adverse effect is expected.",
+    "Ensuring that the change listener fully replaces the click listener avoids duplicate execution; if both listeners were kept, the logic could run twice but would be harmless."
+  ],
+  "verification_requirements": [
+    "Using only the keyboard (Tab to navigate, Space to check), verify that checking cough and fever then checking 'No symptoms' clears cough and fever.",
+    "Verify that mouse clicking continues to work as before.",
+    "Confirm that conditional reveals linked via aria-controls still synchronize correctly for both mouse and keyboard interactions.",
+    "Ensure no errors are thrown when initializing the component on pages that use it."
+  ]
+}

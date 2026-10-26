@@ -1,0 +1,75 @@
+diff --git a/src/disclosureMenu.js b/src/disclosureMenu.js
+index 93ae08a..cf7c42e 100644
+--- a/src/disclosureMenu.js
++++ b/src/disclosureMenu.js
+@@ -149,8 +149,9 @@ class DisclosureMenu extends BaseMenu {
+    * as well as set up focus,
+    * click,
+    * hover,
+-   * keydown, and
+-   * keyup events for the menu.
++   * keydown,
++   * keyup, and
++   * focusout events for the menu.
+    *
+    * If the BaseMenu's initialize method throws an error,
+    * this will catch it and log it to the console.
+@@ -164,11 +165,29 @@ class DisclosureMenu extends BaseMenu {
+       this._handleHover();
+       this._handleKeydown();
+       this._handleKeyup();
++      this._handleFocusBlur();
+     } catch (error) {
+       console.error(error);
+     }
+   }
+ 
++  /**
++   * Handles focusout events to close the menu when focus leaves.
++   *
++   * @protected
++   */
++  _handleFocusBlur() {
++    this.dom.menu.addEventListener("focusout", (event) => {
++      if (!this.dom.menu.contains(event.relatedTarget)) {
++        this.blur();
++        this.closeChildren();
++        if (this.elements.controller) {
++          this.elements.controller.close();
++        }
++      }
++    });
++  }
++
+   /**
+    * A flag to add optional keyboard support (Arrow keys, "Home", and "End") to the menu.
+    *
+@@ -202,12 +221,10 @@ class DisclosureMenu extends BaseMenu {
+     let check = super._validate();
+ 
+     // Option key support check.
+-    const optionalSupportCheck = isValidType("boolean", {
+-      optionalKeySupport: this._optionalSupport,
+-    });
+-
+-    if (!optionalSupportCheck.status) {
+-      this._errors.push(optionalSupportCheck.error.message);
++    try {
++      isValidType("boolean", { optionalKeySupport: this._optionalSupport });
++    } catch (error) {
++      this._errors.push(error.message);
+       check = false;
+     }
+ 
+@@ -232,10 +249,7 @@ class DisclosureMenu extends BaseMenu {
+       if (this.focusState !== "none") {
+         this.currentEvent = "mouse";
+ 
+-        if (
+-          !this.dom.menu.contains(event.target) &&
+-          !this.dom.menu !== event.target
+-        ) {
++        if (!this.dom.menu.contains(event.target)) {
+           this.closeChildren();
+           this.blur();
+ 

@@ -1,0 +1,26 @@
+{
+  "root_cause": "The Vanilla Calendar Pro (VCP) library adds a keydown listener on the datepicker input that calls preventDefault() on the Tab key, preventing focus from moving to the next field. This listener is added during VCP calendar initialization, likely triggered by the presence of aria-haspopup=\"dialog\" on the input. The attribute is added by VCP in its constructor and remains even when the calendar popup is closed, so the Tab-blocking behavior persists.",
+  "repair_strategy": "In the Bootstrap datepicker component's _initCalendar method, after the VCP calendar is constructed but before it is initialized, permanently remove the aria-haspopup attribute from the input and add a capturing-phase keydown listener that stops immediate propagation for the Tab key when the calendar is not shown. This prevents VCP from adding its Tab-blocking listener (since the attribute is absent during init) and ensures that if any Tab-blocking listener is added later, our capturing listener runs first and allows the browser's default tab behavior to proceed while preserving VCP's keyboard navigation inside the popup when it is open.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Create calendar on the position element (for correct popup positioning)\n    // but value updates still go to this._element (the input)\n    this._calendar = new Calendar(this._positionElement, calendarOptions)\n    this._calendar.init()",
+      "after": "    // Create calendar on the position element (for correct popup positioning)\n    // but value updates still go to this._element (the input)\n    this._calendar = new Calendar(this._positionElement, calendarOptions)\n    // Remove aria-haspopup added by VCP constructor to prevent Tab key blocking\n    if (this._isInput) {\n      this._element.removeAttribute('aria-haspopup')\n    }\n    // Add capturing keydown listener to allow Tab to move focus out when calendar is closed\n    if (this._isInput && !this._isInline) {\n      this._element.addEventListener('keydown', (event: KeyboardEvent) => {\n        if (event.key === 'Tab' && !this._isShown) {\n          event.stopImmediatePropagation()\n        }\n      }, true)\n    }\n    this._calendar.init()"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab while focused on the departure date field will move focus to the passengers field, restoring logical tab order for keyboard users. The datepicker popup remains accessible via mouse or keyboard when focused on the input, and screen readers will continue to announce the date field correctly via its associated label.",
+  "functional_risks": [
+    "Removing aria-haspopup might affect screen reader announcements for some users, though the input remains labeled via its associated label element.",
+    "The capturing keydown listener stops propagation for Tab only when the calendar is closed; if the calendar is open, Tab propagation is allowed so VCP can handle keyboard navigation inside the popup.",
+    "If VCP relies on the aria-haspopup attribute for internal behavior, removing it could cause unexpected issues (unlikely as the attribute is primarily for assistive technologies)."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab when the datepicker input is focused moves focus to the next tabbable element (passengers field).",
+    "Verify that the datepicker popup still opens correctly when the input receives focus or is clicked.",
+    "Verify that selecting a date in the popup updates the input value and closes the popup.",
+    "Verify that pressing Escape closes the popup and returns focus to the input.",
+    "Verify that clicking the input field opens the popup.",
+    "Verify that the attribute aria-haspopup is absent on the input after initialization."
+  ]
+}

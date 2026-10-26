@@ -1,0 +1,30 @@
+{
+  "root_cause": "When the #more button is clicked and removes itself from the DOM while focused, the focus trap's state.mostRecentlyFocusedNode retains a reference to the now-detached element. When focus subsequently escapes to the body, the checkFocusIn handler attempts to restore focus via tryFocus(state.mostRecentlyFocusedNode), which passes the detached node. The tryFocus function does not verify the node is still in the document, so node.focus() fails silently and focus remains on body instead of falling back to the initial focus node (#close).",
+  "repair_strategy": "Harden tryFocus to reject nodes no longer contained in the document (using doc.contains(node)) and fall back to getInitialFocusNode(). Simultaneously, modify checkFocusIn to bypass the potentially stale mostRecentlyFocusedNode entirely and directly request the initial focus node when focus escapes the trap.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "const tryFocus = function (node) {\n  if (node === false) {\n    return;\n  }\n\n  if (node === doc.activeElement) {\n    return;\n  }\n\n  if (!node || !node.focus) {\n    tryFocus(getInitialFocusNode());\n    return;\n  }\n\n  node.focus({ preventScroll: !!config.preventScroll });\n  state.mostRecentlyFocusedNode = node;\n\n  if (isSelectableInput(node)) {\n    node.select();\n  }\n};",
+      "after": "const tryFocus = function (node) {\n  if (node === false) {\n    return;\n  }\n\n  if (node === doc.activeElement) {\n    return;\n  }\n\n  if (!node || !node.focus || !doc.contains(node)) {\n    tryFocus(getInitialFocusNode());\n    return;\n  }\n\n  node.focus({ preventScroll: !!config.preventScroll });\n  state.mostRecentlyFocusedNode = node;\n\n  if (isSelectableInput(node)) {\n    node.select();\n  }\n};"
+    },
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "const checkFocusIn = function (e) {\n  const target = getActualTarget(e);\n  const targetContained = findContainerIndex(target, e) >= 0;\n\n  // In Firefox when you Tab out of an iframe the Document is briefly focused.\n  if (targetContained || target instanceof Document) {\n    if (targetContained) {\n      state.mostRecentlyFocusedNode = target;\n    }\n  } else {\n    // escaped! pull it back in to where it just left\n    e.stopImmediatePropagation();\n    tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n  }\n};",
+      "after": "const checkFocusIn = function (e) {\n  const target = getActualTarget(e);\n  const targetContained = findContainerIndex(target, e) >= 0;\n\n  // In Firefox when you Tab out of an iframe the Document is briefly focused.\n  if (targetContained || target instanceof Document) {\n    if (targetContained) {\n      state.mostRecentlyFocusedNode = target;\n    }\n  } else {\n    // escaped! pull it back in to the initial focus node\n    e.stopImmediatePropagation();\n    tryFocus(getInitialFocusNode());\n  }\n};"
+    }
+  ],
+  "expected_accessibility_effect": "After clicking the #more button (which removes itself), focus will remain trapped inside the dialog on the #close button (the first tabbable element), ensuring keyboard users can continue to navigate the dialog without accidentally leaving it. The Escape key will still close the dialog and return focus to the #open button.",
+  "functional_risks": [
+    "If the initial focus node is also removed from the document, the fallback might fail. However, the trap already requires at least one tabbable node, and the #more button removal does not affect the #close button.",
+    "The change to checkFocusIn directs focus to the initial focus node on any escape, which is the intended behavior for a focus trap.",
+    "The tryFocus hardening adds a safety net for any other code paths that might pass a detached node."
+  ],
+  "verification_requirements": [
+    "After clicking the #more button, pressing Tab should move focus to the #close button (not to the body).",
+    "The dialog should retain focus within after the #more button is removed (verified by #results:focus-within).",
+    "The Escape key should still close the dialog and return focus to the #open button.",
+    "The initial focus when opening the dialog should remain on the #close button."
+  ]
+}

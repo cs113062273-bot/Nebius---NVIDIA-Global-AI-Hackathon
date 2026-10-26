@@ -1,0 +1,22 @@
+{
+  "root_cause": "The tab component incorrectly maps the ArrowDown and ArrowUp keys to horizontal navigation (next/previous tab) in addition to ArrowRight and ArrowLeft, causing the down arrow to switch tabs instead of preserving focus on the current tab.",
+  "repair_strategy": "Restrict tab keyboard navigation to only horizontal arrows (ArrowLeft/ArrowRight and their aliases) for switching tabs, ignoring vertical arrows (ArrowUp/ArrowDown) to prevent unintended tab changes.",
+  "edits": [
+    {
+      "path": "packages/govuk-frontend/src/govuk/components/tabs/tabs.js",
+      "sha256": "efec2dbc261636f1987a68ade80173d751d99359fe13cc0106084220e96e3698",
+      "before": "/**\n   * Handle tab keydown event\n   *\n   * - Press right/down arrow for next tab\n   * - Press left/up arrow for previous tab\n   *\n   * @private\n   * @param {KeyboardEvent} event - Keydown event\n   */\n  onTabKeydown(event) {\n    switch (event.key) {\n      // 'Left', 'Right', 'Up' and 'Down' required for Edge 16 support.\n      case 'ArrowLeft':\n      case 'ArrowUp':\n      case 'Left':\n      case 'Up':\n        this.activatePreviousTab()\n        event.preventDefault()\n        break\n      case 'ArrowRight':\n      case 'ArrowDown':\n      case 'Right':\n      case 'Down':\n        this.activateNextTab()\n        event.preventDefault()\n        break\n    }\n  }",
+      "after": "/**\n   * Handle tab keydown event\n   *\n   * - Press right arrow for next tab\n   * - Press left arrow for previous tab\n   *\n   * @private\n   * @param {KeyboardEvent} event - Keydown event\n   */\n  onTabKeydown(event) {\n    switch (event.key) {\n      case 'ArrowLeft':\n      case 'Left':\n        this.activatePreviousTab()\n        event.preventDefault()\n        break\n      case 'ArrowRight':\n      case 'Right':\n        this.activateNextTab()\n        event.preventDefault()\n        break\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing the down arrow key while focused on a tab will no longer change the selected tab, allowing users to use vertical arrow keys for scrolling within the tab panel without triggering unintended navigation.",
+  "functional_risks": [
+    "If the tab list is rendered vertically (not the case in this implementation), vertical arrow navigation would be broken. However, the observed DOM and CSS confirm a horizontal tab layout.",
+    "Removing vertical arrow handling may affect users who expect vertical movement in a vertical tab list, but the component is used horizontally here and the ARIA APG specifies horizontal arrow keys for horizontal tablists."
+  ],
+  "verification_requirements": [
+    "Confirm left/right arrow keys still switch focus between adjacent tabs.",
+    "Confirm up/down arrow keys do not change the focused tab or selected tab state.",
+    "Confirm the tab panel associated with the focused tab remains visible when using vertical arrow keys."
+  ]
+}

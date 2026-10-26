@@ -1,0 +1,46 @@
+[
+  {
+    "path": "index.html",
+    "score": 13,
+    "signals": [
+      "symptoms-cough",
+      "symptoms-fever",
+      "symptoms-none",
+      "symptoms-form",
+      "body",
+      "A new continuous cough",
+      "A high temperature",
+      "A loss or change to your sense of smell or taste",
+      "No, I do not have any of these symptoms",
+      "Text message",
+      "Email",
+      "Do not contact me"
+    ],
+    "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+    "editable": false
+  },
+  {
+    "path": "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js",
+    "score": 12.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "b12e3c7a52e09c981155d2f727c5eb8358d420a487177c9a1e722c19da4c8af0"
+  },
+  {
+    "path": "packages/nhsuk-frontend/src/nhsuk/common/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "c3f5581a9a5fd9765b10781540c625e0b81d7db842c3fa6ddbff0cb18578bc61"
+  },
+  {
+    "path": "packages/nhsuk-frontend/src/nhsuk/errors/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "c8841b8026047b83816d136b2e381b8615da9a58f7cd9de0f4b0a69ce711d7a3"
+  }
+]

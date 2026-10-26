@@ -1,0 +1,6 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 3 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"* This is useful for when a \\\"None of these\\\" checkbox is checked.\"; closest is line 85: \"* This is useful for when a “None of these\\\" checkbox is checked.\". Best alignment: before lines 6-25 match file lines 86-105. The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ]
+}

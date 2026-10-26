@@ -1,0 +1,23 @@
+{
+  "root_cause": "The native <dialog> element does not automatically focus its [autofocus] child when shown via showModal() in this test environment. The _showElement method opens the dialog but does not move focus, leaving it on the triggering element (<body> after Tab key).",
+  "repair_strategy": "In DialogBase._showElement, after calling showModal() for modal dialogs, synchronously focus the [autofocus] element inside the dialog, falling back to the dialog itself. This ensures keyboard focus lands in the drawer immediately without async timing issues.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }",
+      "after": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n      // Focus the autofocus element if present, otherwise the dialog itself\n      const autofocusEl = this._element.querySelector('[autofocus]')\n      if (autofocusEl) {\n        autofocusEl.focus()\n      } else {\n        this._element.focus()\n      }\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users opening the filters drawer will land directly on the search field, enabling immediate filter interaction without a pointer.",
+  "functional_risks": [
+    "Synchronous focus may race with top-layer entry in some environments, but showModal() is synchronous and should establish the top layer first.",
+    "If the autofocus element is not focusable (e.g., disabled, hidden), focus() will be a no-op and focus remains on the dialog."
+  ],
+  "verification_requirements": [
+    "After opening the drawer via keyboard (Enter on #filters-open), focus is on #filters-search.",
+    "Pressing Space on #in-stock checkbox toggles its state.",
+    "Pressing Tab twice and Enter on #apply updates the applied output to 'in'.",
+    "Escape closes drawer and returns focus to #filters-open."
+  ]
+}

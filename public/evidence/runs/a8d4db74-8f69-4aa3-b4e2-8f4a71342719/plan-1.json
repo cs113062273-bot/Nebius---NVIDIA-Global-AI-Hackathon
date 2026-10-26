@@ -1,0 +1,22 @@
+{
+  "root_cause": "The offcanvas component only activates its focus trap when the scroll configuration is false. With data-bs-scroll=\"true\" (as used in the page), the focus trap is not activated, allowing focus to leave the panel on successive Tab presses.",
+  "repair_strategy": "Modify the offcanvas show method to unconditionally activate the focus trap in the shown callback, preserving the existing scrollbar behavior.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d",
+      "before": "    const completeCallBack = () => {\n      if (!this._config.scroll) {\n        this._focustrap.activate()\n      }\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }",
+      "after": "    const completeCallBack = () => {\n      this._focustrap.activate()\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab navigation will remain trapped within the offcanvas panel; repeated Tab presses will keep focus on the close button.",
+  "functional_risks": [
+    "None identified; the change aligns with modal-like behavior expected for an offcanvas with role=dialog and aria-modal=true."
+  ],
+  "verification_requirements": [
+    "After opening the help panel, the first Tab press must focus the close button.",
+    "A second Tab press must keep focus on the close button (not move to the amount field).",
+    "The panel should still be dismissible via the close button or Escape key.",
+    "When data-bs-scroll=\"false\", scrollbar hiding behavior should remain unchanged."
+  ]
+}

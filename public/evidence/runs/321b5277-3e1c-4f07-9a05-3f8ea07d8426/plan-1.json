@@ -1,0 +1,44 @@
+{
+  "root_cause": "The Tab keydown event on the departure date input was prevented (defaultPrevented: true), preventing focus from moving to the next field. This occurred because the Vanilla Calendar Pro library, when initializing the datepicker on the input element, likely added a listener or modified the input in a way that blocked tabbing out. The input had the attribute aria-haspopup='dialog' set by the library, which may interfere with tabbing behavior in certain contexts.",
+  "repair_strategy": "Temporarily remove the aria-haspopup attribute from the input when the datepicker calendar is shown, and restore it when the calendar is hidden. This attribute is not essential for the input's functionality and its removal prevents the tabbing blockage without affecting the datepicker's operation. The change is confined to the Bootstrap datepicker component to ensure all instances are fixed.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _isInline: boolean\n  protected declare _boundInput: HTMLInputElement | null\n",
+      "after": "  protected declare _isInline: boolean\n  protected declare _originalAriaHasPopup: string | null\n  protected declare _boundInput: HTMLInputElement | null\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n    super(element, config)\n\n    this._calendar = null\n    this._isShown = false\n\n    this._initCalendar()\n  }\n",
+      "after": "  constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n    super(element, config)\n\n    this._calendar = null\n    this._isShown = false\n\n    // Store original aria-haspopup if it's an input\n    if (this._element.tagName === 'INPUT') {\n      this._originalAriaHasPopup = this._element.getAttribute('aria-haspopup')\n    }\n\n    this._initCalendar()\n  }\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  async show(): Promise<void> {\n    if (this._config.inline) {\n      return // Inline calendars are always visible\n    }\n\n    if (!this._calendar || isDisabled(this._element) || this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW)\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._calendar.show()\n    this._isShown = true\n\n    EventHandler.trigger(this._element, EVENT_SHOWN)\n  }\n",
+      "after": "  async show(): Promise<void> {\n    if (this._config.inline) {\n      return // Inline calendars are always visible\n    }\n\n    if (!this._calendar || isDisabled(this._element) || this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW)\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    // Remove aria-haspopup to prevent potential Tab key blocking\n    if (this._isInput && this._originalAriaHasPopup !== null) {\n      this._element.removeAttribute('aria-haspopup')\n    }\n\n    this._calendar.show()\n    this._isShown = true\n\n    EventHandler.trigger(this._element, EVENT_SHOWN)\n  }\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  async hide(): Promise<void> {\n    if (this._config.inline) {\n      return // Inline calendars are always visible\n    }\n\n    if (!this._calendar || !this._isShown) {\n      return\n    }\n\n    const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE)\n    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    this._calendar.hide()\n    this._isShown = false\n\n    EventHandler.trigger(this._element, EVENT_HIDDEN)\n  }\n",
+      "after": "  async hide(): Promise<void> {\n    if (this._config.inline) {\n      return // Inline calendars are always visible\n    }\n\n    if (!this._calendar || !this._isShown) {\n      return\n    }\n\n    const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE)\n    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    this._calendar.hide()\n    this._isShown = false\n\n    // Restore aria-haspopup\n    if (this._isInput && this._originalAriaHasPopup !== null) {\n      this._element.setAttribute('aria-haspopup', this._originalAriaHasPopup)\n    }\n\n    EventHandler.trigger(this._element, EVENT_HIDDEN)\n  }\n"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key navigation will now move focus from the departure date field to the passengers field as expected, restoring logical tab order for keyboard users. The datepicker popup remains accessible via mouse or keyboard when focused on the input, and screen readers will continue to announce the date field correctly.",
+  "functional_risks": [
+    "Removing aria-haspopup might affect screen reader announcements for some users, though the input remains labeled via its associated label element.",
+    "If the VCP relies on the aria-haspopup attribute for its internal behavior, removing it could cause unexpected issues in the datepicker popup (though this is unlikely as the attribute is typically used for indicating popup presence to assistive technologies).",
+    "Rapidly showing and hiding the datepicker (e.g., via repeated focus events) could lead to attribute flicker, but this is mitigated by storing and restoring the original value."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab when the datepicker input is focused moves focus to the next tabbable element (passengers field).",
+    "Verify that the datepicker popup still opens correctly when the input receives focus.",
+    "Verify that selecting a date in the popup updates the input value and closes the popup.",
+    "Verify that pressing Escape closes the popup and returns focus to the input.",
+    "Verify that clicking the input field opens the popup.",
+    "Verify that the attribute aria-haspopup is present on the input when the datepicker is closed and absent when open (as a side effect of the fix)."
+  ]
+}

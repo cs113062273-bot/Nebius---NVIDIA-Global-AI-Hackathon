@@ -1,0 +1,34 @@
+diff --git a/index.js b/index.js
+index 0a2a74a..bbe43d7 100644
+--- a/index.js
++++ b/index.js
+@@ -363,7 +363,7 @@ const createFocusTrap = function (elements, userOptions) {
+       return;
+     }
+ 
+-    if (!node || !node.focus) {
++    if (!node || !node.focus || !doc.contains(node)) {
+       tryFocus(getInitialFocusNode());
+       return;
+     }
+@@ -428,9 +428,18 @@ const createFocusTrap = function (elements, userOptions) {
+         state.mostRecentlyFocusedNode = target;
+       }
+     } else {
+-      // escaped! pull it back in to where it just left
++      // escaped! pull it back in to the first tabbable node in the trap
+       e.stopImmediatePropagation();
+-      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
++      // Compute first tabbable node directly from the first container to avoid stale cache
++      const firstContainer = state.containers[0];
++      if (firstContainer) {
++        const tabbableNodes = tabbable(firstContainer, config.tabbableOptions);
++        if (tabbableNodes.length > 0) {
++          tryFocus(tabbableNodes[0]);
++          return;
++        }
++      }
++      tryFocus(getInitialFocusNode());
+     }
+   };
+ 

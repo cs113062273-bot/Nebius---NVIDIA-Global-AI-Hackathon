@@ -1,0 +1,25 @@
+{
+  "root_cause": "The datepicker does not hide when the input loses focus via Tab because there is no blur event listener to trigger hiding.",
+  "repair_strategy": "Add a blur event listener to the input field in non-inline mode that closes the picker unless the focus is moving into the picker itself.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    } else {\n      // set up event listeners in other modes\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }",
+      "after": "    } else {\n      // set up event listeners in other modes\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'blur', (e) => {\n          // Do not hide if focus moves into the picker\n          if (e.relatedTarget && this.picker.element.contains(e.relatedTarget)) {\n            return;\n          }\n          this.picker.hide();\n        }],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate away from the date field using Tab and the datepicker will close, preventing unexpected tab stops inside the closed widget and ensuring focus moves to the next control as expected.",
+  "functional_risks": [
+    "Potential risk of hiding picker prematurely if user intends to interact with picker via keyboard (but blur occurs only when focus leaves the input; if picker is open and focus is within picker, blur won't fire because we check relatedTarget).",
+    "Risk for inline pickers is avoided by guarding the listener addition to non‑inline mode only.",
+    "Risk if custom code relies on the blur event for other purposes; the added listener only calls hide()."
+  ],
+  "verification_requirements": [
+    "After typing a valid or invalid date and pressing Tab, the datepicker must close (.datepicker not visible).",
+    "Clicking outside the picker must still close it.",
+    "Inline pickers must remain unaffected.",
+    "Pressing Escape must still close the picker.",
+    "Date selection and input field updates must continue to work correctly."
+  ]
+}

@@ -1,0 +1,49 @@
+diff --git a/src/autoComplete.js b/src/autoComplete.js
+index 2bf515c..087e067 100644
+--- a/src/autoComplete.js
++++ b/src/autoComplete.js
+@@ -136,7 +136,12 @@ export default class autoComplete {
+      **/
+     eventEmitter(this.inputField, dataFeedback, "rendered");
+     // - Initialize navigation
+-    navigate(this, dataFeedback);
++    const navHandler = navigate(this, dataFeedback);
++    if (this.navHandler) {
++      this.inputField.removeEventListener("keydown", this.navHandler);
++    }
++    this.navHandler = navHandler;
++    this.inputField.addEventListener("keydown", this.navHandler);
+     /**
+      * @desc
+      * Listens for all `click` events in the document
+diff --git a/src/controllers/navigationController.js b/src/controllers/navigationController.js
+index 22aeb48..bc2b9c2 100644
+--- a/src/controllers/navigationController.js
++++ b/src/controllers/navigationController.js
+@@ -85,10 +85,10 @@ const navigate = (config, dataFeedback) => {
+    * @param {Object} event - The `keydown` event Object
+    *
+    */
+-  const navigation = (event) => {
++  const navigation = function navigationHandler(event) {
+     let list = document.getElementById(config.resultsList.idName);
+ 
+-    if (!list) return config.inputField.removeEventListener("keydown", navigate);
++    if (!list) return config.inputField.removeEventListener("keydown", navigationHandler);
+ 
+     list = list.getElementsByTagName(config.resultItem.element);
+ 
+@@ -115,11 +115,8 @@ const navigate = (config, dataFeedback) => {
+     }
+   };
+ 
+-  const navigate = config.resultsList.navigation || navigation;
+-  /**
+-   * @listens {keydown} Listens to all `keydown` events on the input field
+-   **/
+-  config.inputField.addEventListener("keydown", navigate);
++  const handler = config.resultsList.navigation || navigation;
++  return handler;
+ };
+ 
+ export { navigate };

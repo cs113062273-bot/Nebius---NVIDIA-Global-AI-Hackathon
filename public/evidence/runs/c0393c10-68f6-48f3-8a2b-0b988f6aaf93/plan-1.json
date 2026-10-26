@@ -1,0 +1,36 @@
+{
+  "root_cause": "The datepicker component reformats the input's value to a locale-specific string (e.g., MM/DD/YYYY) during initialization, even when no date is selected. This causes the form submission to use the formatted string instead of the expected ISO string (YYYY-MM-DD).",
+  "repair_strategy": "Modify the datepicker component to: 1) Skip updating the input's value during initialization, 2) For input elements, set the value to the ISO string of the selected date (first date for single mode) on date selection or display updates, 3) For display elements, update with the formatted string for UI, 4) Ensure the display element reflects the initial date when the calendar is shown.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()",
+      "after": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput) {\n      this._element.value = formattedDate\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',');\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate;\n    }\n  }",
+      "after": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    // Format the selected dates for display (in the displayElement)\n    const formattedDate = this._formatDateForInput(selectedDates)\n\n    // For input elements, update the input's value to the ISO string of the first selected date (or empty)\n    if (this._isInput) {\n      this._element.value = selectedDates.length > 0 ? selectedDates[0] : ''\n    }\n\n    // For the bound input (used in inline mode), update with the comma-separated ISO strings\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',');\n    }\n\n    // For the display element, update with the formatted string\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate;\n    }\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      onShow: () => {\n        if (!this._calendar) {\n          return\n        }\n\n        this._isShown = true\n        this._syncThemeAttribute(this._calendar.context.mainElement)\n      },",
+      "after": "      onShow: () => {\n        if (!this._calendar) {\n          return\n        }\n\n        this._isShown = true\n        this._syncThemeAttribute(this._calendar.context.mainElement)\n        // Update the display element with the formatted date\n        if (this._displayElement) {\n          const selectedDates = [...this._calendar.context.selectedDates]\n          const formattedDate = this._formatDateForInput(\n            selectedDates.length > 0 ? selectedDates : this._config.selectedDates\n          )\n          this._displayElement.textContent = formattedDate\n        }\n      },"
+    }
+  ],
+  "expected_accessibility_effect": "The date picker will continue to function correctly for keyboard and screen reader users. The input field will retain its ISO string value for form submission while displaying formatted dates in the associated display element (if present) or allowing the user to see the ISO string in the input when no display element is configured. This change does not affect focus management or aria attributes.",
+  "functional_risks": [
+    "If the datepicker is used in multiple selection mode, the input's value will only reflect the first selected date (consistent with single mode behavior for input elements).",
+    "Inline datepickers that rely on the input's value being updated during initialization may need adjustment, but the bound input (hidden) will still receive the comma-separated ISO strings.",
+    "The display element will now be updated when the calendar is shown, which may cause a brief visual update if the calendar is shown repeatedly."
+  ],
+  "verification_requirements": [
+    "Verify that submitting the form without changing the departure date yields 'departure=2026-10-22&passengers=2'.",
+    "Verify that selecting a new departure date updates the input's value to the ISO string of the selected date.",
+    "Verify that the return date (which uses a display element) continues to show the formatted long date string.",
+    "Verify that keyboard navigation (Tab, Escape, Enter) still works as expected for the date picker and form fields."
+  ]
+}

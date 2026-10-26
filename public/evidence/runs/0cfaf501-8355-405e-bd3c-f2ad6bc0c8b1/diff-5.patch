@@ -1,0 +1,18 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..fbfaa8c 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -206,6 +206,13 @@ class DialogBase extends BaseComponent {
+ 
+     if (modal) {
+       this._element.showModal()
++      // Focus the autofocus element if present, otherwise the dialog itself
++      const autofocusEl = this._element.querySelector('[autofocus]')
++      if (autofocusEl) {
++        autofocusEl.focus()
++      } else {
++        this._element.focus()
++      }
+     } else {
+       this._element.show()
+     }

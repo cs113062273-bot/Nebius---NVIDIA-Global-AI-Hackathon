@@ -1,0 +1,31 @@
+{
+  "root_cause": "The datepicker does not close when the user tabs away from the input field because there is no focusout listener to hide the picker. When a focusout listener was added in previous attempts, it called picker.hide() which triggers exitEditMode() without updating the selection, causing the input field to revert to the previous value. Additionally, the setDate function calls datepicker.hide() which does not exist on the Datepicker class, causing a potential crash if autohide is ever true.",
+  "repair_strategy": "Add a hide method to the Datepicker class that delegates to this.picker.hide(). Then add a focusout event listener to the input field (for non-inline pickers) that calls this.exitEditMode({update: true}) when focus leaves the picker. This will commit the typed date (if valid) and hide the picker via the new hide method.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "  exitEditMode(options = undefined) {\n    if (this.inline || !this.editMode) {\n      return;\n    }\n    const opts = Object.assign({update: false}, options);\n    delete this.editMode;\n    this.inputField.classList.remove('in-edit');\n    if (opts.update) {\n      this.update(opts);\n    }\n  }\n\n  setDate(...args) {",
+      "after": "  exitEditMode(options = undefined) {\n    if (this.inline || !this.editMode) {\n      return;\n    }\n    const opts = Object.assign({update: false}, options);\n    delete this.editMode;\n    this.inputField.classList.remove('in-edit');\n    if (opts.update) {\n      this.update(opts);\n    }\n  }\n\n  hide() {\n    if (this.picker) {\n      this.picker.hide();\n    }\n  }\n\n  setDate(...args) {"
+    },
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    } else {\n      // set up event listeners in other modes\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }",
+      "after": "    } else {\n      // set up event listeners in other modes\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [inputField, 'focusout', function(event) {\n          if (!this.picker.active) return;\n          const relatedTarget = event.relatedTarget;\n          if (relatedTarget && this.picker.element.contains(relatedTarget)) {\n            return;\n          }\n          this.exitEditMode({update: true});\n        }.bind(this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "When tabbing away from the date input field after entering a date (valid or invalid), the datepicker calendar will close. If the entered date is valid, it will be committed; if invalid, the input will revert to the last valid selection. Screen reader users can navigate away without being trapped in the calendar.",
+  "functional_risks": [
+    "The new hide method on Datepicker might be called from other places where autohide is true, but it simply delegates to picker.hide() which is safe.",
+    "The focusout listener might fire when focus moves to another element inside the picker (e.g., when clicking a day), but the relatedTarget check prevents that.",
+    "If the user tabs away while in edit mode with an invalid date, exitEditMode({update: true}) will call update which ignores invalid dates, leaving the selection unchanged and reverting the input field. This matches the expected behavior for invalid dates."
+  ],
+  "verification_requirements": [
+    "Tabbing away from the date input field after entering a valid date should close the datepicker and update the form data.",
+    "Tabbing away from the date input field after entering an invalid date should close the datepicker and revert the input field to the previous valid date.",
+    "Clicking on the datepicker should not close it (focus moves inside the picker).",
+    "Tabbing into the datepicker from another field should not close it.",
+    "The datepicker should still close when clicking outside (existing behavior)."
+  ]
+}

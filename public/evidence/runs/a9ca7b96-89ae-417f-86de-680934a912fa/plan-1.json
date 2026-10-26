@@ -1,0 +1,25 @@
+{
+  "root_cause": "The _keydown handler for arrow keys activates the next tab via show() but does not move focus to it, leaving focus on the previously active tab or elsewhere and breaking keyboard navigation expectations.",
+  "repair_strategy": "Modify the _keydown method in tab.js to focus the newly activated tab after invoking its show() method, ensuring focus follows selection as required by ARIA authoring practices for tablists.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "69ca6e1d090610fe209a5b54a151e20b738214aabf1464807c85c17c0e29848c",
+      "before": "    if (nextActiveElement) {\n      Tab.getOrCreateInstance(nextActiveElement).show()\n    }",
+      "after": "    if (nextActiveElement) {\n      const instance = Tab.getOrCreateInstance(nextActiveElement)\n      instance.show()\n      nextActiveElement.focus()\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Arrow key navigation will now move focus to the selected tab, allowing keyboard users to traverse tabs sequentially and meeting WCAG 2.1.1 keyboard and 2.4.3 focus order requirements.",
+  "functional_risks": [
+    "Calling focus() on a tab that is already focusable due to tabindex changes is safe; however, if show() were altered to also focus the element, duplicate focus calls could occur.",
+    "Programmatic calls to show() (e.g., via API) will now also move focus, which aligns with expected ARIA behavior but could affect consumers that rely on focus remaining elsewhere after a scripted tab change.",
+    "Edge cases with disabled tabs are already filtered out before computing nextActiveElement, so no risk of focusing disabled elements."
+  ],
+  "verification_requirements": [
+    "Press ArrowRight from the Account tab: focus moves to Notifications tab and its aria-selected becomes true.",
+    "Press ArrowRight again: focus moves to Billing tab and its aria-selected becomes true.",
+    "Press ArrowLeft to navigate backward: focus moves appropriately and aria-selected updates.",
+    "Mouse clicks on tabs continue to work and focus behaves as expected (click already focuses the button).",
+    "Verify that programmatic invocation of Tab.show() results in focus movement to the tab, confirming the fix does not break API usage."
+  ]
+}

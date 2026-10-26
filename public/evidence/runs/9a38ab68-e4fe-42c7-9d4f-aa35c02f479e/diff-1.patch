@@ -1,0 +1,14 @@
+diff --git a/src/index.js b/src/index.js
+index 713f73c..c046a2d 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -171,7 +171,8 @@ const isNodeMatchingSelectorFocusable = function (options, node) {
+     isHiddenInput(node) ||
+     isHidden(node, options.displayCheck) ||
+     /* For a details element with a summary, the summary element gets the focused  */
+-    isDetailsWithSummary(node)
++    isDetailsWithSummary(node) ||
++    matches.call(node, ':disabled')
+   ) {
+     return false;
+   }

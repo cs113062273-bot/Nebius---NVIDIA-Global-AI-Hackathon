@@ -1,0 +1,26 @@
+{
+  "root_cause": "The radios component only responds to click events within its own module. When keyboard navigation selects a radio in a different module but same radio group (shared name='reminder'), the original module receives no event, leaving its conditional field visible incorrectly.",
+  "repair_strategy": "Add a document-level change event listener that detects when any radio in the same name group changes, then updates all conditionals in this module by calling setAttributes on each radio with aria-controls.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}\n\nRadios.prototype.setAttributes = function ($input) {\n  var inputIsChecked = $input.checked\n  $input.setAttribute('aria-expanded', inputIsChecked)\n\n  var $content = this.$module.querySelector('#' + $input.getAttribute('aria-controls'))\n  if ($content) {\n    $content.classList.toggle('govuk-radios__conditional--hidden', !inputIsChecked)\n  }\n}\n\nRadios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nexport default Radios",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.ownerDocument.addEventListener('change', this.handleChange.bind(this))\n}\n\nRadios.prototype.setAttributes = function ($input) {\n  var inputIsChecked = $input.checked\n  $input.setAttribute('aria-expanded', inputIsChecked)\n\n  var $content = this.$module.querySelector('#' + $input.getAttribute('aria-controls'))\n  if ($content) {\n    $content.classList.toggle('govuk-radios__conditional--hidden', !inputIsChecked)\n  }\n}\n\nRadios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nRadios.prototype.handleChange = function (event) {\n  var target = event.target\n  if (target.getAttribute('type') !== 'radio') return\n  var targetName = target.getAttribute('name')\n  var ourName = this.$inputs[0] && this.$inputs[0].getAttribute('name')\n  if (targetName !== ourName) return\n\n  nodeListForEach(this.$inputs, function ($input) {\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nexport default Radios"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate between all reminder options (including across visual groups) and see dependent fields appear/disappear correctly, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order) and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "Double execution of setAttributes when both click and change events fire for the same interaction (idempotent, low risk).",
+    "Document-level listener catches changes from any radio on the page; mitigated by name check.",
+    "If modules are dynamically destroyed, document listeners remain (not an issue for static pages)."
+  ],
+  "verification_requirements": [
+    "Verify keyboard navigation from Text message to opt-out hides mobile field.",
+    "Verify keyboard navigation from opt-out to Text message shows mobile field.",
+    "Verify mouse click on Text message shows mobile field.",
+    "Verify mouse click on opt-out hides mobile field.",
+    "Verify Email radio conditional still works.",
+    "Verify ARIA attributes (aria-controls, aria-expanded) update correctly on both click and keyboard selection."
+  ]
+}

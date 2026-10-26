@@ -1,0 +1,24 @@
+{
+  "root_cause": "Escape key in a submenu incorrectly closes all submenus of the root menu instead of only the current submenu.",
+  "repair_strategy": "Modify the Escape key handler in the keyup listener for submenus to close only the toggle controlling the current submenu and focus that toggle, preserving parent submenu state.",
+  "edits": [
+    {
+      "path": "src/menubar.js",
+      "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864",
+      "before": "    } else if (key === \"Escape\") {\n            // Hitting Escape:\n            // - Closes submenu.\n            // - Moves focus to parent menubar item.\n            preventEvent(event);\n            this.elements.rootMenu.closeChildren();\n            this.elements.rootMenu.focusCurrentChild();",
+      "after": "    } else if (key === \"Escape\") {\n            // Hitting Escape:\n            // - Closes submenu.\n            // - Moves focus to parent menubar item.\n            preventEvent(event);\n            const toggle = this.elements.parentMenu.elements.submenuToggles.find(\n              t => t.elements.controlledMenu === this\n            );\n            if (toggle) {\n              toggle.close();\n              toggle.dom.toggle.focus();\n            }"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close only the innermost open submenu and return focus to its parent menu item, keeping any outer submenu open.",
+  "functional_risks": [
+    "If a submenu somehow lacks a toggle, the close/focus logic would skip (safe fallback).",
+    "Focus may not land correctly if the toggle element is not focusable (should be a link/button).",
+    "Potential regression if other code relies on the previous behavior of closing all submenus."
+  ],
+  "verification_requirements": [
+    "Verify Escape on a leaf submenu item closes that submenu and focuses its parent menuitem while keeping the parent submenu open.",
+    "Verify Escape on the root menubar with no open submenus results in no state change.",
+    "Verify Escape works correctly when a submenu has its own open submenu (nested case).",
+    "Ensure other keyboard navigation (Arrow keys, Space/Enter, etc.) continues to function as expected."
+  ]
+}

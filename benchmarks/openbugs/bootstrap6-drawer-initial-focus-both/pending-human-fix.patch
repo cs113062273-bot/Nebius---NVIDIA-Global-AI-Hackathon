@@ -1,0 +1,18 @@
+diff --git a/scss/_drawer.scss b/scss/_drawer.scss
+index 868856d44639..40966e2aaaea 100644
+--- a/scss/_drawer.scss
++++ b/scss/_drawer.scss
+@@ -188,6 +188,13 @@ $drawer-backdrop-tokens: defaults(
+           visibility: visible;
+           transform: none;
+         }
++
++        // Make drawer contents visible immediately when opening or closing so browser
++        // focusing steps during showModal() can focus elements inside without waiting
++        // for the drawer's visibility transition to interpolate.
++        &:is([open], .hiding) > * {
++          visibility: visible;
++        }
+       }
+ 
+       // Above breakpoint - show content inline (for responsive drawer).

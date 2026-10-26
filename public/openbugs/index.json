@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T09:16:13.706Z",
+  "generatedAt": "2026-10-26T15:58:59.223Z",
   "cases": [
     {
       "id": "autocompletejs-escape-erases-edit",
@@ -18,18 +18,18 @@
       "pendingHumanCheck": null,
       "review": {
         "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
-        "reviewedAt": "2026-10-26T07:48:10.653Z",
-        "run": "c2f93867-3b85-4328-875e-3afbebc64411",
+        "reviewedAt": "2026-10-26T15:58:14.857Z",
+        "run": "e1080a3a-62c5-4f3c-94a6-2ff315f3c672",
         "verdict": "Sound",
-        "summary": "Escape now only closes the list: the lines that emptied the input and emitted the clear event on Escape are removed, which is the behaviour the maintainer proposed in #485.",
+        "summary": "Escape now only closes the list: the lines that emptied the input and emitted the clear event on Escape are removed, the behaviour the maintainer proposed in #485.",
         "caveats": [
           "A page that listened for the clear event on Escape no longer receives it; #485 accepts that.",
-          "The reporter of #402 suggested restoring the earlier value instead; this patch keeps what the user typed, as the maintainer planned."
+          "Ultra wrote it on the second attempt, after Super’s patch did not apply."
         ]
       },
       "expectedBehaviour": "As proposed by the maintainer in #485: Escape closes the list only and keeps the input. The reporter of #402 suggested restoring the earlier value instead; this task follows the maintainer's plan.",
       "recorded": {
-        "run": "c2f93867-3b85-4328-875e-3afbebc64411",
+        "run": "e1080a3a-62c5-4f3c-94a6-2ff315f3c672",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -40,21 +40,21 @@
       },
       "frozenRuns": [
         {
-          "run": "c2f93867-3b85-4328-875e-3afbebc64411",
+          "run": "e1080a3a-62c5-4f3c-94a6-2ff315f3c672",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
         },
         {
-          "run": "218c00df-fc6b-4330-92a9-14b9803280b1",
+          "run": "a2834519-c34a-4949-a1fd-dcf1a8eb91d7",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
+          "passedOn": 2,
           "scope": "library"
         },
         {
-          "run": "023ae492-d0fd-4a32-96fc-48918e180d51",
+          "run": "d91e5074-43b1-4990-b493-d3697ee77d7d",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 3,
+          "passedOn": 2,
           "scope": "library"
         }
       ]
@@ -90,36 +90,177 @@
         "summary": "For an input without a separate display element, the date formatter now returns YYYY-MM-DD before it looks at the dateFormat option, so focusing no longer rewrites a saved ISO value.",
         "caveats": [
           "Every input datepicker now shows ISO dates and ignores a configured dateFormat, including a custom formatter function.",
-          "The pending human fixes keep the configured format and separate the displayed text from the submitted value; this patch does not."
+          "The pending human fixes keep the configured format and separate the displayed text from the submitted value; this patch does not.",
+          "The stricter case bootstrap6-datepicker-focus-rewrites-date-custom-format adds a datepicker with a long dateFormat. This patch fails it; seven of the ten earlier model patches and the pending human fix pass it."
         ]
       },
       "expectedBehaviour": "Only the part of the issue every proposal agrees on: focusing and leaving the field without picking keeps the submitted value 2026-10-22. What a newly picked date should submit is still being decided upstream and is not tested.",
       "recorded": {
-        "run": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
+        "run": "45267b98-9483-45ef-aeea-d4c24f636f16",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 2,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
+          "run": "45267b98-9483-45ef-aeea-d4c24f636f16",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "1a6559be-9f1b-4fa4-a328-a2ef6b8ad371",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "78a722f7-bee6-41d2-8561-02e3a8ca0a88",
+          "run": "9b60a76b-41c6-4cf9-a9a5-8bacec71ae87",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
+        }
+      ]
+    },
+    {
+      "id": "bootstrap6-datepicker-focus-rewrites-date-custom-format",
+      "title": "Passing through a prefilled datepicker must not change the submitted date, and a configured dateFormat must still be shown",
+      "summary": "The datepicker instance is created on focusin and immediately rewrites the input with a locale string, so a saved 2026-10-22 is submitted as 10/22/2026 although the user never picked a date.",
+      "library": "Bootstrap 6.0 alpha (datepicker, TypeScript source)",
+      "category": "Wrong submitted data",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues/43149",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Open. Fixes are proposed in pull requests #43150 and #43151, not merged at pinnedCommit. They are never sent to the model.",
+      "derivedFrom": "bootstrap6-datepicker-focus-rewrites-date",
+      "addedAfterReview": "Added after reviewing the engine-v11 patch for bootstrap6-datepicker-focus-rewrites-date: it passed every frozen check by returning an ISO date before the dateFormat option is read, so every input datepicker ignored its configured format. The page now also has a datepicker with a long dateFormat, and a guard requires a picked date to show in it. Earlier patches are replayed against this stricter task without inference.",
+      "replays": [
+        {
+          "run": "3212f259-f3d5-4f85-8c63-692e5649f3ec",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "bfef3326-518e-4f03-bc0e-a8bda9d3169d",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
         },
         {
-          "run": "b5912388-7261-4a59-8874-b6518b2c6721",
+          "run": "9d796646-2fbe-4c00-8ca1-68a89d59579d",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "5f429d28-ad4a-4987-87d8-3e89b3ab365e",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "52d6273c-aa25-4329-9184-e254588b3fe5",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "0660cb3d-69c6-4a2f-b63e-0a06532f1164",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "ff896087-80bc-49c0-b087-77763549354c",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "e5b11819-4a22-4eff-a826-bbfbc95465fe",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "3e61576a-dd70-4c4d-acc2-4a3acc3c6092",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "fc4d9aed-b356-419f-bc34-3ccf9b0bbb01",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "5a67ab45-46bb-4a72-85e0-fd5f080503c3",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "1227138c-e061-454e-a346-f33874150a5c",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "5267b95e-2991-4c30-891d-059e3a654096",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "1eed9dfb-b5b7-4fb8-909e-b83702dc5d1a",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "76815dcf-0535-4e26-8cf2-ca717b67cf1b",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "41612a33-01f5-42a4-accd-b1650463abc2",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "78a722f7-bee6-41d2-8561-02e3a8ca0a88",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "d1a7174e-ef70-42f2-ae28-1f462cbb3b1d",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+          "fromRun": "b5912388-7261-4a59-8874-b6518b2c6721",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        }
+      ],
+      "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43150",
+      "pendingHumanCheck": null,
+      "review": {
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T15:58:14.857Z",
+        "run": "8f75e572-c056-4582-9602-cb8737a15cdb",
+        "verdict": "Works, with a visible change to the default display",
+        "summary": "A configured dateFormat (function or Intl options) is still applied first; only the default formatting of an input datepicker changes from locale text to YYYY-MM-DD, so focusing no longer rewrites a saved ISO value.",
+        "caveats": [
+          "Every input datepicker without a dateFormat now shows ISO dates instead of locale text.",
+          "The pending human fixes keep the locale display and submit ISO through a hidden input; this patch changes what users see instead."
+        ]
+      },
+      "expectedBehaviour": "Only the part of the issue every proposal agrees on: focusing and leaving the field without picking keeps the submitted value 2026-10-22. What a newly picked date should submit is still being decided upstream and is not tested.",
+      "recorded": {
+        "run": "8f75e572-c056-4582-9602-cb8737a15cdb",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "8f75e572-c056-4582-9602-cb8737a15cdb",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "c0393c10-68f6-48f3-8a2b-0b988f6aaf93",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "83836c34-3500-47b2-b22e-4451041999a1",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
           "scope": "library"
         }
       ]
@@ -153,34 +294,32 @@
       },
       "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
       "recorded": {
-        "run": "a9cf0d32-ee10-4b02-ab78-f8487748594a",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "ba2cfe7b-0ee4-4a13-a2da-717fdc83b2a5",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
-        "scope": null
+        "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "a9cf0d32-ee10-4b02-ab78-f8487748594a",
+          "run": "ba2cfe7b-0ee4-4a13-a2da-717fdc83b2a5",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "fd78e668-ccf1-4359-b3ca-8b5249ad44bc",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "7e4966ee-8847-47ab-a5d5-44fd1fc66fb9",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
-        },
-        {
-          "run": "26109a26-b352-419f-8e32-c1094c0cf855",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
-        },
-        {
-          "run": "c6c5283f-8a6f-424b-9d8c-d4ceb9ccca4d",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
         }
       ]
     },
@@ -229,29 +368,33 @@
       },
       "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
       "recorded": {
-        "run": "ddfef893-7cb5-43c4-bcb1-efcb238548f7",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "run": "321b5277-3e1c-4f07-9a05-3f8ea07d8426",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
-        "scope": "library"
+        "scope": null
       },
       "frozenRuns": [
         {
-          "run": "ddfef893-7cb5-43c4-bcb1-efcb238548f7",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
-          "scope": "library"
+          "run": "321b5277-3e1c-4f07-9a05-3f8ea07d8426",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         },
         {
-          "run": "6f082ad3-ec81-4fb4-914f-81ae33897f67",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
-          "scope": "library"
+          "run": "9f303cc9-3be9-4104-a94f-07e5ca610b9c",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         },
         {
-          "run": "92e3f823-050a-4cb5-a98b-dcb58147b100",
+          "run": "08052965-19cc-486d-9f91-c651dd808ede",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
@@ -297,32 +440,35 @@
       },
       "expectedBehaviour": null,
       "recorded": {
-        "run": "fb6e1ffd-520a-451e-947f-db582f92969a",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "run": "bde8c252-6f44-43df-ab8c-3870b0ed235d",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ],
-        "scope": "library"
+        "scope": null
       },
       "frozenRuns": [
         {
-          "run": "fb6e1ffd-520a-451e-947f-db582f92969a",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
+          "run": "bde8c252-6f44-43df-ab8c-3870b0ed235d",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         },
         {
-          "run": "ef0a3121-c675-4128-a513-e76d4b755bf4",
+          "run": "f370cb3c-e15f-4c58-8879-2aa808b5a245",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "a8709acf-7736-4f88-a87f-3801f5040173",
+          "run": "8b228b7f-f52b-416c-8448-cdf796025e4d",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
+          "passedOn": 5,
           "scope": "library"
         }
       ]
@@ -397,46 +543,42 @@
       },
       "review": {
         "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
-        "reviewedAt": "2026-10-26T09:09:50.151Z",
-        "run": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
-        "verdict": "Sound, close to the pending human fix",
-        "summary": "For modal dialogs, the Escape keydown handler now calls preventDefault() only when keyboard is false, so the close request never starts; dialogs with the default options still close through the native cancel path.",
+        "reviewedAt": "2026-10-26T15:58:14.857Z",
+        "run": "41b7b4a4-aacd-4916-bb87-71627efd8084",
+        "verdict": "Sound, matches the pending human fix",
+        "summary": "The Escape keydown handler now runs for modal dialogs too: with keyboard false it calls preventDefault() and plays the static-backdrop bounce, so the close request never starts; dialogs with the default options keep the native cancel path.",
         "caveats": [
-          "Pressing Escape on the keyboard: false dialog no longer plays the static-backdrop bounce; the pending human fix (#43077) keeps it.",
-          "The same explanatory comment is added twice.",
-          "Ultra wrote it on the third attempt, after a rejected proposal and a browser rejection."
+          "The bounce is also triggered for a non-modal dialog with keyboard false, which has no backdrop; the pending human fix (#43077) limits it to modal dialogs."
         ]
       },
       "expectedBehaviour": null,
       "recorded": {
-        "run": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
+        "run": "41b7b4a4-aacd-4916-bb87-71627efd8084",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 3,
-          "scope": "library"
-        },
-        {
-          "run": "9445c733-3aa9-42fa-aa71-2983425ef125",
+          "run": "41b7b4a4-aacd-4916-bb87-71627efd8084",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "49457ef2-4c33-4464-ad1c-f462a9609d32",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
+          "run": "ce6ed4f8-8a08-427e-9d91-bfcb0d3a5638",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "a6af955e-f13d-4684-93c6-f164bde619cd",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
         }
       ]
     },
@@ -468,34 +610,243 @@
         "summary": "After the drawer’s shown event, focus moves to the first focusable element inside it, so keyboard focus no longer falls back to the body.",
         "caveats": [
           "The selector list does not prefer an [autofocus] element and does not skip disabled or hidden controls.",
-          "Focus moves only after the slide-in transition ends; the pending human fix in #43139 instead fixes the visibility timing so the native dialog focusing steps work."
+          "Focus moves only after the slide-in transition ends; the pending human fix in #43139 instead fixes the visibility timing so the native dialog focusing steps work.",
+          "The stricter case bootstrap6-drawer-initial-focus-autofocus puts an [autofocus] field in the drawer. This patch and both earlier passing patches fail it."
         ]
       },
       "expectedBehaviour": "Focus lands on the first focusable control in the drawer, its close button, as for a native modal dialog. The compiled stylesheet is a dependency outside the editable source, so a repair has to be made in the TypeScript.",
       "recorded": {
-        "run": "a74a9036-7db1-4b46-a154-006a3c40eb7f",
+        "run": "aafbed78-9379-4e1a-b07c-cd1502b08cbd",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 3,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "a74a9036-7db1-4b46-a154-006a3c40eb7f",
+          "run": "aafbed78-9379-4e1a-b07c-cd1502b08cbd",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
+          "passedOn": 3,
           "scope": "library"
         },
         {
-          "run": "d1cb2dcb-1807-434e-a2bd-1ecbf29cb30c",
+          "run": "daacacf6-8db8-4290-883a-141d092180b6",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "414a2da3-fc11-4e8c-a0e4-2d54b26891c0",
+          "run": "dced4bab-ffda-409f-bb6d-8d6918d3ba87",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        }
+      ]
+    },
+    {
+      "id": "bootstrap6-drawer-initial-focus-autofocus",
+      "title": "Opening a drawer must move keyboard focus into it, to its autofocus field when it has one",
+      "summary": "A closed drawer is visibility: hidden and becomes visible through the slide-in transition. showModal() runs its focusing steps while everything inside is still hidden, so focus falls back to body and the trigger behind the modal is inert.",
+      "library": "Bootstrap 6.0 alpha (drawer, TypeScript source)",
+      "category": "Focus loss",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues/43120",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Open, labelled confirmed and needs-decision. A fix is proposed in pull request #43139, not merged at pinnedCommit. That pull request is never sent to the model.",
+      "derivedFrom": "bootstrap6-drawer-initial-focus",
+      "addedAfterReview": "Added after reviewing the engine-v11 patch for bootstrap6-drawer-initial-focus: it moved focus to the first focusable element after the drawer was shown, ignoring an [autofocus] element, which the HTML dialog focusing steps would focus. The drawer now has an autofocus search field, and the task expects focus there. Earlier patches are replayed against this stricter task without inference.",
+      "replays": [
+        {
+          "run": "df1aaa70-8f82-40b8-9d0b-65753918c681",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it",
+          "fromRun": "7e0e462e-2418-4f6b-b6d1-2c6f89456331",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "902cf439-128d-4f0e-b81e-5f7d6dcbc297",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it",
+          "fromRun": "3bd01302-203b-4959-80d9-10bca5a5e6ea",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "e77ab00f-bf46-423d-ada5-3d7ea38b6539",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it",
+          "fromRun": "a74a9036-7db1-4b46-a154-006a3c40eb7f",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        }
+      ],
+      "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43139",
+      "pendingHumanCheck": null,
+      "review": {
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T15:58:14.857Z",
+        "run": "36e2d581-7898-4c14-a954-13c1892a65c8",
+        "verdict": "Partial: fixes only drawers with an autofocus field",
+        "summary": "After the shown event, focus moves to the drawer’s [autofocus] element; a drawer without one is left unchanged.",
+        "caveats": [
+          "A drawer without an [autofocus] element still drops focus to the page body. The stricter case bootstrap6-drawer-initial-focus-both requires both kinds of drawer; this patch fails it, and one earlier model patch (42ce55e5) passes it."
+        ]
+      },
+      "expectedBehaviour": "Focus lands on the first focusable control in the drawer, its close button, as for a native modal dialog. The compiled stylesheet is a dependency outside the editable source, so a repair has to be made in the TypeScript. With an [autofocus] element in the drawer, focus goes to that element, as the HTML dialog focusing steps specify.",
+      "recorded": {
+        "run": "36e2d581-7898-4c14-a954-13c1892a65c8",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "36e2d581-7898-4c14-a954-13c1892a65c8",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "d40f63a7-699c-410a-9d78-a31d4422295e",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 5,
+          "scope": "library"
+        },
+        {
+          "run": "0cfaf501-8355-405e-bd3c-f2ad6bc0c8b1",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
+    },
+    {
+      "id": "bootstrap6-drawer-initial-focus-both",
+      "title": "Opening a drawer must move keyboard focus into it: to its autofocus field when it has one, otherwise to its first control",
+      "summary": "A closed drawer is visibility: hidden and becomes visible through the slide-in transition. showModal() runs its focusing steps while everything inside is still hidden, so focus falls back to body and the trigger behind the modal is inert.",
+      "library": "Bootstrap 6.0 alpha (drawer, TypeScript source)",
+      "category": "Focus loss",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues/43120",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Open, labelled confirmed and needs-decision. A fix is proposed in pull request #43139, not merged at pinnedCommit. That pull request is never sent to the model.",
+      "derivedFrom": "bootstrap6-drawer-initial-focus-autofocus",
+      "addedAfterReview": "Added after reviewing the engine-v13 patch for bootstrap6-drawer-initial-focus-autofocus: it focused an [autofocus] element and did nothing otherwise, so a drawer without one still dropped focus to the page body. That stricter case had replaced the base expectation instead of adding to it. The page now has both kinds of drawer, and one keyboard task needs both to take focus. Earlier patches are replayed against it without inference.",
+      "replays": [
+        {
+          "run": "11032c7b-22ea-440a-af6f-ed39d8baed41",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it",
+          "fromRun": "7e0e462e-2418-4f6b-b6d1-2c6f89456331",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "8da5d918-1392-4fdd-aae8-b71058b06670",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it",
+          "fromRun": "3bd01302-203b-4959-80d9-10bca5a5e6ea",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "431c8ccb-daef-4384-a2c1-b4638a4f3c46",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it",
+          "fromRun": "a74a9036-7db1-4b46-a154-006a3c40eb7f",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "c915ccd9-6ec6-45f6-81a8-619dedb91e30",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it",
+          "fromRun": "aafbed78-9379-4e1a-b07c-cd1502b08cbd",
+          "attempt": 3,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "6c2b6214-59cc-4e25-a979-caa2711ede31",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it",
+          "fromRun": "dced4bab-ffda-409f-bb6d-8d6918d3ba87",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "729ac023-0db2-46b4-b119-7713b35b458c",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it, to its autofocus field when it has one",
+          "fromRun": "150d9f41-5871-4e9b-965b-b6d9698e1fca",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "5c95edfc-a609-4471-af89-72fa0f3ae918",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Opening a drawer must move keyboard focus into it, to its autofocus field when it has one",
+          "fromRun": "42ce55e5-f531-4497-9899-664f39d5f674",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "4686ecda-bd52-446f-86ec-78f52b9a32d4",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it, to its autofocus field when it has one",
+          "fromRun": "36e2d581-7898-4c14-a954-13c1892a65c8",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "d9b72eb4-f304-4a5d-b51f-df0ff1b54062",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Opening a drawer must move keyboard focus into it, to its autofocus field when it has one",
+          "fromRun": "d40f63a7-699c-410a-9d78-a31d4422295e",
+          "attempt": 5,
+          "engine": "browser replay, no inference"
+        }
+      ],
+      "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43139",
+      "pendingHumanCheck": null,
+      "review": null,
+      "expectedBehaviour": "Opening a drawer moves focus into it: to the [autofocus] element when there is one, otherwise to its first focusable control, as the HTML dialog focusing steps specify.",
+      "recorded": {
+        "run": "8e768c54-8664-4044-aba8-cea57de985dd",
+        "verdict": "INCONCLUSIVE",
+        "passedOn": null,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "8e768c54-8664-4044-aba8-cea57de985dd",
+          "verdict": "INCONCLUSIVE",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "c3e30e64-3d8e-49f3-ad37-2c5183c5c7e9",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "f392ad0a-1654-468c-aabf-f82c320796a7",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
@@ -531,7 +882,7 @@
       },
       "expectedBehaviour": "Author decision: the arrow key moves to the next day that is not disabled, as when a user skips over closed days with the pointer.",
       "recorded": {
-        "run": "c71c63e9-f789-480c-8f0c-593920943998",
+        "run": "71a2a5c8-32ee-4e16-a610-2f1af373e90d",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -541,19 +892,19 @@
       },
       "frozenRuns": [
         {
-          "run": "c71c63e9-f789-480c-8f0c-593920943998",
+          "run": "71a2a5c8-32ee-4e16-a610-2f1af373e90d",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "128ec657-8433-4ce6-b953-7cf30fc30414",
+          "run": "95094473-7ddb-48ea-8101-0433efd8fcb4",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "ed2fecfa-1454-4352-b254-fda7333dc60e",
+          "run": "512c7bbe-d145-4a3e-ab98-b824dea8598c",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -608,36 +959,45 @@
       ],
       "pendingHumanFix": null,
       "pendingHumanCheck": null,
-      "review": null,
+      "review": {
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T15:58:14.857Z",
+        "run": "af87010f-42fc-447a-b6d0-59d572aa8bf9",
+        "verdict": "Works, with caveats",
+        "summary": "ArrowLeft and ArrowRight now step calendar days with setDate and skip days that minDate, maxDate, disableWeekends or disableDayFn close; at a range end they stop on the boundary day, so the maxDate hang of the earlier patch cannot happen.",
+        "caveats": [
+          "ArrowUp and ArrowDown still use the original weekly jump and can land on a closed day.",
+          "At a boundary it clamps to minDate or maxDate even when that day is itself disabled.",
+          "If disableDayFn closed every day with no minDate or maxDate, the loop would not end; no realistic page does that."
+        ]
+      },
       "expectedBehaviour": "Author decision: the arrow key moves to the next day that is not disabled, as when a user skips over closed days with the pointer.",
       "recorded": {
-        "run": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "af87010f-42fc-447a-b6d0-59d572aa8bf9",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
-        "scope": null
+        "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
-        },
-        {
-          "run": "cb4fc16a-9732-4181-9bab-ec662a9fd022",
+          "run": "af87010f-42fc-447a-b6d0-59d572aa8bf9",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "f38e9f65-da95-4d28-8ccc-226d6922bf8d",
+          "run": "4fcca70f-e524-4fbd-96e1-e9d87ef6a57f",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "2135b987-4321-4cb5-85b7-76400e3b81ba",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
           "scope": "library"
         }
       ]
@@ -670,11 +1030,13 @@
       },
       "expectedBehaviour": null,
       "recorded": {
-        "run": "ebd9a598-43a3-4b3e-b128-78f5bc5c2229",
+        "run": "3684e2a3-46e7-432f-a4b1-7d216fd568bc",
         "verdict": "VERIFIED_FAIL",
         "passedOn": null,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ],
@@ -682,19 +1044,19 @@
       },
       "frozenRuns": [
         {
-          "run": "ebd9a598-43a3-4b3e-b128-78f5bc5c2229",
+          "run": "3684e2a3-46e7-432f-a4b1-7d216fd568bc",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "1fb6d50b-3d55-4b0c-83b9-cfa07a2c5fa8",
+          "run": "8aa302f8-effa-4f2b-90dc-4a4229e8a61a",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "e2f00e4b-9be3-4b3a-9826-0dd411c8504d",
+          "run": "bba1b621-46ba-47f3-953f-dcbd0bbc4e37",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null

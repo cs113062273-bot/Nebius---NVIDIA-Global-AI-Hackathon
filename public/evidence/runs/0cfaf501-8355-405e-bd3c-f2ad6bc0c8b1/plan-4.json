@@ -1,0 +1,23 @@
+{
+  "root_cause": "The native <dialog> element does not automatically focus its [autofocus] child when shown via showModal() in this test environment. Synchronous focus() calls in _showElement execute before the dialog is fully in the top layer, and microtask-scheduled focus runs after the test's synchronous assertion check. Focus remains on <body> because the dialog opens but never captures keyboard focus.",
+  "repair_strategy": "In DialogBase._showElement, after calling showModal(), schedule focus on the [autofocus] element using requestAnimationFrame to ensure the dialog is rendered in the top layer, with a synchronous fallback for environments where rAF runs immediately. This matches Bootstrap's pattern for top-layer focus management.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }",
+      "after": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n\n    // Move focus to autofocus element after the dialog enters the top layer.\n    // requestAnimationFrame ensures the browser has processed the top-layer change.\n    // Fall back to synchronous focus if rAF callback runs immediately (test env).\n    const focusAutofocus = () => {\n      const autofocusEl = this._element.querySelector('[autofocus]')\n      if (autofocusEl) {\n        autofocusEl.focus()\n      } else {\n        this._element.focus()\n      }\n    }\n    if (typeof requestAnimationFrame === 'function') {\n      requestAnimationFrame(focusAutofocus)\n    } else {\n      focusAutofocus()\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users opening the filters drawer will land directly on the search field, enabling immediate filter interaction without a pointer.",
+  "functional_risks": [
+    "Minimal timing difference in production (one frame) — negligible for user perception.",
+    "If requestAnimationFrame is not available (unlikely), synchronous focus may still race with top-layer entry, but this matches prior behavior."
+  ],
+  "verification_requirements": [
+    "After opening the drawer via keyboard, focus is on #filters-search.",
+    "Pressing Space on #in-stock checkbox toggles its state.",
+    "Pressing Tab twice and Enter on #apply updates the applied output to 'in'.",
+    "Escape closes drawer and returns focus to #filters-open."
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "id": "bs6-drawer-pointer-filter",
+  "title": "Apply a filter with the pointer",
+  "goal": "Clicking Filters, ticking Waterproof and clicking Show results applies the filter",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the drawer",
+      "action": {
+        "kind": "click",
+        "selector": "#filters-open"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Tick Waterproof",
+      "action": {
+        "kind": "click",
+        "selector": "#waterproof"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Show results",
+      "action": {
+        "kind": "click",
+        "selector": "#apply"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#applied",
+      "value": "waterproof"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#filters",
+      "name": "open",
+      "value": null
+    }
+  ],
+  "forbidden": []
+}

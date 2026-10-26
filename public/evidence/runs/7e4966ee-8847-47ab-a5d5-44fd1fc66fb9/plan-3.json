@@ -1,0 +1,35 @@
+{
+  "root_cause": "The Vanilla Calendar Pro library prevents the default action of the Tab key when the datepicker popup is open, trapping focus on the trigger input and preventing keyboard navigation to the next form field.",
+  "repair_strategy": "Add a keydown listener on the trigger input that calls stopImmediatePropagation() for the Tab key when the datepicker is shown. This prevents VCP's keydown listener from receiving the event and calling preventDefault(), allowing the browser's default Tab navigation to proceed. The existing focusin dismiss handler will close the datepicker when focus moves to the next field.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onInputKeydown: (event: KeyboardEvent) => void"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)\n    EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)\n  }",
+      "after": "    EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)\n    EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)\n\n    // Allow Tab key to move focus out of the input when the datepicker is shown\n    if (this._isInput) {\n      this._onInputKeydown = (event: KeyboardEvent) => {\n        if (this._isShown && event.key === 'Tab') {\n          event.stopImmediatePropagation()\n        }\n      }\n      EventHandler.on(this._element, 'keydown', this._onInputKeydown)\n    }\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {",
+      "after": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._onInputKeydown) {\n      EventHandler.off(this._element, 'keydown', this._onInputKeydown)\n    }\n\n    if (this._calendar) {"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab from the departure date input moves focus to the passengers input, restoring natural form navigation for keyboard users.",
+  "functional_risks": [
+    "If VCP attaches its keydown listener to the input itself (not document), stopImmediatePropagation will also prevent other listeners on the input from running, but there are none.",
+    "If the user presses Tab while focused inside the calendar (e.g., on a calendar button), this fix does not apply because the listener is only on the trigger input. That's acceptable because the calendar should handle its own keyboard navigation."
+  ],
+  "verification_requirements": [
+    "Tab key press from the departure date input moves focus to the passengers input.",
+    "Escape key press still closes the datepicker and keeps focus on the departure date input (regression guard).",
+    "The datepicker still opens when the departure date input receives focus.",
+    "Clicking outside the datepicker still closes it."
+  ]
+}

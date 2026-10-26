@@ -1,0 +1,23 @@
+{
+  "root_cause": "The Escape key listener in DialogBase._addDialogListeners early‑returns for modal dialogs, relying solely on the native cancel event. After two Escape presses, some interaction with the backdrop transition caused the cancel event’s defaultPrevented to be false, allowing the dialog to close. Consequently, the Escape key stopped being respected when keyboard: false.",
+  "repair_strategy": "Modify the keydown listener to handle the Escape key for both modal and non‑modal dialogs. Prevent the default action and hide the dialog only when the keyboard option is true, ensuring consistent behavior regardless of the dialog’s modal state.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "    // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())\n    EventHandler.on(this._element, `keydown${eventKey}`, event => {\n      if (event.key !== 'Escape' || this._openedAsModal) {\n        return;\n      }\n\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    })",
+      "after": "    // Handle Escape key for modal and non-modal dialogs\n    EventHandler.on(this._element, `keydown${eventKey}`, event => {\n      if (event.key !== 'Escape') {\n        return;\n      }\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    })"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will no longer dismiss the confirmation dialog when keyboard: false, allowing users to press Escape repeatedly to clear mistakes or reconsider without losing focus or exiting the dialog, satisfying WCAG 2.1.1 (keyboard) and 2.4.3 (focus order).",
+  "functional_risks": [
+    "The change alters Escape handling for modal dialogs; however, the intended behavior (close when keyboard: true) is preserved. Non‑modal dialogs are unaffected. Any custom code that relied on the previous early‑return for modal dialogs to ignore Escape would now receive the event, but such usage is non‑standard."
+  ],
+  "verification_requirements": [
+    "Confirm that pressing Escape any number of times on the confirmation dialog leaves it open and focus remains on the OTP input.",
+    "Confirm that pressing Escape on the help dialog (non‑modal, default options) still closes it.",
+    "Verify that submitting a correct six‑digit code sends the transfer and closes the dialog.",
+    "Verify that the Cancel transfer button still closes the dialog and sets status to 'Cancelled'.",
+    "Ensure that backdrop clicks with backdrop: 'static' do not close the confirmation dialog."
+  ]
+}

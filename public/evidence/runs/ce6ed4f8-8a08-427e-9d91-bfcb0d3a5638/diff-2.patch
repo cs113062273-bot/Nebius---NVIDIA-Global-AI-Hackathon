@@ -1,0 +1,23 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..7a2f2a6 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -320,8 +320,17 @@ class DialogBase extends BaseComponent {
+     EventHandler.on(this._element, 'cancel', this._cancelHandler)
+ 
+     // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())
++    // and for modal dialogs with keyboard: false to prevent the native cancel event.
+     EventHandler.on(this._element, `keydown${eventKey}`, event => {
+-      if (event.key !== 'Escape' || this._openedAsModal) {
++      if (event.key !== 'Escape') {
++        return
++      }
++
++    if (this._openedAsModal) {
++      if (!this._config.keyboard) {
++        event.preventDefault()
++        event.stopImmediatePropagation()
++      }
+         return
+       }
+ 

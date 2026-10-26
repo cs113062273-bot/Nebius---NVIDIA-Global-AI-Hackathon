@@ -1,0 +1,23 @@
+{
+  "root_cause": "The datepicker's keydown listener prevents the default Tab action when the picker is open, causing focus to be lost instead of moving to the next form field.",
+  "repair_strategy": "Modify the keydown listener in Datepicker.js to allow the Tab key to propagate when the datepicker is active, preserving default focus traversal while keeping other keyboard shortcuts intact.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+      "before": "    const keydownListener = [element, 'keydown', onKeydown.bind(null, this)];\n",
+      "after": "    const keydownListener = [element, 'keydown', (e) => {\n      if (e.key === 'Tab' && this.active) {\n        return;\n      }\n      onKeydown.call(null, this, e);\n    }];\n"
+    }
+  ],
+  "expected_accessibility_effect": "Users can now press Tab to move focus from the visit date field to the access notes field while the datepicker is open, enabling keyboard-only navigation through the form.",
+  "functional_risks": [
+    "Potential interference with any custom Shift+Tab handling (though only Tab is altered).",
+    "If other code relied on Tab being suppressed to keep focus inside the picker, that behavior will change."
+  ],
+  "verification_requirements": [
+    "Verify that Tab moves focus from #visit-date to #notes when the datepicker is open.",
+    "Verify that ArrowRight and Enter still change the date as expected.",
+    "Verify that Escape still closes the picker.",
+    "Verify that Tab behaves normally when the picker is closed."
+  ]
+}

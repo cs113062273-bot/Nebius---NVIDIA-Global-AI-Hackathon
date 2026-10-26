@@ -1,0 +1,23 @@
+{
+  "root_cause": "The datepicker widget traps focus when open, preventing the Tab key from moving focus to the next form field. Specifically, the datepicker's keydown listener does not handle the Tab key to close the widget and allow focus to move outward.",
+  "repair_strategy": "Add a Tab key listener on the datepicker's input field that hides the datepicker when the Tab key is pressed and the datepicker is active, allowing the Tab key to then move focus to the next form field.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+      "before": "          registerListeners(this, [\n            keydownListener,\n            [inputField, 'focus', onFocus.bind(null, this)],\n            [inputField, 'mousedown', onMousedown.bind(null, this)],\n            [inputField, 'click', onClickInput.bind(null, this)],\n            [inputField, 'paste', onPaste.bind(null, this)],\n            // To detect a click on outside, just listening to mousedown is enough,\n            // no need to listen to touchstart.\n            // Actually, listening to touchstart can be a problem because, while\n            // mousedown is fired only on tapping but not on swiping/pinching,\n            // touchstart is fired on swiping/pinching as well.\n            // (issue #95)\n            [document, 'mousedown', onClickOutside.bind(null, this)],\n            [window, 'resize', picker.place.bind(picker)]\n          ]);",
+      "after": "          // Create a new listener for the Tab key that hides the datepicker when active.\n          const tabListener = [inputField, 'keydown', (ev) => {\n            if (ev.key === 'Tab' && this.active) {\n              this.hide();\n            }\n          }];\n\n          registerListeners(this, [\n            tabListener,\n            keydownListener,\n            [inputField, 'focus', onFocus.bind(null, this)],\n            [inputField, 'mousedown', onMousedown.bind(null, this)],\n            [inputField, 'click', onClickInput.bind(null, this)],\n            [inputField, 'paste', onPaste.bind(null, this)],\n            // To detect a click on outside, just listening to mousedown is enough,\n            // no need to listen to touchstart.\n            // Actually, listening to touchstart can be a problem because, while\n            // mousedown is fired only on tapping but not on swiping/pinching,\n            // touchstart is fired on swiping/pinching as well.\n            // (issue #95)\n            [document, 'mousedown', onClickOutside.bind(null, this)],\n            [window, 'resize', picker.place.bind(picker)]\n          ]);"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab while the datepicker is open will close the datepicker and move focus to the next form field, enabling keyboard users to navigate the form without getting trapped in the datepicker widget.",
+  "functional_risks": [
+    "If the datepicker relies on the Tab key for internal navigation (e.g., moving between days in the grid), this change may break that functionality. However, the datepicker provides alternative keyboard navigation (arrow keys and Ctrl+Arrow keys) for internal navigation, so the risk is low."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab in the visit date field when the datepicker is open moves focus to the access notes field.",
+    "Verify that the datepicker closes when Tab is pressed.",
+    "Verify that other keyboard interactions with the datepicker (arrow keys, Enter, Escape) still work as expected.",
+    "Verify that the datepicker still opens when the visit date field is focused.",
+    "Verify that the datepicker does not interfere with Shift+Tab navigation (though not tested in this scenario, it should still work to move focus backward)."
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "id": "bs6-drawer-focus-moves-in",
+  "title": "Open and close the Sort drawer, then apply a filter from the drawer with an autofocus field, all with the keyboard",
+  "goal": "Opening the drawer moves focus into it, so the user can tick a filter and show results without a pointer",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach Sort",
+      "action": {
+        "kind": "seek",
+        "selector": "#sort-open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open the Sort drawer",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#sort",
+          "name": "open",
+          "value": ""
+        },
+        {
+          "kind": "focus",
+          "selector": "#sort-close"
+        }
+      ]
+    },
+    {
+      "title": "Close it with Escape",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#sort",
+          "name": "open",
+          "value": null
+        },
+        {
+          "kind": "focus",
+          "selector": "#sort-open"
+        }
+      ]
+    },
+    {
+      "title": "Reach Filters",
+      "action": {
+        "kind": "seek",
+        "selector": "#filters-open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open the drawer",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#filters",
+          "name": "open",
+          "value": ""
+        },
+        {
+          "kind": "focus",
+          "selector": "#filters-search"
+        }
+      ]
+    },
+    {
+      "title": "Move to In stock",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#in-stock"
+        }
+      ]
+    },
+    {
+      "title": "Tick In stock",
+      "action": {
+        "kind": "press",
+        "key": "Space"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to Waterproof",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to Show results",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#apply"
+        }
+      ]
+    },
+    {
+      "title": "Show results",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#applied",
+      "value": "in"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#filter-form",
+      "name": "stock",
+      "value": [
+        "in"
+      ]
+    }
+  ],
+  "forbidden": []
+}

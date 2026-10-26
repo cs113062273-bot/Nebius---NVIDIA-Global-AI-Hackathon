@@ -1,0 +1,35 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..622fda2 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,6 +118,7 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _isTriggerInput: boolean
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+@@ -228,6 +229,7 @@ class Datepicker extends BaseComponent {
+   // Private
+   protected _initCalendar(): void {
+     this._isInput = this._element.tagName === 'INPUT'
++    this._isTriggerInput = this._isInput && this._element.getAttribute('data-bs-toggle') === 'datepicker'
+     this._isInline = this._config.inline
+ 
+     // For inline mode, look for a hidden input child to bind to
+@@ -270,7 +272,13 @@ class Datepicker extends BaseComponent {
+   protected _syncSelectedDates(selectedDates: string[]): void {
+     const formattedDate = this._formatDateForInput(selectedDates)
+     if (this._isInput) {
+-      this._element.value = formattedDate
++      if (this._isTriggerInput) {
++        // For trigger inputs (e.g., departure date), keep ISO value for form submission
++        this._element.value = selectedDates.length > 0 ? selectedDates[0] : ''
++      } else {
++        // For non-trigger inputs (e.g., return date), show formatted date
++        this._element.value = formattedDate
++      }
+     }
+ 
+     if (this._boundInput) {

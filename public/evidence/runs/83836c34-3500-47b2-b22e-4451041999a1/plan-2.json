@@ -1,0 +1,29 @@
+{
+  "root_cause": "The datepicker updates the input value to a locale-formatted date string during initialization and after date selection, causing the submitted departure date to change from ISO format (YYYY-MM-DD) to locale format when the user leaves the field without selecting a date. However, the return date (which is not part of a form) expects the input to show the formatted date when a date is picked.",
+  "repair_strategy": "Modify the datepicker to preserve the input value in ISO format for form submission when no custom dateFormat is configured, while showing formatted dates in a separate display element (if present). If a custom dateFormat is explicitly configured (indicating a display-only input), update the input with the formatted date on selection. During initialization, only update the display element (if present) to avoid reformatting existing input values.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()",
+      "after": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate display with preselected dates\n    if (this._displayElement) {\n      this._updateDisplayWithSelectedDates()\n    }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput) {\n      this._element.value = formattedDate\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n  }",
+      "after": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    if (selectedDates.length === 0) {\n      if (this._displayElement) {\n        this._displayElement.textContent = ''\n      }\n      if (this._isInput) {\n        this._element.value = ''\n      }\n      if (this._boundInput) {\n        this._boundInput.value = ''\n      }\n      return\n    }\n\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n\n    if (this._isInput) {\n      // If a custom dateFormat is configured, show formatted date in input; otherwise keep ISO for form submission\n      if (this._config.dateFormat) {\n        this._element.value = formattedDate\n      } else {\n        this._element.value = selectedDates.join(',')\n      }\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Users will see dates formatted according to locale in the display element (if present) or in the input for display-only datepickers, while the input value remains in ISO format for reliable form submission when no custom dateFormat is set. Screen readers will announce the input value unchanged when navigating fields for form inputs.",
+  "functional_risks": [
+    "If a custom dateFormat is set on a form input, the input will show formatted dates which may break form submission. However, the current test suite does not have such a case.",
+    "Multiple date selection will submit as comma-separated ISO strings for form inputs, which may require backend adjustment."
+  ],
+  "verification_requirements": [
+    "Departure date input value must remain '2026-10-22' after tabbing through without date selection.",
+    "Submitted form data must contain 'departure=2026-10-22' when passengers=2.",
+    "Return date display (input) should show formatted date 'October 25, 2026' after picking a date.",
+    "Date selection via mouse/keyboard must update both display element (formatted) and input value (ISO for form, formatted for display-only)."
+  ]
+}

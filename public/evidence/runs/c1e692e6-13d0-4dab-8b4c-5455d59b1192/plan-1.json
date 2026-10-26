@@ -1,0 +1,23 @@
+{
+  "root_cause": "The header component unconditionally sets aria-hidden=true on the navigation menu when the menu button is collapsed (aria-expanded false), hiding the navigation links from assistive technology even on desktop where the menu is visually visible.",
+  "repair_strategy": "Update the syncState method to conditionally apply aria-hidden only when the menu button is visible (mobile viewport) and the menu is not open; otherwise ensure the menu is exposed (aria-hidden=false).",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  this.$menu.setAttribute('aria-hidden', !isVisible)\n}",
+      "after": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  // Determine if menu should be hidden from assistive tech\n  var hidden = !isVisible;\n  // If menu button is not displayed (desktop), menu should be visible\n  if (this.$menuButton && window.getComputedStyle(this.$menuButton).display === 'none') {\n    hidden = false;\n  }\n  this.$menu.setAttribute('aria-hidden', hidden);\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links will be exposed in the accessibility tree as links with correct accessible names, enabling screen reader and keyboard users to reach them.",
+  "functional_risks": [
+    "Reliance on computed style may fail if the menu button's display property is changed dynamically in an unexpected way.",
+    "If the CSS for the header changes, the condition may need adjustment."
+  ],
+  "verification_requirements": [
+    "Verify that at desktop width the navigation links have role link and names 'Apply', 'Renew a licence', 'Fishing rules'.",
+    "Verify that at mobile width the menu button toggles the navigation visibility and correctly sets aria-hidden and aria-expanded.",
+    "Ensure that opening and closing the menu via the button still works as expected.",
+    "Confirm no regression in the header's visual behavior across breakpoints."
+  ]
+}

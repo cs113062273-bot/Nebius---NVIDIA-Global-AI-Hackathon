@@ -1,0 +1,24 @@
+{
+  "root_cause": "The ArrowRight key handler calls adjustDate which adds a day without skipping disabled weekend days, so navigation lands on a closed date instead of the next open day.",
+  "repair_strategy": "Add helper methods _isDateSelectable and _adjustDateSkipDisabled to check and advance past disabled dates, then modify _onKeyChange to use _adjustDateSkipDisabled for arrow key navigation.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\n{\n    e = e || window.event;\n\n    if (self.isVisible()) {\n\n        switch(e.keyCode){\n            case 13:\n            case 27:\n                if (opts.field) {\n                    opts.field.blur();\n                }\n                break;\n            case 37:\n                self.adjustDate('subtract', 1);\n                break;\n            case 38:\n                self.adjustDate('subtract', 7);\n                break;\n            case 39:\n                self.adjustDate('add', 1);\n                break;\n            case 40:\n                self.adjustDate('add', 7);\n                break;\n            case 8:\n            case 46:\n                self.setDate(null);\n                break;\n        }\n    }\n};\n\n",
+      "after": "        self._onKeyChange = function(e)\n{\n    e = e || window.event;\n\n    if (self.isVisible()) {\n\n        switch(e.keyCode){\n            case 13:\n            case 27:\n                if (opts.field) {\n                    opts.field.blur();\n                }\n                break;\n            case 37:\n                self._adjustDateSkipDisabled('subtract', 1);\n                break;\n            case 38:\n                self._adjustDateSkipDisabled('subtract', 7);\n                break;\n            case 39:\n                self._adjustDateSkipDisabled('add', 1);\n                break;\n            case 40:\n                self._adjustDateSkipDisabled('add', 7);\n                break;\n            case 8:\n            case 46:\n                self.setDate(null);\n                break;\n        }\n    }\n};\n\n        self._adjustDateSkipDisabled = function(sign, days)\n{\n    var difference = parseInt(days)*24*60*60*1000;\n    var newDate = this.getDate() || new Date();\n    var candidate;\n    if (sign === 'add') {\n        candidate = new Date(newDate.valueOf() + difference);\n    } else {\n        candidate = new Date(newDate.valueOf() - difference);\n    }\n    while (!this._isDateSelectable(candidate)) {\n        if (sign === 'add') {\n            candidate = new Date(candidate.valueOf() + difference);\n        } else {\n            candidate = new Date(candidate.valueOf() - difference);\n        }\n    }\n    this.setDate(candidate);\n};\n\n        self._isDateSelectable = function(date)\n{\n    var opts = this._o;\n    if (opts.minDate && date < opts.minDate) return false;\n    if (opts.maxDate && date > opts.maxDate) return false;\n    if (opts.disableWeekends && (date.getDay() === 0 || date.getDay() === 6)) return false;\n    if (opts.disableDayFn && opts.disableDayFn(date)) return false;\n    return true;\n};\n\n"
+    }
+  ],
+  "expected_accessibility_effect": "Arrow key navigation will now skip disabled (weekend) dates, moving to the next selectable open day, ensuring keyboard users cannot land on closed days and conforming to the requirement to move between open days.",
+  "functional_risks": [
+    "Potential infinite loop if all dates in range are disabled (unlikely given min/max constraints). The adjustDate method is only used in keyboard handling, so no side effects on other features. Ensure that min/max date limits still apply."
+  ],
+  "verification_requirements": [
+    "From Friday 2026-11-20, ArrowRight should set the field to 2026-11-23 (Monday).",
+    "From Monday 2026-11-23, ArrowLeft should set the field to 2026-11-20 (Friday).",
+    "ArrowUp/Down should skip weekends when moving by weeks.",
+    "Date field value updates correctly after each key press.",
+    "Mouse selection of dates remains unchanged.",
+    "Min/max date constraints continue to be respected."
+  ]
+}

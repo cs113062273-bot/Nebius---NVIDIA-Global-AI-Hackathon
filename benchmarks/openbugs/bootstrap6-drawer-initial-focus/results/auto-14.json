@@ -1,0 +1,90 @@
+{
+  "completedAt": "2026-10-26T13:44:54.310Z",
+  "implementation": "31216b826c0d17cbf24ea1baca417703c82194506178eb7413e7ab72d74723a3",
+  "modelRun": "aafbed78-9379-4e1a-b07c-cd1502b08cbd",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "BUILD",
+      "failure": "Candidate build failed: [{\"file\":\"js/src/drawer.ts\",\"pass\":false,\"kind\":\"syntax\",\"message\":\"TypeScript is not erasable or its JavaScript has a syntax error\"}]",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-54b2aa43e255b0b0d9cea08e9754cfc6",
+      "usage": {
+        "completion_tokens": 5803,
+        "prompt_tokens": 19346,
+        "total_tokens": 25149,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5102,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19346
+      },
+      "latencyMs": 21400
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/src/drawer.ts): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// drawer-start (default): swipe left to dismiss in RTL\"; closest is line 180: \"// drawer-start (default): swipe left to dismiss in LTR\". Best alignment: before lines 1-21 match file lines 156-176, then before line 22 \"// drawer-start (default): swipe left to dismiss in RTL\" differs fr",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-688952439638ab1d4acce6e2913af296",
+      "usage": {
+        "completion_tokens": 15927,
+        "prompt_tokens": 20125,
+        "total_tokens": 36052,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 14659,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 20125
+      },
+      "latencyMs": 38994
+    },
+    {
+      "attempt": 3,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-580f520f813b32ef2cab79a9b90826ee",
+      "usage": {
+        "completion_tokens": 3917,
+        "prompt_tokens": 22337,
+        "total_tokens": 26254,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2116,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 22337
+      },
+      "latencyMs": 10373
+    }
+  ]
+}

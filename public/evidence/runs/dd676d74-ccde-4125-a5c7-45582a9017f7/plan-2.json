@@ -1,0 +1,22 @@
+{
+  "root_cause": "When the 'Show all 4 results' button is activated, it removes itself from the DOM. The focus trap's `checkFocusIn` handler attempts to restore focus to the most recently focused node (the removed button) when focus escapes to the body. Since the button is no longer in the document, focusing it fails, and focus remains on the body instead of being trapped inside the dialog.",
+  "repair_strategy": "Modify `checkFocusIn` to update the tabbable nodes (so the removed button is no longer considered) and then verify that the most recently focused node is still within the trap's containers before attempting to restore focus to it. If not, fall back to the initial focus node (which will be the close button after the update).",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n    }\n  };",
+      "after": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      updateTabbableNodes();\n      const recentNode = state.mostRecentlyFocusedNode;\n      if (recentNode && findContainerIndex(recentNode, e) >= 0) {\n        tryFocus(recentNode);\n      } else {\n        tryFocus(getInitialFocusNode());\n      }\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "After activating the 'Show all 4 results' button, keyboard focus will remain inside the dialog, allowing the user to continue navigating the results with Tab/Shift+Tab.",
+  "functional_risks": [
+    "Updating tabbable nodes on every focus escape could have a minor performance impact, but focus escape is rare.",
+    "The change might affect other escape scenarios, but the logic is more robust."
+  ],
+  "verification_requirements": [
+    "Verify that after clicking 'Show all 4 results', pressing Tab moves focus to the close button (or first focusable element in the dialog).",
+    "Ensure that pressing Escape still closes the dialog and returns focus to the opener.",
+    "Test that the focus trap works correctly when focus escapes via other means (e.g., clicking outside)."
+  ]
+}

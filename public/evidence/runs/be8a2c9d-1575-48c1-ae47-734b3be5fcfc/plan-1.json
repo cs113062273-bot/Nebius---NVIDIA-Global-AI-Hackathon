@@ -1,0 +1,23 @@
+{
+  "root_cause": "The component incorrectly removes the maxlength attribute from the container div ($module) instead of the textarea ($textarea), leaving the browser-enforced maxlength on the textarea and causing input to be truncated beyond the limit.",
+  "repair_strategy": "Change the attribute removal target from $module to $textarea so the textarea's maxlength attribute is removed, allowing full input while the component provides character count feedback via visible and screen-reader messages.",
+  "edits": [
+    {
+      "path": "src/govuk/components/character-count/character-count.js",
+      "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90",
+      "before": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')",
+      "after": "  // Remove hard limit if set\n  $textarea.removeAttribute('maxlength')"
+    }
+  ],
+  "expected_accessibility_effect": "Users can type beyond the limit and receive accurate character count feedback (visible and screen-reader), preserving the full input value. This supports WCAG 2.1.1 (keyboard) and 4.1.2 (name, role, value) by ensuring the textarea's value reflects the complete user input and the character count communicates excess characters.",
+  "functional_risks": [
+    "If other code depended on the maxlength attribute being removed from the container, removing it from the textarea instead could leave the attribute on the container (which is harmless).",
+    "Ensuring the textarea's maxlength removal does not interfere with any custom validation that expects the attribute to remain on the textarea."
+  ],
+  "verification_requirements": [
+    "Verify that typing more than 30 characters retains the full value in the textarea and the character count shows the excess (e.g., 'You have 4 characters too many').",
+    "Verify that typing 30 or fewer characters shows the correct remaining count (e.g., 'You have X characters remaining').",
+    "Verify that the screen‑reader live region updates appropriately on input and reflects the same count message.",
+    "Verify that form submission includes the complete user‑entered text without truncation."
+  ]
+}

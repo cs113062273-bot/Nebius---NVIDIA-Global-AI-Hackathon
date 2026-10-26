@@ -1,0 +1,143 @@
+{
+  "completedAt": "2026-10-26T15:36:39.374Z",
+  "implementation": "31216b826c0d17cbf24ea1baca417703c82194506178eb7413e7ab72d74723a3",
+  "modelRun": "0cfaf501-8355-405e-bd3c-f2ad6bc0c8b1",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 2 · #filters-search: expected \"#filters-search\", observed \"body\"",
+    "Task evidence is missing or contradicts the verdict"
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-bdddb5bc53f046b1fd9a17aa9e99a4b4",
+      "usage": {
+        "completion_tokens": 10433,
+        "prompt_tokens": 19492,
+        "total_tokens": 29925,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9615,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19492
+      },
+      "latencyMs": 63819
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-96dc57fc7737b3a09eb17898053bafbf",
+      "usage": {
+        "completion_tokens": 1438,
+        "prompt_tokens": 20090,
+        "total_tokens": 21528,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 604,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 20090
+      },
+      "latencyMs": 5203
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-8a9775b5394b7dfc797c606c616eb89b",
+      "usage": {
+        "completion_tokens": 13300,
+        "prompt_tokens": 21798,
+        "total_tokens": 35098,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 12386,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21798
+      },
+      "latencyMs": 37592
+    },
+    {
+      "attempt": 4,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-9c1afc2891c1bd42dc6fac401e534682",
+      "usage": {
+        "completion_tokens": 10427,
+        "prompt_tokens": 21894,
+        "total_tokens": 32321,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9474,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21894
+      },
+      "latencyMs": 31709
+    },
+    {
+      "attempt": 5,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-ee207338c0bf058eb2a15267890ffc57",
+      "usage": {
+        "completion_tokens": 3083,
+        "prompt_tokens": 22013,
+        "total_tokens": 25096,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2231,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 22013
+      },
+      "latencyMs": 9464
+    }
+  ]
+}

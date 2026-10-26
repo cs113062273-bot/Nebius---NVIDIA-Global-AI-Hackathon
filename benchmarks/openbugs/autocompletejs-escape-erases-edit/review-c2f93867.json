@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T07:48:10.653Z",
+  "run": "c2f93867-3b85-4328-875e-3afbebc64411",
+  "verdict": "Sound",
+  "summary": "Escape now only closes the list: the lines that emptied the input and emitted the clear event on Escape are removed, which is the behaviour the maintainer proposed in #485.",
+  "caveats": [
+    "A page that listened for the clear event on Escape no longer receives it; #485 accepts that.",
+    "The reporter of #402 suggested restoring the earlier value instead; this patch keeps what the user typed, as the maintainer planned."
+  ]
+}

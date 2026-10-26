@@ -1,0 +1,23 @@
+{
+  "root_cause": "The tabbable library's isHidden function does not consider elements inside a disabled <fieldset> as hidden. This causes the <select id=\"speed\"> inside the disabled fieldset to be incorrectly included as the first tabbable node in the dialog. When the focus-trap activates (with default delayInitialFocus: true), it delays focusing the first tabbable node. The test checks focus synchronously after the Enter keypress, before the delayed focus runs, so focus remains on the trigger button. Additionally, even when the delayed focus runs, it would target the incorrectly-included #speed element (which cannot receive focus due to the disabled fieldset), leaving focus on the trigger button.",
+  "repair_strategy": "Update the isHidden function in the tabbable library to treat elements inside a disabled <fieldset> as hidden. This ensures they are excluded from tabbable/focusable results, making the street input the first tabbable node. This is a generic accessibility improvement that respects native HTML semantics (disabled fieldset disables all descendant form controls) and does not hardcode any page-specific IDs.",
+  "edits": [
+    {
+      "path": "src/index.js",
+      "sha256": "8f69e239e7365811abad1130954bb9d4772c0f0e31c477f37f22a3644de78652",
+      "before": "const isHidden = function (node, displayCheck) {\n  if (getComputedStyle(node).visibility === 'hidden') {\n    return true;\n  }\n\n  const isDirectSummary = matches.call(node, 'details>summary:first-of-type');\n  const nodeUnderDetails = isDirectSummary ? node.parentElement : node;\n  if (matches.call(nodeUnderDetails, 'details:not([open]) *')) {\n    return true;\n  }\n  if (!displayCheck || displayCheck === 'full') {\n    while (node) {\n      if (getComputedStyle(node).display === 'none') {\n        return true;\n      }\n      node = node.parentElement;\n    }\n  } else if (displayCheck === 'non-zero-area') {\n    const { width, height } = node.getBoundingClientRect();\n    return width === 0 && height === 0;\n  }\n\n  return false;\n};",
+      "after": "const isHidden = function (node, displayCheck) {\n  if (getComputedStyle(node).visibility === 'hidden') {\n    return true;\n  }\n\n  const isDirectSummary = matches.call(node, 'details>summary:first-of-type');\n  const nodeUnderDetails = isDirectSummary ? node.parentElement : node;\n  if (matches.call(nodeUnderDetails, 'details:not([open]) *')) {\n    return true;\n  }\n  if (!displayCheck || displayCheck === 'full') {\n    while (node) {\n      if (getComputedStyle(node).display === 'none') {\n        return true;\n      }\n      // Treat elements inside a disabled fieldset as hidden (not focusable/tabbable)\n      if (node.tagName === 'FIELDSET' && node.disabled) {\n        return true;\n      }\n      node = node.parentElement;\n    }\n  } else if (displayCheck === 'non-zero-area') {\n    const { width, height } = node.getBoundingClientRect();\n    return width === 0 && height === 0;\n  }\n\n  return false;\n};"
+    }
+  ],
+  "expected_accessibility_effect": "Elements inside a disabled <fieldset> are correctly identified as non-focusable and non-tabbable. The first usable field in the dialog (the street address input) becomes the first tabbable node, so when the focus-trap's delayed initial focus runs, it targets the correct element. This respects native HTML semantics where a disabled fieldset disables all descendant form controls.",
+  "functional_risks": [
+    "If other pages rely on the previous (incorrect) behavior where elements in disabled fieldsets were considered tabbable, their focus order may change. However, the previous behavior was incorrect per HTML semantics.",
+    "The focus-trap's delayInitialFocus default remains true; the test's synchronous focus check may still fail if the runner does not wait for the microtask. This fix ensures the correct element is targeted when the delayed focus runs."
+  ],
+  "verification_requirements": [
+    "Verify that the street input is the first tabbable node in the dialog by checking tabbable(document.getElementById('address-dialog'))[0] === document.getElementById('street').",
+    "Verify that the speed select is excluded from tabbable results when its fieldset is disabled.",
+    "Verify that enabling the fieldset (removing disabled) makes the speed select tabbable again.",
+    "Confirm the focus-trap's delayed focus eventually lands on the street input."
+  ]
+}

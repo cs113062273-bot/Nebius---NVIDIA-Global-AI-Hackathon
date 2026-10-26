@@ -1,0 +1,22 @@
+{
+  "root_cause": "The focus trap's `getFocusableNodes` includes hidden elements (the retry button with `display:none`), causing the Tab wrap logic to misidentify the last visible control. When focus reaches the Upload button, the hidden retry button is still last in the focusable list, so forward Tab does not trigger the wrap-to-first behavior and focus escapes to the page footer.",
+  "repair_strategy": "Filter out non-visible elements (display:none, visibility:hidden, hidden attribute) in `getFocusableNodes` so only actually reachable controls participate in focus cycling. This is a minimal, localized change that preserves all other modal behavior.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes)\n    }",
+      "after": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes).filter(node => {\n        const style = window.getComputedStyle(node)\n        return style.display !== 'none' && style.visibility !== 'hidden' && !node.hidden\n      })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key cycles focus within the dialog's visible controls per WCAG 2.1.1 and 2.4.3, preventing escape to page footer. Screen-reader users remain in the modal until they explicitly close it.",
+  "functional_risks": [
+    "Computed style lookup adds negligible overhead per focus cycle.",
+    "No change to open/close behavior, trigger registration, or animation handling."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: Tab from Open button → filename → Upload → Tab again should wrap to Close button (modal-close), not the help link.",
+    "Verify Escape closes dialog and returns focus to Open button.",
+    "Verify hidden retry button never receives focus during Tab cycling."
+  ]
+}

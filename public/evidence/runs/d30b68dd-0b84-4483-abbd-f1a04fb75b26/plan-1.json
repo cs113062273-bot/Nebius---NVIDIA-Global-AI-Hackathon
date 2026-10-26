@@ -1,0 +1,22 @@
+{
+  "root_cause": "The focus trap is not activated when the offcanvas is shown with data-bs-scroll=\"true\" because the show method conditions focus trap activation on !this._config.scroll.",
+  "repair_strategy": "Activate the focus trap unconditionally when the offcanvas is shown, preserving the existing conditional scrollbar hiding behavior.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d",
+      "before": "    const completeCallBack = () => {\n      if (!this._config.scroll) {\n        this._focustrap.activate()\n      }\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }",
+      "after": "    const completeCallBack = () => {\n      this._focustrap.activate()\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Focus will be trapped inside the offcanvas panel; pressing Tab will cycle among focusable elements within the panel and not move focus to elements outside the panel.",
+  "functional_risks": [
+    "Potential interaction with the scroll=true setting if it was intended to allow page scrolling while the offcanvas is open; however, the focus trap does not affect scrolling behavior."
+  ],
+  "verification_requirements": [
+    "After opening the help panel, the first Tab press moves focus to the close button (#help-close).",
+    "Subsequent Tab presses keep focus inside the panel (cycling between focusable elements).",
+    "Pressing Escape closes the panel and returns focus to the trigger button.",
+    "Verify that page background scrolling behavior remains unchanged when data-bs-scroll=\"true\"."
+  ]
+}

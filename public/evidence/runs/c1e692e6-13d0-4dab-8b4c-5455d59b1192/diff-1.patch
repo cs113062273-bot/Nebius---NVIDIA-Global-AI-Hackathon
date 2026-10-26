@@ -1,0 +1,19 @@
+diff --git a/src/govuk/components/header/header.js b/src/govuk/components/header/header.js
+index 84eb54f..663a9c9 100644
+--- a/src/govuk/components/header/header.js
++++ b/src/govuk/components/header/header.js
+@@ -36,7 +36,13 @@ Header.prototype.init = function () {
+ Header.prototype.syncState = function (isVisible) {
+   this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)
+   this.$menuButton.setAttribute('aria-expanded', isVisible)
+-  this.$menu.setAttribute('aria-hidden', !isVisible)
++  // Determine if menu should be hidden from assistive tech
++  var hidden = !isVisible;
++  // If menu button is not displayed (desktop), menu should be visible
++  if (this.$menuButton && window.getComputedStyle(this.$menuButton).display === 'none') {
++    hidden = false;
++  }
++  this.$menu.setAttribute('aria-hidden', hidden);
+ }
+ 
+ /**

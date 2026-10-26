@@ -1,12 +1,10 @@
 {
   "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
-  "reviewedAt": "2026-10-26T09:09:50.151Z",
-  "run": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
-  "verdict": "Sound, close to the pending human fix",
-  "summary": "For modal dialogs, the Escape keydown handler now calls preventDefault() only when keyboard is false, so the close request never starts; dialogs with the default options still close through the native cancel path.",
+  "reviewedAt": "2026-10-26T15:58:14.857Z",
+  "run": "41b7b4a4-aacd-4916-bb87-71627efd8084",
+  "verdict": "Sound, matches the pending human fix",
+  "summary": "The Escape keydown handler now runs for modal dialogs too: with keyboard false it calls preventDefault() and plays the static-backdrop bounce, so the close request never starts; dialogs with the default options keep the native cancel path.",
   "caveats": [
-    "Pressing Escape on the keyboard: false dialog no longer plays the static-backdrop bounce; the pending human fix (#43077) keeps it.",
-    "The same explanatory comment is added twice.",
-    "Ultra wrote it on the third attempt, after a rejected proposal and a browser rejection."
+    "The bounce is also triggered for a non-modal dialog with keyboard false, which has no backdrop; the pending human fix (#43077) limits it to modal dialogs."
   ]
 }

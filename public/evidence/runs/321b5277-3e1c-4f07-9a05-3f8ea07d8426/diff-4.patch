@@ -1,0 +1,25 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..43c7d14 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -245,6 +245,20 @@ class Datepicker extends BaseComponent {
+     this._calendar = new Calendar(this._positionElement, calendarOptions)
+     this._calendar.init()
+ 
++    // Remove aria-haspopup added by VCP to prevent Tab key blocking
++    if (this._isInput) {
++      this._element.removeAttribute('aria-haspopup')
++    }
++
++    // Add capturing keydown listener to allow Tab to move focus out when calendar is closed
++    if (this._isInput && !this._isInline) {
++      this._element.addEventListener('keydown', (event: KeyboardEvent) => {
++        if (event.key === 'Tab' && !this._isShown) {
++          event.stopImmediatePropagation()
++        }
++      }, true)
++    }
++
+     // Watch for theme changes on ancestor elements (for live theme switching)
+     this._setupThemeObserver()
+ 

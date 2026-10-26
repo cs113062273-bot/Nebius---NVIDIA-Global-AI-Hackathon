@@ -1,0 +1,121 @@
+{
+  "completedAt": "2026-10-26T14:00:09.396Z",
+  "policy": "auto",
+  "modelRun": "9b6a8055-e981-4e4b-a82b-bf116129dd36",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "79a4d5608dd34a687092d5d5b848e507742623dff9821ab58a6b7cd66f6932c4",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-4e1352c413f97b3845f46111a2eaa2af",
+      "usage": {
+        "completion_tokens": 9644,
+        "prompt_tokens": 9334,
+        "total_tokens": 18978,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8750,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 9334
+      },
+      "latencyMs": 52015,
+      "reservedCreditUsd": 0.037835099999999997
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-f5405cf2e8675f698453f4b5b6f2e393",
+      "usage": {
+        "completion_tokens": 2808,
+        "prompt_tokens": 10053,
+        "total_tokens": 12861,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1695,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10053
+      },
+      "latencyMs": 7600,
+      "reservedCreditUsd": 0.129342
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (awesomplete.js): before does not occur in the file. 4 of its lines are not in the source. not in file: \"_ITEM = function (text, input, item_id) {\"; closest is line 394: \"_.ITEM = function (text, input, item_id) {\" | not in file: \"role: \\\"option\\\",\"; closest is line 398: \"\\\"role\\\": \\\"option\\\",\" | not in file: \"tabindex: \\\"0\\\", // for the Talkback screen reader\"; closest is line 400: \"\\\"tabi",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-5d0b5d1c7c5c7f083f62a1b650c56b37",
+      "usage": {
+        "completion_tokens": 14050,
+        "prompt_tokens": 11667,
+        "total_tokens": 25717,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 12753,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 11667
+      },
+      "latencyMs": 38530,
+      "reservedCreditUsd": 0.134472
+    },
+    {
+      "attempt": 4,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-a6ee293ca4a5c9ee62a9b2e95da40a34",
+      "usage": {
+        "completion_tokens": 15442,
+        "prompt_tokens": 13098,
+        "total_tokens": 28540,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13938,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 13098
+      },
+      "latencyMs": 35637,
+      "reservedCreditUsd": 0.138864
+    }
+  ]
+}

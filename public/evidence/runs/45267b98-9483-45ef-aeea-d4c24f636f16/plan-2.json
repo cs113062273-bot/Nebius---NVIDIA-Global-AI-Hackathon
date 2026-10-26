@@ -1,0 +1,22 @@
+{
+  "root_cause": "The datepicker reformats the input value from ISO (YYYY-MM-DD) to a locale-specific format (e.g., MM/DD/YYYY) upon initialization on focus, because `_formatDateForInput` uses the default locale formatting for input elements. This changes the value that is submitted with the form.",
+  "repair_strategy": "Modify `_formatDateForInput` to preserve the ISO format for input elements when there is a single selected date, by returning the raw ISO date string instead of applying locale formatting. This ensures the form submission value remains unchanged while keeping locale formatting for display elements.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _formatDateForInput(dates: string[]): string {\n    if (dates.length === 0) {\n      return ''\n    }\n\n    if (dates.length === 1) {\n      return this._formatDate(dates[0])\n    }\n\n    // For date ranges, use en-dash; for multiple dates, use comma\n    const separator = this._config.selectionMode === 'multiple-ranged' ? ' – ' : ', '\n    return dates.map(d => this._formatDate(d)).join(separator)\n  }",
+      "after": "  protected _formatDateForInput(dates: string[]): string {\n    if (dates.length === 0) {\n      return ''\n    }\n\n    if (dates.length === 1) {\n      // For input elements, keep the ISO format to avoid unexpected reformatting\n      if (this._isInput) {\n        return dates[0]\n      }\n      return this._formatDate(dates[0])\n    }\n\n    // For date ranges, use en-dash; for multiple dates, use comma\n    const separator = this._config.selectionMode === 'multiple-ranged' ? ' – ' : ', '\n    return dates.map(d => this._formatDate(d)).join(separator)\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "The departure date input will no longer unexpectedly change format when receiving focus, preserving the user's expected value and preventing confusion for screen reader users who rely on consistent value representation.",
+  "functional_risks": [
+    "Minimal. The change only affects input elements with single-date selection. Multiple-date selection and non-input triggers (e.g., button with display element) continue to use locale formatting. Existing configurations with custom `dateFormat` are unaffected."
+  ],
+  "verification_requirements": [
+    "The journey should complete with the departure date remaining \"2026-10-22\" in the submitted data.",
+    "The datepicker should still display a user-friendly date in the calendar popup.",
+    "Non-input datepicker triggers should still show locale-formatted dates in their display elements.",
+    "Custom `dateFormat` configurations should continue to work."
+  ]
+}

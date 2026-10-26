@@ -1,0 +1,23 @@
+{
+  "root_cause": "The navigation controller sets aria-activedescendant to the list item's dataset.value (the label) instead of the element's id, causing the attribute to reference the wrong value and breaking the association between the input and the highlighted option.",
+  "repair_strategy": "Replace the use of list[currentFocus].dataset.value with list[currentFocus].id when updating aria-activedescendant in the navigation controller's update function.",
+  "edits": [
+    {
+      "path": "src/controllers/navigationController.js",
+      "sha256": "3f7f66612501cb9d0fbe0a4d8b3d7732ca01228bf922d9b794daa60f87a0c4a4",
+      "before": "    // and add \"active\" class to the list item\n    addActive(list);\n    config.inputField.setAttribute(\"aria-activedescendant\", list[currentFocus].dataset.value);\n    /**\n     * @emits {navigation} Emits Event on results list navigation\n     **/",
+      "after": "    // and add \"active\" class to the list item\n    addActive(list);\n    config.inputField.setAttribute(\"aria-activedescendant\", list[currentFocus].id);\n    /**\n     * @emits {navigation} Emits Event on results list navigation\n     **/"
+    }
+  ],
+  "expected_accessibility_effect": "The input's aria-activedescendant will accurately reflect the id of the currently highlighted option, enabling assistive technologies to correctly announce the focused suggestion.",
+  "functional_risks": [
+    "If any other code depended on the incorrect dataset.value for aria-activedescendant, it would need updating, but no such usage exists.",
+    "Ensuring that generated list items have stable, unique ids (already provided by Item.js) is required for the fix to work."
+  ],
+  "verification_requirements": [
+    "After typing 'ma' and pressing ArrowDown, aria-activedescendant on #store must equal 'autoCompleteJS_result_0'.",
+    "A second ArrowDown must update aria-activedescendant to 'autoCompleteJS_result_1'.",
+    "Pressing ArrowUp must decrement the referenced id appropriately.",
+    "Pressing Enter must set the input's value to the selected suggestion's label (existing behavior)."
+  ]
+}

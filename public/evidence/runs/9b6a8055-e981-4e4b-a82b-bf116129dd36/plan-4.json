@@ -1,0 +1,31 @@
+{
+  "root_cause": "The suggestion list items have tabindex='0' (for Talkback screen reader support), making them focusable. When the list is open and the user presses Tab, focus moves into the list instead of to the next form field. Additionally, the keydown handler does not close the list on Tab press, so the list remains open and its items stay in the tab order.",
+  "repair_strategy": "Remove tabindex from list items to exclude them from the tab order (aligning with ARIA combobox pattern), and add a Tab key handler in the keydown event to close the suggestion list when Tab is pressed, allowing the default tab navigation to proceed to the next form field.",
+  "edits": [
+    {
+      "path": "awesomplete.js",
+      "sha256": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6",
+      "before": "_.ITEM = function (text, input, item_id) {\n\tvar html = input.trim() === \"\" ? text : text.replace(RegExp($.regExpEscape(input.trim()), \"gi\"), \"<mark>$&</mark>\");\n\treturn $.create(\"li\", {\n\t\tinnerHTML: html,\n\t\t\"role\": \"option\",\n\t\t\"aria-selected\": \"false\",\n\t\t\"tabindex\": '0', // for the Talkback screen reader\n\t\t\"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n\t});\n};",
+      "after": "_.ITEM = function (text, input, item_id) {\n\tvar html = input.trim() === \"\" ? text : text.replace(RegExp($.regExpEscape(input.trim()), \"gi\"), \"<mark>$&</mark>\");\n\treturn $.create(\"li\", {\n\t\tinnerHTML: html,\n\t\t\"role\": \"option\",\n\t\t\"aria-selected\": \"false\",\n\t\t\"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n\t});\n};"
+    },
+    {
+      "path": "awesomplete.js",
+      "sha256": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6",
+      "before": "\t\t\t\"keydown\": function(evt) {\n\t\t\t\tvar c = evt.keyCode;\n\n\t\t\t\t// If the dropdown `ul` is in view, then act on keydown for the following keys:\n\t\t\t\t// Enter / Esc / Up / Down\n\t\t\t\tif(me.opened) {\n\t\t\t\t\tif (c === 13 && me.selected) { // Enter\n\t\t\t\t\t\tevt.preventDefault();\n\t\t\t\t\t\tme.select(undefined, undefined, evt);\n\t\t\t\t\t}\n\t\t\t\t\telse if (c === 9 && me.selected && me.tabSelect) {\n\t\t\t\t\t\tevt.preventDefault();\n\t\t\t\t\t\tme.select(undefined, undefined, evt);\n\t\t\t\t\t}\n\t\t\t\t\telse if (c === 27) { // Esc\n\t\t\t\t\t\tme.close({ reason: \"esc\" });\n\t\t\t\t\t}\n\t\t\t\t\telse if (c === 38 || c === 40) { // Down/Up arrow\n\t\t\t\t\t\tevt.preventDefault();\n\t\t\t\t\t\tme[c === 38? \"previous\" : \"next\"]();\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}",
+      "after": "\t\t\t\"keydown\": function(evt) {\n\t\t\t\tvar c = evt.keyCode;\n\n\t\t\t\t// If the dropdown `ul` is in view, then act on keydown for the following keys:\n\t\t\t\t// Enter / Esc / Up / Down\n\t\t\t\tif(me.opened) {\n\t\t\t\t\tif (c === 13 && me.selected) { // Enter\n\t\t\t\t\t\tevt.preventDefault();\n\t\t\t\t\t\tme.select(undefined, undefined, evt);\n\t\t\t\t\t}\n\t\t\t\t\telse if (c === 9 && me.selected && me.tabSelect) {\n\t\t\t\t\t\tevt.preventDefault();\n\t\t\t\t\t\tme.select(undefined, undefined, evt);\n\t\t\t\t\t}\n\t\t\t\t\telse if (c === 9) { // Tab - close list and allow default tab navigation\n\t\t\t\t\t\tme.close({ reason: \"tab\" });\n\t\t\t\t\t}\n\t\t\t\t\telse if (c === 27) { // Esc\n\t\t\t\t\t\tme.close({ reason: \"esc\" });\n\t\t\t\t\t}\n\t\t\t\t\telse if (c === 38 || c === 40) { // Down/Up arrow\n\t\t\t\t\t\tevt.preventDefault();\n\t\t\t\t\t\tme[c === 38? \"previous\" : \"next\"]();\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}"
+    }
+  ],
+  "expected_accessibility_effect": "When suggestions are visible, a single Tab press moves focus from the city input to the dietary requirements input, preserving logical focus order and complying with WCAG 2.1.1 Keyboard and 2.4.3 Focus Order.",
+  "functional_risks": [
+    "If a consumer has set tabSelect:true, the added Tab-close will not interfere because the tabSelect branch is checked first.",
+    "Removing tabindex may affect Talkback screen reader support, but arrow-key navigation and aria-activedescendant remain unchanged."
+  ],
+  "verification_requirements": [
+    "After typing 'Ber' in the city field, pressing Tab moves focus to the dietary requirements field.",
+    "The suggestion list is closed after the Tab press.",
+    "Arrow-up/down navigation within the list still works when the list is open.",
+    "Enter key still selects the highlighted suggestion and closes the list.",
+    "Esc key still closes the list.",
+    "Screen-reader announcements for the list remain functional."
+  ]
+}

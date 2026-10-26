@@ -1,0 +1,28 @@
+{
+  "root_cause": "The Radios component only listens for 'click' events to update conditional visibility. Keyboard arrow navigation changes the checked radio via 'change' events, which are not handled, so conditional-reminder-2 stays visible when moving from Text message to the opt-out answer.",
+  "repair_strategy": "Add a 'change' event listener in Radios.init() that calls setAttributes on the changed radio input when it has aria-controls, ensuring conditional visibility updates on keyboard selection.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.init = function () {\n  var $module = this.$module\n  var $inputs = this.$inputs\n\n  /**\n  * Loop over all items with [data-controls]\n  * Check if they have a matching conditional reveal\n  * If they do, assign attributes.\n  **/\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('data-aria-controls')\n\n    // Check if input controls anything\n    // Check if content exists, before setting attributes.\n    if (!controls || !$module.querySelector('#' + controls)) {\n      return\n    }\n\n    // If we have content that is controlled, set attributes.\n    $input.setAttribute('aria-controls', controls)\n    $input.removeAttribute('data-aria-controls')\n    this.setAttributes($input)\n  }.bind(this))\n\n  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "Radios.prototype.init = function () {\n  var $module = this.$module\n  var $inputs = this.$inputs\n\n  /**\n  * Loop over all items with [data-controls]\n  * Check if they have a matching conditional reveal\n  * If they do, assign attributes.\n  **/\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('data-aria-controls')\n\n    // Check if input controls anything\n    // Check if content exists, before setting attributes.\n    if (!controls || !$module.querySelector('#' + controls)) {\n      return\n    }\n\n    // If we have content that is controlled, set attributes.\n    $input.setAttribute('aria-controls', controls)\n    $input.removeAttribute('data-aria-controls')\n    this.setAttributes($input)\n  }.bind(this))\n\n  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.addEventListener('change', this.handleChange.bind(this))\n}"
+    },
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}",
+      "after": "Radios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nRadios.prototype.handleChange = function (event) {\n  var $input = event.target\n  var isRadio = $input.getAttribute('type') === 'radio'\n  var hasAriaControls = $input.getAttribute('aria-controls')\n  if (isRadio && hasAriaControls) {\n    this.setAttributes($input)\n  }\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users arrowing between radio options will now correctly show/hide conditional fields (email address, mobile number) per WCAG 2.1.1 (Keyboard) and 4.1.2 (Name, Role, Value), matching the behavior for mouse users.",
+  "functional_risks": [
+    "Minimal: only adds a change listener; no existing behavior altered for click interactions.",
+    "The change handler only acts on radio inputs with aria-controls, avoiding side effects on other form controls."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: seek #reminder, ArrowDown to Text message, ArrowDown to opt-out; verify #conditional-reminder-2 becomes hidden.",
+    "Verify mouse clicks still toggle conditionals correctly.",
+    "Verify form data for reminder updates to 'none' on opt-out selection."
+  ]
+}

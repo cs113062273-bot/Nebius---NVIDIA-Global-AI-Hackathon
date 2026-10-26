@@ -1,0 +1,43 @@
+diff --git a/packages/govuk-frontend/src/govuk/components/tabs/tabs.js b/packages/govuk-frontend/src/govuk/components/tabs/tabs.js
+index dce2df6..0c6cd3b 100644
+--- a/packages/govuk-frontend/src/govuk/components/tabs/tabs.js
++++ b/packages/govuk-frontend/src/govuk/components/tabs/tabs.js
+@@ -365,29 +365,31 @@ export class Tabs extends GOVUKFrontendComponent {
+   /**
+    * Handle tab keydown event
+    *
+-   * - Press right/down arrow for next tab
+-   * - Press left/up arrow for previous tab
++   * - Press right arrow for next tab
++   * - Press left arrow for previous tab
++   * - Up and down arrows do nothing (prevent default to avoid scrolling)
+    *
+    * @private
+    * @param {KeyboardEvent} event - Keydown event
+    */
+   onTabKeydown(event) {
+     switch (event.key) {
+-      // 'Left', 'Right', 'Up' and 'Down' required for Edge 16 support.
+       case 'ArrowLeft':
+-      case 'ArrowUp':
+       case 'Left':
+-      case 'Up':
+         this.activatePreviousTab()
+         event.preventDefault()
+         break
+       case 'ArrowRight':
+-      case 'ArrowDown':
+       case 'Right':
+-      case 'Down':
+         this.activateNextTab()
+         event.preventDefault()
+         break
++      case 'ArrowUp':
++      case 'ArrowDown':
++      case 'Up':
++      case 'Down':
++        event.preventDefault()
++        break
+     }
+   }
+ 

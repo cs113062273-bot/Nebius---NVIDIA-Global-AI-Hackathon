@@ -1,0 +1,24 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..5a8fd70 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -268,9 +268,8 @@ class Datepicker extends BaseComponent {
+   }
+ 
+   protected _syncSelectedDates(selectedDates: string[]): void {
+-    const formattedDate = this._formatDateForInput(selectedDates)
+     if (this._isInput) {
+-      this._element.value = formattedDate
++      this._element.value = selectedDates.length > 0 ? selectedDates[0] : ''
+     }
+ 
+     if (this._boundInput) {
+@@ -278,7 +277,7 @@ class Datepicker extends BaseComponent {
+     }
+ 
+     if (this._displayElement) {
+-      this._displayElement.textContent = formattedDate
++      this._displayElement.textContent = this._formatDateForInput(selectedDates)
+     }
+   }
+ 

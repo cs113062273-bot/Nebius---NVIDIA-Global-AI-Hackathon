@@ -1,0 +1,35 @@
+{
+  "root_cause": "The Tab key's default action is prevented when the datepicker is open, preventing focus from moving to the next form field. This occurs because the datepicker component does not handle the Tab key to close itself, allowing the Vanilla Calendar Pro library to trap focus and prevent Tab navigation.",
+  "repair_strategy": "Add a keydown listener to the document that hides the datepicker when the Tab key is pressed and the datepicker is shown. This allows the Tab key's default action to proceed, moving focus to the next form field. The listener is added in _setupDismiss and cleaned up in dispose, with the corresponding property declaration added to the class.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _setupDismiss(): void {\n    if (this._isInline) {\n      return\n    }\n\n    // VCP schedules a show on every click of its trigger, after the data API\n    // toggle runs. When that toggle closed the popup, cancel the reopen.\n    // `hide()` on VCP clears its pending show even when already hidden.\n    if (!this._isInput) {\n      this._onTriggerClick = () => {\n        if (!this._isShown) {\n          this._calendar?.hide()\n        }\n      }\n\n      EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    this._onOutside = ({ target }) => {\n      const mainElement = this._calendar?.context?.mainElement\n      const isOutside = !(target instanceof Node) || (!this._element.contains(target) && !mainElement?.contains(target))\n\n      if (this._isShown && isOutside) {\n        this.hide()\n      }\n    }\n\n    EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)\n    EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)\n  }",
+      "after": "  protected _setupDismiss(): void {\n    if (this._isInline) {\n      return\n    }\n\n    // VCP schedules a show on every click of its trigger, after the data API\n    // toggle runs. When that toggle closed the popup, cancel the reopen.\n    // `hide()` on VCP clears its pending show even when already hidden.\n    if (!this._isInput) {\n      this._onTriggerClick = () => {\n        if (!this._isShown) {\n          this._calendar?.hide()\n        }\n      }\n\n      EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    this._onOutside = ({ target }) => {\n      const mainElement = this._calendar?.context?.mainElement\n      const isOutside = !(target instanceof Node) || (!this._element.contains(target) && !mainElement?.contains(target))\n\n      if (this._isShown && isOutside) {\n        this.hide()\n      }\n    }\n\n    EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)\n    EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)\n\n    // Add keydown listener to hide on Tab\n    this._onOutsideKeydown = ({ key }: KeyboardEvent) => {\n      if (this._isShown && key === 'Tab') {\n        this.hide()\n      }\n    }\n\n    EventHandler.on(document, 'keydown', this._onOutsideKeydown)\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  override dispose(): void {\n    if (this._themeObserver) {\n      this._themeObserver.disconnect()\n      this._themeObserver = null\n    }\n\n    if (this._onOutside) {\n      EventHandler.off(document, EVENT_FOCUSIN, this._onOutside)\n      EventHandler.off(document, EVENT_POINTERDOWN, this._onOutside)\n    }\n\n    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n\n    this._calendar = null\n    super.dispose()\n  }",
+      "after": "  override dispose(): void {\n    if (this._themeObserver) {\n      this._themeObserver.disconnect()\n      this._themeObserver = null\n    }\n\n    if (this._onOutside) {\n      EventHandler.off(document, EVENT_FOCUSIN, this._onOutside)\n      EventHandler.off(document, EVENT_POINTERDOWN, this._onOutside)\n    }\n\n    if (this._onOutsideKeydown) {\n      EventHandler.off(document, 'keydown', this._onOutsideKeydown)\n    }\n\n    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n\n    this._calendar = null\n    super.dispose()\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onOutsideKeydown: (event: KeyboardEvent) => void"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab from the departure date field will move focus to the passengers field, restoring the expected form navigation order for keyboard users.",
+  "functional_risks": [
+    "The datepicker may close unexpectedly when navigating within the calendar using the Tab key, if the Vanilla Calendar Pro library supports Tab navigation internally.",
+    "If the datepicker is open and the user presses Tab to move focus to an element inside the datepicker (such as a button in the calendar header), the datepicker will close and focus will leave the datepicker prematurely."
+  ],
+  "verification_requirements": [
+    "Tab key press from the departure date input must move focus to the passengers input.",
+    "Escape key press must still close the datepicker and keep focus on the departure date input (as per regression guard).",
+    "The datepicker must still open when the departure date input receives focus.",
+    "Clicking outside the datepicker must still close it."
+  ]
+}

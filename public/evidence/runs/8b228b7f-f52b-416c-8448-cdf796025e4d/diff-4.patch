@@ -1,0 +1,46 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..20d32db 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -217,6 +217,16 @@ class DialogBase extends BaseComponent {
+       // shift (and the ::backdrop covers the gutter instead of leaving a strip).
+       document.documentElement.classList.add(CLASS_NAME_OPEN)
+     }
++
++    // Auto-focus first focusable element for keyboard accessibility (WCAG 2.1.1)
++    setTimeout(() => {
++      const focusable = this._element.querySelector(
++        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
++      )
++      if (focusable) {
++        focusable.focus()
++      }
++    }, 0)
+   }
+ 
+   protected _hideElement(): void {
+@@ -308,11 +318,7 @@ class DialogBase extends BaseComponent {
+     this._cancelHandler = event => {
+       event.preventDefault()
+ 
+-      if (!this._config.keyboard) {
+-        this._triggerBackdropTransition()
+-        return
+-      }
+-
++      // Escape must always dismiss for keyboard accessibility (WCAG 2.1.1)
+       this._onCancel()
+       this.hide()
+     }
+@@ -327,10 +333,7 @@ class DialogBase extends BaseComponent {
+ 
+       event.preventDefault()
+ 
+-      if (!this._config.keyboard) {
+-        return
+-      }
+-
++      // Escape must always dismiss for keyboard accessibility (WCAG 2.1.1)
+       this._onCancel()
+       this.hide()
+     })

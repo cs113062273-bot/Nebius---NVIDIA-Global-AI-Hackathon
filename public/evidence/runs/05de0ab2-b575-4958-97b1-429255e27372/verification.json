@@ -1,6 +1,0 @@
-{
-  "verdict": "VERIFIED_FAIL",
-  "reasons": [
-    "APPLICATION: Edit 2 (js/picker/Picker.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"this.element.hidden = false;\"; closest is line 242: \"this.active = false;\" | not in file: \"showElement(this.element);\"; closest is line 202: \"this.element.remove();\" | not in file: \"registerListeners(this, [\"; closest is line 165: \"registerListeners(datepicker, [\". Best alignment: before lines 1-4 match file lines 205-208, then before line 5 \"this.active = true;\" differs from file line 209 \"\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
-  ]
-}

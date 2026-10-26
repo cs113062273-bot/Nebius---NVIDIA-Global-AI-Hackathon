@@ -1,0 +1,38 @@
+{
+  "root_cause": "When the datepicker calendar is open, Vanilla Calendar Pro sets tabindex=-1 on the input element to remove it from the tab order. This causes the browser's default Tab key behavior to fail (focus jumps to body instead of the next form field). Additionally, VCP likely installs a keydown listener that calls preventDefault() on Tab, preventing focus movement entirely.",
+  "repair_strategy": "Add a capture-phase keydown listener on the input element that intercepts the Tab key when the calendar is shown. The listener stops immediate propagation to prevent VCP's listener from calling preventDefault(), calls hide() to close the calendar (which restores tabindex), and allows the browser's default Tab behavior to proceed naturally.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n\n  constructor",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onInputKeyDown: ((event: KeyboardEvent) => void) | null = null\n\n  constructor"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()\n  }",
+      "after": "    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()\n\n    // Add capture-phase keydown listener to allow Tab to exit the input when calendar is shown\n    if (this._isInput) {\n      this._onInputKeyDown = (event: KeyboardEvent) => {\n        if (this._isShown && event.key === 'Tab') {\n          event.stopImmediatePropagation()\n          this.hide()\n        }\n      }\n      this._element.addEventListener('keydown', this._onInputKeyDown, true)\n    }\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    if (this._onOutside) {\n      EventHandler.off(document, EVENT_FOCUSIN, this._onOutside)\n      EventHandler.off(document, EVENT_POINTERDOWN, this._onOutside)\n    }\n\n    if (this._onTriggerClick) {",
+      "after": "    if (this._onOutside) {\n      EventHandler.off(document, EVENT_FOCUSIN, this._onOutside)\n      EventHandler.off(document, EVENT_POINTERDOWN, this._onOutside)\n    }\n\n    // Remove capture-phase keydown listener on input\n    if (this._onInputKeyDown) {\n      this._element.removeEventListener('keydown', this._onInputKeyDown, true)\n      this._onInputKeyDown = null\n    }\n\n    if (this._onTriggerClick) {"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab while the datepicker calendar is open will now close the calendar and move focus to the next focusable element (the passengers field), restoring standard form keyboard navigation per WCAG 2.1.1 and 2.4.3.",
+  "functional_risks": [
+    "Using capture-phase listener ensures our handler runs before VCP's, but could theoretically interfere with other capture-phase listeners on the input (unlikely in this codebase).",
+    "Calling hide() asynchronously means tabindex restoration happens after the keydown; however, the browser's default Tab action uses the tabindex state at the moment of the event. Since VCP sets tabindex=-1 when showing the calendar, and we stop VCP's preventDefault, the browser may still see tabindex=-1. However, hide() triggers VCP to restore tabindex synchronously during the hide call, so it should be restored before the browser processes the default action.",
+    "If the calendar is shown programmatically without user interaction, the Tab behavior remains unchanged."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab when the datepicker calendar is open moves focus to the passengers field.",
+    "Verify that pressing Tab when the datepicker calendar is closed still moves focus normally.",
+    "Verify that the calendar still functions correctly for date selection via mouse or keyboard.",
+    "Verify that the calendar hides appropriately when Tab is pressed.",
+    "Verify that no JavaScript errors are introduced.",
+    "Verify that Shift+Tab (reverse tab) still works correctly."
+  ]
+}

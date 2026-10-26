@@ -1,0 +1,6 @@
+{
+  "verdict": "INCONCLUSIVE",
+  "reasons": [
+    "No reproducible keyboard failure with a passing functional baseline"
+  ]
+}

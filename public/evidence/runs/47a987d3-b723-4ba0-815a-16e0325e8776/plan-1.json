@@ -1,0 +1,24 @@
+{
+  "root_cause": "The component only removes the maxlength attribute from its container element, leaving the textarea's native maxlength attribute active. This causes the browser to truncate input before the script can count excess characters, resulting in an incorrect character count and missing error state when the limit is exceeded.",
+  "repair_strategy": "Also remove the maxlength attribute from the textarea element in the init method, allowing the script to receive the full input value and correctly display remaining characters and error state when the limit is exceeded.",
+  "edits": [
+    {
+      "path": "src/govuk/components/character-count/character-count.js",
+      "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90",
+      "before": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')",
+      "after": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')\n  $textarea.removeAttribute('maxlength')"
+    }
+  ],
+  "expected_accessibility_effect": "Users will receive accurate character count feedback, including an error message when the limit is exceeded, via visible text and ARIA live regions. This ensures they are informed of invalid input, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "Potential regression if any downstream code relies on the textarea's maxlength attribute, though the component is intended to replace the native limit with scripted counting.",
+    "Ensuring that the hard maxlength remains for noscript fallback, so form submission still respects the limit when JavaScript is disabled."
+  ],
+  "verification_requirements": [
+    "Verify that typing beyond the limit shows a negative remaining count and error styling on the textarea.",
+    "Verify that typing within the limit shows the correct remaining count and no error styling.",
+    "Verify that screen‑reader users hear updated messages via the aria‑live region.",
+    "Verify that the component continues to work correctly when the word‑count option is used.",
+    "Verify that with JavaScript disabled the hard maxlength attribute still prevents over‑limit submission."
+  ]
+}

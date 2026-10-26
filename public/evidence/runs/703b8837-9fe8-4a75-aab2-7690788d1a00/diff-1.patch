@@ -1,0 +1,50 @@
+diff --git a/src/disclosureMenu.js b/src/disclosureMenu.js
+index 93ae08a..5e97094 100644
+--- a/src/disclosureMenu.js
++++ b/src/disclosureMenu.js
+@@ -164,11 +164,45 @@ class DisclosureMenu extends BaseMenu {
+       this._handleHover();
+       this._handleKeydown();
+       this._handleKeyup();
++      this._handleFocusBlur();
+     } catch (error) {
+       console.error(error);
+     }
+   }
+ 
++  /**
++   * Handles focusout events to close the menu when focus leaves.
++   *
++   * @protected
++   */
++  _handleFocusBlur() {
++    this.dom.menu.addEventListener(\"focusout\", (event) => {
++      if (!this.dom.menu.contains(event.relatedTarget)) {
++        this.blur();
++        this.closeChildren();
++        if (this.elements.controller) {
++          this.elements.controller.close();
++        }
++      }
++    });
++  }
++
++  /**
++   * A flag to add optional keyboard support (Arrow keys, \"Home\", and \"End\") to the menu.
++   *
++   * This functions differently for root vs. submenus.
++   * Submenus will always inherit their root menu's optionalKeySupport.
++   *
++   * @type {boolean}
++   *
++   * @see _optionalSupport
++   */
++  get optionalKeySupport() {
++    return this.isTopLevel
++      ? this._optionalSupport
++      : this.elements.rootMenu.optionalKeySupport;
++  }
++
+   /**
+    * A flag to add optional keyboard support (Arrow keys, "Home", and "End") to the menu.
+    *

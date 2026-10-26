@@ -1,0 +1,23 @@
+{
+  "root_cause": "The offcanvas focus trap is only activated when the scroll configuration is false. With data-bs-scroll=\"true\" (scroll: true) the trap is not activated, allowing focus to leave the panel when tabbing.",
+  "repair_strategy": "Modify the Offcanvas.show method to unconditionally activate the focus trap, removing the conditional check on this._config.scroll.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d",
+      "before": "    const completeCallBack = () => {\n      if (!this._config.scroll) {\n        this._focustrap.activate()\n      }\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }",
+      "after": "    const completeCallBack = () => {\n      this._focustrap.activate()\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Focus will be trapped inside the offcanvas panel, allowing sequential Tab navigation to cycle among the panel's focusable elements (close button, amount input, submit report) and preventing focus from escaping to underlying page content.",
+  "functional_risks": [
+    "Activating the focus trap when scroll:true does not affect scrolling behavior; risk is minimal.",
+    "If any custom implementation relied on the ability to tab out of the offcanvas when scroll:true, that behavior will change (now trapped)."
+  ],
+  "verification_requirements": [
+    "After opening the help panel, the first Tab press moves focus to the close button (#help-close).",
+    "Subsequent Tab presses cycle focus within the panel: close button → amount input → submit report → close button.",
+    "Pressing Escape closes the panel and returns focus to the trigger button (#open-help).",
+    "The visual and functional behavior of the offcanvas (scrolling, backdrop) remains unchanged."
+  ]
+}

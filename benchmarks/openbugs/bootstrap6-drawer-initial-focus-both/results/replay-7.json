@@ -1,0 +1,10 @@
+{
+  "completedAt": "2026-10-26T15:47:23.791Z",
+  "replayRun": "5c95edfc-a609-4471-af89-72fa0f3ae918",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "fromCase": "Opening a drawer must move keyboard focus into it, to its autofocus field when it has one",
+  "fromRun": "42ce55e5-f531-4497-9899-664f39d5f674",
+  "attempt": 1,
+  "engine": "browser replay, no inference"
+}

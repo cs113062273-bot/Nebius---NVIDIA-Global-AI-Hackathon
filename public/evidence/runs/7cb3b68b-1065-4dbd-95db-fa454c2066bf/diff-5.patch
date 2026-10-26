@@ -1,0 +1,52 @@
+diff --git a/index.js b/index.js
+index 6d88fbd..c931796 100644
+--- a/index.js
++++ b/index.js
+@@ -649,6 +649,21 @@ const createFocusTrap = function (elements, userOptions) {
+ 
+   // This needs to be done on mousedown and touchstart instead of click
+   // so that it precedes the focus event.
++
++  // Determines if a node is attached to the document (including shadow DOM).
++  const isNodeAttached = function (node) {
++    if (!node) return false;
++    const rootNode = node.getRootNode();
++    if (rootNode === node.ownerDocument) {
++      return node.ownerDocument.contains(node);
++    }
++    // rootNode is a ShadowRoot
++    const host = rootNode.host;
++    if (!host) return false;
++    // Recursively check if the host is attached.
++    return isNodeAttached(host);
++  };
++
+   const checkPointerDown = function (e) {
+     const target = getActualTarget(e);
+ 
+@@ -691,6 +706,11 @@ const createFocusTrap = function (elements, userOptions) {
+     const target = getActualTarget(event);
+     const targetContained = findContainerIndex(target, event) >= 0;
+ 
++    // If the MRU node is no longer attached, clear it.
++    if (state.mostRecentlyFocusedNode && !isNodeAttached(state.mostRecentlyFocusedNode)) {
++      state.mostRecentlyFocusedNode = null;
++    }
++
+     // In Firefox when you Tab out of an iframe the Document is briefly focused.
+     if (targetContained || target instanceof Document) {
+       if (targetContained) {
+@@ -700,6 +720,13 @@ const createFocusTrap = function (elements, userOptions) {
+       // escaped! pull it back in to where it just left
+       event.stopImmediatePropagation();
+ 
++      // If the MRU node is detached or null, fall back to initial focus node.
++      if (!state.mostRecentlyFocusedNode || !isNodeAttached(state.mostRecentlyFocusedNode)) {
++        state.mostRecentlyFocusedNode = null;
++        tryFocus(getInitialFocusNode());
++        return;
++      }
++
+       // focus will escape if the MRU node had a positive tab index and user tried to nav forward;
+       //  it will also escape if the MRU node had a 0 tab index and user tried to nav backward
+       //  toward a node with a positive tab index

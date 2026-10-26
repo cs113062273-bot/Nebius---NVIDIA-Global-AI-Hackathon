@@ -1,0 +1,19 @@
+{
+  "root_cause": "The disclosure menu does not close its dropdown when keyboard focus leaves the navigation menu (e.g., tabbing to the search input). The menu lacks a focusout listener to detect when focus moves outside the menu container.",
+  "repair_strategy": "Add a focusout event listener on the root menu element in the DisclosureMenu's initialize method. When focus leaves the menu (relatedTarget not contained), close all child dropdowns using the existing closeChildren method.",
+  "edits": [
+    {
+      "path": "src/disclosureMenu.js",
+      "sha256": "ca4cd96d5ab9b2275e2c8f4989766af90595913fd63bb25320c2b0b8853b564b",
+      "before": "  initialize() {\n    try {\n      super.initialize();\n\n      this._handleFocus();\n      this._handleClick();\n      this._handleHover();\n      this._handleKeydown();\n      this._handleKeyup();\n    } catch (error) {\n      console.error(error);\n    }\n  }",
+      "after": "  initialize() {\n    try {\n      super.initialize();\n\n      this._handleFocus();\n      this._handleClick();\n      this._handleHover();\n      this._handleKeydown();\n      this._handleKeyup();\n\n      // Close dropdown when focus leaves the menu\n      this.dom.menu.addEventListener('focusout', (event) => {\n        if (!this.dom.menu.contains(event.relatedTarget)) {\n          this.closeChildren();\n        }\n      });\n    } catch (error) {\n      console.error(error);\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users tabbing out of the navigation will no longer have the dropdown covering page content. The dropdown will close, meeting WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by ensuring focus moves naturally without trapped open dropdowns.",
+  "functional_risks": [
+    "Minimal risk. The focusout listener only triggers when focus leaves the menu element entirely. It will not interfere with focus movement within the menu (button to links). It uses existing closeChildren method which properly updates ARIA and focus states."
+  ],
+  "verification_requirements": [
+    "The existing journey test \"Tabbing out of the navigation closes the open dropdown\" should pass. Additionally, verify that tabbing within the dropdown (button to links) does not close it, and that clicking outside still works."
+  ]
+}

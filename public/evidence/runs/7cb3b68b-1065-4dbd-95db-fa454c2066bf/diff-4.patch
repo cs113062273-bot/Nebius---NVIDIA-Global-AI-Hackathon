@@ -1,0 +1,51 @@
+diff --git a/index.js b/index.js
+index 6d88fbd..1942714 100644
+--- a/index.js
++++ b/index.js
+@@ -683,6 +683,20 @@ const createFocusTrap = function (elements, userOptions) {
+     e.preventDefault();
+   };
+ 
++  // Determines if a node is attached to the document (including shadow DOM).
++  const isNodeAttached = function (node) {
++    if (!node) return false;
++    const rootNode = node.getRootNode();
++    if (rootNode === node.ownerDocument) {
++      return node.ownerDocument.contains(node);
++    }
++    // rootNode is a ShadowRoot
++    const host = rootNode.host;
++    if (!host) return false;
++    // Recursively check if the host is attached.
++    return isNodeAttached(host);
++  };
++
+   // In case focus escapes the trap for some strange reason, pull it back in.
+   // NOTE: the focusIn event is NOT cancelable, so if focus escapes, it may cause unexpected
+   //  scrolling if the node that got focused was out of view; there's nothing we can do to
+@@ -691,10 +705,25 @@ const createFocusTrap = function (elements, userOptions) {
+     const target = getActualTarget(event);
+     const targetContained = findContainerIndex(target, event) >= 0;
+ 
++    // If the MRU node is no longer attached, clear it.
++    if (state.mostRecentlyFocusedNode && !isNodeAttached(state.mostRecentlyFocusedNode)) {
++      state.mostRecentlyFocusedNode = null;
++    }
++
+     // In Firefox when you Tab out of an iframe the Document is briefly focused.
+     if (targetContained || target instanceof Document) {
+       if (targetContained) {
+         state.mostRecentlyFocusedNode = target;
++      } else if (target instanceof Document) {
++        // Focus moved to Document. If the MRU node was in the trap and is now detached,
++        // restore focus to the initial focus node.
++        if (
++          state.mostRecentlyFocusedNode &&
++          !isNodeAttached(state.mostRecentlyFocusedNode)
++        ) {
++          state.mostRecentlyFocusedNode = null;
++          tryFocus(getInitialFocusNode());
++        }
+       }
+     } else {
+       // escaped! pull it back in to where it just left

@@ -1,56 +1,57 @@
 diff --git a/pikaday.js b/pikaday.js
-index cede5d3..af029b2 100644
+index cede5d3..4c281ae 100644
 --- a/pikaday.js
 +++ b/pikaday.js
-@@ -543,6 +543,14 @@
-             e = e || window.event;
- 
-             if (self.isVisible()) {
-+                function isAllowedDate(date) {
-+                    if (!isDate(date)) return false;
-+                    if (self._o.minDate && date < self._o.minDate) return false;
-+                    if (self._o.maxDate && date > self._o.maxDate) return false;
-+                    if (self._o.disableWeekends && isWeekend(date)) return false;
-+                    if (self._o.disableDayFn && self._o.disableDayFn(date)) return false;
-+                    return true;
-+                }
- 
-                 switch(e.keyCode){
-                     case 13:
-@@ -552,16 +560,32 @@
+@@ -552,13 +552,13 @@
                          }
                          break;
                      case 37:
 -                        self.adjustDate('subtract', 1);
-+                        var newDate = self.getDate() || new Date();
-+                        do {
-+                            newDate = new Date(newDate.valueOf() - 24*60*60*1000);
-+                        } while (!isAllowedDate(newDate));
-+                        self.setDate(newDate);
++                        self._adjustDateSkipDisabled('subtract', 1);
                          break;
                      case 38:
--                        self.adjustDate('subtract', 7);
-+                        var newDate = self.getDate() || new Date();
-+                        do {
-+                            newDate = new Date(newDate.valueOf() - 7*24*60*60*1000);
-+                        } while (!isAllowedDate(newDate));
-+                        self.setDate(newDate);
+                         self.adjustDate('subtract', 7);
                          break;
                      case 39:
 -                        self.adjustDate('add', 1);
-+                        var newDate = self.getDate() || new Date();
-+                        do {
-+                            newDate = new Date(newDate.valueOf() + 24*60*60*1000);
-+                        } while (!isAllowedDate(newDate));
-+                        self.setDate(newDate);
++                        self._adjustDateSkipDisabled('add', 1);
                          break;
                      case 40:
--                        self.adjustDate('add', 7);
-+                        var newDate = self.getDate() || new Date();
-+                        do {
-+                            newDate = new Date(newDate.valueOf() + 7*24*60*60*1000);
-+                        } while (!isAllowedDate(newDate));
-+                        self.setDate(newDate);
-                         break;
-                     case 8:
-                     case 46:
+                         self.adjustDate('add', 7);
+@@ -653,6 +653,36 @@
+             }
+         };
+ 
++        // Helper to check if a date is disabled according to picker options
++        self._isDateDisabled = function(date) {
++            var opts = self._o;
++            if (opts.minDate && date < opts.minDate) {
++                return true;
++            }
++            if (opts.maxDate && date > opts.maxDate) {
++                return true;
++            }
++            if (opts.disableWeekends && isWeekend(date)) {
++                return true;
++            }
++            if (opts.disableDayFn && opts.disableDayFn(date)) {
++                return true;
++            }
++            return false;
++        };
++
++        // Adjust date by skipping disabled days
++        self._adjustDateSkipDisabled = function(sign, days) {
++            var newDate = self.getDate() || new Date();
++            var increment = (sign === 'add') ? 1 : -1;
++            for (var i = 0; i < days; i++) {
++                do {
++                    newDate = new Date(newDate.valueOf() + increment * 24 * 60 * 60 * 1000);
++                } while (self._isDateDisabled(newDate));
++            }
++            self.setDate(newDate);
++        };
++
+         self.el = document.createElement('div');
+         self.el.className = 'pika-single' + (opts.isRTL ? ' is-rtl' : '') + (opts.theme ? ' ' + opts.theme : '');
+ 

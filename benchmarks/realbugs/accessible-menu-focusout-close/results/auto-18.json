@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T14:53:38.102Z",
+  "policy": "auto",
+  "modelRun": "002fede6-7d53-4eb0-a5d3-baeb34c9b405",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "79a4d5608dd34a687092d5d5b848e507742623dff9821ab58a6b7cd66f6932c4",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "TRUNCATED",
+      "failure": "Model output truncated at max_tokens; reasoning may have consumed the output limit",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-6ecbb3e3f6f097337df62d16a94c1e23",
+      "usage": {
+        "completion_tokens": 32000,
+        "prompt_tokens": 33582,
+        "total_tokens": 65582,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 30675,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 33582
+      },
+      "latencyMs": 133938
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-d7829b4d029bb8cc64567c59ca052c10",
+      "usage": {
+        "completion_tokens": 7925,
+        "prompt_tokens": 33642,
+        "total_tokens": 41567,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7332,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 33642
+      },
+      "latencyMs": 21580,
+      "reservedCreditUsd": 0.213912
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..0a0b6de 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -545,6 +545,9 @@
+             if (self.isVisible()) {
+ 
+                 switch(e.keyCode){
++                    case 9: // Tab
++                        self.hide();
++                        break;
+                     case 13:
+                     case 27:
+                         if (opts.field) {

@@ -1,0 +1,23 @@
+{
+  "root_cause": "The Escape key handler in the navigation listener clears the input value, causing the typed city to be lost when dismissing suggestions.",
+  "repair_strategy": "Remove the line that clears the input value and the associated clear event emission in the Escape case of the navigate function, leaving only the call to close the suggestion list.",
+  "edits": [
+    {
+      "path": "src/controllers/listController.js",
+      "sha256": "913fcec2ffc448fd458cae19dd873623256f7e1c1ba3eab15225d68f74351f8f",
+      "before": "    // Esc\n    case 27:\n      // Clear \\\"input\\\" value\n      ctx.input.value = \"\";\n\n      /** \n       * @emit {clear} event on input clear \n       **/\n      eventEmitter('clear', ctx);\n\n      close(ctx);\n      break;",
+      "after": "    // Esc\n    case 27:\n      close(ctx);\n      break;"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will dismiss the suggestion list while preserving the user's entered value, maintaining keyboard focus on the input and ensuring the form data reflects the typed city.",
+  "functional_risks": [
+    "Users who rely on Escape to clear the field may notice the value persists; however the specified behavior is to retain the value after dismissing suggestions."
+  ],
+  "verification_requirements": [
+    "After typing a city and pressing Escape, the suggestion list must be hidden.",
+    "The input must retain the typed value.",
+    "Focus must return to the input field.",
+    "Form data for the city field must match the typed value.",
+    "Other navigation keys (ArrowDown, Enter, Tab) must continue to function as expected."
+  ]
+}

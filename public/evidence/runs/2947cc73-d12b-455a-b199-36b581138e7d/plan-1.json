@@ -1,0 +1,25 @@
+{
+  "root_cause": "The datepicker does not hide on blur when the entered date is outside the allowed range because there is no blur event listener to close the calendar; the existing hide logic is tied to validation or explicit hide calls that are not triggered on Tab away.",
+  "repair_strategy": "Add a blur event listener to the input field in non-inline mode that calls datepicker.hide(), ensuring the calendar closes when the user tabs away regardless of date validity.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "      const listeners = [\\n        [inputField, 'keydown', onKeydown.bind(null, this)],\\n        [inputField, 'focus', onFocus.bind(null, this)],\\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\\n        [inputField, 'click', onClickInput.bind(null, this)],\\n        [inputField, 'paste', onPaste.bind(null, this)],\\n        [document, 'mousedown', onMousedownDocument],\\n        [document, 'touchstart', onMousedownDocument],\\n        [window, 'resize', picker.place.bind(picker)]\\n      ];\\n",
+      "after": "      const listeners = [\\n        [inputField, 'keydown', onKeydown.bind(null, this)],\\n        [inputField, 'focus', onFocus.bind(null, this)],\\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\\n        [inputField, 'click', onClickInput.bind(null, this)],\\n        [inputField, 'paste', onPaste.bind(null, this)],\\n        [document, 'mousedown', onMousedownDocument],\\n        [document, 'touchstart', onMousedownDocument],\\n        [window, 'resize', picker.place.bind(picker)],\\n        [inputField, 'blur', this.hide.bind(this)]\\n      ];\\n"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can reliably close the datepicker by tabbing out of the field, preventing unexpected focus trapping and satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "The datepicker will hide on blur even if the user intends to correct an invalid date; however the requirement specifies that Tab away should close the calendar regardless of validity.",
+    "Inline pickers are unaffected because the listener is added only in the non‑inline branch.",
+    "If other code depends on the blur event to keep the picker open for custom validation, that behavior will change; but the datepicker's own validation already runs on input change."
+  ],
+  "verification_requirements": [
+    "After typing a valid or invalid date and pressing Tab, the datepicker element must not be visible.",
+    "Clicking outside the picker should still hide it.",
+    "Inline pickers must remain visible when their host element receives blur.",
+    "Selecting a date via the mouse grid should still update the field and hide the picker if configured.",
+    "The blur listener should not cause duplicate hide calls or errors."
+  ]
+}

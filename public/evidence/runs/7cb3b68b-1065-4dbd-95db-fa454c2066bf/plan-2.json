@@ -1,0 +1,20 @@
+{
+  "root_cause": "When a focused element inside the focus trap is removed from the DOM, the browser moves focus to the document body. The focusin handler (checkFocusIn) detects focus on Document but returns early without attempting recovery, because it assumes Document focus is a temporary Firefox iframe quirk. The trap's mostRecentlyFocusedNode still references the detached element, but the recovery logic is never triggered.",
+  "repair_strategy": "Modify the Document focus handling in checkFocusIn to detect when the mostRecentlyFocusedNode has become detached (indicating the focused element was removed), and proactively restore focus to the trap's initial focus node instead of returning early.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n      state.recentNavEvent = undefined; // clear\n      return;\n    }",
+      "after": "    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    // But if the previously focused node in the trap was removed, we need to restore focus.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      } else if (target instanceof Document) {\n        // Focus moved to Document. If the MRU node was in the trap and is now detached,\n        // restore focus to the initial focus node.\n        if (\n          state.mostRecentlyFocusedNode &&\n          !doc.contains(state.mostRecentlyFocusedNode)\n        ) {\n          state.mostRecentlyFocusedNode = null;\n          tryFocus(getInitialFocusNode());\n        }\n      }\n      state.recentNavEvent = undefined; // clear\n      return;\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains trapped inside the dialog after removing an item, preserving tab order and preventing focus loss to background elements.",
+  "functional_risks": [
+    "The Document focus check may trigger on legitimate temporary Document focus (Firefox iframe), causing unnecessary focus restoration. However, the detached-node check mitigates this."
+  ],
+  "verification_requirements": [
+    "After pressing Enter on the remove button of an item, the count updates and focus stays inside the basket (#basket:focus-within is true).",
+    "Tab navigation continues to wrap correctly within the dialog after item removal."
+  ]
+}

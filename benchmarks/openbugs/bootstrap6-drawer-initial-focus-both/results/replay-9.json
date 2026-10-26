@@ -1,0 +1,13 @@
+{
+  "completedAt": "2026-10-26T15:47:44.092Z",
+  "replayRun": "d9b72eb4-f304-4a5d-b51f-df0ff1b54062",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 2 · #sort-close: expected \"#sort-close\", observed \"#sort\"",
+    "Task evidence is missing or contradicts the verdict"
+  ],
+  "fromCase": "Opening a drawer must move keyboard focus into it, to its autofocus field when it has one",
+  "fromRun": "d40f63a7-699c-410a-9d78-a31d4422295e",
+  "attempt": 5,
+  "engine": "browser replay, no inference"
+}

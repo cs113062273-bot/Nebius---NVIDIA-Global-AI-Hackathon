@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T13:00:33.514Z",
+  "policy": "auto",
+  "modelRun": "06dad3bc-0f8b-4bb8-92f2-4cc9521cce5f",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "79a4d5608dd34a687092d5d5b848e507742623dff9821ab58a6b7cd66f6932c4",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-47b133291b14710bdbfa47c1e83c954e",
+      "usage": {
+        "completion_tokens": 11674,
+        "prompt_tokens": 37292,
+        "total_tokens": 48966,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10826,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 25296,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 37292
+      },
+      "latencyMs": 54211,
+      "reservedCreditUsd": 0.0681969
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-355628037c94678cc862ef5e7e8815f0",
+      "usage": {
+        "completion_tokens": 11773,
+        "prompt_tokens": 38128,
+        "total_tokens": 49901,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10886,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 38128
+      },
+      "latencyMs": 32950,
+      "reservedCreditUsd": 0.23119399999999998
+    }
+  ]
+}

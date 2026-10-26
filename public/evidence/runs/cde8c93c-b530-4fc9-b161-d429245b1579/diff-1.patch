@@ -1,0 +1,12 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..bdfaf7a 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -464,7 +464,6 @@ class Dropdown extends BaseComponent {
+     }
+ 
+     event.preventDefault()
+-    event.stopPropagation()
+ 
+     if (isDisabled(this)) {
+       return

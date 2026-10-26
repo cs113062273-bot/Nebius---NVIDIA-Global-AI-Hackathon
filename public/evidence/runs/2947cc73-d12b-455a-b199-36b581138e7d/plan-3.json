@@ -1,0 +1,32 @@
+{
+  "root_cause": "The datepicker does not hide on blur when the user tabs away because there is no blur event listener attached to the input field in non-inline mode. Additionally, the exitEditMode method has a logic error: it returns early when editMode is true, preventing proper cleanup of edit mode state, which may contribute to unexpected input field behavior.",
+  "repair_strategy": "Add a blur event listener to the input field in the non-inline branch that calls datepicker.hide(). Also fix the exitEditMode condition so it actually exits edit mode when editMode is true, ensuring the input field is not left in an inconsistent state.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    if (inline) {\n      this.show();\n    } else {\n      // set up event listeners\n      const onMousedownDocument = onClickOutside.bind(null, datepicker);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(datepicker, listeners);\n    }",
+      "after": "    if (inline) {\n      this.show();\n    } else {\n      // set up event listeners\n      const onMousedownDocument = onClickOutside.bind(null, datepicker);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)],\n        [inputField, 'blur', this.hide.bind(this)]\n      ];\n      registerListeners(datepicker, listeners);\n    }"
+    },
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "  exitEditMode(options = undefined) {\n    if (this.inline || !this.picker.active || this.editMode) {\n      return;\n    }\n    const opts = Object.assign({update: false}, options);\n    delete this.editMode;\n    this.inputField.classList.remove('in-edit');\n    if (opts.update) {\n      this.update(opts);\n    }\n  }",
+      "after": "  exitEditMode(options = undefined) {\n    if (this.inline || !this.picker.active || !this.editMode) {\n      return;\n    }\n    const opts = Object.assign({update: false}, options);\n    delete this.editMode;\n    this.inputField.classList.remove('in-edit');\n    if (opts.update) {\n      this.update(opts);\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can reliably close the datepicker by tabbing out of the field, preventing unexpected focus trapping and satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order). The edit mode cleanup fix ensures the input field does not retain stale editing state.",
+  "functional_risks": [
+    "The datepicker will hide on blur even if the user intends to correct an invalid date; however the requirement specifies that Tab away should close the calendar regardless of validity.",
+    "Inline pickers are unaffected because the listener is added only in the non-inline branch.",
+    "Fixing the exitEditMode condition changes behavior when the picker is hidden while in edit mode; it will now properly exit edit mode instead of leaving the input field in edit mode. This should not break existing flows because the picker is being hidden anyway."
+  ],
+  "verification_requirements": [
+    "After typing a valid or invalid date and pressing Tab, the datepicker element must not be visible.",
+    "Clicking outside the picker should still hide it.",
+    "Inline pickers must remain visible when their host element receives blur.",
+    "Selecting a date via the mouse grid should still update the field and hide the picker if configured.",
+    "The blur listener should not cause duplicate hide calls or errors.",
+    "The regression guard 'Type a valid delivery date and Tab away' must hold with form-data reflecting the typed valid date."
+  ]
+}

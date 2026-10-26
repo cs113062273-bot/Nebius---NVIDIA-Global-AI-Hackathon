@@ -1,0 +1,25 @@
+{
+  "root_cause": "The focus trap only wraps when focus is at the first or last focusable element in the modal's focusableNodes array, but does not prevent tabbing out when focus is in the middle and the next DOM focusable element lies outside the modal. This occurs because the modal's focusable nodes are not contiguous in DOM order (the close button appears before other inputs), causing focus to escape to the footer link after the Upload button.",
+  "repair_strategy": "Modify Micromodal's maintainFocus method to implement circular navigation based on the ordered array of focusable nodes, preventing default on Tab and Shift+Tab regardless of position, ensuring focus stays within the modal.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    maintainFocus (event) {\n      const focusableNodes = this.getFocusableNodes()\n\n      // if disableFocus is true\n      if (!this.modal.contains(document.activeElement)) {\n        focusableNodes[0].focus()\n      } else {\n        const focusedItemIndex = focusableNodes.indexOf(document.activeElement)\n\n        if (event.shiftKey && focusedItemIndex === 0) {\n          focusableNodes[focusableNodes.length - 1].focus()\n          event.preventDefault()\n        }\n\n        if (!event.shiftKey && focusableNodes.length > 0 && focusedItemIndex === focusableNodes.length - 1) {\n          focusableNodes[0].focus()\n          event.preventDefault()\n        }\n      }\n    }",
+      "after": "    maintainFocus (event) {\n      const focusableNodes = this.getFocusableNodes()\n\n      // if disableFocus is true\n      if (!this.modal.contains(document.activeElement)) {\n        focusableNodes[0].focus()\n      } else {\n        const focusedItemIndex = focusableNodes.indexOf(document.activeElement)\n        if (event.shiftKey) {\n          const prev = focusableNodes[(focusedItemIndex - 1 + focusableNodes.length) % focusableNodes.length]\n          prev.focus()\n          event.preventDefault()\n        } else {\n          const next = focusableNodes[(focusedItemIndex + 1) % focusableNodes.length]\n          next.focus()\n          event.preventDefault()\n        }\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tabbing within the upload dialog will now cycle among the modal's focusable elements (filename input, Upload button, close button) and not move focus to external links, satisfying keyboard trap requirement (WCAG 2.1.1) and allowing users to navigate the modal without escaping.",
+  "functional_risks": [
+    "Changing focus handling could affect custom usage where developers rely on the previous behavior (e.g., expecting focus to leave modal on Tab from certain elements).",
+    "If a modal contains no focusable elements, the modulo operation would divide by zero; however getFocusableNodes returns an empty array only in such degenerate cases, which would lead to a runtime error."
+  ],
+  "verification_requirements": [
+    "After opening the modal, focus starts on the filename input.",
+    "Pressing Tab moves focus to the Upload button.",
+    "Another Tab moves focus to the close button.",
+    "Another Tab wraps focus back to the filename input.",
+    "Shift+Tab reverses the order correctly.",
+    "Escape key still closes the modal and returns focus to the trigger button."
+  ]
+}

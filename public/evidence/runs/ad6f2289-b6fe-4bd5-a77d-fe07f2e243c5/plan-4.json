@@ -1,0 +1,30 @@
+{
+  "root_cause": "When the #more button is clicked and removes itself from the DOM while focused, the focus trap's checkFocusIn handler attempts to restore focus using state.mostRecentlyFocusedNode (the now-detached element). The tryFocus function does not verify the node is still in the document, causing node.focus() to fail silently. Additionally, the focusin event may not fire in the test environment (JSDom), so the trap never gets a chance to restore focus. The trap's internal tabbable node cache (state.tabbableGroups) can also become stale after DOM mutations, causing getInitialFocusNode to return an outdated reference.",
+  "repair_strategy": "Harden tryFocus to reject nodes no longer contained in the document (using doc.contains(node)) and fall back to a freshly computed initial focus node. Modify checkFocusIn to bypass the potentially stale state.mostRecentlyFocusedNode and state.tabbableGroups by directly querying the first container for tabbable nodes using the imported tabbable utility, ensuring a live reference to the first focusable element (#close).",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "  const tryFocus = function (node) {\n    if (node === false) {\n      return;\n    }\n\n    if (node === doc.activeElement) {\n      return;\n    }\n\n    if (!node || !node.focus) {\n      tryFocus(getInitialFocusNode());\n      return;\n    }\n\n    node.focus({ preventScroll: !!config.preventScroll });\n    state.mostRecentlyFocusedNode = node;\n\n    if (isSelectableInput(node)) {\n      node.select();\n    }\n  };",
+      "after": "  const tryFocus = function (node) {\n    if (node === false) {\n      return;\n    }\n\n    if (node === doc.activeElement) {\n      return;\n    }\n\n    if (!node || !node.focus || !doc.contains(node)) {\n      tryFocus(getInitialFocusNode());\n      return;\n    }\n\n    node.focus({ preventScroll: !!config.preventScroll });\n    state.mostRecentlyFocusedNode = node;\n\n    if (isSelectableInput(node)) {\n      node.select();\n    }\n  };"
+    },
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n    }\n  };",
+      "after": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to the first tabbable node in the trap\n      e.stopImmediatePropagation();\n      // Compute first tabbable node directly from the first container to avoid stale cache\n      const firstContainer = state.containers[0];\n      if (firstContainer) {\n        const tabbableNodes = tabbable(firstContainer, config.tabbableOptions);\n        if (tabbableNodes.length > 0) {\n          tryFocus(tabbableNodes[0]);\n          return;\n        }\n      }\n      tryFocus(getInitialFocusNode());\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "After clicking the #more button (which removes itself), focus will remain trapped inside the dialog on the #close button (the first tabbable element), ensuring keyboard users can continue to navigate the dialog without accidentally leaving it. The Escape key will still close the dialog and return focus to the #open button.",
+  "functional_risks": [
+    "If the first container has no tabbable nodes (unlikely, as the trap requires at least one), the fallback to getInitialFocusNode may still use stale cache.",
+    "The direct tabbable query runs on every focus escape, adding minimal overhead.",
+    "The change to checkFocusIn directs focus to the first tabbable node on any escape, which is the intended behavior for a focus trap."
+  ],
+  "verification_requirements": [
+    "After clicking the #more button, pressing Tab should move focus to the #close button (not to the body).",
+    "The dialog should retain focus within after the #more button is removed (verified by #results:focus-within).",
+    "The Escape key should still close the dialog and return focus to the #open button.",
+    "The initial focus when opening the dialog should remain on the #close button."
+  ]
+}

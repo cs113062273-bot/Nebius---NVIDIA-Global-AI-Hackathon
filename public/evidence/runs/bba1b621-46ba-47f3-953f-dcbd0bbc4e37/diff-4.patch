@@ -1,0 +1,37 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..afbce39 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -478,7 +478,8 @@
+     Pikaday = function(options)
+     {
+         var self = this,
+-            opts = self.config(options);
++            opts = self.config(options),
++            tabPressed = false;
+ 
+         self._onMouseDown = function(e)
+         {
+@@ -545,6 +546,10 @@
+             if (self.isVisible()) {
+ 
+                 switch(e.keyCode){
++                    case 9:
++                        tabPressed = true;
++                        sto(function() { tabPressed = false; }, 0);
++                        break;
+                     case 13:
+                     case 27:
+                         if (opts.field) {
+@@ -620,6 +625,11 @@
+             }
+             while ((pEl = pEl.parentNode));
+ 
++            if (tabPressed) {
++                tabPressed = false;
++                return;
++            }
++
+             if (!self._c) {
+                 self._b = sto(function() {
+                     self.hide();

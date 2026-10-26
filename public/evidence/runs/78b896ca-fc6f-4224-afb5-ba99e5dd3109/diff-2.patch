@@ -1,0 +1,29 @@
+diff --git a/index.js b/index.js
+index 6d88fbd..f781040 100644
+--- a/index.js
++++ b/index.js
+@@ -980,16 +980,22 @@ const createFocusTrap = function (elements, userOptions) {
+   //
+ 
+   const checkDomRemoval = function (mutations) {
++    const focusedNode = state.mostRecentlyFocusedNode;
++    if (!focusedNode) return;
++    
+     const isFocusedNodeRemoved = mutations.some(function (mutation) {
+       const removedNodes = Array.from(mutation.removedNodes);
+       return removedNodes.some(function (node) {
+-        return node === state.mostRecentlyFocusedNode;
++        return node === focusedNode || node.contains(focusedNode);
+       });
+     });
+ 
++    // Also check if focused node is no longer in the document
++    const isFocusedNodeDetached = !doc.contains(focusedNode);
++
+     // If the currently focused is removed then browsers will move focus to the
+     // <body> element. If this happens, try to move focus back into the trap.
+-    if (isFocusedNodeRemoved) {
++    if (isFocusedNodeRemoved || isFocusedNodeDetached) {
+       tryFocus(getInitialFocusNode());
+     }
+   };

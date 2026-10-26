@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T15:58:14.857Z",
+  "run": "8f75e572-c056-4582-9602-cb8737a15cdb",
+  "verdict": "Works, with a visible change to the default display",
+  "summary": "A configured dateFormat (function or Intl options) is still applied first; only the default formatting of an input datepicker changes from locale text to YYYY-MM-DD, so focusing no longer rewrites a saved ISO value.",
+  "caveats": [
+    "Every input datepicker without a dateFormat now shows ISO dates instead of locale text.",
+    "The pending human fixes keep the locale display and submit ISO through a hidden input; this patch changes what users see instead."
+  ]
+}

@@ -1,0 +1,44 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..fac4ef4 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,12 +118,14 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _isInitializing: boolean
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+ 
+     this._calendar = null
+     this._isShown = false
++    this._isInitializing = false
+ 
+     this._initCalendar()
+   }
+@@ -227,6 +229,7 @@ class Datepicker extends BaseComponent {
+ 
+   // Private
+   protected _initCalendar(): void {
++    this._isInitializing = true
+     this._isInput = this._element.tagName === 'INPUT'
+     this._isInline = this._config.inline
+ 
+@@ -257,6 +260,7 @@ class Datepicker extends BaseComponent {
+ 
+     // Populate input/display with preselected dates
+     this._updateDisplayWithSelectedDates()
++    this._isInitializing = false
+   }
+ 
+   protected _updateDisplayWithSelectedDates(): void {
+@@ -269,7 +273,7 @@ class Datepicker extends BaseComponent {
+ 
+   protected _syncSelectedDates(selectedDates: string[]): void {
+     const formattedDate = this._formatDateForInput(selectedDates)
+-    if (this._isInput) {
++    if (this._isInput && !this._isInitializing) {
+       this._element.value = formattedDate
+     }
+ 

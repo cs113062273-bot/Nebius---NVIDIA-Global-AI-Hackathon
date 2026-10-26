@@ -1,0 +1,37 @@
+{
+  "root_cause": "The Pikaday date picker's focusable elements (previous/next month navigation buttons and day buttons) are in the default tab order. When the picker is open, these elements intercept Tab navigation from the bound input field, preventing focus from moving to the next form field (guests). The picker's aria-label instructs users to 'Use the arrow keys to pick a date', confirming that Tab should not be used for internal picker navigation.",
+  "repair_strategy": "Add tabindex=\"-1\" to all focusable buttons within the picker (pika-prev, pika-next, pika-day) so they are removed from the sequential tab order. The month/year selects already have tabindex=\"-1\". Keyboard users navigate the picker via arrow keys on the input field (handled by _onKeyChange), while Tab naturally moves to the next form field. This follows the APG date picker pattern and preserves native browser focus behavior.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "    if (c === 0) {\n        html += '<button class=\"pika-prev\" type=\"button\" data-pika-year=\"' + year + '\" data-pika-month=\"' + (month === 0 ? 11 : month - 1) + '\">' + opts.i18n.previousMonth + '</button>';\n    }",
+      "after": "    if (c === 0) {\n        html += '<button class=\"pika-prev\" type=\"button\" tabindex=\"-1\" data-pika-year=\"' + year + '\" data-pika-month=\"' + (month === 0 ? 11 : month - 1) + '\">' + opts.i18n.previousMonth + '</button>';\n    }"
+    },
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "    if (c === numberOfMonths - 1) {\n        html += '<button class=\"pika-next\" type=\"button\" data-pika-year=\"' + (month === 11 ? year + 1 : year) + '\" data-pika-month=\"' + (month === 11 ? 0 : month + 1) + '\">' + opts.i18n.nextMonth + '</button>';\n    }",
+      "after": "    if (c === numberOfMonths - 1) {\n        html += '<button class=\"pika-next\" type=\"button\" tabindex=\"-1\" data-pika-year=\"' + (month === 11 ? year + 1 : year) + '\" data-pika-month=\"' + (month === 11 ? 0 : month + 1) + '\">' + opts.i18n.nextMonth + '</button>';\n    }"
+    },
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "            return '<td data-day=\"' + opts.day + '\" class=\"' + arr.join(' ') + '\" aria-selected=\"' + ariaSelected + '\">' +\n                 '<button class=\"pika-button pika-day\" type=\"button\" ' +\n                    'data-pika-year=\"' + opts.year + '\" data-pika-month=\"' + opts.month + '\" data-pika-day=\"' + opts.day + '\">' +\n                        opts.day +\n                 '</button>' +\n              '</td>';",
+      "after": "            return '<td data-day=\"' + opts.day + '\" class=\"' + arr.join(' ') + '\" aria-selected=\"' + ariaSelected + '\">' +\n                 '<button class=\"pika-button pika-day\" type=\"button\" tabindex=\"-1\" ' +\n                    'data-pika-year=\"' + opts.year + '\" data-pika-month=\"' + opts.month + '\" data-pika-day=\"' + opts.day + '\">' +\n                        opts.day +\n                 '</button>' +\n              '</td>';"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can tab from the checkin date input field directly to the guests field (WCAG 2.1.1 Keyboard, 2.4.3 Focus Order). The picker's internal controls are no longer in the tab order; arrow keys on the input field navigate dates per the aria-label. Focus order follows DOM order naturally.",
+  "functional_risks": [
+    "Low - only removes picker buttons from tab order; arrow key navigation via input field unchanged",
+    "Date selection via keyboard (Tab to day button + Enter) was not previously supported; direct input typing and arrow key navigation remain",
+    "Pointer/touch interaction unaffected"
+  ],
+  "verification_requirements": [
+    "Tab from checkin field moves focus to guests field",
+    "Arrow keys still navigate dates when picker is open",
+    "Date selection via direct input typing works",
+    "Picker opens/closes on focus/blur of checkin field",
+    "Pointer interaction with picker buttons still works"
+  ]
+}

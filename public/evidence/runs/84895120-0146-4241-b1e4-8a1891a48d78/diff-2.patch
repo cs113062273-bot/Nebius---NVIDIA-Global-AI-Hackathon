@@ -1,0 +1,20 @@
+diff --git a/src/govuk/components/header/header.js b/src/govuk/components/header/header.js
+index 84eb54f..8613482 100644
+--- a/src/govuk/components/header/header.js
++++ b/src/govuk/components/header/header.js
+@@ -21,6 +21,15 @@ Header.prototype.init = function () {
+     return
+   }
+ 
++  // Check if menu button is visible (mobile mode)
++  var isMobile = this.$menuButton.offsetWidth > 0 || this.$menuButton.offsetHeight > 0
++
++  if (!isMobile) {
++    // Desktop: ensure menu is accessible
++    this.$menu.setAttribute('aria-hidden', 'false')
++    return
++  }
++
+   this.syncState(this.$menu.classList.contains('govuk-header__navigation--open'))
+   this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))
+ }

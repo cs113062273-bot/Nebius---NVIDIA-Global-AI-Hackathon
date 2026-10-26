@@ -1,0 +1,153 @@
+{
+  "completedAt": "2026-10-26T15:13:41.253Z",
+  "policy": "auto",
+  "modelRun": "e5d8f22e-7f39-4bf6-aa3b-75c2f1aa468d",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 3 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"* This is useful for when a \\\"None of these\\\" checkbox is checked.\"; closest is line 85: \"* This is useful for when a “None of these\\\" checkbox is checked.\". Best alignment: before lines 6-25 match file lines 86-105. The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "79a4d5608dd34a687092d5d5b848e507742623dff9821ab58a6b7cd66f6932c4",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-d8b6d1d6060ea7dd4c6720f56213ac03",
+      "usage": {
+        "completion_tokens": 3164,
+        "prompt_tokens": 8701,
+        "total_tokens": 11865,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2644,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 8701
+      },
+      "latencyMs": 21187,
+      "reservedCreditUsd": 0.0383169
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// GOV.UK Frontend behaviour and uncheck all with the same name attribute\"; closest is line 100: \"// GOV.UK Frontend behaviour to uncheck all with the same name attribute\". Best alignment: before lines 11-21 match file lines 117-127,",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-489ed26766d444ac9922f1207830ce21",
+      "usage": {
+        "completion_tokens": 9787,
+        "prompt_tokens": 8933,
+        "total_tokens": 18720,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7863,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 8933
+      },
+      "latencyMs": 24914,
+      "reservedCreditUsd": 0.129131
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 1-29 match file lines 158-186, then before line 30 \"this.unCheckExclusiveInputs($clickedInput)\" differs from file line 187 \"this.unCheckAllInputsExcept($clickedInput)\". The real f",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-fd6735b45e50dd116dc78276a7012dbd",
+      "usage": {
+        "completion_tokens": 2537,
+        "prompt_tokens": 12760,
+        "total_tokens": 15297,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 474,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 12760
+      },
+      "latencyMs": 6791,
+      "reservedCreditUsd": 0.142948
+    },
+    {
+      "attempt": 4,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 3 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"* This is useful for when a “None of these” checkbox is checked.\"; closest is line 85: \"* This is useful for when a “None of these\\\" checkbox is checked.\". Best alignment: before lines 6-25 match file lines 86-105. The real file line",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-bd72161fc42b8867583eb22e1eccb7fb",
+      "usage": {
+        "completion_tokens": 10016,
+        "prompt_tokens": 14109,
+        "total_tokens": 24125,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7364,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 14109
+      },
+      "latencyMs": 22181,
+      "reservedCreditUsd": 0.148099
+    },
+    {
+      "attempt": 5,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 3 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"* This is useful for when a \\\"None of these\\\" checkbox is checked.\"; closest is line 85: \"* This is useful for when a “None of these\\\" checkbox is checked.\". Best alignment: before lines 6-25 match file lines 86-105. The real file li",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-af6ff6820d383a01c6b7a0914a1d63c2",
+      "usage": {
+        "completion_tokens": 3944,
+        "prompt_tokens": 14726,
+        "total_tokens": 18670,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1416,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 14726
+      },
+      "latencyMs": 9096,
+      "reservedCreditUsd": 0.150163
+    }
+  ]
+}

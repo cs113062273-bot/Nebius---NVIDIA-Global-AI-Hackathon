@@ -1,0 +1,53 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..837a6eb 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -543,6 +543,32 @@
+             e = e || window.event;
+ 
+             if (self.isVisible()) {
++                function isDisabled(date) {
++                    if (opts.minDate && date < opts.minDate) return true;
++                    if (opts.maxDate && date > opts.maxDate) return true;
++                    if (opts.disableWeekends && (date.getDay()===0 || date.getDay()===6)) return true;
++                    if (opts.disableDayFn && opts.disableDayFn(date)) return true;
++                    return false;
++                }
++                function moveDays(dir) {
++                    var current = self.getDate() || new Date();
++                    var candidate = new Date(current.getTime());
++                    while (true) {
++                        candidate.setDate(candidate.getDate() + dir);
++                        if (opts.minDate && candidate < opts.minDate) {
++                            candidate = new Date(opts.minDate);
++                            break;
++                        }
++                        if (opts.maxDate && candidate > opts.maxDate) {
++                            candidate = new Date(opts.maxDate);
++                            break;
++                        }
++                        if (!isDisabled(candidate)) {
++                            break;
++                        }
++                    }
++                    self.setDate(candidate);
++                }
+ 
+                 switch(e.keyCode){
+                     case 13:
+@@ -552,13 +578,13 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                        moveDays(-1);
+                         break;
+                     case 38:
+                         self.adjustDate('subtract', 7);
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                        moveDays(1);
+                         break;
+                     case 40:
+                         self.adjustDate('add', 7);

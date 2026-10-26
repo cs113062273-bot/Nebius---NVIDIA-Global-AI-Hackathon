@@ -1,0 +1,25 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..7d99a05 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -394,6 +394,11 @@ class Datepicker extends BaseComponent {
+       }
+ 
+       EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)
++    } else {
++      this._onTriggerClick = () => {
++        this.show()
++      }
++      EventHandler.on(this._element, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
+     this._onOutside = ({ target }) => {
+@@ -420,7 +425,7 @@ class Datepicker extends BaseComponent {
+       // Vanilla Calendar Pro v3.4+ ships optional features as extensions. Bootstrap
+       // supports only `months`, which `displayMonthsCount` needs.
+       extensions: [months],
+-      inputMode: !this._isInline,
++      inputMode: false,
+       positionToInput: this._config.placement,
+       firstWeekday: this._config.firstWeekday,
+       locale: this._config.locale,

@@ -1,0 +1,21 @@
+{
+  "root_cause": "The navigation controller incorrectly sets aria-activedescendant to the list item's data value (its label) instead of the element's ID, causing assistive technologies to announce the wrong active option during arrow key navigation.",
+  "repair_strategy": "In src/controllers/navigationController.js, replace the use of list[currentFocus].dataset.value with list[currentFocus].id when assigning the aria-activedescendant attribute within the update function.",
+  "edits": [
+    {
+      "path": "src/controllers/navigationController.js",
+      "sha256": "3f7f66612501cb9d0fbe0a4d8b3d7732ca01228bf922d9b794daa60f87a0c4a4",
+      "before": "    config.inputField.setAttribute(\"aria-activedescendant\", list[currentFocus].dataset.value);",
+      "after": "    config.inputField.setAttribute(\"aria-activedescendant\", list[currentFocus].id);"
+    }
+  ],
+  "expected_accessibility_effect": "Arrow key navigation will now correctly update the input's aria-activedescendant to reference the active listitem's ID, enabling screen readers to announce the highlighted option as expected.",
+  "functional_risks": [
+    "Any custom code that erroneously relied on aria-activedescendant containing the item's label may need adjustment, but the attribute is spec‑defined to hold an ID reference, so risk is low."
+  ],
+  "verification_requirements": [
+    "After typing 'ma' and pressing ArrowDown once, the input's aria-activedescendant must equal 'autoCompleteJS_result_0'.",
+    "After a second ArrowDown, it must equal 'autoCompleteJS_result_1'.",
+    "Pressing Enter must submit the form with store value ['Marina Park']."
+  ]
+}

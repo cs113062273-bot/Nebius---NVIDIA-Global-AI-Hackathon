@@ -1,0 +1,12 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T15:58:14.857Z",
+  "run": "af87010f-42fc-447a-b6d0-59d572aa8bf9",
+  "verdict": "Works, with caveats",
+  "summary": "ArrowLeft and ArrowRight now step calendar days with setDate and skip days that minDate, maxDate, disableWeekends or disableDayFn close; at a range end they stop on the boundary day, so the maxDate hang of the earlier patch cannot happen.",
+  "caveats": [
+    "ArrowUp and ArrowDown still use the original weekly jump and can land on a closed day.",
+    "At a boundary it clamps to minDate or maxDate even when that day is itself disabled.",
+    "If disableDayFn closed every day with no minDate or maxDate, the loop would not end; no realistic page does that."
+  ]
+}

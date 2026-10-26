@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-26T09:10:01.354Z",
-  "note": "Fractions: every recorded blind run of the 26 real bugs, across all engine versions; a run is one bug on one engine version, up to three attempts (Super, then Ultra with the browser failure report). Rejected patches: real-bug and open-bug runs.",
-  "runs": 406,
-  "realRuns": 323,
-  "attempts": 745,
-  "firstTry": 151,
-  "withFeedback": 103,
-  "notRepaired": 69,
-  "libraryFixed": 219,
-  "caughtAfterKeyboardPass": 38,
+  "generatedAt": "2026-10-26T15:58:47.697Z",
+  "note": "Fractions: every recorded blind run of the 26 real bugs, across all engine versions; a run is one blind run of one bug on one engine version: Super, then Ultra with the browser failure report, up to three proposals (five from engine v13). Rejected patches: real-bug and open-bug runs.",
+  "runs": 637,
+  "realRuns": 479,
+  "attempts": 1192,
+  "firstTry": 234,
+  "withFeedback": 155,
+  "notRepaired": 90,
+  "libraryFixed": 354,
+  "caughtAfterKeyboardPass": 61,
   "caughtReasons": {
-    "functional": 25,
-    "guards": 13,
+    "functional": 35,
+    "guards": 26,
     "rules": 0,
     "other": 0
   },
@@ -44,9 +44,45 @@
       "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"], color-contrast:abbr[title=\"Sunday\"], color-contrast:abbr[title=\"Monday\"], color-contrast:abbr[title=\"Tuesday\"], color-contrast:abbr[title=\"Wednesday"
     }
   ],
-  "overfitRejected": 1,
-  "unappliedPatches": 102,
+  "overfitRejected": 3,
+  "unappliedPatches": 132,
   "caught": [
+    {
+      "case": "bootstrap-dropdown-escape-in-modal",
+      "kind": "real",
+      "version": "11d7ef4d",
+      "run": "cde8c93c-b530-4fc9-b161-d429245b1579",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Escape inside the open access menu closes only the menu\": failed · Step 5 · #access-toggle: expected \"#access-toggle\", observed \"#open-share\""
+    },
+    {
+      "case": "bootstrap-dropdown-escape-in-modal",
+      "kind": "real",
+      "version": "79a4d560",
+      "run": "bc2b2029-f5dc-492e-8b11-a678726ffd82",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Escape inside the open access menu closes only the menu\": failed · Step 5 · #access-toggle: expected \"#access-toggle\", observed \"#open-share\""
+    },
+    {
+      "case": "bootstrap-dropdown-escape-in-modal",
+      "kind": "real",
+      "version": "79a4d560",
+      "run": "46258c3b-f629-4209-b68c-946fbdc9b05c",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Escape inside the open access menu closes only the menu\": failed · Step 5 · #access-toggle: expected \"#access-toggle\", observed \"#open-share\""
+    },
     {
       "case": "bootstrap-dropdown-escape-in-modal",
       "kind": "real",
@@ -197,6 +233,126 @@
       "version": "2a8f0bbe",
       "run": "1f618dc3-559a-4207-8061-08b6f4c9c516",
       "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "11d7ef4d",
+      "run": "66828102-d281-4d3b-a2f2-3eefe21cde27",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: failed · Step 3 · #delivery-form delivery: expected [\"2024-06-04\"], observed [\"2024-05-10\"]"
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "11d7ef4d",
+      "run": "66828102-d281-4d3b-a2f2-3eefe21cde27",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: failed · Step 3 · #delivery-form delivery: expected [\"2024-06-04\"], observed [\"2024-05-10\"]"
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "11d7ef4d",
+      "run": "640ae1e5-9bdd-4971-891f-b27d4a9d1678",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "11d7ef4d",
+      "run": "640ae1e5-9bdd-4971-891f-b27d4a9d1678",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: failed · Step 3 · #delivery-form delivery: expected [\"2024-06-04\"], observed [\"2024-05-10\"]"
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "11d7ef4d",
+      "run": "640ae1e5-9bdd-4971-891f-b27d4a9d1678",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: failed · Step 3 · #delivery-form delivery: expected [\"2024-06-04\"], observed [\"2024-05-10\"]"
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "79a4d560",
+      "run": "43035a7d-180e-4235-901d-268de5bd8ef1",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "79a4d560",
+      "run": "43035a7d-180e-4235-901d-268de5bd8ef1",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "79a4d560",
+      "run": "2947cc73-d12b-455a-b199-36b581138e7d",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "79a4d560",
+      "run": "2947cc73-d12b-455a-b199-36b581138e7d",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "79a4d560",
+      "run": "2947cc73-d12b-455a-b199-36b581138e7d",
+      "attempt": 4,
       "model": "Nemotron-3-Ultra-550b-a55b",
       "why": [
         "functional"
@@ -420,6 +576,102 @@
       "reason": "Regression guard \"ArrowDown and Enter still select a suggestion\": failed · #profile city: expected [\"Faro\"], observed [\"Fa\"]"
     },
     {
+      "case": "bootstrap6-datepicker-focus-rewrites-date-custom-format",
+      "kind": "open",
+      "version": "31216b82",
+      "run": "c0393c10-68f6-48f3-8a2b-0b988f6aaf93",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"A picked date still shows in the configured dateFormat\": failed · #return-shown: expected \"October 25, 2026\", observed \"2026-10-25\""
+    },
+    {
+      "case": "bootstrap6-datepicker-focus-rewrites-date-custom-format",
+      "kind": "open",
+      "version": "31216b82",
+      "run": "83836c34-3500-47b2-b22e-4451041999a1",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"A picked date still shows in the configured dateFormat\": failed · #return-shown: expected \"October 25, 2026\", observed \"2026-10-25\""
+    },
+    {
+      "case": "bootstrap6-datepicker-tab-trap-with-picker",
+      "kind": "open",
+      "version": "11d7ef4d",
+      "run": "7ccd9adb-2df9-47e6-83da-ded5bd23f2ac",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+    },
+    {
+      "case": "bootstrap6-datepicker-tab-trap-with-picker",
+      "kind": "open",
+      "version": "31216b82",
+      "run": "9f303cc9-3be9-4104-a94f-07e5ca610b9c",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+    },
+    {
+      "case": "bootstrap6-datepicker-tab-trap-with-picker",
+      "kind": "open",
+      "version": "31216b82",
+      "run": "9f303cc9-3be9-4104-a94f-07e5ca610b9c",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+    },
+    {
+      "case": "bootstrap6-datepicker-tab-trap-with-picker",
+      "kind": "open",
+      "version": "31216b82",
+      "run": "9f303cc9-3be9-4104-a94f-07e5ca610b9c",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+    },
+    {
+      "case": "bootstrap6-datepicker-tab-trap-with-picker",
+      "kind": "open",
+      "version": "31216b82",
+      "run": "9f303cc9-3be9-4104-a94f-07e5ca610b9c",
+      "attempt": 4,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+    },
+    {
+      "case": "bootstrap6-datepicker-tab-trap-with-picker",
+      "kind": "open",
+      "version": "31216b82",
+      "run": "9f303cc9-3be9-4104-a94f-07e5ca610b9c",
+      "attempt": 5,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+    },
+    {
       "case": "bootstrap6-datepicker-tab-trap-with-picker",
       "kind": "open",
       "version": "ea20b422",
@@ -430,6 +682,30 @@
         "guards"
       ],
       "reason": "Regression guard \"Escape still closes the calendar\": failed · #passengers: expected \"#passengers\", observed false"
+    },
+    {
+      "case": "bootstrap6-datepicker-tab-trap-with-picker",
+      "kind": "open",
+      "version": "11d7ef4d",
+      "run": "d043441d-525e-4c4d-94fa-1eda5cf18b11",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+    },
+    {
+      "case": "bootstrap6-datepicker-tab-trap-with-picker",
+      "kind": "open",
+      "version": "11d7ef4d",
+      "run": "d043441d-525e-4c4d-94fa-1eda5cf18b11",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
     },
     {
       "case": "bootstrap6-dialog-escape-keyboard-false-default-dialog",

@@ -1,0 +1,38 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..ed9c633 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -68,15 +68,15 @@ class Drawer extends DialogBase {
+   }
+ 
+   // Getters
+-  static override get Default(): DrawerConfig {
++  static get Default(): DrawerConfig {
+     return Default
+   }
+ 
+-  static override get DefaultType(): Record<string, string> {
++  static get DefaultType(): Record<string, string> {
+     return DefaultType
+   }
+ 
+-  static override get NAME(): string {
++  static get NAME(): string {
+     return NAME
+   }
+ 
+@@ -97,6 +97,14 @@ class Drawer extends DialogBase {
+     super.dispose()
+   }
+ 
++  async show(relatedTarget?: HTMLElement): Promise<void> {
++    await super.show(relatedTarget)
++    const autofocus = this._element.querySelector('[autofocus]')
++    if (autofocus) {
++      autofocus.focus()
++    }
++  }
++
+   // Protected — hook overrides
+ 
+   protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {

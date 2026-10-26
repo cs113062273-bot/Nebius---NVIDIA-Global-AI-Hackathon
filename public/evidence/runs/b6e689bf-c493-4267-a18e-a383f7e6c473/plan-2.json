@@ -1,0 +1,23 @@
+{
+  "root_cause": "The mutation observer's checkDomRemoval handler only detects direct removal of the focused node. When a list item containing the focused button is removed, the button is not in removedNodes (only its ancestor li is), so the trap fails to restore focus and focus escapes to the body.",
+  "repair_strategy": "Update checkDomRemoval to also check if any removed node contains the focused node (using Node.contains). Also refresh the tabbable node cache by calling updateTabbableNodes before attempting to restore focus.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };",
+      "after": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode || node.contains(state.mostRecentlyFocusedNode);\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      updateTabbableNodes();\n      tryFocus(getInitialFocusNode());\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains trapped inside the basket dialog after a row removal, allowing continued tab navigation within the dialog and preventing focus from escaping to the page background.",
+  "functional_risks": [
+    "The containment check adds a minor performance cost per mutation.",
+    "If the focused node is in a detached subtree, Node.contains might behave unexpectedly, but the node is in the same document."
+  ],
+  "verification_requirements": [
+    "After focusing a remove button inside the basket and pressing Enter to delete its row, focus must stay inside the basket (e.g., on the close button or another item's remove button).",
+    "Opening the basket, tabbing through its controls, and closing it must continue to work as before.",
+    "The item count must update correctly after each removal.",
+    "No regression in other pages that use the focus-trap component."
+  ]
+}

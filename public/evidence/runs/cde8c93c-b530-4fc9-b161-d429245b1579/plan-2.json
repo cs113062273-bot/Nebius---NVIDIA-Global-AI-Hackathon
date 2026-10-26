@@ -1,0 +1,33 @@
+{
+  "root_cause": "The modal's keyboard dismiss listener for Escape is attached to the modal element and fires during the bubble phase before the dropdown's delegated keydown handler on document can stop propagation. When the dropdown menu is open, pressing Escape should close only the dropdown, but the modal closes instead.",
+  "repair_strategy": "Add a capture-phase keydown listener on the dropdown menu that stops propagation for the Escape key. This intercepts the event before it reaches the modal's listener, allowing the dropdown's delegated handler to close the menu while preventing the modal from closing.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "  constructor(element, config) {\n    super(element)\n\n    this._popper = null\n    this._config = this._getConfig(config)\n    this._menu = this._getMenuElement()\n    this._inNavbar = this._detectNavbar()\n\n    this._addEventListeners()\n  }",
+      "after": "  constructor(element, config) {\n    super(element)\n\n    this._popper = null\n    this._config = this._getConfig(config)\n    this._menu = this._getMenuElement()\n    this._inNavbar = this._detectNavbar()\n\n    this._keydownCaptureHandler = (event) => {\n      if (event.key === ESCAPE_KEY) {\n        event.stopPropagation()\n      }\n    }\n\n    this._addEventListeners()\n  }"
+    },
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "  _addEventListeners() {\n    EventHandler.on(this._element, EVENT_CLICK, event => {\n      event.preventDefault()\n      this.toggle()\n    })\n  }",
+      "after": "  _addEventListeners() {\n    EventHandler.on(this._element, EVENT_CLICK, event => {\n      event.preventDefault()\n      this.toggle()\n    })\n\n    this._menu.addEventListener('keydown', this._keydownCaptureHandler, true)\n  }"
+    },
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "  dispose() {\n    EventHandler.off(this._element, EVENT_KEY)\n    this._menu = null\n\n    if (this._popper) {\n      this._popper.destroy()\n      this._popper = null\n    }\n\n    super.dispose()\n  }",
+      "after": "  dispose() {\n    EventHandler.off(this._element, EVENT_KEY)\n    this._menu.removeEventListener('keydown', this._keydownCaptureHandler, true)\n    this._menu = null\n\n    if (this._popper) {\n      this._popper.destroy()\n      this._popper = null\n    }\n\n    super.dispose()\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When the access dropdown menu is open, pressing Escape will close the dropdown menu but leave the share modal open, satisfying the requirement that Escape inside the open access menu closes only the menu.",
+  "functional_risks": [
+    "The capture listener stops Escape propagation for any element inside the dropdown menu. This could affect other components nested in the menu, but the menu only contains simple button items. No other components are expected to handle Escape there."
+  ],
+  "verification_requirements": [
+    "Press ArrowDown on the access toggle to open the dropdown, then press Escape: verify the dropdown closes but the modal remains open (access-toggle still visible).",
+    "Press Escape on the access toggle when the dropdown is closed: verify the modal closes (existing behavior).",
+    "Ensure ArrowUp, ArrowDown, Space, and Enter keys still work for dropdown navigation and selection."
+  ]
+}

@@ -1,0 +1,61 @@
+diff --git a/js/src/modal.js b/js/src/modal.js
+index 0e8346d..fbae12d 100644
+--- a/js/src/modal.js
++++ b/js/src/modal.js
+@@ -168,6 +168,7 @@ class Modal extends BaseComponent {
+     this._setResizeEvent()
+ 
+     EventHandler.off(document, EVENT_FOCUSIN)
++    this._removeTabTrap()
+ 
+     this._element.classList.remove(CLASS_NAME_SHOW)
+ 
+@@ -242,6 +243,7 @@ class Modal extends BaseComponent {
+ 
+     if (this._config.focus) {
+       this._enforceFocus()
++      this._initTabTrap()
+     }
+ 
+     const transitionComplete = () => {
+@@ -292,6 +294,40 @@ class Modal extends BaseComponent {
+     }
+   }
+ 
++  _initTabTrap() {
++    EventHandler.on(this._element, 'keydown.tab', event => this._handleTab(event))
++  }
++
++  _removeTabTrap() {
++    EventHandler.off(this._element, 'keydown.tab')
++  }
++
++  _handleTab(event) {
++    if (event.key !== 'Tab') return
++    const focusable = SelectorEngine.find(
++      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex]:not([tabindex="-1"]), *[contenteditable]',
++      this._element
++    )
++    const filtered = focusable.filter(el => !el.hasAttribute('disabled') && el.getAttribute('tabindex') !== '-1')
++    if (filtered.length === 0) {
++      event.preventDefault()
++      return
++    }
++    const first = filtered[0]
++    const last = filtered[filtered.length - 1]
++    if (event.shiftKey) {
++      if (document.activeElement === first) {
++        event.preventDefault()
++        last.focus()
++      }
++    } else {
++      if (document.activeElement === last) {
++        event.preventDefault()
++        first.focus()
++      }
++    }
++  }
++
+   _hideModal() {
+     this._element.style.display = 'none'
+     this._element.setAttribute('aria-hidden', true)

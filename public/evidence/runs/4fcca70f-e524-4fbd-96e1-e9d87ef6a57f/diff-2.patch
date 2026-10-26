@@ -1,0 +1,26 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..0c28160 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -910,6 +910,21 @@
+             } else if (sign === 'subtract') {
+                 newDay = new Date(day.valueOf() - difference);
+             }
++            // Skip disabled days
++            var opts = this._o;
++            var maxIterations = 365;
++            while (maxIterations-- > 0) {
++                var isDisabled = (opts.minDate && newDay < opts.minDate) ||
++                                 (opts.maxDate && newDay > opts.maxDate) ||
++                                 (opts.disableWeekends && (newDay.getDay() === 0 || newDay.getDay() === 6)) ||
++                                 (opts.disableDayFn && opts.disableDayFn(newDay));
++                if (!isDisabled) break;
++                if (sign === 'add') {
++                    newDay = new Date(newDay.valueOf() + 24*60*60*1000);
++                } else {
++                    newDay = new Date(newDay.valueOf() - 24*60*60*1000);
++                }
++            }
+ 
+             this.setDate(newDay);
+         },

@@ -1,0 +1,25 @@
+diff --git a/index.js b/index.js
+index 6d88fbd..e95929f 100644
+--- a/index.js
++++ b/index.js
+@@ -692,9 +692,20 @@ const createFocusTrap = function (elements, userOptions) {
+     const targetContained = findContainerIndex(target, event) >= 0;
+ 
+     // In Firefox when you Tab out of an iframe the Document is briefly focused.
++    // But if the previously focused node in the trap was removed, we need to restore focus.
+     if (targetContained || target instanceof Document) {
+       if (targetContained) {
+         state.mostRecentlyFocusedNode = target;
++      } else if (target instanceof Document) {
++        // Focus moved to Document. If the MRU node was in the trap and is now detached,
++        // restore focus to the initial focus node.
++        if (
++          state.mostRecentlyFocusedNode &&
++          !doc.contains(state.mostRecentlyFocusedNode)
++        ) {
++          state.mostRecentlyFocusedNode = null;
++          tryFocus(getInitialFocusNode());
++      }
+       }
+     } else {
+       // escaped! pull it back in to where it just left

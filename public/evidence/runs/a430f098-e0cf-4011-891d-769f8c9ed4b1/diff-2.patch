@@ -1,0 +1,24 @@
+diff --git a/index.js b/index.js
+index 0a2a74a..83596e2 100644
+--- a/index.js
++++ b/index.js
+@@ -430,7 +430,18 @@ const createFocusTrap = function (elements, userOptions) {
+     } else {
+       // escaped! pull it back in to where it just left
+       e.stopImmediatePropagation();
+-      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
++      // Update tabbable nodes in case the DOM changed (e.g., focused node removed)
++      updateTabbableNodes();
++      // Defer focus restoration to allow the current focus event to complete
++      setTimeout(() => {
++        // If the mostRecentlyFocusedNode is still in one of the containers, try to focus it.
++        // Otherwise, use the initial focus node.
++        if (state.mostRecentlyFocusedNode && state.containers.some(container => container.contains(state.mostRecentlyFocusedNode))) {
++          tryFocus(state.mostRecentlyFocusedNode);
++        } else {
++          tryFocus(getInitialFocusNode());
++        }
++      }, 0);
+     }
+   };
+ 

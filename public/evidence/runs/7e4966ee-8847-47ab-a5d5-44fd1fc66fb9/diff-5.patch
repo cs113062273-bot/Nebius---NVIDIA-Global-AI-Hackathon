@@ -1,0 +1,40 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..0b3ec3c 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,6 +118,7 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onInputKeydown: (event: KeyboardEvent) => void
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+@@ -205,6 +206,10 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    if (this._onInputKeydown) {
++      EventHandler.off(this._element, 'keydown', this._onInputKeydown)
++    }
++
+     if (this._calendar) {
+       this._calendar.destroy()
+     }
+@@ -245,6 +250,16 @@ class Datepicker extends BaseComponent {
+     this._calendar = new Calendar(this._positionElement, calendarOptions)
+     this._calendar.init()
+ 
++    // Allow Tab key to move focus out of the input when the datepicker is shown
++    if (this._isInput) {
++      this._onInputKeydown = (event: KeyboardEvent) => {
++        if (this._isShown && event.key === 'Tab') {
++          event.stopImmediatePropagation()
++        }
++      }
++      EventHandler.on(this._element, 'keydown', this._onInputKeydown)
++    }
++
+     // Watch for theme changes on ancestor elements (for live theme switching)
+     this._setupThemeObserver()
+ 

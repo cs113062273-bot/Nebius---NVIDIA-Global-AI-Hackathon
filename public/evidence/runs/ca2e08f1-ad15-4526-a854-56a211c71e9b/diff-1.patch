@@ -1,0 +1,13 @@
+diff --git a/pikaday.js b/pikaday.js
+index ba7aca0..2590af7 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -514,7 +514,7 @@
+         {
+             e = e || window.event;
+ 
+-            if (self.isVisible()) {
++            if (self.isVisible() && (self.el === e.target || self.el.contains(e.target) || e.target === opts.field)) {
+ 
+                 switch(e.keyCode){
+                     case 13:

@@ -1,0 +1,34 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..c05baf5 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -101,6 +101,12 @@ class Dropdown extends BaseComponent {
+     this._menu = this._getMenuElement()
+     this._inNavbar = this._detectNavbar()
+ 
++    this._keydownCaptureHandler = (event) => {
++      if (event.key === ESCAPE_KEY) {
++        event.stopPropagation()
++      }
++    }
++
+     this._addEventListeners()
+   }
+ 
+@@ -230,6 +236,7 @@ class Dropdown extends BaseComponent {
+ 
+   dispose() {
+     EventHandler.off(this._element, EVENT_KEY)
++    this._menu.removeEventListener('keydown', this._keydownCaptureHandler, true)
+     this._menu = null
+ 
+     if (this._popper) {
+@@ -254,6 +261,8 @@ class Dropdown extends BaseComponent {
+       event.preventDefault()
+       this.toggle()
+     })
++
++    this._menu.addEventListener('keydown', this._keydownCaptureHandler, true)
+   }
+ 
+   _getConfig(config) {

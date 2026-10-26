@@ -1,0 +1,39 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..ac53808 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -463,9 +463,6 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
+-    event.preventDefault()
+-    event.stopPropagation()
+-
+     if (isDisabled(this)) {
+       return
+     }
+@@ -474,12 +471,21 @@ class Dropdown extends BaseComponent {
+     const isActive = this.classList.contains(CLASS_NAME_SHOW)
+ 
+     if (event.key === ESCAPE_KEY) {
+-      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+-      button.focus()
+-      Dropdown.clearMenus()
++      if (isActive) {
++        event.preventDefault()
++        event.stopPropagation()
++        const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
++        button.focus()
++        Dropdown.clearMenus()
++      }
++      // If not active, do nothing and let the event propagate (e.g., to modal)
+       return
+     }
+ 
++    // For other keys, we prevent default and stop propagation as before
++    event.preventDefault()
++    event.stopPropagation()
++
+     if (!isActive && (event.key === ARROW_UP_KEY || event.key === ARROW_DOWN_KEY)) {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.click()

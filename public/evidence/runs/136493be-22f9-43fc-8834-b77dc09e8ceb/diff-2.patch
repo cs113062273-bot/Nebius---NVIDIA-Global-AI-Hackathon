@@ -1,0 +1,25 @@
+diff --git a/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js b/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
+index 1571266..30cbc64 100644
+--- a/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
++++ b/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
+@@ -89,11 +89,16 @@ export class Checkboxes extends Component {
+   unCheckAllInputsExcept($input) {
+     const { checkboxExclusiveGroup: exclusiveGroup } = $input.dataset
+ 
+-    const allInputsWithSameName = document.querySelectorAll(
+-      `input[type="checkbox"][name="${$input.name}"]`
+-    )
++    let selector
++    if (exclusiveGroup) {
++      selector = `input[type="checkbox"][data-checkbox-exclusive-group="${exclusiveGroup}"]`
++    } else {
++      selector = `input[type="checkbox"][name="${$input.name}"]`
++    }
++
++    const allInputs = document.querySelectorAll(selector)
+ 
+-    allInputsWithSameName.forEach(($inputWithSameName) => {
++    allInputs.forEach(($inputWithSameName) => {
+       const hasSameFormOwner = $input.form === $inputWithSameName.form
+ 
+       // Uncheck all with same exclusive group by default, otherwise fall back to

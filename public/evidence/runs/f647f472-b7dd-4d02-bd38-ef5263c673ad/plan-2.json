@@ -1,0 +1,39 @@
+{
+  "root_cause": "The modal's focus management only traps focus via focusin event, which forces focus back to the modal element when focus leaves. It does not handle reverse tabbing (Shift+Tab) from the first focusable element, causing focus to escape the modal instead of wrapping to the last focusable element.",
+  "repair_strategy": "Add a keydown event listener for Tab key on the modal element that cycles focus between the first and last focusable elements in the modal. Initialize the listener when the modal shows and remove it when the modal hides.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  constructor(element, config) {\n    super(element)\n\n    this._config = this._getConfig(config)\n    this._dialog = SelectorEngine.findOne(SELECTOR_DIALOG, this._element)\n    this._backdrop = this._initializeBackDrop()\n    this._isShown = false\n    this._ignoreBackdropClick = false\n    this._isTransitioning = false\n    this._scrollBar = new ScrollBarHelper()\n  }",
+      "after": "  constructor(element, config) {\n    super(element)\n\n    this._config = this._getConfig(config)\n    this._dialog = SelectorEngine.findOne(SELECTOR_DIALOG, this._element)\n    this._backdrop = this._initializeBackDrop()\n    this._isShown = false\n    this._ignoreBackdropClick = false\n    this._isTransitioning = false\n    this._scrollBar = new ScrollBarHelper()\n    this._focusTrapHandler = null\n  }"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  }\n\n  _setResizeEvent() {",
+      "after": "  }\n\n  _setFocusTrap() {\n    if (this._focusTrapHandler) {\n      return\n    }\n    this._focusTrapHandler = event => {\n      if (event.key !== 'Tab') {\n        return\n      }\n      const focusableElements = this._element.querySelectorAll(\n        'button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])'\n      )\n      if (focusableElements.length === 0) {\n        return\n      }\n      const firstElement = focusableElements[0]\n      const lastElement = focusableElements[focusableElements.length - 1]\n      const activeElement = document.activeElement\n      if (event.shiftKey) {\n        if (activeElement === firstElement) {\n          event.preventDefault()\n          lastElement.focus()\n        }\n      } else {\n        if (activeElement === lastElement) {\n          event.preventDefault()\n          firstElement.focus()\n        }\n      }\n    }\n    EventHandler.on(this._element, 'keydown', this._focusTrapHandler)\n  }\n\n  _removeFocusTrap() {\n    if (this._focusTrapHandler) {\n      EventHandler.off(this._element, 'keydown', this._focusTrapHandler)\n      this._focusTrapHandler = null\n    }\n  }\n\n  _setResizeEvent() {"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "    if (this._config.focus) {\n      this._enforceFocus()\n    }",
+      "after": "    if (this._config.focus) {\n      this._enforceFocus()\n      this._setFocusTrap()\n    }"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  _hideModal() {\n    this._element.style.display = 'none'\n    this._element.setAttribute('aria-hidden', true)\n    this._element.removeAttribute('aria-modal')\n    this._element.removeAttribute('role')\n    this._isTransitioning = false\n    this._backdrop.hide(() => {\n      document.body.classList.remove(CLASS_NAME_OPEN)\n      this._resetAdjustments()\n      this._scrollBar.reset()\n      EventHandler.trigger(this._element, EVENT_HIDDEN)\n    })\n  }",
+      "after": "  _hideModal() {\n    this._removeFocusTrap()\n    this._element.style.display = 'none'\n    this._element.setAttribute('aria-hidden', true)\n    this._element.removeAttribute('aria-modal')\n    this._element.removeAttribute('role')\n    this._isTransitioning = false\n    this._backdrop.hide(() => {\n      document.body.classList.remove(CLASS_NAME_OPEN)\n      this._resetAdjustments()\n      this._scrollBar.reset()\n      EventHandler.trigger(this._element, EVENT_HIDDEN)\n    })\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate the modal dialog with Tab and Shift+Tab, with focus wrapping within the modal's focusable elements, conforming to WCAG 2.1.1 and 2.4.3.",
+  "functional_risks": [
+    "The focus trap may interfere with other keydown handlers (e.g., Escape key). However, the Escape key handler is on a different event namespace and only triggers on Escape key, so no conflict. The focus trap only acts on Tab key."
+  ],
+  "verification_requirements": [
+    "Test Shift+Tab from the close button moves focus to the Delete button.",
+    "Test Tab from the Delete button moves focus to the close button.",
+    "Verify focus remains trapped within the modal when tabbing forward and backward."
+  ]
+}

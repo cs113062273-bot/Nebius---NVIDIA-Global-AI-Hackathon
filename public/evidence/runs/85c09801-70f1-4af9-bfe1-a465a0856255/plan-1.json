@@ -1,0 +1,25 @@
+{
+  "root_cause": "The datepicker does not hide when the input loses focus via keyboard navigation (Tab) because there is no blur/focusout listener to hide the picker when focus moves to an element outside the picker.",
+  "repair_strategy": "Add a focusout event listener to the input field that hides the picker if the relatedTarget (the element gaining focus) is not inside the picker element, while in edit mode.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];",
+      "after": "      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [inputField, 'focusout', (e) => {\n          if (!this.editMode) {\n            return;\n          }\n          const relatedTarget = e.relatedTarget;\n          if (relatedTarget && this.picker.element.contains(relatedTarget)) {\n            return;\n          }\n          this.hide();\n        }],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];"
+    }
+  ],
+  "expected_accessibility_effect": "The datepicker will now close when tabbing away from the input field, ensuring that keyboard users can move focus away without the datepicker obstructing other content.",
+  "functional_risks": [
+    "Risk of hiding the picker too early if the focusout event fires when focus is moving to an element inside the picker (mitigated by checking relatedTarget).",
+    "Risk of double hiding if focusout fires multiple times (mitigated by checking editMode).",
+    "Potential interference with screen reader virtual cursors (mitigated by only hiding when focus moves outside the picker)."
+  ],
+  "verification_requirements": [
+    "Verify that typing a valid date and pressing Tab hides the datepicker.",
+    "Verify that typing an invalid date (outside allowed range) and pressing Tab hides the datepicker.",
+    "Verify that clicking on the datepicker does not hide it when focus moves to an element inside the picker (e.g., clicking a button in the datepicker).",
+    "Verify that clicking outside the datepicker hides it (existing behavior).",
+    "Verify that the datepicker still shows when the input gains focus."
+  ]
+}

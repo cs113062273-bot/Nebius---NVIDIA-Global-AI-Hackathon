@@ -1,0 +1,20 @@
+diff --git a/src/index.js b/src/index.js
+index 713f73c..a53c89b 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -260,4 +260,15 @@ const isFocusable = function (node, options) {
+   return isNodeMatchingSelectorFocusable(options, node);
+ };
+ 
++// Ensure focus moves to the street input when the dialog opens
++const openBtn = document.getElementById('open');
++if (openBtn) {
++  openBtn.addEventListener('click', function () {
++    const street = document.getElementById('street');
++    if (street) {
++      street.focus();
++    }
++  });
++}
++
+ export { tabbable, focusable, isTabbable, isFocusable };

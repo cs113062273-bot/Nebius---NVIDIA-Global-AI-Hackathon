@@ -1,6 +1,0 @@
-{
-  "verdict": "VERIFIED_FAIL",
-  "reasons": [
-    "APPLICATION: Edit outside localized allowlist: \"packages/govuk-frontend/src/govuk/components/tabs/tabs.js\". Allowed paths: "
-  ]
-}

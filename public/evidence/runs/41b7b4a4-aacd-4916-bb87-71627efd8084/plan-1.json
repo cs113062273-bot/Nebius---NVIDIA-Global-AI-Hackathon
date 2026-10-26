@@ -1,0 +1,25 @@
+{
+  "root_cause": "The native cancel event fired by the Escape key becomes non‑cancelable after repeated presses, so the preventDefault() call in the cancel listener has no effect and the dialog closes unexpectedly when keyboard:false.",
+  "repair_strategy": "Intercept the Escape key earlier in the keydown listener for modal dialogs when keyboard is false, preventDefault and trigger the backdrop transition, ensuring the dialog stays open while preserving existing behavior for keyboard:true and non‑modal dialogs.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "    // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())\n    EventHandler.on(this._element, `keydown${eventKey}`, event => {\n      if (event.key !== 'Escape' || this._openedAsModal) {\n        return\n      }\n\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    })",
+      "after": "    // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())\n    EventHandler.on(this._element, `keydown${eventKey}`, event => {\n      if (event.key !== 'Escape') {\n        return\n      }\n\n      if (!this._config.keyboard) {\n        event.preventDefault()\n        this._triggerBackdropTransition()\n        return\n      }\n\n      if (this._openedAsModal) {\n        // Let native cancel handler run\n        return\n      }\n\n      // Non-modal dialog with keyboard enabled\n      event.preventDefault()\n      this._onCancel()\n      this.hide()\n    })"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will no longer dismiss the confirmation dialog, allowing keyboard‑only users to enter the OTP and send the transfer without losing focus.",
+  "functional_risks": [
+    "May affect Escape handling in modal dialogs where keyboard:true is expected to close the dialog.",
+    "Non‑modal dialogs with keyboard:false should remain unaffected.",
+    "Custom components that rely on the keydown listener for Escape may need adjustment."
+  ],
+  "verification_requirements": [
+    "Press Escape any number of times on the confirmation dialog (opened with keyboard:false) – dialog must remain open.",
+    "Press Escape on a non‑modal dialog – dialog must close when keyboard:true, stay open when keyboard:false.",
+    "Press Escape on a modal dialog with keyboard:true – dialog must close.",
+    "Verify that backdrop: 'static' still triggers the bounce effect on Escape when keyboard:false.",
+    "Ensure focus returns to the trigger button after dialog closure via Send or Cancel."
+  ]
+}

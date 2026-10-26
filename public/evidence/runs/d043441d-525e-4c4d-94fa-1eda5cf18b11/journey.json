@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "id": "bs6-datepicker-tab-leaves-field",
+  "title": "Tab out of the departure date to the passengers field",
+  "goal": "Tab moves focus from the date field to the next field, as in any form",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the departure date",
+      "action": {
+        "kind": "seek",
+        "selector": "#departure",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Press Tab",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#passengers"
+        }
+      ]
+    },
+    {
+      "title": "Change the passengers",
+      "action": {
+        "kind": "type",
+        "text": "2",
+        "replace": true
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#passengers"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "passengers",
+      "value": [
+        "2"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "focus",
+      "selector": "#passengers"
+    }
+  ],
+  "forbidden": []
+}

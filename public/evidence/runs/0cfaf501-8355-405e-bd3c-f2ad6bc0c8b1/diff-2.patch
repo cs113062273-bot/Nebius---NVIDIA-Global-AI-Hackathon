@@ -1,0 +1,19 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..7a0df79 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -217,6 +217,14 @@ class DialogBase extends BaseComponent {
+       // shift (and the ::backdrop covers the gutter instead of leaving a strip).
+       document.documentElement.classList.add(CLASS_NAME_OPEN)
+     }
++
++    // Move focus to autofocus element if present, otherwise to the dialog
++    const autofocusEl = this._element.querySelector('[autofocus]')
++    if (autofocusEl) {
++      autofocusEl.focus()
++    } else {
++      this._element.focus()
++    }
+   }
+ 
+   protected _hideElement(): void {

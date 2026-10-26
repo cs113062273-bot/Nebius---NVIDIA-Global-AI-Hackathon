@@ -1,0 +1,23 @@
+{
+  "root_cause": "The keyboard navigation (ArrowRight/ArrowLeft) in Pikaday's `_onKeyChange` calls `adjustDate` which moves by exactly one day without checking if the target day is disabled (e.g., weekends). This causes the selection to land on a disabled weekend day (Saturday) instead of skipping to the next enabled day (Monday).",
+  "repair_strategy": "Modify the `adjustDate` method to iterate day-by-day in the same direction until it finds a date that is not disabled (respecting minDate, maxDate, disableWeekends, and disableDayFn). This ensures all keyboard navigation (including up/down) never lands on a disabled day.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "adjustDate: function(sign, days)\n{\n    var day = this.getDate() || new Date();\n    var difference = parseInt(days)*24*60*60*1000;\n    var newDay;\n    if (sign === 'add') {\n        newDay = new Date(day.valueOf() + difference);\n    } else if (sign === 'subtract') {\n        newDay = new Date(day.valueOf() - difference);\n    }\n    this.setDate(newDay);\n},",
+      "after": "adjustDate: function(sign, days)\n{\n    var day = this.getDate() || new Date();\n    var difference = parseInt(days)*24*60*60*1000;\n    var newDay;\n    if (sign === 'add') {\n        newDay = new Date(day.valueOf() + difference);\n    } else if (sign === 'subtract') {\n        newDay = new Date(day.valueOf() - difference);\n    }\n    // Skip disabled days\n    var opts = this._o;\n    var maxIterations = 365;\n    while (maxIterations-- > 0) {\n        var isDisabled = (opts.minDate && newDay < opts.minDate) ||\n                         (opts.maxDate && newDay > opts.maxDate) ||\n                         (opts.disableWeekends && (newDay.getDay() === 0 || newDay.getDay() === 6)) ||\n                         (opts.disableDayFn && opts.disableDayFn(newDay));\n        if (!isDisabled) break;\n        if (sign === 'add') {\n            newDay = new Date(newDay.valueOf() + 24*60*60*1000);\n        } else {\n            newDay = new Date(newDay.valueOf() - 24*60*60*1000);\n        }\n    }\n    this.setDate(newDay);\n},"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate the date picker with arrow keys without landing on disabled weekend dates, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "Week navigation (up/down) may move more than 7 days if the target day is disabled, but will always land on an enabled day.",
+    "Infinite loop protection via maxIterations (365) prevents runaway loops if all days are disabled."
+  ],
+  "verification_requirements": [
+    "ArrowRight from Friday 2026-11-20 selects Monday 2026-11-23 (skipping weekend).",
+    "ArrowLeft from Monday 2026-11-23 selects Friday 2026-11-20.",
+    "Up/Down arrow keys move by week and skip disabled days if necessary.",
+    "Min/max date boundaries and custom disableDayFn are respected."
+  ]
+}

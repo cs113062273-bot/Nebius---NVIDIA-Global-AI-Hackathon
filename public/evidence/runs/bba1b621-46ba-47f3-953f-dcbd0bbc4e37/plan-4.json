@@ -1,0 +1,35 @@
+{
+  "root_cause": "The datepicker's keydown handler (_onKeyChange) lacks a case for the Tab key (keyCode 9). When the picker is visible, the handler does not consume the key, but the blur event triggered by the focus change schedules a hide that, due to a race condition, refocuses the field before the blur completes, causing focus to remain on the check-in field. Additionally, the blur handler (_onInputBlur) unconditionally hides the picker when the field loses focus, even when the user is tabbing to the next field, which can cause a refocus via the picker's draw cycle.",
+  "repair_strategy": "Add a case for keyCode 9 in _onKeyChange that sets a flag indicating Tab was pressed. In _onInputBlur, check this flag and skip hiding the picker when Tab was the cause of the blur. Clear the flag after a short timeout to avoid interfering with other blur events.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "    Pikaday = function(options)\n    {\n        var self = this,\n            opts = self.config(options);\n\n        self._onMouseDown = function(e)",
+      "after": "    Pikaday = function(options)\n    {\n        var self = this,\n            opts = self.config(options),\n            tabPressed = false;\n\n        self._onMouseDown = function(e)"
+    },
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 9:\n                        tabPressed = true;\n                        sto(function() { tabPressed = false; }, 0);\n                        break;\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };"
+    },
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onInputBlur = function()\n        {\n            // IE allows pika div to gain focus; catch blur the field\n            var pEl = document.activeElement;\n            do {\n                if (hasClass(pEl, 'pika-single')) {\n                    return;\n                }\n            } while ((pEl = pEl.parentNode));\n\n            if (!self._c) {\n                self._b = sto(function() {\n                    self.hide();\n                }, 50);\n            }\n            self._c = false;\n        };",
+      "after": "        self._onInputBlur = function()\n        {\n            // IE allows pika div to gain focus; catch blur the field\n            var pEl = document.activeElement;\n            do {\n                if (hasClass(pEl, 'pika-single')) {\n                    return;\n                }\n            } while ((pEl = pEl.parentNode));\n\n            if (tabPressed) {\n                tabPressed = false;\n                return;\n            }\n\n            if (!self._c) {\n                self._b = sto(function() {\n                    self.hide();\n                }, 50);\n            }\n            self._c = false;\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab after entering a date will move focus to the next focusable element (the guests field) without the datepicker interfering, allowing keyboard-only users to continue filling the form without interruption.",
+  "functional_risks": [
+    "The flag-based approach adds a small amount of state to the picker instance, but it is scoped to the constructor and cleared quickly, so risk of leakage is low.",
+    "If the user tabs away and the picker stays visible momentarily, it will hide on the next blur or click outside, which is acceptable."
+  ],
+  "verification_requirements": [
+    "After typing a valid date in the check-in field and pressing Tab, the active element must be the guests input.",
+    "Arrow keys (←, ↑, →, ↓) must still adjust the date when the picker is open.",
+    "Enter and Escape keys must still blur the field when the picker is open.",
+    "The picker should still hide appropriately when clicking outside or selecting a date."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "root_cause": "The Drawer component does not move focus into the dialog when opened, leaving focus on the trigger button. Additionally, the drawer.ts file has TypeScript build errors: missing Data import and swipe callback type mismatches (arrow functions returning Promise<void> where () => void is expected).",
+  "repair_strategy": "Apply three minimal fixes to drawer.ts: (1) add missing Data import, (2) wrap each this.hide() call in _initSwipe with block statements to match SwipeConfig callback signatures, (3) override show() to focus the first focusable element (respecting autofocus) after the dialog opens.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "import DialogBase, { type DialogBaseConfig } from './dialog-base.js'\nimport EventHandler from './dom/event-handler.js'\nimport SelectorEngine from './dom/selector-engine.js'\nimport Swipe, { type SwipeConfig } from './util/swipe.js'\nimport { enableDismissTrigger } from './util/component-functions.js'\nimport {\n  isDisabled,\n  isRTL,\n  isVisible\n} from './util/index.js'",
+      "after": "import DialogBase, { type DialogBaseConfig } from './dialog-base.js'\nimport EventHandler from './dom/event-handler.js'\nimport SelectorEngine from './dom/selector-engine.js'\nimport Swipe, { type SwipeConfig } from './util/swipe.js'\nimport { enableDismissTrigger } from './util/component-functions.js'\nimport Data from './dom/data.js'\nimport {\n  isDisabled,\n  isRTL,\n  isVisible\n} from './util/index.js'"
+    },
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  protected _initSwipe(): void {\n    if (this._swipeHelper || !Swipe.isSupported()) {\n      return\n    }\n\n    // Determine which swipe direction dismisses based on placement\n    const swipeConfig: Partial<SwipeConfig> = {}\n    const element = this._element\n\n    if (element.classList.contains('drawer-bottom')) {\n      swipeConfig.downCallback = () => this.hide()\n    } else if (element.classList.contains('drawer-top')) {\n      swipeConfig.upCallback = () => this.hide()\n    } else if (element.classList.contains('drawer-end')) {\n      // RTL: swipe left to dismiss end drawer\n      if (isRTL()) {\n        swipeConfig.leftCallback = () => this.hide()\n      } else {\n        swipeConfig.rightCallback = () => this.hide()\n      }\n    } else if (isRTL()) {\n      // drawer-start (default): swipe right to dismiss in RTL\n      swipeConfig.rightCallback = () => this.hide()\n    } else {\n      // drawer-start (default): swipe left to dismiss in LTR\n      swipeConfig.leftCallback = () => this.hide()\n    }\n\n    this._swipeHelper = new Swipe(element, swipeConfig)\n  }",
+      "after": "  protected _initSwipe(): void {\n    if (this._swipeHelper || !Swipe.isSupported()) {\n      return\n    }\n\n    // Determine which swipe direction dismisses based on placement\n    const swipeConfig: Partial<SwipeConfig> = {}\n    const element = this._element\n\n    if (element.classList.contains('drawer-bottom')) {\n      swipeConfig.downCallback = () => { this.hide() }\n    } else if (element.classList.contains('drawer-top')) {\n      swipeConfig.upCallback = () => { this.hide() }\n    } else if (element.classList.contains('drawer-end')) {\n      // RTL: swipe left to dismiss end drawer\n      if (isRTL()) {\n        swipeConfig.leftCallback = () => { this.hide() }\n      } else {\n        swipeConfig.rightCallback = () => { this.hide() }\n      }\n    } else if (isRTL()) {\n      // drawer-start (default): swipe right to dismiss in RTL\n      swipeConfig.rightCallback = () => { this.hide() }\n    } else {\n      // drawer-start (default): swipe left to dismiss in LTR\n      swipeConfig.leftCallback = () => { this.hide() }\n    }\n\n    this._swipeHelper = new Swipe(element, swipeConfig)\n  }"
+    },
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  // Public\n  override dispose(): void {\n    if (this._swipeHelper) {\n      this._swipeHelper.dispose()\n    }\n\n    if (this._resizeObserver) {\n      this._resizeObserver.disconnect()\n    }\n\n    if (this._resizeFrame !== null) {\n      cancelAnimationFrame(this._resizeFrame)\n    }\n\n    super.dispose()\n  }\n\n  // Protected — hook overrides",
+      "after": "  // Public\n  override dispose(): void {\n    if (this._swipeHelper) {\n      this._swipeHelper.dispose()\n    }\n\n    if (this._resizeObserver) {\n      this._resizeObserver.disconnect()\n    }\n\n    if (this._resizeFrame !== null) {\n      cancelAnimationFrame(this._resizeFrame)\n    }\n\n    super.dispose()\n  }\n\n  // Ensure focus moves to the first focusable element when shown\n  override async show(relatedTarget?: HTMLElement): Promise<void> {\n    await super.show(relatedTarget)\n    const focusable = SelectorEngine.findOne(\n      '[autofocus], button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])',\n      this._element\n    ) ?? this._element\n    focusable.focus()\n  }\n\n  // Protected — hook overrides"
+    }
+  ],
+  "expected_accessibility_effect": "When the drawer opens via keyboard (Enter on trigger), focus moves to the first focusable element inside (e.g., close button), allowing immediate Tab navigation to checkboxes and Apply button without a pointer.",
+  "functional_risks": [
+    "If the drawer already has an autofocus attribute, that element receives focus first (correct behavior).",
+    "If no focusable elements exist, focus lands on the dialog element itself (harmless).",
+    "Swipe dismiss callbacks now return void, matching SwipeConfig; hide() promise is not awaited (matches existing Swipe.execute behavior).",
+    "Adding Data import has no runtime side effects; only satisfies type-checking for _hideChildComponents."
+  ],
+  "verification_requirements": [
+    "TypeScript compilation passes with no syntax or type errors in drawer.ts.",
+    "Opening the drawer with Enter moves focus to #filters-close (or first focusable).",
+    "Subsequent Tab presses move focus to #in-stock, #waterproof, #apply in order.",
+    "Escape key closes drawer and returns focus to #filters-open.",
+    "Mouse interactions (click trigger, click close, click backdrop) continue to work.",
+    "Swipe-to-dismiss functionality still works (manual test)."
+  ]
+}

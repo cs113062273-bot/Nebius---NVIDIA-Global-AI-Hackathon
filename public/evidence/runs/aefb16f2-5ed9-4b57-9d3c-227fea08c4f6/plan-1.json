@@ -1,0 +1,25 @@
+{
+  "root_cause": "The tab widget's arrow key navigation does not move focus to the newly selected tab; it only updates ARIA state and leaves focus on the previously blurred tab or the body, causing a mismatch between visual selection and keyboard focus.",
+  "repair_strategy": "Add an explicit focus() call to the next tab element before activating it in the _keydown handler, ensuring focus follows selection as required by the ARIA tablist pattern.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "69ca6e1d090610fe209a5b54a151e20b738214aabf1464807c85c17c0e29848c",
+      "before": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const nextActiveElement = getNextActiveElement(this._getChildren().filter(element => !isDisabled(element)), event.target, isNext, true)\n\n    if (nextActiveElement) {\n      Tab.getOrCreateInstance(nextActiveElement).show()\n    }\n  }",
+      "after": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const nextActiveElement = getNextActiveElement(this._getChildren().filter(element => !isDisabled(element)), event.target, isNext, true)\n\n    if (nextActiveElement) {\n      nextActiveElement.focus()\n      Tab.getOrCreateInstance(nextActiveElement).show()\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight and ArrowLeft keystrokes will move focus to the adjacent tab, update its aria-selected state, and display the corresponding panel, making the tablist operable via keyboard as required by WCAG 2.1.1 and 2.4.3.",
+  "functional_risks": [
+    "If the next tab is disabled, focus will not move (existing behavior).",
+    "Calling focus() before show() could theoretically cause two focus events, but show() does not change focus, so risk is minimal.",
+    "Ensure that the focus method does not interfere with any custom handlers attached to the tab elements."
+  ],
+  "verification_requirements": [
+    "After focusing the first tab, pressing ArrowRight results in focus on the second tab and its aria-selected becoming true.",
+    "Pressing ArrowRight again moves focus to the third tab with appropriate state updates.",
+    "ArrowLeft reverses the direction correctly.",
+    "Tab panels update visibility in sync with the selected tab.",
+    "No unintended scrolling or page changes occur due to focus movement."
+  ]
+}

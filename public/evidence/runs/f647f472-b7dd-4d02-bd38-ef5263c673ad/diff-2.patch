@@ -1,0 +1,74 @@
+diff --git a/js/src/modal.js b/js/src/modal.js
+index 0e8346d..12c8187 100644
+--- a/js/src/modal.js
++++ b/js/src/modal.js
+@@ -85,6 +85,7 @@ class Modal extends BaseComponent {
+     this._ignoreBackdropClick = false
+     this._isTransitioning = false
+     this._scrollBar = new ScrollBarHelper()
++    this._focusTrapHandler = null
+   }
+ 
+   // Getters
+@@ -242,6 +243,7 @@ class Modal extends BaseComponent {
+ 
+     if (this._config.focus) {
+       this._enforceFocus()
++      this._setFocusTrap()
+     }
+ 
+     const transitionComplete = () => {
+@@ -284,6 +286,45 @@ class Modal extends BaseComponent {
+     }
+   }
+ 
++  _setFocusTrap() {
++    if (this._focusTrapHandler) {
++      return
++    }
++    this._focusTrapHandler = event => {
++      if (event.key !== 'Tab') {
++        return
++      }
++      const focusableElements = this._element.querySelectorAll(
++        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
++      )
++      if (focusableElements.length === 0) {
++        return
++      }
++      const firstElement = focusableElements[0]
++      const lastElement = focusableElements[focusableElements.length - 1]
++      const activeElement = document.activeElement
++      if (event.shiftKey) {
++        if (activeElement === firstElement) {
++          event.preventDefault()
++          lastElement.focus()
++        }
++      } else {
++        if (activeElement === lastElement) {
++          event.preventDefault()
++          firstElement.focus()
++        }
++      }
++    }
++    EventHandler.on(this._element, 'keydown', this._focusTrapHandler)
++  }
++
++  _removeFocusTrap() {
++    if (this._focusTrapHandler) {
++      EventHandler.off(this._element, 'keydown', this._focusTrapHandler)
++      this._focusTrapHandler = null
++    }
++  }
++
+   _setResizeEvent() {
+     if (this._isShown) {
+       EventHandler.on(window, EVENT_RESIZE, () => this._adjustDialog())
+@@ -293,6 +334,7 @@ class Modal extends BaseComponent {
+   }
+ 
+   _hideModal() {
++    this._removeFocusTrap()
+     this._element.style.display = 'none'
+     this._element.setAttribute('aria-hidden', true)
+     this._element.removeAttribute('aria-modal')

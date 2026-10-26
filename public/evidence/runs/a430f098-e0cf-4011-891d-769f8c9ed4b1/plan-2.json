@@ -1,0 +1,24 @@
+{
+  "root_cause": "When the focused 'Show all 4 results' button is removed from the DOM, the browser moves focus to the body. The focus trap's checkFocusIn handler attempts to restore focus using the stale mostRecentlyFocusedNode (the removed button) or the initial focus node. However, the initial focus node is derived from state.tabbableGroups which is not updated after the button removal, and the focus() call during the focusin event may not take effect synchronously in all environments.",
+  "repair_strategy": "Update the tabbable nodes in checkFocusIn before attempting to restore focus, and ensure the initial focus node is computed from the current DOM. Also, defer the focus restoration via setTimeout to allow the current focus event to complete, preventing the browser from ignoring the focus() call.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n    }\n  };",
+      "after": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      // Update tabbable nodes in case the DOM changed (e.g., focused node removed)\n      updateTabbableNodes();\n      // Defer focus restoration to allow the current focus event to complete\n      setTimeout(() => {\n        // If the mostRecentlyFocusedNode is still in one of the containers, try to focus it.\n        // Otherwise, use the initial focus node.\n        if (state.mostRecentlyFocusedNode && state.containers.some(container => container.contains(state.mostRecentlyFocusedNode))) {\n          tryFocus(state.mostRecentlyFocusedNode);\n        } else {\n          tryFocus(getInitialFocusNode());\n        }\n      }, 0);\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "After activating the trap and removing the focused node (via the 'Show all' button), keyboard focus will remain trapped within the dialog, moving to the close button (or initial focus node) when the focused node is removed. This ensures that subsequent tab navigation remains within the dialog.",
+  "functional_risks": [
+    "The setTimeout deferral may cause a brief moment where focus is on the body before being restored, which could be perceived as a flash by screen readers.",
+    "Calling updateTabbableNodes on every focus escape adds a small performance cost, but focus escapes are rare.",
+    "If the trap is deactivated before the setTimeout fires, the focus restoration may still run but the trap is no longer active; tryFocus will early-return because state.active is false."
+  ],
+  "verification_requirements": [
+    "Verify that after clicking the 'Show all 4 results' button (which removes itself), focus is retained within the results dialog (specifically, the close button should receive focus).",
+    "Verify that tab navigation continues to work within the dialog after the button removal.",
+    "Verify that the Escape key still closes the dialog and returns focus to the open button.",
+    "Verify that the initial state of the trap (before any node removal) still functions correctly."
+  ]
+}

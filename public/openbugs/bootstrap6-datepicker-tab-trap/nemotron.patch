@@ -1,0 +1,52 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..c0edf4a 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,12 +118,14 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _dummyPositionElement: HTMLElement | null
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+ 
+     this._calendar = null
+     this._isShown = false
++    this._dummyPositionElement = null
+ 
+     this._initCalendar()
+   }
+@@ -209,6 +211,12 @@ class Datepicker extends BaseComponent {
+       this._calendar.destroy()
+     }
+ 
++    // Remove the dummy element if we created one
++    if (this._dummyPositionElement) {
++      this._dummyPositionElement.remove()
++      this._dummyPositionElement = null
++    }
++
+     this._calendar = null
+     super.dispose()
+   }
+@@ -297,6 +305,19 @@ class Datepicker extends BaseComponent {
+       }
+     }
+ 
++    // If we still don't have a positionElement and we are an input and not inline, create a dummy element
++    if (!positionElement && this._isInput && !this._isInline) {
++      // Create a dummy element that is off-screen
++      const dummy = document.createElement('div')
++      dummy.style.position = 'fixed'
++      dummy.style.left = '-9999px'
++      dummy.style.top = '-9999px'
++      // Store it so we can remove it later
++      this._dummyPositionElement = dummy
++      document.body.appendChild(dummy)
++      positionElement = dummy
++    }
++
+     return positionElement || this._element
+   }
+ 

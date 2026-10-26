@@ -1,0 +1,40 @@
+{
+  "root_cause": "Three issues prevent correct keyboard and pointer behavior: (1) The datepicker passes `inputMode: !this._isInline` to Vanilla Calendar Pro, enabling input mode for non-inline calendars which traps the Tab key inside the calendar widget. (2) The data-api click handler explicitly skips input elements, relying solely on focusin to show the calendar, but focusin may not fire in all test environments. (3) The `_onOutside` dismiss handler treats the trigger element as \"outside\" because `element.contains(element)` returns false, causing the calendar to hide immediately when the input receives focusin from a click. Additionally, the click handler's `event.preventDefault()` for inputs may interfere with focusin firing in some test environments.",
+  "repair_strategy": "Make three minimal changes to js/src/datepicker.ts: (1) Set `inputMode: false` in `_buildCalendarOptions` so Tab can escape the calendar. (2) Update the data-api click handler to call `instance.show()` for input elements (without `event.preventDefault()`) instead of skipping them, ensuring the calendar appears on click in all environments while preserving toggle behavior for non-input elements. (3) Fix `_onOutside` in `_setupDismiss` to exclude the trigger element (`target !== this._element`) from the outside check so focusin on the trigger doesn't close the calendar.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      extensions: [months],\n      inputMode: !this._isInline,\n      positionToInput: this._config.placement,",
+      "after": "      extensions: [months],\n      inputMode: false,\n      positionToInput: this._config.placement,"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {\n  // Only handle if not an input (inputs use focus)\n  // Skip inline datepickers (they're always visible)\n  if (this.tagName === 'INPUT' || this.dataset.bsInline === 'true') {\n    return\n  }\n\n  event.preventDefault()\n  Datepicker.getOrCreateInstance(this).toggle()\n})",
+      "after": "EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {\n  // Skip inline datepickers (they're always visible)\n  if (this.dataset.bsInline === 'true') {\n    return\n  }\n\n  const instance = Datepicker.getOrCreateInstance(this)\n  if (this.tagName === 'INPUT') {\n    // For inputs, click should show the calendar (focusin also handles this,\n    // but click may not trigger focus in all environments)\n    instance.show()\n  } else {\n    event.preventDefault()\n    instance.toggle()\n  }\n})"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    this._onOutside = ({ target }) => {\n      const mainElement = this._calendar?.context?.mainElement\n      const isOutside = !(target instanceof Node) || (!this._element.contains(target) && !mainElement?.contains(target))\n\n      if (this._isShown && isOutside) {\n        this.hide()\n      }\n    }",
+      "after": "    this._onOutside = ({ target }) => {\n      const mainElement = this._calendar?.context?.mainElement\n      const isOutside = !(target instanceof Node) || (target !== this._element && !this._element.contains(target) && !mainElement?.contains(target))\n\n      if (this._isShown && isOutside) {\n        this.hide()\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab when the datepicker calendar is open moves focus to the next focusable element (passengers field) instead of being trapped. Clicking the departure date input reliably shows the calendar. Focusin on the input also shows the calendar. Non-input toggle elements still toggle the calendar.",
+  "functional_risks": [
+    "Other keyboard navigation within the calendar (arrow keys, Enter, Escape) could be altered if they depended on inputMode being true",
+    "Inline calendars retain inputMode: false (unchanged behavior)",
+    "The outside-click dismiss logic now treats the trigger element as inside, which is correct for focusin but could theoretically affect pointerdown on the trigger; however pointerdown on the trigger is already handled by VCP internally",
+    "Removing preventDefault on input click may allow default browser behavior (e.g., text selection) but should not affect calendar functionality"
+  ],
+  "verification_requirements": [
+    "Verify Tab moves focus from departure date to passengers field when calendar is open",
+    "Verify arrow keys, Enter, and Escape still function correctly in the calendar",
+    "Verify clicking the departure date input shows the calendar",
+    "Verify focusin on the departure date input still shows the calendar",
+    "Verify non-input toggle elements still toggle the calendar",
+    "Verify clicking outside the calendar hides it",
+    "Verify pressing Escape closes the calendar"
+  ]
+}

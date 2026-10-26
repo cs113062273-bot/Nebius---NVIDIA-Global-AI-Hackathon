@@ -1,0 +1,39 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..2ab22f9 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -420,7 +420,7 @@ class Datepicker extends BaseComponent {
+       // Vanilla Calendar Pro v3.4+ ships optional features as extensions. Bootstrap
+       // supports only `months`, which `displayMonthsCount` needs.
+       extensions: [months],
+-      inputMode: !this._isInline,
++      inputMode: false,
+       positionToInput: this._config.placement,
+       firstWeekday: this._config.firstWeekday,
+       locale: this._config.locale,
+@@ -557,14 +557,21 @@ class Datepicker extends BaseComponent {
+  */
+ 
+ EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {
+-  // Only handle if not an input (inputs use focus)
+   // Skip inline datepickers (they're always visible)
+-  if (this.tagName === 'INPUT' || this.dataset.bsInline === 'true') {
++  if (this.dataset.bsInline === 'true') {
+     return
+   }
+ 
+-  event.preventDefault()
+-  Datepicker.getOrCreateInstance(this).toggle()
++  const instance = Datepicker.getOrCreateInstance(this)
++  if (this.tagName === 'INPUT') {
++    // For inputs, click should show the calendar (focusin also handles this,
++    // but click may not trigger focus in all environments)
++    event.preventDefault()
++    instance.show()
++  } else {
++    event.preventDefault()
++    instance.toggle()
++  }
+ })
+ 
+ EventHandler.on(document, EVENT_FOCUSIN_DATA_API, SELECTOR_DATA_TOGGLE, function () {

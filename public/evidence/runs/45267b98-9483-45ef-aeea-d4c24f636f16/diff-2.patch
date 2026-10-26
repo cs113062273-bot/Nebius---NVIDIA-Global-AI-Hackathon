@@ -1,0 +1,15 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..e4b72ee 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -522,6 +522,10 @@ class Datepicker extends BaseComponent {
+     }
+ 
+     if (dates.length === 1) {
++      // For input elements, keep the ISO format to avoid unexpected reformatting
++      if (this._isInput) {
++        return dates[0]
++      }
+       return this._formatDate(dates[0])
+     }
+ 

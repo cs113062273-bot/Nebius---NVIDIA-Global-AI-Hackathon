@@ -1,0 +1,23 @@
+{
+  "root_cause": "Vanilla Calendar Pro sets tabindex=-1 on the input when the calendar opens, removing it from the tab order. When Tab is pressed from the departure field, the browser cannot navigate from an element outside the tab order, so focus falls back to body instead of moving to passengers.",
+  "repair_strategy": "In the VCP onShow callback, restore the input's tabindex to 0 so it remains in the tab order. This allows natural Tab navigation to the next field. The existing focusin dismiss handler (_onOutside) will close the datepicker when focus moves outside.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      onShow: () => {\n        if (!this._calendar) {\n          return\n        }\n\n        this._isShown = true\n        this._syncThemeAttribute(this._calendar.context.mainElement)\n      },",
+      "after": "      onShow: () => {\n        if (!this._calendar) {\n          return\n        }\n\n        this._isShown = true\n        this._syncThemeAttribute(this._calendar.context.mainElement)\n        if (this._isInput) {\n          this._element.tabIndex = 0\n        }\n      },"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab from the departure date field moves focus to the passengers field naturally, as the input remains in the tab order. The datepicker closes automatically via the existing focusin handler when focus leaves.",
+  "functional_risks": [
+    "Restoring tabindex may conflict with VCP's internal focus management, but VCP's focus trapping is the root cause of the accessibility failure.",
+    "If VCP immediately resets tabindex after onShow, the fix may not persist; however, onShow fires after VCP's show logic."
+  ],
+  "verification_requirements": [
+    "Tab key press from the departure date input moves focus to the passengers input.",
+    "Escape key press still closes the datepicker and keeps focus on the departure date input (regression guard).",
+    "The datepicker still opens when the departure date input receives focus.",
+    "Clicking outside the datepicker still closes it."
+  ]
+}

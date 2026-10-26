@@ -1,0 +1,23 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..edb1834 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -463,13 +463,16 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
+-    event.preventDefault()
+-    event.stopPropagation()
++    if (event.key !== ESCAPE_KEY) {
++      event.preventDefault()
++      event.stopPropagation()
++    }
+ 
+     if (isDisabled(this)) {
+       return
+     }
+ 
++
+     const parent = Dropdown.getParentFromElement(this)
+     const isActive = this.classList.contains(CLASS_NAME_SHOW)
+ 

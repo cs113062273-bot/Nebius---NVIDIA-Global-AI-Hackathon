@@ -1,0 +1,19 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..146d628 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -217,6 +217,14 @@ class DialogBase extends BaseComponent {
+       // shift (and the ::backdrop covers the gutter instead of leaving a strip).
+       document.documentElement.classList.add(CLASS_NAME_OPEN)
+     }
++
++    // Move focus to the first focusable element for keyboard accessibility
++    const focusable = this._element.querySelector<HTMLElement>(
++      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
++    )
++    if (focusable) {
++      focusable.focus()
++    }
+   }
+ 
+   protected _hideElement(): void {

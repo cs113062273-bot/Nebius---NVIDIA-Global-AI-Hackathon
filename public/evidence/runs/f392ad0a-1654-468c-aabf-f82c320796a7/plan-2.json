@@ -1,0 +1,54 @@
+{
+  "root_cause": "DialogBase does not manage focus when opening or closing dialogs/drawers. When a drawer opens via keyboard, focus remains on the trigger button (or body) instead of moving into the drawer. When the drawer closes, focus is not restored to the trigger. This prevents keyboard users from interacting with drawer controls.",
+  "repair_strategy": "Add focus management to DialogBase: (1) import isVisible/isVisible from util, (2) store the triggering element on show(), (3) in _showElement() move focus to [autofocus] or first focusable descendant, (4) in _onAfterHide() restore focus to the stored trigger if still visible and enabled.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "import BaseComponent from './base-component.js'\nimport Data from './dom/data.js'\nimport EventHandler, { type BootstrapEvent } from './dom/event-handler.js'\nimport SelectorEngine from './dom/selector-engine.js'",
+      "after": "import BaseComponent from './base-component.js'\nimport Data from './dom/data.js'\nimport EventHandler, { type BootstrapEvent } from './dom/event-handler.js'\nimport SelectorEngine from './dom/selector-engine.js'\nimport { isDisabled, isVisible } from './util/index.js'"
+    },
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected declare _element: HTMLDialogElement\n  protected declare _config: DialogBaseConfig\n  protected declare _isTransitioning: boolean\n  protected declare _openedAsModal: boolean\n  protected declare _cancelHandler: (event: BootstrapEvent) => void",
+      "after": "  protected declare _element: HTMLDialogElement\n  protected declare _config: DialogBaseConfig\n  protected declare _isTransitioning: boolean\n  protected declare _openedAsModal: boolean\n  protected declare _cancelHandler: (event: BootstrapEvent) => void\n  protected declare _lastFocusedTrigger: HTMLElement | null"
+    },
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  constructor(element?: string | Element | null, config?: Partial<DialogBaseConfig> | null) {\n    super(element, config)\n\n    this._isTransitioning = false\n    this._openedAsModal = false\n    this._addDialogListeners()\n  }",
+      "after": "  constructor(element?: string | Element | null, config?: Partial<DialogBaseConfig> | null) {\n    super(element, config)\n\n    this._isTransitioning = false\n    this._openedAsModal = false\n    this._lastFocusedTrigger = null\n    this._addDialogListeners()\n  }"
+    },
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  async show(relatedTarget?: HTMLElement): Promise<void> {\n    if (!this._canShow(relatedTarget)) {\n      return\n    }\n\n    await this._show(relatedTarget)\n  }",
+      "after": "  async show(relatedTarget?: HTMLElement): Promise<void> {\n    if (!this._canShow(relatedTarget)) {\n      return\n    }\n    this._lastFocusedTrigger = relatedTarget ?? null\n    await this._show(relatedTarget)\n  }"
+    },
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }",
+      "after": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n\n    // Move focus to the first focusable element inside the dialog\n    const autofocus = this._element.querySelector('[autofocus]')\n    if (autofocus) {\n      autofocus.focus({ preventScroll: true })\n    } else {\n      const focusableSelectors = [\n        'a[href]',\n        'area[href]',\n        'input:not([disabled]):not([type=\"hidden\"])',\n        'select:not([disabled])',\n        'textarea:not([disabled])',\n        'button:not([disabled])',\n        'iframe',\n        'object',\n        'embed',\n        '[tabindex]:not([tabindex=\"-1\"])',\n        '[contenteditable]'\n      ].join(',')\n      const focusable = this._element.querySelectorAll(focusableSelectors)\n      for (const el of focusable) {\n        if (isVisible(el) && !isDisabled(el as HTMLElement)) {\n          (el as HTMLElement).focus({ preventScroll: true })\n          break\n        }\n      }\n    }\n  }"
+    },
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _onAfterHide(): void {\n    // No-op by default — Dialog overrides to remove nonmodal class\n  }",
+      "after": "  protected _onAfterHide(): void {\n    if (this._lastFocusedTrigger) {\n      const trigger = this._lastFocusedTrigger\n      this._lastFocusedTrigger = null\n      if (isVisible(trigger) && !isDisabled(trigger)) {\n        trigger.focus({ preventScroll: true })\n      }\n    }\n    // No-op by default — Dialog overrides to remove nonmodal class\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Opening a drawer moves focus into it, allowing keyboard users to tab through controls; closing returns focus to the trigger, preserving logical tab order.",
+  "functional_risks": [
+    "Potential focus stealing if the stored trigger is disabled or removed (mitigated by checking visibility and disabled state before restoring focus).",
+    "Focusing non-focusable elements could cause issues (limited to standard focusable selectors)."
+  ],
+  "verification_requirements": [
+    "After activating sort-open with Enter, focus should be on sort-close.",
+    "After activating filters-open with Enter, focus should be on filters-search (due to autofocus).",
+    "Pressing Escape in either drawer should return focus to the respective opener button.",
+    "Tab navigation within drawer should cycle through its focusable elements.",
+    "Activating Apply button after checking In stock should update applied output to \"in\"."
+  ]
+}

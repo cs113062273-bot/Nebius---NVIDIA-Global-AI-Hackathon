@@ -1,0 +1,13 @@
+{
+  "completedAt": "2026-10-26T15:46:30.200Z",
+  "replayRun": "8da5d918-1392-4fdd-aae8-b71058b06670",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 5 · #filters-search: expected \"#filters-search\", observed \"#filters-close\"",
+    "Task evidence is missing or contradicts the verdict"
+  ],
+  "fromCase": "Opening a drawer must move keyboard focus into it",
+  "fromRun": "3bd01302-203b-4959-80d9-10bca5a5e6ea",
+  "attempt": 2,
+  "engine": "browser replay, no inference"
+}

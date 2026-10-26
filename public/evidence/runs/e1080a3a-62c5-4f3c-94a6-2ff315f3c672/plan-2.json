@@ -1,0 +1,23 @@
+{
+  "root_cause": "Escape key clears the input value instead of only closing the suggestion list.",
+  "repair_strategy": "Modify the navigate handler in listController.js to remove the line that clears ctx.input.value on Escape and the clear event emission, keeping only the close(ctx) call.",
+  "edits": [
+    {
+      "path": "src/controllers/listController.js",
+      "sha256": "913fcec2ffc448fd458cae19dd873623256f7e1c1ba3eab15225d68f74351f8f",
+      "before": "    // Esc\n    case 27:\n      // Clear \"input\" value\n      ctx.input.value = \"\";\n\n      /**\n       * @emit {clear} event on input clear\n       **/\n      eventEmitter('clear', ctx);\n\n      close(ctx);\n      break;",
+      "after": "    // Esc\n    case 27:\n      // Close the suggestion list without clearing the input\n      close(ctx);\n      break;"
+    }
+  ],
+  "expected_accessibility_effect": "Users can dismiss suggestions with Escape while retaining their typed input, preserving keyboard operability and preventing loss of entered text.",
+  "functional_risks": [
+    "Potential loss of the 'clear' event that some consumers might rely on to reset state.",
+    "If any custom logic depends on the input being cleared on Escape, it may break."
+  ],
+  "verification_requirements": [
+    "After typing a value and pressing Escape, the input value must remain unchanged and the suggestion list must be closed.",
+    "Focus must return to the input element.",
+    "Form data must reflect the typed value.",
+    "Existing keyboard interactions (Enter, Tab, Arrow keys) must continue to work as before."
+  ]
+}

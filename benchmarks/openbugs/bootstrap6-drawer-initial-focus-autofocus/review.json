@@ -1,0 +1,10 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T15:58:14.857Z",
+  "run": "36e2d581-7898-4c14-a954-13c1892a65c8",
+  "verdict": "Partial: fixes only drawers with an autofocus field",
+  "summary": "After the shown event, focus moves to the drawer’s [autofocus] element; a drawer without one is left unchanged.",
+  "caveats": [
+    "A drawer without an [autofocus] element still drops focus to the page body. The stricter case bootstrap6-drawer-initial-focus-both requires both kinds of drawer; this patch fails it, and one earlier model patch (42ce55e5) passes it."
+  ]
+}

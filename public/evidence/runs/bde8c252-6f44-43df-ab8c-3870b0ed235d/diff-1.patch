@@ -1,0 +1,15 @@
+diff --git a/js/src/dialog.ts b/js/src/dialog.ts
+index 7bfd164..05f8d53 100644
+--- a/js/src/dialog.ts
++++ b/js/src/dialog.ts
+@@ -58,6 +58,10 @@ class Dialog extends DialogBase {
+   // eslint-disable-next-line no-useless-constructor -- narrows the config param type
+   constructor(element?: string | Element | null, config?: Partial<DialogConfig> | null) {
+     super(element, config)
++    // Ensure keyboard setting is respected despite Default overrides
++    if (config?.keyboard === false) {
++      this._config.keyboard = false;
++    }
+   }
+ 
+   // Getters

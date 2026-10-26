@@ -1,0 +1,25 @@
+{
+  "root_cause": "The _keydown handler in tab.js uses getNextActiveElement without checking whether the target tab is disabled, allowing focus to move to a disabled tab when arrow keys are pressed.",
+  "repair_strategy": "Modify the _keydown method to skip over disabled tabs by repeatedly calling getNextActiveElement in the navigation direction until an enabled tab is found or a safe iteration limit is reached.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "7ad4e9f0424d0d4b95bcf399a1639e44cfec200c874382dc7a8b34016a74228f",
+      "before": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const nextActiveElement = getNextActiveElement(this._getChildren(), event.target, isNext, true)\n    Tab.getOrCreateInstance(nextActiveElement).show()\n  }",
+      "after": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    let nextActiveElement = getNextActiveElement(this._getChildren(), event.target, isNext, true)\n    // Skip disabled elements\n    let checked = 0\n    const children = this._getChildren()\n    while (isDisabled(nextActiveElement) && checked < children.length) {\n      nextActiveElement = getNextActiveElement(children, nextActiveElement, isNext, true)\n      checked++\n    }\n    Tab.getOrCreateInstance(nextActiveElement).show()\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight will now move focus to the next enabled tab (Billing) skipping the disabled Notifications tab, updating aria-selected and focus accordingly, and ArrowLeft will wrap to the last enabled tab.",
+  "functional_risks": [
+    "Infinite loop mitigated by length check; if all tabs are disabled, the last checked disabled tab may be selected.",
+    "Behavior change if tabs are disabled after initialization; the navigation will skip them as intended.",
+    "Ensure that show() is not called on a disabled tab; the loop prevents this unless all tabs are disabled."
+  ],
+  "verification_requirements": [
+    "Press ArrowRight from Account tab → Billing tab becomes aria-selected=true and receives focus.",
+    "Press ArrowLeft from Billing tab → Account tab becomes aria-selected=true and receives focus (wrapping if needed).",
+    "Repeated ArrowRight/Left navigation skips the disabled Notifications tab.",
+    "Screen reader announces the newly selected tab.",
+    "Tab panel visibility updates correctly when tab changes."
+  ]
+}

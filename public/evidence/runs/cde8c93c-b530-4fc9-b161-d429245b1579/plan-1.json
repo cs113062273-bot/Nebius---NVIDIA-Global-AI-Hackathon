@@ -1,0 +1,21 @@
+{
+  "root_cause": "Escape keydown event on the dropdown toggle calls event.stopPropagation(), preventing the event from reaching the modal's keyboard dismiss listener.",
+  "repair_strategy": "Remove event.stopPropagation() call for Escape key in dropdown.js dataApiKeydownHandler, keeping event.preventDefault() to allow the event to bubble to the modal while still preventing default browser action.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    event.preventDefault()\n    event.stopPropagation()\n",
+      "after": "    event.preventDefault()\n"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will now close the share dialog when focus is on the access toggle button, satisfying the requirement that Escape closes the dialog.",
+  "functional_risks": [
+    "Potential side effects if other components rely on Escape being stopped by dropdown; however modal's keyboard dismiss is appropriate and unlikely to cause conflicts."
+  ],
+  "verification_requirements": [
+    "Press Escape on the access toggle button to verify the modal closes (button becomes invisible).",
+    "Verify that Escape still closes an open dropdown menu when focus is inside the menu.",
+    "Ensure ArrowUp, ArrowDown, Space, and Enter keys still work for dropdown navigation and selection."
+  ]
+}

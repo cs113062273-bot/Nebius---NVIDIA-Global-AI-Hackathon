@@ -1,0 +1,21 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..640d37d 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -101,6 +101,16 @@ class DialogBase extends BaseComponent {
+     const { modal, preventBodyScroll } = this._getShowOptions()
+     this._showElement({ modal, preventBodyScroll })
+ 
++    // Yield to allow native dialog focus management to complete, then ensure
++    // keyboard focus lands on the autofocus element (or dialog fallback).
++    await Promise.resolve()
++    const autofocus = this._element.querySelector('[autofocus]')
++    if (autofocus) {
++      (autofocus as HTMLElement).focus()
++    } else if (this._element !== document.activeElement) {
++      this._element.focus()
++    }
++
+     await this._queueCallback(() => {
+       this._isTransitioning = false
+       EventHandler.trigger(

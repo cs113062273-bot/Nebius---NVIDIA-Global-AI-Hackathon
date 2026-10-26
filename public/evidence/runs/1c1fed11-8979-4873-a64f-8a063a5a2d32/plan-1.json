@@ -1,0 +1,24 @@
+{
+  "root_cause": "Escape key hides the dropdown menu but does not return focus to the toggle button, leaving focus on the menu item or elsewhere.",
+  "repair_strategy": "Modify the dropdown's dataApiKeydownHandler to focus the toggle button after hiding the menu when Escape is pressed.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "fc69a61b69ae1fa2c2bb923fdc393dd2742925e8af996376df5f98e38f8d810e",
+      "before": "    if (isEscapeEvent) {\n      instance.hide()\n      return\n    }",
+      "after": "    if (isEscapeEvent) {\n      instance.hide()\n      getToggleButton.focus()\n      return\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape will close the invoice actions menu and move focus back to the 'Invoice actions' toggle button, meeting keyboard accessibility expectations.",
+  "functional_risks": [
+    "If the toggle button becomes detached or hidden while the menu is open, focusing it could fail or cause unexpected behavior.",
+    "Focusing the toggle after hide may interfere with other scripts that also attempt to manage focus during hide.",
+    "Risk of focusing a disabled toggle (though the code path already checks isDisabled on the keydown target)."
+  ],
+  "verification_requirements": [
+    "After opening the menu with ArrowDown, pressing Escape must result in aria-expanded='false' on the toggle and focus returning to the toggle.",
+    "Escape should not alter focus when the menu is not open.",
+    "ArrowUp and ArrowDown navigation within the menu must continue to work as before.",
+    "Closing the menu via click outside or Esc from other contexts should not inadvertently shift focus when inappropriate."
+  ]
+}

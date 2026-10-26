@@ -1,0 +1,25 @@
+{
+  "root_cause": "The drawer opens but focus remains on the triggering button because the dialog element is not focusable and no focus management is performed after showing it.",
+  "repair_strategy": "In DialogBase._showElement, after showing the dialog (modal or non‑modal), set tabindex=\"-1\" on the dialog and call focus() to move keyboard focus into the drawer, ensuring the first focusable element (the close button) can be reached with Tab.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }\n",
+      "after": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n\n    // Move focus to the dialog to ensure keyboard users can interact\n    this._element.tabIndex = -1;\n    this._element.focus();\n  }\n"
+    }
+  ],
+  "expected_accessibility_effect": "Focus will be moved into the drawer when opened, allowing sequential Tab navigation to reach the close button and other controls without a pointer.",
+  "functional_risks": [
+    "Setting tabindex=-1 may interfere if the dialog already uses a custom tabindex for other purposes.",
+    "Non‑modal drawers with scroll behavior might receive unexpected focus, but the negative tabindex removes it from tab order.",
+    "If the dialog contains elements that expect initial focus elsewhere, this could override that intention."
+  ],
+  "verification_requirements": [
+    "After pressing Enter on the filters button, focus must be on #filters-close.",
+    "Subsequent Tab presses must move focus to #in-stock, then #waterproof, then #apply.",
+    "Escape key must close the drawer and return focus to #filters-open.",
+    "Clicking Show results must update the applied output correctly.",
+    "Ensure the drawer still opens/closes correctly for mouse users."
+  ]
+}

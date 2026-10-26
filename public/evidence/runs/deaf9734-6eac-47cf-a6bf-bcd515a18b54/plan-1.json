@@ -1,0 +1,23 @@
+{
+  "root_cause": "Duplicate keydown listeners are registered each time the suggestion list is rebuilt, causing multiple navigation handlers with independent `currentFocus` states. When Enter is pressed, each handler may trigger a click, and the last click determines the final value, often leading to an incorrect selection.",
+  "repair_strategy": "Before attaching a new navigation listener in the `start` method, remove any existing keydown listener on the input field to ensure only one active navigation handler at a time.",
+  "edits": [
+    {
+      "path": "src/autoComplete.js",
+      "sha256": "0d0d446adae1a014da3d8ab13ee99cb73e0094218b8a48458756f2145b850fea",
+      "before": "    // - Initialize navigation\n    navigate(this, dataFeedback);\n",
+      "after": "    // - Initialize navigation\n    const navHandler = navigate(this, dataFeedback);\n    this.inputField.removeEventListener(\"keydown\", navHandler);\n    this.inputField.addEventListener(\"keydown\", navHandler);\n"
+    }
+  ],
+  "expected_accessibility_effect": "Ensures that pressing Enter activates the currently highlighted suggestion (as indicated by `aria-activedescendant`) and prevents duplicate activations, preserving the expected combobox behavior for keyboard users.",
+  "functional_risks": [
+    "If external code had added its own `keydown` listener on the input field, it would be inadvertently removed. However, only this component registers keydown listeners, so the risk is minimal.",
+    "Removing and re-adding the listener could cause a brief moment where no keydown handler is attached, but this occurs synchronously during list updates and does not affect user interaction."
+  ],
+  "verification_requirements": [
+    "After typing a query and navigating suggestions with arrow keys, pressing Enter must set the input value to the highlighted suggestion.",
+    "Confirm that only one keydown listener is present on the input field after each list update.",
+    "Verify that `aria-activedescendant` is correctly updated when navigating with arrow keys and cleared when the list is closed.",
+    "Ensure that typing, arrow navigation, and Escape key behavior remain functional."
+  ]
+}

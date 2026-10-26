@@ -1,0 +1,48 @@
+{
+  "root_cause": "The datepicker component updates the input value to a locale-formatted string during initialization, even when the user hasn't selected a date. This causes the submitted departure date to change from the ISO format (YYYY-MM-DD) to a locale-specific format (e.g., MM/DD/YYYY) when the datepicker is opened and closed without selecting a date.",
+  "repair_strategy": "Add a flag `_isInitializing` to prevent updating the main input value during initialization while still allowing updates to bound inputs and display elements. The flag is set to true at the start of `_initCalendar` and false at the end. In `_syncSelectedDates`, the main input value is only updated if the flag is false.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _element: HTMLElement & { value: string }\n  protected declare _config: DatepickerConfig\n  protected declare _calendar: Calendar | null\n  protected declare _isShown: boolean\n  protected declare _isInput: boolean\n  protected declare _isInline: boolean\n  protected declare _boundInput: HTMLInputElement | null\n  protected declare _positionElement: HTMLElement\n  protected declare _displayElement: HTMLElement | false | null\n  protected declare _themeObserver: MutationObserver | null\n  protected declare _themeAncestor: Element | null | undefined\n  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "  protected declare _element: HTMLElement & { value: string }\n  protected declare _config: DatepickerConfig\n  protected declare _calendar: Calendar | null\n  protected declare _isShown: boolean\n  protected declare _isInput: boolean\n  protected declare _isInline: boolean\n  protected declare _boundInput: HTMLInputElement | null\n  protected declare _positionElement: HTMLElement\n  protected declare _displayElement: HTMLElement | false | null\n  protected declare _themeObserver: MutationObserver | null\n  protected declare _themeAncestor: Element | null | undefined\n  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _isInitializing: boolean"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n      super(element, config)\n\n      this._calendar = null\n      this._isShown = false\n\n      this._initCalendar()\n    }",
+      "after": "    constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n      super(element, config)\n\n      this._calendar = null\n      this._isShown = false\n      this._isInitializing = false\n\n      this._initCalendar()\n    }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _initCalendar(): void {\n    this._isInput = this._element.tagName === 'INPUT'\n    this._isInline = this._config.inline",
+      "after": "  protected _initCalendar(): void {\n    this._isInitializing = true\n    this._isInput = this._element.tagName === 'INPUT'\n    this._isInline = this._config.inline"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()\n  }",
+      "after": "    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()\n    this._isInitializing = false\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput) {\n      this._element.value = formattedDate\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n  }",
+      "after": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput && !this._isInitializing) {\n      this._element.value = formattedDate\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "The datepicker will no longer modify the input value during initialization, preserving the original format. Users relying on assistive technologies will perceive the input value as unchanged when opening and closing the datepicker without selecting a date, reducing confusion.",
+  "functional_risks": [
+    "The bound input and display element will still be updated during initialization, which is expected.",
+    "Programmatic use of setSelectedDates will continue to update the main input as intended.",
+    "Inline datepickers may experience delayed input updates until user interaction, but the calendar will still reflect the correct selected state."
+  ],
+  "verification_requirements": [
+    "Verify that the departure date remains in ISO format (YYYY-MM-DD) after opening and closing the datepicker without selecting a date.",
+    "Verify that selecting a date updates the input to the locale-formatted string.",
+    "Verify that the bound input and display element update correctly during initialization and interaction.",
+    "Verify that keyboard navigation (Tab, Escape, Enter) functions as expected in the journey."
+  ]
+}

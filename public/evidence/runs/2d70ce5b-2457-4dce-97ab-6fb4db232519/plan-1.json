@@ -1,0 +1,26 @@
+{
+  "root_cause": "The dropdown remains open when focus leaves via Tab because there is no blur/focusout listener to close the menu when focus moves outside the navigation.",
+  "repair_strategy": "Add a focusout listener to the menu container that closes submenu children when the related target is outside the menu, ensuring the dropdown closes when focus navigates out (e.g., to the search field) but stays open when moving between items inside the menu.",
+  "edits": [
+    {
+      "path": "src/_baseMenu.js",
+      "sha256": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+      "before": "  _handleFocus() {\n    this.elements.menuItems.forEach((menuItem, index) => {\n      menuItem.dom.link.addEventListener(\"focus\", () => {\n        this.focusState = \"self\";\n        this.currentChild = index;\n      });\n    });\n  }",
+      "after": "  _handleFocus() {\n    this.elements.menuItems.forEach((menuItem, index) => {\n      menuItem.dom.link.addEventListener(\"focus\", () => {\n        this.focusState = \"self\";\n        this.currentChild = index;\n      });\n    });\n\n    this.dom.menu.addEventListener(\"focusout\", (event) => {\n      if (!this.dom.menu.contains(event.relatedTarget)) {\n        this.closeChildren();\n      }\n    });\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When a user tabs out of the navigation dropdown, the dropdown will close, preventing it from covering page content and restoring expected tab order behavior.",
+  "functional_risks": [
+    "Potential premature closure if the focusout listener misjudges the related target (e.g., due to programmatic focus moves).",
+    "Additional event listener may have minor performance impact but is negligible.",
+    "Must ensure the listener does not interfere with existing click‑outside closure mechanism."
+  ],
+  "verification_requirements": [
+    "Tabbing from the Shop button to the Plants link keeps the dropdown open.",
+    "Tabbing from Plants to Tools keeps the dropdown open.",
+    "Tabbing from Tools to the Search input closes the dropdown.",
+    "Shift+Tabbing from Search back to Tools does not reopen the dropdown (it remains closed until the button is activated).",
+    "Clicking outside the menu still closes the dropdown as before.",
+    "Keyboard arrow navigation within the open dropdown continues to function."
+  ]
+}

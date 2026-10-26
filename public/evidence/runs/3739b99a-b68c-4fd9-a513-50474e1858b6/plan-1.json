@@ -1,0 +1,24 @@
+{
+  "root_cause": "Escape key handling in dropdown.js always calls preventDefault and stopPropagation, preventing the modal from receiving the Escape key when the dropdown is not open.",
+  "repair_strategy": "Modify dropdown.js's dataApiKeydownHandler to only prevent default and stop propagation for Escape when the dropdown is shown (isActive true); otherwise allow the event to propagate so the modal can close.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    event.preventDefault()\n    event.stopPropagation()\n\n    if (isDisabled(this)) {\n      return\n    }\n\n    const parent = Dropdown.getParentFromElement(this)\n    const isActive = this.classList.contains(CLASS_NAME_SHOW)\n\n    if (event.key === ESCAPE_KEY) {\n      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n      button.focus()\n      Dropdown.clearMenus()\n      return\n    }",
+      "after": "    if (isDisabled(this)) {\n      return\n    }\n\n    const parent = Dropdown.getParentFromElement(this)\n    const isActive = this.classList.contains(CLASS_NAME_SHOW)\n\n    if (event.key === ESCAPE_KEY) {\n      if (isActive) {\n        event.preventDefault()\n        event.stopPropagation()\n        const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n        button.focus()\n        Dropdown.clearMenus()\n      }\n      return\n    }\n\n    event.preventDefault()\n    event.stopPropagation()"
+    }
+  ],
+  "expected_accessibility_effect": "Users can dismiss the share modal with Escape when focus is on the access toggle button and dropdown is closed, satisfying WCAG 2.1.1 keyboard accessibility and providing a consistent Escape-to-close behavior.",
+  "functional_risks": [
+    "May affect other components that rely on Escape being blocked when dropdown is closed.",
+    "Could interfere with browser-level Escape shortcuts if dropdown is used elsewhere."
+  ],
+  "verification_requirements": [
+    "Press Escape with focus on access toggle when dropdown closed should close modal (make #access-toggle not visible).",
+    "Press Escape with focus on access toggle when dropdown open should close only dropdown (toggle remains visible).",
+    "ArrowDown and Space should still open dropdown.",
+    "Keyboard navigation within dropdown menu should remain functional.",
+    "Modal's static backdrop Escape behavior should remain unchanged."
+  ]
+}

@@ -1,0 +1,17 @@
+diff --git a/index.js b/index.js
+index 0a2a74a..49cd81b 100644
+--- a/index.js
++++ b/index.js
+@@ -430,7 +430,11 @@ const createFocusTrap = function (elements, userOptions) {
+     } else {
+       // escaped! pull it back in to where it just left
+       e.stopImmediatePropagation();
+-      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
++      if (state.mostRecentlyFocusedNode && doc.contains(state.mostRecentlyFocusedNode)) {
++        tryFocus(state.mostRecentlyFocusedNode);
++      } else {
++        tryFocus(getInitialFocusNode());
++      }
+     }
+   };
+ 

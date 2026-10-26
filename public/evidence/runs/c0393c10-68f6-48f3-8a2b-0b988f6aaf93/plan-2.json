@@ -1,0 +1,35 @@
+{
+  "root_cause": "The datepicker component treats all input elements the same when updating the value after a date selection. The departure date picker (trigger input with data-bs-toggle) should retain ISO format for form submission, while the return date picker (non-trigger input) should display the formatted date per its configured dateFormat. The original code sets the input's value to the formatted date for all inputs, which would break form submission for the departure picker. The previous attempt set all inputs to ISO, breaking the return picker's formatted display requirement.",
+  "repair_strategy": "Distinguish between trigger inputs (with data-bs-toggle=\"datepicker\") and non-trigger inputs. For trigger inputs, keep the input's value as ISO (first selected date) for form submission. For non-trigger inputs, update the input's value with the formatted date for display. This is done by adding a _isTriggerInput flag set during initialization and using it in _syncSelectedDates.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _isTriggerInput: boolean"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _initCalendar(): void {\n    this._isInput = this._element.tagName === 'INPUT'\n    this._isInline = this._config.inline",
+      "after": "  protected _initCalendar(): void {\n    this._isInput = this._element.tagName === 'INPUT'\n    this._isTriggerInput = this._isInput && this._element.getAttribute('data-bs-toggle') === 'datepicker'\n    this._isInline = this._config.inline"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput) {\n      this._element.value = formattedDate\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n  }",
+      "after": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput) {\n      if (this._isTriggerInput) {\n        // For trigger inputs (e.g., departure date), keep ISO value for form submission\n        this._element.value = selectedDates.length > 0 ? selectedDates[0] : ''\n      } else {\n        // For non-trigger inputs (e.g., return date), show formatted date\n        this._element.value = formattedDate\n      }\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "The date picker continues to function correctly for keyboard and screen reader users. Trigger inputs (like departure) retain ISO values for form submission, while non-trigger inputs (like return) display formatted dates per the configured dateFormat. Focus management and ARIA attributes are unchanged.",
+  "functional_risks": [
+    "If a trigger input is used without a form, it will still show ISO format, which may be less user-friendly but ensures form compatibility.",
+    "Non-trigger inputs without a displayElement will show formatted dates in the input itself, which is the desired behavior for display-only date pickers."
+  ],
+  "verification_requirements": [
+    "Verify that submitting the form without changing the departure date yields 'departure=2026-10-22&passengers=2'.",
+    "Verify that selecting a new departure date updates the input's value to the ISO string of the selected date.",
+    "Verify that the return date picker shows the formatted long date string (e.g., 'October 25, 2026') after picking a date.",
+    "Verify that keyboard navigation (Tab, Escape, Enter) still works as expected for both date pickers and form fields."
+  ]
+}

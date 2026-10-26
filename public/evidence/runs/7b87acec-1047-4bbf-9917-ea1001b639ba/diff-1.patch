@@ -1,0 +1,33 @@
+diff --git a/src/autoComplete.js b/src/autoComplete.js
+index 2bf515c..46cb76a 100644
+--- a/src/autoComplete.js
++++ b/src/autoComplete.js
+@@ -106,6 +106,7 @@ export default class autoComplete {
+     this.highlight = highlight;
+     this.feedback = feedback;
+     this.onSelection = onSelection;
++    this._navigateListener = null;
+     // Invoking preInit if enabled
+     // or initiate autoComplete instance directly
+     this.observer ? this.preInit() : this.init();
+@@ -136,7 +137,9 @@ export default class autoComplete {
+      **/
+     eventEmitter(this.inputField, dataFeedback, "rendered");
+     // - Initialize navigation
+-    navigate(this, dataFeedback);
++    const nav = navigate(this, dataFeedback);
++    if (this._navigateListener) {
++      this.inputField.removeEventListener("keydown", this._navigateListener);
+     /**
+      * @desc
+      * Listens for all `click` events in the document
+@@ -145,6 +148,9 @@ export default class autoComplete {
+      **/
+     document.addEventListener("click", (event) => closeAllLists(this, event.target));
+   }
++    this._navigateListener = nav;
++    this.inputField.addEventListener("keydown", nav);
++  }
+ 
+   async dataStore() {
+     // Check if cache is NOT true

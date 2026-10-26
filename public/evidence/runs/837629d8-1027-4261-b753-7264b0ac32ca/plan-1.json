@@ -1,0 +1,24 @@
+{
+  "root_cause": "The offcanvas plugin unconditionally sets aria-modal=true, role=dialog and installs a focus trap when shown, regardless of the backdrop setting. This makes the panel modal and prevents keyboard users from tabbing out to elements like #amount when data-bs-backdrop='false'.",
+  "repair_strategy": "Modify the show method to conditionally apply modal attributes and focus enforcement only when this._config.backdrop is true. When backdrop is false, omit aria-modal/role and simply focus the element without trapping.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "  show(relatedTarget) {\n    if (this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW, { relatedTarget })\n\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._isShown = true\n    this._element.style.visibility = 'visible'\n\n    this._backdrop.show()\n\n    if (!this._config.scroll) {\n      scrollBarHide()\n    }\n\n    this._element.removeAttribute('aria-hidden')\n    this._element.setAttribute('aria-modal', true)\n    this._element.setAttribute('role', 'dialog')\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      this._enforceFocusOnElement(this._element)\n    }\n\n    const transitionDuration = getTransitionDurationFromElement(this._element)\n    EventHandler.one(this._element, 'transitionend', completeCallBack)\n    emulateTransitionEnd(this._element, transitionDuration)\n  }\n",
+      "after": "  show(relatedTarget) {\n    if (this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW, { relatedTarget })\n\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._isShown = true\n    this._element.style.visibility = 'visible'\n\n    this._backdrop.show()\n\n    if (!this._config.scroll) {\n      scrollBarHide()\n    }\n\n    this._element.removeAttribute('aria-hidden')\n    if (this._config.backdrop) {\n      this._element.setAttribute('aria-modal', true)\n      this._element.setAttribute('role', 'dialog')\n    }\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      if (this._config.backdrop) {\n        this._enforceFocusOnElement(this._element)\n      } else {\n        this._element.focus()\n      }\n    }\n\n    const transitionDuration = getTransitionDurationFromElement(this._element)\n    EventHandler.one(this._element, 'transitionend', completeCallBack)\n    emulateTransitionEnd(this._element, transitionDuration)\n  }\n"
+    }
+  ],
+  "expected_accessibility_effect": "Users can tab off the offcanvas panel to reach subsequent fields (such as #amount) when the panel is non-modal, restoring logical navigation order and enabling keyboard interaction with both the panel and the main form.",
+  "functional_risks": [
+    "Removing aria-modal and role may change how assistive technologies announce the panel (no longer as a dialog). This is appropriate for a non‑modal offcanvas.",
+    "Without the focus trap, focus may leave the panel when the developer expects modal behavior; however, the backdrop=false configuration explicitly signals a non‑modal panel, mitigating this risk.",
+    "If any custom code relies on the modal attributes being present regardless of backdrop, it may need adjustment."
+  ],
+  "verification_requirements": [
+    "With data-bs-backdrop='false', verify that the shown offcanvas does NOT have aria-modal or role attributes and that pressing Tab moves focus to the next focusable element outside the panel (e.g., #amount).",
+    "With data-bs-backdrop='true' (or omitted), verify that the offcanvas retains aria-modal='true', role='dialog' and that focus is trapped within the panel.",
+    "Ensure hiding the panel correctly reverts any changes and that no JavaScript errors are thrown in either case.",
+    "Confirm that the panel still receives initial focus when shown, regardless of backdrop setting."
+  ]
+}

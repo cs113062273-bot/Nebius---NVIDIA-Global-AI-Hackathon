@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Vanilla Calendar Pro (VCP) library, when initialized with inputMode: true for non-inline datepickers, captures the Tab keydown event on the input element and calls preventDefault(), blocking the default focus traversal behavior.",
+  "repair_strategy": "Set the VCP inputMode option to false in the datepicker configuration to prevent keyboard event capture, allowing the Tab key to propagate normally for focus movement while preserving mouse-based date selection and programmatic value updates.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      inputMode: !this._isInline,\n",
+      "after": "      inputMode: false,\n"
+    }
+  ],
+  "expected_accessibility_effect": "Restores expected tab order navigation from the date field to subsequent form fields, enabling keyboard-only users to exit the date picker widget as required by WCAG 2.1.1 Keyboard.",
+  "functional_risks": [
+    "Direct keyboard date input in the field may not update the calendar display (reliant on click or programmatic updates)",
+    "Inline datepickers may lose VCP keyboard navigation if dependent on inputMode=true",
+    "Arrow key navigation within the calendar popup may be affected (though not used in this journey)"
+  ],
+  "verification_requirements": [
+    "Tab key press on focused date field moves focus to next form field (#passengers)",
+    "Clicking a date in the calendar updates the input field value correctly",
+    "Initial date value (2026-10-22) is properly parsed and displayed on load",
+    "Inline datepickers (if present) remain functional for mouse interaction"
+  ]
+}

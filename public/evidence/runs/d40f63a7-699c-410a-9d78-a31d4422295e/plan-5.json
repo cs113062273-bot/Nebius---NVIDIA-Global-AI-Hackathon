@@ -1,0 +1,22 @@
+{
+  "root_cause": "The native <dialog> element's showModal() does not reliably focus the autofocus element in this environment. The Drawer component (which extends DialogBase) lacks explicit focus management after opening, leaving keyboard focus on the trigger button or body instead of moving into the drawer.",
+  "repair_strategy": "Override _show in Drawer to await the base show lifecycle (which handles animations and fires 'shown'), then explicitly focus the autofocus element (or fall back to the dialog itself) so keyboard users land inside the drawer immediately.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  // Keep the drawer in the top layer until the exit transition ends, like\n  // Dialog does. close() removes the dialog from the top layer, which drops\n  // the native ::backdrop synchronously — the backdrop would disappear before\n  // it could transition out.\n  protected override _shouldDeferClose(): boolean {\n    return this._isAnimated()\n  }\n\n  // Private\n\n  protected _initResizeObserver(): void {",
+      "after": "  // Keep the drawer in the top layer until the exit transition ends, like\n  // Dialog does. close() removes the dialog from the top layer, which drops\n  // the native ::backdrop synchronously — the backdrop would disappear before\n  // it could transition out.\n  protected override _shouldDeferClose(): boolean {\n    return this._isAnimated()\n  }\n\n  // Ensure keyboard focus lands on the autofocus element after the drawer\n  // is fully shown and in the top layer.\n  protected override async _show(relatedTarget?: HTMLElement): Promise<void> {\n    await super._show(relatedTarget)\n\n    const autofocus = this._element.querySelector('[autofocus]')\n    if (autofocus) {\n      (autofocus as HTMLElement).focus()\n    } else if (this._element !== document.activeElement) {\n      this._element.focus()\n    }\n  }\n\n  // Private\n\n  protected _initResizeObserver(): void {"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus moves into the drawer when opened, landing on the search field so users can immediately type or Tab to filters without a pointer.",
+  "functional_risks": [
+    "Potential focus theft if autofocus element is not focusable (mitigated by fallback to dialog).",
+    "Risk of double-focus if browser already moved focus (mitigated by awaiting base show completion)."
+  ],
+  "verification_requirements": [
+    "After activating the drawer button with Enter, focus is on #filters-search.",
+    "Pressing Tab moves focus to #in-stock checkbox.",
+    "Closing the drawer with Escape returns focus to the trigger button."
+  ]
+}

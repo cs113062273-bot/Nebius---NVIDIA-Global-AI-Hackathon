@@ -1,0 +1,24 @@
+{
+  "root_cause": "Vanilla Calendar Pro's inputMode adds a keydown listener on the date input that calls preventDefault() on Tab, blocking focus movement to the next form field. Disabling inputMode breaks calendar display on click.",
+  "repair_strategy": "Keep inputMode enabled for calendar functionality, but add a capture-phase keydown listener on the input that stops propagation of the Tab key before VCP's listener can block it.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    this._setupDismiss()\n\n    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }",
+      "after": "    this._setupDismiss()\n\n    // Allow Tab key to move focus out of the date input (VCP inputMode blocks Tab)\n    if (this._isInput) {\n      this._element.addEventListener('keydown', (event) => {\n        if (event.key === 'Tab') {\n          event.stopPropagation()\n        }\n      }, true) // capture phase to intercept before VCP's listener\n    }\n\n    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key moves focus from the departure date field to the passengers field while preserving calendar display on click and date selection.",
+  "functional_risks": [
+    "Capture-phase listener must be added before VCP's listener attaches (order in _initCalendar ensures this)",
+    "Other keyboard navigation inside the calendar (arrow keys, Enter, Escape) should remain unaffected as they are handled by VCP on the calendar element, not the input"
+  ],
+  "verification_requirements": [
+    "Pressing Tab on the departure date field moves focus to the passengers field",
+    "Clicking the departure date field still opens the datepicker calendar",
+    "Selecting a date in the calendar updates the input and closes the calendar",
+    "Pressing Escape closes the calendar and returns focus to the departure date field",
+    "Tab navigation works correctly when the calendar is closed"
+  ]
+}

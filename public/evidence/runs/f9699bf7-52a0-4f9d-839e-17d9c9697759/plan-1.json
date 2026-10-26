@@ -1,0 +1,24 @@
+{
+  "root_cause": "The textarea retains its maxlength attribute, which blocks input beyond the limit, causing truncation instead of allowing excess characters and showing an error count.",
+  "repair_strategy": "Remove the maxlength attribute from the textarea element in the component's init method, allowing the JavaScript-driven character count to manage the limit and display excess characters.",
+  "edits": [
+    {
+      "path": "src/govuk/components/character-count/character-count.js",
+      "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90",
+      "before": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')\n\n  this.bindChangeEvents()",
+      "after": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')\n  $textarea.removeAttribute('maxlength')\n\n  this.bindChangeEvents()"
+    }
+  ],
+  "expected_accessibility_effect": "Users will receive accurate character count feedback when exceeding the limit, satisfying WCAG 2.1.1 (Keyboard) and 4.1.2 (Name, Role, Value) as the textarea value remains accessible and error state is conveyed visually and to assistive technologies.",
+  "functional_risks": [
+    "Users without JavaScript will no longer have a hard maxlength enforcement, relying solely on server-side validation.",
+    "If server-side validation is missing, excess characters could be submitted.",
+    "Other scripts that depend on the textarea's maxlength attribute may behave differently."
+  ],
+  "verification_requirements": [
+    "Verify that typing beyond the limit shows a negative count and error styling.",
+    "Ensure that the screen‑reader live region updates with the excess message.",
+    "Confirm that focus order and keyboard interaction remain unchanged.",
+    "Validate that server‑side validation still rejects submissions exceeding the limit."
+  ]
+}

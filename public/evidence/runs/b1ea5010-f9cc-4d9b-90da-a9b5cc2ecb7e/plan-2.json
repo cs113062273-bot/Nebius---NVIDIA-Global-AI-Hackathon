@@ -1,0 +1,23 @@
+{
+  "root_cause": "The tabbable module in src/index.js does not consider elements inside a disabled <fieldset> as non-focusable. When the address dialog opens, the first tabbable element found is the <select id=\"speed\"> inside the disabled fieldset, but it should be skipped because the fieldset is disabled. The focus trap then tries to focus this non-focusable element, causing focus to remain on the open button instead of moving to the street input.",
+  "repair_strategy": "Add a check in isNodeMatchingSelectorFocusable to detect when an element is a form control inside a disabled fieldset (excluding the first legend). This will cause the tabbable function to skip the speed select and correctly identify the street input as the first tabbable node.",
+  "edits": [
+    {
+      "path": "src/index.js",
+      "sha256": "8f69e239e7365811abad1130954bb9d4772c0f0e31c477f37f22a3644de78652",
+      "before": "const isNodeMatchingSelectorFocusable = function (options, node) {\n  if (\n    node.disabled ||\n    isHiddenInput(node) ||\n    isHidden(node, options.displayCheck) ||\n    /* For a details element with a summary, the summary element gets the focused  */\n    isDetailsWithSummary(node)\n  ) {\n    return false;\n  }\n  return true;\n};",
+      "after": "const isNodeMatchingSelectorFocusable = function (options, node) {\n  if (\n    node.disabled ||\n    isHiddenInput(node) ||\n    isHidden(node, options.displayCheck) ||\n    /* For a details element with a summary, the summary element gets the focused  */\n    isDetailsWithSummary(node) ||\n    isInDisabledFieldset(node)\n  ) {\n    return false;\n  }\n  return true;\n};\n\nconst isInDisabledFieldset = function (node) {\n  // Form controls inside a disabled fieldset are not focusable,\n  // except those in the fieldset's first legend.\n  const fieldset = node.closest('fieldset[disabled]');\n  if (!fieldset) {\n    return false;\n  }\n  const legend = fieldset.querySelector('legend');\n  if (legend && legend.contains(node)) {\n    return false;\n  }\n  return true;\n};"
+    }
+  ],
+  "expected_accessibility_effect": "When the address dialog opens, focus will correctly move to the street input (the first usable field) instead of attempting to focus the disabled speed select. This satisfies WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value) by ensuring keyboard users can immediately interact with the primary form field.",
+  "functional_risks": [
+    "The isInDisabledFieldset check adds a DOM traversal (closest/querySelector) for each candidate element, which may have minor performance impact on pages with many form controls inside fieldsets.",
+    "If a page relies on the previous behavior where disabled fieldset descendants were incorrectly considered tabbable, focus order may change."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: pressing Enter on #open should open the dialog and focus #street.",
+    "Verify that Tab navigation within the dialog cycles through street, save, cancel (skipping the disabled speed select).",
+    "Verify that Shift+Tab reverse navigation works correctly.",
+    "Confirm the regression guard (Escape closes dialog) still passes."
+  ]
+}

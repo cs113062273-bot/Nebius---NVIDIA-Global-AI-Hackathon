@@ -1,0 +1,24 @@
+{
+  "root_cause": "The unCheckAllInputsExcept method filters checkboxes by name attribute instead of the exclusive group attribute, so the exclusive 'No, I do not have any of these symptoms' checkbox fails to uncheck other symptom checkboxes that have distinct names.",
+  "repair_strategy": "Modify unCheckAllInputsExcept to select checkboxes by the data-checkbox-exclusive-group attribute when present, falling back to name-based selection for backward compatibility, then uncheck matching inputs in the same form except the clicked one.",
+  "edits": [
+    {
+      "path": "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js",
+      "sha256": "b12e3c7a52e09c981155d2f727c5eb8358d420a487177c9a1e722c19da4c8af0",
+      "before": "  /**\n   * Uncheck other checkboxes\n   *\n   * Find any other checkbox inputs with the checkbox group value, and uncheck them.\n   * This is useful for when a “None of these” checkbox is checked.\n   *\n   * @param {HTMLInputElement} $input - Checkbox input\n   */\n  unCheckAllInputsExcept($input) {\n    const { checkboxExclusiveGroup: exclusiveGroup } = $input.dataset\n\n    const allInputsWithSameName = document.querySelectorAll(\n      `input[type=\"checkbox\"][name=\"${$input.name}\"]`\n    )\n\n    allInputsWithSameName.forEach(($inputWithSameName) => {\n      const hasSameFormOwner = $input.form === $inputWithSameName.form\n\n      // Uncheck all with same exclusive group by default, otherwise fall back to\n      // GOV.UK Frontend behaviour to uncheck all with the same name attribute\n      if (hasSameFormOwner && $inputWithSameName !== $input) {\n        this.setInputState($inputWithSameName, false, exclusiveGroup)\n      }\n    })\n  }",
+      "after": "  /**\n   * Uncheck other checkboxes\n   *\n   * Find any other checkbox inputs with the checkbox group value, and uncheck them.\n   * This is useful for when a “None of these” checkbox is checked.\n   *\n   * @param {HTMLInputElement} $input - Checkbox input\n   */\n  unCheckAllInputsExcept($input) {\n    const { checkboxExclusiveGroup: exclusiveGroup } = $input.dataset\n\n    let inputs\n    if (exclusiveGroup) {\n      inputs = document.querySelectorAll(\n        `input[type=\"checkbox\"][data-checkbox-exclusive-group=\"${exclusiveGroup}\"]`\n      )\n    } else {\n      inputs = document.querySelectorAll(\n        `input[type=\"checkbox\"][name=\"${$input.name}\"]`\n      )\n    }\n\n    inputs.forEach(($otherInput) => {\n      const hasSameFormOwner = $input.form === $otherInput.form\n\n      if (hasSameFormOwner && $otherInput !== $input) {\n        this.setInputState($otherInput, false, exclusiveGroup)\n      }\n    })\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users will now see that checking 'No, I do not have any of these symptoms' clears any previously selected symptom checkboxes, ensuring mutually exclusive selection as intended, improving form correctness and accessibility of exclusive choice.",
+  "functional_risks": [
+    "Changing the selection logic could affect implementations that rely on the name-based behavior for exclusive checkboxes without a group attribute; however the fallback preserves existing behavior.",
+    "Risk of inadvertently unchecking checkboxes outside the intended form if forms are misconfigured, but the sameFormOwner check mitigates this."
+  ],
+  "verification_requirements": [
+    "After the change, the journey step 5 (tick no symptoms after cough and fever) should result in symptoms[cough] and symptoms[fever] being unchecked (value []).",
+    "The exclusive none checkbox should still function when clicked alone (should check itself and leave others unchecked).",
+    "Clicking a symptom checkbox should still uncheck the exclusive none checkbox if it is checked (optional but verify).",
+    "Ensure that checkboxes without data-checkbox-exclusive-group continue to work as before (if any).",
+    "No regression in the conditional reveal functionality (aria-controls) unrelated to exclusive behavior."
+  ]
+}

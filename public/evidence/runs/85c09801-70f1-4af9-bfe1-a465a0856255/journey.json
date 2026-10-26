@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "id": "datepicker-invalid-text-tab-away",
+  "title": "Tab away after typing an unavailable delivery date",
+  "goal": "Leaving the date field with Tab closes the calendar even when the typed date is outside the delivery window",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the delivery date field",
+      "action": {
+        "kind": "seek",
+        "selector": "#delivery-date",
+        "maxTabs": 24
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": ".datepicker",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Type a date outside the delivery window",
+      "action": {
+        "kind": "type",
+        "text": "2024-07-15",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Tab to the instructions",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#instructions"
+        },
+        {
+          "kind": "visible",
+          "selector": ".datepicker",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": ".datepicker",
+      "value": false
+    },
+    {
+      "kind": "focus",
+      "selector": "#instructions"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "focus",
+      "selector": "#instructions"
+    }
+  ],
+  "forbidden": []
+}

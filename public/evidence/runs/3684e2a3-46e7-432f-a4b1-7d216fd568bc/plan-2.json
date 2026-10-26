@@ -1,0 +1,25 @@
+{
+  "root_cause": "The Pikaday date picker's keyboard handler (_onKeyChange) does not handle the Tab key (keyCode 9). When a user types a date in the bound input field and presses Tab, the picker remains open and its focusable elements (day buttons, navigation buttons) intercept the Tab navigation, preventing focus from moving to the next form field.",
+  "repair_strategy": "Add a case for keyCode 9 (Tab) in the _onKeyChange switch statement. When Tab is pressed while the bound input field is focused (e.target === opts.field), hide the picker to release its focus trap and allow the browser's default Tab behavior to move focus to the next form field.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 9: // Tab\n                        if (e.target === opts.field) {\n                            self.hide();\n                        }\n                        break;\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now tab from the date input field to the next form field (guests) after typing a date, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Minimal - only affects Tab key behavior when the picker is visible and the input field is focused",
+    "Arrow key navigation within the picker remains unchanged",
+    "Date selection with Enter/Space still works",
+    "Picker closes on Tab from field as intended"
+  ],
+  "verification_requirements": [
+    "Tab from checkin field moves focus to guests field",
+    "Arrow keys still navigate dates when picker is open",
+    "Date selection with Enter/Space still works",
+    "Picker closes on Tab from field"
+  ]
+}

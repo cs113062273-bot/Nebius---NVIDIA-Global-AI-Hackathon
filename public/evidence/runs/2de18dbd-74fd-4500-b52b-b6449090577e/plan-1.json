@@ -1,0 +1,22 @@
+{
+  "root_cause": "Pikaday attaches a global keydown listener that handles arrow keys whenever the picker is visible, regardless of which element has focus. This prevents the default caret movement in other inputs when the calendar is open.",
+  "repair_strategy": "Modify the _onKeyChange handler to only process arrow key events when the picker is visible AND the associated input field is the active element, ensuring that keyboard shortcuts only affect the date picker when its field is focused.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "662123ec9f429dee9cffaacfcf89b05ed9c3c30a78d33ecfd113e6778349cc77",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible() && opts.field && opts.field === document.activeElement) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowLeft and ArrowRight keys will now move the caret in text inputs other than the date field when the calendar is visible, allowing users to correct typos without the picker interfering.",
+  "functional_risks": [
+    "If a user expects to navigate the calendar via arrow keys while focus is elsewhere (e.g., on a button), that navigation will no longer work. However, the intended use case is calendar navigation only when the associated input is focused, so risk is low."
+  ],
+  "verification_requirements": [
+    "Verify that pressing ArrowLeft in the notes field after typing 'Gate4' results in the value 'Gate 4'.",
+    "Verify that when the delivery-date input is focused, ArrowLeft/Right/Up/Down still change the selected date in the calendar.",
+    "Verify that Enter and Esc still close the picker when the delivery-date input is focused.",
+    "Verify that typing directly into the delivery-date input still works and updates the field."
+  ]
+}

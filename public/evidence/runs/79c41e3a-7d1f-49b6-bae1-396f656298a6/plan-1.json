@@ -1,0 +1,23 @@
+{
+  "root_cause": "Arrow key navigation updates aria-selected and activates the tab panel but does not move focus to the newly selected tab, causing focus to be lost after the previous tab is blurred.",
+  "repair_strategy": "Modify the Tab class's _activate method to focus the tab element after setting aria-selected=true, but only for elements with role='tab', ensuring focus follows selection as required by ARIA tablist patterns.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "69ca6e1d090610fe209a5b54a151e20b738214aabf1464807c85c17c0e29848c",
+      "before": "        element.removeAttribute('tabindex')\n        element.setAttribute('aria-selected', true)\n        this._toggleDropDown(element, true)\n        EventHandler.trigger(element, EVENT_SHOWN, {\n          relatedTarget: relatedElem\n        })",
+      "after": "        element.removeAttribute('tabindex')\n        element.setAttribute('aria-selected', true)\n        element.focus()\n        this._toggleDropDown(element, true)\n        EventHandler.trigger(element, EVENT_SHOWN, {\n          relatedTarget: relatedElem\n        })"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing ArrowRight or ArrowLeft will move focus to the next or previous tab while updating its aria-selected state, providing keyboard operability and conforming to the ARIA Authoring Practices Guide for tablists.",
+  "functional_risks": [
+    "Calling focus() on an already focused element is harmless but may fire redundant focus/blur events.",
+    "If a custom implementation relies on the tab receiving focus only after a user click, this change could alter timing of focus-related side effects."
+  ],
+  "verification_requirements": [
+    "After ArrowRight press from the Account tab, focus is on the Notifications tab and its aria-selected is true.",
+    "After ArrowLeft press from the Notifications tab, focus returns to the Account tab and its aria-selected is true.",
+    "Tab panels still show/hide correctly when tabs are activated via arrow keys or mouse clicks.",
+    "Initial tab receives focus on page load if it is already active and focusable."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "root_cause": "The Radios component only listens for 'click' events to update conditional visibility. Keyboard arrow navigation changes the checked radio via 'change' events, which are not handled, so conditional-reminder-2 stays visible when moving from Text message to the opt-out answer.",
+  "repair_strategy": "Add a 'change' event listener in Radios.init() that calls the existing handleClick method, which loops through all radio inputs and updates conditional visibility based on their checked state, ensuring keyboard selection works like mouse clicks.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.addEventListener('change', this.handleClick.bind(this))\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users arrowing between radio options will now correctly show/hide conditional fields (email address, mobile number) per WCAG 2.1.1 (Keyboard) and 4.1.2 (Name, Role, Value), matching the behavior for mouse users.",
+  "functional_risks": [
+    "Minimal: only adds a change listener; no existing behavior altered for click interactions.",
+    "The change handler reuses handleClick which only acts on radio inputs with aria-controls, avoiding side effects on other form controls."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: seek #reminder, ArrowDown to Text message, ArrowDown to opt-out; verify #conditional-reminder-2 becomes hidden.",
+    "Verify mouse clicks still toggle conditionals correctly.",
+    "Verify form data for reminder updates to 'none' on opt-out selection."
+  ]
+}

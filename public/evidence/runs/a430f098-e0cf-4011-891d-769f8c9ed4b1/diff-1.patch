@@ -1,0 +1,19 @@
+diff --git a/index.js b/index.js
+index 0a2a74a..ccca789 100644
+--- a/index.js
++++ b/index.js
+@@ -430,7 +430,13 @@ const createFocusTrap = function (elements, userOptions) {
+     } else {
+       // escaped! pull it back in to where it just left
+       e.stopImmediatePropagation();
+-      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
++      // If the mostRecentlyFocusedNode is still in one of the containers, try to focus it.
++      // Otherwise, use the initial focus node.
++      if (state.mostRecentlyFocusedNode && state.containers.some(container => container.contains(state.mostRecentlyFocusedNode))) {
++        tryFocus(state.mostRecentlyFocusedNode);
++      } else {
++        tryFocus(getInitialFocusNode());
++      }
+     }
+   };
+ 

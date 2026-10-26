@@ -1,0 +1,19 @@
+diff --git a/js/src/dialog.ts b/js/src/dialog.ts
+index 7bfd164..342166d 100644
+--- a/js/src/dialog.ts
++++ b/js/src/dialog.ts
+@@ -60,6 +60,14 @@ class Dialog extends DialogBase {
+     super(element, config)
+   }
+ 
++  protected override _getConfig(config?: Partial<DialogConfig> | null): DialogConfig {
++    const merged = super._getConfig(config) as DialogConfig
++    if (config?.keyboard === false) {
++      merged.keyboard = false
++    }
++    return merged
++  }
++
+   // Getters
+   static override get Default(): DialogConfig {
+     return Default

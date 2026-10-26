@@ -1,0 +1,25 @@
+{
+  "root_cause": "The modal's focus trap (_enforceFocus) unconditionally returns focus to the modal element whenever focus leaves the modal, preventing natural tab wrapping between the first and last focusable items inside the modal.",
+  "repair_strategy": "Modify _enforceFocus to detect when focus leaves the modal due to Tab or Shift+Tab (using event.relatedTarget). If the related target is inside the modal, determine whether the user is attempting to exit before the first focusable element or after the last, and redirect focus to the opposite end (last or first) instead of refocusing the modal.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  _enforceFocus() {\n    EventHandler.off(document, EVENT_FOCUSIN) // guard against infinite focus loop\n    EventHandler.on(document, EVENT_FOCUSIN, event => {\n      if (document !== event.target &&\n          this._element !== event.target &&\n          !this._element.contains(event.target)) {\n        this._element.focus()\n      }\n    })\n  }",
+      "after": "  _enforceFocus() {\n    EventHandler.off(document, EVENT_FOCUSIN) // guard against infinite focus loop\n    EventHandler.on(document, EVENT_FOCUSIN, event => {\n      if (document !== event.target &&\n          this._element !== event.target &&\n          !this._element.contains(event.target)) {\n        // If focus left the modal, redirect to opposite end based on relatedTarget\n        const relatedTarget = event.relatedTarget\n        const isRelatedTargetInside = relatedTarget && this._element.contains(relatedTarget)\n        if (isRelatedTargetInside) {\n          const focusable = Array.from(this._element.querySelectorAll(\n            'button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])'\n          ))\n          .filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-disabled') !== 'true')\n          if (focusable.length) {\n            if (relatedTarget === focusable[0]) {\n              focusable[focusable.length - 1].focus()\n              return\n            }\n            if (relatedTarget === focusable[focusable.length - 1]) {\n              focusable[0].focus()\n              return\n            }\n          }\n        }\n        this._element.focus()\n      }\n    })\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Shift+Tab pressed while focus is on the first focusable element (the Close button) will move focus to the last focusable element (the Delete button), satisfying the requirement that backward navigation wraps within the modal.",
+  "functional_risks": [
+    "If the modal contains no focusable elements, the fallback to focusing the modal remains unchanged.",
+    "Custom implementations that rely on the previous behavior of always refocusing the modal may be affected.",
+    "Performance impact is minimal as the query runs only on focusin events when focus leaves the modal."
+  ],
+  "verification_requirements": [
+    "Tab navigation moves focus forward through all focusable elements inside the modal and wraps from the last to the first.",
+    "Shift+Tab navigation moves focus backward and wraps from the first to the last.",
+    "Clicking outside the modal or pressing Escape continues to dismiss the modal as before.",
+    "Initial focus when the modal is shown (if config.focus is true) remains on the modal element.",
+    "The modal continues to trap focus inside when focus attempts to leave via mouse or programmatic means."
+  ]
+}

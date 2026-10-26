@@ -1,17 +1,58 @@
 diff --git a/js/src/drawer.ts b/js/src/drawer.ts
-index d91307e..a552905 100644
+index d91307e..6ab67af 100644
 --- a/js/src/drawer.ts
 +++ b/js/src/drawer.ts
-@@ -64,6 +64,12 @@ class Drawer extends DialogBase {
-     this._swipeHelper = null
-     this._resizeObserver = null
-     this._resizeFrame = null
-+    EventHandler.on(this._element, this.constructor.eventName('shown'), () => {
-+      const focusable = this._element.querySelector('[autofocus], button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
-+      if (focusable) {
-+        focusable.focus();
-+      }
-+    });
-     this._initResizeObserver()
+@@ -10,6 +10,7 @@ import EventHandler from './dom/event-handler.js'
+ import SelectorEngine from './dom/selector-engine.js'
+ import Swipe, { type SwipeConfig } from './util/swipe.js'
+ import { enableDismissTrigger } from './util/component-functions.js'
++import Data from './dom/data.js'
+ import {
+   isDisabled,
+   isRTL,
+@@ -97,6 +98,16 @@ class Drawer extends DialogBase {
+     super.dispose()
    }
  
++  // Ensure focus moves to the first focusable element when shown
++  override async show(relatedTarget?: HTMLElement): Promise<void> {
++    await super.show(relatedTarget)
++    const focusable = SelectorEngine.findOne(
++      '[autofocus], button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
++      this._element
++    ) ?? this._element
++    focusable.focus()
++  }
++
+   // Protected — hook overrides
+ 
+   protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {
+@@ -162,22 +173,22 @@ class Drawer extends DialogBase {
+     const element = this._element
+ 
+     if (element.classList.contains('drawer-bottom')) {
+-      swipeConfig.downCallback = () => this.hide()
++      swipeConfig.downCallback = () => { this.hide() }
+     } else if (element.classList.contains('drawer-top')) {
+-      swipeConfig.upCallback = () => this.hide()
++      swipeConfig.upCallback = () => { this.hide() }
+     } else if (element.classList.contains('drawer-end')) {
+       // RTL: swipe left to dismiss end drawer
+       if (isRTL()) {
+-        swipeConfig.leftCallback = () => this.hide()
++        swipeConfig.leftCallback = () => { this.hide() }
+       } else {
+-        swipeConfig.rightCallback = () => this.hide()
++        swipeConfig.rightCallback = () => { this.hide() }
+       }
+     } else if (isRTL()) {
+       // drawer-start (default): swipe right to dismiss in RTL
+-      swipeConfig.rightCallback = () => this.hide()
++      swipeConfig.rightCallback = () => { this.hide() }
+     } else {
+       // drawer-start (default): swipe left to dismiss in LTR
+-      swipeConfig.leftCallback = () => this.hide()
++      swipeConfig.leftCallback = () => { this.hide() }
+     }
+ 
+     this._swipeHelper = new Swipe(element, swipeConfig)

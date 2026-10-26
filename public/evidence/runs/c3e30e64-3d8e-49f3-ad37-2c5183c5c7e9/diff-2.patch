@@ -1,0 +1,28 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..4eb43e9 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -111,6 +111,23 @@ class Drawer extends DialogBase {
+     this._initSwipe()
+   }
+ 
++  protected override async _show(relatedTarget?: HTMLElement): Promise<void> {
++    await super._show(relatedTarget)
++    // After the drawer is shown, move focus to the autofocus element if present,
++    // otherwise to the close button, or the drawer itself as fallback.
++    const autofocus = this._element.querySelector('[autofocus]') as HTMLElement | null
++    if (autofocus) {
++      autofocus.focus({ preventScroll: true })
++    } else {
++      const closeButton = this._element.querySelector('[data-bs-dismiss="drawer"]') as HTMLElement | null
++      if (closeButton) {
++        closeButton.focus({ preventScroll: true })
++      } else {
++        this._element.focus({ preventScroll: true })
++      }
++    }
++  }
++
+   protected override _getInstantClassName(): string {
+     return 'drawer-instant'
+   }

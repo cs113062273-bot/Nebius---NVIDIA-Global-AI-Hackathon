@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Escape key handler in the list controller clears the input value, causing the user's typed city to be lost when dismissing suggestions.",
+  "repair_strategy": "Modify the navigate function in src/controllers/listController.js to retain the input value when Escape is pressed, only closing the suggestion list and emitting the clear event (if any).",
+  "edits": [
+    {
+      "path": "src/controllers/listController.js",
+      "sha256": "0242c0d6b3ddd74aa1f7f193124688b1e6bc61635a4ff086e56c9200d8032f04",
+      "before": "    // Esc\n    case 27:\n      // Clear \"input\" value\n      ctx.input.value = \"\";\n\n      /**\n       * @emit {clear} event on input clear\n       **/\n      eventEmitter('clear', ctx);\n\n      close(ctx);\n      break;",
+      "after": "    // Esc\n    case 27:\n      /**\n       * @emit {clear} event on input clear\n       **/\n      eventEmitter('clear', ctx);\n\n      close(ctx);\n      break;"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close the suggestion listbox (setting aria-expanded to false and hiding the list), return focus to the combobox input, and leave the input value unchanged, preserving the user's typed city while maintaining correct combobox state.",
+  "functional_risks": [
+    "Consumers that rely on the 'clear' event being accompanied by an actual value reset may observe a mismatch, though the event is still emitted.",
+    "If the intent of Escape was to cancel the current input, the value will persist; however the requirement specifies Escape should retain the typed value."
+  ],
+  "verification_requirements": [
+    "After typing text and pressing Escape, the suggestion list must be hidden (no visible #city-list).",
+    "Focus must return to the #city input.",
+    "The input's value must remain exactly what the user typed.",
+    "ArrowDown and Enter selection of a suggestion must continue to work.",
+    "Tab key behavior (with tabSelect) must remain unchanged."
+  ]
+}

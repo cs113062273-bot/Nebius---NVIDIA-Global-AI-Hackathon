@@ -1,0 +1,39 @@
+{
+  "completedAt": "2026-10-26T15:10:32.489Z",
+  "policy": "auto",
+  "modelRun": "8f2355d0-7432-4a1f-b5c7-73e01fe74b9f",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "79a4d5608dd34a687092d5d5b848e507742623dff9821ab58a6b7cd66f6932c4",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-88c3a6e02c517db56a4aca4029a2656f",
+      "usage": {
+        "completion_tokens": 4148,
+        "prompt_tokens": 10760,
+        "total_tokens": 14908,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3372,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10760
+      },
+      "latencyMs": 21248,
+      "reservedCreditUsd": 0.040309199999999996
+    }
+  ]
+}

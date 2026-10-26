@@ -1,0 +1,31 @@
+{
+  "root_cause": "The datepicker component was passing `inputMode: !this._isInline` to Vanilla Calendar Pro, causing non-inline calendars to enable input mode which traps the Tab key inside the calendar widget, preventing focus from moving to the next form field. Additionally, the click handler for data-api toggles explicitly skipped input elements, relying solely on focusin to show the calendar, which may not fire in all test environments.",
+  "repair_strategy": "Set the `inputMode` option to `false` for all calendar instances to allow the Tab key to escape the calendar and move focus to the next focusable element in the form. Additionally, update the click handler to explicitly show the calendar when an input element is clicked, ensuring the calendar appears on click in all environments while preserving toggle behavior for non-input elements.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      extensions: [months],\n      inputMode: !this._isInline,\n      positionToInput: this._config.placement,",
+      "after": "      extensions: [months],\n      inputMode: false,\n      positionToInput: this._config.placement,"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {\n  // Only handle if not an input (inputs use focus)\n  // Skip inline datepickers (they're always visible)\n  if (this.tagName === 'INPUT' || this.dataset.bsInline === 'true') {\n    return\n  }\n\n  event.preventDefault()\n  Datepicker.getOrCreateInstance(this).toggle()\n})",
+      "after": "EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {\n  // Skip inline datepickers (they're always visible)\n  if (this.dataset.bsInline === 'true') {\n    return\n  }\n\n  const instance = Datepicker.getOrCreateInstance(this)\n  if (this.tagName === 'INPUT') {\n    // For inputs, click should show the calendar (focusin also handles this,\n    // but click may not trigger focus in all environments)\n    event.preventDefault()\n    instance.show()\n  } else {\n    event.preventDefault()\n    instance.toggle()\n  }\n})"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab when the datepicker calendar is open will move focus to the next focusable element in the form (the passengers field) instead of being trapped in the calendar. Clicking the departure date input will reliably show the calendar.",
+  "functional_risks": [
+    "Other keyboard navigation within the calendar (arrow keys, Enter, Escape) may be altered if they depended on inputMode",
+    "Inline calendars may lose intended keyboard behavior if they relied on inputMode being true (but they already had inputMode: false)",
+    "The click handler change ensures inputs show the calendar on click, which matches user expectations"
+  ],
+  "verification_requirements": [
+    "Verify Tab moves focus from departure date to passengers field when calendar is open",
+    "Verify arrow keys, Enter, and Escape still function correctly in the calendar",
+    "Verify clicking the departure date input shows the calendar",
+    "Verify focusin on the departure date input still shows the calendar",
+    "Verify non-input toggle elements still toggle the calendar"
+  ]
+}

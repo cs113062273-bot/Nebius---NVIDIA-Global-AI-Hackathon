@@ -1,0 +1,24 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..b80a208 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -127,6 +127,19 @@ class Drawer extends DialogBase {
+     return this._isAnimated()
+   }
+ 
++  // Ensure keyboard focus lands on the autofocus element after the drawer
++  // is fully shown and in the top layer.
++  protected override async _show(relatedTarget?: HTMLElement): Promise<void> {
++    await super._show(relatedTarget)
++
++    const autofocus = this._element.querySelector('[autofocus]')
++    if (autofocus) {
++      (autofocus as HTMLElement).focus()
++    } else if (this._element !== document.activeElement) {
++      this._element.focus()
++    }
++  }
++
+   // Private
+ 
+   protected _initResizeObserver(): void {

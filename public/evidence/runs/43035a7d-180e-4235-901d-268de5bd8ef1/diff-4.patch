@@ -1,0 +1,16 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index 44431aa..40a3da7 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -199,6 +199,11 @@ export default class Datepicker {
+       // set up event listeners in other modes
+       const onMousedownDocument = onClickOutside.bind(null, this);
+       const listeners = [
++        [inputField, 'keydown', (event) => {
++          if (event.key === 'Tab') {
++            this.picker.hide();
++          }
++        }, {capture: true}],
+         [inputField, 'keydown', onKeydown.bind(null, this)],
+         [inputField, 'focus', onFocus.bind(null, this)],
+         [inputField, 'mousedown', onMousedown.bind(null, this)],

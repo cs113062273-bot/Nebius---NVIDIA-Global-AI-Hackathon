@@ -1,0 +1,41 @@
+{
+  "root_cause": "Vanilla Calendar Pro (VCP) sets tabindex=-1 on the trigger input when the datepicker opens, removing it from the tab order, and also attaches a keydown listener that calls preventDefault() on the Tab key. This traps focus on the departure field, preventing natural keyboard navigation to the passengers field.",
+  "repair_strategy": "Add a capture-phase keydown listener on the trigger input (registered before VCP's listeners) that calls stopImmediatePropagation() for the Tab key when the datepicker is shown. This allows the browser's default Tab navigation to proceed. Also restore tabindex=0 in the onShow callback to keep the input in the tab order. The existing focusin dismiss handler (_onOutside) will close the datepicker when focus moves to the next field.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onInputKeydown: (event: KeyboardEvent) => void"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  this._initCalendar()\n\n  // Watch for theme changes on ancestor elements (for live theme switching)\n  this._setupThemeObserver()",
+      "after": "  this._initCalendar()\n\n  // Allow Tab key to move focus out of the input when the datepicker is shown\n  this._onInputKeydown = (event: KeyboardEvent) => {\n    if (this._isShown && event.key === 'Tab') {\n      event.stopImmediatePropagation()\n    }\n  }\n  if (this._isInput) {\n    this._element.addEventListener('keydown', this._onInputKeydown, true)\n  }\n\n  // Watch for theme changes on ancestor elements (for live theme switching)\n  this._setupThemeObserver()"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      onShow: () => {\n        if (!this._calendar) {\n          return\n        }\n\n        this._isShown = true\n        this._syncThemeAttribute(this._calendar.context.mainElement)\n      },",
+      "after": "      onShow: () => {\n        if (!this._calendar) {\n          return\n        }\n\n        this._isShown = true\n        this._syncThemeAttribute(this._calendar.context.mainElement)\n        if (this._isInput) {\n          this._element.tabIndex = 0\n        }\n      },"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {",
+      "after": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._onInputKeydown) {\n      this._element.removeEventListener('keydown', this._onInputKeydown, true)\n    }\n\n    if (this._calendar) {"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab from the departure date input moves focus to the passengers input, restoring natural form navigation for keyboard users. The datepicker closes automatically via the existing focusin handler when focus leaves.",
+  "functional_risks": [
+    "Capture-phase listener runs before VCP's bubble-phase listeners, but if VCP also uses capture phase, order depends on registration. Our listener is added after _initCalendar, so VCP's capture listeners (if any) would fire first. However, VCP typically uses bubble phase for keyboard trapping.",
+    "Restoring tabindex=0 in onShow assumes VCP sets tabindex=-1 before onShow fires. If VCP sets it after, a MutationObserver would be more robust but adds complexity."
+  ],
+  "verification_requirements": [
+    "Tab key press from the departure date input moves focus to the passengers input.",
+    "Escape key press still closes the datepicker and keeps focus on the departure date input (regression guard).",
+    "The datepicker still opens when the departure date input receives focus.",
+    "Clicking outside the datepicker still closes it."
+  ]
+}

@@ -24,5 +24,5 @@ try{
   document.querySelector('#proof-open').textContent=fixed.length?`${fixed.length}/${strictest.length}`:String(strictest.length);
   // A browser pass is not the last word: count only patches the review called sound.
   const sound=fixed.filter(c=>c.review?.run===c.recorded.run&&/^Sound/.test(c.review.verdict)).length;
-  document.querySelector('#proof-open-text').textContent=fixed.length?`keyboard and form bugs still unfixed upstream, repaired and browser-verified on each library's current code and its strictest frozen task; ${sound} of those patches judged sound on review`:`keyboard and form bugs still unfixed upstream, reproduced on each library's current code`;
+  document.querySelector('#proof-open-text').textContent=fixed.length?`keyboard and form bugs still unfixed upstream, repaired and browser-verified on the first run of each bug's strictest frozen task (${strictest.filter(c=>c.frozenRuns?.some(x=>x.verdict==='VERIFIED_PASS')).length} in at least one of three runs); ${sound} of those patches judged sound on review`:`keyboard and form bugs still unfixed upstream, reproduced on each library's current code`;
 }catch{/* Static copy remains. */}

@@ -1,0 +1,25 @@
+{
+  "root_cause": "The _keydown method in tab.js uses getNextActiveElement which does not skip disabled tabs, causing arrow navigation to move focus to disabled tabs instead of the next enabled tab.",
+  "repair_strategy": "Replace _keydown logic to iterate over tab children in the arrow direction, skipping disabled elements using the isDisabled utility, while preserving wrapping behavior.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "7ad4e9f0424d0d4b95bcf399a1639e44cfec200c874382dc7a8b34016a74228f",
+      "before": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const nextActiveElement = getNextActiveElement(this._getChildren(), event.target, isNext, true)\n    Tab.getOrCreateInstance(nextActiveElement).show()\n  }",
+      "after": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const children = this._getChildren()\n    let activeIndex = children.indexOf(event.target)\n    if (activeIndex === -1) {\n      activeIndex = 0\n    }\n    let len = children.length\n    let i = activeIndex\n    do {\n      i = isNext ? (i + 1) % len : (i - 1 + len) % len\n      if (!isDisabled(children[i])) {\n        break\n      }\n    } while (i !== activeIndex)\n    const nextActiveElement = children[i]\n    Tab.getOrCreateInstance(nextActiveElement).show()\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight will move focus from the Account tab to the Billing tab, skipping the disabled Notifications tab, updating aria-selected and visibility accordingly.",
+  "functional_risks": [
+    "If all tabs are disabled, the script may attempt to show a disabled tab (unlikely in practice).",
+    "Relies on isDisabled detecting disabled state via class or attribute; custom disabled styling not captured could be missed.",
+    "Wrapping behavior preserved but now skips disabled tabs during wrap."
+  ],
+  "verification_requirements": [
+    "After ArrowRight from Account tab, focus is on Billing tab, aria-selected=\"true\" on Billing, tabpanel visible.",
+    "After ArrowLeft from Billing tab, focus returns to Account tab.",
+    "ArrowRight from Billing tab wraps to Account tab (skipping disabled).",
+    "ArrowLeft from Account tab wraps to Billing tab (skipping disabled).",
+    "Disabled Notification tab never receives focus or aria-selected=\"true\" during navigation."
+  ]
+}

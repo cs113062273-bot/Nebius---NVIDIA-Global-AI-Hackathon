@@ -1,0 +1,25 @@
+{
+  "root_cause": "The focus trap's getFocusableNodes includes hidden elements (e.g., display:none buttons) in the focusable nodes array. This causes the Tab key navigation to attempt focusing a hidden button, which fails and leaves focus on the previous element, breaking the expected wrap to the close button.",
+  "repair_strategy": "Modify getFocusableNodes to filter out elements that are not visibly rendered (display:none, visibility:hidden), so the focusable nodes array only contains elements that can actually receive focus. This ensures the existing focus trap logic (which wraps at the first/last visible element) works correctly.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes)\n    }",
+      "after": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      const allNodes = Array(...nodes)\n      return allNodes.filter(node => {\n        const style = window.getComputedStyle(node)\n        return style.display !== 'none' && style.visibility !== 'hidden'\n      })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users tabbing through the upload dialog will cycle among the visible controls (file name input, Upload button, Close button) without escaping to external content, satisfying WCAG 2.1.1 and 2.4.3.",
+  "functional_risks": [
+    "Filtering by computed style may have a small performance cost when opening modals or on each Tab keydown, but the modal is small.",
+    "If an element is hidden via other means (e.g., opacity:0, clip-path) it may still be included; however, such elements are typically not focusable by the browser anyway."
+  ],
+  "verification_requirements": [
+    "After opening the modal, focus starts on the filename input.",
+    "Pressing Tab moves focus to the Upload button.",
+    "Another Tab moves focus to the close button.",
+    "Another Tab wraps focus back to the filename input.",
+    "Shift+Tab reverses the order correctly.",
+    "Escape key still closes the modal and returns focus to the trigger button."
+  ]
+}

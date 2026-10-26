@@ -1,0 +1,23 @@
+{
+  "root_cause": "When the #more button is removed from the DOM while focused, the focus trap retains a reference to the removed node in state.mostRecentlyFocusedNode. When focus leaves the trap due to the removal, the checkFocusIn handler attempts to restore focus to the removed node, which is no longer in the document. The tryFocus function does not check if the node is still in the document, so it attempts to focus the removed node (which fails) and does not fall back to the initial focus node. As a result, focus remains outside the trap (on the body) and the dialog loses focus within.",
+  "repair_strategy": "Modify the tryFocus function in the focus trap to check if the node is still contained in the document before attempting to focus it. If the node is not in the document, fall back to focusing the initial focus node (the first tabbable node in the trap).",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "    const tryFocus = function (node) {\n    if (node === false) {\n      return;\n    }\n\n    if (node === doc.activeElement) {\n      return;\n    }\n\n    if (!node || !node.focus) {\n      tryFocus(getInitialFocusNode());\n      return;\n    }\n\n    node.focus({ preventScroll: !!config.preventScroll });\n    state.mostRecentlyFocusedNode = node;\n\n    if (isSelectableInput(node)) {\n      node.select();\n    }\n  };",
+      "after": "    const tryFocus = function (node) {\n    if (node === false) {\n      return;\n    }\n\n    if (node === doc.activeElement) {\n      return;\n    }\n\n    if (!node || !node.focus || !doc.contains(node)) {\n      tryFocus(getInitialFocusNode());\n      return;\n    }\n\n    node.focus({ preventScroll: !!config.preventScroll });\n    state.mostRecentlyFocusedNode = node;\n\n    if (isSelectableInput(node)) {\n      node.select();\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "After clicking the #more button, focus will remain trapped inside the dialog, specifically on the #close button (the first tabbable node), ensuring that keyboard users can continue to navigate the dialog without accidentally leaving it.",
+  "functional_risks": [
+    "If the initial focus node is also removed from the document, the fallback might fail. However, the trap already requires at least one tabbable node, and we only remove the #more button, which is not the initial focus node (the initial focus node is #close).",
+    "The change might affect other scenarios where a node is temporarily removed and then re-added, but the trap updates its tabbable nodes on unpause and other events, so it should be safe."
+  ],
+  "verification_requirements": [
+    "After clicking the #more button, pressing Tab should move focus to the #close button (not to the body).",
+    "The dialog should retain focus within after the #more button is removed.",
+    "The Escape key should still close the dialog and return focus to the #open button.",
+    "The initial focus when opening the dialog should remain on the #close button."
+  ]
+}

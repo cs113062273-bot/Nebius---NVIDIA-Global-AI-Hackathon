@@ -1,0 +1,24 @@
+{
+  "root_cause": "The radios component only updates conditional visibility on mouse click events. Keyboard navigation via ArrowDown changes the checked state of radio buttons but does not trigger the update, causing conditional fields to remain visible when they should be hidden.",
+  "repair_strategy": "Add a 'change' event listener to the radios module that invokes the same attribute update logic as the click handler. This ensures that any change in radio selection—whether via mouse, keyboard, or assistive technology—updates aria-expanded and toggles the visibility of associated conditional content.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.addEventListener('change', this.handleClick.bind(this))\n"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate between radio options using arrow keys and see conditional fields show/hide appropriately, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Both click and change events may fire for the same interaction, but setAttributes is idempotent, so no adverse effect.",
+    "The handler only processes inputs with type radio and an aria-controls attribute, preventing unintended side effects on other form fields."
+  ],
+  "verification_requirements": [
+    "Verify that pressing ArrowDown from the Email radio to the Text message radio shows the mobile number field.",
+    "Verify that pressing ArrowDown from the Text message radio to the Opt‑out radio hides the mobile number field.",
+    "Verify that clicking a radio with mouse still updates the conditional content correctly.",
+    "Verify that pressing Space on a focused radio updates the conditional content.",
+    "Ensure no JavaScript errors are thrown in the console during these interactions."
+  ]
+}

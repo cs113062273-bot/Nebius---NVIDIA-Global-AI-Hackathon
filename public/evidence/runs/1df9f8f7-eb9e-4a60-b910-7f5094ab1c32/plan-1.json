@@ -1,0 +1,25 @@
+{
+  "root_cause": "The modal's focus trap only returns focus after a focusin event, which fails to prevent focus from leaving when shift+tabbing from the first focusable element, allowing focus to escape to the opener button.",
+  "repair_strategy": "Add a keydown listener on the modal element to intercept Tab and Shift+Tab keys and wrap focus within the modal's focusable elements, preventing default when at the boundaries.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  _setResizeEvent() {\n    if (this._isShown) {\n      EventHandler.on(window, EVENT_RESIZE, () => this._adjustDialog())\n    } else {\n      EventHandler.off(window, EVENT_RESIZE)\n    }\n  }",
+      "after": "  _setResizeEvent() {\n    if (this._isShown) {\n      EventHandler.on(window, EVENT_RESIZE, () => this._adjustDialog())\n    } else {\n      EventHandler.off(window, EVENT_RESIZE)\n    }\n  }\n\n  _initTabTrap() {\n    EventHandler.on(this._element, 'keydown.tab', event => this._handleTab(event))\n  }\n\n  _removeTabTrap() {\n    EventHandler.off(this._element, 'keydown.tab')\n  }\n\n  _handleTab(event) {\n    if (event.key !== 'Tab') return\n    const focusable = SelectorEngine.find(\n      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex]:not([tabindex=\"-1\"]), *[contenteditable]',\n      this._element\n    )\n    const filtered = focusable.filter(el => !el.hasAttribute('disabled') && el.getAttribute('tabindex') !== '-1')\n    if (filtered.length === 0) {\n      event.preventDefault()\n      return\n    }\n    const first = filtered[0]\n    const last = filtered[filtered.length - 1]\n    if (event.shiftKey) {\n      if (document.activeElement === first) {\n        event.preventDefault()\n        last.focus()\n      }\n    } else {\n      if (document.activeElement === last) {\n        event.preventDefault()\n        first.focus()\n      }\n    }\n  }\n"
+    }
+  ],
+  "expected_accessibility_effect": "Shift+Tab from the first focusable element (close button) will now move focus to the last focusable element (Delete button) within the modal, meeting the requirement.",
+  "functional_risks": [
+    "May interfere with custom keyboard shortcuts that rely on Tab or Shift+Tab inside the modal.",
+    "If the modal contains no focusable elements, the listener will prevent tabbing entirely (though this is unlikely).",
+    "Could conflict with assistive technologies that expect default tabbing behavior to leave the modal via the opener (though escape remains available)."
+  ],
+  "verification_requirements": [
+    "After opening the modal, pressing Tab moves focus through close button, input field, cancel button, delete button and wraps back to close button.",
+    "Pressing Shift+Tab from the delete button moves focus to cancel button, input field, close button and wraps to delete button.",
+    "The Escape key continues to close the modal.",
+    "Clicking outside the modal or on the backdrop still returns focus to the modal when appropriate.",
+    "The modal's focus trap still works for mouse clicks and programmatic focus loss."
+  ]
+}

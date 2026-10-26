@@ -1,0 +1,24 @@
+{
+  "root_cause": "The datepicker's `_formatDate` method uses locale-aware formatting (`toLocaleDateString`) as the default for all elements, including `<input>` elements. This causes ISO format dates (YYYY-MM-DD) in input fields to be reformatted to locale-specific formats (e.g., MM/DD/YYYY for en-US) on initialization, breaking form submission expectations.",
+  "repair_strategy": "Modify `_formatDate` to use ISO format (YYYY-MM-DD) as the default for input elements, preserving form compatibility, while keeping locale-aware formatting for non-input display elements.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _formatDate(dateStr: string): string {\n    const date = this._parseDate(dateStr)\n    const locale = this._config.locale === 'default' ? undefined : this._config.locale\n    const { dateFormat } = this._config\n\n    // Custom function formatter\n    if (typeof dateFormat === 'function') {\n      return dateFormat(date, locale)\n    }\n\n    // Intl.DateTimeFormat options object\n    if (dateFormat && typeof dateFormat === 'object') {\n      return new Intl.DateTimeFormat(locale, dateFormat).format(date)\n    }\n\n    // Default: locale-aware formatting\n    return date.toLocaleDateString(locale)\n  }",
+      "after": "  protected _formatDate(dateStr: string): string {\n    const date = this._parseDate(dateStr)\n    const locale = this._config.locale === 'default' ? undefined : this._config.locale\n    const { dateFormat } = this._config\n\n    // Custom function formatter\n    if (typeof dateFormat === 'function') {\n      return dateFormat(date, locale)\n    }\n\n    // Intl.DateTimeFormat options object\n    if (dateFormat && typeof dateFormat === 'object') {\n      return new Intl.DateTimeFormat(locale, dateFormat).format(date)\n    }\n\n    // Default: for input elements, use ISO format (YYYY-MM-DD) to preserve form compatibility\n    if (this._isInput) {\n      const year = date.getFullYear()\n      const month = String(date.getMonth() + 1).padStart(2, '0')\n      const day = String(date.getDate()).padStart(2, '0')\n      return `${year}-${month}-${day}`\n    }\n\n    // Default: locale-aware formatting for non-input elements\n    return date.toLocaleDateString(locale)\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Preserves the expected date format in form inputs for screen reader users and keyboard navigators, ensuring the announced value matches the submitted value.",
+  "functional_risks": [
+    "Only changes default formatting for input elements without explicit dateFormat config",
+    "Non-input elements (buttons, inline calendars) retain locale formatting",
+    "Custom dateFormat functions/objects still work as before"
+  ],
+  "verification_requirements": [
+    "Tab through departure date field without picking a date, change passengers, save - verify departure remains 2026-10-22 in form submission",
+    "Verify return date (non-input with explicit dateFormat) still shows \"October 22, 2026\" format",
+    "Verify date picker still works correctly when picking a date",
+    "Verify multiple date selection modes still work"
+  ]
+}

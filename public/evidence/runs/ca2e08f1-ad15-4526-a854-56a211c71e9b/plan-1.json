@@ -1,0 +1,23 @@
+{
+  "root_cause": "Pikaday's global keydown listener prevents default for arrow keys regardless of focus, causing ArrowLeft to be blocked when typing in another input while the calendar is always visible.",
+  "repair_strategy": "Modify the _onKeyChange handler to only process arrow keys when the event target is inside the pikaday container or is the associated input field, preserving date picker keyboard navigation when appropriate.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "662123ec9f429dee9cffaacfcf89b05ed9c3c30a78d33ecfd113e6778349cc77",
+      "before": "    if (self.isVisible()) {",
+      "after": "    if (self.isVisible() && (self.el === e.target || self.el.contains(e.target) || e.target === opts.field)) {"
+    }
+  ],
+  "expected_accessibility_effect": "Arrow keys will now function normally in text fields while the calendar remains visible, allowing users to correct text without interference, while date picker keyboard navigation remains functional when focus is inside the picker or its associated field.",
+  "functional_risks": [
+    "Keyboard date navigation may no longer work when focus is outside the picker but the user intends to affect the picker (unlikely usage).",
+    "The contains method may not be supported in very old browsers; however the target environment is modern."
+  ],
+  "verification_requirements": [
+    "Verify that ArrowLeft moves the caret in the #notes field when the calendar is visible.",
+    "Verify that ArrowLeft/Right/Up/Down still change the selected date when focus is on the #delivery-date field or within the picker container.",
+    "Verify that Enter and Esc still blur the field as expected.",
+    "Verify that tab navigation between fields continues to work."
+  ]
+}

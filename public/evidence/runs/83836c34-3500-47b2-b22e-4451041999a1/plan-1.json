@@ -1,0 +1,30 @@
+{
+  "root_cause": "The datepicker updates the input value to a locale-formatted date string during initialization, causing the submitted departure date to change from ISO format (YYYY-MM-DD) to locale format (MM/DD/YYYY) when the user leaves the field without selecting a date.",
+  "repair_strategy": "Modify the datepicker to preserve the input value in ISO format for submission while showing formatted dates in a separate display element. Specifically: 1) Only update the display element (not input) during initialization if a display element exists. 2) In _syncSelectedDates, update the display element with formatted dates and the input value with ISO-format date strings (joined by commas for multiple dates).",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()",
+      "after": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate display with preselected dates\n    if (this._displayElement) {\n      this._updateDisplayWithSelectedDates()\n    }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput) {\n      this._element.value = formattedDate\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n  }",
+      "after": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    if (selectedDates.length === 0) {\n      if (this._displayElement) {\n        this._displayElement.textContent = ''\n      }\n      if (this._isInput) {\n        this._element.value = ''\n      }\n      if (this._boundInput) {\n        this._boundInput.value = ''\n      }\n      return\n    }\n\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n\n    if (this._isInput) {\n      this._element.value = selectedDates.join(',')\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Users will see dates formatted according to locale in the display element (if present) or datepicker popup, while the input value remains in ISO format for reliable form submission. Screen readers will announce the input value unchanged when navigating fields.",
+  "functional_risks": [
+    "If no display element is configured, users will see ISO-format dates in the input (less friendly but still functional).",
+    "The bound input (for inline mode) will now receive ISO-format strings instead of comma-separated selected dates as previously.",
+    "Multiple date selection will submit as comma-separated ISO strings (e.g., '2026-10-22,2026-10-25') which may require backend adjustment."
+  ],
+  "verification_requirements": [
+    "Departure date input value must remain '2026-10-22' after tabbing through without date selection.",
+    "Submitted form data must contain 'departure=2026-10-22' when passengers=2.",
+    "Return date display (if configured) should still show formatted dates correctly.",
+    "Date selection via mouse/keyboard must update both display element (formatted) and input value (ISO)."
+  ]
+}

@@ -1,0 +1,21 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index 44431aa..ce9d398 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -204,6 +204,16 @@ export default class Datepicker {
+         [inputField, 'mousedown', onMousedown.bind(null, this)],
+         [inputField, 'click', onClickInput.bind(null, this)],
+         [inputField, 'paste', onPaste.bind(null, this)],
++        [inputField, 'focusout', (e) => {
++          if (!this.editMode) {
++            return;
++          }
++          const relatedTarget = e.relatedTarget;
++          if (relatedTarget && this.picker.element.contains(relatedTarget)) {
++            return;
++          }
++          this.hide();
++        }],
+         [document, 'mousedown', onMousedownDocument],
+         [document, 'touchstart', onMousedownDocument],
+         [window, 'resize', picker.place.bind(picker)]

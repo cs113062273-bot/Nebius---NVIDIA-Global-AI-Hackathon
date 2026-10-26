@@ -1,0 +1,22 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..04f7b77 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -127,6 +127,17 @@ class Drawer extends DialogBase {
+     return this._isAnimated()
+   }
+ 
++  protected override async _show(relatedTarget?: HTMLElement): Promise<void> {
++    await super._show(relatedTarget)
++    // Move focus to the close button or first focusable element
++    const focusable = this._element.querySelector('[data-bs-dismiss="drawer"]') as HTMLElement | null
++    if (focusable) {
++      focusable.focus({ preventScroll: true })
++    } else {
++      this._element.focus({ preventScroll: true })
++    }
++  }
++
+   // Private
+ 
+   protected _initResizeObserver(): void {

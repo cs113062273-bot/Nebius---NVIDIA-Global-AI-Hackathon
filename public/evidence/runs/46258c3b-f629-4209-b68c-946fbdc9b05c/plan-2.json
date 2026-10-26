@@ -1,0 +1,23 @@
+{
+  "root_cause": "The modal's escape handler triggers on Escape key regardless of whether a dropdown menu is open and focused. Since the modal's handler runs on the modal element (ancestor) during the bubble phase before the dropdown's delegated handler on document, it closes the modal before the dropdown can handle the Escape key.",
+  "repair_strategy": "Modify the modal's escape handler to ignore Escape key events that originate from within an open dropdown menu (element with class 'dropdown-menu.show'). This allows the dropdown's own Escape handling to close only the dropdown and return focus to the toggle button.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "c26bc84f25135e4bb3f80c29baee85385a52128fa53b4ebf065268ba88ecf1ee",
+      "before": "  _setEscapeEvent() {\n    if (this._isShown) {\n      EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {\n        if (this._config.keyboard && event.key === ESCAPE_KEY) {\n          event.preventDefault()\n          this.hide()\n        } else if (!this._config.keyboard && event.key === ESCAPE_KEY) {\n          this._triggerBackdropTransition()\n        }\n      })\n    } else {\n      EventHandler.off(this._element, EVENT_KEYDOWN_DISMISS)\n    }\n  }",
+      "after": "  _setEscapeEvent() {\n    if (this._isShown) {\n      EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {\n        if (event.key === ESCAPE_KEY) {\n          // If the event target is inside an open dropdown menu, let the dropdown handle it\n          const dropdownMenu = event.target.closest('.dropdown-menu.show')\n          if (dropdownMenu) {\n            return\n          }\n        }\n        if (this._config.keyboard && event.key === ESCAPE_KEY) {\n          event.preventDefault()\n          this.hide()\n        } else if (!this._config.keyboard && event.key === ESCAPE_KEY) {\n          this._triggerBackdropTransition()\n        }\n      })\n    } else {\n      EventHandler.off(this._element, EVENT_KEYDOWN_DISMISS)\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape while focused on an item in the access dropdown menu will close the dropdown and return focus to the toggle button, without closing the share dialog. This satisfies WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by providing a keyboard-accessible way to dismiss the dropdown while keeping the modal open.",
+  "functional_risks": [
+    "If a dropdown menu is used outside a modal, the modal's handler is not present, so no risk.",
+    "If a modal contains a dropdown but the dropdown should not block modal escape (unlikely), this could prevent modal closure. However, the pattern of dropdown inside modal typically expects Escape to close the dropdown first."
+  ],
+  "verification_requirements": [
+    "Pressing Escape with focus on a dropdown menu item inside the modal closes the dropdown and returns focus to the toggle button, modal remains open.",
+    "Pressing Escape with focus elsewhere in the modal (e.g., on the Cancel button) closes the modal.",
+    "Dropdown keyboard navigation (ArrowUp, ArrowDown, Space, Enter) continues to work.",
+    "Modal escape handling works for other focus positions."
+  ]
+}

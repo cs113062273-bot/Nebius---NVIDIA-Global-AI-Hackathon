@@ -1,0 +1,40 @@
+[
+  {
+    "path": "index.html",
+    "score": 6,
+    "signals": [
+      "past-day",
+      "body",
+      "Past day",
+      "Past week",
+      "Past month",
+      "View these applications on a map"
+    ],
+    "sha256": "24e8e15758ccfc9f3b17cadc01108c076cd71ab50482434408642d3a3ece9dfb",
+    "editable": false
+  },
+  {
+    "path": "packages/govuk-frontend/src/govuk/components/tabs/tabs.js",
+    "score": 5.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "efec2dbc261636f1987a68ade80173d751d99359fe13cc0106084220e96e3698"
+  },
+  {
+    "path": "packages/govuk-frontend/src/govuk/common/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "675d8cf2c459d25b8c1e1860136ef96f53d9b7fa9f3aca62db3926190d793933"
+  },
+  {
+    "path": "packages/govuk-frontend/src/govuk/errors/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "a61eb5bd02d2ff80f9d87f72bb5bf2d5634c16b0b2f5f8054eee9f4280b2637a"
+  }
+]

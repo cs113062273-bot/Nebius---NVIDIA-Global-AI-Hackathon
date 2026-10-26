@@ -1,0 +1,22 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..61e6684 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -210,6 +210,17 @@ class DialogBase extends BaseComponent {
+       this._element.show()
+     }
+ 
++    // Move focus to the autofocus element or first focusable element
++    const autofocus = this._element.querySelector('[autofocus]')
++    if (autofocus) {
++      (autofocus as HTMLElement).focus()
++    } else {
++      // fallback: focus the dialog itself if it's focusable
++      if (this._element !== document.activeElement) {
++        this._element.focus()
++      }
++    }
++
+     if (preventBodyScroll) {
+       // Lock scroll on the root element (not <body>) so it lands on the same
+       // element that carries `scrollbar-gutter: stable`. Co-locating them keeps

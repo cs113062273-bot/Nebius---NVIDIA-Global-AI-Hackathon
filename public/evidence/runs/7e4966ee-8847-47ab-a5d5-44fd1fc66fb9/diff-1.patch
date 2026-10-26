@@ -1,0 +1,39 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..8c08b11 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,6 +118,7 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onOutsideKeydown: (event: KeyboardEvent) => void
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+@@ -201,6 +202,10 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(document, EVENT_POINTERDOWN, this._onOutside)
+     }
+ 
++    if (this._onOutsideKeydown) {
++      EventHandler.off(document, 'keydown', this._onOutsideKeydown)
++    }
++
+     if (this._onTriggerClick) {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+@@ -407,6 +412,15 @@ class Datepicker extends BaseComponent {
+ 
+     EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)
+     EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)
++
++    // Add keydown listener to hide on Tab
++    this._onOutsideKeydown = ({ key }: KeyboardEvent) => {
++      if (this._isShown && key === 'Tab') {
++        this.hide()
++      }
++    }
++
++    EventHandler.on(document, 'keydown', this._onOutsideKeydown)
+   }
+ 
+   protected _buildCalendarOptions(): Options {

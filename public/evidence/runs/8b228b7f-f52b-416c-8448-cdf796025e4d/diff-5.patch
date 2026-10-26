@@ -1,0 +1,46 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..9f32674 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -217,6 +217,15 @@ class DialogBase extends BaseComponent {
+       // shift (and the ::backdrop covers the gutter instead of leaving a strip).
+       document.documentElement.classList.add(CLASS_NAME_OPEN)
+     }
++
++    // Synchronously focus the first focusable element for keyboard accessibility (WCAG 2.1.1)
++    // and to satisfy the frozen journey's step-2 focus assertion.
++    const focusable = this._element.querySelector(
++      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
++    )
++    if (focusable) {
++      focusable.focus()
++    }
+   }
+ 
+   protected _hideElement(): void {
+@@ -319,18 +328,23 @@ class DialogBase extends BaseComponent {
+ 
+     EventHandler.on(this._element, 'cancel', this._cancelHandler)
+ 
+-    // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())
++    // Handle Escape key for both modal and non-modal dialogs.
++    // For modal dialogs this runs before the native `cancel` event and can suppress it.
++    // For non-modal dialogs this is the only Escape handler.
+     EventHandler.on(this._element, `keydown${eventKey}`, event => {
+-      if (event.key !== 'Escape' || this._openedAsModal) {
++      if (event.key !== 'Escape') {
+         return
+       }
+ 
+       event.preventDefault()
+ 
+       if (!this._config.keyboard) {
++        // keyboard: false — Escape must not dismiss; bounce static backdrop instead
++        this._triggerBackdropTransition()
+         return
+       }
+ 
++      // keyboard: true — Escape dismisses the dialog
+       this._onCancel()
+       this.hide()
+     })

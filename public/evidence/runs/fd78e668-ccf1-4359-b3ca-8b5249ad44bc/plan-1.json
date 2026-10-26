@@ -1,0 +1,41 @@
+{
+  "root_cause": "The datepicker remains shown when tabbing out of the input, causing the Vanilla Calendar Pro to prevent the Tab key press to keep focus trapped within the calendar.",
+  "repair_strategy": "Add a focusout listener to the input that hides the datepicker when focus leaves the input unless it is moving to the calendar, ensuring the datepicker is hidden before the focus changes to the next field.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _element: HTMLElement & { value: string }\n  protected declare _config: DatepickerConfig\n  protected declare _calendar: Calendar | null\n  protected declare _isShown: boolean\n  protected declare _isInput: boolean\n  protected declare _isInline: boolean\n  protected declare _boundInput: HTMLInputElement | null\n  protected declare _positionElement: HTMLElement\n  protected declare _displayElement: HTMLElement | false | null\n  protected declare _themeObserver: MutationObserver | null\n  protected declare _themeAncestor: Element | null | undefined\n  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n",
+      "after": "  protected declare _element: HTMLElement & { value: string }\n  protected declare _config: DatepickerConfig\n  protected declare _calendar: Calendar | null\n  protected declare _isShown: boolean\n  protected declare _isInput: boolean\n  protected declare _isInline: boolean\n  protected declare _boundInput: HTMLInputElement | null\n  protected declare _positionElement: HTMLElement\n  protected declare _displayElement: HTMLElement | false | null\n  protected declare _themeObserver: MutationObserver | null\n  protected declare _themeAncestor: Element | null | undefined\n  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onFocusout: ((event: FocusEvent) => void) | null\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n    super(element, config)\n\n    this._calendar = null\n    this._isShown = false\n\n    this._initCalendar()\n  }\n",
+      "after": "  constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n    super(element, config)\n\n    this._calendar = null\n    this._isShown = false\n    this._onFocusout = null\n\n    this._initCalendar()\n  }\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    this._setupDismiss()\n\n    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()\n  }\n",
+      "after": "    this._setupDismiss()\n\n    // Hide datepicker when losing focus unless focus is moving to the calendar\n    this._onFocusout = (event: FocusEvent) => {\n      if (!this._isShown) {\n        return\n      }\n      const calendarMainElement = this._calendar?.context?.mainElement\n      if (calendarMainElement && calendarMainElement.contains(event.relatedTarget as Node)) {\n        return\n      }\n      this.hide()\n    }\n\n    EventHandler.on(this._element, 'focusout', this._onFocusout)\n\n    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()\n  }\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n\n    this._calendar = null\n    super.dispose()\n  }\n",
+      "after": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._onFocusout) {\n      EventHandler.off(this._element, 'focusout', this._onFocusout)\n      this._onFocusout = null\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n\n    this._calendar = null\n    super.dispose()\n  }\n"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key will now move focus from the departure date field to the passengers field as expected.",
+  "functional_risks": [
+    "Hiding the datepicker on focusout might interfere with users who navigate away from the input using means other than Tab (e.g., mouse click on another field) if the datepicker is still needed? But hiding on blur is common.",
+    "If the user clicks on the calendar, the focusout event on the input will fire, but we check if the relatedTarget is in the calendar and avoid hiding in that case."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the departure date field moves focus to the passengers field.",
+    "Verify that the datepicker is hidden when focus leaves the input unless moving to the calendar.",
+    "Verify that clicking on a date in the calendar does not hide the calendar prematurely.",
+    "Verify that the datepicker still functions correctly for mouse users."
+  ]
+}

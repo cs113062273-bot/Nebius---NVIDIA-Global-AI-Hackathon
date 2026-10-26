@@ -1,0 +1,80 @@
+diff --git a/src/controllers/navigationController.js b/src/controllers/navigationController.js
+index 22aeb48..934f8b9 100644
+--- a/src/controllers/navigationController.js
++++ b/src/controllers/navigationController.js
+@@ -10,7 +10,8 @@ import eventEmitter from "../utils/eventEmitter";
+  */
+ const navigate = (config, dataFeedback) => {
+   // Reset focus state
+-  let currentFocus = -1;
++  config.currentFocus = -1;
++  config.dataFeedback = dataFeedback;
+ 
+   /**
+    * Update list item state
+@@ -26,21 +27,21 @@ const navigate = (config, dataFeedback) => {
+     if (state) {
+       // If the arrow DOWN or TAB key is pressed
+       // increase the currentFocus
+-      currentFocus++;
++      config.currentFocus++;
+     } else {
+       // If the arrow UP or TAB key is pressed
+       // decrease the currentFocus
+-      currentFocus--;
++      config.currentFocus--;
+     }
+     // and add "active" class to the list item
+     addActive(list);
+-    config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
++    config.inputField.setAttribute("aria-activedescendant", list[config.currentFocus].id);
+     /**
+      * @emits {navigation} Emits Event on results list navigation
+      **/
+     eventEmitter(
+       event.srcElement,
+-      { event, ...dataFeedback, selection: dataFeedback.results[currentFocus] },
++      { event, ...config.dataFeedback, selection: config.dataFeedback.results[config.currentFocus] },
+       "navigation"
+     );
+   };
+@@ -72,11 +73,11 @@ const navigate = (config, dataFeedback) => {
+     if (!list) return false;
+     // Remove "active" class from all list items
+     removeActive(list);
+-    if (currentFocus >= list.length) currentFocus = 0;
+-    if (currentFocus < 0) currentFocus = list.length - 1;
++    if (config.currentFocus >= list.length) config.currentFocus = 0;
++    if (config.currentFocus < 0) config.currentFocus = list.length - 1;
+     // Add "active" class to the item
+-    list[currentFocus].setAttribute("aria-selected", "true");
+-    list[currentFocus].classList.add("autoComplete_selected");
++    list[config.currentFocus].setAttribute("aria-selected", "true");
++    list[config.currentFocus].classList.add("autoComplete_selected");
+   };
+ 
+   /**
+@@ -108,9 +109,9 @@ const navigate = (config, dataFeedback) => {
+       // If the ENTER key is pressed
+       // prevent the form from its default behaviour "being submitted"
+       event.preventDefault();
+-      if (currentFocus > -1) {
++      if (config.currentFocus > -1) {
+         // and simulate a click on the selected "active" item
+-        if (list) list[currentFocus].click();
++        if (list) list[config.currentFocus].click();
+       }
+     }
+   };
+@@ -119,7 +120,10 @@ const navigate = (config, dataFeedback) => {
+   /**
+    * @listens {keydown} Listens to all `keydown` events on the input field
+    **/
+-  config.inputField.addEventListener("keydown", navigate);
++  if (!config.resultsList.navigation && !config._navigationListenerAttached) {
++    config.inputField.addEventListener("keydown", navigate);
++    config._navigationListenerAttached = true;
++  }
+ };
+ 
+ export { navigate };

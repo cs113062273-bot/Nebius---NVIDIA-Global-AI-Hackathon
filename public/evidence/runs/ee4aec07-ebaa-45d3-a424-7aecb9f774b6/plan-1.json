@@ -1,0 +1,24 @@
+{
+  "root_cause": "The focus trap incorrectly includes hidden elements (e.g., buttons with display:none) in the focusable node list, causing the last focusable element to be misidentified and allowing Tab to escape the modal.",
+  "repair_strategy": "Modify getFocusableNodes to filter out elements that are not visually rendered (display:none or visibility hidden) using computed styles, ensuring only truly focusable nodes are considered for wrapping.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes)\n    }",
+      "after": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array.from(nodes).filter(node => {\n        const style = window.getComputedStyle(node)\n        return style.display !== 'none' && style.visibility !== 'hidden'\n      })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tabbing within the modal will now properly wrap to the first focusable element when reaching the last, keeping focus inside the dialog for keyboard users.",
+  "functional_risks": [
+    "Potential performance impact due to computing styles for each focusable node on each keydown.",
+    "Risk of incorrectly hiding nodes that are programmatically focusable but temporarily off-screen.",
+    "Possible interference with custom elements that rely on JS for visibility."
+  ],
+  "verification_requirements": [
+    "Verify that tabbing from the last visible control (Upload button) loops back to the first control (filename input) and does not move to the help link.",
+    "Confirm that Escape still closes the dialog and returns focus to the triggering button.",
+    "Ensure screen reader announcement of modal content remains unchanged.",
+    "Check that the hidden retry button remains non-focusable and does not affect tab order."
+  ]
+}

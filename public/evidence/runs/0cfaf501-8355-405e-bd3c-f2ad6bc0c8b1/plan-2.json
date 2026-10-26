@@ -1,0 +1,23 @@
+{
+  "root_cause": "The dialog opens via showModal() but focus does not move to the autofocus input because the native <dialog> element does not automatically focus the [autofocus] element when shown via showModal() in this environment, causing focus to remain on the triggering button and then be lost to the body.",
+  "repair_strategy": "After showing the dialog in _showElement, explicitly focus the element with the autofocus attribute inside the dialog, falling back to the dialog itself.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }",
+      "after": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      // Lock scroll on the root element (not <body>) so it lands on the same\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n\n    // Move focus to autofocus element if present, otherwise to the dialog\n    const autofocusEl = this._element.querySelector('[autofocus]')\n    if (autofocusEl) {\n      autofocusEl.focus()\n    } else {\n      this._element.focus()\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Focus will move into the dialog and land on the autofocus search field, allowing keyboard users to interact with filters without a pointer.",
+  "functional_risks": [
+    "Potential focus stealing if the dialog already had focus managed elsewhere, but focusing the autofocus element is harmless and aligns with native behavior.",
+    "Risk of focusing a non-visible element if the autofocus attribute is misused, though this is unlikely given the DOM structure."
+  ],
+  "verification_requirements": [
+    "After opening the drawer via keyboard, focus is on #filters-search.",
+    "Pressing Space on #in-stock checkbox toggles its state.",
+    "Pressing Tab twice and Enter on #apply updates the applied output to 'in'.",
+    "Escape closes drawer and returns focus to #filters-open."
+  ]
+}

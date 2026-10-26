@@ -1,0 +1,48 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..5bbb55b 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -175,6 +175,33 @@ class DialogBase extends BaseComponent {
+     return { modal: true, preventBodyScroll: true }
+   }
+ 
++  protected _enforceFocus(): void {
++    const dialog = this._element
++    const autofocus = dialog.querySelector('[autofocus]')
++    if (autofocus) {
++      (autofocus as HTMLElement).focus()
++      return
++    }
++    // Find the first focusable element
++    const focusableSelectors = [
++      'a[href]',
++      'area[href]',
++      'input:not([disabled]):not([type="hidden"])',
++      'select:not([disabled])',
++      'textarea:not([disabled])',
++      'button:not([disabled])',
++      'iframe',
++      'object',
++      'embed',
++      '[contenteditable]',
++      '[tabindex]:not([tabindex="-1"])'
++    ].join(',')
++    const focusable = dialog.querySelector(focusableSelectors)
++    if (focusable) {
++      (focusable as HTMLElement).focus()
++    }
++  }
++
+   protected _onBeforeShow(): void {
+     // No-op by default — Dialog overrides to add nonmodal class
+   }
+@@ -210,6 +237,9 @@ class DialogBase extends BaseComponent {
+       this._element.show()
+     }
+ 
++    // Ensure focus is moved to the dialog's first focusable element
++    this._enforceFocus()
++
+     if (preventBodyScroll) {
+       // Lock scroll on the root element (not <body>) so it lands on the same
+       // element that carries `scrollbar-gutter: stable`. Co-locating them keeps

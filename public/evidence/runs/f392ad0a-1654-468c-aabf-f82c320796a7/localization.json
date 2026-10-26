@@ -1,0 +1,93 @@
+[
+  {
+    "path": "index.html",
+    "score": 10,
+    "signals": [
+      "sort-open",
+      "sort",
+      "sort-close",
+      "body",
+      "Filters",
+      "Sort",
+      "Close",
+      "Search filters",
+      "In stock",
+      "Waterproof"
+    ],
+    "sha256": "9299d4772072bf8be4023d17b3a8081cb74017385e473ee79a231181b59009b8",
+    "editable": false
+  },
+  {
+    "path": "js/src/dialog-base.ts",
+    "score": 2,
+    "signals": [
+      "body",
+      "Close"
+    ],
+    "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b"
+  },
+  {
+    "path": "js/src/base-component.ts",
+    "score": 1.5,
+    "signals": [
+      "Imported runtime dependency of js/src/dialog-base.ts"
+    ],
+    "sha256": "13e2e303241874c49eb8d739e2900655f94b7d673ad7694591b776fbd089f886"
+  },
+  {
+    "path": "js/src/dom/data.ts",
+    "score": 1.5,
+    "signals": [
+      "Imported runtime dependency of js/src/dialog-base.ts"
+    ],
+    "sha256": "4626f638b542f3e6db0173b8e3e164cf9a3a9ea5840c763688b19d64a4d3ca34"
+  },
+  {
+    "path": "js/src/dom/event-handler.ts",
+    "score": 1.5,
+    "signals": [
+      "Imported runtime dependency of js/src/dialog-base.ts"
+    ],
+    "sha256": "87e970cca1e8190a049f450c2fe122eefec7c068ee6ce9352362d1c729bcb851"
+  },
+  {
+    "path": "js/src/dom/selector-engine.ts",
+    "score": 1.5,
+    "signals": [
+      "Imported runtime dependency of js/src/dialog-base.ts"
+    ],
+    "sha256": "7e58a9f1aaf1a8d78474d923faed2f79035b9372fa494d518da4ba77568f8f3b"
+  },
+  {
+    "path": "js/src/drawer.ts",
+    "score": 1,
+    "signals": [
+      "Close"
+    ],
+    "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a"
+  },
+  {
+    "path": "js/src/util/swipe.ts",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/drawer.ts"
+    ],
+    "sha256": "17f19e2e8deae3528b8e85217ee60f340ad6330912ce8977a1926f2226fa8a14"
+  },
+  {
+    "path": "js/src/util/component-functions.ts",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/drawer.ts"
+    ],
+    "sha256": "6ed9fc25bd5efecebfbdb29a88f7932b3af4b4966f80eb1147da58ad6d262d04"
+  },
+  {
+    "path": "js/src/util/index.ts",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/drawer.ts"
+    ],
+    "sha256": "796f788b24065a562b6b8e132dcd0eaf748c95bf699996315de9aa0406f9b3d2"
+  }
+]

@@ -1,0 +1,32 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..bf51e33 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -126,6 +126,11 @@ class Datepicker extends BaseComponent {
+     this._isShown = false
+ 
+     this._initCalendar()
++
++    // Remove aria-haspopup to prevent Tab key blocking
++    if (this._isInput) {
++      this._element.removeAttribute('aria-haspopup')
++    }
+   }
+ 
+   // Getters
+@@ -250,6 +255,15 @@ class Datepicker extends BaseComponent {
+ 
+     this._setupDismiss()
+ 
++    // Allow Tab key to move focus out of the input when the calendar is not shown
++    if (this._isInput && !this._isInline) {
++      this._element.addEventListener('keydown', (event: KeyboardEvent) => {
++        if (event.key === 'Tab' && !this._isShown) {
++          event.stopImmediatePropagation()
++        }
++      }, true)
++    }
++
+     // Set initial value if input has a value
+     if (this._isInput && this._element.value) {
+       this._parseInputValue()

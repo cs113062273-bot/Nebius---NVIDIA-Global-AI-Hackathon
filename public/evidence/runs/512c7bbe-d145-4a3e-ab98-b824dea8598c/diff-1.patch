@@ -1,0 +1,44 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..c6e0937 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -543,6 +543,13 @@
+             e = e || window.event;
+ 
+             if (self.isVisible()) {
++                function isDateDisabled(d) {
++                    if (opts.minDate && d < opts.minDate) return true;
++                    if (opts.maxDate && d > opts.maxDate) return true;
++                    if (opts.disableWeekends && isWeekend(d)) return true;
++                    if (opts.disableDayFn && opts.disableDayFn(d)) return true;
++                    return false;
++                }
+ 
+                 switch(e.keyCode){
+                     case 13:
+@@ -552,13 +559,23 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                        var current = self.getDate() || new Date();
++                        var prev = new Date(current.getTime());
++                        do {
++                            prev.setDate(prev.getDate() - 1);
++                        } while (isDateDisabled(prev));
++                        self.setDate(prev);
+                         break;
+                     case 38:
+                         self.adjustDate('subtract', 7);
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                        var current = self.getDate() || new Date();
++                        var next = new Date(current.getTime());
++                        do {
++                            next.setDate(next.getDate() + 1);
++                        } while (isDateDisabled(next));
++                        self.setDate(next);
+                         break;
+                     case 40:
+                         self.adjustDate('add', 7);

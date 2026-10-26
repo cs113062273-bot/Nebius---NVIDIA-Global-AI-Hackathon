@@ -1,0 +1,22 @@
+{
+  "root_cause": "The unCheckAllInputsExcept method selects checkboxes by name attribute instead of the exclusive group attribute, so clicking the exclusive 'No symptoms' checkbox does not uncheck other symptom checkboxes.",
+  "repair_strategy": "Update unCheckAllInputsExcept to select inputs by data-checkbox-exclusive-group when present, falling back to name attribute, ensuring the exclusive checkbox clears other options in the same group.",
+  "edits": [
+    {
+      "path": "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js",
+      "sha256": "b12e3c7a52e09c981155d2f727c5eb8358d420a487177c9a1e722c19da4c8af0",
+      "before": "  /**\n   * Uncheck other checkboxes\n   *\n   * Find any other checkbox inputs with the checkbox group value, and uncheck them.\n   * This is useful for when a “None of these” checkbox is checked.\n   *\n   * @param {HTMLInputElement} $input - Checkbox input\n   */\n  unCheckAllInputsExcept($input) {\n    const { checkboxExclusiveGroup: exclusiveGroup } = $input.dataset\n\n    const allInputsWithSameName = document.querySelectorAll(\n      `input[type=\"checkbox\"][name=\"${$input.name}\"]`\n    )\n\n    allInputsWithSameName.forEach(($inputWithSameName) => {\n      const hasSameFormOwner = $input.form === $inputWithSameName.form\n\n      // Uncheck all with same exclusive group by default, otherwise fall back to\n      // GOV.UK Frontend behaviour to uncheck all with the same name attribute\n      if (hasSameFormOwner && $inputWithSameName !== $input) {\n        this.setInputState($inputWithSameName, false, exclusiveGroup)\n      }\n    })\n  }",
+      "after": "  /**\n   * Uncheck other checkboxes\n   *\n   * Find any other checkbox inputs with the checkbox group value, and uncheck them.\n   * This is useful for when a “None of these” checkbox is checked.\n   *\n   * @param {HTMLInputElement} $input - Checkbox input\n   */\n  unCheckAllInputsExcept($input) {\n    const { checkboxExclusiveGroup: exclusiveGroup } = $input.dataset\n\n    let selector\n    if (exclusiveGroup) {\n      selector = `input[type=\"checkbox\"][data-checkbox-exclusive-group=\"${exclusiveGroup}\"]`\n    } else {\n      selector = `input[type=\"checkbox\"][name=\"${$input.name}\"]`\n    }\n\n    const allInputs = document.querySelectorAll(selector)\n\n    allInputs.forEach(($inputWithSameName) => {\n      const hasSameFormOwner = $input.form === $inputWithSameName.form\n\n      // Uncheck all with same exclusive group by default, otherwise fall back to\n      // GOV.UK Frontend behaviour to uncheck all with the same name attribute\n      if (hasSameFormOwner && $inputWithSameName !== $input) {\n        this.setInputState($inputWithSameName, false, exclusiveGroup)\n      }\n    })\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now clear previously ticked symptoms when selecting the exclusive 'No symptoms' option, satisfying WCAG 2.1.1 (Keyboard) and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "Possible regression for checkboxes that rely on the previous name‑based selection when no exclusive group is defined; the fallback preserves existing behavior."
+  ],
+  "verification_requirements": [
+    "After the fix, selecting 'No symptoms' after ticking cough and fever results in symptoms[cough] and symptoms[fever] being unset.",
+    "Selecting a symptom after 'No symptoms' should clear the 'No symptoms' checkbox (existing behavior).",
+    "Mouse interaction with the exclusive checkbox continues to work.",
+    "Non‑exclusive checkboxes retain their mutual‑exclusion behavior."
+  ]
+}

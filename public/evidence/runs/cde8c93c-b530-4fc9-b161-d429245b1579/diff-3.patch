@@ -1,0 +1,74 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..180aa8e 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -101,6 +101,13 @@ class Dropdown extends BaseComponent {
+     this._menu = this._getMenuElement()
+     this._inNavbar = this._detectNavbar()
+ 
++    this._escapeCaptureHandler = (event) => {
++      if (event.key === ESCAPE_KEY) {
++        event.stopPropagation()
++        this.hide()
++      }
++    }
++
+     this._addEventListeners()
+   }
+ 
+@@ -200,6 +207,10 @@ class Dropdown extends BaseComponent {
+ 
+     this._menu.classList.toggle(CLASS_NAME_SHOW)
+     this._element.classList.toggle(CLASS_NAME_SHOW)
++
++    this._element.addEventListener('keydown', this._escapeCaptureHandler, true)
++    this._menu.addEventListener('keydown', this._escapeCaptureHandler, true)
++
+     EventHandler.trigger(this._element, EVENT_SHOWN, relatedTarget)
+   }
+ 
+@@ -218,6 +229,9 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
++    this._element.removeEventListener('keydown', this._escapeCaptureHandler, true)
++    this._menu.removeEventListener('keydown', this._escapeCaptureHandler, true)
++
+     if (this._popper) {
+       this._popper.destroy()
+     }
+@@ -229,6 +243,9 @@ class Dropdown extends BaseComponent {
+   }
+ 
+   dispose() {
++    this._element.removeEventListener('keydown', this._escapeCaptureHandler, true)
++    this._menu.removeEventListener('keydown', this._escapeCaptureHandler, true)
++
+     EventHandler.off(this._element, EVENT_KEY)
+     this._menu = null
+ 
+@@ -464,7 +481,6 @@ class Dropdown extends BaseComponent {
+     }
+ 
+     event.preventDefault()
+-    event.stopPropagation()
+ 
+     if (isDisabled(this)) {
+       return
+@@ -476,10 +492,15 @@ class Dropdown extends BaseComponent {
+     if (event.key === ESCAPE_KEY) {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.focus()
+-      Dropdown.clearMenus()
++      if (isActive) {
++        event.stopPropagation()
++        Dropdown.clearMenus()
++      }
+       return
+     }
+ 
++    event.stopPropagation()
++
+     if (!isActive && (event.key === ARROW_UP_KEY || event.key === ARROW_DOWN_KEY)) {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.click()

@@ -1,0 +1,23 @@
+{
+  "root_cause": "The tab keyboard navigation (_keydown) uses _getChildren which includes disabled tabs, causing ArrowRight to move focus to the disabled Notifications tab instead of skipping it.",
+  "repair_strategy": "Modify _getChildren to return only enabled tabs by filtering out elements where isDisabled returns true, ensuring keyboard navigation skips disabled tabs.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "7ad4e9f0424d0d4b95bcf399a1639e44cfec200c874382dc7a8b34016a74228f",
+      "before": "  _getChildren() { // collection of inner elements\n    return SelectorEngine.find(SELECTOR_INNER_ELEM, this._parent)\n  }",
+      "after": "  _getChildren() { // collection of inner elements\n    return SelectorEngine.find(SELECTOR_INNER_ELEM, this._parent).filter(child => !isDisabled(child))\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight will skip the disabled Notifications tab and move focus to the Billing tab, updating aria-selected to true on Billing and showing its panel.",
+  "functional_risks": [
+    "Disabled tabs may miss initial attribute setup (tabindex, aria-selected, role) but remain inert due to the disabled attribute.",
+    "Ensure that disabling a tab via the disabled attribute continues to prevent focus and activation."
+  ],
+  "verification_requirements": [
+    "Verify that ArrowRight from the Account tab moves focus to the Billing tab (skipping Notifications).",
+    "Verify that ArrowLeft from the Billing tab wraps to the Account tab.",
+    "Confirm the disabled Notifications tab remains unfocusable and its panel stays hidden.",
+    "Ensure initial state (Account tab selected, Billing panel hidden) is unchanged."
+  ]
+}

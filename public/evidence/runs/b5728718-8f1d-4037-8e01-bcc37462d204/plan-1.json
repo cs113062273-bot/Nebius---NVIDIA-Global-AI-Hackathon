@@ -1,0 +1,23 @@
+{
+  "root_cause": "The offcanvas plugin always enforces a focus trap via _enforceFocusOnElement, regardless of the backdrop setting. When the offcanvas is configured as non‑modal (data-bs-backdrop=\"false\"), this trap prevents tab navigation to underlying fields such as #amount.",
+  "repair_strategy": "Make focus enforcement conditional on the backdrop configuration. Only call _enforceFocusOnElement when this._config.backdrop is true, preserving modal trapping for the default case while allowing tab escape for non‑modal offcanvases.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      this._enforceFocusOnElement(this._element)\n    }",
+      "after": "    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      if (this._config.backdrop) {\n        this._enforceFocusOnElement(this._element)\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Users can tab off the offcanvas panel to reach the amount field and other page controls when the panel is non‑modal, restoring a logical tab order and reducing the number of keystrokes needed to interact with the main form.",
+  "functional_risks": [
+    "If developers inadvertently rely on the focus trap irrespective of the backdrop setting, changing this behavior could allow focus to leave the offcanvas unexpectedly.",
+    "The modal‑related ARIA attributes (aria‑modal=\"true\", role=\"dialog\") are left unchanged; assistive technologies may still perceive the offcanvas as modal when backdrop is false, but the primary tab‑navigation issue is resolved."
+  ],
+  "verification_requirements": [
+    "With data-bs-backdrop=\"false\", tabbing from the open-help button reaches the #amount field within 6 Tab presses.",
+    "With the default backdrop (true), focus remains trapped inside the offcanvas and cannot escape to #amount without explicitly closing it.",
+    "Keyboard closing via the Escape key continues to work when keyboard:true.",
+    "Panel open/close animations, visibility changes, and ARIA attribute updates remain as originally implemented."
+  ]
+}

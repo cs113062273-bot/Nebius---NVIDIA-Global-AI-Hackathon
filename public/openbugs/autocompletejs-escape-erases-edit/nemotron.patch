@@ -1,8 +1,8 @@
 diff --git a/src/controllers/listController.js b/src/controllers/listController.js
-index ae1d3de..dfc61c0 100644
+index ae1d3de..39a74ca 100644
 --- a/src/controllers/listController.js
 +++ b/src/controllers/listController.js
-@@ -255,14 +255,6 @@ const navigate = (event, ctx) => {
+@@ -255,14 +255,7 @@ const navigate = (event, ctx) => {
        break;
      // Esc
      case 27:
@@ -14,6 +14,7 @@ index ae1d3de..dfc61c0 100644
 -       **/
 -      eventEmitter('clear', ctx);
 -
++      // Close the suggestion list without clearing the input
        close(ctx);
        break;
    }

@@ -1,0 +1,48 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..caae60a 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -111,6 +111,7 @@ class Datepicker extends BaseComponent {
+   protected declare _isShown: boolean
+   protected declare _isInput: boolean
+   protected declare _isInline: boolean
++  protected declare _originalAriaHasPopup: string | null
+   protected declare _boundInput: HTMLInputElement | null
+   protected declare _positionElement: HTMLElement
+   protected declare _displayElement: HTMLElement | false | null
+@@ -125,6 +126,11 @@ class Datepicker extends BaseComponent {
+     this._calendar = null
+     this._isShown = false
+ 
++    // Store original aria-haspopup if it's an input
++    if (this._element.tagName === 'INPUT') {
++      this._originalAriaHasPopup = this._element.getAttribute('aria-haspopup')
++    }
++
+     this._initCalendar()
+   }
+ 
+@@ -164,6 +170,11 @@ class Datepicker extends BaseComponent {
+       return
+     }
+ 
++    // Remove aria-haspopup to prevent potential Tab key blocking
++    if (this._isInput && this._originalAriaHasPopup !== null) {
++      this._element.removeAttribute('aria-haspopup')
++    }
++
+     this._calendar.show()
+     this._isShown = true
+ 
+@@ -187,6 +198,11 @@ class Datepicker extends BaseComponent {
+     this._calendar.hide()
+     this._isShown = false
+ 
++    // Restore aria-haspopup
++    if (this._isInput && this._originalAriaHasPopup !== null) {
++      this._element.setAttribute('aria-haspopup', this._originalAriaHasPopup)
++    }
++
+     EventHandler.trigger(this._element, EVENT_HIDDEN)
+   }
+ 

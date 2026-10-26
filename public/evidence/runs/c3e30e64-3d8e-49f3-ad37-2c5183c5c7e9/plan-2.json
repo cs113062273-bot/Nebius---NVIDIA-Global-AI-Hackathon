@@ -1,0 +1,25 @@
+{
+  "root_cause": "The drawer component relies on native <dialog> focus behavior when shown via showModal(). The native implementation focuses the first focusable element in the dialog (the close button) and does not honor the autofocus attribute on the search input. This causes keyboard users to land on the close button instead of the intended autofocus element when opening the Filters drawer.",
+  "repair_strategy": "Override the _show method in Drawer to call super._show() (which handles the native show and transition) and then explicitly move focus to the element with autofocus if present, otherwise to the close button (data-bs-dismiss=\"drawer\"), with the drawer element itself as a final fallback. This ensures keyboard users land on the correct interactive element immediately after the drawer opens.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  protected override _onBeforeShow(): void {\n    this._initSwipe()\n  }\n\n  protected override _getInstantClassName(): string {\n    return 'drawer-instant'\n  }",
+      "after": "  protected override _onBeforeShow(): void {\n    this._initSwipe()\n  }\n\n  protected override async _show(relatedTarget?: HTMLElement): Promise<void> {\n    await super._show(relatedTarget)\n    // After the drawer is shown, move focus to the autofocus element if present,\n    // otherwise to the close button, or the drawer itself as fallback.\n    const autofocus = this._element.querySelector('[autofocus]') as HTMLElement | null\n    if (autofocus) {\n      autofocus.focus({ preventScroll: true })\n    } else {\n      const closeButton = this._element.querySelector('[data-bs-dismiss=\"drawer\"]') as HTMLElement | null\n      if (closeButton) {\n        closeButton.focus({ preventScroll: true })\n      } else {\n        this._element.focus({ preventScroll: true })\n      }\n    }\n  }\n\n  protected override _getInstantClassName(): string {\n    return 'drawer-instant'\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When opening the Filters drawer via Enter on #filters-open, focus will move to the search input (#filters-search) because it has the autofocus attribute. When opening the Sort drawer (which lacks autofocus), focus will move to the close button (#sort-close). In both cases, pressing Escape closes the drawer and returns focus to the respective toggle button. This allows keyboard users to immediately interact with filter controls without extra tab navigation.",
+  "functional_risks": [
+    "If the autofocus element is not focusable (e.g., disabled), focus will fall back to the close button or drawer.",
+    "The focus adjustment occurs after the exit transition, which may cause a brief focus on the close button before moving to the autofocus element. This is visually negligible and does not affect functionality.",
+    "No impact on mouse interactions or programmatic usage of the drawer."
+  ],
+  "verification_requirements": [
+    "Opening the Sort drawer via Enter on #sort-open results in focus on #sort-close.",
+    "Opening the Filters drawer via Enter on #filters-open results in focus on #filters-search (autofocus element).",
+    "Pressing Escape closes the drawer and returns focus to the toggle button (#sort-open or #filters-open).",
+    "Mouse click on toggle still opens drawer and does not disrupt focus.",
+    "Programmatic show() via Drawer.getOrCreateInstance(...).show() also focuses appropriately."
+  ]
+}

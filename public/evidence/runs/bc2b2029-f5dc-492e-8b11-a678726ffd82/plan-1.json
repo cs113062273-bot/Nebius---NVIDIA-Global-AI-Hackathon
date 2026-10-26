@@ -1,0 +1,23 @@
+{
+  "root_cause": "The dropdown component's dataApiKeydownHandler prevents default and stops propagation for the Escape key, preventing the modal's Escape listener from receiving the event and thus the modal does not close when focus is on the dropdown toggle.",
+  "repair_strategy": "Modify the dropdown's dataApiKeydownHandler to only call event.preventDefault() and event.stopPropagation() for keys other than Escape, allowing Escape to bubble up to the modal while still hiding the dropdown.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    if (/input|textarea/i.test(event.target.tagName) ?\\n      event.key === SPACE_KEY || (event.key !== ESCAPE_KEY &&\\n        ((event.key !== ARROW_DOWN_KEY && event.key !== ARROW_UP_KEY) ||\\n          event.target.closest(SELECTOR_MENU))) :\\n      !REGEXP_KEYDOWN.test(event.key)) {\\n      return\\n    }\\n\\n    event.preventDefault()\\n    event.stopPropagation()\\n\\n    if (isDisabled(this)) {\\n      return\\n    }\\n",
+      "after": "    if (/input|textarea/i.test(event.target.tagName) ?\\n      event.key === SPACE_KEY || (event.key !== ESCAPE_KEY &&\\n        ((event.key !== ARROW_DOWN_KEY && event.key !== ARROW_UP_KEY) ||\\n          event.target.closest(SELECTOR_MENU))) :\\n      !REGEXP_KEYDOWN.test(event.key)) {\\n      return\\n    }\\n\\n    if (event.key !== ESCAPE_KEY) {\\n      event.preventDefault()\\n      event.stopPropagation()\\n    }\\n\\n    if (isDisabled(this)) {\\n      return\\n    }\\n"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will now close the share modal when focus is on the access toggle button, making the button invisible (modal hidden) and returning focus to the element that opened the modal.",
+  "functional_risks": [
+    "Escape key event may propagate to other listeners beyond the modal, potentially causing unintended side effects if other components handle Escape.",
+    "Dropdown still closes on Escape as before, so core dropdown functionality is preserved."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape with focus on the access toggle button closes the modal (button becomes invisible).",
+    "Verify that pressing Escape with focus inside the dropdown menu still closes the dropdown.",
+    "Verify that ArrowUp, ArrowDown, Space, and Enter keys still operate correctly within the dropdown.",
+    "Verify that Escape closes the modal when focus is elsewhere in the modal (e.g., on Cancel or Save buttons)."
+  ]
+}

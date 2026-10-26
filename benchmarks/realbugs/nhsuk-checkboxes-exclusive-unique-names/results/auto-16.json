@@ -1,0 +1,67 @@
+{
+  "completedAt": "2026-10-26T13:25:24.090Z",
+  "policy": "auto",
+  "modelRun": "136493be-22f9-43fc-8834-b77dc09e8ceb",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "79a4d5608dd34a687092d5d5b848e507742623dff9821ab58a6b7cd66f6932c4",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before does not occur in the file. 2 of its lines are not in the source. not in file: \"* This is useful for when a \\\\\\\"None of these\\\\\\\" checkbox is checked.\"; closest is line 85: \"* This is useful for when a “None of these\\\" checkbox is checked.\" | not in file: \"`input[type=\\\\\\\"checkbox\\\\\\\"][name=\\\\\\\"${$input.name}\\\\\\",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-3adb7deb2786a9571a6d09461dde6995",
+      "usage": {
+        "completion_tokens": 7764,
+        "prompt_tokens": 8701,
+        "total_tokens": 16465,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6780,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 8701
+      },
+      "latencyMs": 42766,
+      "reservedCreditUsd": 0.0383169
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-c55a55332a4c14b913ce69f29b2e11bf",
+      "usage": {
+        "completion_tokens": 4868,
+        "prompt_tokens": 10795,
+        "total_tokens": 15663,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3906,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10795
+      },
+      "latencyMs": 15095,
+      "reservedCreditUsd": 0.135389
+    }
+  ]
+}

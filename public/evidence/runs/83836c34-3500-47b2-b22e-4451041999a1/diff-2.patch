@@ -1,0 +1,59 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..03dd538 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -255,8 +255,10 @@ class Datepicker extends BaseComponent {
+       this._parseInputValue()
+     }
+ 
+-    // Populate input/display with preselected dates
+-    this._updateDisplayWithSelectedDates()
++    // Populate display with preselected dates
++    if (this._displayElement) {
++      this._updateDisplayWithSelectedDates()
++    }
+   }
+ 
+   protected _updateDisplayWithSelectedDates(): void {
+@@ -268,18 +270,36 @@ class Datepicker extends BaseComponent {
+   }
+ 
+   protected _syncSelectedDates(selectedDates: string[]): void {
++    if (selectedDates.length === 0) {
++      if (this._displayElement) {
++        this._displayElement.textContent = ''
++      }
++      if (this._isInput) {
++        this._element.value = ''
++      }
++      if (this._boundInput) {
++        this._boundInput.value = ''
++      }
++      return
++    }
++
+     const formattedDate = this._formatDateForInput(selectedDates)
++    if (this._displayElement) {
++      this._displayElement.textContent = formattedDate
++    }
++
+     if (this._isInput) {
+-      this._element.value = formattedDate
++      // If a custom dateFormat is configured, show formatted date in input; otherwise keep ISO for form submission
++      if (this._config.dateFormat) {
++        this._element.value = formattedDate
++      } else {
++        this._element.value = selectedDates.join(',')
++      }
+     }
+ 
+     if (this._boundInput) {
+       this._boundInput.value = selectedDates.join(',')
+     }
+-
+-    if (this._displayElement) {
+-      this._displayElement.textContent = formattedDate
+-    }
+   }
+ 
+   protected _resolvePositionElement(): HTMLElement {

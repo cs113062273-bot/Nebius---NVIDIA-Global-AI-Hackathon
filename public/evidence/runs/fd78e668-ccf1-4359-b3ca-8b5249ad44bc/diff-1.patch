@@ -1,0 +1,52 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..fe42a34 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,12 +118,14 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onFocusout: ((event: FocusEvent) => void) | null
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+ 
+     this._calendar = null
+     this._isShown = false
++    this._onFocusout = null
+ 
+     this._initCalendar()
+   }
+@@ -205,6 +207,11 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    if (this._onFocusout) {
++      EventHandler.off(this._element, 'focusout', this._onFocusout)
++      this._onFocusout = null
++    }
++
+     if (this._calendar) {
+       this._calendar.destroy()
+     }
+@@ -250,6 +257,20 @@ class Datepicker extends BaseComponent {
+ 
+     this._setupDismiss()
+ 
++    // Hide datepicker when losing focus unless focus is moving to the calendar
++    this._onFocusout = (event: FocusEvent) => {
++      if (!this._isShown) {
++        return
++      }
++      const calendarMainElement = this._calendar?.context?.mainElement
++      if (calendarMainElement && calendarMainElement.contains(event.relatedTarget as Node)) {
++        return
++      }
++      this.hide()
++    }
++
++    EventHandler.on(this._element, 'focusout', this._onFocusout)
++
+     // Set initial value if input has a value
+     if (this._isInput && this._element.value) {
+       this._parseInputValue()

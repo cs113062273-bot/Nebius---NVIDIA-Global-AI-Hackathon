@@ -1,0 +1,24 @@
+{
+  "root_cause": "The datepicker updates the input's value to a locale-specific format during initialization (on focus) even when the user does not select a date. This causes the input's value to change from the original ISO format (YYYY-MM-DD) to a localized format (MM/DD/YYYY for en-US) when the datepicker is shown and dismissed without a date selection.",
+  "repair_strategy": "Prevent the datepicker from updating the input's value during initialization. The input's value should only be updated when the user selects a date (via the date picker) or when the datepicker is updated programmatically. The calendar's internal state is still initialized correctly from the input's value (or config) so that the date picker opens to the correct month.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()",
+      "after": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "The change does not affect accessibility as it only alters the timing of when the input's value is updated. The date picker remains fully operable via keyboard and screen readers, with all announcement and focus behaviors preserved.",
+  "functional_risks": [
+    "The input's value will not show a formatted date representation until the user picks a date, which may deviate from user expectations of seeing a formatted value while the date picker is open.",
+    "Inline date pickers may not update the associated input until a date is picked, though the internal calendar state remains correct.",
+    "Programmatic use of setSelectedDates continues to update the input's value as expected."
+  ],
+  "verification_requirements": [
+    "Verify that the journey now passes: focusing #departure, pressing Escape, changing #passengers to 2, and submitting results in the departure date remaining in ISO format (2026-10-22).",
+    "Confirm that selecting a date in the date picker updates the input's value to the localized format.",
+    "Ensure programmatic invocation of setSelectedDates updates the input's value correctly.",
+    "Validate that the date picker still opens to the correct month based on the input's initial value or config."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "root_cause": "The datepicker's picker element is inserted into the DOM immediately after the date input field. Its controls (previous/next buttons, view switch, today/clear buttons) are in the default tab order. When the user presses Tab from the date input, the browser moves focus to the first focusable element in the picker (the previous button) instead of the next form field (access notes). Additionally, the datepicker's keydown listener calls onKeydown for Tab, which may further manipulate focus within the picker.",
+  "repair_strategy": "1. Modify the keydown listener in Datepicker.js to allow the Tab key to propagate (by not calling onKeydown) when the picker is active, preserving default focus traversal. 2. Remove the picker controls from the tab order by setting tabindex=-1 on them in Picker.js. This ensures Tab skips the picker entirely and moves to the next form field, while arrow key navigation within the picker (handled by onKeydown) remains functional because it does not rely on the controls being in the tab order.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+      "before": "    const keydownListener = [element, 'keydown', onKeydown.bind(null, this)];",
+      "after": "    const keydownListener = [element, 'keydown', (e) => {\n      if (e.key === 'Tab' && this.active) {\n        return;\n      }\n      onKeydown.call(null, this, e);\n    }];"
+    },
+    {
+      "path": "js/picker/Picker.js",
+      "sha256": "bdad6c1434285abe75a3ea29c3be21b923eb1d7c828d09d29f38bf07e1d76ba2",
+      "before": "    const [todayButton, clearButton] = footer.firstChild.children;\n    const controls = {\n      title,\n      prevButton,\n      viewSwitch,",
+      "after": "    const [todayButton, clearButton] = footer.firstChild.children;\n    // Remove picker controls from tab order\n    prevButton.tabIndex = -1;\n    viewSwitch.tabIndex = -1;\n    nextButton.tabIndex = -1;\n    todayButton.tabIndex = -1;\n    clearButton.tabIndex = -1;\n    const controls = {\n      title,\n      prevButton,\n      viewSwitch,"
+    }
+  ],
+  "expected_accessibility_effect": "Users can now press Tab to move focus from the visit date field directly to the access notes field while the datepicker is open, enabling keyboard-only navigation through the form without being trapped in the datepicker popup. Arrow keys still navigate the datepicker as expected.",
+  "functional_risks": [
+    "If other code relies on the picker controls being in the tab order (unlikely), that behavior will change.",
+    "The keydown listener change only affects Tab; all other keys (ArrowRight, Enter, Escape, etc.) continue to be handled by onKeydown."
+  ],
+  "verification_requirements": [
+    "Verify that Tab moves focus from #visit-date to #notes when the datepicker is open.",
+    "Verify that ArrowRight and Enter still change the date as expected (regression guard).",
+    "Verify that Escape still closes the picker.",
+    "Verify that Tab behaves normally when the picker is closed."
+  ]
+}

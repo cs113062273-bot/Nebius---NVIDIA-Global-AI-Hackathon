@@ -1,0 +1,37 @@
+{
+  "root_cause": "The datepicker component prevents the Tab key from moving focus to the next field because it initializes the calendar on the input element itself, causing the vanilla-calendar-pro library to attach a keydown listener that incorrectly blocks Tab navigation when the calendar is not open.",
+  "repair_strategy": "Modify the datepicker component to create an off-screen dummy element for the calendar to attach to, leaving the input element free of interfering listeners. This ensures the calendar functions correctly for positioning and value updates without blocking Tab key navigation.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    protected declare _onOutside: (event: Event) => void\n    protected declare _onTriggerClick: () => void\n\n    constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n      super(element, config)\n\n      this._calendar = null\n      this._isShown = false\n\n      this._initCalendar()\n    }",
+      "after": "    protected declare _onOutside: (event: Event) => void\n    protected declare _onTriggerClick: () => void\n    protected declare _dummyPositionElement: HTMLElement | null\n\n    constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {\n      super(element, config)\n\n      this._calendar = null\n      this._isShown = false\n      this._dummyPositionElement = null\n\n      this._initCalendar()\n    }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _resolvePositionElement(): HTMLElement {\n    let { positionElement } = this._config\n\n    if (typeof positionElement === 'string') {\n      positionElement = document.querySelector<HTMLElement>(positionElement)\n    }\n\n    // Use input's parent if in form-adorn\n    if (!positionElement && this._isInput && !this._isInline) {\n      const parent = this._element.closest<HTMLElement>('.form-adorn')\n      if (parent) {\n        positionElement = parent\n      }\n    }\n\n    return positionElement || this._element\n  }",
+      "after": "  protected _resolvePositionElement(): HTMLElement {\n    let { positionElement } = this._config\n\n    if (typeof positionElement === 'string') {\n      positionElement = document.querySelector<HTMLElement>(positionElement)\n    }\n\n    // Use input's parent if in form-adorn\n    if (!positionElement && this._isInput && !this._isInline) {\n      const parent = this._element.closest<HTMLElement>('.form-adorn')\n      if (parent) {\n        positionElement = parent\n      }\n    }\n\n    // If we still don't have a positionElement and we are an input and not inline, create a dummy element\n    if (!positionElement && this._isInput && !this._isInline) {\n      // Create a dummy element that is off-screen\n      const dummy = document.createElement('div')\n      dummy.style.position = 'fixed'\n      dummy.style.left = '-9999px'\n      dummy.style.top = '-9999px'\n      // Store it so we can remove it later\n      this._dummyPositionElement = dummy\n      document.body.appendChild(dummy)\n      positionElement = dummy\n    }\n\n    return positionElement || this._element\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  override dispose(): void {\n    if (this._themeObserver) {\n      this._themeObserver.disconnect()\n      this._themeObserver = null\n    }\n\n    if (this._onOutside) {\n      EventHandler.off(document, EVENT_FOCUSIN, this._onOutside)\n      EventHandler.off(document, EVENT_POINTERDOWN, this._onOutside)\n    }\n\n    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n\n    this._calendar = null\n    super.dispose()\n  }",
+      "after": "  override dispose(): void {\n    if (this._themeObserver) {\n      this._themeObserver.disconnect()\n      this._themeObserver = null\n    }\n\n    if (this._onOutside) {\n      EventHandler.off(document, EVENT_FOCUSIN, this._onOutside)\n      EventHandler.off(document, EVENT_POINTERDOWN, this._onOutside)\n    }\n\n    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n\n    // Remove the dummy element if we created one\n    if (this._dummyPositionElement) {\n      this._dummyPositionElement.remove()\n      this._dummyPositionElement = null\n    }\n\n    this._calendar = null\n    super.dispose()\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key navigation will move focus from the departure date field to the passengers field as expected, restoring logical tab order for keyboard users.",
+  "functional_risks": [
+    "The dummy element might interfere with screen readers if not properly hidden (mitigated by off-screen positioning).",
+    "Calendar positioning might be slightly off if the dummy element is not in the same stacking context as the input (low risk as it's positioned fixed).",
+    "If the input is removed from the DOM before the datepicker disposes, the dummy element might not be cleaned up (mitigated by the dispose method running before DOM removal in typical scenarios)."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the departure date field moves focus to the passengers field.",
+    "Verify that the datepicker calendar still opens correctly when the departure date field receives focus.",
+    "Verify that date selection still works correctly and updates the input value.",
+    "Verify that the Escape key still closes the calendar when open (regression guard).",
+    "Verify that the datepicker works correctly for both inline and non-inline configurations."
+  ]
+}

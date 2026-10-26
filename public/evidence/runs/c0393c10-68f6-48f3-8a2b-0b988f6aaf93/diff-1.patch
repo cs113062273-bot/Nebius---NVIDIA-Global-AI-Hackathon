@@ -1,0 +1,51 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..61054f8 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -254,9 +254,6 @@ class Datepicker extends BaseComponent {
+     if (this._isInput && this._element.value) {
+       this._parseInputValue()
+     }
+-
+-    // Populate input/display with preselected dates
+-    this._updateDisplayWithSelectedDates()
+   }
+ 
+   protected _updateDisplayWithSelectedDates(): void {
+@@ -268,15 +265,20 @@ class Datepicker extends BaseComponent {
+   }
+ 
+   protected _syncSelectedDates(selectedDates: string[]): void {
++    // Format the selected dates for display (in the displayElement)
+     const formattedDate = this._formatDateForInput(selectedDates)
++
++    // For input elements, update the input's value to the ISO string of the first selected date (or empty)
+     if (this._isInput) {
+-      this._element.value = formattedDate
++      this._element.value = selectedDates.length > 0 ? selectedDates[0] : ''
+     }
+ 
++    // For the bound input (used in inline mode), update with the comma-separated ISO strings
+     if (this._boundInput) {
+       this._boundInput.value = selectedDates.join(',')
+     }
+ 
++    // For the display element, update with the formatted string
+     if (this._displayElement) {
+       this._displayElement.textContent = formattedDate
+     }
+@@ -441,6 +443,14 @@ class Datepicker extends BaseComponent {
+ 
+         this._isShown = true
+         this._syncThemeAttribute(this._calendar.context.mainElement)
++        // Update the display element with the formatted date
++        if (this._displayElement) {
++          const selectedDates = [...this._calendar.context.selectedDates]
++          const formattedDate = this._formatDateForInput(
++            selectedDates.length > 0 ? selectedDates : this._config.selectedDates
++          )
++          this._displayElement.textContent = formattedDate
++        }
+       },
+       onHide: () => {
+         this._isShown = false

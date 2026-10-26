@@ -1,0 +1,13 @@
+diff --git a/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js b/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
+index 1571266..6b0c196 100644
+--- a/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
++++ b/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js
+@@ -54,7 +54,7 @@ export class Checkboxes extends Component {
+     this.syncAllConditionalReveals()
+ 
+     // Handle events
+-    this.$root.addEventListener('click', (event) => this.handleClick(event))
++    this.$root.addEventListener('change', (event) => this.handleClick(event))
+   }
+ 
+   /**

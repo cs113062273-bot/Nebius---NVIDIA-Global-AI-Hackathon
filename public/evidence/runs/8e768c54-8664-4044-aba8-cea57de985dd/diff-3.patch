@@ -1,0 +1,51 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..d79486d 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -9,6 +9,7 @@ import BaseComponent from './base-component.js'
+ import Data from './dom/data.js'
+ import EventHandler, { type BootstrapEvent } from './dom/event-handler.js'
+ import SelectorEngine from './dom/selector-engine.js'
++import { isVisible } from '../util/index.js'
+ 
+ /**
+  * Constants
+@@ -42,6 +43,7 @@ class DialogBase extends BaseComponent {
+   protected declare _isTransitioning: boolean
+   protected declare _openedAsModal: boolean
+   protected declare _cancelHandler: (event: BootstrapEvent) => void
++  protected declare _relatedTarget: HTMLElement | null
+ 
+   constructor(element?: string | Element | null, config?: Partial<DialogBaseConfig> | null) {
+     super(element, config)
+@@ -95,6 +97,7 @@ class DialogBase extends BaseComponent {
+   }
+ 
+   protected async _show(relatedTarget?: HTMLElement): Promise<void> {
++    this._relatedTarget = relatedTarget || null
+     this._isTransitioning = true
+     this._onBeforeShow()
+ 
+@@ -210,6 +213,9 @@ class DialogBase extends BaseComponent {
+       this._element.show()
+     }
+ 
++    // Move focus into the dialog
++    this._enforceFocus()
++
+     if (preventBodyScroll) {
+       // Lock scroll on the root element (not <body>) so it lands on the same
+       // element that carries `scrollbar-gutter: stable`. Co-locating them keeps
+@@ -247,6 +253,12 @@ class DialogBase extends BaseComponent {
+     if (!document.querySelector('dialog[open]:modal')) {
+       document.documentElement.classList.remove(CLASS_NAME_OPEN)
+     }
++
++    // Restore focus to the element that opened the dialog
++    if (this._relatedTarget && isVisible(this._relatedTarget)) {
++      this._relatedTarget.focus({ preventScroll: true })
++    }
++    this._relatedTarget = null
+   }
+ 
+   // Hook: return true to keep the dialog in the top layer (i.e., delay

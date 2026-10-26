@@ -1,0 +1,24 @@
+{
+  "root_cause": "The onTabKeydown handler treats ArrowDown and ArrowUp as navigation between tabs, causing vertical arrow keys to change the selected tab in a horizontal tablist, contrary to the expected behavior where only left/right arrows move between tabs.",
+  "repair_strategy": "Modify the onTabKeydown method to respond only to ArrowLeft/Left and ArrowRight/Right (and their legacy key names), ignoring ArrowUp/Down and Up/Down, thus making vertical arrow keys no-ops for the tablist while preserving horizontal navigation.",
+  "edits": [
+    {
+      "path": "packages/govuk-frontend/src/govuk/components/tabs/tabs.js",
+      "sha256": "efec2dbc261636f1987a68ade80173d751d99359fe13cc0106084220e96e3698",
+      "before": "  /**\n   * Handle tab keydown event\n   *\n   * - Press right/down arrow for next tab\n   * - Press left/up arrow for previous tab\n   *\n   * @private\n   * @param {KeyboardEvent} event - Keydown event\n   */\n  onTabKeydown(event) {\n    switch (event.key) {\n      // 'Left', 'Right', 'Up' and 'Down' required for Edge 16 support.\n      case 'ArrowLeft':\n      case 'ArrowUp':\n      case 'Left':\n      case 'Up':\n        this.activatePreviousTab()\n        event.preventDefault()\n        break\n      case 'ArrowRight':\n      case 'ArrowDown':\n      case 'Right':\n      case 'Down':\n        this.activateNextTab()\n        event.preventDefault()\n        break\n    }\n  }",
+      "after": "  /**\n   * Handle tab keydown event\n   *\n   * - Press right/left arrow for next/previous tab\n   *\n   * @private\n   * @param {KeyboardEvent} event - Keydown event\n   */\n  onTabKeydown(event) {\n    switch (event.key) {\n      // 'Left' and 'Right' required for Edge 16 support.\n      case 'ArrowLeft':\n      case 'Left':\n        this.activatePreviousTab()\n        event.preventDefault()\n        break\n      case 'ArrowRight':\n      case 'Right':\n        this.activateNextTab()\n        event.preventDefault()\n        break\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Users can press the Down arrow without changing the selected tab, keeping the current tab panel visible; keyboard navigation remains operable via left/right arrows, conforming to ARIA authoring practices for a horizontal tablist.",
+  "functional_risks": [
+    "Removing vertical arrow navigation may affect users who expect Up/DOWN to move focus in a vertical tablist, but this component is used only for horizontal tablists as per the supplied CSS.",
+    "Legacy Edge support for Up/DOWN keys is dropped, but LEFT/RIGHT keys remain supported."
+  ],
+  "verification_requirements": [
+    "Pressing ArrowDown does not change focus or aria-selected attribute; the selected tab and its panel remain unchanged.",
+    "Pressing ArrowRight moves focus to the next tab, updates aria-selected, and shows the corresponding panel.",
+    "Pressing ArrowLeft moves focus to the previous tab, updates aria-selected, and shows the corresponding panel.",
+    "No JavaScript errors are thrown when pressing ArrowUp or ArrowDown.",
+    "Page scroll is not affected by ArrowUp/Down key presses."
+  ]
+}

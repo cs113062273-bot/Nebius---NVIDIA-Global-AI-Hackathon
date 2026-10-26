@@ -1,0 +1,74 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..5828e6a 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,12 +118,16 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onFocusout: ((event: FocusEvent) => void) | null
++  protected declare _onKeydown: ((event: KeyboardEvent) => void) | null
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+ 
+     this._calendar = null
+     this._isShown = false
++    this._onFocusout = null
++    this._onKeydown = null
+ 
+     this._initCalendar()
+   }
+@@ -205,6 +209,16 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    if (this._onFocusout) {
++      EventHandler.off(this._element, 'focusout', this._onFocusout)
++      this._onFocusout = null
++    }
++
++    if (this._onKeydown) {
++      this._element.removeEventListener('keydown', this._onKeydown, { capture: true })
++      this._onKeydown = null
++    }
++
+     if (this._calendar) {
+       this._calendar.destroy()
+     }
+@@ -250,6 +264,20 @@ class Datepicker extends BaseComponent {
+ 
+     this._setupDismiss()
+ 
++    // Hide datepicker when losing focus unless focus is moving to the calendar
++    this._onFocusout = (event: FocusEvent) => {
++      if (!this._isShown) {
++        return
++      }
++      const calendarMainElement = this._calendar?.context?.mainElement
++      if (calendarMainElement && calendarMainElement.contains(event.relatedTarget as Node)) {
++        return
++      }
++      this.hide()
++    }
++
++    EventHandler.on(this._element, 'focusout', this._onFocusout)
++
+     // Set initial value if input has a value
+     if (this._isInput && this._element.value) {
+       this._parseInputValue()
+@@ -407,6 +435,14 @@ class Datepicker extends BaseComponent {
+ 
+     EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)
+     EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)
++
++    // Hide datepicker on Tab key press from the input to allow focus to move to the next field
++    this._onKeydown = (event: KeyboardEvent) => {
++      if (this._isShown && event.key === 'Tab' && event.target === this._element) {
++        this.hide()
++      }
++    }
++    this._element.addEventListener('keydown', this._onKeydown, { capture: true })
+   }
+ 
+   protected _buildCalendarOptions(): Options {

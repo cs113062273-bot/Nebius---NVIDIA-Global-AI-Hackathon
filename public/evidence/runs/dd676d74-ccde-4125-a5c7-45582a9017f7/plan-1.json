@@ -1,0 +1,21 @@
+{
+  "root_cause": "When the 'Show all 4 results' button is removed from the DOM after being focused, the focus-trap attempts to restore focus to the removed button (which is no longer in the document) when focus escapes the trap. This results in focus being lost to the body instead of remaining inside the dialog.",
+  "repair_strategy": "Modify the checkFocusIn function to verify that the most recently focused node is still in the document before attempting to restore focus to it. If it is not, fall back to the initial focus node (which is known to be in the trap).",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n    }\n  }",
+      "after": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      if (state.mostRecentlyFocusedNode && doc.contains(state.mostRecentlyFocusedNode)) {\n        tryFocus(state.mostRecentlyFocusedNode);\n      } else {\n        tryFocus(getInitialFocusNode());\n      }\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Focus will remain trapped inside the dialog after the 'Show all 4 results' button is removed, ensuring that keyboard users can continue to interact with the dialog without losing focus.",
+  "functional_risks": [
+    "The change adds a document.contains check which may have a minimal performance impact, but it is only executed when focus escapes the trap (a rare event).",
+    "If the most recently focused node is still in the document but no longer in the trap's containers (due to container changes or node movement), the trap may incorrectly attempt to restore focus to that node instead of the initial focus node. However, this scenario is unlikely and the trap would still keep focus within the document (though possibly outside the intended trap area)."
+  ],
+  "verification_requirements": [
+    "Verify that after clicking the 'Show all 4 results' button, focus remains inside the dialog (e.g., pressing Tab moves focus to the close button or the first item in the list).",
+    "Ensure that the existing functionality of the focus-trap is preserved for other cases (e.g., pressing Escape still closes the dialog and restores focus to the opener)."
+  ]
+}

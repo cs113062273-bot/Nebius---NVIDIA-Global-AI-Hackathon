@@ -1,0 +1,30 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..fb7ac29 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -97,6 +97,25 @@ class Drawer extends DialogBase {
+     super.dispose()
+   }
+ 
++  /**
++   * Show the drawer and move focus to the autofocus element or the first focusable child.
++   * @param relatedTarget Optional related target for the show event.
++   */
++  async show(relatedTarget?: HTMLElement): Promise<void> {
++    await super.show(relatedTarget)
++    // Try to focus element with autofocus within the drawer
++    const autofocusEl = this._element.querySelector('[autofocus]')
++    if (autofocusEl) {
++      (autofocusEl as HTMLElement).focus({ preventScroll: true })
++    } else {
++      // fallback: focus first focusable element
++      const focusableEls = this._element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
++      if (focusableEls.length) {
++        (focusableEls[0] as HTMLElement).focus({ preventScroll: true })
++      }
++    }
++  }
++
+   // Protected — hook overrides
+ 
+   protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {

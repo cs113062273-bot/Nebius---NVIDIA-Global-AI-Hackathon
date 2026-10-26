@@ -1,0 +1,20 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..ae5db0d 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -208,6 +208,15 @@ class DialogBase extends BaseComponent {
+       this._element.showModal()
+     } else {
+       this._element.show()
++      // Move focus to the first focusable element in non-modal dialogs
++      Promise.resolve().then(() => {
++        const focusable = this._element.querySelector<HTMLElement>(
++          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
++        )
++        if (focusable) {
++          focusable.focus()
++        }
++      })
+     }
+ 
+     if (preventBodyScroll) {

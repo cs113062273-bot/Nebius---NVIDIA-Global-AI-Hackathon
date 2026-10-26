@@ -1,0 +1,15 @@
+diff --git a/src/index.js b/src/index.js
+index 713f73c..6422b0b 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -155,6 +155,10 @@ const isHidden = function (node, displayCheck) {
+       if (getComputedStyle(node).display === 'none') {
+         return true;
+       }
++      // Treat elements inside a disabled fieldset as hidden (not focusable/tabbable)
++      if (node.tagName === 'FIELDSET' && node.disabled) {
++        return true;
++      }
+       node = node.parentElement;
+     }
+   } else if (displayCheck === 'non-zero-area') {

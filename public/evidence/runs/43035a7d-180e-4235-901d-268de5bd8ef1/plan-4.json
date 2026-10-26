@@ -1,0 +1,23 @@
+{
+  "root_cause": "The datepicker's keydown handler only hides the calendar when the entered date is valid (within min/max range). When the date is invalid, pressing Tab does not trigger hide, leaving the picker open. The existing blur listener should close the picker but does not fire reliably in this scenario.",
+  "repair_strategy": "Add a capture-phase keydown listener on the input field that hides the picker on Tab regardless of date validity, ensuring the calendar closes when the user tabs away.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "      // set up event listeners in other modes\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [inputField, 'blur', this.picker.hide.bind(this.picker)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);",
+      "after": "      // set up event listeners in other modes\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', (event) => {\n          if (event.key === 'Tab') {\n            this.picker.hide();\n          }\n        }, {capture: true}],\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [inputField, 'blur', this.picker.hide.bind(this.picker)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate away from the date field using Tab and the datepicker will close, preventing focus trap and preserving logical tab order even when the typed date is outside the allowed range.",
+  "functional_risks": [
+    "Minimal risk: the new listener runs in capture phase and hides the picker before the existing keydown handler. The existing handler may also hide for valid dates, but hide() is idempotent."
+  ],
+  "verification_requirements": [
+    "Typing a valid date (within min/max) and pressing Tab closes the datepicker and moves focus to the next field.",
+    "Typing an invalid date (outside min/max) and pressing Tab closes the datepicker and moves focus to the next field.",
+    "Clicking outside the input field closes the datepicker.",
+    "Inline datepickers remain unaffected.",
+    "Selecting a date via the calendar grid still behaves as configured (e.g., autohide)."
+  ]
+}

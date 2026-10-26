@@ -1,0 +1,31 @@
+{
+  "root_cause": "The offcanvas plugin incorrectly treats the panel as modal by adding role='dialog', aria-modal='true', and enforcing focus via _enforceFocusOnElement, which traps focus inside the panel and prevents tabbing to the amount field.",
+  "repair_strategy": "Remove the modal attributes (role and aria-modal) and the focus enforcement logic when showing/hiding the offcanvas, making it non‑modal while preserving other functionality (backdrop, scrolling, hide/show).",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "  show(relatedTarget) {\n    if (this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW, { relatedTarget })\n\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._isShown = true\n    this._element.style.visibility = 'visible'\n\n    this._backdrop.show()\n\n    if (!this._config.scroll) {\n      scrollBarHide()\n    }\n\n    this._element.removeAttribute('aria-hidden')\n    this._element.setAttribute('aria-modal', true)\n    this._element.setAttribute('role', 'dialog')\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      this._enforceFocusOnElement(this._element)\n    }\n\n    const transitionDuration = getTransitionDurationFromElement(this._element)\n    EventHandler.one(this._element, 'transitionend', completeCallBack)\n    emulateTransitionEnd(this._element, transitionDuration)\n  }",
+      "after": "  show(relatedTarget) {\n    if (this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW, { relatedTarget })\n\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._isShown = true\n    this._element.style.visibility = 'visible'\n\n    this._backdrop.show()\n\n    if (!this._config.scroll) {\n      scrollBarHide()\n    }\n\n    this._element.removeAttribute('aria-hidden')\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }\n\n    const transitionDuration = getTransitionDurationFromElement(this._element)\n    EventHandler.one(this._element, 'transitionend', completeCallBack)\n    emulateTransitionEnd(this._element, transitionDuration)\n  }"
+    },
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "  hide() {\n    if (!this._isShown) {\n      return\n    }\n\n    const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE)\n\n    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    EventHandler.off(document, EVENT_FOCUSIN)\n    this._element.blur()\n    this._isShown = false\n    this._element.classList.remove(CLASS_NAME_SHOW)\n    this._backdrop.hide()\n\n    const completeCallback = () => {\n      this._element.setAttribute('aria-hidden', true)\n      this._element.removeAttribute('aria-modal')\n      this._element.removeAttribute('role')\n      this._element.style.visibility = 'hidden'\n\n      if (!this._config.scroll) {\n        scrollBarReset()\n      }\n\n      EventHandler.trigger(this._element, EVENT_HIDDEN)\n    }\n\n    const transitionDuration = getTransitionDurationFromElement(this._element)\n    EventHandler.one(this._element, 'transitionend', completeCallback)\n    emulateTransitionEnd(this._element, transitionDuration)\n  }",
+      "after": "  hide() {\n    if (!this._isShown) {\n      return\n    }\n\n    const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE)\n\n    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    EventHandler.off(document, EVENT_FOCUSIN)\n    this._element.blur()\n    this._isShown = false\n    this._element.classList.remove(CLASS_NAME_SHOW)\n    this._backdrop.hide()\n\n    const completeCallback = () => {\n      this._element.setAttribute('aria-hidden', true)\n      this._element.style.visibility = 'hidden'\n\n      if (!this._config.scroll) {\n        scrollBarReset()\n      }\n\n      EventHandler.trigger(this._element, EVENT_HIDDEN)\n    }\n\n    const transitionDuration = getTransitionDurationFromElement(this._element)\n    EventHandler.one(this._element, 'transitionend', completeCallback)\n    emulateTransitionEnd(this._element, transitionDuration)\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab navigation will move from the help panel to the amount field within the allowed number of tab presses, allowing users to interact with the form while the help panel remains open.",
+  "functional_risks": [
+    "Removing modal behavior may affect assistive technology expectations for dialogs.",
+    "If the panel is ever used as a true modal elsewhere, it would no longer trap focus.",
+    "Removing focus enforcement could lead to focus loss when the panel is dismissed via backdrop or Escape if not handled elsewhere (though those actions are managed by other listeners)."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the help panel reaches the amount field within 6 tabs.",
+    "Verify that the help panel can be opened and closed via the button and Escape key.",
+    "Verify that the form amount value can be edited and submitted.",
+    "Confirm that focus is not trapped when the panel is open (can move to other page elements).",
+    "Ensure the panel’s visibility and aria-hidden attributes are correctly toggled."
+  ]
+}

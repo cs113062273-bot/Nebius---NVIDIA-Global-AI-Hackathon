@@ -1,6 +1,0 @@
-{
-  "verdict": "VERIFIED_FAIL",
-  "reasons": [
-    "APPLICATION: Edit outside localized allowlist: \"./packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js\". Allowed paths: "
-  ]
-}

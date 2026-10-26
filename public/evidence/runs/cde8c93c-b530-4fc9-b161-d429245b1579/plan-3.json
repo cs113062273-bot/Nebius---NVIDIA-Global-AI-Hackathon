@@ -1,0 +1,49 @@
+{
+  "root_cause": "The dropdown's delegated keydown handler (dataApiKeydownHandler) unconditionally calls event.stopPropagation() for the Escape key, preventing the event from reaching the modal's keyboard dismiss listener. This occurs even when the dropdown menu is closed, so pressing Escape on the access toggle button never closes the share modal. Additionally, when the dropdown menu is open, the delegated handler runs too late (on document bubble) to stop the modal's listener, so a capture-phase listener is needed on the dropdown toggle and menu to intercept Escape before it reaches the modal.",
+  "repair_strategy": "1. Add a capture-phase keydown listener on the dropdown toggle button and menu that stops propagation for Escape and closes the dropdown when the menu is open. Attach these listeners in show() and remove them in hide() and dispose(). 2. Modify the static dataApiKeydownHandler to only call event.stopPropagation() for Escape when the dropdown is active (menu open). When the menu is closed, allow the event to propagate so the modal can close. Keep event.preventDefault() for all dropdown commands.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "  constructor(element, config) {\n    super(element)\n\n    this._popper = null\n    this._config = this._getConfig(config)\n    this._menu = this._getMenuElement()\n    this._inNavbar = this._detectNavbar()\n\n    this._addEventListeners()\n  }",
+      "after": "  constructor(element, config) {\n    super(element)\n\n    this._popper = null\n    this._config = this._getConfig(config)\n    this._menu = this._getMenuElement()\n    this._inNavbar = this._detectNavbar()\n\n    this._escapeCaptureHandler = (event) => {\n      if (event.key === ESCAPE_KEY) {\n        event.stopPropagation()\n        this.hide()\n      }\n    }\n\n    this._addEventListeners()\n  }"
+    },
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    this._menu.classList.toggle(CLASS_NAME_SHOW)\n    this._element.classList.toggle(CLASS_NAME_SHOW)\n    EventHandler.trigger(this._element, EVENT_SHOWN, relatedTarget)\n  }",
+      "after": "    this._menu.classList.toggle(CLASS_NAME_SHOW)\n    this._element.classList.toggle(CLASS_NAME_SHOW)\n\n    this._element.addEventListener('keydown', this._escapeCaptureHandler, true)\n    this._menu.addEventListener('keydown', this._escapeCaptureHandler, true)\n\n    EventHandler.trigger(this._element, EVENT_SHOWN, relatedTarget)\n  }"
+    },
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    if (this._popper) {\n      this._popper.destroy()\n    }\n\n    this._menu.classList.toggle(CLASS_NAME_SHOW)\n    this._element.classList.toggle(CLASS_NAME_SHOW)\n    Manipulator.removeDataAttribute(this._menu, 'popper')\n    EventHandler.trigger(this._element, EVENT_HIDDEN, relatedTarget)\n  }",
+      "after": "    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    this._element.removeEventListener('keydown', this._escapeCaptureHandler, true)\n    this._menu.removeEventListener('keydown', this._escapeCaptureHandler, true)\n\n    if (this._popper) {\n      this._popper.destroy()\n    }\n\n    this._menu.classList.toggle(CLASS_NAME_SHOW)\n    this._element.classList.toggle(CLASS_NAME_SHOW)\n    Manipulator.removeDataAttribute(this._menu, 'popper')\n    EventHandler.trigger(this._element, EVENT_HIDDEN, relatedTarget)\n  }"
+    },
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "  dispose() {\n    EventHandler.off(this._element, EVENT_KEY)\n    this._menu = null\n\n    if (this._popper) {\n      this._popper.destroy()\n      this._popper = null\n    }\n\n    super.dispose()\n  }",
+      "after": "  dispose() {\n    this._element.removeEventListener('keydown', this._escapeCaptureHandler, true)\n    this._menu.removeEventListener('keydown', this._escapeCaptureHandler, true)\n\n    EventHandler.off(this._element, EVENT_KEY)\n    this._menu = null\n\n    if (this._popper) {\n      this._popper.destroy()\n      this._popper = null\n    }\n\n    super.dispose()\n  }"
+    },
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    event.preventDefault()\n    event.stopPropagation()\n\n    if (isDisabled(this)) {\n      return\n    }\n\n    const parent = Dropdown.getParentFromElement(this)\n    const isActive = this.classList.contains(CLASS_NAME_SHOW)\n\n    if (event.key === ESCAPE_KEY) {\n      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n      button.focus()\n      Dropdown.clearMenus()\n      return\n    }",
+      "after": "    event.preventDefault()\n\n    if (isDisabled(this)) {\n      return\n    }\n\n    const parent = Dropdown.getParentFromElement(this)\n    const isActive = this.classList.contains(CLASS_NAME_SHOW)\n\n    if (event.key === ESCAPE_KEY) {\n      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n      button.focus()\n      if (isActive) {\n        event.stopPropagation()\n        Dropdown.clearMenus()\n      }\n      return\n    }\n\n    event.stopPropagation()"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape on the access toggle button (#access-toggle) will now close the share modal when the dropdown menu is closed, satisfying the requirement that Escape dismisses the dialog. When the dropdown menu is open, pressing Escape (whether focus is on the toggle button or a menu item) will close only the dropdown menu and leave the modal open, satisfying the regression guard.",
+  "functional_risks": [
+    "The capture listeners are added/removed in show/hide; if the dropdown is shown/hidden via other means (e.g., direct class manipulation), the listeners might not be correctly managed. However, the component's public API (show/hide) is the intended way.",
+    "The capture handler calls this.hide(), which triggers the hide method and removes the listeners. This is safe but could cause a reentrancy if hide is called again. The hide method guards against being called when the menu is not shown.",
+    "The change to dataApiKeydownHandler removes stopPropagation for Escape when the menu is closed. This allows the event to reach the modal's listener. Other keys (ArrowDown, ArrowUp, Space) still stop propagation, preserving existing dropdown navigation behavior."
+  ],
+  "verification_requirements": [
+    "Press Escape on the access toggle button when the dropdown menu is closed: verify the modal closes (access-toggle becomes invisible).",
+    "Press ArrowDown on the access toggle to open the dropdown, then press Escape: verify the dropdown closes but the modal remains open (access-toggle still visible).",
+    "Press Escape on a dropdown menu item (e.g., 'Finance team') when the menu is open: verify the dropdown closes but the modal remains open.",
+    "Ensure ArrowUp, ArrowDown, Space, and Enter keys still work for dropdown navigation and selection.",
+    "Verify that the modal can still be closed by pressing Escape when focus is elsewhere in the modal (e.g., on the Cancel button)."
+  ]
+}

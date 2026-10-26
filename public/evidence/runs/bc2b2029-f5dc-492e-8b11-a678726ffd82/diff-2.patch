@@ -1,0 +1,40 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..34ca00a 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -463,6 +463,21 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
++    // Handle Escape key: only close dropdown if menu is open
++    if (event.key === ESCAPE_KEY) {
++      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
++      const isMenuOpen = button.classList.contains(CLASS_NAME_SHOW)
++      if (!isMenuOpen) {
++        return // allow event to propagate to modal
++      }
++      event.preventDefault()
++      event.stopPropagation()
++      button.focus()
++      Dropdown.clearMenus()
++      return
++    }
++
++    // For all other keys, prevent default and stop propagation
+     event.preventDefault()
+     event.stopPropagation()
+ 
+@@ -473,13 +488,6 @@ class Dropdown extends BaseComponent {
+     const parent = Dropdown.getParentFromElement(this)
+     const isActive = this.classList.contains(CLASS_NAME_SHOW)
+ 
+-    if (event.key === ESCAPE_KEY) {
+-      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+-      button.focus()
+-      Dropdown.clearMenus()
+-      return
+-    }
+-
+     if (!isActive && (event.key === ARROW_UP_KEY || event.key === ARROW_DOWN_KEY)) {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.click()

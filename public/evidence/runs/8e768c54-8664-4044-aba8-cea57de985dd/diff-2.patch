@@ -1,0 +1,15 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..1605cbb 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -100,9 +100,8 @@ class Drawer extends DialogBase {
+   // Protected — hook overrides
+ 
+   protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {
+-    const useModal = Boolean(this._config.backdrop) || !this._config.scroll
+     return {
+-      modal: useModal,
++      modal: false,
+       preventBodyScroll: !this._config.scroll
+     }
+   }

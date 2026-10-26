@@ -1,0 +1,13 @@
+diff --git a/js/src/tab.js b/js/src/tab.js
+index 135e929..a85e95d 100644
+--- a/js/src/tab.js
++++ b/js/src/tab.js
+@@ -173,7 +173,7 @@ class Tab extends BaseComponent {
+   }
+ 
+   _getChildren() { // collection of inner elements
+-    return SelectorEngine.find(SELECTOR_INNER_ELEM, this._parent)
++    return SelectorEngine.find(SELECTOR_INNER_ELEM, this._parent).filter(child => !isDisabled(child))
+   }
+ 
+   _getActiveElem() {

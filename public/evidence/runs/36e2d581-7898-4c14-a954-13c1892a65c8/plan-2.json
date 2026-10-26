@@ -1,0 +1,21 @@
+{
+  "root_cause": "The drawer component relies on native <dialog> autofocus behavior when shown modally, but the browser does not move focus to the autofocus element in this configuration, leaving focus on the body after opening.",
+  "repair_strategy": "Add a 'shown.bs.drawer' event listener in the Drawer constructor to explicitly focus the first element with an autofocus attribute after the drawer finishes opening.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  constructor(element?: string | Element | null, config?: Partial<DrawerConfig> | null) {\n    super(element, config)\n    this._swipeHelper = null\n    this._resizeObserver = null\n    this._resizeFrame = null\n    this._initResizeObserver()\n  }",
+      "after": "  constructor(element?: string | Element | null, config?: Partial<DrawerConfig> | null) {\n    super(element, config)\n    this._swipeHelper = null\n    this._resizeObserver = null\n    this._resizeFrame = null\n    this._initResizeObserver()\n\n    // Focus the autofocus element when the drawer is shown\n    EventHandler.on(this._element, 'shown.bs.drawer', () => {\n      const autofocusElement = this._element.querySelector('[autofocus]')\n      if (autofocusElement instanceof HTMLElement) {\n        autofocusElement.focus()\n      }\n    })\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users opening the filters drawer will have focus land on the search input, enabling immediate interaction without manual tabbing.",
+  "functional_risks": [
+    "Minimal: only adds focus management for autofocus elements, aligning with expected native dialog behavior.",
+    "Does not affect non-modal drawers or existing focus restoration on close."
+  ],
+  "verification_requirements": [
+    "The journey step 'Open the drawer' must pass the focus assertion for #filters-search after pressing Enter on #filters-open.",
+    "Regression guard 'Escape closes the drawer and returns focus to Filters' must continue to pass."
+  ]
+}

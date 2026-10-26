@@ -1,0 +1,15 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Regression guard \"A picked date still shows in the configured dateFormat\": failed · #return-shown: expected \"October 25, 2026\", observed \"2026-10-25\""
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true,
+    "regressionGuards": "0/1"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

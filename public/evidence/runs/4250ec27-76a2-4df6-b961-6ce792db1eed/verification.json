@@ -1,6 +1,0 @@
-{
-  "verdict": "VERIFIED_FAIL",
-  "reasons": [
-    "APPLICATION: Edit 1 changes \"index.html\", the page that uses the component. It is read-only context: repair the component's own code in ."
-  ]
-}

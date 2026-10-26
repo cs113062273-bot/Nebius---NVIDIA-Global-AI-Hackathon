@@ -1,0 +1,26 @@
+{
+  "root_cause": "The Escape key handler in non-top-level menus incorrectly closes all submenus via rootMenu.closeChildren() and focuses the root menu's current child, instead of closing only the innermost open submenu and returning focus to its parent menu item. This breaks nested submenu navigation and leaves ancestor submenus closed.",
+  "repair_strategy": "Replace the Escape handler in the non-top-level menu branch to: (1) if the currently focused item has an open submenu, close that submenu and keep focus on the item; (2) otherwise, close the parent menu's current menu item's toggle (which is the submenu we are in) and call parentMenu.focusCurrentChild() to return focus to that parent item. This mirrors the ArrowLeft behavior and preserves ancestor submenu state.",
+  "edits": [
+    {
+      "path": "src/menubar.js",
+      "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864",
+      "before": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.rootMenu.closeChildren();\n          this.elements.rootMenu.focusCurrentChild();\n        }",
+      "after": "        } else if (key === \"Escape\") {\n          preventEvent(event);\n          // If the currently focused menu item has an open submenu, close it and keep focus on the item.\n          if (this.currentMenuItem.isSubmenuItem && this.currentMenuItem.elements.toggle.isOpen) {\n            this.currentMenuItem.elements.toggle.close();\n            this.currentMenuItem.focus();\n          } else {\n            // Otherwise close the submenu that opened this menu (i.e., the parent menu item's submenu)\n            // and move focus to that parent menu item.\n            const parentMenu = this.elements.parentMenu;\n            if (parentMenu && parentMenu.currentMenuItem.isSubmenuItem) {\n              parentMenu.currentMenuItem.elements.toggle.close();\n              parentMenu.focusCurrentChild();\n            }\n          }\n        }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape in a nested submenu (e.g., Facts) closes only that submenu, moves focus to its parent menu item (Facts), and leaves the ancestor submenu (About) open. Pressing Escape in a first-level submenu (e.g., About) closes that submenu and returns focus to the menubar item (About).",
+  "functional_risks": [
+    "Changing the Escape handler may affect other Escape behaviors that relied on closing all submenus; ensure no other parts of the code depend on that behavior.",
+    "Focus management must correctly handle nested submenus; incorrect parentMenu reference could misfocus.",
+    "Ensure that closing a submenu via Escape does not inadvertently affect sibling submenus or the menubar controller."
+  ],
+  "verification_requirements": [
+    "Verify the exact journey steps: Escape on #history returns focus to #facts with #facts aria-expanded false and #about aria-expanded true.",
+    "Test Escape on a submenu item that has an open submenu (e.g., #facts) – should close that submenu and keep focus on the item.",
+    "Test Escape on a top-level menubar item with an open submenu – should close the submenu and keep focus on the menubar item.",
+    "Test Escape when no submenu is open – should leave focus unchanged and not close any submenu.",
+    "Confirm that aria-expanded attributes are updated correctly and that focus is visible after each Escape press.",
+    "Regression guard: Escape in a first-level submenu (About) returns focus to #about and closes the About submenu."
+  ]
+}
