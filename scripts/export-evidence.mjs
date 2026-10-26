@@ -34,9 +34,12 @@ await fs.rm(realbugsOut, { recursive: true, force: true });
 for (const c of realbugs) { await fs.mkdir(path.join(realbugsOut, c.id), { recursive: true }); await fs.writeFile(path.join(realbugsOut, c.id, 'human.patch'), await humanPatch(c.id)); }
 await json(path.join(realbugsOut, 'index.json'), { generatedAt: new Date().toISOString(), enabled: false, cases: realbugs, benchmark: await benchmarkVersions() });
 // Patches that made the reported key work and failed another gate (scripts/gate-stats.mjs writes the list).
-const caught = (await readJson(path.join(ROOT, 'public', 'gate-stats.json')).catch(() => ({ caught: [] }))).caught;
-if (caught.length) groups.push({ title: 'Fixed the reported key, broke something else', summary: 'Blind model patches that made the frozen keyboard task pass and were rejected by another gate: the submitted data, the independent pointer path, a regression guard or a new axe finding. A test of the reported bug alone would have accepted each of them.',
+const { caught = [], falseRejections = [] } = await readJson(path.join(ROOT, 'public', 'gate-stats.json')).catch(() => ({}));
+if (caught.length) groups.push({ title: 'Fixed the reported key, broke something else', summary: 'Blind model patches that made the frozen keyboard task pass and were rejected by another gate: the submitted data, the independent pointer path or a regression guard. A test of the reported bug alone would have accepted each of them.',
  runs: caught.map(c => r(c.run, `${c.case} · attempt ${c.attempt} · engine ${c.version}`, { attempt: c.attempt })) });
+// The axe gate's own errors before engine v9, linked from the scoreboard; their recorded verdicts are unchanged.
+if (falseRejections.length) groups.push({ title: 'Rejected by our own gate in error', summary: 'Before engine v9 the axe check compared findings with the failing keyboard baseline only, by exact selector, and blamed the library’s existing day colours on these patches. Under the corrected check they add no finding. Not counted as caught.',
+ runs: falseRejections.map(c => r(c.run, `${c.case} · attempt ${c.attempt} · engine ${c.version}`, { attempt: c.attempt })) });
 // Passed every browser check and were rejected on review; kept because they explain the later gates.
 groups.unshift({ title: 'Passed the browser, rejected on review', summary: 'Model patches that satisfied every frozen check but were not real fixes. The first two name the test page’s own element ids inside library code, which led to the version 6 overfitting gate.',
  runs: [r('05c9906c-ae05-44df-97a4-52a433fdf9a7', 'Bootstrap 5 modal (engine v3) · hardcodes #confirm-close and #confirm-delete in modal.js', { attempt: 1, proof: true }),
