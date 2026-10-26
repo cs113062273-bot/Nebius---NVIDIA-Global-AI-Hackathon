@@ -80,7 +80,10 @@ if(mode==='screen'){
   const current=digest(await implementation()),eligible=rows.filter(r=>r.screen==='VERIFIED_PASS'),first=eligible.map(r=>r.results.filter(x=>x.policy==='auto'&&x.implementation===current).at(0)).filter(Boolean);
   // Every earlier frozen implementation keeps its own score, so a rerun never hides the previous result.
   const hashes=[...new Set(eligible.flatMap(r=>r.results.filter(x=>x.policy==='auto'&&x.implementation).map(x=>x.implementation)))];
-  const versions=hashes.map(h=>{const runs=eligible.map(r=>r.results.find(x=>x.policy==='auto'&&x.implementation===h)).filter(Boolean);return {implementation:h,current:h===current,autoRuns:runs.length,autoVerified:runs.filter(r=>r.verdict==='VERIFIED_PASS').length,firstRun:runs.map(r=>r.run).sort()[0]};});
+  const versions=hashes.map(h=>{const runs=eligible.map(r=>r.results.find(x=>x.policy==='auto'&&x.implementation===h)).filter(Boolean);// Repeated runs on one engine (v9 onward): every auto run counts, none is picked.
+    const all=eligible.map(r=>r.results.filter(x=>x.policy==='auto'&&x.implementation===h)),allRuns=all.flat();
+    return {implementation:h,current:h===current,autoRuns:runs.length,autoVerified:runs.filter(r=>r.verdict==='VERIFIED_PASS').length,firstRun:runs.map(r=>r.run).sort()[0],
+      allRuns:allRuns.length,allVerified:allRuns.filter(r=>r.verdict==='VERIFIED_PASS').length,casesRepairedOnce:all.filter(l=>l.some(r=>r.verdict==='VERIFIED_PASS')).length,maxRunsPerCase:Math.max(0,...all.map(l=>l.length))};});
   const summary={generatedAt:new Date().toISOString(),implementation:current,cases:rows.length,eligible:eligible.length,autoRuns:first.length,autoVerified:first.filter(r=>r.verdict==='VERIFIED_PASS').length,versions,rows};
   await write(path.join(BASE,'summary.json'),summary,'w');
   console.log(JSON.stringify({cases:summary.cases,eligible:summary.eligible,autoRuns:summary.autoRuns,autoVerified:summary.autoVerified},null,1));

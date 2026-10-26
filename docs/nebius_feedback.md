@@ -1,7 +1,21 @@
-# Nebius feedback — observation status
+# Nebius Token Factory: what we observed
 
-2026-10-20: No sponsor account credentials or credits have been configured. Live inference calls: zero. The user chose to complete local functionality first. No onboarding, real latency, reliability, structured-output compatibility or quota observations are available. Do not describe this as experience using the service.
+All inference in Tabstitch runs on Nebius Token Factory through its OpenAI-compatible API: 417 calls from the development machine between 2026-10-21 and 2026-10-26, plus the live runs that GitHub Actions makes on request and once a day. At catalog prices that is about US$8.80, paid from sponsor credits. Aggregates are in [`public/inference-stats.json`](../public/inference-stats.json).
 
-Documentation research: the official quickstart specifies an OpenAI-compatible API; the official model page advertises Nemotron variants. We chose authenticated catalog discovery rather than hard-coding a possibly unavailable model. The client fails closed, keeps server-only credentials and reserves token budget before completions.
+## What worked
 
-Questions to evaluate after actual onboarding: account model availability, sponsor-credit expiry and no-overage settings, HTTP behavior, schema support by model, request usage reporting and latency at bounded output sizes. Log observations from actual runs and include specific tool/version details. Would we use it again? Not enough runtime evidence yet.
+- **OpenAI-compatible chat completions.** One `fetch` client, with no SDK, covers Nemotron 3 Super, Ultra and Nano. Model choice is configuration.
+- **The catalog carries prices.** `GET /v1/models?verbose=true` returns per-token prices, so every call reserves its worst-case cost before it is sent. Each benchmark scope has a US$ ceiling, and the GitHub Actions live runs cap each run at US$0.50. We never had to estimate prices by hand.
+- **Usage includes reasoning tokens**, and every response has a request id. Both go into each run's provenance, so every published repair links to the exact request and response.
+- **Reliability.** No call returned an HTTP error or needed a retry. The failures were our own limits or the model's output: truncation at our `max_tokens`, and output that did not parse. Two calls on 2026-10-25 have no recorded outcome, and one run records our five-minute client timeout.
+- **It works from CI.** The same key, held as a GitHub secret, lets judges start a real Nemotron run by opening an issue. The run is replayed in Chromium and the verdict is posted back within minutes.
+
+## What could be better
+
+- **Structured outputs for Nemotron.** The catalog does not advertise `structured_outputs` for the Nemotron 3 models, so the schema travels in the prompt, and 34 completions did not parse into it. A documented `response_format` that works with reasoning enabled would remove that failure class.
+- **Latency varies widely for long prompts.** At a p50 prompt of about 14,000 tokens, Super's p90 latency was 64 s and its maximum 139 s. Ultra was steadier. A published expected-latency figure per model would help set timeouts.
+- **Cost in the response.** The response reports tokens, not cost. We compute cost from catalog prices. A per-request cost field would make sponsor-credit accounting exact.
+
+## Would we use it again
+
+Yes. Price-aware model discovery and an OpenAI-compatible API made it practical to cap every call, publish every request and let strangers trigger live runs safely.

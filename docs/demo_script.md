@@ -1,27 +1,21 @@
-# Demo script — 2 minutes 50 seconds
+# Demo script: 2 minutes 45 seconds
 
-## New presentation opening
+Record at 1440×900 in a normal Chrome window, with the judge site at 110% zoom. Everything shown is recorded evidence or a real live run; say "recorded" when you play a recording. Keep under three minutes, and use no music you have no licence for.
 
-Use the bundled case studies instead of beginning on an empty workbench. Click **Presentation view**. In the first 20 seconds, show the account form with **zero axe violations** and a keyboard path that cannot reach the submit action. Switch to **The wrong fix**: the button is reachable and the scan remains clear, but the confirmation is wrong, so the candidate is rejected. Then show **Real-world focus loss** with its linked upstream human fix. All three are actual recorded evidence with explicit author/human provenance. Spend no time listing test counts. Move into a fresh run, and replace the author provider with the real Nebius/Nemotron stage only after live credentials and a genuine successful run exist. The current honest limitation is no live model execution.
+Site: https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/
 
-The detailed shot timing below predates the casebook opening; adapt its first minute to these three concrete outcomes. Keep the final video under three minutes.
+| Time | Screen | Say |
+|---|---|---|
+| 0:00–0:15 | `twbs/bootstrap#43202`, with the *confirmed* label visible | "This Bootstrap 6 datepicker traps keyboard users: once the calendar is open, Tab never leaves the field. Nobody had reported it. Tabstitch found it, and a Bootstrap maintainer confirmed it the same day." |
+| 0:15–0:35 | Home page hero and the 22/26 card (use the current number) | "AI can write a fix for this kind of bug in seconds. The hard part is knowing which fix you can merge. Tabstitch has NVIDIA Nemotron on Nebius Token Factory write the patch, and a real browser decide." |
+| 0:35–1:20 | Live page → GOV.UK Frontend card *"The up and down arrow keys must not switch between horizontal tabs"* → **Watch the recorded run** (run `8743f80f`) | "This bug was fixed by GOV.UK's maintainers. We pin the code from before their fix and freeze the user's task: the keys, the data the form must submit, a pointer path and guards for what already works. Nemotron 3 Super gets only the buggy source. Its patch is replayed in Chromium and rejected: step 2 fails. Nemotron 3 Ultra gets that exact failure and fixes it. Every gate passes." Open the diff, then **Compare with the maintainers' own fix**. |
+| 1:20–1:45 | Scoreboard → *"What the browser loop and the gates add"* → open the Bootstrap dropdown entry (run `b82c5703`, attempt 1) | "This is why we don't trust a passing test. Super's patch fixed the reported Escape key, but it broke Escape inside the open menu. A test of the bug alone would have merged it. The guard caught it, and so did the gates for 18 others like it." |
+| 1:45–2:05 | Scoreboard engine versions and the all-version rate | "26 real bugs from 12 libraries. Every engine version keeps its public score, including the worse ones. Every run, every rejected patch and every raw model request is published." |
+| 2:05–2:30 | Any bug card → **Run it live** → the prefilled issue → a finished bot reply (issue #2) | "Judges don't have to trust recordings. Press Run it live, and GitHub Actions makes a fresh Nemotron repair, capped at fifty cents of sponsor credits, then replies on the issue with the verdict and the evidence." |
+| 2:30–2:45 | PR #1, the Tabstitch check comment | "It runs as a GitHub Action on pull requests too. Nemotron writes the fix; the browser keeps the outcome. Tabstitch." |
 
-This script is ready for the **current local reference build**. Do not record the future live-provider statements until a genuine successful Nebius run exists. Do not imply a generated patch when reference mode is selected.
+## Before recording
 
-0:00–0:15 — “A checkout can look polished and still stop someone using a keyboard. A clean scan is not proof that a person can finish.” Show Common Ground, then the workbench.
-
-0:15–0:35 — Start a fresh checkout run. “We freeze the actual task and its functional outcomes first. The agent cannot rewrite the test.” Show the fingerprint. Open the failure checkpoint: focus stays on the trigger instead of entering the dialog.
-
-0:35–0:55 — Show focus transitions, AX snapshot and failing assertion. “This is browser evidence: the expected focus state did not happen. We preserve incomplete axe findings as well.”
-
-0:55–1:15 — Current build: “This run uses an author reference patch. It exercises our repair gate without spending sponsor credits or claiming AI work.” Open source diff. Future live replacement, only after actual validation: “NVIDIA [exact model ID] on Nebius Token Factory receives this bounded evidence and proposes a minimal source repair. It never decides whether it worked.”
-
-1:15–1:45 — Inspect replay checkpoints: focus enters, Shift+Tab wraps, Tab wraps, Escape returns to trigger, reopen, input and submit. “Same frozen journey. Fresh browser state. We also repeat an independent pointer task so an accessibility fix cannot silently break the original function.”
-
-1:45–2:05 — Show before fail / after pass, visual change gate, verification JSON and download bundle. “Specific task, specific conditions. All assertions, source changes and evidence are inspectable and hashed.”
-
-2:05–2:30 — Show actual `benchmarks/results.json`. Read the current measured counts, distinguishing reference patches, negative controls, focused pairs and published historical human fixes. Do not call these model success rates. “The verifier also has to reject the wrong fix.” Show functional-regression negative control.
-
-2:30–2:50 — “The target is accountable repair: Nemotron can reason, but execution has to prove the exact task works. Real screen readers and full conformance still need people. Don’t trust the fix. Replay the journey.” Display live-provider NOT_TESTED if still applicable.
-
-Record a new public YouTube video under three minutes only when final live integration, release build and judge-access plan are ready. No copyrighted music or unlicensed assets.
+- Use the scoreboard numbers shown on the day, not the ones in this file.
+- Start one live run about 15 minutes before recording, so a fresh bot reply is ready to show.
+- Upload as a public YouTube video under three minutes, then add the link to the Devpost form and the README.
