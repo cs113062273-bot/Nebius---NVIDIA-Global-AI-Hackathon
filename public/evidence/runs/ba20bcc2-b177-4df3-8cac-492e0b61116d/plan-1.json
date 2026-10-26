@@ -1,0 +1,30 @@
+{
+  "root_cause": "The offcanvas plugin always treats the panel as a modal dialog (setting aria-modal=true, role=dialog) and enforces focus trapping regardless of the backdrop setting. When backdrop=false (as used for the non‑modal help panel), the focus trap prevents tab navigation from escaping the offcanvas, causing focus to cycle between the offcanvas container and its close button and never reaching the amount field.",
+  "repair_strategy": "Modify the offcanvas show and hide methods to conditionally apply modal attributes (aria‑modal, role) and focus enforcement only when the backdrop option is true. When backdrop is false, the panel will behave like regular inline content, allowing normal tab traversal while preserving its visibility and dismiss behavior.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "    this._element.removeAttribute('aria-hidden')\n    this._element.setAttribute('aria-modal', true)\n    this._element.setAttribute('role', 'dialog')\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      this._enforceFocusOnElement(this._element)\n    }",
+      "after": "    this._element.removeAttribute('aria-hidden')\n    if (this._config.backdrop) {\n      this._element.setAttribute('aria-modal', true)\n      this._element.setAttribute('role', 'dialog')\n    }\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      if (this._config.backdrop) {\n        this._enforceFocusOnElement(this._element)\n      }\n    }"
+    },
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "    EventHandler.off(document, EVENT_FOCUSIN)\n    this._element.blur()\n    this._isShown = false\n    this._element.classList.remove(CLASS_NAME_SHOW)\n    this._backdrop.hide()\n\n    const completeCallback = () => {\n      this._element.setAttribute('aria-hidden', true)\n      this._element.removeAttribute('aria-modal')\n      this._element.removeAttribute('role')\n      this._element.style.visibility = 'hidden'\n\n      if (!this._config.scroll) {\n        scrollBarReset()\n      }\n\n      EventHandler.trigger(this._element, EVENT_HIDDEN)\n    }",
+      "after": "    EventHandler.off(document, EVENT_FOCUSIN)\n    this._element.blur()\n    this._isShown = false\n    this._element.classList.remove(CLASS_NAME_SHOW)\n    this._backdrop.hide()\n\n    const completeCallback = () => {\n      this._element.setAttribute('aria-hidden', true)\n      if (this._config.backdrop) {\n        this._element.removeAttribute('aria-modal')\n        this._element.removeAttribute('role')\n      }\n      this._element.style.visibility = 'hidden'\n\n      if (!this._config.scroll) {\n        scrollBarReset()\n      }\n\n      EventHandler.trigger(this._element, EVENT_HIDDEN)\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Users can now tab from the help panel’s close button directly to the amount input field, reaching it within the allowed number of tab presses. The tab order follows the DOM sequence, and the offcanvas no longer traps focus when presented as a non‑modal sidebar.",
+  "functional_risks": [
+    "Removing the modal attributes and focus trap may change how assistive technologies announce the offcanvas (no longer as a dialog). Since the panel is intended as a non‑modal sidebar with backdrop=false, this aligns with the visual design.",
+    "Without automatic focus return, focus could wander outside the offcanvas unintentionally, but the panel remains dismissible via its close button or the Escape key (when keyboard:true).",
+    "If any other code relies on the offcanvas having role=dialog or aria-modal=true for scripting, those assumptions would break; however the current usage only depends on visibility and dismissal."
+  ],
+  "verification_requirements": [
+    "After applying the edit, the journey step \"Tab to the amount field\" must succeed within 6 tab transitions when the help panel is open.",
+    "Verify that pressing Escape still closes the offcanvas when the keyboard option is true (default).",
+    "Confirm that the offcanvas can be closed by clicking its close button or via the backdrop click when backdrop:true.",
+    "Ensure that when backdrop is explicitly set to true (default), the offcanvas retains modal behavior (focus trapping, aria-modal, role=dialog) to avoid regressions in other contexts."
+  ]
+}

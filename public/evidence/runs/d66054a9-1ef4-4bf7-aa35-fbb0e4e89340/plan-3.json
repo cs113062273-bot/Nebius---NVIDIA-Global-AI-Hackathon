@@ -1,0 +1,22 @@
+{
+  "root_cause": "The ES module import for the checkboxes component fails because the module does not export 'initCheckboxes' (neither named nor default), leaving exclusive checkbox behavior uninitialized for both symptoms and contact groups. The contact group lacks data-checkbox-exclusive-group attributes, relying only on shared name='contact', which the previous inline script did not handle.",
+  "repair_strategy": "Replace the failing module import with an inline script that implements exclusive checkbox behavior using data-checkbox-exclusive-group when present, falling back to the shared name attribute for grouping. This ensures both symptoms and contact exclusive checkboxes clear their respective groups on keyboard or pointer interaction.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+      "before": "<script type=\"module\">\nimport { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'\ninitCheckboxes()\n</script>",
+      "after": "<script>\ndocument.addEventListener('DOMContentLoaded', function() {\n  function getGroup(cb) {\n    return cb.getAttribute('data-checkbox-exclusive-group') || cb.name;\n  }\n  function getNonExclusiveInGroup(group) {\n    var byAttr = Array.from(document.querySelectorAll('input[data-checkbox-exclusive-group=\"' + group + '\"]:not([data-checkbox-exclusive])'));\n    if (byAttr.length) return byAttr;\n    return Array.from(document.querySelectorAll('input[name=\"' + group + '\"]:not([data-checkbox-exclusive])'));\n  }\n  function getExclusiveInGroup(group) {\n    return Array.from(document.querySelectorAll('input[data-checkbox-exclusive]')).filter(function(excl) {\n      return getGroup(excl) === group;\n    });\n  }\n  document.querySelectorAll('input[data-checkbox-exclusive]').forEach(function(exclusiveCheckbox) {\n    exclusiveCheckbox.addEventListener('change', function() {\n      if (this.checked) {\n        var group = getGroup(this);\n        var nonExclusive = getNonExclusiveInGroup(group);\n        nonExclusive.forEach(function(cb) {\n          cb.checked = false;\n          cb.dispatchEvent(new Event('change', { bubbles: true }));\n        });\n      }\n    });\n  });\n  document.querySelectorAll('input[type=\"checkbox\"]:not([data-checkbox-exclusive])').forEach(function(cb) {\n    cb.addEventListener('change', function() {\n      if (this.checked) {\n        var group = getGroup(this);\n        var exclusives = getExclusiveInGroup(group);\n        exclusives.forEach(function(excl) {\n          excl.checked = false;\n          excl.dispatchEvent(new Event('change', { bubbles: true }));\n        });\n      }\n    });\n  });\n});\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "Selecting the exclusive 'No, I do not have any of these symptoms' checkbox clears previously selected symptom checkboxes, and selecting 'Do not contact me' clears other contact methods, providing correct keyboard-operated exclusive choice behavior for both groups and satisfying WCAG 2.1.1 (keyboard) and 4.1.2 (name, role, value).",
+  "functional_risks": [
+    "Inline script may not cover all edge cases of the original module (e.g., dynamic groups, nested forms).",
+    "If the original module provides additional enhancements (e.g., ARIA attributes), they will be missing."
+  ],
+  "verification_requirements": [
+    "After applying the edit, executing the journey steps (tick cough, tick fever, then tick 'no symptoms') should result in symptoms[cough] and symptoms[fever] being cleared (value []).",
+    "The regression guard for choosing 'Do not contact me' after ticking a contact method should pass (contact value ['none']).",
+    "All existing functional checks and success criteria should remain satisfied."
+  ]
+}

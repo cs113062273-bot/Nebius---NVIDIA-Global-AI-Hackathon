@@ -1,0 +1,89 @@
+{
+  "completedAt": "2026-10-26T02:59:16.285Z",
+  "implementation": "4ee73b81fd1057bef76d7820808d250a8dbeb3528af67e5ae219cd32d5985ea7",
+  "modelRun": "2bb91b99-274b-46c2-bb10-05c83c3cb194",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: edits.1: Unrecognized key: \"keystrokes\"",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-a448f99131477c0f962ddb204692f499",
+      "usage": {
+        "completion_tokens": 15527,
+        "prompt_tokens": 15246,
+        "total_tokens": 30773,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13644,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 15246
+      },
+      "latencyMs": 86039
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-e7d5e823604d910c1c2c99667733f775",
+      "usage": {
+        "completion_tokens": 5567,
+        "prompt_tokens": 15320,
+        "total_tokens": 20887,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4100,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 15320
+      },
+      "latencyMs": 14534
+    },
+    {
+      "attempt": 3,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-5c7d6bbe7b9bc920be7c9e6079341725",
+      "usage": {
+        "completion_tokens": 6275,
+        "prompt_tokens": 17324,
+        "total_tokens": 23599,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4731,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17324
+      },
+      "latencyMs": 16394
+    }
+  ]
+}

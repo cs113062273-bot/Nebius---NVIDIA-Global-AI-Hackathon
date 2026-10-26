@@ -1,11 +1,11 @@
 {
   "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-  "reviewedAt": "2026-10-25T18:34:11.811Z",
-  "run": "5f429d28-ad4a-4987-87d8-3e89b3ab365e",
-  "verdict": "Works, different trade-off from the pending human fix",
-  "summary": "The input now keeps the ISO date of the selection instead of the locale-formatted string.",
+  "reviewedAt": "2026-10-26T03:08:35.468Z",
+  "run": "e5b11819-4a22-4eff-a826-bbfbc95465fe",
+  "verdict": "Works, but not acceptable upstream as written",
+  "summary": "The field keeps an ISO date because the default display format becomes YYYY-MM-DD. That fixes the submitted value, but every datepicker without its own dateFormat would now show ISO dates instead of locale-formatted ones.",
   "caveats": [
-    "An input-mode datepicker now shows 2026-10-22 rather than the localized date.",
-    "Pending pull request #43150 keeps the localized text visible and submits the ISO date through a hidden input. Both pass this task; the human design is the better user experience."
+    "The pending human fix keeps the localized display and changes only what is submitted; that is the better trade-off.",
+    "Useful for an app that wants ISO in the field; not proposed upstream."
   ]
 }

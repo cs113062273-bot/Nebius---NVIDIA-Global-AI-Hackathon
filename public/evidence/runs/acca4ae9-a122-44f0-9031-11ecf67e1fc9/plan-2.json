@@ -1,0 +1,23 @@
+{
+  "root_cause": "The dropdown's Escape key handler unconditionally calls preventDefault() and stopPropagation() before checking if the menu is actually open. This swallows the Escape event even when the dropdown menu is closed, preventing the modal's Escape listener from receiving the event to close the dialog.",
+  "repair_strategy": "Restructure the dataApiKeydownHandler to check if the dropdown menu is active (isActive) before handling Escape. Only call preventDefault/stopPropagation and clearMenus when Escape is pressed AND the menu is shown. When the menu is not shown, return early without preventing default, allowing the event to propagate to the modal.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    if (/input|textarea/i.test(event.target.tagName) ?\n      event.key === SPACE_KEY || (event.key !== ESCAPE_KEY &&\n      ((event.key !== ARROW_DOWN_KEY && event.key !== ARROW_UP_KEY) ||\n        event.target.closest(SELECTOR_MENU))) :\n      !REGEXP_KEYDOWN.test(event.key)) {\n      return\n    }\n\n    event.preventDefault()\n    event.stopPropagation()\n\n    if (isDisabled(this)) {\n      return\n    }\n\n    const parent = Dropdown.getParentFromElement(this)\n    const isActive = this.classList.contains(CLASS_NAME_SHOW)\n\n    if (event.key === ESCAPE_KEY) {\n      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n      button.focus()\n      Dropdown.clearMenus()\n      return\n    }\n\n    if (!isActive && (event.key === ARROW_UP_KEY || event.key === ARROW_DOWN_KEY)) {\n      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n      button.click()\n      return\n    }\n\n    if (!isActive || event.key === SPACE_KEY) {\n      Dropdown.clearMenus()\n      return\n    }",
+      "after": "    if (/input|textarea/i.test(event.target.tagName) ?\n      event.key === SPACE_KEY || (event.key !== ESCAPE_KEY &&\n      ((event.key !== ARROW_DOWN_KEY && event.key !== ARROW_UP_KEY) ||\n        event.target.closest(SELECTOR_MENU))) :\n      !REGEXP_KEYDOWN.test(event.key)) {\n      return\n    }\n\n    if (isDisabled(this)) {\n      return\n    }\n\n    const parent = Dropdown.getParentFromElement(this)\n    const isActive = this.classList.contains(CLASS_NAME_SHOW)\n\n    if (event.key === ESCAPE_KEY) {\n      if (isActive) {\n        event.preventDefault()\n        event.stopPropagation()\n        const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n        button.focus()\n        Dropdown.clearMenus()\n      }\n      return\n    }\n\n    event.preventDefault()\n    event.stopPropagation()\n\n    if (!isActive && (event.key === ARROW_UP_KEY || event.key === ARROW_DOWN_KEY)) {\n      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n      button.click()\n      return\n    }\n\n    if (!isActive || event.key === SPACE_KEY) {\n      Dropdown.clearMenus()\n      return\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will now close the share modal when focus is on the access toggle button and the dropdown menu is closed. When the dropdown menu is open, Escape will close only the menu (not the modal), preserving expected dropdown behavior.",
+  "functional_risks": [
+    "Escape key behavior changes only when dropdown menu is closed; menu-open behavior unchanged.",
+    "Other components relying on dropdown consuming Escape events universally may be affected, but this aligns with APG pattern where Escape closes the current component only."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape with focus on the access toggle button (menu closed) closes the share modal.",
+    "Verify that pressing Escape with the dropdown menu open closes only the menu (does not close the modal).",
+    "Verify that ArrowUp, ArrowDown, Space, and Enter interactions with the dropdown remain functional.",
+    "Verify that Escape still closes the modal when focus is elsewhere in the modal (e.g., on the Cancel or Save buttons)."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "root_cause": "The MicroModal library's getFocusableNodes() method includes hidden elements (like the .retry button with display:none) in the focusable nodes list. When tabbing from the last visible control (#upload), the focus trap logic sees the hidden #retry button as the last focusable node, so it doesn't trigger the wrap-around behavior, allowing focus to escape to page content (#help).",
+  "repair_strategy": "Modify getFocusableNodes() to filter out elements that are not visually rendered (display:none, visibility:hidden, opacity:0) or have aria-hidden=\"true\", ensuring only perceivable controls participate in the focus trap.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes)\n    }",
+      "after": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes).filter(node => {\n        if (node.getAttribute('aria-hidden') === 'true') return false\n        const style = window.getComputedStyle(node)\n        return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0'\n      })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key cycles within the dialog's visible controls per WCAG 2.1.1 and 2.4.3, preventing focus escape to page content when the dialog is open.",
+  "functional_risks": [
+    "Minimal risk: only affects focus trapping logic in MicroModal",
+    "Could theoretically affect modals that intentionally use hidden-but-focusable elements (uncommon pattern)"
+  ],
+  "verification_requirements": [
+    "Existing keyboard journey passes: Tab from #upload wraps to #modal-close",
+    "Escape key closes dialog and returns focus to trigger",
+    "Initial focus lands on #filename when dialog opens",
+    "Shift+Tab from first focusable element wraps to last"
+  ]
+}

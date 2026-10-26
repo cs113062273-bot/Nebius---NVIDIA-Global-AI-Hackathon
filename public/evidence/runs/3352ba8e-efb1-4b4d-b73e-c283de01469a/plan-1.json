@@ -1,0 +1,21 @@
+{
+  "root_cause": "The navigation controller incorrectly sets aria-activedescendant to the item's data-value (label) instead of the element's ID, causing assistive technologies to announce the wrong active option.",
+  "repair_strategy": "Change the assignment of aria-activedescendant in the navigation controller's update function to use the list item's ID attribute.",
+  "edits": [
+    {
+      "path": "src/controllers/navigationController.js",
+      "sha256": "3f7f66612501cb9d0fbe0a4d8b3d7732ca01228bf922d9b794daa60f87a0c4a4",
+      "before": "  const update = (event, list, state, config) => {\n    event.preventDefault();\n    if (state) {\n      // If the arrow DOWN or TAB key is pressed\n      // increase the currentFocus\n      currentFocus++;\n    } else {\n      // If the arrow UP or TAB key is pressed\n      // decrease the currentFocus\n      currentFocus--;\n    }\n    // and add \"active\" class to the list item\n    addActive(list);\n    config.inputField.setAttribute(\"aria-activedescendant\", list[currentFocus].dataset.value);\n    /**\n     * @emits {navigation} Emits Event on results list navigation\n     **/\n    eventEmitter(\n      event.srcElement,\n      { event, ...dataFeedback, matches: results, selection: results[currentFocus] },\n      \"navigation\"\n    );\n  };",
+      "after": "  const update = (event, list, state, config) => {\n    event.preventDefault();\n    if (state) {\n      // If the arrow DOWN or TAB key is pressed\n      // increase the currentFocus\n      currentFocus++;\n    } else {\n      // If the arrow UP or TAB key is pressed\n      // decrease the currentFocus\n      currentFocus--;\n    }\n    // and add \"active\" class to the list item\n    addActive(list);\n    config.inputField.setAttribute(\"aria-activedescendant\", list[currentFocus].id);\n    /**\n     * @emits {navigation} Emits Event on results list navigation\n     **/\n    eventEmitter(\n      event.srcElement,\n      { event, ...dataFeedback, matches: results, selection: results[currentFocus] },\n      \"navigation\"\n    );\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "aria-activedescendant will now correctly reference the ID of the highlighted option, allowing screen readers to announce the active suggestion as the user navigates with arrow keys.",
+  "functional_risks": [
+    "If any custom code depended on the previous dataset.value being set as aria-activedescendant, it would now receive the ID instead; however, no such usage is evident in the provided codebase."
+  ],
+  "verification_requirements": [
+    "After typing 'ma' and pressing ArrowDown once, aria-activedescendant on #store must equal 'autoCompleteJS_result_0'.",
+    "After a second ArrowDown, aria-activedescendant must equal 'autoCompleteJS_result_1'.",
+    "Pressing Enter while a suggestion is highlighted must set the form's store field to the corresponding suggestion's name."
+  ]
+}

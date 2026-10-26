@@ -1,0 +1,55 @@
+[
+  {
+    "path": "index.html",
+    "score": 7,
+    "signals": [
+      "delivery-date",
+      "datepicker",
+      "instructions",
+      "body",
+      "Delivery date (yyyy-mm-dd, May or June 2024)",
+      "Delivery instructions",
+      "Save changes"
+    ],
+    "sha256": "65aed401079db321848a7aaac961422c238e1349153fe346168aea0cb390dfc8"
+  },
+  {
+    "path": "js/picker/Picker.js",
+    "score": 4,
+    "signals": [
+      "datepicker",
+      "body",
+      "Today",
+      "Clear"
+    ],
+    "sha256": "b72869d034bca737e9d5ad1dd7cdc899083a7c1202b5619323d76aaa6ac5beaf"
+  },
+  {
+    "path": "js/events/pickerListeners.js",
+    "score": 3,
+    "signals": [
+      "datepicker",
+      "Today",
+      "Clear"
+    ],
+    "sha256": "fff68db8aa10ab33fe9e393aa1bf6d56953fae94f88632e1e65ca602d44500cf"
+  },
+  {
+    "path": "js/Datepicker.js",
+    "score": 2,
+    "signals": [
+      "datepicker",
+      "body"
+    ],
+    "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609"
+  },
+  {
+    "path": "js/i18n/base-locales.js",
+    "score": 2,
+    "signals": [
+      "Today",
+      "Clear"
+    ],
+    "sha256": "b687f8c2767e03947e51a4ed014c361e6c910aa5c9f4e7aa8794284a342f285f"
+  }
+]

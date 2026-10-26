@@ -1,0 +1,43 @@
+diff --git a/index.html b/index.html
+index f26a4cc..65b4992 100644
+--- a/index.html
++++ b/index.html
+@@ -75,9 +75,35 @@ body{margin:0;font:19px/1.4 Arial,sans-serif;color:#212b32;background:#f0f4f5}
+ </form>
+ </main>
+ </div>
+-<script type="module">
+-import { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'
+-initCheckboxes()
++<script>
++document.addEventListener('DOMContentLoaded', function() {
++  // Exclusive checkbox behavior for data-checkbox-exclusive and data-checkbox-exclusive-group
++  document.querySelectorAll('input[data-checkbox-exclusive]').forEach(function(exclusiveCheckbox) {
++    exclusiveCheckbox.addEventListener('change', function() {
++      if (this.checked) {
++        var group = this.getAttribute('data-checkbox-exclusive-group');
++        if (group) {
++          document.querySelectorAll('input[data-checkbox-exclusive-group="' + group + '"]:not([data-checkbox-exclusive])').forEach(function(cb) {
++            cb.checked = false;
++            cb.dispatchEvent(new Event('change', { bubbles: true }));
++          });
++        }
++      }
++    });
++  });
++  // Uncheck exclusive when a non-exclusive in same group is checked
++  document.querySelectorAll('input[data-checkbox-exclusive-group]:not([data-checkbox-exclusive])').forEach(function(cb) {
++    cb.addEventListener('change', function() {
++      if (this.checked) {
++        var group = this.getAttribute('data-checkbox-exclusive-group');
++        document.querySelectorAll('input[data-checkbox-exclusive][data-checkbox-exclusive-group="' + group + '"]').forEach(function(excl) {
++          excl.checked = false;
++          excl.dispatchEvent(new Event('change', { bubbles: true }));
++        });
++      }
++    });
++  });
++});
+ </script>
+ </body>
+ </html>

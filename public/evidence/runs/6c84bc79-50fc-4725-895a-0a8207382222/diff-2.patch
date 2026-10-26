@@ -1,0 +1,13 @@
+diff --git a/index.html b/index.html
+index 8b3f6a4..a1f22f5 100644
+--- a/index.html
++++ b/index.html
+@@ -39,7 +39,7 @@ fieldset{border:1px solid #555;margin:0 0 16px}
+ <script type="module">
+ import { createFocusTrap } from './upstream-dependency/focus-trap/index.js';
+ const backdrop = document.getElementById('backdrop');
+-const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; } });
++const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; }, initialFocus: '#street', delayInitialFocus: false });
+ document.getElementById('open').addEventListener('click', () => { backdrop.hidden = false; trap.activate(); });
+ document.getElementById('cancel').addEventListener('click', () => trap.deactivate());
+ document.getElementById('save').addEventListener('click', () => {

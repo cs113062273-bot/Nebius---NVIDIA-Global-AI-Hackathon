@@ -1,0 +1,30 @@
+diff --git a/src/controllers/navigationController.js b/src/controllers/navigationController.js
+index 22aeb48..b8cb834 100644
+--- a/src/controllers/navigationController.js
++++ b/src/controllers/navigationController.js
+@@ -9,6 +9,10 @@ import eventEmitter from "../utils/eventEmitter";
+  *
+  */
+ const navigate = (config, dataFeedback) => {
++  // Remove previous navigation listener if exists
++  if (config._navigateListener) {
++    config.inputField.removeEventListener("keydown", config._navigateListener);
++  }
+   // Reset focus state
+   let currentFocus = -1;
+ 
+@@ -115,11 +119,12 @@ const navigate = (config, dataFeedback) => {
+     }
+   };
+ 
+-  const navigate = config.resultsList.navigation || navigation;
++  const listener = config.resultsList.navigation || navigation;
+   /**
+    * @listens {keydown} Listens to all `keydown` events on the input field
+    **/
+-  config.inputField.addEventListener("keydown", navigate);
++  config.inputField.addEventListener("keydown", listener);
++  config._navigateListener = listener;
+ };
+ 
+ export { navigate };

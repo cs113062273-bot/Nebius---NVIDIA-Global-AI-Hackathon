@@ -1,0 +1,20 @@
+diff --git a/index.html b/index.html
+index 92fad08..c577f07 100644
+--- a/index.html
++++ b/index.html
+@@ -51,6 +51,15 @@ window.cityPicker = new autoComplete({
+   resultsList: { id: 'city-list' },
+   events: { input: { selection: event => { window.cityPicker.input.value = event.detail.selection.value; } } }
+ });
++// Dismiss suggestions with Escape while preserving typed input
++window.cityPicker.input.addEventListener('keydown', event => {
++  if (event.key === 'Escape') {
++    event.preventDefault();
++    if (typeof window.cityPicker.close === 'function') {
++      window.cityPicker.close();
++    }
++  }
++});
+ form.addEventListener('submit', event => {
+   event.preventDefault();
+   document.getElementById('status').textContent = 'Saved ' + new FormData(form).get('city');

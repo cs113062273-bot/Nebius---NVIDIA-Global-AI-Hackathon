@@ -1,0 +1,38 @@
+{
+  "root_cause": "The datepicker does not close when tabbing away from the input field because there is no blur event listener on the input to hide the picker, and the picker element is not focusable to retain focus during keyboard interaction. Additionally, the input field is not reachable via Tab because the picker's show() method focuses the picker element, removing focus from the input.",
+  "repair_strategy": "1. In Picker.js, modify show() to make the picker element focusable (tabindex=-1) without focusing it, so the input retains focus. In hide(), remove the tabindex. 2. In index.html, add a blur event listener on the input field that hides the picker when focus leaves the input and the new focus is not the picker element or its children. This ensures the picker closes when tabbing away but stays open when interacting with it.",
+  "edits": [
+    {
+      "path": "js/picker/Picker.js",
+      "sha256": "b72869d034bca737e9d5ad1dd7cdc899083a7c1202b5619323d76aaa6ac5beaf",
+      "before": "  show() {\n    if (this.active) {\n      return;\n    }\n    this.element.classList.add('active');\n    this.active = true;\n\n    const datepicker = this.datepicker;\n    if (!datepicker.inline) {\n      // ensure picker's direction matches input's\n      const inputDirection = getTextDirection(datepicker.inputField);\n      if (inputDirection !== getTextDirection(datepicker.config.container)) {\n        this.element.dir = inputDirection;\n      } else if (this.element.dir) {\n        this.element.removeAttribute('dir');\n      }\n\n      this.place();\n      if (datepicker.config.disableTouchKeyboard) {\n        datepicker.inputField.blur();\n      }\n    }\n    triggerDatepickerEvent(datepicker, 'show');\n  }",
+      "after": "  show() {\n    if (this.active) {\n      return;\n    }\n    this.element.classList.add('active');\n    this.active = true;\n\n    const datepicker = this.datepicker;\n    if (!datepicker.inline) {\n      // ensure picker's direction matches input's\n      const inputDirection = getTextDirection(datepicker.inputField);\n      if (inputDirection !== getTextDirection(datepicker.config.container)) {\n        this.element.dir = inputDirection;\n      } else if (this.element.dir) {\n        this.element.removeAttribute('dir');\n      }\n\n      this.place();\n      if (datepicker.config.disableTouchKeyboard) {\n        datepicker.inputField.blur();\n      }\n      // Make the picker focusable so it can receive focus without blurring the input\n      this.element.tabIndex = -1;\n    }\n    triggerDatepickerEvent(datepicker, 'show');\n  }"
+    },
+    {
+      "path": "js/picker/Picker.js",
+      "sha256": "b72869d034bca737e9d5ad1dd7cdc899083a7c1202b5619323d76aaa6ac5beaf",
+      "before": "  hide() {\n    if (!this.active) {\n      return;\n    }\n    this.datepicker.exitEditMode();\n    this.element.classList.remove('active');\n    this.active = false;\n    triggerDatepickerEvent(this.datepicker, 'hide');\n  }",
+      "after": "  hide() {\n    if (!this.active) {\n      return;\n    }\n    this.datepicker.exitEditMode();\n    this.element.classList.remove('active');\n    this.active = false;\n    // Remove the tabindex we added for focusing\n    this.element.removeAttribute('tabindex');\n    triggerDatepickerEvent(this.datepicker, 'hide');\n  }"
+    },
+    {
+      "path": "index.html",
+      "sha256": "65aed401079db321848a7aaac961422c238e1349153fe346168aea0cb390dfc8",
+      "before": "<script type=\"module\">\nimport Datepicker from './js/Datepicker.js';\nconst form = document.getElementById('delivery-form');\nwindow.picker = new Datepicker(document.getElementById('delivery-date'), {format: 'yyyy-mm-dd', minDate: '2024-05-01', maxDate: '2024-06-30'});\nform.addEventListener('submit', event => {\n  event.preventDefault();\n  document.getElementById('status').textContent = 'Delivery set for ' + new FormData(form).get('delivery');\n});\nwindow.__ready = true;\n</script>",
+      "after": "<script type=\"module\">\nimport Datepicker from './js/Datepicker.js';\nconst form = document.getElementById('delivery-form');\nwindow.picker = new Datepicker(document.getElementById('delivery-date'), {format: 'yyyy-mm-dd', minDate: '2024-05-01', maxDate: '2024-06-30'});\nform.addEventListener('submit', event => {\n  event.preventDefault();\n  document.getElementById('status').textContent = 'Delivery set for ' + new FormData(form).get('delivery');\n});\n// Hide datepicker when tabbing away from the input field\nconst input = document.getElementById('delivery-date');\ninput.addEventListener('blur', function() {\n  if (window.picker && window.picker.picker && window.picker.picker.active) {\n    const pickerEl = window.picker.picker.element;\n    // If focus moved to the picker or inside it, keep the picker open\n    if (document.activeElement === pickerEl || pickerEl.contains(document.activeElement)) {\n      return;\n    }\n    window.picker.hide();\n  }\n});\nwindow.__ready = true;\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "The datepicker will now close when tabbing away from the input field, regardless of whether the entered date is valid or invalid. The input field remains in the tab order and can be reached via Tab. The picker remains open when interacting with it via mouse or keyboard because the picker element is focusable and the blur listener checks for focus within the picker.",
+  "functional_risks": [
+    "The blur listener may hide the picker prematurely if the active element check fails due to timing issues (e.g., focus moves to the picker but the blur fires before focus is set).",
+    "Making the picker focusable could interfere with custom styling or assumptions about the picker's DOM structure.",
+    "Inline datepickers are unaffected because the changes only apply to non-inline pickers."
+  ],
+  "verification_requirements": [
+    "Verify that typing a valid date and pressing Tab closes the datepicker.",
+    "Verify that typing an invalid date (outside min/max) and pressing Tab closes the datepicker.",
+    "Verify that clicking on the datepicker does not cause it to close when the input loses focus.",
+    "Verify that the datepicker remains open when interacting with it via mouse or keyboard.",
+    "Verify that inline datepickers are unaffected by these changes.",
+    "Verify that the input field is reachable via Tab from the start of the page."
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T02:55:20.200Z",
+  "policy": "auto",
+  "modelRun": "63485780-5022-4ecf-a934-2fdb48b2faea",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (js/picker/Picker.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"element.tabIndex = -1;\". Best alignment: before lines 1-5 match file lines 155-159, then before line 6 \"element.tabIndex = -1;\" differs from file line 160 \"\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "4ee73b81fd1057bef76d7820808d250a8dbeb3528af67e5ae219cd32d5985ea7",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-80463feb203f94b5b327e656489b151a",
+      "usage": {
+        "completion_tokens": 3977,
+        "prompt_tokens": 21608,
+        "total_tokens": 25585,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3503,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21608
+      },
+      "latencyMs": 20962,
+      "reservedCreditUsd": 0.0510519
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/picker/Picker.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"this.controls = {\"; closest is line 156: \"this.controls = controls;\". Best alignment: before lines 3-8 match file lines 149-154, then before line 9 \"\" differs from file line 155 \"this.main = main;\". The real file lines are in actual_source_region. Copy before verbatim from source_ca",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-611e11cfc709d129e44eb348fe32fdec",
+      "usage": {
+        "completion_tokens": 6817,
+        "prompt_tokens": 21771,
+        "total_tokens": 28588,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6054,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21771
+      },
+      "latencyMs": 18365,
+      "reservedCreditUsd": 0.171251
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (js/picker/Picker.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"element.tabIndex = -1;\". Best alignment: before lines 1-5 match file lines 155-159, then before line 6 \"element.tabIndex = -1;\" differs from file line 160 \"\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-5f1996c475168dfbd3ec91cedb6888c4",
+      "usage": {
+        "completion_tokens": 3467,
+        "prompt_tokens": 24371,
+        "total_tokens": 27838,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2901,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 24371
+      },
+      "latencyMs": 9970,
+      "reservedCreditUsd": 0.180256
+    }
+  ]
+}

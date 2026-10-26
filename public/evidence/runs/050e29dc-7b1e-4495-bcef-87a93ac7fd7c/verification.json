@@ -1,0 +1,6 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (js/src/modal.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 6-11 match file lines 202-207. The real file lines are in actual_source_region. Copy the region verbatim from the source."
+  ]
+}

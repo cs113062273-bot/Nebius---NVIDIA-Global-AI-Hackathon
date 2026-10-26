@@ -1,0 +1,52 @@
+{
+  "root_cause": "The arrow key handler in Pikaday's _onKeyChange shifts the date by a fixed amount without checking whether the resulting date is disabled (e.g., weekends via disableDayFn), causing navigation to land on non‑selectable days. Additionally, several UI elements (day buttons, weekday abbreviations, month/year selects) have insufficient color contrast against their backgrounds, violating WCAG 1.4.3.",
+  "repair_strategy": "Modify _onKeyChange to step left or right by one day repeatedly, using a helper function that validates a date against minDate, maxDate, disableWeekends, and disableDayFn, until an enabled date is found before calling setDate. Adjust CSS colors for .pika-button, .is-disabled .pika-button, .pika-table th, and .pika-title select to meet a 4.5:1 contrast ratio.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };\n\n        self._parseFieldValue = function()\n        {\n            if (opts.parse) {",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n                var opts = self._o;\n                function isDateAllowed(date) {\n                    if (opts.minDate && date < opts.minDate) return false;\n                    if (opts.maxDate && date > opts.maxDate) return false;\n                    if (opts.disableWeekends) {\n                        var day = date.getDay();\n                        if (day === 0 || day === 6) return false;\n                    }\n                    if (opts.disableDayFn && typeof opts.disableDayFn === 'function') {\n                        if (opts.disableDayFn(date)) return false;\n                    }\n                    return true;\n                }\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        var newDate = self.getDate() || new Date();\n                        do {\n                            newDate = new Date(newDate.getTime() - 24*60*60*1000);\n                        } while (!isDateAllowed(newDate));\n                        self.setDate(newDate);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        var newDate = self.getDate() || new Date();\n                        do {\n                            newDate = new Date(newDate.getTime() + 24*60*60*1000);\n                        } while (!isDateAllowed(newDate));\n                        self.setDate(newDate);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };\n\n        self._parseFieldValue = function()\n        {\n            if (opts.parse) {"
+    },
+    {
+      "path": "css/pikaday.css",
+      "sha256": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+      "before": ".pika-button {\n    cursor: pointer;\n    display: block;\n    outline: none;\n    border: 0;\n    margin: 0;\n    width: 100%;\n    padding: 5px;\n    color: #666;\n    font-size: 12px;\n    line-height: 15px;\n    text-align: center;\n    background: #f5f5f5;\n    height: initial;\n}",
+      "after": ".pika-button {\n    cursor: pointer;\n    display: block;\n    outline: none;\n    border: 0;\n    margin: 0;\n    width: 100%;\n    padding: 5px;\n    color: #333;\n    font-size: 12px;\n    line-height: 15px;\n    text-align: center;\n    background: #f5f5f5;\n    height: initial;\n}"
+    },
+    {
+      "path": "css/pikaday.css",
+      "sha256": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+      "before": ".is-disabled .pika-button {\n    pointer-events: none;\n    cursor: default;\n    color: #999;\n    opacity: .3;\n}",
+      "after": ".is-disabled .pika-button {\n    pointer-events: none;\n    cursor: default;\n    color: #555;\n    opacity: 1;\n}"
+    },
+    {
+      "path": "css/pikaday.css",
+      "sha256": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+      "before": ".pika-table th {\n    color: #999;\n    font-size: 12px;\n    line-height: 25px;\n    font-weight: bold;\n    text-align: center;\n}",
+      "after": ".pika-table th {\n    color: #333;\n    font-size: 12px;\n    line-height: 25px;\n    font-weight: bold;\n    text-align: center;\n}"
+    },
+    {
+      "path": "css/pikaday.css",
+      "sha256": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047",
+      "before": ".pika-title select {\n    cursor: pointer;\n    position: absolute;\n    z-index: 9998;\n    margin: 0;\n    left: 0;\n    top: 5px;\n    opacity: 0;\n}",
+      "after": ".pika-title select {\n    cursor: pointer;\n    position: absolute;\n    z-index: 9998;\n    margin: 0;\n    left: 0;\n    top: 0;\n    width: 100%;\n    height: 100%;\n    opacity: 1;\n    background: transparent;\n    color: #333;\n    border: none;\n}"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight and ArrowLeft will now move only to enabled dates, preventing focus on disabled weekend days and satisfying WCAG 2.1.1 (keyboard) and 2.4.3 (focus order). Color contrast for day buttons, weekday abbreviations, and month/year selects meets WCAG 1.4.3 (AA) requirements.",
+  "functional_risks": [
+    "If all dates within the min/max range are disabled, the loop could run indefinitely; however the min/max bounds limit the range.",
+    "Performance may degrade slightly when many consecutive disabled dates exist.",
+    "Only left/right arrow navigation is altered; up/down (week) navigation and month/year dropdowns remain unchanged.",
+    "Custom disableDayFn is respected as intended.",
+    "CSS changes may slightly alter visual appearance of disabled buttons and selects, but maintain functional behavior."
+  ],
+  "verification_requirements": [
+    "From Friday 2026-11-20, pressing ArrowRight results in Monday 2026-11-23.",
+    "From Monday 2026-11-23, pressing ArrowLeft results in Friday 2026-11-20.",
+    "Arrow navigation respects minDate, maxDate, and any disableDayFn provided.",
+    "Existing month/year dropdowns and UI interactions continue to work as before.",
+    "Up/down arrow behavior (week shift) remains unchanged.",
+    "Automated color-contrast checks pass for buttons, abbreviations, and selects."
+  ]
+}

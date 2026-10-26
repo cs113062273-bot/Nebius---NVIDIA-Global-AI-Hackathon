@@ -1,0 +1,23 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index 44431aa..5ba76c1 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -198,12 +198,18 @@ export default class Datepicker {
+     } else {
+       // set up event listeners in other modes
+       const onMousedownDocument = onClickOutside.bind(null, this);
++      const onFocusout = (event) => {
++        if (!this.picker.element.contains(event.relatedTarget)) {
++          this.hide();
++        }
++      };
+       const listeners = [
+         [inputField, 'keydown', onKeydown.bind(null, this)],
+         [inputField, 'focus', onFocus.bind(null, this)],
+         [inputField, 'mousedown', onMousedown.bind(null, this)],
+         [inputField, 'click', onClickInput.bind(null, this)],
+         [inputField, 'paste', onPaste.bind(null, this)],
++        [inputField, 'focusout', onFocusout],
+         [document, 'mousedown', onMousedownDocument],
+         [document, 'touchstart', onMousedownDocument],
+         [window, 'resize', picker.place.bind(picker)]

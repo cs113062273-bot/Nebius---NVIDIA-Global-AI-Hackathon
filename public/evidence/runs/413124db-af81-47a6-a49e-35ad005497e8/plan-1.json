@@ -1,0 +1,26 @@
+{
+  "root_cause": "The arrow key handler in Pikaday's _onKeyChange shifts the date by a fixed amount without checking whether the resulting date is disabled (e.g., weekends via disableDayFn), causing navigation to land on non‑selectable days.",
+  "repair_strategy": "Modify _onKeyChange to step left or right by one day repeatedly, using a helper function that validates a date against minDate, maxDate, disableWeekends, and disableDayFn, until an enabled date is found before calling setDate.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n                var opts = self._o;\n                function isDateAllowed(date) {\n                    if (opts.minDate && date < opts.minDate) return false;\n                    if (opts.maxDate && date > opts.maxDate) return false;\n                    if (opts.disableWeekends) {\n                        var day = date.getDay();\n                        if (day === 0 || day === 6) return false;\n                    }\n                    if (opts.disableDayFn && typeof opts.disableDayFn === 'function') {\n                        if (opts.disableDayFn(date)) return false;\n                    }\n                    return true;\n                }\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        var newDate = self.getDate() || new Date();\n                        do {\n                            newDate = new Date(newDate.getTime() - 24*60*60*1000);\n                        } while (!isDateAllowed(newDate));\n                        self.setDate(newDate);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        var newDate = self.getDate() || new Date();\n                        do {\n                            newDate = new Date(newDate.getTime() + 24*60*60*1000);\n                        } while (!isDateAllowed(newDate));\n                        self.setDate(newDate);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight and ArrowLeft will now move only to enabled dates, preventing focus on disabled weekend days and satisfying WCAG 2.1.1 (keyboard) and 2.4.3 (focus order).",
+  "functional_risks": [
+    "If all dates within the min/max range are disabled, the loop could run indefinitely; however the min/max bounds limit the range.",
+    "Performance may degrade slightly when many consecutive disabled dates exist.",
+    "Only left/right arrow navigation is altered; up/down (week) navigation and month/year dropdowns remain unchanged.",
+    "Custom disableDayFn is respected as intended."
+  ],
+  "verification_requirements": [
+    "From Friday 2026-11-20, pressing ArrowRight results in Monday 2026-11-23.",
+    "From Monday 2026-11-23, pressing ArrowLeft results in Friday 2026-11-20.",
+    "Arrow navigation respects minDate, maxDate, and any disableDayFn provided.",
+    "Existing month/year dropdowns and UI interactions continue to work as before.",
+    "Up/down arrow behavior (week shift) remains unchanged."
+  ]
+}

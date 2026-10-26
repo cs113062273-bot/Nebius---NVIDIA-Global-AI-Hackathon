@@ -1,0 +1,16 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Independent functional candidate: failed · Step 3 · #delivery-form delivery: expected [\"2024-06-04\"], observed [\"2024-05-10\"]",
+    "Functional output changed"
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_FAIL",
+    "functionalOutputUnchanged": false,
+    "regressionGuards": "1/1"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

@@ -1,0 +1,24 @@
+{
+  "root_cause": "The focus trap's mutation observer only checks if the removed node is exactly the currently focused node. It does not check if the focused node is a descendant of a removed node. When removing a list item that contains the focused button, the button is removed as a descendant, but the mutation observer does not detect it, so focus is not restored to the trap.",
+  "repair_strategy": "Modify the `checkDomRemoval` function in the focus trap to also check if the focused node is contained in any removed node (by using the `contains` method on element nodes).",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };",
+      "after": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode ||\n          (state.mostRecentlyFocusedNode &&\n            typeof node.contains === 'function' &&\n            node.contains(state.mostRecentlyFocusedNode));\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "When an item is removed from the basket, if the focused button is removed, focus will be moved to the initial focus node (the close button) remaining inside the basket dialog, thus maintaining keyboard focus within the trapped dialog.",
+  "functional_risks": [
+    "The change might cause performance issues if there are many mutations, but the mutation observer is already observing and we are only adding a simple check.",
+    "The `contains` method might not be available in very old browsers, but we guard by checking `typeof node.contains === 'function'`.",
+    "If the focused node is not an element (which should not happen because we only focus elements), we skip the contains check."
+  ],
+  "verification_requirements": [
+    "After removing the first item (hand trowel) by pressing Enter on its remove button, focus should remain inside the basket dialog (specifically, on the close button or another focusable element in the basket).",
+    "The assertion for `#basket:focus-within` should pass after the removal.",
+    "The count should update correctly to \"2 items\".",
+    "The basket dialog should remain open."
+  ]
+}

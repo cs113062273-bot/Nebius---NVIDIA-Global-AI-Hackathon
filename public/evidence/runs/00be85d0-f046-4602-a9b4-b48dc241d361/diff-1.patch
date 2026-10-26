@@ -1,0 +1,44 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index 44431aa..64ba278 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -204,6 +204,16 @@ export default class Datepicker {
+         [inputField, 'mousedown', onMousedown.bind(null, this)],
+         [inputField, 'click', onClickInput.bind(null, this)],
+         [inputField, 'paste', onPaste.bind(null, this)],
++        [inputField, 'blur', function(ev) {
++          if (
++            !this.inline
++            && this.picker.active
++            && !this.picker.element.contains(document.activeElement)
++            && !this.inputField.contains(document.activeElement)
++          ) {
++            this.hide();
++          }
++        }.bind(this)],
+         [document, 'mousedown', onMousedownDocument],
+         [document, 'touchstart', onMousedownDocument],
+         [window, 'resize', picker.place.bind(picker)]
+diff --git a/js/picker/Picker.js b/js/picker/Picker.js
+index 14058f8..63de501 100644
+--- a/js/picker/Picker.js
++++ b/js/picker/Picker.js
+@@ -193,6 +193,9 @@ export default class Picker {
+         datepicker.inputField.blur();
+       }
+     }
++    // Make the picker focusable and focus it
++    this.element.tabIndex = -1;
++    this.element.focus();
+     triggerDatepickerEvent(datepicker, 'show');
+   }
+ 
+@@ -203,6 +206,8 @@ export default class Picker {
+     this.datepicker.exitEditMode();
+     this.element.classList.remove('active');
+     this.active = false;
++    // Remove the tabindex we added for focusing
++    this.element.removeAttribute('tabindex');
+     triggerDatepickerEvent(this.datepicker, 'hide');
+   }
+ 

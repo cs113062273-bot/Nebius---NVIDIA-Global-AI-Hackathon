@@ -1,0 +1,13 @@
+diff --git a/index.html b/index.html
+index f26a4cc..9001760 100644
+--- a/index.html
++++ b/index.html
+@@ -76,7 +76,7 @@ body{margin:0;font:19px/1.4 Arial,sans-serif;color:#212b32;background:#f0f4f5}
+ </main>
+ </div>
+ <script type="module">
+-import { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'
++import initCheckboxes from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'
+ initCheckboxes()
+ </script>
+ </body>

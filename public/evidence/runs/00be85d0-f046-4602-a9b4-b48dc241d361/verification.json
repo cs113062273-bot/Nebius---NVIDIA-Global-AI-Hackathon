@@ -1,0 +1,16 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\"",
+    "Functional output changed"
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "INCONCLUSIVE",
+    "functionalOutputUnchanged": false,
+    "regressionGuards": "1/1"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

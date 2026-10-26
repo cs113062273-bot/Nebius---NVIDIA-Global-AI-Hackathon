@@ -1,0 +1,13 @@
+diff --git a/src/govuk/components/character-count/character-count.js b/src/govuk/components/character-count/character-count.js
+index fcc5a10..d2d78d5 100644
+--- a/src/govuk/components/character-count/character-count.js
++++ b/src/govuk/components/character-count/character-count.js
+@@ -69,7 +69,7 @@ CharacterCount.prototype.init = function () {
+   }
+ 
+   // Remove hard limit if set
+-  $module.removeAttribute('maxlength')
++  this.$textarea.removeAttribute('maxlength')
+ 
+   this.bindChangeEvents()
+ 

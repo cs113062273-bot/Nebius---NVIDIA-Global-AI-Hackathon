@@ -1,0 +1,41 @@
+diff --git a/css/pikaday.css b/css/pikaday.css
+index 3dbce2a..4c0a278 100644
+--- a/css/pikaday.css
++++ b/css/pikaday.css
+@@ -148,7 +148,7 @@ http://nicolasgallagher.com/micro-clearfix-hack/
+     margin: 0;
+     width: 100%;
+     padding: 5px;
+-    color: #666;
++    color: #222;
+     font-size: 12px;
+     line-height: 15px;
+     text-align: center;
+@@ -170,8 +170,8 @@ http://nicolasgallagher.com/micro-clearfix-hack/
+ .has-event .pika-button {
+     color: #fff;
+     font-weight: bold;
+-    background: #33aaff;
+-    box-shadow: inset 0 1px 3px #178fe5;
++    background: #002244;
++    box-shadow: inset 0 1px 3px #001122;
+     border-radius: 3px;
+ }
+ 
+@@ -187,14 +187,14 @@ http://nicolasgallagher.com/micro-clearfix-hack/
+ 
+ .is-startrange .pika-button {
+     color: #fff;
+-    background: #6CB31D;
++    background: #003300;
+     box-shadow: none;
+     border-radius: 3px;
+ }
+ 
+ .is-endrange .pika-button {
+     color: #fff;
+-    background: #33aaff;
++    background: #002244;
+     box-shadow: none;
+     border-radius: 3px;
+ }

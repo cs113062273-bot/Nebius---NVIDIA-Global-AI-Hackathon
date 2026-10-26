@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Radios component only listens for click and change events within its own module. When radio buttons sharing the same name are split across multiple modules (as in the test), a keyboard-driven selection change in one module does not trigger conditional updates in the other module, leaving the now-irrelevant conditional field visible.",
+  "repair_strategy": "Extend each Radios instance to also listen for 'change' events on the document for radio names that have associated conditionals (aria-controls) within its module. When such a change occurs anywhere in the document, update the conditionals for all radios in this module with that name and aria-controls.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n\n  // Handle changes from any radio with the same name (including other modules)\n  var namesWithControls = {}\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('aria-controls')\n    if (controls) {\n      var name = $input.getAttribute('name')\n      if (name) {\n        namesWithControls[name] = true\n      }\n    }\n  })\n  for (var name in namesWithControls) {\n    document.addEventListener('change', function (event) {\n      var $target = event.target\n      if ($target.getAttribute('type') === 'radio' && $target.getAttribute('name') === name) {\n        // Update all inputs in this module with this name and aria-controls\n        nodeListForEach($inputs, function ($input) {\n          if ($input.getAttribute('type') === 'radio' && $input.getAttribute('name') === name && $input.getAttribute('aria-controls')) {\n            this.setAttributes($input)\n          }\n        }.bind(this))\n      }\n    }.bind(this))\n  }\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate among radio options across module boundaries using arrow keys and see dependent fields appear/disappear correctly, satisfying WCAG 2.1.1 Keyboard, 2.4.3 Focus Order, and 4.1.2 Name, Role, Value.",
+  "functional_risks": [
+    "Document-level change listeners are added per Radios instance; if many instances exist for the same name, duplicate listeners may fire but setAttributes is idempotent.",
+    "The change listener triggers on any radio with the same name, even those not in a Radios module, but the guard condition ensures only relevant inputs are updated."
+  ],
+  "verification_requirements": [
+    "Verify that arrow key navigation from Text message to the opt-out answer hides the mobile number field.",
+    "Verify that arrow key navigation from Email to Text message shows the mobile field and hides the email field.",
+    "Verify that clicking radios with mouse continues to work as before.",
+    "Verify that the form's reflected value matches the selected radio after keyboard interaction.",
+    "Ensure no regression in existing automated tests for the radios component."
+  ]
+}

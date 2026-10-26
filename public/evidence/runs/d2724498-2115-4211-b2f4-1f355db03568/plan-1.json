@@ -1,0 +1,23 @@
+{
+  "root_cause": "The Pikaday draw method refocuses the input trigger after showing the calendar, preventing keyboard navigation away from the date field when the user presses Tab.",
+  "repair_strategy": "Remove the automatic refocus of the trigger bound to the input within the draw method, allowing focus to move to the next focusable element (e.g., the guests field) on Tab.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "            this.el.innerHTML = html;\n\n            if (opts.bound) {\n                if(opts.field.type !== 'hidden') {\n                    sto(function() {\n                        opts.trigger.focus();\n                    }, 1);\n                }\n            }\n\n            if (typeof this._o.onDraw === 'function') {\n                this._o.onDraw(this);\n            }\n\n            if (opts.bound) {\n                // let the screen reader user know to use arrow keys\n                opts.field.setAttribute('aria-label', opts.ariaLabel);\n            }",
+      "after": "            this.el.innerHTML = html;\n\n            if (typeof this._o.onDraw === 'function') {\n                this._o.onDraw(this);\n            }\n\n            if (opts.bound) {\n                // let the screen reader user know to use arrow keys\n                opts.field.setAttribute('aria-label', opts.ariaLabel);\n            }"
+    }
+  ],
+  "expected_accessibility_effect": "After entering a date and pressing Tab, focus will move to the guests field, enabling keyboard-only users to continue filling the form without being trapped in the date picker.",
+  "functional_risks": [
+    "Removing the auto-refocus may cause the input to lose focus when the calendar is shown programmatically, potentially affecting users who expect the field to remain focused after opening the picker via script.",
+    "Mouse users who click the field to open the picker will still retain focus because the field already has focus; the refocus was only redundant."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab after entering a date moves focus to the guests field.",
+    "Confirm that date selection via mouse or keyboard still updates the input value correctly.",
+    "Ensure that pressing Esc or Enter closes the picker and returns focus to the input field.",
+    "Check that the picker still opens when the input receives focus."
+  ]
+}

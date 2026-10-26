@@ -1,0 +1,45 @@
+diff --git a/index.html b/index.html
+index 4e136a2..9f68b6f 100644
+--- a/index.html
++++ b/index.html
+@@ -36,6 +36,18 @@ form.addEventListener('submit', event => {
+   event.preventDefault();
+   document.getElementById('status').textContent = 'Delivery set for ' + new FormData(form).get('delivery');
+ });
++// Hide datepicker when tabbing away from the input field
++const input = document.getElementById('delivery-date');
++input.addEventListener('blur', function() {
++  if (window.picker && window.picker.picker && window.picker.picker.active) {
++    const pickerEl = window.picker.picker.element;
++    // If focus moved to the picker or inside it, keep the picker open
++    if (document.activeElement === pickerEl || pickerEl.contains(document.activeElement)) {
++      return;
++    }
++    window.picker.hide();
++  }
++});
+ window.__ready = true;
+ </script>
+ </body>
+diff --git a/js/picker/Picker.js b/js/picker/Picker.js
+index 14058f8..b16d12a 100644
+--- a/js/picker/Picker.js
++++ b/js/picker/Picker.js
+@@ -192,6 +192,8 @@ export default class Picker {
+       if (datepicker.config.disableTouchKeyboard) {
+         datepicker.inputField.blur();
+       }
++      // Make the picker focusable so it can receive focus without blurring the input
++      this.element.tabIndex = -1;
+     }
+     triggerDatepickerEvent(datepicker, 'show');
+   }
+@@ -203,6 +205,8 @@ export default class Picker {
+     this.datepicker.exitEditMode();
+     this.element.classList.remove('active');
+     this.active = false;
++    // Remove the tabindex we added for focusing
++    this.element.removeAttribute('tabindex');
+     triggerDatepickerEvent(this.datepicker, 'hide');
+   }
+ 

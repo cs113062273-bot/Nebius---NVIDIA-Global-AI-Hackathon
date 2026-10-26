@@ -1,0 +1,19 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..fd31b01 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -1050,14 +1050,6 @@
+ 
+             this.el.innerHTML = html;
+ 
+-            if (opts.bound) {
+-                if(opts.field.type !== 'hidden') {
+-                    sto(function() {
+-                        opts.trigger.focus();
+-                    }, 1);
+-                }
+-            }
+-
+             if (typeof this._o.onDraw === 'function') {
+                 this._o.onDraw(this);
+             }

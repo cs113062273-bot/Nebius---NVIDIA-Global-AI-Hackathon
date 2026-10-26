@@ -1,0 +1,33 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..2670f91 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -205,6 +205,10 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    if (this._onTabKey) {
++      EventHandler.off(this._element, 'keydown', this._onTabKey)
++    }
++
+     if (this._calendar) {
+       this._calendar.destroy()
+     }
+@@ -396,6 +400,17 @@ class Datepicker extends BaseComponent {
+       EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    // Allow Tab to escape the datepicker and move focus to next element
++    if (this._isInput) {
++      this._onTabKey = (event: KeyboardEvent) => {
++        if (event.key === 'Tab' && this._isShown) {
++          this.hide()
++          // Do not preventDefault - let browser handle focus movement
++        }
++      }
++      EventHandler.on(this._element, 'keydown', this._onTabKey)
++    }
++
+     this._onOutside = ({ target }) => {
+       const mainElement = this._calendar?.context?.mainElement
+       const isOutside = !(target instanceof Node) || (!this._element.contains(target) && !mainElement?.contains(target))

@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "id": "pikaday-edit-note-with-arrow-left",
+  "title": "Correct a typo in the driver note with the left arrow",
+  "goal": "While the calendar is on the page, ArrowLeft in another text field still moves the caret so the user can fix their text",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the driver note",
+      "action": {
+        "kind": "seek",
+        "selector": "#notes",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type the note without a space",
+      "action": {
+        "kind": "type",
+        "text": "Gate4"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move the caret back one character",
+      "action": {
+        "kind": "press",
+        "key": "ArrowLeft"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Insert the missing space",
+      "action": {
+        "kind": "type",
+        "text": " "
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#slot-form",
+          "name": "notes",
+          "value": [
+            "Gate 4"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#slot-form",
+      "name": "notes",
+      "value": [
+        "Gate 4"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "focus",
+      "selector": "#notes"
+    }
+  ],
+  "forbidden": []
+}

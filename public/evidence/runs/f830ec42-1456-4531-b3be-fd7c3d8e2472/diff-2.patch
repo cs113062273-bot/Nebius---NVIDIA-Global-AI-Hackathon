@@ -1,0 +1,25 @@
+diff --git a/index.html b/index.html
+index 92fad08..ce73cac 100644
+--- a/index.html
++++ b/index.html
+@@ -49,7 +49,19 @@ window.cityPicker = new autoComplete({
+   selector: '#city',
+   data: { src: ['Aveiro', 'Braga', 'Coimbra', 'Faro', 'Lisbon', 'Porto', 'Portimão'] },
+   resultsList: { id: 'city-list' },
+-  events: { input: { selection: event => { window.cityPicker.input.value = event.detail.selection.value; } } }
++  events: { 
++    input: { 
++      selection: event => { window.cityPicker.input.value = event.detail.selection.value; },
++      keydown: event => { 
++        if (event.key === 'Escape') { 
++          event.preventDefault(); 
++          if (typeof window.cityPicker.close === 'function') {
++            window.cityPicker.close();
++          }
++        } 
++      } 
++    } 
++  }
+ });
+ form.addEventListener('submit', event => {
+   event.preventDefault();

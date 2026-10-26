@@ -1,0 +1,25 @@
+{
+  "root_cause": "The disclosure menu does not close when focus leaves the menu tree, causing the dropdown to remain visible and cover page content after tabbing out.",
+  "repair_strategy": "Add a focusout listener to the menu element that checks if the related target is outside the menu; if so, and the menu has an open controller, close the controller.",
+  "edits": [
+    {
+      "path": "src/_baseMenu.js",
+      "sha256": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+      "before": "/**\\n   * Handles focus events throughout the menu for proper menu use.\\n   *\\n   * - Adds a `focus` listener to every menu item so when it gains focus,\\n   *   it will set the item's containing menu's focus state\\n   *   to \\\"self\\\".\\n   *\\n   * @protected\\n   */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n  }\\n",
+      "after": "/**\\n   * Handles focus events throughout the menu for proper menu use.\\n   *\\n   * - Adds a `focus` listener to every menu item so when it gains focus,\\n   *   it will set the item's containing menu's focus state\\n   *   to \\\"self\\\".\\n   *\\n   * @protected\\n   */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n\\n    // Close the menu when focus leaves the menu tree\\n    this.dom.menu.addEventListener(\\\"focusout\\\", (event) => {\\n      if (!this.dom.menu.contains(event.relatedTarget)) {\\n        if (this.elements.controller && this.elements.controller.isOpen) {\\n          this.elements.controller.close();\\n        }\\n      }\\n    });\\n  }\\n"
+    }
+  ],
+  "expected_accessibility_effect": "When a user tabs out of the navigation dropdown, the dropdown will close, preventing it from obscuring page content.",
+  "functional_risks": [
+    "Potential unintended closure if focus moves to an element that is not a DOM descendant of the menu but is logically part of the menu (e.g., a portal).",
+    "If the menu is used as a trigger for non‑menu popups, those popups may close prematurely.",
+    "Edge cases where rapid focus shifts could cause flicker, though the containment check mitigates this."
+  ],
+  "verification_requirements": [
+    "Tabbing from any menu item to an element outside the menu closes the dropdown (aria-expanded false, submenu hidden).",
+    "Moving focus within the menu or into a submenu does not close the dropdown.",
+    "Keyboard navigation inside the dropdown (arrow keys, Home, End) continues to work when open.",
+    "Clicking the Shop button still opens and closes the dropdown as expected.",
+    "Mouse hover behavior remains unchanged."
+  ]
+}

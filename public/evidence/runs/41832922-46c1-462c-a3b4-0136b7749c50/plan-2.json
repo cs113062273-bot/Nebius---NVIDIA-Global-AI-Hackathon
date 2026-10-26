@@ -1,0 +1,21 @@
+{
+  "root_cause": "The Escape key handler in Dropdown.dataApiKeydownHandler calls instance.hide() but fails to restore focus to the toggle button (instance._element) after closing the menu.",
+  "repair_strategy": "Add instance._element.focus() after instance.hide() in the Escape key handling block to return focus to the dropdown toggle per ARIA APG keyboard interface pattern.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "fc69a61b69ae1fa2c2bb923fdc393dd2742925e8af996376df5f98e38f8d810e",
+      "before": "    const instance = Dropdown.getOrCreateInstance(getToggleButton)\n\n    if (isEscapeEvent) {\n      instance.hide()\n      return\n    }\n\n    if (isUpOrDownEvent) {\n      instance.show()\n      instance._selectMenuItem(event)\n    }\n  }",
+      "after": "    const instance = Dropdown.getOrCreateInstance(getToggleButton)\n\n    if (isEscapeEvent) {\n      instance.hide()\n      instance._element.focus()\n      return\n    }\n\n    if (isUpOrDownEvent) {\n      instance.show()\n      instance._selectMenuItem(event)\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape in an open dropdown menu now closes the menu and returns focus to the toggle button, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value) as well as ARIA APG keyboard interface guidance for disclosure widgets.",
+  "functional_risks": [
+    "Focus restoration only on Escape key; other close paths (click outside, Tab navigation) unchanged",
+    "No risk of focus loss because instance._element is the toggle button that originally opened the menu"
+  ],
+  "verification_requirements": [
+    "Existing journey 'Close the invoice actions menu with Escape' passes: aria-expanded=false, menu hidden, focus on #actions-toggle",
+    "Keyboard regression guard 'Choose an action with the keyboard' continues to pass"
+  ]
+}

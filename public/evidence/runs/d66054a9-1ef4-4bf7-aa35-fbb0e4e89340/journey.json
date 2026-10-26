@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "id": "nhsuk-exclusive-none-unique-names-keyboard",
+  "title": "Choose 'No symptoms' after ticking symptoms with the keyboard",
+  "goal": "Ticking the exclusive 'No, I do not have any of these symptoms' answer clears the symptoms ticked earlier",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the cough answer",
+      "action": {
+        "kind": "seek",
+        "selector": "#symptoms-cough",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Tick cough",
+      "action": {
+        "kind": "press",
+        "key": "Space"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach the temperature answer",
+      "action": {
+        "kind": "seek",
+        "selector": "#symptoms-fever",
+        "maxTabs": 3
+      },
+      "assertions": []
+    },
+    {
+      "title": "Tick high temperature",
+      "action": {
+        "kind": "press",
+        "key": "Space"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach the no-symptoms answer",
+      "action": {
+        "kind": "seek",
+        "selector": "#symptoms-none",
+        "maxTabs": 4
+      },
+      "assertions": []
+    },
+    {
+      "title": "Tick no symptoms",
+      "action": {
+        "kind": "press",
+        "key": "Space"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#symptoms-form",
+          "name": "symptoms[cough]",
+          "value": []
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#symptoms-form",
+      "name": "symptoms[cough]",
+      "value": []
+    },
+    {
+      "kind": "form-data",
+      "selector": "#symptoms-form",
+      "name": "symptoms[fever]",
+      "value": []
+    },
+    {
+      "kind": "form-data",
+      "selector": "#symptoms-form",
+      "name": "symptoms[none]",
+      "value": [
+        "yes"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#symptoms-form",
+      "name": "symptoms[none]",
+      "value": [
+        "yes"
+      ]
+    }
+  ],
+  "forbidden": []
+}

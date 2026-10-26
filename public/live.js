@@ -9,7 +9,7 @@ const runLive=id=>el('a',{class:'secondary run-live',href:issueUrl(id),target:'_
 const MODEL={'nemotron-3-super-120b-a12b':'Nemotron 3 Super','Nemotron-3-Ultra-550b-a55b':'Nemotron 3 Ultra'};
 const modelName=id=>MODEL[String(id||'').split('/').pop()]||String(id||'Nemotron').split('/').pop();
 const STAGES=[['reproduce','Reproduce the bug',['PREPARING','BASELINE_RUNNING','FAILURE_CONFIRMED']],['locate','Find the source',['LOCALIZING']],['propose','Nemotron proposes a patch',['PLANNING_REPAIR']],['apply','Apply in an isolated copy',['PATCHING','BUILDING']],['replay','Replay in Chromium',['REPLAYING','VERIFYING']],['verdict','Verdict',['VERIFIED','FAILED','INCONCLUSIVE']]];
-let api=false,data=null,open=[],daily=null,watching=null,clock=null;
+let api=false,data=null,open=[],daily=null,gates=null,watching=null,clock=null;
 
 async function getJson(url,options){const r=await fetch(url,options);const body=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(body.error||`HTTP ${r.status}`),{status:r.status,body});return body;}
 const artifactUrl=(run,file)=>run.__static?`./evidence/runs/${run.id}/${file}`:`./api/runs/${run.id}/artifacts/${file}`;
@@ -20,7 +20,8 @@ async function boot(){
   catch{try{data=await getJson('./realbugs/index.json');}catch{$('#mode').textContent='OFFLINE';notice('The bug list could not be loaded.');return;}}
   try{open=api&&data.open?data.open:(await getJson('./openbugs/index.json')).cases;}catch{open=[];}
   try{daily=await getJson('./live-runs/index.json');}catch{daily=null;}
-  renderMode();renderDaily();renderStats();renderOpen();renderCases();renderScoreboard();
+  try{gates=await getJson('./gate-stats.json');}catch{gates=null;}
+  renderMode();renderDaily();renderStats();renderOpen();renderCases();renderScoreboard();renderGates();
   const wanted=new URLSearchParams(location.search).get('case');if(wanted){const c=[...data.cases,...open].find(c=>c.id===wanted);if(c)void showRecorded(c);}
   if(api&&data.active)void watch(data.active.id,data.cases.find(c=>c.id===data.active.case),{live:true});
 }
@@ -63,7 +64,7 @@ function renderOpen(){
       ...(c.expectedBehaviour?[el('p',{class:'case-note',text:c.expectedBehaviour})]:[]),
       ...(c.addedAfterReview?[el('p',{class:'case-note added',text:c.addedAfterReview})]:[]),
       ...(c.replays?.length?[el('ul',{class:'case-replays'},...c.replays.map(x=>el('li',{},el('a',{href:`./project.html?run=${x.run}#project-result`,text:`Replay of run ${x.fromRun.slice(0,8)} attempt ${x.attempt}`}),`: ${x.verdict==='VERIFIED_PASS'?'passes the stricter task':'rejected by the stricter task'} (browser only, no inference)`)))]:[]),
-      el('p',{class:'case-src'},el('a',{href:c.issue,text:c.issue.includes('/issues?q=')?'Not reported yet · issues searched ↗':'Open issue ↗'}),...(c.pendingHumanFix?[' · ',el('a',{href:c.pendingHumanFix,text:'Pending human fix ↗'}),' · ',el('a',{href:`./openbugs/${c.id}/pending-human.patch`,text:'its diff'})]:[])),
+      el('p',{class:'case-src'},el('a',{href:c.issue,text:c.issue.includes('/issues?q=')?'Not reported yet · issues searched ↗':/Found by Tabstitch and reported/.test(c.status||'')?`Reported upstream by Tabstitch · #${c.issue.split('/').pop()} ↗`:'Open issue ↗'}),...(c.pendingHumanFix?[' · ',el('a',{href:c.pendingHumanFix,text:'Pending human fix ↗'}),' · ',el('a',{href:`./openbugs/${c.id}/pending-human.patch`,text:'its diff'})]:[])),
       ...(c.pendingHumanCheck?[el('p',{class:'case-note',text:c.pendingHumanCheck.keyboard==='VERIFIED_PASS'?'The pending human fix also passes this frozen task, so the task is fair. It was fetched only for comparison and never sent to the model.':c.pendingHumanCheck.note})]:[]),
       el('p',{class:`case-status ${r?.verdict==='VERIFIED_PASS'?'ok':r?'no':''}`,text:status}),
       // Human reading of the patch after the browser verdict, only shown for the run it reviewed.
@@ -97,6 +98,21 @@ function renderScoreboard(){
   const b=data.benchmark,box=$('#versions');if(!b?.versions?.length){box.hidden=true;return;}
   box.hidden=false;box.replaceChildren(el('h3',{text:'Engine versions'}),...(b.note?[el('p',{class:'small',text:b.note})]:[]),
     el('ol',{},...[...b.versions].reverse().map(v=>el('li',{class:v.current?'current':''},el('strong',{text:`${v.verified}/${v.runs}`}),el('span',{class:'small',text:` ${v.id}${v.current?' · this table':''}${v.runs<v.eligible?` · ${v.runs} of ${v.eligible} cases run`:''}`}),...(v.note?[el('p',{text:v.note})]:[])))));
+}
+// What the loop and the gates add, measured over every recorded blind run (scripts/gate-stats.mjs).
+function renderGates(){
+  const g=gates,box=$('#gates');if(!g?.realRuns){box.hidden=true;return;}box.hidden=false;
+  const pct=n=>Math.round(n/g.realRuns*100)+'%',WHY={functional:'changed the submitted data or broke the pointer path',guards:'broke a guarded behaviour',rules:'added an axe finding'};
+  box.replaceChildren(el('h3',{text:'What the browser loop and the gates add'}),el('p',{class:'small',text:g.note}),
+    el('dl',{class:'gate-stats'},
+      el('div',{},el('dt',{text:`${g.firstTry}/${g.realRuns}`}),el('dd',{text:`repaired by Nemotron 3 Super's first patch (${pct(g.firstTry)})`})),
+      el('div',{},el('dt',{text:`${g.firstTry+g.withFeedback}/${g.realRuns}`}),el('dd',{text:`repaired once Chromium's failure report goes back to Nemotron (${pct(g.firstTry+g.withFeedback)})`})),
+      el('div',{},el('dt',{text:String(g.caughtAfterKeyboardPass)}),el('dd',{text:'patches made the reported keyboard task pass and were still rejected. A test of the reported bug alone would have accepted them.'}))),
+    el('details',{class:'gate-caught'},el('summary',{text:`The ${g.caught.length} patches, on ${new Set(g.caught.map(c=>c.case)).size} bugs, that fixed the reported key and broke something else`}),
+      el('ul',{},...Object.values(Object.groupBy(g.caught,c=>c.case)).map(list=>el('li',{},
+        el('strong',{text:list[0].case}),` · ${list.length} patch${list.length>1?'es':''}: ${[...new Set(list.flatMap(c=>c.why))].map(w=>WHY[w]||w).join('; ')}. `,
+        el('span',{class:'small',text:list[0].reason||''}),
+        el('span',{class:'gate-links'},...list.map((c,i)=>el('a',{href:`./project.html?run=${c.run}&attempt=${c.attempt}#project-result`,text:`${modelName(c.model)} · attempt ${c.attempt}${c.version?` · engine ${c.version}`:""}`}))))))));
 }
 // Crop a 1280×720 capture to the focused element so the result is visible at a glance.
 function focusShot(img,src,state,tone){

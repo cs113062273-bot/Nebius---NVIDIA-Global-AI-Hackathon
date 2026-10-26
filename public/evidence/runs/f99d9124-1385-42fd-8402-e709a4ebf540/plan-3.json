@@ -1,0 +1,23 @@
+{
+  "root_cause": "The datepicker does not close when the input field loses focus (blur) after typing an invalid date because the blur event is not handled to hide the picker. Keyboard users who tab away from the date field expect the calendar to close, but it remains open and obscures content.",
+  "repair_strategy": "Add a focusout event listener to the input field that hides the picker when focus moves to an element outside the picker. This ensures the calendar closes on tab-away while avoiding closure when focus moves to picker controls (e.g., clicking a day button).",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    } else {\n      // set up event listeners in other modes\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }",
+      "after": "    } else {\n      // set up event listeners in other modes\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const onFocusout = (event) => {\n        if (!this.picker.element.contains(event.relatedTarget)) {\n          this.hide();\n        }\n      };\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [inputField, 'focusout', onFocusout],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can tab away from the date field and the calendar will close, preventing the calendar from remaining open and obscuring content. This meets WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by ensuring the dropdown behaves like a native select.",
+  "functional_risks": [
+    "The focusout handler may hide the picker when focus moves to a non-picker element, which is the desired behavior. However, if the picker element is not yet in the DOM (e.g., during initialization), contains() could throw; but the picker is created before listeners are registered.",
+    "If the picker is inline, this branch is not executed, so no risk there."
+  ],
+  "verification_requirements": [
+    "Test that tabbing away from the date field with an invalid date closes the calendar.",
+    "Test that tabbing away with a valid date updates the date and closes the calendar.",
+    "Ensure the regression guard for valid date still passes (form data updated).",
+    "Verify that clicking on a day button inside the picker does not close the picker prematurely (focus moves to button, but button is inside picker)."
+  ]
+}

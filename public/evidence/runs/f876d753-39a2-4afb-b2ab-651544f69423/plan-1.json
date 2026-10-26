@@ -1,0 +1,23 @@
+{
+  "root_cause": "The pikaday keyboard listener attached to document processes ArrowLeft/Right/Up/Down keys regardless of which element has focus, preventing normal text field caret movement when the calendar is visible.",
+  "repair_strategy": "Add an early return in Pikaday._onKeyChange when the bound field is not the active element, so arrow keys only adjust the date picker when the associated input has focus.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "662123ec9f429dee9cffaacfcf89b05ed9c3c30a78d33ecfd113e6778349cc77",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n                // Only react to keyboard input when the bound field has focus\n                if (opts.field && document.activeElement !== opts.field) {\n                    return;\n                }\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "Users can now use left/right arrow keys to correct typos in text fields while the date picker is visible, restoring expected editing behavior.",
+  "functional_risks": [
+    "Arrow keys will no longer change the selected date when focus is outside the bound input (e.g., in other form fields). This is the intended behavior; date navigation via arrow keys remains available when the input itself is focused."
+  ],
+  "verification_requirements": [
+    "Press ArrowLeft in the #notes field while the calendar is visible and verify the caret moves left.",
+    "Press ArrowRight/Up/Down in the #notes field and verify normal text navigation works.",
+    "Focus the #delivery-date field and verify ArrowLeft/Right/Up/Still change the selected date as before.",
+    "Confirm that date selection via mouse clicks in the calendar continues to work.",
+    "Ensure the calendar still opens/closes correctly and bound field updates on selection."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "root_cause": "The modal's focus trap only returns focus to the modal element when focus leaves, but does not wrap Tab/Shift+Tab at the boundaries, causing Shift+Tab from the first focusable element (close button) to move focus to the opener button outside the modal.",
+  "repair_strategy": "Add a keydown listener on the modal element to intercept Tab and Shift+Tab keys. When Shift+Tab is pressed and the active element is the close button, prevent default and focus the delete button. When Tab is pressed and the active element is the delete button, prevent default and focus the close button.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "    this._config = this._getConfig(config)\n    this._dialog = SelectorEngine.findOne(SELECTOR_DIALOG, this._element)\n    this._backdrop = this._initializeBackDrop()\n    this._isShown = false\n    this._ignoreBackdropClick = false\n    this._isTransitioning = false\n    this._scrollBar = new ScrollBarHelper()",
+      "after": "    this._config = this._getConfig(config)\n    this._dialog = SelectorEngine.findOne(SELECTOR_DIALOG, this._element)\n    this._backdrop = this._initializeBackDrop()\n    this._isShown = false\n    this._ignoreBackdropClick = false\n    this._isTransitioning = false\n    this._scrollBar = new ScrollBarHelper()\n    this._tabTrapHandler = null;"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  _resetAdjustments() {\n    this._element.style.paddingLeft = ''\n    this._element.style.paddingRight = ''\n  }\n\n",
+      "after": "  _resetAdjustments() {\n    this._element.style.paddingLeft = ''\n    this._element.style.paddingRight = ''\n  }\n\n  _bindTabTrap() {\n    const handler = (event) => {\n      if (event.key === 'Tab') {\n        const first = this._element.querySelector('#confirm-close');\n        const last = this._element.querySelector('#confirm-delete');\n        if (!first || !last) return;\n        if (event.shiftKey) {\n          if (document.activeElement === first) {\n            event.preventDefault();\n            last.focus();\n          }\n        } else {\n          if (document.activeElement === last) {\n            event.preventDefault();\n            first.focus();\n          }\n        }\n      }\n    };\n    this._tabTrapHandler = handler;\n    this._element.addEventListener('keydown', handler);\n  }\n\n  _unbindTabTrap() {\n    if (this._tabTrapHandler) {\n      this._element.removeEventListener('keydown', this._tabTrapHandler);\n      this._tabTrapHandler = null;\n    }\n  }\n\n"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "    if (this._config.focus) {\n      this._enforceFocus()\n    }\n\n    const transitionComplete = () =>",
+      "after": "    if (this._config.focus) {\n      this._enforceFocus()\n    }\n\n    this._bindTabTrap()\n\n    const transitionComplete = () =>"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "    EventHandler.off(document, EVENT_FOCUSIN)\n\n    this._element.classList.remove(CLASS_NAME_SHOW)",
+      "after": "    EventHandler.off(document, EVENT_FOCUSIN)\n    this._unbindTabTrap()\n\n    this._element.classList.remove(CLASS_NAME_SHOW)"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "    EventHandler.off(document, EVENT_FOCUSIN)",
+      "after": "    EventHandler.off(document, EVENT_FOCUSIN)\n    this._unbindTabTrap()"
+    }
+  ],
+  "expected_accessibility_effect": "Shift+Tab from the close button will now wrap to the delete button, maintaining keyboard focus trapped within the modal and satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Potential conflict with other custom keydown handlers on the modal.",
+    "If the close or delete button IDs change, the wrapper may fail silently.",
+    "If the modal is rendered without those buttons, no wrapping occurs but focus behavior remains as before."
+  ],
+  "verification_requirements": [
+    "Verify that Tab navigation loops from close button → input → cancel → delete button → close button.",
+    "Verify that Shift+Tab navigation loops in reverse order.",
+    "Confirm that Escape key still closes the modal.",
+    "Confirm that clicking the modal backdrop still closes the modal.",
+    "Ensure focus returns to the opener button after modal is closed."
+  ]
+}

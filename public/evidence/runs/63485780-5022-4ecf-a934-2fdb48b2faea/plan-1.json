@@ -1,0 +1,24 @@
+{
+  "root_cause": "The datepicker popup element is focusable and intercepts the Tab key, trapping focus inside the datepicker and preventing focus from moving to the next form field.",
+  "repair_strategy": "Make the datepicker element non-focusable by setting tabindex=\"-1\", allowing the Tab key to bypass the popup and move focus to the next focusable element.",
+  "edits": [
+    {
+      "path": "js/picker/Picker.js",
+      "sha256": "bdad6c1434285abe75a3ea29c3be21b923eb1d7c828d09d29f38bf07e1d76ba2",
+      "before": "    const elementClass = inputField ? 'dropdown' : 'inline';\n    element.classList.add(`datepicker-${elementClass}`);\n\n    processPickerOptions(this, config);",
+      "after": "    const elementClass = inputField ? 'dropdown' : 'inline';\n    element.classList.add(`datepicker-${elementClass}`);\n    element.tabIndex = -1;\n\n    processPickerOptions(this, config);"
+    }
+  ],
+  "expected_accessibility_effect": "When the datepicker is open, pressing Tab will move focus from the visit date input to the next form field (the access notes input), allowing keyboard-only users to continue filling the form without being trapped.",
+  "functional_risks": [
+    "None significant; datepicker remains operable via arrow keys, Enter, and mouse interactions.",
+    "Setting tabindex=-1 removes the popup from the tab order, which is appropriate for a modal-like dialog and does not affect screen reader perception of the datepicker's content."
+  ],
+  "verification_requirements": [
+    "Pressing Tab while the datepicker is open moves focus to the #notes input.",
+    "Arrow keys still navigate dates within the datepicker.",
+    "Enter key still selects the focused date and closes the datepicker.",
+    "Datepicker still opens on focus or click of the visit date input.",
+    "Datepicker still hides appropriately when a date is selected or when clicking outside."
+  ]
+}

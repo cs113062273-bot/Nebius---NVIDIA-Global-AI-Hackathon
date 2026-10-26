@@ -1,0 +1,19 @@
+diff --git a/index.html b/index.html
+index 0605973..c72b97d 100644
+--- a/index.html
++++ b/index.html
+@@ -51,6 +51,14 @@ h1{font-size:32px;margin:0 0 20px}
+ <p id="map">Map view is available on request.</p>
+ </main>
+ </div>
++<script>
++document.addEventListener('keydown', function(e) {
++  if (e.target.matches('.govuk-tabs__tab') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
++    e.preventDefault();
++    e.stopPropagation();
++  }
++}, true);
++</script>
+ <script type="module">
+ import { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'
+ new Tabs(document.getElementById('applications-tabs'))

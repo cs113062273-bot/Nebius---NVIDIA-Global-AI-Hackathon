@@ -1,0 +1,22 @@
+{
+  "root_cause": "The header component incorrectly applies aria-hidden='true' to the navigation menu when the menu button is collapsed, hiding the navigation links from assistive technology on desktop widths where the menu should be visible.",
+  "repair_strategy": "Remove the aria-hidden attribute synchronization in Header.prototype.syncState, relying on CSS (display:none/show) to control visibility of the navigation menu, which already hides it appropriately in mobile view and shows it on desktop.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  this.$menu.setAttribute('aria-hidden', !isVisible)\n}",
+      "after": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links will be exposed in the accessibility tree with role link and accessible names, allowing keyboard and screen‑reader users to reach and activate them via Tab.",
+  "functional_risks": [
+    "If CSS changes or fails, the navigation could remain accessible when visually hidden on mobile, but the existing CSS rule display:none on .govuk-header__navigation when the menu is closed ensures it is removed from the accessibility tree."
+  ],
+  "verification_requirements": [
+    "Assert that axe role link checks pass for #nav-apply, #nav-renew, and #nav-rules.",
+    "Verify that the menu button's aria-expanded attribute toggles correctly when clicked.",
+    "Confirm that on narrow viewports the navigation is hidden (not in the accessibility tree) when the menu button is collapsed.",
+    "Confirm that on wide viewports the navigation is visible and accessible without needing to open the menu button."
+  ]
+}

@@ -1,0 +1,13 @@
+diff --git a/index.html b/index.html
+index 6333847..3a7815e 100644
+--- a/index.html
++++ b/index.html
+@@ -40,6 +40,8 @@ document.getElementById('close').addEventListener('click', () => trap.deactivate
+ document.getElementById('more').addEventListener('click', event => {
+   for (const name of ['Steel trowel', 'Pointing trowel']) { const li = document.createElement('li'); li.textContent = name; document.getElementById('list').append(li); }
+   document.getElementById('count').textContent = '4 of 4 results';
++  const closeBtn = document.getElementById('close');
++  if (closeBtn) closeBtn.focus();
+   event.currentTarget.remove();
+ });
+ window.__ready = true;

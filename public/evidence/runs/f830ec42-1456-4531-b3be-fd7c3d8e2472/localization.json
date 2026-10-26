@@ -1,0 +1,23 @@
+[
+  {
+    "path": "index.html",
+    "score": 6,
+    "signals": [
+      "city",
+      "city-list",
+      "profile",
+      "body",
+      "Delivery city",
+      "Save profile"
+    ],
+    "sha256": "48f4ddd1b4e39618682369c8ad0247bb95ee8601eff8de68294361750cefdefe"
+  },
+  {
+    "path": "src/autoComplete.js",
+    "score": 5.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "0242c0d6b3ddd74aa1f7f193124688b1e6bc61635a4ff086e56c9200d8032f04"
+  }
+]

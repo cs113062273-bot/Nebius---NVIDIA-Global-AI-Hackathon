@@ -1,0 +1,16 @@
+diff --git a/index.js b/index.js
+index 6d88fbd..3e1b770 100644
+--- a/index.js
++++ b/index.js
+@@ -983,7 +983,10 @@ const createFocusTrap = function (elements, userOptions) {
+     const isFocusedNodeRemoved = mutations.some(function (mutation) {
+       const removedNodes = Array.from(mutation.removedNodes);
+       return removedNodes.some(function (node) {
+-        return node === state.mostRecentlyFocusedNode;
++        return node === state.mostRecentlyFocusedNode ||
++          (state.mostRecentlyFocusedNode &&
++            typeof node.contains === 'function' &&
++            node.contains(state.mostRecentlyFocusedNode));
+       });
+     });
+ 

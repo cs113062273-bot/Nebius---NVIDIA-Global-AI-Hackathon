@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Escape key handler in the list navigation clears the input value instead of preserving the user's typed text, causing the form data to lose the entered value when dismissing suggestions.",
+  "repair_strategy": "Modify the Escape case in the navigate function of listController.js to close the suggestion list without clearing the input value or emitting the clear event, thereby retaining the current input value.",
+  "edits": [
+    {
+      "path": "src/controllers/listController.js",
+      "sha256": "913fcec2ffc448fd458cae19dd873623256f7e1c1ba3eab15225d68f74351f8f",
+      "before": "    // Esc\\n    case 27:\\n      // Clear \\\"input\\\" value\\n      ctx.input.value = \\\"\\\";\\n\\n      /**\\n       * @emit {clear} event on input clear\\n       **/\\n      eventEmitter('clear', ctx);\\n\\n      close(ctx);\\n      break;\\n",
+      "after": "    // Esc\\n    case 27:\\n      close(ctx);\\n      break;\\n"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will dismiss the suggestion list while keeping the user's current input intact, preserving focus on the input field and maintaining the form data value, fulfilling the expectation that dismissing suggestions does not lose entered text.",
+  "functional_risks": [
+    "Any custom listeners relying on the 'clear' event emitted on Escape will no longer receive it; however, the base code does not use this event.",
+    "If downstream code expects the input to be emptied on Escape, those behaviors would need to be updated."
+  ],
+  "verification_requirements": [
+    "After typing a value into the city input and pressing Escape, the input value must remain unchanged.",
+    "The suggestion list (#city-list) must be hidden after Escape.",
+    "Focus must remain on the #city input after Escape.",
+    "The form data for the city field must reflect the typed value.",
+    "ArrowDown/Enter and Tab selection mechanisms must continue to function as before."
+  ]
+}

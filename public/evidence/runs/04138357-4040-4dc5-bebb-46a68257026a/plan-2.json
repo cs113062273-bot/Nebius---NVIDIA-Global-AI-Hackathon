@@ -1,0 +1,24 @@
+{
+  "root_cause": "The datepicker lacks a blur event handler on the input field. When a user types a date (valid or invalid) and presses Tab, focus leaves the input but the picker remains open because no listener closes it. The previous attempt added a blur handler calling exitEditMode({update: true}), but update() returns early without hiding when the typed date is invalid (outside min/max range), leaving the picker visible.",
+  "repair_strategy": "Add a blur event listener to the input field that directly calls this.hide(). This ensures the picker closes on focus loss regardless of date validity, while hide() safely handles inline pickers and calls exitEditMode internally. The keydown handler (existing) will manage date selection updates for valid dates.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    } else {\n      // set up event listeners in other modes\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }",
+      "after": "    } else {\n      // set up event listeners in other modes\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [inputField, 'blur', (e) => this.hide()],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate away from the date field using Tab and the calendar closes, satisfying WCAG 2.1.1 (keyboard) and 2.4.3 (focus order). The picker closes for both valid and invalid typed dates.",
+  "functional_risks": [
+    "Calling hide() on blur will close the picker even if the user tabs away while the picker is already closing (e.g., after a date selection), but hide() is idempotent.",
+    "The input value will not be updated to an invalid date; it retains the typed string. The datepicker's internal selection remains the last valid date. This matches typical native date input behavior."
+  ],
+  "verification_requirements": [
+    "After typing an invalid date (e.g., 2024-07-15) and pressing Tab, the datepicker (.datepicker) must be hidden (not visible).",
+    "Focus must move to the next focusable element (#instructions).",
+    "After typing a valid date (e.g., 2024-05-21) and pressing Tab, the datepicker must be hidden and the form data must reflect the new date.",
+    "Selecting a date via mouse or keyboard within the picker should still function correctly.",
+    "Inline datepickers (if any) must remain unaffected by the change."
+  ]
+}

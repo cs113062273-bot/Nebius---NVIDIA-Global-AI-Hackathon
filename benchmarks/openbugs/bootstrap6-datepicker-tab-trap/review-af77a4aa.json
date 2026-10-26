@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewedAt": "2026-10-25T18:34:11.811Z",
+  "run": "af77a4aa-da7c-4790-8ecb-eee8a78cc33b",
+  "verdict": "Rejected on review: it breaks the calendar",
+  "summary": "The patch passes input mode as false to vanilla-calendar-pro. That removes the Tab trap, but after a click the calendar is no longer visible (0 of 35 days visible, against 35 before the patch).",
+  "caveats": [
+    "The frozen pointer path never opened the calendar, so the browser gate could not see this.",
+    "A stricter case, bootstrap6-datepicker-tab-trap-with-picker, adds a pointer guard for it; the patch is replayed there without inference."
+  ]
+}

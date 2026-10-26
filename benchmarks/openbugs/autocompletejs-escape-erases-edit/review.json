@@ -1,11 +1,10 @@
 {
   "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-  "reviewedAt": "2026-10-25T18:34:11.810Z",
-  "run": "66393ab6-8fe4-46fb-a208-ccfcb0f5dbbe",
+  "reviewedAt": "2026-10-26T03:08:35.468Z",
+  "run": "a47e4fb6-4e1d-43c0-b4e5-46ba69fec6e6",
   "verdict": "Sound",
-  "summary": "The one line that set the input to an empty string on Escape is removed; Escape still closes the list. This is the default the maintainer proposes in #485.",
+  "summary": "Escape no longer empties the input; it only closes the list. This is the default the maintainer proposes in #485, and the same change an earlier run made.",
   "caveats": [
-    "The clear event is still emitted on Escape although nothing is cleared any more; listeners for it may now be misleading.",
-    "#485 also proposes a clearOnEscape option for the old behaviour; an upstream pull request would need to add it."
+    "The clear event is no longer emitted on Escape, because nothing is cleared. A consumer that listened for it on Escape would need the option the maintainer describes."
   ]
 }

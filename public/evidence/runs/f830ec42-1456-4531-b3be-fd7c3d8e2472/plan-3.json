@@ -1,0 +1,23 @@
+{
+  "root_cause": "The autoComplete library's default keydown handler for the Escape key clears the input value when dismissing the suggestion list, instead of preserving the user's typed input. Adding a custom keydown handler via events.config replaces the library's default keydown handler, breaking arrow key navigation (ArrowDown/Enter selection).",
+  "repair_strategy": "Add a separate keydown event listener directly on the input element after initialization to intercept the Escape key, prevent the default behavior (which clears the input), and programmatically close the suggestion list while preserving the input value. This avoids replacing the library's internal keydown handler.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "48f4ddd1b4e39618682369c8ad0247bb95ee8601eff8de68294361750cefdefe",
+      "before": "window.cityPicker = new autoComplete({\n  name: 'City suggestions',\n  selector: '#city',\n  data: { src: ['Aveiro', 'Braga', 'Coimbra', 'Faro', 'Lisbon', 'Porto', 'Portimão'] },\n  resultsList: { id: 'city-list' },\n  events: { input: { selection: event => { window.cityPicker.input.value = event.detail.selection.value; } } }\n});\nform.addEventListener('submit', event => {",
+      "after": "window.cityPicker = new autoComplete({\n  name: 'City suggestions',\n  selector: '#city',\n  data: { src: ['Aveiro', 'Braga', 'Coimbra', 'Faro', 'Lisbon', 'Porto', 'Portimão'] },\n  resultsList: { id: 'city-list' },\n  events: { input: { selection: event => { window.cityPicker.input.value = event.detail.selection.value; } } }\n});\n// Dismiss suggestions with Escape while preserving typed input\nwindow.cityPicker.input.addEventListener('keydown', event => {\n  if (event.key === 'Escape') {\n    event.preventDefault();\n    if (typeof window.cityPicker.close === 'function') {\n      window.cityPicker.close();\n    }\n  }\n});\nform.addEventListener('submit', event => {"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape while editing a city will dismiss the autocomplete suggestions without losing the user's typed input, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by ensuring keyboard dismissal works predictably.",
+  "functional_risks": [
+    "If the library uses onkeydown property instead of addEventListener, the custom listener may not intercept in time (mitigated by preventDefault)",
+    "The close() method may not exist on the instance (guarded with typeof check)"
+  ],
+  "verification_requirements": [
+    "Escape closes suggestion list",
+    "Input value persists after Escape",
+    "ArrowDown and Enter still select suggestions",
+    "Form submission saves the typed city"
+  ]
+}

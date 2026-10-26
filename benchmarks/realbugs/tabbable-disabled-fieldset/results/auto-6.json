@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T02:51:35.659Z",
+  "policy": "auto",
+  "modelRun": "6c84bc79-50fc-4725-895a-0a8207382222",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "4ee73b81fd1057bef76d7820808d250a8dbeb3528af67e5ae219cd32d5985ea7",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-a027c63ac70ff09c75cfbf2de8a14518",
+      "usage": {
+        "completion_tokens": 3075,
+        "prompt_tokens": 10415,
+        "total_tokens": 13490,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2691,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10415
+      },
+      "latencyMs": 21159,
+      "reservedCreditUsd": 0.040299
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-0ba8ca5b295cdd536a5eff0de4a9fbe6",
+      "usage": {
+        "completion_tokens": 7251,
+        "prompt_tokens": 10633,
+        "total_tokens": 17884,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6772,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10633
+      },
+      "latencyMs": 20532,
+      "reservedCreditUsd": 0.135443
+    }
+  ]
+}

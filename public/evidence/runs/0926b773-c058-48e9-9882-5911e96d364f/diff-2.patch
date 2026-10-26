@@ -1,0 +1,60 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..4e0b1c5 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -552,13 +552,53 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                        (function(){
++                            var current = self.getDate() || new Date();
++                            var step = -1;
++                            var next = new Date(current.getFullYear(), current.getMonth(), current.getDate() + step);
++                            var isDisabled = function(d) {
++                                if (opts.minDate && d < opts.minDate) return true;
++                                if (opts.maxDate && d > opts.maxDate) return true;
++                                if (opts.disableWeekends) {
++                                    var dow = d.getDay();
++                                    if (dow === 0 || dow === 6) return true;
++                                }
++                                if (opts.disableDayFn && opts.disableDayFn(d)) return true;
++                                return false;
++                            };
++                            var limit = 0;
++                            while (isDisabled(next) && limit < 365) {
++                                next = new Date(next.getFullYear(), next.getMonth(), next.getDate() + step);
++                                limit++;
++                            }
++                            self.setDate(next);
++                        })();
+                         break;
+                     case 38:
+                         self.adjustDate('subtract', 7);
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                        (function(){
++                            var current = self.getDate() || new Date();
++                            var step = 1;
++                            var next = new Date(current.getFullYear(), current.getMonth(), current.getDate() + step);
++                            var isDisabled = function(d) {
++                                if (opts.minDate && d < opts.minDate) return true;
++                                if (opts.maxDate && d > opts.maxDate) return true;
++                                if (opts.disableWeekends) {
++                                    var dow = d.getDay();
++                                    if (dow === 0 || dow === 6) return true;
++                                }
++                                if (opts.disableDayFn && opts.disableDayFn(d)) return true;
++                                return false;
++                            };
++                            var limit = 0;
++                            while (isDisabled(next) && limit < 365) {
++                                next = new Date(next.getFullYear(), next.getMonth(), next.getDate() + step);
++                                limit++;
++                            }
++                            self.setDate(next);
++                        })();
+                         break;
+                     case 40:
+                         self.adjustDate('add', 7);

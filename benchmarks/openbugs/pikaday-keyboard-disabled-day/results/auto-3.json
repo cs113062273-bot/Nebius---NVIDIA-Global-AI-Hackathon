@@ -1,0 +1,92 @@
+{
+  "completedAt": "2026-10-26T03:04:17.658Z",
+  "implementation": "4ee73b81fd1057bef76d7820808d250a8dbeb3528af67e5ae219cd32d5985ea7",
+  "modelRun": "413124db-af81-47a6-a49e-35ad005497e8",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (css/pikaday.css): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 4-15 match file lines 146-157. The real file lines are in actual_source_region. Copy the region verbatim from the source."
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (pikaday.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 6-31 match file lines 547-572. The real file lines are in actual_source_region. Copy the region verbatim from the source.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-bd9d950aa23ba253f4a0900826757a05",
+      "usage": {
+        "completion_tokens": 14845,
+        "prompt_tokens": 17289,
+        "total_tokens": 32134,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13688,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17289
+      },
+      "latencyMs": 77844
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-12e56b59dc70ff1f983f1fee9eac8771",
+      "usage": {
+        "completion_tokens": 4387,
+        "prompt_tokens": 19123,
+        "total_tokens": 23510,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3182,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19123
+      },
+      "latencyMs": 12433
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (css/pikaday.css): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 4-15 match file lines 146-157. The real file lines are in actual_source_region. Copy the region verbatim from the source.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-63dbee4174ef32421f6cf53147ee96fa",
+      "usage": {
+        "completion_tokens": 17922,
+        "prompt_tokens": 18920,
+        "total_tokens": 36842,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 15652,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 18920
+      },
+      "latencyMs": 39369
+    }
+  ]
+}

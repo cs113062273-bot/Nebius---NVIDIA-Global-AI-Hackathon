@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": "bootstrap-dropdown-modal-escape-keyboard",
+  "title": "Dismiss the share dialog with Escape",
+  "goal": "Escape closes the dialog while focus is on the access button",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach Share",
+      "action": {
+        "kind": "seek",
+        "selector": "#open-share",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open the share dialog",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#access-toggle",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Tab to the access button",
+      "action": {
+        "kind": "seek",
+        "selector": "#access-toggle",
+        "maxTabs": 3
+      },
+      "assertions": []
+    },
+    {
+      "title": "Press Escape to dismiss the dialog",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#access-toggle",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#share-title",
+      "value": false
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#shared-with",
+      "value": "Only you"
+    }
+  ],
+  "forbidden": []
+}

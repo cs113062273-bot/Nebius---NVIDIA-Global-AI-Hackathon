@@ -1,0 +1,23 @@
+{
+  "root_cause": "Missing blur event listener on the date input field causes the datepicker to remain open when the user tabs away after typing an unavailable date.",
+  "repair_strategy": "Add a blur listener to the input that calls datepicker.hide() to close the calendar when focus leaves the field, but only for non-inline datepickers (since the listener is only registered for dropdown mode).",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);",
+      "after": "      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'blur', () => picker.hide()],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can tab out of the date field and the datepicker will close, ensuring that the calendar does not obstruct subsequent fields and focus order is respected.",
+  "functional_risks": [
+    "Hiding the picker on blur may interfere with scenarios where the picker is programmatically shown and the input loses focus temporarily.",
+    "If the picker relies on blur for validation, unintended hiding could occur."
+  ],
+  "verification_requirements": [
+    "Tabbing away from the date field after typing a valid or invalid date closes the datepicker.",
+    "Selecting a date via mouse or keyboard within the picker still updates the input and hides the picker as appropriate.",
+    "Inline datepickers remain unaffected.",
+    "Blur does not cause premature hiding when the picker is opened via script."
+  ]
+}

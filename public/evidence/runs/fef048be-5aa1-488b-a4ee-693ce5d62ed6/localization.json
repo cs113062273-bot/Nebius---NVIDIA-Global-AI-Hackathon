@@ -1,0 +1,58 @@
+[
+  {
+    "path": "pikaday.js",
+    "score": 17,
+    "signals": [
+      "body",
+      "Previous Month",
+      "Next Month",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "18",
+      "19",
+      "20",
+      "24"
+    ],
+    "sha256": "662123ec9f429dee9cffaacfcf89b05ed9c3c30a78d33ecfd113e6778349cc77"
+  },
+  {
+    "path": "css/pikaday.css",
+    "score": 13,
+    "signals": [
+      "10",
+      "11",
+      "12",
+      "14",
+      "15",
+      "17",
+      "20",
+      "24",
+      "25",
+      "26",
+      "28",
+      "30"
+    ],
+    "sha256": "f8cb0856a98f2c8c193e42dbb3e3097833ea27b5b8d1a4e0d581b2ef7e94ea09"
+  },
+  {
+    "path": "index.html",
+    "score": 11,
+    "signals": [
+      "notes",
+      "slot-form",
+      "body",
+      "Delivery day (yyyy-mm-dd)",
+      "Note for the driver",
+      "15",
+      "16",
+      "20",
+      "24",
+      "26",
+      "Book slot"
+    ],
+    "sha256": "4cf4183a11d7c6ca380c6caeb6e7649b7898c26108f466ed3c3758609e716bf6"
+  }
+]

@@ -1,0 +1,12 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 6fa3ea3..85b7d2d 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -434,6 +434,7 @@ class Dropdown extends BaseComponent {
+ 
+     if (isEscapeEvent) {
+       instance.hide()
++      instance._element.focus()
+       return
+     }
+ 

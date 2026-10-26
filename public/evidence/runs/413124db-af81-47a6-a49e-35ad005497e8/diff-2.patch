@@ -1,0 +1,48 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..8331583 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -543,6 +543,19 @@
+             e = e || window.event;
+ 
+             if (self.isVisible()) {
++                var opts = self._o;
++                function isDateAllowed(date) {
++                    if (opts.minDate && date < opts.minDate) return false;
++                    if (opts.maxDate && date > opts.maxDate) return false;
++                    if (opts.disableWeekends) {
++                        var day = date.getDay();
++                        if (day === 0 || day === 6) return false;
++                    }
++                    if (opts.disableDayFn && typeof opts.disableDayFn === 'function') {
++                        if (opts.disableDayFn(date)) return false;
++                    }
++                    return true;
++                }
+ 
+                 switch(e.keyCode){
+                     case 13:
+@@ -552,13 +565,21 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                        var newDate = self.getDate() || new Date();
++                        do {
++                            newDate = new Date(newDate.getTime() - 24*60*60*1000);
++                        } while (!isDateAllowed(newDate));
++                        self.setDate(newDate);
+                         break;
+                     case 38:
+                         self.adjustDate('subtract', 7);
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                        var newDate = self.getDate() || new Date();
++                        do {
++                            newDate = new Date(newDate.getTime() + 24*60*60*1000);
++                        } while (!isDateAllowed(newDate));
++                        self.setDate(newDate);
+                         break;
+                     case 40:
+                         self.adjustDate('add', 7);

@@ -1,14 +1,18 @@
 diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
-index e71d8df..24bb2b8 100644
+index e71d8df..12e2e29 100644
 --- a/js/src/datepicker.ts
 +++ b/js/src/datepicker.ts
-@@ -270,7 +270,8 @@ class Datepicker extends BaseComponent {
-   protected _syncSelectedDates(selectedDates: string[]): void {
-     const formattedDate = this._formatDateForInput(selectedDates)
-     if (this._isInput) {
--      this._element.value = formattedDate
-+      // Keep ISO format in input for form submission
-+      this._element.value = selectedDates[0] || ''
-     }
- 
-     if (this._boundInput) {
+@@ -70,7 +70,12 @@ const Default: DatepickerConfig = {
+   datepickerTheme: null, // 'light', 'dark', 'auto' - explicit theme for datepicker popover only
+   dateMin: null,
+   dateMax: null,
+-  dateFormat: null, // Intl.DateTimeFormat options, or function(date, locale) => string
++  dateFormat: (date: Date, locale: string | undefined) => {
++    const year = date.getFullYear();
++    const month = String(date.getMonth() + 1).padStart(2, '0');
++    const day = String(date.getDate()).padStart(2, '0');
++    return `${year}-${month}-${day}`;
++  },
+   displayElement: null, // Element to show formatted date (defaults to element for buttons)
+   displayMonthsCount: 1, // Number of months to display side-by-side
+   firstWeekday: 1, // Monday

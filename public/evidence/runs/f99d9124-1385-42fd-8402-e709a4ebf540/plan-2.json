@@ -1,0 +1,28 @@
+{
+  "root_cause": "The datepicker does not close when the input field loses focus (blur) after typing an invalid date because the blur event is not handled to hide the picker, and the setDate function returns early without hiding when the date is invalid.",
+  "repair_strategy": "Add a blur event listener to the input field that triggers datepicker.setDate with autohide:true, and modify setDate to hide the picker when autohide is true and the input date is invalid.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "function setDate(datepicker, inputDates, options) {\n  let {clear, render, autohide} = options;\n  if (render === undefined) {\n    render = true;\n  }\n  if (!render) {\n    autohide = false;\n  } else if (autohide === undefined) {\n    autohide = datepicker.config.autohide;\n  }\n\n  const newDates = processInputDates(datepicker, inputDates, clear);\n  if (!newDates) {\n    return;\n  }\n  if (newDates.toString() !== datepicker.dates.toString()) {\n    datepicker.dates = newDates;\n    refreshUI(datepicker, render ? 3 : 1);\n    triggerDatepickerEvent(datepicker, 'changeDate');\n  } else {\n    refreshUI(datepicker, 1);\n  }\n  if (autohide) {\n    datepicker.hide();\n  }\n}",
+      "after": "function setDate(datepicker, inputDates, options) {\n  let {clear, render, autohide} = options;\n  if (render === undefined) {\n    render = true;\n  }\n  if (!render) {\n    autohide = false;\n  } else if (autohide === undefined) {\n    autohide = datepicker.config.autohide;\n  }\n\n  const newDates = processInputDates(datepicker, inputDates, clear);\n  if (!newDates) {\n    if (autohide) {\n      datepicker.hide();\n    }\n    return;\n  }\n  if (newDates.toString() !== datepicker.dates.toString()) {\n    datepicker.dates = newDates;\n    refreshUI(datepicker, render ? 3 : 1);\n    triggerDatepickerEvent(datepicker, 'changeDate');\n  } else {\n    refreshUI(datepicker, 1);\n  }\n  if (autohide) {\n    datepicker.hide();\n  }\n}"
+    },
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    // set up event listeners\n    registerListeners(this, [\n      [inputField, 'keydown', onKeydown.bind(null, this)],\n      [inputField, 'focus', onFocus.bind(null, this)],\n      [inputField, 'mousedown', onMousedown.bind(null, this)],\n      [inputField, 'click', onClickInput.bind(null, this)],\n      [inputField, 'paste', onPaste.bind(null, this)],\n      [document, 'mousedown', onClickOutside.bind(null, this)],\n      [document, 'touchstart', onClickOutside.bind(null, this)],\n      [window, 'resize', picker.place.bind(picker)],\n    ]);",
+      "after": "    // set up event listeners\n    registerListeners(this, [\n      [inputField, 'keydown', onKeydown.bind(null, this)],\n      [inputField, 'focus', onFocus.bind(null, this)],\n      [inputField, 'mousedown', onMousedown.bind(null, this)],\n      [inputField, 'click', onClickInput.bind(null, this)],\n      [inputField, 'paste', onPaste.bind(null, this)],\n      [inputField, 'blur', function(datepicker) { datepicker.setDate(datepicker.inputField.value, {render: false, autohide: true}); }.bind(null, this)],\n      [document, 'mousedown', onClickOutside.bind(null, this)],\n      [document, 'touchstart', onClickOutside.bind(null, this)],\n      [window, 'resize', picker.place.bind(picker)],\n    ]);"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can tab away from the date field and the calendar will close, preventing the calendar from remaining open and obscuring content.",
+  "functional_risks": [
+    "The blur handler may cause the picker to close on every blur, which might interfere with other interactions.",
+    "The setDate change may cause the picker to hide in other contexts where autohide is true and the date is invalid."
+  ],
+  "verification_requirements": [
+    "Test that tabbing away from the date field with an invalid date closes the calendar.",
+    "Test that tabbing away with a valid date updates the date and closes the calendar (if autohide is true).",
+    "Ensure the regression guard for valid date still passes."
+  ]
+}

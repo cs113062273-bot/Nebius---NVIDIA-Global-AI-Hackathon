@@ -1,0 +1,12 @@
+{
+  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T03:08:35.468Z",
+  "run": "2dfa5efb-16e0-4333-a4fe-39c84d7723da",
+  "verdict": "Workaround in the page, not a library fix",
+  "summary": "The patch changes only the consumer page: it wraps the field in Bootstrap’s .form-adorn wrapper, which makes the datepicker position (and attach its key handling) to the wrapper instead of the input. Tab leaves the field, Escape still closes the calendar and a click still shows it.",
+  "caveats": [
+    "The library bug remains for every page that does not use the wrapper.",
+    "Whether Tab still moves into a calendar opened by click was not part of the frozen task and was not checked.",
+    "A reasonable stopgap for an app team until twbs/bootstrap#43202 is fixed."
+  ]
+}

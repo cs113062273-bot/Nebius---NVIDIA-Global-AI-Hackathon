@@ -1,0 +1,12 @@
+diff --git a/js/picker/Picker.js b/js/picker/Picker.js
+index abd17e9..692da9b 100644
+--- a/js/picker/Picker.js
++++ b/js/picker/Picker.js
+@@ -157,6 +157,7 @@ export default class Picker {
+ 
+     const elementClass = inputField ? 'dropdown' : 'inline';
+     element.classList.add(`datepicker-${elementClass}`);
++    element.tabIndex = -1;
+ 
+     processPickerOptions(this, config);
+     this.viewDate = computeResetViewDate(datepicker);

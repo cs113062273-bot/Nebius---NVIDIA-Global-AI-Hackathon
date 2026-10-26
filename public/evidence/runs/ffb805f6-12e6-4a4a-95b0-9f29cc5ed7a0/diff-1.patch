@@ -1,0 +1,20 @@
+diff --git a/src/menubar.js b/src/menubar.js
+index a33aa05..b665aba 100644
+--- a/src/menubar.js
++++ b/src/menubar.js
+@@ -485,8 +485,13 @@ class Menubar extends BaseMenu {
+           // - Closes submenu.
+           // - Moves focus to parent menubar item.
+           preventEvent(event);
+-          this.elements.rootMenu.closeChildren();
+-          this.elements.rootMenu.focusCurrentChild();
++          const toggle = this.elements.parentMenu.elements.submenuToggles.find(
++            t => t.elements.controlledMenu === this
++          );
++          if (toggle) {
++            toggle.close();
++          }
++          this.elements.parentMenu.focusCurrentChild();
+         } else if (key === "ArrowRight") {
+           // Hitting the Right Arrow:
+           // - If focus is on an item with a submenu, opens the submenu and places focus on the first item.

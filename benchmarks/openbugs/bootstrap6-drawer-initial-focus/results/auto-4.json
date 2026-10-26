@@ -1,0 +1,93 @@
+{
+  "completedAt": "2026-10-26T03:01:59.491Z",
+  "implementation": "4ee73b81fd1057bef76d7820808d250a8dbeb3528af67e5ae219cd32d5985ea7",
+  "modelRun": "562fdf10-be09-4efb-b03f-d64a4971ffe4",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 2 · #filters-close: expected \"#filters-close\", observed \"body\"",
+    "Task evidence is missing or contradicts the verdict"
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "OVERFIT",
+      "failure": "Patch hardcodes the test page into component code: js/src/drawer.ts now names #filters-close. Component code must work on any page that uses it; repair the component's behaviour without referring to this page's ids.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-b57439ebc615b80ccbb67240dba14855",
+      "usage": {
+        "completion_tokens": 3904,
+        "prompt_tokens": 19421,
+        "total_tokens": 23325,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3441,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19421
+      },
+      "latencyMs": 20707
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (js/src/drawer.ts): before does not occur in the file. 3 of its lines are not in the source. not in file: \"const closeBtn = this._element.querySelector('#filters-close')\"; closest is line 133: \"const navbar = this._element.closest('.navbar')\" | not in file: \"if (closeBtn) {\" | not in file: \"closeBtn.focus({ preventScroll: true })\"; closest is line 204: \"this.focus({ preventScroll: true })\".",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-b77a437cac523a475b0e2cda18136453",
+      "usage": {
+        "completion_tokens": 811,
+        "prompt_tokens": 19975,
+        "total_tokens": 20786,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 224,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19975
+      },
+      "latencyMs": 3564
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-4f6dbf6783f349f63a7e63db2fe6bc2b",
+      "usage": {
+        "completion_tokens": 827,
+        "prompt_tokens": 21125,
+        "total_tokens": 21952,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 346,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21125
+      },
+      "latencyMs": 3755
+    }
+  ]
+}

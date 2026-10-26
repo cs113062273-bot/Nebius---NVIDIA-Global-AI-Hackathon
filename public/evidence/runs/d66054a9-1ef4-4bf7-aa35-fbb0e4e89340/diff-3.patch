@@ -1,0 +1,54 @@
+diff --git a/index.html b/index.html
+index f26a4cc..1aff12a 100644
+--- a/index.html
++++ b/index.html
+@@ -75,9 +75,46 @@ body{margin:0;font:19px/1.4 Arial,sans-serif;color:#212b32;background:#f0f4f5}
+ </form>
+ </main>
+ </div>
+-<script type="module">
+-import { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'
+-initCheckboxes()
++<script>
++document.addEventListener('DOMContentLoaded', function() {
++  function getGroup(cb) {
++    return cb.getAttribute('data-checkbox-exclusive-group') || cb.name;
++  }
++  function getNonExclusiveInGroup(group) {
++    var byAttr = Array.from(document.querySelectorAll('input[data-checkbox-exclusive-group="' + group + '"]:not([data-checkbox-exclusive])'));
++    if (byAttr.length) return byAttr;
++    return Array.from(document.querySelectorAll('input[name="' + group + '"]:not([data-checkbox-exclusive])'));
++  }
++  function getExclusiveInGroup(group) {
++    return Array.from(document.querySelectorAll('input[data-checkbox-exclusive]')).filter(function(excl) {
++      return getGroup(excl) === group;
++    });
++  }
++  document.querySelectorAll('input[data-checkbox-exclusive]').forEach(function(exclusiveCheckbox) {
++    exclusiveCheckbox.addEventListener('change', function() {
++      if (this.checked) {
++        var group = getGroup(this);
++        var nonExclusive = getNonExclusiveInGroup(group);
++        nonExclusive.forEach(function(cb) {
++          cb.checked = false;
++          cb.dispatchEvent(new Event('change', { bubbles: true }));
++        });
++      }
++    });
++  });
++  document.querySelectorAll('input[type="checkbox"]:not([data-checkbox-exclusive])').forEach(function(cb) {
++    cb.addEventListener('change', function() {
++      if (this.checked) {
++        var group = getGroup(this);
++        var exclusives = getExclusiveInGroup(group);
++        exclusives.forEach(function(excl) {
++          excl.checked = false;
++          excl.dispatchEvent(new Event('change', { bubbles: true }));
++        });
++      }
++    });
++  });
++});
+ </script>
+ </body>
+ </html>

@@ -1,0 +1,13 @@
+diff --git a/lib/src/index.js b/lib/src/index.js
+index d4e2d21..d622dab 100644
+--- a/lib/src/index.js
++++ b/lib/src/index.js
+@@ -128,7 +128,7 @@ const MicroModal = (() => {
+     }
+ 
+     onClick (event) {
+-      if (event.target.closest(`[${ this.config.closeTrigger }]`)) {
++      if (event.target.hasAttribute(this.config.closeTrigger)) {
+         event.preventDefault()
+         event.stopPropagation()
+         this.closeModal(event)

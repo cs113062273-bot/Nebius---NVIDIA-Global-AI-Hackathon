@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T01:42:31.175Z",
+  "generatedAt": "2026-10-26T03:09:05.200Z",
   "enabled": false,
   "cases": [
     {
@@ -16,13 +16,11 @@
       "split": "development",
       "screenRun": "b1323d20-7eca-4307-9122-1028cfb7b60a",
       "recorded": {
-        "run": "d79954ca-68e0-4d44-9136-c44a0d60a9e4",
+        "run": "5c1a0351-ccc4-4c7d-a766-97614550c826",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ]
       }
     },
@@ -40,7 +38,7 @@
       "split": "holdout",
       "screenRun": "1ddb58be-6a35-4d54-8a86-699a73fa82be",
       "recorded": {
-        "run": "cf0c0951-dd9d-49c3-b7e3-24a979a07c07",
+        "run": "ffb805f6-12e6-4a4a-95b0-9f29cc5ed7a0",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -62,12 +60,11 @@
       "split": "holdout",
       "screenRun": "06ec9c99-8063-426b-bf48-3b3742505e23",
       "recorded": {
-        "run": "df6424ef-e302-46d5-b706-0bf69a678aec",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "f7fd7e86-a984-4eae-8688-f9eefe41fa32",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ]
       }
@@ -86,7 +83,7 @@
       "split": "holdout",
       "screenRun": "c3735af7-f04f-4263-ae33-3b8de7bc02bb",
       "recorded": {
-        "run": "eb8c90ab-4d1d-4e84-9531-05d952a5451e",
+        "run": "3352ba8e-efb1-4b4d-b73e-c283de01469a",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -108,7 +105,7 @@
       "split": "holdout",
       "screenRun": "6aafa56d-ec50-45bf-9b7a-4d6ce3365d33",
       "recorded": {
-        "run": "25d12562-3442-4d4b-8b60-26a28797e45a",
+        "run": "1fa9016e-10f8-4757-b9be-e4b1c29adb8f",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -131,7 +128,7 @@
       "split": "holdout",
       "screenRun": "256b1a25-6338-457b-aa33-b902a0006e54",
       "recorded": {
-        "run": "0e246881-c582-43df-8fe4-deabd7647c8b",
+        "run": "2ede266f-6035-40e0-9e89-3e9b592d2999",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -154,12 +151,11 @@
       "split": "holdout",
       "screenRun": "85f9651a-6cb2-433a-a6fd-838c123c3058",
       "recorded": {
-        "run": "cf5837df-2bb6-4aaa-9a1c-c8f5c95165db",
+        "run": "acca4ae9-a122-44f0-9031-11ecf67e1fc9",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ]
       }
@@ -178,11 +174,12 @@
       "split": "holdout",
       "screenRun": "c21cb036-3711-4490-8214-d204193f5f5a",
       "recorded": {
-        "run": "36cee98b-d04e-4546-af72-76bde7677d8c",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "run": "050e29dc-7b1e-4495-bcef-87a93ac7fd7c",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ]
       }
@@ -201,7 +198,7 @@
       "split": "holdout",
       "screenRun": "7c36e31c-5304-46e9-878a-f36acfe75d0d",
       "recorded": {
-        "run": "60afb785-3b22-4042-8ff6-60eabc51b12e",
+        "run": "ba20bcc2-b177-4df3-8cac-492e0b61116d",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -223,11 +220,12 @@
       "split": "holdout",
       "screenRun": "05000179-773a-42b0-be97-19f6cca1b123",
       "recorded": {
-        "run": "9aa975bd-1c9a-46c3-8898-f43bd4a9ea4b",
+        "run": "41832922-46c1-462c-a3b4-0136b7749c50",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 2,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
         ]
       }
     },
@@ -245,7 +243,7 @@
       "split": "holdout",
       "screenRun": "99bf7b0b-058c-4b59-a64f-8f452ec83a79",
       "recorded": {
-        "run": "ecc10068-b612-4f77-8d2b-9c12f61365b1",
+        "run": "42f61f83-a92f-4d37-a63b-6c1d5dd2a145",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -267,7 +265,7 @@
       "split": "holdout",
       "screenRun": "6f1c7b4b-9102-439e-9908-26a1f904befe",
       "recorded": {
-        "run": "5f5218cc-11bd-4207-9f68-866bbc8f81a0",
+        "run": "ea5cffe6-75e3-4636-8052-cbc8636d1992",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -289,7 +287,7 @@
       "split": "holdout",
       "screenRun": "ca54db63-5ea3-4fc6-8ad3-157b257aa32c",
       "recorded": {
-        "run": "e7922ff2-1938-48a6-8155-c496f631d380",
+        "run": "87af7bf7-185b-437e-b275-9c234e7d951f",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -311,12 +309,11 @@
       "split": "holdout",
       "screenRun": "d5ceebfc-80bd-4580-83a8-a48c27697bc6",
       "recorded": {
-        "run": "4a25fdf3-4435-4971-8451-e0ab2f198fd0",
+        "run": "36ba88d6-2c71-4d38-9200-231836e2683d",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ]
       }
     },
@@ -334,7 +331,7 @@
       "split": "holdout",
       "screenRun": "cd73bcb1-b6ac-4439-8a2a-0b3e9318952b",
       "recorded": {
-        "run": "d36a4d5d-9ac5-4122-9d6e-d7b7d3c3cb86",
+        "run": "5e2a101a-a677-485d-8e29-c6c8a9f72296",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -357,7 +354,7 @@
       "split": "holdout",
       "screenRun": "87e39e0a-911d-43fd-a03d-47ee81666625",
       "recorded": {
-        "run": "5d1e27d6-e054-412d-aebb-796e721a20cd",
+        "run": "4ea4d0da-3c45-4956-8030-e62d45e2b20c",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -379,7 +376,7 @@
       "split": "holdout",
       "screenRun": "a01bb35f-60a6-4508-8f54-1ad4c1e482ed",
       "recorded": {
-        "run": "e6c6c076-6a79-4857-b436-310075786e7c",
+        "run": "44a7156a-4da1-4a96-b179-e435018c8e26",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -401,11 +398,12 @@
       "split": "holdout",
       "screenRun": "848a8b7a-0764-40d9-91ed-6d7fe9f78f39",
       "recorded": {
-        "run": "7338c453-5ba4-4c4c-9d34-119174f9ca47",
+        "run": "66b21846-62b9-4e40-bb17-8f994a27763a",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 3,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ]
       }
@@ -424,7 +422,7 @@
       "split": "holdout",
       "screenRun": "ee96cce4-3c72-44de-9dc6-0dee61068737",
       "recorded": {
-        "run": "74a57932-46a1-4953-b060-970aa563d349",
+        "run": "8743f80f-bf23-4eb9-ad0e-dcd33ddc9718",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -447,13 +445,11 @@
       "split": "holdout",
       "screenRun": "4202b573-f40f-4c27-85d5-cde5932842a1",
       "recorded": {
-        "run": "dcdae0cd-1e92-4c60-9ee0-0d4294351e4a",
+        "run": "0b1c868d-7867-41ff-9f73-45b46a12ce49",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ]
       }
     },
@@ -471,7 +467,7 @@
       "split": "development",
       "screenRun": "1e53cc4b-1b50-4cd0-8e03-6491a5a7adce",
       "recorded": {
-        "run": "c052c3fc-524c-4611-bd9d-6714b579a4b0",
+        "run": "c4c834e1-b0f9-456c-a6b7-2340f88dacfb",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -494,7 +490,7 @@
       "split": "holdout",
       "screenRun": "2b36fa59-dedb-4a08-94f1-d47a5f9038ea",
       "recorded": {
-        "run": "7faba4f1-5e3d-46e6-b48c-d52c22360c64",
+        "run": "1c62a67a-4ab7-4673-b653-cba47ba28d35",
         "verdict": "VERIFIED_FAIL",
         "passedOn": null,
         "models": [
@@ -518,13 +514,11 @@
       "split": "holdout",
       "screenRun": "69df69ba-9d14-472d-8f3f-4f7692c6546f",
       "recorded": {
-        "run": "4f6774db-3035-4a93-9943-e9a30478164a",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "f876d753-39a2-4afb-b2ab-651544f69423",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ]
       }
     },
@@ -542,7 +536,7 @@
       "split": "holdout",
       "screenRun": "83b8eb31-ef77-4bce-9b63-47ee6b76b7d8",
       "recorded": {
-        "run": "4e040ddb-1457-4b80-848c-984e88a8ce8e",
+        "run": "6c84bc79-50fc-4725-895a-0a8207382222",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -565,7 +559,7 @@
       "split": "holdout",
       "screenRun": "b0d35143-a165-4155-974e-8ed35cce340b",
       "recorded": {
-        "run": "9b781408-25c9-4119-9e78-6180440671d1",
+        "run": "00be85d0-f046-4602-a9b4-b48dc241d361",
         "verdict": "VERIFIED_FAIL",
         "passedOn": null,
         "models": [
@@ -589,7 +583,7 @@
       "split": "holdout",
       "screenRun": "961c7d87-daa3-473c-a685-2fb1b27248ae",
       "recorded": {
-        "run": "612111af-39ed-4370-9b84-c6a4397c56fc",
+        "run": "63485780-5022-4ecf-a934-2fdb48b2faea",
         "verdict": "VERIFIED_FAIL",
         "passedOn": null,
         "models": [
@@ -637,11 +631,27 @@
       },
       {
         "id": "55874e83",
-        "current": true,
+        "current": false,
         "runs": 26,
         "verified": 21,
         "eligible": 26,
         "note": "Adds an overfitting gate: a patch that makes component code name one of the test page's element ids is rejected and sent back (it caught two earlier passes that hardcoded the page). The browser now records, for each key, whether it was cancelled and whether a dialog's cancel event could be cancelled, and the model sees that trace. All 26 cases and all open bugs rerun."
+      },
+      {
+        "id": "e64c7d19",
+        "current": false,
+        "runs": 26,
+        "verified": 18,
+        "eligible": 26,
+        "note": "When a patch does not apply, the retry gets the file lines it was aimed at and the first line that differs; a path naming only the tail of one allowed file is resolved. Scored 18/26, below v6: most misses were patches that did not apply because the model misremembered an unchanged line (a dropped semicolon, self for this) or copied lines from its own rejected patch. That led to version 8. All 26 cases and all open bugs rerun."
+      },
+      {
+        "id": "4ee73b81",
+        "current": true,
+        "runs": 26,
+        "verified": 22,
+        "eligible": 26,
+        "note": "An unchanged line the model misremembered (spacing, a trailing semicolon, self for this) is replaced by the file's own line; changed lines may differ only in formatting and no line may be inserted. Advisory fields nested inside an edit are moved back to the plan, and after an unapplied patch the model is told nothing was applied. Verification is unchanged. All 26 cases and all open bugs rerun."
       }
     ]
   }

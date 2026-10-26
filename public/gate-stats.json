@@ -1,0 +1,286 @@
+{
+  "generatedAt": "2026-10-26T03:09:01.758Z",
+  "note": "Fractions: every recorded blind run of the 26 real bugs, across all engine versions; a run is one bug on one engine version, up to three attempts (Super, then Ultra with the browser failure report). Rejected patches: real-bug and open-bug runs.",
+  "runs": 194,
+  "realRuns": 165,
+  "attempts": 362,
+  "firstTry": 72,
+  "withFeedback": 58,
+  "notRepaired": 35,
+  "caughtAfterKeyboardPass": 22,
+  "caughtReasons": {
+    "functional": 12,
+    "guards": 7,
+    "rules": 4,
+    "other": 0
+  },
+  "overfitRejected": 1,
+  "unappliedPatches": 56,
+  "caught": [
+    {
+      "case": "bootstrap-dropdown-escape-in-modal",
+      "kind": "real",
+      "version": "e4179877",
+      "run": "b82c5703-5ae7-419b-9823-243cce2ba838",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Escape inside the open access menu closes only the menu\": failed · Step 5 · #access-toggle: expected \"#access-toggle\", observed \"#open-share\""
+    },
+    {
+      "case": "bootstrap-dropdown-escape-in-modal",
+      "kind": "real",
+      "version": "e4179877",
+      "run": "b82c5703-5ae7-419b-9823-243cce2ba838",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Escape inside the open access menu closes only the menu\": failed · Step 5 · #access-toggle: expected \"#access-toggle\", observed \"#open-share\""
+    },
+    {
+      "case": "bootstrap-dropdown-escape-in-modal",
+      "kind": "real",
+      "version": "55874e83",
+      "run": "cf5837df-2bb6-4aaa-9a1c-c8f5c95165db",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Escape inside the open access menu closes only the menu\": failed · Step 5 · #access-toggle: expected \"#access-toggle\", observed \"#open-share\""
+    },
+    {
+      "case": "nhsuk-checkboxes-exclusive-unique-names",
+      "kind": "real",
+      "version": "c985a43a",
+      "run": "d66054a9-1ef4-4bf7-aa35-fbb0e4e89340",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Choose 'Do not contact me' after ticking a contact method\": failed · #symptoms-form contact: expected [\"none\"], observed [\"text\",\"none\"]"
+    },
+    {
+      "case": "pikaday-arrow-left-other-field",
+      "kind": "real",
+      "version": "e4179877",
+      "run": "fef048be-5aa1-488b-a4ee-693ce5d62ed6",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Move the delivery day with arrow keys\": failed · Step 2 · #slot-form delivery: expected [\"2024-03-14\"], observed [\"2024-03-15\"]"
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "c985a43a",
+      "run": "5d37c9fa-3e74-49e0-85e1-c4e8b03d7cc9",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "c985a43a",
+      "run": "5d37c9fa-3e74-49e0-85e1-c4e8b03d7cc9",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "e4179877",
+      "run": "8a56dfe1-16af-477c-89d8-b6eebd41360d",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "e4179877",
+      "run": "8a56dfe1-16af-477c-89d8-b6eebd41360d",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "e4179877",
+      "run": "8a56dfe1-16af-477c-89d8-b6eebd41360d",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "c4c339d4",
+      "run": "04138357-4040-4dc5-bebb-46a68257026a",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "c4c339d4",
+      "run": "04138357-4040-4dc5-bebb-46a68257026a",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "55874e83",
+      "run": "9b781408-25c9-4119-9e78-6180440671d1",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "55874e83",
+      "run": "9b781408-25c9-4119-9e78-6180440671d1",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "e64c7d19",
+      "run": "f99d9124-1385-42fd-8402-e709a4ebf540",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: failed · Step 3 · #delivery-form delivery: expected [\"2024-06-04\"], observed [\"2024-05-10\"]"
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "4ee73b81",
+      "run": "00be85d0-f046-4602-a9b4-b48dc241d361",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "4ee73b81",
+      "run": "00be85d0-f046-4602-a9b4-b48dc241d361",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "autocompletejs-escape-erases-edit",
+      "kind": "open",
+      "version": "",
+      "run": "f830ec42-1456-4531-b3be-fd7c3d8e2472",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"ArrowDown and Enter still select a suggestion\": failed · #profile city: expected [\"Faro\"], observed [\"Fa\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day",
+      "kind": "open",
+      "version": "55874e83",
+      "run": "1e3667fc-6ac9-40d9-ab2a-db08966c3842",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards",
+        "rules"
+      ],
+      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day",
+      "kind": "open",
+      "version": "55874e83",
+      "run": "1e3667fc-6ac9-40d9-ab2a-db08966c3842",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "rules"
+      ],
+      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day",
+      "kind": "open",
+      "version": "e64c7d19",
+      "run": "0926b773-c058-48e9-9882-5911e96d364f",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "rules"
+      ],
+      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day",
+      "kind": "open",
+      "version": "4ee73b81",
+      "run": "413124db-af81-47a6-a49e-35ad005497e8",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "rules"
+      ],
+      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"], color-contrast:abbr[title=\"Sunday\"], color-contrast:abbr[title=\"Monday\"], color-contrast:abbr[title=\"Tuesday\"], color-contrast:abbr[title=\"Wednesday"
+    }
+  ]
+}

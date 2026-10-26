@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T03:08:35.468Z",
+  "run": "d2724498-2115-4211-b2f4-1f355db03568",
+  "verdict": "Sound",
+  "summary": "The patch removes the timer that refocused the date field one millisecond after every redraw, which is what pulled focus back after Tab. A reviewer probe of the mouse paths the task does not cover (open by click, Next month, type, pick a day) gives the same focus and value with and without the patch.",
+  "caveats": [
+    "The refocus is removed for every redraw, not only the one after change. The probe covered mouse navigation in desktop Chromium; touch devices were not tested.",
+    "Pikaday is archived, so this is a patch for teams that vendor it, not an upstream pull request."
+  ]
+}

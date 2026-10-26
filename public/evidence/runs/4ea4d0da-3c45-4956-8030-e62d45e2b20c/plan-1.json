@@ -1,0 +1,21 @@
+{
+  "root_cause": "The character count component incorrectly removes the maxlength attribute from the container div instead of the textarea, causing the browser's native maxlength limit to truncate input beyond 30 characters.",
+  "repair_strategy": "Change the line that removes the hard limit to target the textarea element (this.$textarea) rather than the container ($module).",
+  "edits": [
+    {
+      "path": "src/govuk/components/character-count/character-count.js",
+      "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90",
+      "before": "  // Save the element limit\n  this.maxLength = $module.getAttribute(countAttribute)\n\n  // Check for limit\n  if (!this.maxLength) {\n    return\n  }\n\n  // Remove hard limit if set\n  $module.removeAttribute('maxlength')\n\n  this.bindChangeEvents()",
+      "after": "  // Save the element limit\n  this.maxLength = $module.getAttribute(countAttribute)\n\n  // Check for limit\n  if (!this.maxLength) {\n    return\n  }\n\n  // Remove hard limit if set\n  this.$textarea.removeAttribute('maxlength')\n\n  this.bindChangeEvents()"
+    }
+  ],
+  "expected_accessibility_effect": "Users will be able to type beyond 30 characters and receive accurate character count feedback, ensuring the summary field accepts the full input and conveys correct remaining/too-many characters.",
+  "functional_risks": [
+    "If JavaScript fails or is disabled, the textarea will lack a client-side maxlength limit, potentially allowing excessively long input that could exceed server-side expectations."
+  ],
+  "verification_requirements": [
+    "Typing 34 characters into the summary field should retain the full string and display 'You have 4 characters too many'.",
+    "Typing fewer than 30 characters should show the correct remaining character count.",
+    "The component should still enforce the 30‑character limit via JavaScript when enabled."
+  ]
+}

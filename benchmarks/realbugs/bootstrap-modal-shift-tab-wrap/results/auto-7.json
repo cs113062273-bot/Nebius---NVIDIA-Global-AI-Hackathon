@@ -1,0 +1,98 @@
+{
+  "completedAt": "2026-10-26T02:40:08.146Z",
+  "policy": "auto",
+  "modelRun": "050e29dc-7b1e-4495-bcef-87a93ac7fd7c",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (js/src/modal.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 6-11 match file lines 202-207. The real file lines are in actual_source_region. Copy the region verbatim from the source."
+  ],
+  "humanFixLinesInRequest": 10,
+  "implementation": "4ee73b81fd1057bef76d7820808d250a8dbeb3528af67e5ae219cd32d5985ea7",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 5 (js/src/modal.js): before occurs 3 times (lines 171, 194, 266); include surrounding lines so it matches exactly once.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-2aeff402eef469a7c8933f74b0617154",
+      "usage": {
+        "completion_tokens": 25214,
+        "prompt_tokens": 17143,
+        "total_tokens": 42357,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 23744,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17143
+      },
+      "latencyMs": 113890,
+      "reservedCreditUsd": 0.0475185
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/src/modal.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 6-11 match file lines 202-207. The real file lines are in actual_source_region. Copy the region verbatim from the source.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-696838519a6a6e5023f89f4b9a8059c8",
+      "usage": {
+        "completion_tokens": 7416,
+        "prompt_tokens": 18651,
+        "total_tokens": 26067,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5576,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 18651
+      },
+      "latencyMs": 17362,
+      "reservedCreditUsd": 0.163386
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/src/modal.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 6-11 match file lines 202-207. The real file lines are in actual_source_region. Copy the region verbatim from the source.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-ba49091c13fee886413d76e01331ba2a",
+      "usage": {
+        "completion_tokens": 4140,
+        "prompt_tokens": 20833,
+        "total_tokens": 24973,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2429,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 20833
+      },
+      "latencyMs": 10694,
+      "reservedCreditUsd": 0.170768
+    }
+  ]
+}

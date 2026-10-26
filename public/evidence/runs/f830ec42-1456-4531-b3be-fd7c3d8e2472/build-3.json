@@ -1,0 +1,66 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "src/autoComplete.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/controllers/dataController.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/controllers/eventController.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/controllers/listController.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/controllers/searchController.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/helpers/eventEmitter.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/helpers/io.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/services/configure.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/services/extend.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/services/init.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/services/start.js",
+      "pass": true,
+      "kind": "syntax"
+    }
+  ],
+  "scope": "Static HTML structure, JavaScript syntax (classic or ESM) and erasable TypeScript only; no framework compilation claim."
+}

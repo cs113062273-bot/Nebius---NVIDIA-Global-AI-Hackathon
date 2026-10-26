@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewedAt": "2026-10-25T18:34:11.812Z",
+  "run": "8c28f644-3bef-49ed-bebf-c95413cee13a",
+  "verdict": "Sound, and close to the pending human fix",
+  "summary": "Nemotron diagnosed that the cancel event becomes non-cancelable, and now cancels the Escape keydown whenever keyboard is false, for modal dialogs too, so no close request is sent. Pending pull request #43077 makes the same change.",
+  "caveats": [
+    "The human fix also plays the static-backdrop bounce on each press for modal dialogs and keeps the cancel handler as a fallback for close requests that do not come from a key; the model patch does neither.",
+    "Version 5 failed this case three times. The difference in version 6 is the key trace, which shows cancel arriving with cancelable=false."
+  ]
+}

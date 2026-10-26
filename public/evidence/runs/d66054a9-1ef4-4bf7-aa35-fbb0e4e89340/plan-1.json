@@ -1,0 +1,22 @@
+{
+  "root_cause": "The module import attempts to import a named export `initCheckboxes` which does not exist; the module likely provides a default export, leaving `initCheckboxes` undefined and preventing the checkboxes enhancement (including exclusive behavior) from running.",
+  "repair_strategy": "Modify the import statement to import the default export from the checkboxes module and then invoke it, ensuring the enhancement runs and exclusive checkboxes clear other options in their group.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+      "before": "<script type=\"module\">\nimport { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'\ninitCheckboxes()\n</script>",
+      "after": "<script type=\"module\">\nimport initCheckboxes from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'\ninitCheckboxes()\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "Selecting the exclusive 'No, I do not have any of these symptoms' checkbox will now clear any previously selected symptom checkboxes, providing correct keyboard-operated exclusive choice behavior and satisfying WCAG 2.1.1 (keyboard) and 4.1.2 (name, role, value).",
+  "functional_risks": [
+    "If the module does not actually provide a default export, the import will fail and the checkboxes enhancement will not run, potentially breaking other checkbox functionality.",
+    "If the module relies on the named export for other internal usage, changing the import could cause unexpected behavior."
+  ],
+  "verification_requirements": [
+    "After applying the edit, executing the journey steps (tick cough, tick fever, then tick 'no symptoms') should result in symptoms[cough] and symptoms[fever] being cleared (value []).",
+    "The regression guard for choosing 'Do not contact me' after ticking a contact method should continue to pass.",
+    "All existing functional checks and success criteria should remain satisfied."
+  ]
+}

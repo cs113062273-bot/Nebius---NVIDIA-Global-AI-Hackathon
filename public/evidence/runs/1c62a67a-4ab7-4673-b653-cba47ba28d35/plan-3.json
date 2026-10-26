@@ -1,0 +1,21 @@
+{
+  "root_cause": "The exclusive 'No symptoms' checkbox incorrectly includes both `data-checkbox-exclusive` and `data-checkbox-exclusive-group=\"symptoms\"` attributes. The NHSUK checkboxes widget expects exclusive checkboxes to have only `data-checkbox-exclusive` (as seen in the working contact group), while non-exclusive checkboxes carry the group attribute. This conflict prevents the widget from clearing other checkboxes when the exclusive option is selected via keyboard.",
+  "repair_strategy": "Remove the `data-checkbox-exclusive-group=\"symptoms\"` attribute from the exclusive checkbox, aligning it with the pattern used in the contact group where the exclusive option has only `data-checkbox-exclusive`.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+      "before": "        <input class=\"nhsuk-checkboxes__input\" id=\"symptoms-none\" name=\"symptoms[none]\" type=\"checkbox\" value=\"yes\" data-checkbox-exclusive data-checkbox-exclusive-group=\"symptoms\">",
+      "after": "        <input class=\"nhsuk-checkboxes__input\" id=\"symptoms-none\" name=\"symptoms[none]\" type=\"checkbox\" value=\"yes\" data-checkbox-exclusive>"
+    }
+  ],
+  "expected_accessibility_effect": "Restores keyboard-accessible mutually exclusive behavior for the symptom group, ensuring that selecting 'No, I do not have any of these symptoms' clears any previously selected symptom checkboxes, satisfying WCAG 2.1.1 keyboard and 4.1.2 name/role/value requirements.",
+  "functional_risks": [
+    "Minimal; the change only affects the exclusive checkbox's attribute configuration.",
+    "The contact group regression guard should continue to pass as it uses the same pattern."
+  ],
+  "verification_requirements": [
+    "After the edit, journey step 5 must pass: focusing #symptoms-none and pressing Space results in form-data symptoms[cough] and symptoms[fever] being empty.",
+    "Regression guard for the contact group must continue to pass."
+  ]
+}
