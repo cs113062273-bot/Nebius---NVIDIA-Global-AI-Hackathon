@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Change booking</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="dist/css/bootstrap.min.css">
+<script type="importmap">{"imports":{"vanilla-calendar-pro":"/vendor/vanilla-calendar-pro/index.js"}}</script>
+</head>
+<body class="p-4">
+<main class="container" style="max-width:40rem">
+  <h1 class="h3 mb-3">Change booking LX-2207</h1>
+  <form id="booking" action="#" novalidate>
+    <label class="form-label" for="departure">Departure date</label>
+    <input class="form-control mb-3" id="departure" name="departure" value="2026-10-22" data-bs-toggle="datepicker" autocomplete="off">
+    <label class="form-label" for="passengers">Passengers</label>
+    <input class="form-control mb-3" id="passengers" name="passengers" inputmode="numeric" value="1" autocomplete="off">
+    <button type="submit" class="btn-solid theme-primary" id="save">Save changes</button>
+  </form>
+  <label class="form-label mt-3" for="return">Return date (shown only)</label>
+  <input class="form-control mb-3" id="return" value="2026-10-29" autocomplete="off">
+  <p class="mt-3">Server received: <output id="sent">nothing yet</output></p>
+  <p>Return date shown: <output id="return-shown">nothing yet</output></p>
+</main>
+<script type="module">
+import Datepicker from './js/src/datepicker.js';
+// The return date is shown in a configured long format; picking a date must keep that format.
+Datepicker.getOrCreateInstance(document.getElementById('return'), { dateFormat: { year: 'numeric', month: 'long', day: 'numeric' } });
+const form = document.getElementById('booking');
+form.addEventListener('submit', event => {
+  event.preventDefault();
+  document.getElementById('sent').textContent = new URLSearchParams(new FormData(form)).toString();
+  document.getElementById('return-shown').textContent = document.getElementById('return').value;
+});
+window.__ready = true;
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "completedAt": "2026-10-26T10:26:55.684Z",
+  "replayRun": "5267b95e-2991-4c30-891d-059e3a654096",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+  "fromRun": "1eed9dfb-b5b7-4fb8-909e-b83702dc5d1a",
+  "attempt": 1,
+  "engine": "browser replay, no inference"
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Opening a drawer must move keyboard focus into it, to its autofocus field when it has one",
+  "library": "Bootstrap 6.0 alpha (drawer, TypeScript source)",
+  "repository": "https://github.com/twbs/bootstrap",
+  "issue": "https://github.com/twbs/bootstrap/issues/43120",
+  "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+  "status": "Open, labelled confirmed and needs-decision. A fix is proposed in pull request #43139, not merged at pinnedCommit. That pull request is never sent to the model.",
+  "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43139",
+  "summary": "A closed drawer is visibility: hidden and becomes visible through the slide-in transition. showModal() runs its focusing steps while everything inside is still hidden, so focus falls back to body and the trigger behind the modal is inert.",
+  "category": "Focus loss",
+  "expectedBehaviour": "Focus lands on the first focusable control in the drawer, its close button, as for a native modal dialog. The compiled stylesheet is a dependency outside the editable source, so a repair has to be made in the TypeScript. With an [autofocus] element in the drawer, focus goes to that element, as the HTML dialog focusing steps specify.",
+  "upstreamFiles": [
+    "LICENSE",
+    "dist/css/bootstrap.min.css",
+    "js/src/base-component.ts",
+    "js/src/dialog-base.ts",
+    "js/src/dom/data.ts",
+    "js/src/dom/event-handler.ts",
+    "js/src/dom/manipulator.ts",
+    "js/src/dom/selector-engine.ts",
+    "js/src/drawer.ts",
+    "js/src/util/component-functions.ts",
+    "js/src/util/config.ts",
+    "js/src/util/index.ts",
+    "js/src/util/swipe.ts"
+  ],
+  "dependencies": [
+    "dist/css/bootstrap.min.css: the published 6.0.0-alpha.1 stylesheet from npm (MIT); the repository does not commit built CSS"
+  ],
+  "license": "MIT",
+  "consumer": "Author-written shoe listing with a filters drawer opened through data-bs-toggle, around the unchanged TypeScript source at pinnedCommit, served with types erased by Node's built-in stripping. The drawer has an autofocus search field (no name, so it is not part of the form data) for the stricter task.",
+  "derivedFrom": "bootstrap6-drawer-initial-focus",
+  "addedAfterReview": "Added after reviewing the engine-v11 patch for bootstrap6-drawer-initial-focus: it moved focus to the first focusable element after the drawer was shown, ignoring an [autofocus] element, which the HTML dialog focusing steps would focus. The drawer now has an autofocus search field, and the task expects focus there. Earlier patches are replayed against this stricter task without inference."
+}

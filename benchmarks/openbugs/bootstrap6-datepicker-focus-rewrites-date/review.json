@@ -6,6 +6,7 @@
   "summary": "For an input without a separate display element, the date formatter now returns YYYY-MM-DD before it looks at the dateFormat option, so focusing no longer rewrites a saved ISO value.",
   "caveats": [
     "Every input datepicker now shows ISO dates and ignores a configured dateFormat, including a custom formatter function.",
-    "The pending human fixes keep the configured format and separate the displayed text from the submitted value; this patch does not."
+    "The pending human fixes keep the configured format and separate the displayed text from the submitted value; this patch does not.",
+    "The stricter case bootstrap6-datepicker-focus-rewrites-date-custom-format adds a datepicker with a long dateFormat. This patch fails it; seven of the ten earlier model patches and the pending human fix pass it."
   ]
 }

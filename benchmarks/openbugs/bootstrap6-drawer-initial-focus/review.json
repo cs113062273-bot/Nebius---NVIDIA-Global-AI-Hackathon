@@ -6,6 +6,7 @@
   "summary": "After the drawer’s shown event, focus moves to the first focusable element inside it, so keyboard focus no longer falls back to the body.",
   "caveats": [
     "The selector list does not prefer an [autofocus] element and does not skip disabled or hidden controls.",
-    "Focus moves only after the slide-in transition ends; the pending human fix in #43139 instead fixes the visibility timing so the native dialog focusing steps work."
+    "Focus moves only after the slide-in transition ends; the pending human fix in #43139 instead fixes the visibility timing so the native dialog focusing steps work.",
+    "The stricter case bootstrap6-drawer-initial-focus-autofocus puts an [autofocus] field in the drawer. This patch and both earlier passing patches fail it."
   ]
 }

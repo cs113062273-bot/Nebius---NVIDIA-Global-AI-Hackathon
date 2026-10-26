@@ -1,0 +1,12 @@
+{
+  "completedAt": "2026-10-26T10:27:06.189Z",
+  "replayRun": "76815dcf-0535-4e26-8cf2-ca717b67cf1b",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Regression guard \"A picked date still shows in the configured dateFormat\": failed · #return-shown: expected \"October 25, 2026\", observed \"2026-10-25\""
+  ],
+  "fromCase": "Passing through a prefilled datepicker must not change the date the form submits",
+  "fromRun": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
+  "attempt": 1,
+  "engine": "browser replay, no inference"
+}

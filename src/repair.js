@@ -9,7 +9,9 @@ import { checkedDiff } from './diff.js';
 
 const allowedExtensions = new Set(['.html','.css','.js','.jsx','.tsx','.ts']);
 export function allowedSource(file) {
-  return !file.split('/').some(p => p.startsWith('.') || /^(node_modules|vendor|dist|build|scripts|tests|secrets|credentials)$/i.test(p)) && allowedExtensions.has(path.extname(file)) && !/(^|\/)(package|lock|config|next\.config|vite\.config)/i.test(file);
+  // Directory names are matched whole, and only build-tool configs (vite.config.js and the like) are
+  // excluded by file name. A prefix match here once hid packages/** and util/config.js from every repair.
+  return !file.split('/').some(p => p.startsWith('.') || /^(node_modules|vendor|dist|build|scripts|tests|secrets|credentials)$/i.test(p)) && allowedExtensions.has(path.extname(file)) && !/\.config\.[cm]?[jt]s$/i.test(path.posix.basename(file));
 }
 export async function localize(root, evidence) {
   const terms = new Set();
@@ -245,13 +247,20 @@ export function actualRegion(current, before) {
 export async function applyPlan(root, rawPlan, allowedFiles, { readOnly = [] } = {}) {
   const plan = RepairPlan.parse(rawPlan), staged = new Map(), normalizations = []; let changed = 0, size=0;
   for(const edit of plan.edits) {
-    // A path missing only its leading folders is resolved when exactly one allowed file ends with it.
-    if(!allowedFiles.includes(edit.path)) { const match = allowedFiles.filter(f => f.endsWith('/'+edit.path.replace(/^\.?\//,''))); if(match.length===1) { normalizations.push({path:match[0],normalization:'path-prefix',written:edit.path}); edit.path=match[0]; } }
+    // A path written with a leading ./ or /, or missing only its leading folders, is resolved when exactly one allowed file matches.
+    if(!allowedFiles.includes(edit.path)) { const bare = edit.path.replace(/^\.?\//,''), match = allowedFiles.filter(f => f === bare || f.endsWith('/'+bare)); if(match.length===1) { normalizations.push({path:match[0],normalization:'path-prefix',written:edit.path}); edit.path=match[0]; } }
     if(readOnly.includes(edit.path)) throw new Error(`Edit ${plan.edits.indexOf(edit)+1} changes ${JSON.stringify(edit.path)}, the page that uses the component. It is read-only context: repair the component's own code in ${allowedFiles.slice(0,12).map(f=>JSON.stringify(f)).join(', ')}.`);
     if(!allowedSource(edit.path) || !allowedFiles.includes(edit.path)) throw new Error(`Edit outside localized allowlist: ${JSON.stringify(edit.path)}. Allowed paths: ${allowedFiles.slice(0,12).map(f=>JSON.stringify(f)).join(', ')}`);
     const file = await contained(root,edit.path);
     const original = await fs.readFile(file,'utf8');
-    if(digest(original)!==edit.sha256) throw new Error('Stale source preimage');
+    // Every attempt patches a fresh copy of the unchanged original, so a hash that matches no file is a
+    // transcription slip and is recorded; a hash that belongs to another file means the model mixed files up.
+    if(digest(original)!==edit.sha256) {
+      const other = [];
+      for (const f of allowedFiles) if (f !== edit.path && digest(await fs.readFile(await contained(root,f),'utf8')) === edit.sha256) other.push(f);
+      if (other.length) throw new Error(`Edit ${plan.edits.indexOf(edit)+1} gives ${JSON.stringify(edit.path)} the sha256 of ${JSON.stringify(other[0])}; edit the file whose source you quoted.`);
+      normalizations.push({path:edit.path,normalization:'sha256-mistyped'});
+    }
     const current = staged.get(file)?.after ?? original;
     let resolved;
     try { resolved = resolvePreimage(current, edit.before, edit.after); }
