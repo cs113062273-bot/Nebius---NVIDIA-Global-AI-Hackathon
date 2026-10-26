@@ -45,6 +45,8 @@ body:
         - bootstrap6-datepicker-tab-trap
         - bootstrap6-datepicker-tab-trap-with-picker
         - bootstrap6-dialog-escape-keyboard-false
+        - bootstrap6-dialog-escape-keyboard-false-default-dialog
         - bootstrap6-drawer-initial-focus
         - pikaday-keyboard-disabled-day
+        - pikaday-keyboard-disabled-day-max-date
         - pikaday-tab-after-typed-date
