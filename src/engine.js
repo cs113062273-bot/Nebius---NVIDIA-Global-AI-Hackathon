@@ -52,7 +52,7 @@ export async function runRepair({fixture='checkout',mode='reference',artifactRoo
       const candidates=(await localize(original,before)).filter(c=>fixtureInfo.kind!=='historical'||c.path==='src/a11y-dialog.js').map(c=>readOnly.includes(c.path)?{...c,editable:false}:c);run.candidates=candidates.map(({source,...c})=>c);if(readOnly.length)run.readOnly=readOnly;await json(path.join(dir,'localization.json'),run.candidates);
       const client=new NebiusClient({dir:path.join(artifactRoot,'..','inference')});
       const history=[];
-      const cap=mode==='reference'||mode==='recorded'?1:Math.min(3,Math.max(1,maxAttempts));
+      const cap=mode==='reference'||mode==='recorded'?1:Math.min(5,Math.max(1,maxAttempts));
       for(let attempt=1;attempt<=cap;attempt++) {
         const attemptStarted=performance.now(),record={attempt,startedAt:new Date().toISOString(),verified:false,category:null};run.attempts.push(record);
         // Every proposal targets the same immutable original, never a partly applied failed patch.

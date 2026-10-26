@@ -13,8 +13,9 @@ import {launchBrowser,executeJourney} from '../src/runner.js';
 // still unfixed. There is no maintainers' fix to screen against, so `screen` proves the reverse:
 // on the unchanged source the keyboard task fails while the pointer path and every guard pass.
 // `run` then asks Nemotron for a patch with the same routing and gates as the real-bug benchmark.
-const BASE=path.resolve('benchmarks','openbugs'),SCOPE='openbugs-20261026',USD_CEILING='28';
-const ROUTE=['nvidia/nemotron-3-super-120b-a12b','nvidia/Nemotron-3-Ultra-550b-a55b','nvidia/Nemotron-3-Ultra-550b-a55b'];
+const BASE=path.resolve('benchmarks','openbugs'),SCOPE='openbugs-20261026',USD_CEILING='40';
+// Super first; Ultra for up to four retries, each with the browser's failure report (engine v13).
+const ROUTE=['nvidia/nemotron-3-super-120b-a12b',...Array(4).fill('nvidia/Nemotron-3-Ultra-550b-a55b')];
 const [mode,id]=process.argv.slice(2);
 // Same frozen implementation as the real-bug benchmark, so both scoreboards name one engine version.
 const implementationFiles=['src/engine.js','src/nebius.js','src/repair.js','src/runner.js','src/schema.js','src/static.js','src/verifier.js'];
@@ -47,8 +48,8 @@ if(mode==='screen'){
   assert.equal(taskHash(c.tasks),commitment.taskHash,'Tasks changed after screening');
   Object.assign(process.env,parseEnv(await fs.readFile('.env','utf8')));
   const ledger=await readJson('artifacts/inference/budget.json');
-  Object.assign(process.env,{NEBIUS_MAX_CALLS:String(ledger.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(ledger.reservedTokens+900000),NEBIUS_MAX_CREDIT_USD:USD_CEILING,NEBIUS_BUDGET_SCOPE:SCOPE,NEBIUS_MAX_OUTPUT_TOKENS:'32000',NEBIUS_TIMEOUT_MS:'300000'});
-  const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,readOnly:await pageFiles(c.original,c.meta.upstreamFiles),journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:3,freshInference:true,models:ROUTE,
+  Object.assign(process.env,{NEBIUS_MAX_CALLS:String(ledger.calls+5),NEBIUS_MAX_TOTAL_TOKENS:String(ledger.reservedTokens+1500000),NEBIUS_MAX_CREDIT_USD:USD_CEILING,NEBIUS_BUDGET_SCOPE:SCOPE,NEBIUS_MAX_OUTPUT_TOKENS:'32000',NEBIUS_TIMEOUT_MS:'300000'});
+  const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,readOnly:await pageFiles(c.original,c.meta.upstreamFiles),journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:5,freshInference:true,models:ROUTE,
     sourceMetadata:{kind:'source',name:c.meta.title,originalRoot:c.original,scope:`Open upstream bug (${c.meta.issue}) at ${c.meta.pinnedCommit}, unfixed when pinned. Routing Super, then Ultra.`}});
   assert.equal((await verifyProof(`artifacts/runs/${run.id}`)).pass,true);
   const result={completedAt:new Date().toISOString(),implementation:await implementation(),modelRun:run.id,verdict:run.verification.verdict,reasons:run.verification.reasons,

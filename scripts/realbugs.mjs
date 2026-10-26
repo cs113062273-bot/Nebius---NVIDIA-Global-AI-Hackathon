@@ -12,10 +12,11 @@ import {patchScope} from '../src/live.js';
 // maintainer fix, wraps it in an author-written consumer page and freezes a browser task.
 // `screen` proves the task fails on the buggy source and passes with the maintainers' own
 // fix (no inference). `run` gives Nemotron only the buggy source; the human fix is never sent.
-const BASE=path.resolve('benchmarks','realbugs'),SCOPE='realbugs-20261025',USD_CEILING='68';
+const BASE=path.resolve('benchmarks','realbugs'),SCOPE='realbugs-20261025',USD_CEILING='88';
 const ROUTE={super:'nvidia/nemotron-3-super-120b-a12b',ultra:'nvidia/Nemotron-3-Ultra-550b-a55b'};
 // Everyday calls go to Super; a rejected patch escalates to Ultra with the browser's failure attached.
-const POLICIES={auto:[ROUTE.super,ROUTE.ultra,ROUTE.ultra],super:[ROUTE.super,ROUTE.super,ROUTE.super],ultra:[ROUTE.ultra,ROUTE.ultra,ROUTE.ultra]};
+// Super first; Ultra for up to four retries, each with the browser's failure report (engine v13).
+const POLICIES={auto:[ROUTE.super,ROUTE.ultra,ROUTE.ultra,ROUTE.ultra,ROUTE.ultra],super:Array(5).fill(ROUTE.super),ultra:Array(5).fill(ROUTE.ultra)};
 const implementationFiles=['src/engine.js','src/nebius.js','src/repair.js','src/runner.js','src/schema.js','src/static.js','src/verifier.js'];
 const [mode,id,policy='auto']=process.argv.slice(2);
 const write=async(file,value,flag='wx')=>fs.writeFile(file,JSON.stringify(value,null,2)+'\n',{flag});
@@ -59,8 +60,8 @@ if(mode==='screen'){
   const c=await load(id),commitment=await committed(c),models=POLICIES[policy];assert.ok(models,'Policy must be auto, super or ultra');
   Object.assign(process.env,parseEnv(await fs.readFile('.env','utf8')));
   const ledger=await readJson('artifacts/inference/budget.json');
-  Object.assign(process.env,{NEBIUS_MAX_CALLS:String(ledger.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(ledger.reservedTokens+900000),NEBIUS_MAX_CREDIT_USD:USD_CEILING,NEBIUS_BUDGET_SCOPE:SCOPE,NEBIUS_MAX_OUTPUT_TOKENS:String(CONFIG.maxOutputTokens),NEBIUS_TIMEOUT_MS:String(CONFIG.timeoutMs)});
-  const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,readOnly:await pageFiles(c.original,c.meta.upstreamFiles),journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:3,freshInference:true,models,
+  Object.assign(process.env,{NEBIUS_MAX_CALLS:String(ledger.calls+5),NEBIUS_MAX_TOTAL_TOKENS:String(ledger.reservedTokens+1500000),NEBIUS_MAX_CREDIT_USD:USD_CEILING,NEBIUS_BUDGET_SCOPE:SCOPE,NEBIUS_MAX_OUTPUT_TOKENS:String(CONFIG.maxOutputTokens),NEBIUS_TIMEOUT_MS:String(CONFIG.timeoutMs)});
+  const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,readOnly:await pageFiles(c.original,c.meta.upstreamFiles),journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:5,freshInference:true,models,
     sourceMetadata:{kind:'source',name:c.meta.title,originalRoot:c.original,scope:`Real upstream bug (${c.meta.issue}) at ${c.meta.buggyCommit}. Blind to the maintainers' fix ${c.meta.fixCommit}; routing ${policy}.`}});
   assert.equal((await verifyProof(`artifacts/runs/${run.id}`)).pass,true);await committed(c);
   // The request must not contain any line the maintainers added.
