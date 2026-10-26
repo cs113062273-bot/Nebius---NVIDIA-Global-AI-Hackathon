@@ -1,0 +1,12 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-25T18:34:30.997Z",
+  "run": "ca7bb8b1-eb32-4b73-9453-cef90b272e45",
+  "verdict": "Not repaired",
+  "summary": "Ultra now looked for the drawer dismiss button generically ([data-bs-dismiss=\"drawer\"]) instead of naming the test page, but focused it while the drawer was still visibility: hidden, so focus stayed on body.",
+  "caveats": [
+    "A working repair has to move focus once the slide-in transition has made the content visible.",
+    "The version 5 run passed this case only by hardcoding the page id #filters-close; version 6 rejects that, and this honest failure replaces the earlier pass.",
+    "Pending pull request #43139 fixes it in the stylesheet, which this case cannot edit."
+  ]
+}

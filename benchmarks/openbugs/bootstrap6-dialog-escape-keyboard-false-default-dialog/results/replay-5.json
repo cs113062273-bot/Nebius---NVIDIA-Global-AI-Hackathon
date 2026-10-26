@@ -1,0 +1,12 @@
+{
+  "completedAt": "2026-10-26T07:47:23.123Z",
+  "replayRun": "bfab1838-860e-4cb1-9e45-1483263bf349",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Regression guard \"Escape still closes a dialog with the default options\": failed · #help-dialog open: expected \"assertion satisfied\", observed \"\""
+  ],
+  "fromCase": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+  "fromRun": "fb6e1ffd-520a-451e-947f-db582f92969a",
+  "attempt": 2,
+  "engine": "browser replay, no inference"
+}

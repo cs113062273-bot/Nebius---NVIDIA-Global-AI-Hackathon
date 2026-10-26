@@ -1,0 +1,10 @@
+{
+  "completedAt": "2026-10-26T07:53:27.612Z",
+  "replayRun": "eac0e900-7e4e-431a-b47f-28a4e2f350f4",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "fromCase": "Arrow keys must not select a day that disableDayFn closes",
+  "fromRun": "c323b9aa-96b9-4413-9284-e6ea04c39e68",
+  "attempt": 2,
+  "engine": "browser replay, no inference"
+}

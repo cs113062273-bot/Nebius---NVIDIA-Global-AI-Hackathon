@@ -1,5 +1,5 @@
 {
-  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
   "reviewedAt": "2026-10-25T18:34:11.811Z",
   "run": "5f429d28-ad4a-4987-87d8-3e89b3ab365e",
   "verdict": "Works, different trade-off from the pending human fix",

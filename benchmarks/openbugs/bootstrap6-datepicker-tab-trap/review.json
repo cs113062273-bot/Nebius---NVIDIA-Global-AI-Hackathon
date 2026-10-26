@@ -1,5 +1,5 @@
 {
-  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
   "reviewedAt": "2026-10-26T03:08:35.468Z",
   "run": "2bb91b99-274b-46c2-bb10-05c83c3cb194",
   "verdict": "Removes the trap, with trade-offs",

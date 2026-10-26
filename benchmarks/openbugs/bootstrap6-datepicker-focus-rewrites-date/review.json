@@ -1,11 +1,11 @@
 {
-  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-  "reviewedAt": "2026-10-26T03:08:35.468Z",
-  "run": "e5b11819-4a22-4eff-a826-bbfbc95465fe",
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T07:48:10.653Z",
+  "run": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
   "verdict": "Works, but not acceptable upstream as written",
-  "summary": "The field keeps an ISO date because the default display format becomes YYYY-MM-DD. That fixes the submitted value, but every datepicker without its own dateFormat would now show ISO dates instead of locale-formatted ones.",
+  "summary": "For an input without a separate display element, the date formatter now returns YYYY-MM-DD before it looks at the dateFormat option, so focusing no longer rewrites a saved ISO value.",
   "caveats": [
-    "The pending human fix keeps the localized display and changes only what is submitted; that is the better trade-off.",
-    "Useful for an app that wants ISO in the field; not proposed upstream."
+    "Every input datepicker now shows ISO dates and ignores a configured dateFormat, including a custom formatter function.",
+    "The pending human fixes keep the configured format and separate the displayed text from the submitted value; this patch does not."
   ]
 }

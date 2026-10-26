@@ -1,0 +1,10 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T03:08:35.468Z",
+  "run": "a47e4fb6-4e1d-43c0-b4e5-46ba69fec6e6",
+  "verdict": "Sound",
+  "summary": "Escape no longer empties the input; it only closes the list. This is the default the maintainer proposes in #485, and the same change an earlier run made.",
+  "caveats": [
+    "The clear event is no longer emitted on Escape, because nothing is cleared. A consumer that listened for it on Escape would need the option the maintainer describes."
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "completedAt": "2026-10-26T07:54:51.723Z",
+  "replayRun": "d54bd084-fa9e-45ed-98ba-bcaa6afcedf0",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Regression guard \"Arrow keys stop at the last bookable day\": inconclusive · Hard journey deadline exceeded; browser context terminated"
+  ],
+  "fromCase": "Arrow keys must not select a day that disableDayFn closes",
+  "fromRun": "c71c63e9-f789-480c-8f0c-593920943998",
+  "attempt": 1,
+  "engine": "browser replay, no inference"
+}

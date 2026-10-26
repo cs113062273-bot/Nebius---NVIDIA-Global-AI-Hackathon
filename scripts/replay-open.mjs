@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import os from 'node:os';
 import assert from 'node:assert/strict';
 import { runRepair } from '../src/engine.js';
 import { hashTree, readJson } from '../src/files.js';
@@ -20,7 +21,14 @@ assert.deepEqual(await hashTree(path.join(root, 'original')), commitment.sourceH
 assert.equal(digest({ journey: tasks.journey, functionalJourney: tasks.functionalJourney, guards: tasks.guards }), commitment.taskHash, 'Tasks changed after screening');
 const candidate = path.resolve('artifacts', 'runs', fromRun, `candidate-${attempt}`), source = await readJson(path.resolve('artifacts', 'runs', fromRun, 'run.json'));
 await fs.access(candidate);
-const run = await runRepair({ fixture: 'custom-project', mode: 'reference', sourceRoot: path.join(root, 'original'), referenceRoot: candidate, journey: tasks.journey, functionalJourney: tasks.functionalJourney, guards: tasks.guards, maxAttempts: 1,
+// The patch is the earlier candidate's library files; the stricter case's own page stays. The library
+// must be byte-identical in both originals, so this is the same as applying the earlier diff.
+const upstream = meta.upstreamFiles || [], oldOriginal = source.source?.originalRoot, here = await hashTree(path.join(root, 'original'));
+if (oldOriginal) { const there = await hashTree(oldOriginal); for (const f of upstream) assert.equal(there[f], here[f], `${f} differs between the two pinned sources`); }
+const reference = await fs.mkdtemp(path.join(os.tmpdir(), 'tabstitch-replay-'));
+await fs.cp(path.join(root, 'original'), reference, { recursive: true });
+for (const f of upstream) { try { await fs.copyFile(path.join(candidate, f), path.join(reference, f)); } catch (e) { if (e.code !== 'ENOENT') throw e; } }
+const run = await runRepair({ fixture: 'custom-project', mode: 'reference', sourceRoot: path.join(root, 'original'), referenceRoot: reference, journey: tasks.journey, functionalJourney: tasks.functionalJourney, guards: tasks.guards, maxAttempts: 1,
   sourceMetadata: { kind: 'source', name: `Replay · ${meta.title}`, originalRoot: path.join(root, 'original'), scope: `Model patch from run ${fromRun}, attempt ${attempt}, replayed against this stricter task. No inference.` } });
 assert.equal((await verifyProof(`artifacts/runs/${run.id}`)).pass, true);
 const result = { completedAt: new Date().toISOString(), replayRun: run.id, verdict: run.verification.verdict, reasons: run.verification.reasons, fromCase: source.source?.name || null, fromRun, attempt: Number(attempt), engine: 'browser replay, no inference' };

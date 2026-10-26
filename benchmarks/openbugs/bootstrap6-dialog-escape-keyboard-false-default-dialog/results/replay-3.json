@@ -1,0 +1,10 @@
+{
+  "completedAt": "2026-10-26T07:47:05.310Z",
+  "replayRun": "794c6805-049f-48c2-8a1d-b9db95916db2",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "fromCase": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+  "fromRun": "f65e71f2-55f9-4cee-8adb-f350517e8aa6",
+  "attempt": 1,
+  "engine": "browser replay, no inference"
+}

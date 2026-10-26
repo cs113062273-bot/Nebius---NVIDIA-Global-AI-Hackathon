@@ -1,0 +1,12 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T07:48:10.653Z",
+  "run": "c71c63e9-f789-480c-8f0c-593920943998",
+  "verdict": "Rejected on review: hangs at maxDate",
+  "summary": "Arrow keys now step past days that minDate, maxDate, disableWeekends or disableDayFn close, instead of selecting them.",
+  "caveats": [
+    "At a range boundary the do…while loop never finds an allowed date: with a maxDate set, ArrowRight on that day hung the page in Chromium, while the unpatched library stayed on the day.",
+    "The stricter case pikaday-keyboard-disabled-day-max-date adds a maxDate and a guard. This patch fails it, while the three earlier model patches for this bug pass it.",
+    "It keeps Pikaday’s own 24-hour millisecond steps, which can land on the wrong day across a daylight-saving change (a separate flaw that the original adjustDate shares)."
+  ]
+}

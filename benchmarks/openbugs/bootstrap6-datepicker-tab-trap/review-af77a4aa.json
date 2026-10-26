@@ -1,5 +1,5 @@
 {
-  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
   "reviewedAt": "2026-10-25T18:34:11.811Z",
   "run": "af77a4aa-da7c-4790-8ecb-eee8a78cc33b",
   "verdict": "Rejected on review: it breaks the calendar",

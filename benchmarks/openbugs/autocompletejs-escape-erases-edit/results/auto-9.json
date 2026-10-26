@@ -1,0 +1,63 @@
+{
+  "completedAt": "2026-10-26T07:32:02.874Z",
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "modelRun": "c2f93867-3b85-4328-875e-3afbebc64411",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/controllers/listController.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 1-7 match file lines 256-262, then before line 8 \"*/\" differs from file line 263 \"**/\". The real file lines are in actual_source_region. Copy the region verbatim from the source.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-86b071cf5fa1a16aa71f8b4ea7246175",
+      "usage": {
+        "completion_tokens": 6310,
+        "prompt_tokens": 11974,
+        "total_tokens": 18284,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5882,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 11974
+      },
+      "latencyMs": 29395
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-14b7789bc60765f93d2f036c561cb30f",
+      "usage": {
+        "completion_tokens": 761,
+        "prompt_tokens": 12868,
+        "total_tokens": 13629,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 327,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 12868
+      },
+      "latencyMs": 3472
+    }
+  ]
+}

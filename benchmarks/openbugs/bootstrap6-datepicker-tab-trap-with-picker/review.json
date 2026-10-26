@@ -1,12 +1,11 @@
 {
-  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-  "reviewedAt": "2026-10-26T03:08:35.468Z",
-  "run": "2dfa5efb-16e0-4333-a4fe-39c84d7723da",
-  "verdict": "Workaround in the page, not a library fix",
-  "summary": "The patch changes only the consumer page: it wraps the field in Bootstrap’s .form-adorn wrapper, which makes the datepicker position (and attach its key handling) to the wrapper instead of the input. Tab leaves the field, Escape still closes the calendar and a click still shows it.",
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T07:48:10.653Z",
+  "run": "ddfef893-7cb5-43c4-bcb1-efcb238548f7",
+  "verdict": "Removes the trap by changing when the calendar opens",
+  "summary": "Inputs no longer open the calendar on focus; a click opens it instead, so tabbing through the field never enters vanilla-calendar-pro’s key handling.",
   "caveats": [
-    "The library bug remains for every page that does not use the wrapper.",
-    "Whether Tab still moves into a calendar opened by click was not part of the frozen task and was not checked.",
-    "A reasonable stopgap for an app team until twbs/bootstrap#43202 is fixed."
+    "Opening on focus was the designed behaviour for input datepickers; keyboard users now open the calendar another way (click, or the page’s own control).",
+    "The underlying Tab handling inside the open calendar is unchanged; twbs/bootstrap#43202 is still open and this patch is not proposed there."
   ]
 }

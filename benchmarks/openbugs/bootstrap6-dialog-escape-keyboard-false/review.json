@@ -1,11 +1,12 @@
 {
-  "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-  "reviewedAt": "2026-10-26T03:08:35.468Z",
-  "run": "c4e3444d-9f7a-4dce-a378-727ac8bedaf6",
-  "verdict": "Sound, and close to the pending human fix",
-  "summary": "The Escape keydown handler now runs for modal dialogs too, so with keyboard: false the key is cancelled before Chromium sends a close request that can no longer be cancelled. Pending pull request #43077 makes the same change.",
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T07:48:10.653Z",
+  "run": "fb6e1ffd-520a-451e-947f-db582f92969a",
+  "verdict": "Rejected on review: breaks Escape for every default dialog",
+  "summary": "The Escape keydown handler now runs for modal dialogs too and calls preventDefault() before it checks the keyboard option, so the keyboard: false dialog stays open, as the task requires.",
   "caveats": [
-    "With keyboard: false the human fix also plays the static-backdrop bounce on each press for modal dialogs; this patch does not.",
-    "The cancel handler stays as the fallback for close requests that do not come from a key."
+    "An ordinary dialog with the default keyboard: true no longer closes on Escape either, checked in Chromium without inference. The frozen task had no such dialog.",
+    "The stricter case bootstrap6-dialog-escape-keyboard-false-default-dialog adds one with a guard. This patch fails it, while the four earlier model patches for this bug and the pending human fix (#43077) pass it.",
+    "It also removes the static-backdrop bounce that signals a dialog cannot be dismissed."
   ]
 }

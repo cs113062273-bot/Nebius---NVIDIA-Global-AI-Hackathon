@@ -1,0 +1,20 @@
+{
+  "title": "Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate",
+  "library": "Pikaday",
+  "repository": "https://github.com/Pikaday/Pikaday",
+  "issue": "https://github.com/Pikaday/Pikaday/issues/955",
+  "pinnedCommit": "9a90eea5cdbc48784d3a909ddb36e052c16bf25d",
+  "status": "Open since July 2025 and confirmed by a second user. The repository was archived, so no upstream fix will ship.",
+  "summary": "A disabled day cannot be clicked, but ArrowRight from Friday selects the closed Saturday and the form submits it.",
+  "category": "Wrong submitted data",
+  "expectedBehaviour": "Author decision: the arrow key moves to the next day that is not disabled, as when a user skips over closed days with the pointer.",
+  "upstreamFiles": [
+    "LICENSE",
+    "css/pikaday.css",
+    "pikaday.js"
+  ],
+  "license": "MIT",
+  "consumer": "Author-written clinic appointment form with weekends disabled, around the unchanged pikaday.js and pikaday.css at pinnedCommit (the head of the archived repository). The picker has a maxDate (Friday 27 November) for the added guard.",
+  "derivedFrom": "pikaday-keyboard-disabled-day",
+  "addedAfterReview": "Added after reviewing the engine-v11 patch for pikaday-keyboard-disabled-day: it passed every frozen check, but its loop that skips closed days never ends at a maxDate, and the page hung. The page now ends the booking window with a maxDate, and a guard requires the arrow keys to stop on that day. Earlier patches are replayed against this stricter task without inference."
+}

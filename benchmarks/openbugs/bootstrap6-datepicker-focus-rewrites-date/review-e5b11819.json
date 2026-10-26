@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T03:08:35.468Z",
+  "run": "e5b11819-4a22-4eff-a826-bbfbc95465fe",
+  "verdict": "Works, but not acceptable upstream as written",
+  "summary": "The field keeps an ISO date because the default display format becomes YYYY-MM-DD. That fixes the submitted value, but every datepicker without its own dateFormat would now show ISO dates instead of locale-formatted ones.",
+  "caveats": [
+    "The pending human fix keeps the localized display and changes only what is submitted; that is the better trade-off.",
+    "Useful for an app that wants ISO in the field; not proposed upstream."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+  "reviewedAt": "2026-10-26T03:08:35.468Z",
+  "run": "c4e3444d-9f7a-4dce-a378-727ac8bedaf6",
+  "verdict": "Sound, and close to the pending human fix",
+  "summary": "The Escape keydown handler now runs for modal dialogs too, so with keyboard: false the key is cancelled before Chromium sends a close request that can no longer be cancelled. Pending pull request #43077 makes the same change.",
+  "caveats": [
+    "With keyboard: false the human fix also plays the static-backdrop bounce on each press for modal dialogs; this patch does not.",
+    "The cancel handler stays as the fallback for close requests that do not come from a key."
+  ]
+}
