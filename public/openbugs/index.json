@@ -1,0 +1,305 @@
+{
+  "generatedAt": "2026-10-26T01:42:31.223Z",
+  "cases": [
+    {
+      "id": "autocompletejs-escape-erases-edit",
+      "title": "Escape must close the suggestion list without erasing what the user typed",
+      "summary": "Pressing Escape to dismiss suggestions sets the input value to an empty string, so a user editing a saved field loses their text.",
+      "library": "autoComplete.js",
+      "category": "Lost user input",
+      "repository": "https://github.com/TarekRaafat/autoComplete.js",
+      "issue": "https://github.com/TarekRaafat/autoComplete.js/issues/402",
+      "pinnedCommit": "4bc4bad6da87b4546cf70a248553e4e4b03672a6",
+      "status": "Open. The maintainer tracks the change for v11 in issue #485; no fix is merged at pinnedCommit (the current head).",
+      "derivedFrom": null,
+      "addedAfterReview": null,
+      "replays": [],
+      "pendingHumanFix": null,
+      "pendingHumanCheck": null,
+      "review": {
+        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+        "reviewedAt": "2026-10-25T18:34:11.810Z",
+        "run": "66393ab6-8fe4-46fb-a208-ccfcb0f5dbbe",
+        "verdict": "Sound",
+        "summary": "The one line that set the input to an empty string on Escape is removed; Escape still closes the list. This is the default the maintainer proposes in #485.",
+        "caveats": [
+          "The clear event is still emitted on Escape although nothing is cleared any more; listeners for it may now be misleading.",
+          "#485 also proposes a clearOnEscape option for the old behaviour; an upstream pull request would need to add it."
+        ]
+      },
+      "expectedBehaviour": "As proposed by the maintainer in #485: Escape closes the list only and keeps the input. The reporter of #402 suggested restoring the earlier value instead; this task follows the maintainer's plan.",
+      "recorded": {
+        "run": "66393ab6-8fe4-46fb-a208-ccfcb0f5dbbe",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ]
+      }
+    },
+    {
+      "id": "bootstrap6-datepicker-focus-rewrites-date",
+      "title": "Passing through a prefilled datepicker must not change the date the form submits",
+      "summary": "The datepicker instance is created on focusin and immediately rewrites the input with a locale string, so a saved 2026-10-22 is submitted as 10/22/2026 although the user never picked a date.",
+      "library": "Bootstrap 6.0 alpha (datepicker, TypeScript source)",
+      "category": "Wrong submitted data",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues/43149",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Open. Fixes are proposed in pull requests #43150 and #43151, not merged at pinnedCommit. They are never sent to the model.",
+      "derivedFrom": null,
+      "addedAfterReview": null,
+      "replays": [],
+      "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43150",
+      "pendingHumanCheck": {
+        "checkedAt": "2026-10-25T18:15:47.598Z",
+        "pullRequest": "https://github.com/twbs/bootstrap/pull/43150",
+        "applied": "js/src changes only (tests and docs omitted)",
+        "keyboard": "VERIFIED_PASS",
+        "pointer": "VERIFIED_PASS",
+        "guards": [],
+        "note": "The pending human fix passes the same frozen task. It was fetched for comparison and is never part of a model request."
+      },
+      "review": {
+        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+        "reviewedAt": "2026-10-25T18:34:11.811Z",
+        "run": "5f429d28-ad4a-4987-87d8-3e89b3ab365e",
+        "verdict": "Works, different trade-off from the pending human fix",
+        "summary": "The input now keeps the ISO date of the selection instead of the locale-formatted string.",
+        "caveats": [
+          "An input-mode datepicker now shows 2026-10-22 rather than the localized date.",
+          "Pending pull request #43150 keeps the localized text visible and submits the ISO date through a hidden input. Both pass this task; the human design is the better user experience."
+        ]
+      },
+      "expectedBehaviour": "Only the part of the issue every proposal agrees on: focusing and leaving the field without picking keeps the submitted value 2026-10-22. What a newly picked date should submit is still being decided upstream and is not tested.",
+      "recorded": {
+        "run": "5f429d28-ad4a-4987-87d8-3e89b3ab365e",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ]
+      }
+    },
+    {
+      "id": "bootstrap6-datepicker-tab-trap",
+      "title": "Tab must leave a datepicker input for the next field",
+      "summary": "When the field is reached with Tab, the calendar does not open, but vanilla-calendar-pro treats it as shown: on the next Tab it cancels the key and focuses the first control of a calendar that is not in the page, so focus stays in the date field. Escape is the only way out, and it drops focus to the page body.",
+      "library": "Bootstrap 6.0 alpha (datepicker, TypeScript source)",
+      "category": "Keyboard trap",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues?q=is%3Aissue%20datepicker",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Not found among Bootstrap's open or closed issues when pinned. Reproduced in headless Chromium 156 and in desktop Chrome 155, both with this source and with the published 6.0.0-alpha.1 bundle and stylesheet. Not yet reported upstream.",
+      "derivedFrom": null,
+      "addedAfterReview": null,
+      "replays": [],
+      "pendingHumanFix": null,
+      "pendingHumanCheck": null,
+      "review": {
+        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+        "reviewedAt": "2026-10-25T18:34:11.811Z",
+        "run": "af77a4aa-da7c-4790-8ecb-eee8a78cc33b",
+        "verdict": "Rejected on review: it breaks the calendar",
+        "summary": "The patch passes input mode as false to vanilla-calendar-pro. That removes the Tab trap, but after a click the calendar is no longer visible (0 of 35 days visible, against 35 before the patch).",
+        "caveats": [
+          "The frozen pointer path never opened the calendar, so the browser gate could not see this.",
+          "A stricter case, bootstrap6-datepicker-tab-trap-with-picker, adds a pointer guard for it; the patch is replayed there without inference."
+        ]
+      },
+      "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
+      "recorded": {
+        "run": "af77a4aa-da7c-4790-8ecb-eee8a78cc33b",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
+        "models": [
+          "nemotron-3-super-120b-a12b"
+        ]
+      }
+    },
+    {
+      "id": "bootstrap6-datepicker-tab-trap-with-picker",
+      "title": "Tab must leave a datepicker input for the next field, and a click must still show the calendar",
+      "summary": "When the field is reached with Tab, the calendar does not open, but vanilla-calendar-pro treats it as shown: on the next Tab it cancels the key and focuses the first control of a calendar that is not in the page, so focus stays in the date field. Escape is the only way out, and it drops focus to the page body.",
+      "library": "Bootstrap 6.0 alpha (datepicker, TypeScript source)",
+      "category": "Keyboard trap",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues?q=is%3Aissue%20datepicker",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Not found among Bootstrap's open or closed issues when pinned. Reproduced in headless Chromium 156 and in desktop Chrome 155, both with this source and with the published 6.0.0-alpha.1 bundle and stylesheet. Not yet reported upstream.",
+      "derivedFrom": "bootstrap6-datepicker-tab-trap",
+      "addedAfterReview": "Added after reviewing the engine-v6 patch for bootstrap6-datepicker-tab-trap: it passed every frozen check by disabling input mode, which left the calendar invisible on click. The original case and its result are kept unchanged; this stricter task adds one pointer guard, and earlier patches are replayed against it without inference.",
+      "replays": [
+        {
+          "run": "80798166-e3a2-41d9-978b-c2afd8c61a02",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Tab must leave a datepicker input for the next field",
+          "fromRun": "af77a4aa-da7c-4790-8ecb-eee8a78cc33b",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "75379ffb-f2f7-4595-970c-9cf248b2fafc",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Tab must leave a datepicker input for the next field",
+          "fromRun": "9c87e810-82f4-4ac7-b108-c1658a430f5c",
+          "attempt": 3,
+          "engine": "browser replay, no inference"
+        }
+      ],
+      "pendingHumanFix": null,
+      "pendingHumanCheck": null,
+      "review": null,
+      "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
+      "recorded": null
+    },
+    {
+      "id": "bootstrap6-dialog-escape-keyboard-false",
+      "title": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+      "summary": "keyboard: false only calls preventDefault() on the native cancel event. Escape does not count as user activation, so after a few presses Chromium fires cancel with cancelable=false and the dialog closes anyway.",
+      "library": "Bootstrap 6.0 alpha (dialog, TypeScript source)",
+      "category": "Unwanted dismissal",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues/43070",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Open and labelled confirmed. A maintainer-side fix is proposed in pull request #43077, not merged at pinnedCommit. That pull request is never sent to the model; it is kept for comparison after it merges.",
+      "derivedFrom": null,
+      "addedAfterReview": null,
+      "replays": [],
+      "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43077",
+      "pendingHumanCheck": {
+        "checkedAt": "2026-10-25T18:15:47.598Z",
+        "pullRequest": "https://github.com/twbs/bootstrap/pull/43077",
+        "applied": "js/src changes only (tests omitted)",
+        "keyboard": "VERIFIED_PASS",
+        "pointer": "VERIFIED_PASS",
+        "guards": [
+          "VERIFIED_PASS"
+        ],
+        "note": "The pending human fix passes the same frozen task. It was fetched for comparison and is never part of a model request."
+      },
+      "review": {
+        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+        "reviewedAt": "2026-10-25T18:34:11.812Z",
+        "run": "8c28f644-3bef-49ed-bebf-c95413cee13a",
+        "verdict": "Sound, and close to the pending human fix",
+        "summary": "Nemotron diagnosed that the cancel event becomes non-cancelable, and now cancels the Escape keydown whenever keyboard is false, for modal dialogs too, so no close request is sent. Pending pull request #43077 makes the same change.",
+        "caveats": [
+          "The human fix also plays the static-backdrop bounce on each press for modal dialogs and keeps the cancel handler as a fallback for close requests that do not come from a key; the model patch does neither.",
+          "Version 5 failed this case three times. The difference in version 6 is the key trace, which shows cancel arriving with cancelable=false."
+        ]
+      },
+      "expectedBehaviour": null,
+      "recorded": {
+        "run": "8c28f644-3bef-49ed-bebf-c95413cee13a",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
+        "models": [
+          "nemotron-3-super-120b-a12b"
+        ]
+      }
+    },
+    {
+      "id": "bootstrap6-drawer-initial-focus",
+      "title": "Opening a drawer must move keyboard focus into it",
+      "summary": "A closed drawer is visibility: hidden and becomes visible through the slide-in transition. showModal() runs its focusing steps while everything inside is still hidden, so focus falls back to body and the trigger behind the modal is inert.",
+      "library": "Bootstrap 6.0 alpha (drawer, TypeScript source)",
+      "category": "Focus loss",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues/43120",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Open, labelled confirmed and needs-decision. A fix is proposed in pull request #43139, not merged at pinnedCommit. That pull request is never sent to the model.",
+      "derivedFrom": null,
+      "addedAfterReview": null,
+      "replays": [],
+      "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43139",
+      "pendingHumanCheck": {
+        "checkedAt": "2026-10-25T18:15:47.598Z",
+        "pullRequest": "https://github.com/twbs/bootstrap/pull/43139",
+        "applied": null,
+        "note": "The pending human fix changes scss/_drawer.scss. This case serves the published 6.0.0-alpha.1 stylesheet, so the SCSS change was not compiled or checked here."
+      },
+      "review": {
+        "reviewer": "Project author, after the browser verdict. This is a reading of the attempts, not another test.",
+        "reviewedAt": "2026-10-25T18:34:30.997Z",
+        "run": "ca7bb8b1-eb32-4b73-9453-cef90b272e45",
+        "verdict": "Not repaired",
+        "summary": "Ultra now looked for the drawer dismiss button generically ([data-bs-dismiss=\"drawer\"]) instead of naming the test page, but focused it while the drawer was still visibility: hidden, so focus stayed on body.",
+        "caveats": [
+          "A working repair has to move focus once the slide-in transition has made the content visible.",
+          "The version 5 run passed this case only by hardcoding the page id #filters-close; version 6 rejects that, and this honest failure replaces the earlier pass.",
+          "Pending pull request #43139 fixes it in the stylesheet, which this case cannot edit."
+        ]
+      },
+      "expectedBehaviour": "Focus lands on the first focusable control in the drawer, its close button, as for a native modal dialog. The compiled stylesheet is a dependency outside the editable source, so a repair has to be made in the TypeScript.",
+      "recorded": {
+        "run": "ca7bb8b1-eb32-4b73-9453-cef90b272e45",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ]
+      }
+    },
+    {
+      "id": "pikaday-keyboard-disabled-day",
+      "title": "Arrow keys must not select a day that disableDayFn closes",
+      "summary": "A disabled day cannot be clicked, but ArrowRight from Friday selects the closed Saturday and the form submits it.",
+      "library": "Pikaday",
+      "category": "Wrong submitted data",
+      "repository": "https://github.com/Pikaday/Pikaday",
+      "issue": "https://github.com/Pikaday/Pikaday/issues/955",
+      "pinnedCommit": "9a90eea5cdbc48784d3a909ddb36e052c16bf25d",
+      "status": "Open since July 2025 and confirmed by a second user. The repository was archived, so no upstream fix will ship.",
+      "derivedFrom": null,
+      "addedAfterReview": null,
+      "replays": [],
+      "pendingHumanFix": null,
+      "pendingHumanCheck": null,
+      "review": null,
+      "expectedBehaviour": "Author decision: the arrow key moves to the next day that is not disabled, as when a user skips over closed days with the pointer.",
+      "recorded": {
+        "run": "1e3667fc-6ac9-40d9-ab2a-db08966c3842",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ]
+      }
+    },
+    {
+      "id": "pikaday-tab-after-typed-date",
+      "title": "Tab after typing a date must move to the next field, not jump back into the date field",
+      "summary": "Typing a date and pressing Tab fires change; Pikaday redraws and, one millisecond later, focuses the date field again, so the next field loses focus and the user's typing lands in the wrong place.",
+      "library": "Pikaday",
+      "category": "Focus loss",
+      "repository": "https://github.com/Pikaday/Pikaday",
+      "issue": "https://github.com/Pikaday/Pikaday/issues/827",
+      "pinnedCommit": "9a90eea5cdbc48784d3a909ddb36e052c16bf25d",
+      "status": "Open since January 2019. The repository was archived, so no upstream fix will ship.",
+      "derivedFrom": null,
+      "addedAfterReview": null,
+      "replays": [],
+      "pendingHumanFix": null,
+      "pendingHumanCheck": null,
+      "review": null,
+      "expectedBehaviour": null,
+      "recorded": {
+        "run": "f9595461-8d8e-49d2-9902-0ae789c97a41",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ]
+      }
+    }
+  ]
+}

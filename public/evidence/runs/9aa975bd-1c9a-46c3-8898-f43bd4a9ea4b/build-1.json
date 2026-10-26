@@ -1,0 +1,351 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "js/src/base-component.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dom/data.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dom/event-handler.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dom/manipulator.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dom/selector-engine.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/dropdown.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "js/src/util/index.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/createPopper.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/contains.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getBoundingClientRect.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getClippingRect.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getCompositeRect.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getComputedStyle.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getDocumentElement.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getDocumentRect.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getHTMLElementScroll.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getLayoutRect.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getNodeName.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getNodeScroll.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getOffsetParent.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getParentNode.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getScrollParent.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getViewportRect.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getWindow.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getWindowScroll.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/getWindowScrollBarX.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/instanceOf.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/isScrollParent.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/isTableElement.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/dom-utils/listScrollParents.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/enums.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/index.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/applyStyles.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/arrow.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/computeStyles.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/eventListeners.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/flip.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/hide.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/index.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/offset.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/popperOffsets.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/modifiers/preventOverflow.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/popper-base.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/popper-lite.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/popper.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/types.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/computeAutoPlacement.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/computeOffsets.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/debounce.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/detectOverflow.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/expandToHashMap.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/format.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/getAltAxis.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/getAltLen.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/getBasePlacement.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/getFreshSideObject.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/getMainAxisFromPlacement.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/getOppositePlacement.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/getOppositeVariationPlacement.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/getVariation.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/math.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/mergeByName.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/mergePaddingObject.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/orderModifiers.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/rectToClientRect.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/uniqueBy.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/validateModifiers.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "vendor/popperjs-core/utils/within.js",
+      "pass": true,
+      "kind": "syntax"
+    }
+  ],
+  "scope": "Static HTML structure, JavaScript syntax (classic or ESM) and erasable TypeScript only; no framework compilation claim."
+}

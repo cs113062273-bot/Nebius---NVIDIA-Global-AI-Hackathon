@@ -1,0 +1,102 @@
+{
+  "completedAt": "2026-10-25T17:43:15.407Z",
+  "policy": "auto",
+  "modelRun": "b099ad8e-a046-4342-bdce-e34f43518626",
+  "verdict": "INCONCLUSIVE",
+  "reasons": [
+    "Keyboard candidate: inconclusive · Step 3 · #autoCompleteJS_result_0 aria-selected: expected \"true\", observed null",
+    "Task evidence is missing or contradicts the verdict",
+    "Independent functional candidate: inconclusive · Browser runtime/console/network errors require review",
+    "New automated-rule findings: color-contrast:#autoCompleteJS_result_0 > span, color-contrast:#autoCompleteJS_result_1 > span, color-contrast:#autoCompleteJS_result_2 > span, color-contrast:#autoCompleteJS_result_3 > span, aria-input-field-name:#autoCompleteJS_list",
+    "Replay has runtime/console errors",
+    "Functional replay has runtime/console errors",
+    "Regression guard \"Arrow up from the field to the last suggestion\": inconclusive · #pickup-form store: expected [\"Harbour Mall\"], observed [\"ma\"]",
+    "Regression guard \"Arrow up from the field to the last suggestion\": runtime error · Failed to execute 'addEventListener' on 'EventTarget': parameter 2 is not of type 'Object'."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "c4c339d4feb3e1a8ae5ee1cd70ef893da952c66f65054b46cea7c23480d4647a",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-efb413bdd6a04ab505d5eefe209636f0",
+      "usage": {
+        "completion_tokens": 2505,
+        "prompt_tokens": 5397,
+        "total_tokens": 7902,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2019,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5397
+      },
+      "latencyMs": 17654,
+      "reservedCreditUsd": 0.0352206
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-05a63a756a16fcd2bea48e4c31a3c43e",
+      "usage": {
+        "completion_tokens": 15795,
+        "prompt_tokens": 5735,
+        "total_tokens": 21530,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 15229,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5735
+      },
+      "latencyMs": 40425,
+      "reservedCreditUsd": 0.119001
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-dd9519ef67d1cbeea509563fa1f5a34b",
+      "usage": {
+        "completion_tokens": 12066,
+        "prompt_tokens": 6706,
+        "total_tokens": 18772,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 11139,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6706
+      },
+      "latencyMs": 30153,
+      "reservedCreditUsd": 0.122832
+    }
+  ]
+}

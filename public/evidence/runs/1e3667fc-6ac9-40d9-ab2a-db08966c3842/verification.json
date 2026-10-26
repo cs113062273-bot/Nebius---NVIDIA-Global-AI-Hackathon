@@ -1,0 +1,17 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
+  ],
+  "uncertain": [],
+  "newRules": [
+    "color-contrast:button[data-pika-day=\"23\"]"
+  ],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true,
+    "regressionGuards": "1/1"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

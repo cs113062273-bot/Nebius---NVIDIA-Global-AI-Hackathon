@@ -1,0 +1,56 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..3b3f690 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -538,6 +538,26 @@
+             }
+         };
+ 
++        self._getNextSelectableDate = function(date, increment) {
++            var next = new Date(date.getTime());
++            var step = increment > 0 ? 1 : -1;
++            var maxSteps = 366;
++            var steps = 0;
++            while (steps < maxSteps) {
++                next.setTime(next.getTime() + step * 24*60*60*1000);
++                steps++;
++                var isDisabled = false;
++                if (opts.minDate && next < opts.minDate) isDisabled = true;
++                if (opts.maxDate && next > opts.maxDate) isDisabled = true;
++                if (opts.disableWeekends && isWeekend(next)) isDisabled = true;
++                if (opts.disableDayFn && opts.disableDayFn(next)) isDisabled = true;
++                if (!isDisabled) {
++                    return next;
++                }
++            }
++            return date;
++        };
++
+         self._onKeyChange = function(e)
+         {
+             e = e || window.event;
+@@ -552,16 +572,20 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                        var newDate = self._getNextSelectableDate(self.getDate() || new Date(), -1);
++                        self.setDate(newDate);
+                         break;
+                     case 38:
+-                        self.adjustDate('subtract', 7);
++                        var newDate = self._getNextSelectableDate(self.getDate() || new Date(), -7);
++                        self.setDate(newDate);
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                        var newDate = self._getNextSelectableDate(self.getDate() || new Date(), 1);
++                        self.setDate(newDate);
+                         break;
+                     case 40:
+-                        self.adjustDate('add', 7);
++                        var newDate = self._getNextSelectableDate(self.getDate() || new Date(), 7);
++                        self.setDate(newDate);
+                         break;
+                     case 8:
+                     case 46:

@@ -1,0 +1,24 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..33152c1 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -127,6 +127,19 @@ class Drawer extends DialogBase {
+     return this._isAnimated()
+   }
+ 
++  // Public
++  async show(relatedTarget?: HTMLElement): Promise<void> {
++    await super.show(relatedTarget)
++    this._focusFirstElement()
++  }
++
++  protected _focusFirstElement(): void {
++    const focusTrigger = this._element.querySelector('#filters-close') as HTMLElement | null
++    if (focusTrigger) {
++      focusTrigger.focus()
++    }
++  }
++
+   // Private
+ 
+   protected _initResizeObserver(): void {

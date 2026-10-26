@@ -1,0 +1,12 @@
+diff --git a/src/govuk/components/header/header.js b/src/govuk/components/header/header.js
+index 84eb54f..ca21519 100644
+--- a/src/govuk/components/header/header.js
++++ b/src/govuk/components/header/header.js
+@@ -36,7 +36,6 @@ Header.prototype.init = function () {
+ Header.prototype.syncState = function (isVisible) {
+   this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)
+   this.$menuButton.setAttribute('aria-expanded', isVisible)
+-  this.$menu.setAttribute('aria-hidden', !isVisible)
+ }
+ 
+ /**

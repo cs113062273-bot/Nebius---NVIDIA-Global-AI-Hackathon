@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en" class="govuk-template">
+<head>
+<meta charset="utf-8">
+<title>Register to vote: your name</title>
+<link rel="icon" href="data:,">
+<style>
+body{margin:0;font:19px/1.3 Arial,sans-serif;color:#0b0c0c;background:#fff}
+.govuk-width-container{max-width:960px;margin:0 30px;padding:30px 0}
+h1{font-size:32px;margin:0 0 20px}
+.govuk-error-summary{border:5px solid #d4351c;padding:20px;margin-bottom:30px}
+.govuk-error-summary__title{margin:0 0 15px;font-size:24px}
+.govuk-error-summary__list{margin:0;padding:0;list-style:none}
+.govuk-error-summary__list a{color:#d4351c;font-weight:700}
+.govuk-form-group{margin-bottom:25px}
+.govuk-label{display:block;font-weight:700;margin-bottom:5px}
+.govuk-hint{color:#505a5f;margin-bottom:10px}
+.govuk-input{font:inherit;padding:5px;border:2px solid #0b0c0c;width:320px}
+.govuk-button{font:inherit;padding:8px 10px;background:#00703c;color:#fff;border:0;box-shadow:0 2px 0 #002d18}
+:focus{outline:3px solid #fd0;outline-offset:0}
+</style>
+<script type="importmap">
+{"imports":{"/src/vendor/polyfills/Function/prototype/bind":"/src/vendor/polyfills/Function/prototype/bind.js","/src/vendor/polyfills/Object/defineProperty":"/src/vendor/polyfills/Object/defineProperty.js","/src/vendor/polyfills/Event":"/src/vendor/polyfills/Event.js","/src/vendor/polyfills/Window":"/src/vendor/polyfills/Window.js","/src/vendor/polyfills/Element":"/src/vendor/polyfills/Element.js","/src/vendor/polyfills/Document":"/src/vendor/polyfills/Document.js","/src/vendor/polyfills/Element/prototype/closest":"/src/vendor/polyfills/Element/prototype/closest.js","/src/vendor/polyfills/Element/prototype/matches":"/src/vendor/polyfills/Element/prototype/matches.js"}}
+</script>
+</head>
+<body class="govuk-template__body js-enabled">
+<div class="govuk-width-container">
+<main class="govuk-main-wrapper" id="main-content">
+<div id="error-summary-slot"></div>
+<h1>What is your name?</h1>
+<form id="name-form" action="#" novalidate>
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="full-name">Full name</label>
+    <div id="full-name-hint" class="govuk-hint">As it appears on your passport or driving licence</div>
+    <input class="govuk-input" id="full-name" name="full-name" type="text" autocomplete="name" aria-describedby="full-name-hint">
+  </div>
+  <button type="button" class="govuk-button" id="continue">Continue</button>
+</form>
+</main>
+</div>
+<script type="module">
+import ErrorSummary from './src/components/error-summary/error-summary.js'
+
+// Client-side check: when the name is missing, render the documented error summary
+// markup at the top of the page and initialise the component on it.
+document.getElementById('continue').addEventListener('click', function () {
+  var slot = document.getElementById('error-summary-slot')
+  slot.innerHTML = ''
+  if (document.getElementById('full-name').value.trim()) return
+  var summary = document.createElement('div')
+  summary.className = 'govuk-error-summary'
+  summary.id = 'error-summary'
+  summary.setAttribute('aria-labelledby', 'error-summary-title')
+  summary.setAttribute('role', 'alert')
+  summary.setAttribute('tabindex', '-1')
+  summary.setAttribute('data-module', 'error-summary')
+  summary.innerHTML = '<h2 class="govuk-error-summary__title" id="error-summary-title">There is a problem</h2>' +
+    '<div class="govuk-error-summary__body"><ul class="govuk-list govuk-error-summary__list">' +
+    '<li><a href="#full-name" id="error-full-name">Enter your full name</a></li></ul></div>'
+  slot.appendChild(summary)
+  new ErrorSummary(summary).init()
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "root_cause": "The exclusive 'No symptoms' checkbox has value=\"yes\", identical to the non-exclusive symptom checkboxes. The initialization script (mirroring the working contact group pattern) likely expects the exclusive option to have a distinct value such as \"none\" to trigger clearing of other checkboxes in the group. Because the value matches the non-exclusive options, the script does not recognize it as the exclusive 'none of the above' choice and fails to clear previously selected symptoms when activated via keyboard.",
+  "repair_strategy": "Change the value attribute of the exclusive 'No symptoms' checkbox from \"yes\" to \"none\" to match the contact group's exclusive checkbox pattern (value=\"none\"), while retaining the existing exclusive attributes (data-checkbox-exclusive and data-checkbox-exclusive-group). This aligns with the working implementation and should enable the script to clear other symptom checkboxes when the exclusive option is selected.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+      "before": "<input class=\"nhsuk-checkboxes__input\" id=\"symptoms-none\" name=\"symptoms[none]\" type=\"checkbox\" value=\"yes\" data-checkbox-exclusive data-checkbox-exclusive-group=\"symptoms\">",
+      "after": "<input class=\"nhsuk-checkboxes__input\" id=\"symptoms-none\" name=\"symptoms[none]\" type=\"checkbox\" value=\"none\" data-checkbox-exclusive data-checkbox-exclusive-group=\"symptoms\">"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now select the exclusive 'No symptoms' option and have any previously selected symptom choices automatically cleared, providing correct exclusive choice behavior and satisfying WCAG 2.1.1 keyboard operability and 4.1.2 name, role, value requirements.",
+  "functional_risks": [
+    "The form submission value for symptoms[none] changes from \"yes\" to \"none\". If the backend expects \"yes\", this could break server-side processing. However, the contact group uses \"none\" for its exclusive option, suggesting the backend may already handle this pattern.",
+    "The keyboard functional invariant expects symptoms[none] value [\"yes\"]; this change will cause that invariant to report [\"none\"], potentially failing a separate profile test."
+  ],
+  "verification_requirements": [
+    "Verify that selecting 'No symptoms' via keyboard (Tab/Space) clears any previously selected symptom checkboxes.",
+    "Verify that selecting a symptom checkbox after 'No symptoms' clears the 'No symptoms' checkbox.",
+    "Confirm that form data reflects the correct values after each interaction (symptoms[cough] and symptoms[fever] become empty, symptoms[none] becomes [\"none\"]).",
+    "Ensure the contact group's exclusive 'Do not contact me' checkbox continues to work as expected.",
+    "Check that no visual or functional regressions are introduced."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "root_cause": "The hidden retry button inside the modal remains in the tab order (no tabindex=-1 or aria-hidden), so when Tab passes the last visible control the browser skips the non‑focusable hidden button and moves focus to the next focusable element outside the modal, breaking the focus trap.",
+  "repair_strategy": "Add tabindex=\"-1\" to the hidden retry button to remove it from the tab order, ensuring the last focusable element inside the modal is the Upload button so that Tab wraps to the first focusable element (the Close button) as expected.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "83bb455f24a186d6b1de61d1a51c55e05d813d1716179b03d479b09d82e70be9",
+      "before": "<button id=\"retry\" class=\"retry\" type=\"button\">Try again</button>",
+      "after": "<button id=\"retry\" class=\"retry\" type=\"button\" tabindex=\"-1\">Try again</button>"
+    }
+  ],
+  "expected_accessibility_effect": "Tabbing within the modal will loop focus between the modal's focusable elements, preventing focus from escaping to elements outside the modal.",
+  "functional_risks": [
+    "If the retry button is later made visible via script without removing tabindex=-1, it would be keyboard inaccessible.",
+    "Adding tabindex=-1 has no effect while the button is hidden via display:none, so there is no impact on current functionality or screen reader announcement."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the Upload button moves focus to the Close button (or first focusable element) and not to the Help link outside the modal.",
+    "Confirm that Escape still closes the dialog and returns focus to the triggering button.",
+    "Ensure that opening the dialog still sets initial focus to the filename input as specified.",
+    "Check that the visual state and functional behavior of the upload process remain unchanged."
+  ]
+}

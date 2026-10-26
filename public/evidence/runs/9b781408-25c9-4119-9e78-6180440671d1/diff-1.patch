@@ -1,0 +1,14 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index 44431aa..7a0b867 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -206,7 +206,8 @@ export default class Datepicker {
+         [inputField, 'paste', onPaste.bind(null, this)],
+         [document, 'mousedown', onMousedownDocument],
+         [document, 'touchstart', onMousedownDocument],
+-        [window, 'resize', picker.place.bind(picker)]
++        [window, 'resize', picker.place.bind(picker)],
++        [inputField, 'blur', () => { if (!this.inline) this.hide(); }]
+       ];
+       registerListeners(this, listeners);
+     }

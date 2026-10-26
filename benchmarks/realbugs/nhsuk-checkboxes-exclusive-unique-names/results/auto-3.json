@@ -1,0 +1,96 @@
+{
+  "completedAt": "2026-10-25T18:01:48.755Z",
+  "policy": "auto",
+  "modelRun": "b87475cd-a01e-4f8a-a381-5a334df723ed",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (index.html): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "c4c339d4feb3e1a8ae5ee1cd70ef893da952c66f65054b46cea7c23480d4647a",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-4cd003e12d7958f4723b8c7a9583041e",
+      "usage": {
+        "completion_tokens": 3023,
+        "prompt_tokens": 4297,
+        "total_tokens": 7320,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2582,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4297
+      },
+      "latencyMs": 30669,
+      "reservedCreditUsd": 0.0336165
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-c5edaca9d4bf0d139f10664e80d26597",
+      "usage": {
+        "completion_tokens": 8658,
+        "prompt_tokens": 4884,
+        "total_tokens": 13542,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7633,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4884
+      },
+      "latencyMs": 22810,
+      "reservedCreditUsd": 0.115112
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (index.html): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-e0ad9c694402e9450c2eccae04fa1a32",
+      "usage": {
+        "completion_tokens": 5384,
+        "prompt_tokens": 6598,
+        "total_tokens": 11982,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4756,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6598
+      },
+      "latencyMs": 14920,
+      "reservedCreditUsd": 0.121327
+    }
+  ]
+}

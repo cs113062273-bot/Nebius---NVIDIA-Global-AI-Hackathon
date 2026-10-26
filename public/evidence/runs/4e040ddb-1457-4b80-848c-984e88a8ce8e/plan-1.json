@@ -1,0 +1,21 @@
+{
+  "root_cause": "The focus trap's default option delayInitialFocus:true defers setting initial focus to the next tick, leaving focus on the triggering button after the dialog opens and causing the assertion that focus should be on #street to fail.",
+  "repair_strategy": "Disable the delayInitialFocus option when creating the focus trap so that initial focus is set synchronously upon activation, moving focus to the first focusable field (#street) immediately.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "85fb0980102bd0ea76fa350b8e2df6695a5bf878b5526a6a22d84ca1b8547611",
+      "before": "const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; } });",
+      "after": "const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; }, delayInitialFocus: false });"
+    }
+  ],
+  "expected_accessibility_effect": "When the address dialog is opened via keyboard, focus moves to the first usable field (the street address input) allowing immediate interaction.",
+  "functional_risks": [
+    "Change in focus timing could affect any code that relies on the delayed focus behavior, but no such usage is present in the provided source."
+  ],
+  "verification_requirements": [
+    "After pressing Enter on the #open button, the #address-dialog is visible and #street receives focus.",
+    "Pressing Escape still closes the dialog and returns focus to the #open button.",
+    "Entering a street address and pressing Save updates the status correctly and closes the dialog."
+  ]
+}

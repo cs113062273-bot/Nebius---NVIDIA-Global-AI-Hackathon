@@ -1,0 +1,77 @@
+{
+  "journey": {
+    "version": 1,
+    "id": "govuk-error-summary-late-init-keyboard",
+    "title": "Be taken to the error summary after submitting an empty name with the keyboard",
+    "goal": "Focus moves to the error summary that appears, and its link takes the user to the name field",
+    "source": "authored",
+    "profile": "keyboard",
+    "path": "/",
+    "steps": [
+      { "title": "Reach Continue", "action": { "kind": "seek", "selector": "#continue" } },
+      { "title": "Submit without a name", "action": { "kind": "press", "key": "Enter" },
+        "assertions": [ { "kind": "visible", "selector": "#error-summary", "value": true }, { "kind": "focus", "selector": "#error-summary" } ] },
+      { "title": "Move to the error link", "action": { "kind": "press", "key": "Tab" },
+        "assertions": [ { "kind": "focus", "selector": "#error-full-name" } ] },
+      { "title": "Follow the error link", "action": { "kind": "press", "key": "Enter" },
+        "assertions": [ { "kind": "focus", "selector": "#full-name" } ] },
+      { "title": "Enter a name", "action": { "kind": "type", "text": "Amira Hussain" } }
+    ],
+    "success": [
+      { "kind": "form-data", "selector": "#name-form", "name": "full-name", "value": ["Amira Hussain"] }
+    ],
+    "functional": [
+      { "kind": "visible", "selector": "#error-summary", "value": true }
+    ],
+    "forbidden": []
+  },
+  "functionalJourney": {
+    "version": 1,
+    "id": "govuk-error-summary-link-pointer",
+    "title": "Use the error summary link with a pointer",
+    "goal": "Clicking the error link puts the cursor in the name field",
+    "source": "authored",
+    "profile": "pointer",
+    "path": "/",
+    "steps": [
+      { "title": "Submit without a name", "action": { "kind": "click", "selector": "#continue" },
+        "assertions": [ { "kind": "visible", "selector": "#error-summary", "value": true } ] },
+      { "title": "Click the error link", "action": { "kind": "click", "selector": "#error-full-name" },
+        "assertions": [ { "kind": "focus", "selector": "#full-name" } ] }
+    ],
+    "success": [
+      { "kind": "focus", "selector": "#full-name" }
+    ],
+    "functional": [
+      { "kind": "focus", "selector": "#full-name" },
+      { "kind": "visible", "selector": "#error-summary", "value": true }
+    ],
+    "forbidden": []
+  },
+  "guards": [
+    {
+      "version": 1,
+      "id": "govuk-error-summary-valid-keyboard",
+      "title": "Submit a name with the keyboard",
+      "goal": "A completed name does not show the error summary",
+      "source": "authored",
+      "profile": "keyboard",
+      "path": "/",
+      "steps": [
+        { "title": "Reach the name field", "action": { "kind": "seek", "selector": "#full-name" } },
+        { "title": "Enter a name", "action": { "kind": "type", "text": "Amira Hussain" } },
+        { "title": "Reach Continue", "action": { "kind": "seek", "selector": "#continue", "maxTabs": 3 } },
+        { "title": "Submit", "action": { "kind": "press", "key": "Enter" } }
+      ],
+      "success": [
+        { "kind": "focus", "selector": "#continue" }
+      ],
+      "functional": [
+        { "kind": "form-data", "selector": "#name-form", "name": "full-name", "value": ["Amira Hussain"] }
+      ],
+      "forbidden": [
+        { "kind": "visible", "selector": "#error-summary", "value": true }
+      ]
+    }
+  ]
+}

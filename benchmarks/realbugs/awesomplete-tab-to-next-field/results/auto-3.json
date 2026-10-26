@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-25T17:45:51.195Z",
+  "policy": "auto",
+  "modelRun": "18f9f0be-7e20-43c1-8354-502918e5a53a",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "c4c339d4feb3e1a8ae5ee1cd70ef893da952c66f65054b46cea7c23480d4647a",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-c803e3dc65f15052fbd4321a4de1b501",
+      "usage": {
+        "completion_tokens": 7224,
+        "prompt_tokens": 9281,
+        "total_tokens": 16505,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6018,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 9281
+      },
+      "latencyMs": 36519,
+      "reservedCreditUsd": 0.0376827
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-723f9b9b6a79cfe58c920f5fb28ecd9e",
+      "usage": {
+        "completion_tokens": 9501,
+        "prompt_tokens": 10180,
+        "total_tokens": 19681,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7909,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10180
+      },
+      "latencyMs": 23689,
+      "reservedCreditUsd": 0.12871
+    }
+  ]
+}

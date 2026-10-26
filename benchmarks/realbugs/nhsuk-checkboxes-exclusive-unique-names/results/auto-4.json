@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-25T18:58:36.905Z",
+  "policy": "auto",
+  "modelRun": "7faba4f1-5e3d-46e6-b48c-d52c22360c64",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 6 · #symptoms-form symptoms[cough]: expected [], observed [\"yes\"]",
+    "Task evidence is missing or contradicts the verdict"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "55874e835c0f72431904aaa778bca8f59fe0c5200304e758084b134924853ba6",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (index.html): before does not occur in the file. 1 of its lines are not in the source. not in file: \"<input class=\\\"nhsuk-checkboxes__input\\\" id=\\\"symptoms-none\\\" name=\\\"symptoms[none]\\\" type=\\\"checkbox\\\" value=\\\"yes\\\" data-checkbox-exclusive=\\\"\\\" data-checkbox-exclusive-g\"; closest is line 47: \"<input class=\\\"nhsuk-checkboxes__input\\\" id=\\\"symptoms-none\\\" name=\\\"symptoms[none]\\\" type=\\\"che",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-071127695f1d4dc4e8120f5c3271ce17",
+      "usage": {
+        "completion_tokens": 2192,
+        "prompt_tokens": 4468,
+        "total_tokens": 6660,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1636,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4468
+      },
+      "latencyMs": 18725,
+      "reservedCreditUsd": 0.033789599999999996
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-c9f4b11d74cf34d9a530904e5114bf7c",
+      "usage": {
+        "completion_tokens": 7585,
+        "prompt_tokens": 5372,
+        "total_tokens": 12957,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7043,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5372
+      },
+      "latencyMs": 19669,
+      "reservedCreditUsd": 0.116088
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-b4a69bc263de458a6990f4330d58998c",
+      "usage": {
+        "completion_tokens": 13950,
+        "prompt_tokens": 5444,
+        "total_tokens": 19394,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13257,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5444
+      },
+      "latencyMs": 36207,
+      "reservedCreditUsd": 0.117001
+    }
+  ]
+}

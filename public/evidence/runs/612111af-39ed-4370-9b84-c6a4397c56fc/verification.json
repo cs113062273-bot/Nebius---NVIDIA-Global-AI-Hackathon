@@ -1,0 +1,23 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 2 · #notes: expected \"#notes\", observed \"button\"",
+    "Task evidence is missing or contradicts the verdict",
+    "New automated-rule findings: color-contrast:span[data-date=\"1708819200000\"], color-contrast:span[data-date=\"1708905600000\"], color-contrast:span[data-date=\"1708992000000\"], color-contrast:span[data-date=\"1709078400000\"], color-contrast:span[data-date=\"1709164800000\"]"
+  ],
+  "uncertain": [],
+  "newRules": [
+    "color-contrast:span[data-date=\"1708819200000\"]",
+    "color-contrast:span[data-date=\"1708905600000\"]",
+    "color-contrast:span[data-date=\"1708992000000\"]",
+    "color-contrast:span[data-date=\"1709078400000\"]",
+    "color-contrast:span[data-date=\"1709164800000\"]"
+  ],
+  "gates": {
+    "keyboard": "VERIFIED_FAIL",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true,
+    "regressionGuards": "1/1"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

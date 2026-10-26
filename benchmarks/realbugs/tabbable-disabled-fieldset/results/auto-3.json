@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-25T18:03:38.552Z",
+  "policy": "auto",
+  "modelRun": "d1e4b43d-477b-494b-8fde-c2c55e1ab7ef",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "c4c339d4feb3e1a8ae5ee1cd70ef893da952c66f65054b46cea7c23480d4647a",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-882c1666b4912fcb36bbe6f641ee6945",
+      "usage": {
+        "completion_tokens": 3037,
+        "prompt_tokens": 10369,
+        "total_tokens": 13406,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2675,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10369
+      },
+      "latencyMs": 27118,
+      "reservedCreditUsd": 0.0402507
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-9e1d42dc5a1d53d91d9fd7cd4fe5058b",
+      "usage": {
+        "completion_tokens": 9340,
+        "prompt_tokens": 10520,
+        "total_tokens": 19860,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8925,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10520
+      },
+      "latencyMs": 25635,
+      "reservedCreditUsd": 0.135028
+    }
+  ]
+}

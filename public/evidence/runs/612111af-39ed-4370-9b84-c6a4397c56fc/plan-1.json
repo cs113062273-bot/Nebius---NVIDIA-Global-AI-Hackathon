@@ -1,0 +1,37 @@
+{
+  "root_cause": "The datepicker traps focus when open, preventing Tab from moving focus to the next form field (notes). The datepicker's keydown listener does not allow Tab to escape the picker widget.",
+  "repair_strategy": "Add a keydown listener to the datepicker element when shown that moves focus to the next focusable element in the DOM when Tab is pressed, and remove the listener when hidden. This ensures Tab exits the datepicker and moves focus to the next logical field (e.g., notes).",
+  "edits": [
+    {
+      "path": "js/picker/Picker.js",
+      "sha256": "bdad6c1434285abe75a3ea29c3be21b923eb1d7c828d09d29f38bf07e1d76ba2",
+      "before": "    this.currentView = this.views[config.startView];\n\n    this.currentView.render();\n    this.main.appendChild(this.currentView.element);\n    if (config.container) {\n      config.container.appendChild(this.element);\n    } else {\n      inputField.after(this.element);\n    }\n",
+      "after": "    this.currentView = this.views[config.startView];\n    this._tabKeyHandler = null;\n\n    this.currentView.render();\n    this.main.appendChild(this.currentView.element);\n    if (config.container) {\n      config.container.appendChild(this.element);\n    } else {\n      inputField.after(this.element);\n    }\n"
+    },
+    {
+      "path": "js/picker/Picker.js",
+      "sha256": "bdad6c1434285abe75a3ea29c3be21b923eb1d7c828d09d29f38bf07e1d76ba2",
+      "before": "  show() {\n    if (this.active) {\n      return;\n    }\n\n    const {datepicker, element} = this;\n    const inputField = datepicker.inputField;\n    if (inputField) {\n      // ensure picker's direction matches input's\n      const inputDirection = getTextDirection(inputField);\n      if (inputDirection !== getTextDirection(getParent(element))) {\n        element.dir = inputDirection;\n      } else if (element.dir) {\n        element.removeAttribute('dir');\n      }\n\n      element.style.visibility = 'hidden';\n      element.classList.add('active');\n      this.place();\n      element.style.visibility = '';\n\n      if (datepicker.config.disableTouchKeyboard) {\n        inputField.blur();\n      }\n    } else {\n      element.classList.add('active');\n    }\n    this.active = true;\n    triggerDatepickerEvent(datepicker, 'show');\n  }",
+      "after": "  show() {\n    if (this.active) {\n      return;\n    }\n\n    const {datepicker, element} = this;\n    const inputField = datepicker.inputField;\n    if (inputField) {\n      // ensure picker's direction matches input's\n      const inputDirection = getTextDirection(inputField);\n      if (inputDirection !== getTextDirection(getParent(element))) {\n        element.dir = inputDirection;\n      } else if (element.dir) {\n        element.removeAttribute('dir');\n      }\n\n      element.style.visibility = 'hidden';\n      element.classList.add('active');\n      this.place();\n      element.style.visibility = '';\n\n      if (datepicker.config.disableTouchKeyboard) {\n        inputField.blur();\n      }\n\n      // ADD OUR LISTENER FOR TAB KEY TO MOVE FOCUS TO THE NEXT FOCUSABLE ELEMENT\n      // Remove any existing listener to avoid duplicates\n      if (this._tabKeyHandler) {\n        this.element.removeEventListener('keydown', this._tabKeyHandler);\n      }\n      this._tabKeyHandler = (e) => {\n        if (e.key === 'Tab') {\n          let next = this.element.nextElementSibling;\n          while (next) {\n            const focusable = \n              next.tagName.match(/^(input|select|textarea|button|object)$/i) ||\n              (next.hasAttribute('tabindex') && next.tabIndex >= 0);\n            if (focusable && !next.disabled) {\n              try {\n                next.focus();\n              } catch (err) {\n                // ignore and continue\n              }\n              if (document.activeElement === next) {\n                break;\n              }\n            }\n            next = next.nextElementSibling;\n          }\n          e.preventDefault();\n        }\n      };\n      this.element.addEventListener('keydown', this._tabKeyHandler);\n    } else {\n      element.classList.add('active');\n    }\n    this.active = true;\n    triggerDatepickerEvent(datepicker, 'show');\n  }"
+    },
+    {
+      "path": "js/picker/Picker.js",
+      "sha256": "bdad6c1434285abe75a3ea29c3be21b923eb1d7c828d09d29f38bf07e1d76ba2",
+      "before": "  hide() {\n    if (!this.active) {\n      return;\n    }\n    this.datepicker.exitEditMode();\n    this.element.classList.remove('active');\n    this.active = false;\n    triggerDatepickerEvent(this.datepicker, 'hide');\n  }",
+      "after": "  hide() {\n    if (!this.active) {\n      return;\n    }\n    // REMOVE OUR LISTENER IF IT EXISTS\n    if (this.datepicker.inputField && this._tabKeyHandler) {\n      this.element.removeEventListener('keydown', this._tabKeyHandler);\n      this._tabKeyHandler = null;\n    }\n    this.datepicker.exitEditMode();\n    this.element.classList.remove('active');\n    this.active = false;\n    triggerDatepickerEvent(this.datepicker, 'hide');\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab while the datepicker is open will move focus to the next focusable element in the form (e.g., the notes field), allowing keyboard users to continue navigating the form without getting trapped in the datepicker widget.",
+  "functional_risks": [
+    "The datepicker may lose its internal Tab navigation functionality (e.g., moving between grid cells) if the custom listener interferes. However, the listener only activates for the Tab key and only when the datepicker is attached to an input field, preserving existing arrow key and Enter interactions.",
+    "If no next focusable element exists, Tab will be consumed and focus may appear stuck. This mirrors native browser behavior when Tab is pressed in the last focusable element.",
+    "The solution assumes the datepicker is inserted after its associated input field in the DOM, which holds true for the current implementation but may break if the DOM structure changes."
+  ],
+  "verification_requirements": [
+    "Tab key pressed in the visit-date input when datepicker is open moves focus to the notes input.",
+    "Shift+Tab key pressed in the notes input moves focus back to the visit-date input (should still work via natural tab order).",
+    "Arrow keys and Enter still function correctly within the datepicker grid for date selection.",
+    "Datepicker opens/closes correctly via mouse and keyboard interactions.",
+    "No JavaScript errors are introduced in the console."
+  ]
+}

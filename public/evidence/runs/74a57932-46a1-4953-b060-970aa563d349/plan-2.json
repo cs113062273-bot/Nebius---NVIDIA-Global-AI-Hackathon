@@ -1,0 +1,24 @@
+{
+  "root_cause": "The govuk-tabs component incorrectly treats ArrowDown and ArrowUp as navigation keys for a horizontal tablist, causing focus to move to the next/previous tab. The previous fix added a bubbling keydown listener that called preventDefault but executed after the component's listener had already moved focus.",
+  "repair_strategy": "Add a capture-phase keydown listener on the tablist that intercepts ArrowDown/ArrowUp events when the target is a tab, calling preventDefault and stopImmediatePropagation to prevent the component's keyboard navigation logic from running.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "24e8e15758ccfc9f3b17cadc01108c076cd71ab50482434408642d3a3ece9dfb",
+      "before": "<script type=\"module\">\nimport { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'\nnew Tabs(document.getElementById('applications-tabs'))\n</script>",
+      "after": "<script type=\"module\">\nimport { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'\nconst tabsEl = document.getElementById('applications-tabs');\nnew Tabs(tabsEl);\ntabsEl.addEventListener('keydown', function(event) {\n  if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {\n    const target = event.target;\n    if (target.matches('[role=\"tab\"]')) {\n      event.preventDefault();\n      event.stopImmediatePropagation();\n    }\n  }\n}, true);\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing ArrowDown or ArrowUp while focus is on a tab will no longer trigger the component's tab switching; focus remains on the current tab, its panel stays visible, and left/right arrows continue to work.",
+  "functional_risks": [
+    "If the tablist is ever used in a vertical orientation, ArrowDown/ArrowUp would be incorrectly suppressed, breaking intended navigation.",
+    "The capture listener might also suppress other legitimate keydown handlers on the tab or tablist (e.g., custom analytics).",
+    "Future updates to the govuk-tabs component might conflict with this listener if it also modifies key handling."
+  ],
+  "verification_requirements": [
+    "Verify that after pressing ArrowDown on the Past day tab, focus remains on that tab, aria-selected remains true, and the Past day panel stays visible.",
+    "Verify that pressing ArrowUp similarly does not change focus or selection.",
+    "Confirm that ArrowRight and ArrowLeft still move focus and selection between tabs as expected.",
+    "Ensure that screen reader announcement of the selected tab remains correct after ArrowDown/ArrowUp presses."
+  ]
+}

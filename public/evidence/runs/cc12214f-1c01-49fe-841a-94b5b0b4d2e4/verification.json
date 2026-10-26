@@ -1,6 +1,0 @@
-{
-  "verdict": "VERIFIED_FAIL",
-  "reasons": [
-    "APPLICATION: Patch preimage must match exactly once"
-  ]
-}

@@ -1,0 +1,23 @@
+{
+  "root_cause": "The radios component only updates conditional visibility on click events, not when the checked state changes via keyboard navigation (arrow keys).",
+  "repair_strategy": "Add a change event listener that invokes the same update logic used for clicks, ensuring that when arrow keys change the selected radio, the associated conditional fields are shown or hidden correctly.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.addEventListener('change', this.handleClick.bind(this))"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now navigate the radio group with arrow keys and see conditional fields appear/disappear correctly, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Both click and change events may fire for the same interaction (e.g., mouse click), but the update logic is idempotent.",
+    "Negligible performance impact from an additional event listener."
+  ],
+  "verification_requirements": [
+    "Verify that arrow key navigation updates visibility of conditionals as expected.",
+    "Verify that mouse clicks continue to work correctly.",
+    "Verify that the form data reflects the selected value after keyboard navigation.",
+    "Ensure no regression in existing tests or functionality."
+  ]
+}

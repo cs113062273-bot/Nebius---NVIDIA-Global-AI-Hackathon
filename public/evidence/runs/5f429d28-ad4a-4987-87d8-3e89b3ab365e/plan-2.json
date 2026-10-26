@@ -1,0 +1,24 @@
+{
+  "root_cause": "The datepicker's `_syncSelectedDates` method writes locale-formatted dates (e.g., \"10/22/2026\") to input elements, overwriting the ISO-format value (\"2026-10-22\") needed for form submission. When a user tabs into the date field (triggering datepicker initialization) then presses Escape without selecting a date, the input value is permanently changed from ISO to locale format.",
+  "repair_strategy": "Modify `_syncSelectedDates` to preserve ISO-format dates in input elements for form submission while still writing locale-formatted dates to display elements. Input elements receive the raw selectedDates[0] value; display elements receive the formatted version.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput) {\n      this._element.value = formattedDate\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n  }",
+      "after": "  protected _syncSelectedDates(selectedDates: string[]): void {\n    const formattedDate = this._formatDateForInput(selectedDates)\n    if (this._isInput) {\n      // Keep ISO format in input for form submission\n      this._element.value = selectedDates[0] || ''\n    }\n\n    if (this._boundInput) {\n      this._boundInput.value = selectedDates.join(',')\n    }\n\n    if (this._displayElement) {\n      this._displayElement.textContent = formattedDate\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can tab through the date field without altering the saved departure value. The input retains its machine-readable ISO format, ensuring form submission matches the original booking date. Screen readers announce the unchanged date value.",
+  "functional_risks": [
+    "If selectionMode is 'multiple' or 'multiple-ranged', only the first date is written to the input (but the form only expects a single date)",
+    "Bound hidden inputs still receive comma-separated ISO dates (unchanged behavior)",
+    "Display elements continue to show locale-formatted dates (unchanged)"
+  ],
+  "verification_requirements": [
+    "Tab to departure field, press Escape, tab to passengers, type 2, submit → departure=2026-10-22&passengers=2",
+    "Select a new date via datepicker → input updates to new ISO date",
+    "Form submission with unchanged date preserves original ISO format",
+    "Display elements (if any) show locale-formatted dates"
+  ]
+}

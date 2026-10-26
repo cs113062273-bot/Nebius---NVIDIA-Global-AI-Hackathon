@@ -1,0 +1,304 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df0225f..7f75879f652f 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -31,6 +31,7 @@ const EVENT_KEY = `.${DATA_KEY}`
+ const DATA_API_KEY = '.data-api'
+ 
+ const EVENT_CHANGE = `change${EVENT_KEY}`
++const EVENT_INPUT = `input${EVENT_KEY}`
+ const EVENT_SHOW = `show${EVENT_KEY}`
+ const EVENT_SHOWN = `shown${EVENT_KEY}`
+ const EVENT_HIDE = `hide${EVENT_KEY}`
+@@ -210,6 +211,7 @@ class Datepicker extends BaseComponent {
+     }
+ 
+     this._calendar = null
++    this._removeBoundInput()
+     super.dispose()
+   }
+ 
+@@ -235,6 +237,11 @@ class Datepicker extends BaseComponent {
+       this._boundInput = this._element.querySelector<HTMLInputElement>('input[type="hidden"], input[name]')
+     }
+ 
++    // For a named input, submit the ISO date(s) through a hidden input instead
++    if (this._isInput && !this._isInline) {
++      this._createBoundInput()
++    }
++
+     this._positionElement = this._resolvePositionElement()
+     this._displayElement = this._resolveDisplayElement()
+ 
+@@ -530,11 +537,59 @@ class Datepicker extends BaseComponent {
+     return dates.map(d => this._formatDate(d)).join(separator)
+   }
+ 
++  // The text an input shows is locale formatted (`_formatDate`), which a server
++  // cannot parse back reliably, and whether it shows at all depends on the
++  // instance having been created. Like inline mode and `<input type="date">`,
++  // the form therefore gets the ISO date(s) from a hidden input that takes over
++  // the `name`. The visible input stays the display.
++  protected _createBoundInput(): void {
++    const name = this._element.getAttribute('name')
++    if (!name) {
++      return
++    }
++
++    this._boundInput = document.createElement('input')
++    this._boundInput.type = 'hidden'
++    this._boundInput.name = name
++
++    const form = this._element.getAttribute('form')
++    if (form) {
++      this._boundInput.setAttribute('form', form)
++    }
++
++    this._element.removeAttribute('name')
++    this._element.before(this._boundInput)
++
++    // Keep the submitted value in step with text typed or cleared by hand
++    EventHandler.on(this._element, EVENT_INPUT, () => this._parseInputValue())
++  }
++
++  protected _removeBoundInput(): void {
++    if (!this._boundInput || !this._isInput) {
++      return
++    }
++
++    this._element.setAttribute('name', this._boundInput.name)
++    this._boundInput.remove()
++    this._boundInput = null
++  }
++
++  // Mirrors the input's text into the selection and the bound input. The text
++  // itself is left alone so typing is not interrupted by reformatting.
+   protected _parseInputValue(): void {
+-    // Try to parse the input value as a date
+-    const value = this._element.value.trim()
++    const date = this._parseLooseDate(this._element.value.trim())
++    const selectedDates = date ? [this._toIsoDate(date)] : []
++
++    this._calendar!.set({ selectedDates })
++
++    if (this._boundInput) {
++      this._boundInput.value = selectedDates.join(',')
++    }
++  }
++
++  protected _parseLooseDate(value: string): Date | null {
+     if (!value) {
+-      return
++      return null
+     }
+ 
+     const dateOnlyMatch = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value)
+@@ -542,13 +597,14 @@ class Datepicker extends BaseComponent {
+       new Date(Number(dateOnlyMatch[1]), Number(dateOnlyMatch[2]) - 1, Number(dateOnlyMatch[3])) :
+       new Date(value)
+ 
+-    if (!Number.isNaN(date.getTime())) {
+-      const year = date.getFullYear()
+-      const month = String(date.getMonth() + 1).padStart(2, '0')
+-      const day = String(date.getDate()).padStart(2, '0')
+-      const formatted = `${year}-${month}-${day}`
+-      this._calendar!.set({ selectedDates: [formatted] })
+-    }
++    return Number.isNaN(date.getTime()) ? null : date
++  }
++
++  protected _toIsoDate(date: Date): string {
++    const year = date.getFullYear()
++    const month = String(date.getMonth() + 1).padStart(2, '0')
++    const day = String(date.getDate()).padStart(2, '0')
++    return `${year}-${month}-${day}`
+   }
+ }
+ 
+diff --git a/js/tests/unit/datepicker.spec.js b/js/tests/unit/datepicker.spec.js
+index c38c07f50fa2..323690a11799 100644
+--- a/js/tests/unit/datepicker.spec.js
++++ b/js/tests/unit/datepicker.spec.js
+@@ -1254,6 +1254,144 @@ describe('Datepicker', () => {
+     })
+   })
+ 
++  describe('form submission', () => {
++    it('should move the name to a hidden input that holds the ISO date', () => {
++      fixtureEl.innerHTML = '<form><input type="text" name="start" data-bs-toggle="datepicker" value="2026-01-15"></form>'
++
++      const formEl = fixtureEl.querySelector('form')
++      const inputEl = fixtureEl.querySelector('input[type="text"]')
++      const datepicker = new Datepicker(inputEl)
++      const hiddenInput = fixtureEl.querySelector('input[type="hidden"]')
++
++      expect(hiddenInput).not.toBeNull()
++      expect(hiddenInput.name).toEqual('start')
++      expect(hiddenInput.nextElementSibling).toEqual(inputEl)
++      expect(inputEl.hasAttribute('name')).toBeFalse()
++      expect(datepicker._boundInput).toEqual(hiddenInput)
++      expect(hiddenInput.value).toEqual('2026-01-15')
++      expect(inputEl.value).not.toEqual('')
++      expect(new FormData(formEl).get('start')).toEqual('2026-01-15')
++    })
++
++    it('should not create a hidden input for an input without a name', () => {
++      fixtureEl.innerHTML = '<input type="text" data-bs-toggle="datepicker" value="2026-01-15">'
++
++      const inputEl = fixtureEl.querySelector('input')
++      const datepicker = new Datepicker(inputEl)
++
++      expect(fixtureEl.querySelector('input[type="hidden"]')).toBeNull()
++      expect(datepicker._boundInput).toBeUndefined()
++    })
++
++    it('should carry the form attribute over to the hidden input', () => {
++      fixtureEl.innerHTML = '<form id="outer"></form><input type="text" name="start" form="outer" data-bs-toggle="datepicker" value="2026-01-15">'
++
++      const formEl = fixtureEl.querySelector('form')
++      const inputEl = fixtureEl.querySelector('input[type="text"]')
++      const datepicker = new Datepicker(inputEl)
++
++      expect(datepicker._boundInput.getAttribute('form')).toEqual('outer')
++      expect(new FormData(formEl).get('start')).toEqual('2026-01-15')
++    })
++
++    it('should submit selected dates as ISO strings whatever the display format', () => {
++      fixtureEl.innerHTML = '<input type="text" name="dates" data-bs-toggle="datepicker" data-bs-selection-mode="multiple" data-bs-locale="de-DE">'
++
++      const inputEl = fixtureEl.querySelector('input[type="text"]')
++      const datepicker = new Datepicker(inputEl)
++
++      datepicker.setSelectedDates(['2026-01-15', '2026-01-20'])
++
++      expect(inputEl.value).not.toContain('2026-01-15')
++      expect(datepicker._boundInput.value).toEqual('2026-01-15,2026-01-20')
++
++      datepicker.setSelectedDates([])
++
++      expect(inputEl.value).toEqual('')
++      expect(datepicker._boundInput.value).toEqual('')
++    })
++
++    it('should update the hidden input from a date typed into the input', () => {
++      fixtureEl.innerHTML = '<input type="text" name="start" data-bs-toggle="datepicker">'
++
++      const inputEl = fixtureEl.querySelector('input[type="text"]')
++      const datepicker = new Datepicker(inputEl)
++
++      inputEl.value = '2026-02-03'
++      inputEl.dispatchEvent(createEvent('input', { bubbles: true }))
++
++      expect(datepicker._boundInput.value).toEqual('2026-02-03')
++      expect(datepicker.getSelectedDates()).toEqual(['2026-02-03'])
++      // The text is not reformatted while the user is typing
++      expect(inputEl.value).toEqual('2026-02-03')
++    })
++
++    it('should clear the hidden input when the text is cleared or is not a date', () => {
++      fixtureEl.innerHTML = '<input type="text" name="start" data-bs-toggle="datepicker" value="2026-01-15">'
++
++      const inputEl = fixtureEl.querySelector('input[type="text"]')
++      const datepicker = new Datepicker(inputEl)
++
++      expect(datepicker._boundInput.value).toEqual('2026-01-15')
++
++      inputEl.value = ''
++      inputEl.dispatchEvent(createEvent('input', { bubbles: true }))
++
++      expect(datepicker._boundInput.value).toEqual('')
++      expect(datepicker.getSelectedDates()).toEqual([])
++
++      inputEl.value = 'soon'
++      inputEl.dispatchEvent(createEvent('input', { bubbles: true }))
++
++      expect(datepicker._boundInput.value).toEqual('')
++      expect(datepicker.getSelectedDates()).toEqual([])
++      expect(inputEl.value).toEqual('soon')
++    })
++
++    it('should give the name back to the input on dispose', () => {
++      fixtureEl.innerHTML = '<input type="text" name="start" data-bs-toggle="datepicker" value="2026-01-15">'
++
++      const inputEl = fixtureEl.querySelector('input[type="text"]')
++      const datepicker = new Datepicker(inputEl)
++
++      datepicker.dispose()
++
++      expect(fixtureEl.querySelector('input[type="hidden"]')).toBeNull()
++      expect(inputEl.getAttribute('name')).toEqual('start')
++    })
++
++    it('should keep a hand-written hidden input of an inline datepicker on dispose', () => {
++      fixtureEl.innerHTML = [
++        '<div data-bs-toggle="datepicker" data-bs-inline="true">',
++        '  <input type="hidden" name="selected_date">',
++        '</div>'
++      ].join('')
++
++      const divEl = fixtureEl.querySelector('div')
++      const datepicker = new Datepicker(divEl)
++
++      datepicker.dispose()
++
++      expect(fixtureEl.querySelector('input[type="hidden"]').name).toEqual('selected_date')
++    })
++
++    it('should submit the ISO date once the data API created the instance on focus', () => {
++      return new Promise(resolve => {
++        fixtureEl.innerHTML = '<form><input type="text" name="start" data-bs-toggle="datepicker" value="2026-01-15"></form>'
++
++        const formEl = fixtureEl.querySelector('form')
++        const inputEl = fixtureEl.querySelector('input[type="text"]')
++
++        inputEl.addEventListener('shown.bs.datepicker', () => {
++          expect(new FormData(formEl).get('start')).toEqual('2026-01-15')
++          resolve()
++        })
++
++        inputEl.dispatchEvent(createEvent('focusin', { bubbles: true }))
++      })
++    })
++  })
++
+   describe('vcpOptions pass-through', () => {
+     it('should pass vcpOptions to VCP', () => {
+       fixtureEl.innerHTML = '<input type="text" data-bs-toggle="datepicker">'
+diff --git a/site/src/content/docs/forms/datepicker.mdx b/site/src/content/docs/forms/datepicker.mdx
+index 950eb719c6d3..1c43f66a17fb 100644
+--- a/site/src/content/docs/forms/datepicker.mdx
++++ b/site/src/content/docs/forms/datepicker.mdx
+@@ -23,7 +23,8 @@ Note that we’re using a width utility of `.w-12` to ensure the input is wide e
+ - Add `data-bs-toggle="datepicker"` to any `<input>` element to enable the datepicker
+ - Use `type="text"` to avoid conflicts with native browser date pickers
+ - When focused, the calendar popup appears below the input
+-- Selecting a date updates the input value and closes the picker
++- Selecting a date shows it in the input, formatted for the locale, and closes the picker
++- An input with a `name` submits the selected date(s) in `YYYY-MM-DD` format through a hidden input, see [Form submission](#form-submission)
+ - The picker also closes on a click outside it, on <kbd>Escape</kbd>, or when focus moves to an element outside it
+ - The picker respects Bootstrap’s color modes (`data-bs-theme`)
+ - Configurable with any [Vanilla Calendar Pro option](https://vanilla-calendar.pro/docs/reference/settings) via `vcpOptions` when initializing with JavaScript
+@@ -195,6 +196,23 @@ const datepicker = new bootstrap.Datepicker(element, {
+ })
+ ```
+ 
++## Form submission
++
++The text shown in the input is formatted for display, so it is not what a form should send. When the input has a `name`, the datepicker moves that name to a hidden `<input>` inserted before it and keeps it updated with the selected date(s) in `YYYY-MM-DD` format, the same value a native `<input type="date">` submits. The visible input only shows the formatted date.
++
++```html
++<!-- What you write -->
++<input type="text" class="form-control" name="start" data-bs-toggle="datepicker" value="2026-06-10">
++
++<!-- What the JS creates -->
++<input type="hidden" name="start" value="2026-06-10">
++<input type="text" class="form-control" data-bs-toggle="datepicker" value="6/10/2026">
++```
++
++For multiple dates and date ranges, the hidden input holds a comma-separated list, for example `2026-06-10,2026-06-18`. A date typed into the input is mirrored into the hidden input; text that is not a date submits an empty value.
++
++The instance is created when the input receives focus, so an input that is never focused submits its `value` attribute unchanged. Use the `YYYY-MM-DD` format for prefilled values.
++
+ ## Dark mode
+ 
+ The datepicker automatically adapts to Bootstrap’s color modes. When `data-bs-theme="dark"` is set on a parent element or the `<html>` tag, the calendar popup inherits that theme.

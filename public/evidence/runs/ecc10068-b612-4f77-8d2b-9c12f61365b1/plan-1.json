@@ -1,0 +1,21 @@
+{
+  "root_cause": "The offcanvas element has data-bs-scroll=\"true\" which sets the scroll configuration to true, preventing the focus trap from activating. Consequently, pressing Tab a second time moves focus outside the panel to the amount field.",
+  "repair_strategy": "Remove the data-bs-scroll=\"true\" attribute from the offcanvas element so that the scroll option defaults to false, allowing the focus trap to activate and keep focus inside the offcanvas when tabbing.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "60f9c30eaf2574c405d38683a298cad18c74b612a5860995a330a93d1aec35fc",
+      "before": "  <div class=\"offcanvas offcanvas-end\" data-bs-scroll=\"true\" data-bs-backdrop=\"true\" tabindex=\"-1\" id=\"help\" aria-labelledby=\"help-title\">\\n",
+      "after": "  <div class=\"offcanvas offcanvas-end\" data-bs-backdrop=\"true\" tabindex=\"-1\" id=\"help\" aria-labelledby=\"help-title\">\\n"
+    }
+  ],
+  "expected_accessibility_effect": "Focus remains trapped inside the offcanvas panel when tabbing; the second Tab press keeps focus on the #help-close button (or cycles to the first focusable element) instead of moving to the amount field outside the panel.",
+  "functional_risks": [
+    "Removing data-bs-scroll=\"true\" may change scrolling behavior when the offcanvas is open; however, the offcanvas is narrow and unlikely to require body scrolling, so the impact is minimal."
+  ],
+  "verification_requirements": [
+    "After opening the help panel with Enter, pressing Tab once should focus the #help-close button.",
+    "Pressing Tab a second time should keep focus inside the panel (either on #help-close or loop to the first focusable element).",
+    "Verify that the offcanvas content can still be scrolled internally if needed."
+  ]
+}

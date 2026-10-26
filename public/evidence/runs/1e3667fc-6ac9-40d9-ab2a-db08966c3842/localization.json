@@ -1,0 +1,56 @@
+[
+  {
+    "path": "pikaday.js",
+    "score": 17,
+    "signals": [
+      "day",
+      "body",
+      "Use the arrow keys to pick a date",
+      "Previous Month",
+      "Next Month",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "18",
+      "20"
+    ],
+    "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75"
+  },
+  {
+    "path": "css/pikaday.css",
+    "score": 13,
+    "signals": [
+      "day",
+      "10",
+      "11",
+      "12",
+      "14",
+      "15",
+      "17",
+      "20",
+      "24",
+      "25",
+      "26",
+      "28"
+    ],
+    "sha256": "199cb17f38ab8a1db1d510f41892b8253e36b5a80bf1af9478ae37b3ee113047"
+  },
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "day",
+      "appointment",
+      "body",
+      "Appointment day (yyyy-mm-dd)",
+      "Book",
+      "10",
+      "16",
+      "20",
+      "26"
+    ],
+    "sha256": "6b43713455a73306d3353781612fbd00ae9faecbb066ec6e5b457cd8435b858b"
+  }
+]

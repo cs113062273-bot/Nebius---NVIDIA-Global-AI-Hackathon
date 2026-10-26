@@ -1,0 +1,23 @@
+diff --git a/index.html b/index.html
+index 0605973..b379232 100644
+--- a/index.html
++++ b/index.html
+@@ -53,7 +53,17 @@ h1{font-size:32px;margin:0 0 20px}
+ </div>
+ <script type="module">
+ import { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'
+-new Tabs(document.getElementById('applications-tabs'))
++const tabsEl = document.getElementById('applications-tabs');
++new Tabs(tabsEl);
++tabsEl.addEventListener('keydown', function(event) {
++  if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
++    const target = event.target;
++    if (target.matches('[role="tab"]')) {
++      event.preventDefault();
++      event.stopImmediatePropagation();
++    }
++  }
++}, true);
+ </script>
+ </body>
+ </html>

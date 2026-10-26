@@ -1,0 +1,15 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Regression guard \"Clicking the date field still shows the calendar\": failed · Step 1 · [data-vc-date=\"2026-10-25\"] button: expected true, observed false"
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true,
+    "regressionGuards": "1/2"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

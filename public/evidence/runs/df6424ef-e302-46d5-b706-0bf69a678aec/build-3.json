@@ -1,0 +1,56 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "src/_baseMenu.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/_baseMenuItem.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/_baseMenuToggle.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/disclosureMenu.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/disclosureMenuItem.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/disclosureMenuToggle.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/domHelpers.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/eventHandlers.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/validate.js",
+      "pass": true,
+      "kind": "syntax"
+    }
+  ],
+  "scope": "Static HTML structure, JavaScript syntax (classic or ESM) and erasable TypeScript only; no framework compilation claim."
+}

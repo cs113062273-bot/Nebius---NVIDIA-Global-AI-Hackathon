@@ -1,0 +1,98 @@
+{
+  "completedAt": "2026-10-25T19:00:39.037Z",
+  "policy": "auto",
+  "modelRun": "4f6774db-3035-4a93-9943-e9a30478164a",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (pikaday.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "55874e835c0f72431904aaa778bca8f59fe0c5200304e758084b134924853ba6",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (pikaday.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-b2d912c3bb635f99a24d2a92b3d67f1b",
+      "usage": {
+        "completion_tokens": 23314,
+        "prompt_tokens": 17043,
+        "total_tokens": 40357,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 22479,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17043
+      },
+      "latencyMs": 104051,
+      "reservedCreditUsd": 0.047637299999999994
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (pikaday.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-4793e03f52e3b33923c919570dfe9a40",
+      "usage": {
+        "completion_tokens": 2265,
+        "prompt_tokens": 17951,
+        "total_tokens": 20216,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1434,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17951
+      },
+      "latencyMs": 6101,
+      "reservedCreditUsd": 0.163007
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (pikaday.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-dea76abd9d69641ab9189153ef9b9398",
+      "usage": {
+        "completion_tokens": 1981,
+        "prompt_tokens": 18827,
+        "total_tokens": 20808,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1150,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 18827
+      },
+      "latencyMs": 5259,
+      "reservedCreditUsd": 0.167093
+    }
+  ]
+}

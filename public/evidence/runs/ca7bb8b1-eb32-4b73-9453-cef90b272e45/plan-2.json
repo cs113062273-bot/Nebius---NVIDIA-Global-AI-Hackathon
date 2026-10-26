@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Drawer component does not manage focus when opening the dialog. When the drawer is shown via showModal() or show(), focus remains on the trigger button instead of moving to the first focusable element inside the drawer (the close button), violating keyboard navigation expectations.",
+  "repair_strategy": "Override _showElement in the Drawer class to explicitly focus the dismiss button (identified by [data-bs-dismiss=\"drawer\"]) after the native dialog is shown. This ensures keyboard focus lands on the close button immediately when the drawer opens, enabling immediate Tab navigation to form controls.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  protected override _onBeforeShow(): void {\n    this._initSwipe()\n  }\n\n  protected override _getInstantClassName(): string {\n    return 'drawer-instant'\n  }",
+      "after": "  protected override _onBeforeShow(): void {\n    this._initSwipe()\n  }\n\n  protected override _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    super._showElement({ modal, preventBodyScroll })\n    \n    // Focus the dismiss button when the drawer opens\n    const dismissButton = this._element.querySelector('[data-bs-dismiss=\"drawer\"]') as HTMLElement\n    if (dismissButton) {\n      dismissButton.focus({ preventScroll: true })\n    }\n  }\n\n  protected override _getInstantClassName(): string {\n    return 'drawer-instant'\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can immediately interact with drawer controls after opening: focus moves to the close button, then Tab reaches checkboxes and the apply button. Satisfies WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Minimal risk: only adds focus management when drawer opens; dismiss button focus is consistent with APG dialog pattern.",
+    "If a drawer lacks a [data-bs-dismiss=\"drawer\"] button, no focus change occurs (safe fallback)."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: Enter on #filters-open opens drawer and focuses #filters-close.",
+    "Tab moves focus to #in-stock checkbox, Space toggles it.",
+    "Tab moves to #waterproof, Tab moves to #apply, Enter submits and closes drawer.",
+    "Escape closes drawer and returns focus to #filters-open.",
+    "Form data shows stock=in after submit."
+  ]
+}

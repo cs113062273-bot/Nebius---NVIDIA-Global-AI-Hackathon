@@ -1,0 +1,24 @@
+{
+  "root_cause": "When the drawer is opened via the button, focus remains on the triggering button instead of moving inside the drawer, preventing keyboard users from interacting with the filter controls.",
+  "repair_strategy": "Override the Drawer.show method to focus the close button (#filters-close) after the drawer is shown, ensuring initial focus is placed within the drawer for keyboard navigation.",
+  "edits": [
+    {
+      "path": "js/src/drawer.ts",
+      "sha256": "ec1263ee997c9acf245a67902c7e977f7550be6b313ada12b594925efa11847a",
+      "before": "  // Keep the drawer in the top layer until the exit transition ends, like\n  // Dialog does. close() removes the dialog from the top layer, which drops\n  // the native ::backdrop synchronously — the backdrop would disappear before\n  // it could transition out.\n  protected override _shouldDeferClose(): boolean {\n    return this._isAnimated()\n  }\n\n  // Private\n",
+      "after": "  // Keep the drawer in the top layer until the exit transition ends, like\n  // Dialog does. close() removes the dialog from the top layer, which drops\n  // the native ::backdrop synchronously — the backdrop would disappear before\n  // it could transition out.\n  protected override _shouldDeferClose(): boolean {\n    return this._isAnimated()\n  }\n\n  // Public\n  async show(relatedTarget?: HTMLElement): Promise<void> {\n    await super.show(relatedTarget)\n    this._focusFirstElement()\n  }\n\n  protected _focusFirstElement(): void {\n    const focusTrigger = this._element.querySelector('#filters-close') as HTMLElement | null\n    if (focusTrigger) {\n      focusTrigger.focus()\n    }\n  }\n\n  // Private\n"
+    }
+  ],
+  "expected_accessibility_effect": "Focus moves into the drawer when opened, allowing sequential tab navigation to the filter controls and apply button without requiring a pointing device.",
+  "functional_risks": [
+    "If the element with id 'filters-close' is removed or becomes non‑focusable, focus will not be moved.",
+    "Overriding show may interfere with subclasses that rely on the original show timing."
+  ],
+  "verification_requirements": [
+    "After activating the Filters button with Enter, focus is on #filters-close.",
+    "Pressing Tab moves focus to #in-stock.",
+    "Pressing Space toggles the checkbox.",
+    "Pressing Tab twice moves focus to #apply.",
+    "Pressing Enter on #apply updates the applied output to 'in' and hides the drawer."
+  ]
+}

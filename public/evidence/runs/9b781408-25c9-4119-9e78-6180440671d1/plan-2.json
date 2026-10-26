@@ -1,0 +1,30 @@
+{
+  "root_cause": "The Datepicker.hide() method incorrectly checks `this.active` (which doesn't exist on Datepicker) instead of `this.picker.active`, causing it to return early without hiding. Additionally, no blur event listener exists to close the datepicker when focus leaves the input via keyboard (Tab).",
+  "repair_strategy": "Fix Datepicker.hide() to delegate to picker.hide() without the faulty guard, and add a blur listener on the input field that calls hide() for non-inline pickers.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "  hide() {\n    if (!this.active) {\n      return;\n    }\n    this.picker.hide();\n  }",
+      "after": "  hide() {\n    this.picker.hide();\n  }"
+    },
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];",
+      "after": "      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [inputField, 'blur', () => { if (!this.inline) this.hide(); }],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can close the datepicker by moving focus away with Tab, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order). The datepicker now properly hides on blur for non-inline instances.",
+  "functional_risks": [
+    "Blur fires on any focus loss (e.g., opening a popup), but guarded by !this.inline.",
+    "Inline pickers remain unaffected due to the inline check.",
+    "Duplicate hide calls are safe because Picker.hide() is idempotent."
+  ],
+  "verification_requirements": [
+    "After typing a date and pressing Tab, the datepicker must close (.datepicker not visible).",
+    "Clicking on the datepicker or selecting a date via mouse/keyboard should still work and hide appropriately.",
+    "Inline datepickers should not be affected by the blur listener.",
+    "Focus should move to the next tabbable element (#instructions) as before."
+  ]
+}

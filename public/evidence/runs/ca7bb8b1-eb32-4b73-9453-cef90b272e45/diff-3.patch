@@ -1,0 +1,21 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..39dc153 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -111,6 +111,16 @@ class Drawer extends DialogBase {
+     this._initSwipe()
+   }
+ 
++  protected override _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {
++    super._showElement({ modal, preventBodyScroll })
++
++    // Focus the dismiss button when the drawer opens
++    const dismissButton = this._element.querySelector('[data-bs-dismiss="drawer"]') as HTMLElement
++    if (dismissButton) {
++      dismissButton.focus({ preventScroll: true })
++    }
++  }
++
+   protected override _getInstantClassName(): string {
+     return 'drawer-instant'
+   }

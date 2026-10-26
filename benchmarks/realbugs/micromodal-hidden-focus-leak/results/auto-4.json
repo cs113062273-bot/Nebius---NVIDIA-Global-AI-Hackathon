@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-25T18:57:05.566Z",
+  "policy": "auto",
+  "modelRun": "c052c3fc-524c-4611-bd9d-6714b579a4b0",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "55874e835c0f72431904aaa778bca8f59fe0c5200304e758084b134924853ba6",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-03866ba4bb4609a243f01347febedc9c",
+      "usage": {
+        "completion_tokens": 3411,
+        "prompt_tokens": 5961,
+        "total_tokens": 9372,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2944,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5961
+      },
+      "latencyMs": 28169,
+      "reservedCreditUsd": 0.0356049
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-36fbc9962b62d12bf1d0d5ede0edff6e",
+      "usage": {
+        "completion_tokens": 2898,
+        "prompt_tokens": 6120,
+        "total_tokens": 9018,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2412,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6120
+      },
+      "latencyMs": 7866,
+      "reservedCreditUsd": 0.119739
+    }
+  ]
+}

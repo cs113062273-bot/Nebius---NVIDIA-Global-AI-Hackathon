@@ -1,0 +1,94 @@
+{
+  "completedAt": "2026-10-25T18:56:19.189Z",
+  "policy": "auto",
+  "modelRun": "dcdae0cd-1e92-4c60-9ee0-0d4294351e4a",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "55874e835c0f72431904aaa778bca8f59fe0c5200304e758084b134924853ba6",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Expected ',' or ']' after array element in JSON at position 1078 (line 11 column 34)",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-82a0659f7aabc8c4784f016442940175",
+      "usage": {
+        "completion_tokens": 3674,
+        "prompt_tokens": 6159,
+        "total_tokens": 9833,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3208,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6159
+      },
+      "latencyMs": 27069
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (lib/src/index.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"if (event.target.closest(`[${this.config.closeTrigger}]`)) {\"; closest is line 131: \"if (event.target.closest(`[${ this.config.closeTrigger }]`)) {\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-fe9fcfd28eca1a6c535afa0080a63617",
+      "usage": {
+        "completion_tokens": 5516,
+        "prompt_tokens": 6249,
+        "total_tokens": 11765,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5004,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6249
+      },
+      "latencyMs": 15686,
+      "reservedCreditUsd": 0.119884
+    },
+    {
+      "attempt": 3,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-10c48811d4d3aef4c846b42f1f909200",
+      "usage": {
+        "completion_tokens": 5150,
+        "prompt_tokens": 6913,
+        "total_tokens": 12063,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4638,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6913
+      },
+      "latencyMs": 13025,
+      "reservedCreditUsd": 0.122532
+    }
+  ]
+}

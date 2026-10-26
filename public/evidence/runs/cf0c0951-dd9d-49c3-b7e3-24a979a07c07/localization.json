@@ -1,0 +1,93 @@
+[
+  {
+    "path": "index.html",
+    "score": 14,
+    "signals": [
+      "home",
+      "about",
+      "overview",
+      "facts",
+      "history",
+      "body",
+      "Home",
+      "About",
+      "Overview",
+      "Facts",
+      "History",
+      "Collection"
+    ],
+    "sha256": "ea68380ed7736d0d23e364961be987392554ed781988ea97823a8443c8d39a9c"
+  },
+  {
+    "path": "src/eventHandlers.js",
+    "score": 1,
+    "signals": [
+      "Home"
+    ],
+    "sha256": "156bd922307e1995be11210d1d228bbd01a80acbeb150e5ade5ec6890ec52bf1"
+  },
+  {
+    "path": "src/menubar.js",
+    "score": 1,
+    "signals": [
+      "Home"
+    ],
+    "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864"
+  },
+  {
+    "path": "src/_baseMenu.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of src/menubar.js"
+    ],
+    "sha256": "9fa15e87e99bdf9eb20dc29741e051d816e42896d70080c5e2c08895665f1ffb"
+  },
+  {
+    "path": "src/menubarItem.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of src/menubar.js"
+    ],
+    "sha256": "9199e597a3af126a3d829efec2c5708fb1c651b8b106d8472e67ae5112fbbdba"
+  },
+  {
+    "path": "src/menubarToggle.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of src/menubar.js"
+    ],
+    "sha256": "ed069cd366bef0fa77444b4cc0ca9154bc2eea9d7ae3fae915b27f29bd841384"
+  },
+  {
+    "path": "src/_baseMenuToggle.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of src/_baseMenu.js"
+    ],
+    "sha256": "60ffbc57f4c29129d35d23db318ec86a1ba8202583b5c0255c8d0aee6d5c8eed"
+  },
+  {
+    "path": "src/_baseMenuItem.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of src/_baseMenu.js"
+    ],
+    "sha256": "cdbd485d00d8b4f5c608f3aa9d76b094e557add67df641b87811140fb86c98f2"
+  },
+  {
+    "path": "src/validate.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of src/_baseMenu.js"
+    ],
+    "sha256": "ae8639e06f8316a4bbe256af59836908694758f38098d73e156cf1cb031bad47"
+  },
+  {
+    "path": "src/domHelpers.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of src/_baseMenuToggle.js"
+    ],
+    "sha256": "8f5c1617c49509f4951b5a940fab452796612e49ddf99b93bd91495b1b439971"
+  }
+]

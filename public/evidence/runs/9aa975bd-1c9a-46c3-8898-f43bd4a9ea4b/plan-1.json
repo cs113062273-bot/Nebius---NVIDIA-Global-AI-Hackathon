@@ -1,0 +1,22 @@
+{
+  "root_cause": "Escape keydown on a menu item triggers the dropdown hide method, but focus is not returned to the toggle after hiding. When the menu loses the .show class (display:none), the focused menu item becomes hidden and the browser shifts focus to the body, causing the focus assertion to fail.",
+  "repair_strategy": "Modify the Dropdown.hide() method to restore focus to the toggle button (this._element) after completing the hide operation, ensuring focus returns to the activator when the dropdown is closed via Escape.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "fc69a61b69ae1fa2c2bb923fdc393dd2742925e8af996376df5f98e38f8d810e",
+      "before": "  hide() {\n    if (isDisabled(this._element) || !this._isShown(this._menu)) {\n      return\n    }\n\n    const relatedTarget = {\n      relatedTarget: this._element\n    }\n\n    this._completeHide(relatedTarget)\n  }",
+      "after": "  hide() {\n    if (isDisabled(this._element) || !this._isShown(this._menu)) {\n      return\n    }\n\n    const relatedTarget = {\n      relatedTarget: this._element\n    }\n\n    this._completeHide(relatedTarget)\n    this._element.focus()\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape while the actions menu is open will close the menu and move focus back to the 'Invoice actions' toggle button, meeting keyboard accessibility requirements for dropdown menus.",
+  "functional_risks": [
+    "Focus may be restored to the toggle when the dropdown is dismissed by clicking outside or selecting a menu item, which could shift focus unexpectedly for some users.",
+    "If the toggle button is disabled or detached at the time of hide, the focus call will be safely ignored by the browser."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape with focus on any menu item results in aria-expanded='false' on the toggle and focus returning to the toggle.",
+    "Verify that clicking outside the menu or selecting a menu item still closes the menu and does not cause JavaScript errors.",
+    "Verify that the dropdown can still be opened via ArrowDown or click and that focus initially moves to the first menu item as before."
+  ]
+}

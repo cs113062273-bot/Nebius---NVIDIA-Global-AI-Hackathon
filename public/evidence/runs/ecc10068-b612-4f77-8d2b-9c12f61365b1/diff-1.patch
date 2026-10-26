@@ -1,0 +1,13 @@
+diff --git a/index.html b/index.html
+index a98b52b..7af0acd 100644
+--- a/index.html
++++ b/index.html
+@@ -13,7 +13,7 @@
+   <h1 class="h3 mb-3">Expense report</h1>
+   <p>Submit receipts for your March travel. The help panel can stay open while you scroll the report.</p>
+   <button class="btn btn-outline-primary mb-3" type="button" id="open-help" data-bs-toggle="offcanvas" data-bs-target="#help" aria-controls="help">Policy help</button>
+-  <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="help" aria-labelledby="help-title">
++  <div class="offcanvas offcanvas-end" data-bs-backdrop="true" tabindex="-1" id="help" aria-labelledby="help-title">
+     <div class="offcanvas-header">
+       <h2 class="offcanvas-title h5" id="help-title">Expense policy</h2>
+     </div>

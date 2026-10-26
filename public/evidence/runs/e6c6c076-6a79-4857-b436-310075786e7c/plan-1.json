@@ -1,0 +1,21 @@
+{
+  "root_cause": "The header JavaScript incorrectly sets aria-hidden=true on the navigation menu when the menu is not in the open state, causing assistive technology to ignore the navigation links even though they are visually visible on desktop.",
+  "repair_strategy": "Remove the aria-hidden attribute modification from the syncState method, allowing the navigation to remain accessible regardless of the menu button state, while preserving aria-expanded on the button for mobile menu toggling.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  this.$menu.setAttribute('aria-hidden', !isVisible)\n}",
+      "after": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links will be exposed in the accessibility tree as links, allowing keyboard and screen‑reader users to reach them via Tab.",
+  "functional_risks": [
+    "Removing aria-hidden may cause the menu to be announced twice if both the button and links are read, but this is acceptable and does not affect functionality."
+  ],
+  "verification_requirements": [
+    "Verify that the ax name/Apply role link assertion passes after the fix.",
+    "Confirm that the menu button still toggles the navigation visibility on narrow widths (mobile breakpoint).",
+    "Ensure no visual regression: the navigation remains visible on desktop and hidden when collapsed on mobile."
+  ]
+}

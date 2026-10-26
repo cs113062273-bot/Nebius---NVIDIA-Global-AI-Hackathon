@@ -1,0 +1,25 @@
+{
+  "root_cause": "The datepicker popup (vanilla-calendar-pro) traps the Tab key, preventing default focus movement to the next focusable element when the popup is open.",
+  "repair_strategy": "Change the `inputMode` option passed to vanilla-calendar-pro from `!this._isInline` to `false` for non-inline datepickers. This disables keyboard trapping behavior, allowing the Tab key to move focus out of the datepicker while preserving other keyboard navigation.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "      inputMode: !this._isInline,\n      positionToInput: this._config.placement,",
+      "after": "      inputMode: false,\n      positionToInput: this._config.placement,"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab when the datepicker is open will close the datepicker (via focusout) and move focus to the next focusable element (#passengers field), matching standard form behavior.",
+  "functional_risks": [
+    "Altered inputMode may affect other keyboard navigation in the datepicker (e.g., arrow keys, Enter), though non-inline datepickers now match inline mode's inputMode setting.",
+    "Potential loss of datepicker-specific Tab trapping that might be relied upon for complex date range selection (though current selectionMode is 'single').",
+    "Change affects all non-inline datepicker instances; verify no regressions in date selection via keyboard."
+  ],
+  "verification_requirements": [
+    "Tab key moves focus from #departure to #passengers when datepicker is open.",
+    "Datepicker closes when Tab is pressed (no open popup in background).",
+    "Arrow keys, Enter, and Escape keys function correctly in datepicker for date selection.",
+    "Mouse interactions with datepicker remain unaffected.",
+    "Inline datepickers (if any) continue to work as expected."
+  ]
+}

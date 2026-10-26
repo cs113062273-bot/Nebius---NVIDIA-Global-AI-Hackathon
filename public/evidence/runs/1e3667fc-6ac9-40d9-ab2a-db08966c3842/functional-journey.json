@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "id": "pikaday-pointer-open-day",
+  "title": "Pick an open day with the pointer",
+  "goal": "A weekday can be clicked; the saved day changes to it",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the calendar",
+      "action": {
+        "kind": "click",
+        "selector": "#day"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Choose Wednesday 25 November",
+      "action": {
+        "kind": "click",
+        "selector": ".pika-button[data-pika-year=\"2026\"][data-pika-month=\"10\"][data-pika-day=\"25\"]"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#appointment",
+      "name": "day",
+      "value": [
+        "2026-11-25"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#appointment",
+      "name": "day",
+      "value": [
+        "2026-11-25"
+      ]
+    }
+  ],
+  "forbidden": []
+}

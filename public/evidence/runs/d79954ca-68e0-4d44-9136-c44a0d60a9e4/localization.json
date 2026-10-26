@@ -1,0 +1,76 @@
+[
+  {
+    "path": "index.html",
+    "score": 5,
+    "signals": [
+      "open",
+      "dialog",
+      "body",
+      "Read notice",
+      "Close notice"
+    ],
+    "sha256": "be27c7e2735cefa906ed79979311c1471ea497cfbd7dfdde0d0de0475852ff3b"
+  },
+  {
+    "path": "src/a11y-dialog.js",
+    "score": 3,
+    "signals": [
+      "open",
+      "dialog",
+      "body"
+    ],
+    "sha256": "9dbd1daa87fcac8518db48e4cbb4b0eeea7c30c92a6171ff59cbc895938aaf4c"
+  },
+  {
+    "path": "src/a11y-dialog.ts",
+    "score": 3,
+    "signals": [
+      "open",
+      "dialog",
+      "body"
+    ],
+    "sha256": "4451a44bcda3dbdc5e31ce4e6e058e6bab71d86d4ee8dc410bcb3c4398fa14cc"
+  },
+  {
+    "path": "src/dom-utils.js",
+    "score": 2,
+    "signals": [
+      "open",
+      "dialog"
+    ],
+    "sha256": "b61f2298c180ce08cf5f1669fd68b52d3d5c11f11ffec05380dd87cbce5c2fd5"
+  },
+  {
+    "path": "src/dom-utils.ts",
+    "score": 2,
+    "signals": [
+      "open",
+      "dialog"
+    ],
+    "sha256": "2d72fcf848623977a14688dce4171a564ae89893e342648d4031e8f4106e3cfb"
+  },
+  {
+    "path": "src/focusable-selectors.js",
+    "score": 1.5,
+    "signals": [
+      "Imported runtime dependency of src/dom-utils.js"
+    ],
+    "sha256": "81543859737209c40bf92538005159b129d21bc0c2db24c85c17852f90f2eec9"
+  },
+  {
+    "path": "src/index.js",
+    "score": 1,
+    "signals": [
+      "dialog"
+    ],
+    "sha256": "a5ea03dfa2b91ef17d10fbc28ec5c28a1d225531e6e3947a1cc25d9d360612bb"
+  },
+  {
+    "path": "src/index.ts",
+    "score": 1,
+    "signals": [
+      "dialog"
+    ],
+    "sha256": "f34d26f8b6e8125f40d47754e48c0d5e8dfad8925e33581d745b3c159ba2521e"
+  }
+]

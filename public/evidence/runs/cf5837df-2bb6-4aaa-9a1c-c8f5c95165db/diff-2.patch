@@ -1,0 +1,14 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..6e0df06 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -477,6 +477,9 @@ class Dropdown extends BaseComponent {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.focus()
+       Dropdown.clearMenus()
++      if (isActive) {
++        event.stopPropagation()
++      }
+       return
+     }
+ 

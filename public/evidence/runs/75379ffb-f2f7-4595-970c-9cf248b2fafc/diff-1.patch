@@ -1,0 +1,48 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..7ff6c3a 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -40,6 +40,7 @@ const EVENT_POINTERDOWN = `pointerdown${EVENT_KEY}`
+ const EVENT_CLICK = `click${EVENT_KEY}`
+ const EVENT_CLICK_DATA_API = `click${EVENT_KEY}${DATA_API_KEY}`
+ const EVENT_FOCUSIN_DATA_API = `focusin${EVENT_KEY}${DATA_API_KEY}`
++const EVENT_KEYDOWN_DATA_API = `keydown${EVENT_KEY}${DATA_API_KEY}`
+ 
+ const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="datepicker"]'
+ 
+@@ -557,23 +558,23 @@ class Datepicker extends BaseComponent {
+  */
+ 
+ EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {
+-  // Only handle if not an input (inputs use focus)
+-  // Skip inline datepickers (they're always visible)
+-  if (this.tagName === 'INPUT' || this.dataset.bsInline === 'true') {
++  if (this.tagName === 'INPUT') {
++    // For inputs: do not prevent default, then toggle
++    Datepicker.getOrCreateInstance(this).toggle()
++  } else if (this.dataset.bsInline === 'true') {
++    // Skip inline datepickers
+     return
++  } else {
++    // For non-inputs: prevent default and toggle
++    event.preventDefault()
++    Datepicker.getOrCreateInstance(this).toggle()
+   }
+-
+-  event.preventDefault()
+-  Datepicker.getOrCreateInstance(this).toggle()
+ })
+ 
+-EventHandler.on(document, EVENT_FOCUSIN_DATA_API, SELECTOR_DATA_TOGGLE, function () {
+-  // Handle focus for input elements
+-  if (this.tagName !== 'INPUT') {
+-    return
++EventHandler.on(document, EVENT_KEYDOWN_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {
++  if (this.tagName === 'INPUT' && (event.key === 'Enter' || event.key === ' ')) {
++    Datepicker.getOrCreateInstance(this).show()
+   }
+-
+-  Datepicker.getOrCreateInstance(this).show()
+ })
+ 
+ // Auto-initialize datepickers that need to render on load:

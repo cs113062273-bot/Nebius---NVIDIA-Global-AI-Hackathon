@@ -1,0 +1,26 @@
+{
+  "root_cause": "The dropdown remains open when focus leaves the navigation because there is no mechanism to close the menu when focus moves from a menu item to an element outside the menu and its controller. The previous fix added a focusout listener on the menu, but it may not have fired due to event bubbling issues.",
+  "repair_strategy": "Add focusout listeners on each menu item's link in submenus. When a menu item loses focus, check if the new focus is outside the menu and its controller. If so, close the dropdown.",
+  "edits": [
+    {
+      "path": "src/_baseMenu.js",
+      "sha256": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+      "before": "  _handleFocus() {\n    this.elements.menuItems.forEach((menuItem, index) => {\n      menuItem.dom.link.addEventListener(\"focus\", () => {\n        this.focusState = \"self\";\n        this.currentChild = index;\n      });\n    });\n  }",
+      "after": "  _handleFocus() {\n    this.elements.menuItems.forEach((menuItem, index) => {\n      menuItem.dom.link.addEventListener(\"focus\", () => {\n        this.focusState = \"self\";\n        this.currentChild = index;\n      });\n    });\n    if (this.elements.controller) {\n      this.elements.menuItems.forEach((menuItem) => {\n        menuItem.dom.link.addEventListener(\"focusout\", (event) => {\n          const relatedTarget = event.relatedTarget;\n          const menu = this.dom.menu;\n          const controller = this.elements.controller.dom.toggle;\n          if (\n            relatedTarget !== controller &&\n            !menu.contains(relatedTarget) &&\n            !controller.contains(relatedTarget)\n          ) {\n            if (this.elements.controller.isOpen) {\n              this.elements.controller.close();\n            }\n          }\n        });\n      });\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When a keyboard user tabs out of an open dropdown, the dropdown will close, ensuring it does not obscure page content and allowing keyboard users to navigate away without obstruction.",
+  "functional_risks": [
+    "Potential unintended closure if focusout fires due to temporary focus shifts inside the menu that are not detected as being within the menu or controller (mitigated by checking relatedTarget).",
+    "Risk of interfering with custom focus management if other scripts rely on the menu staying open during focus transitions (only closes when menu is open and focus leaves both controller and menu)."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Enter on the Shop button opens the dropdown (aria-expanded=true, #plants visible).",
+    "Verify that pressing Tab moves focus from the Shop button to the first menu item (#plants).",
+    "Verify that subsequent Tab presses move focus through each menu item (#tools).",
+    "Verify that pressing Tab after the last menu item moves focus to the next element outside the menu (search input) and the dropdown closes (aria-expanded=false, #plants hidden).",
+    "Verify that Escape still closes the dropdown and returns focus to the Shop button.",
+    "Verify that clicking outside the dropdown still closes it.",
+    "Verify that the dropdown can be reopened via Enter on the Shop button after closing."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "root_cause": "The textarea retains a maxlength attribute, causing the browser to block input beyond the limit and truncate the value instead of allowing excess characters to be shown via the character‑count error state.",
+  "repair_strategy": "Remove the maxlength attribute from the textarea element in the CharacterCount init method, mirroring the removal from the module, so the widget can rely on JavaScript to enforce the limit and display excess‑character feedback.",
+  "edits": [
+    {
+      "path": "src/govuk/components/character-count/character-count.js",
+      "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90",
+      "before": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')\n",
+      "after": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')\n  $textarea.removeAttribute('maxlength')\n"
+    }
+  ],
+  "expected_accessibility_effect": "Users can type beyond the limit and receive visible and screen‑reader error messages indicating excess characters, meeting WCAG 2.1.1 (keyboard access) and 4.1.2 (accurate value communication).",
+  "functional_risks": [
+    "If other code depends on the textarea's maxlength attribute for fallback behavior, removing it could alter that fallback; however the component already hides the fallback message and relies on JavaScript, so risk is low.",
+    "Server‑side validation must still enforce the 30‑character limit."
+  ],
+  "verification_requirements": [
+    "Type more than 30 characters into the summary field and verify the textarea's value exceeds 30.",
+    "Confirm the visible counter shows a negative remaining count with error styling (red border, error message).",
+    "Confirm the screen‑reader counter is exposed (aria‑hidden removed) and announces the excess count.",
+    "With JavaScript disabled, ensure the hard maxlength attribute still prevents entry beyond 30 characters."
+  ]
+}

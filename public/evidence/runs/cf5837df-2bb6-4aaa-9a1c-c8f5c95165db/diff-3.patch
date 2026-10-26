@@ -1,0 +1,28 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..ddd38de 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -463,6 +463,13 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
++    const parent = Dropdown.getParentFromElement(this)
++    const isActive = this.classList.contains(CLASS_NAME_SHOW)
++
++    if (event.key === ESCAPE_KEY && !isActive) {
++      return
++    }
++
+     event.preventDefault()
+     event.stopPropagation()
+ 
+@@ -470,9 +477,6 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
+-    const parent = Dropdown.getParentFromElement(this)
+-    const isActive = this.classList.contains(CLASS_NAME_SHOW)
+-
+     if (event.key === ESCAPE_KEY) {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.focus()

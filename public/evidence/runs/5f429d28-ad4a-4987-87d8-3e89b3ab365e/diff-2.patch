@@ -1,0 +1,14 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..24bb2b8 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -270,7 +270,8 @@ class Datepicker extends BaseComponent {
+   protected _syncSelectedDates(selectedDates: string[]): void {
+     const formattedDate = this._formatDateForInput(selectedDates)
+     if (this._isInput) {
+-      this._element.value = formattedDate
++      // Keep ISO format in input for form submission
++      this._element.value = selectedDates[0] || ''
+     }
+ 
+     if (this._boundInput) {
