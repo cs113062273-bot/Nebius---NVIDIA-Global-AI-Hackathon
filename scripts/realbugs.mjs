@@ -72,7 +72,7 @@ if(mode==='screen'){
   for(const caseId of (await fs.readdir(BASE,{withFileTypes:true})).filter(d=>d.isDirectory()).map(d=>d.name).sort()){
     if(!await Promise.all(['case.json','tasks.json'].map(f=>fs.access(path.join(BASE,caseId,f)))).then(()=>true,()=>false))continue;
     const c=await load(caseId),commitment=await readJson(path.join(c.root,'commitment.json')).catch(()=>null);
-    const results=[];for(const f of (await fs.readdir(path.join(c.root,'results')).catch(()=>[])).sort())results.push({file:f,...await readJson(path.join(c.root,'results',f))});
+    const results=[];for(const f of (await fs.readdir(path.join(c.root,'results')).catch(()=>[])).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true})))results.push({file:f,...await readJson(path.join(c.root,'results',f))});
     rows.push({id:caseId,title:c.meta.title,library:c.meta.library,issue:c.meta.issue,fixCommit:c.meta.fixCommit,screen:commitment?.screen?.verdict||'NOT_SCREENED',screenRun:commitment?.screen?.run||null,
       results:results.map(r=>({file:r.file,policy:r.policy,implementation:r.implementation||null,run:r.modelRun,verdict:r.verdict,passedOn:r.attempts.find(a=>a.verified)?.attempt||null,passedModel:r.attempts.find(a=>a.verified)?.model||null,attempts:r.attempts.length,tokens:r.attempts.reduce((s,a)=>s+(a.usage?.total_tokens||0),0),leaked:r.humanFixLinesInRequest}))});
   }

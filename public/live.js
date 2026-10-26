@@ -7,6 +7,9 @@ const REPO='https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackath
 const issueUrl=id=>`${REPO}/issues/new?template=live-run.yml&title=${encodeURIComponent('[live run] '+id)}`;
 const runLive=id=>el('a',{class:'secondary run-live',href:issueUrl(id),target:'_blank',rel:'noopener',text:'Run it live ↗'});
 const MODEL={'nemotron-3-super-120b-a12b':'Nemotron 3 Super','Nemotron-3-Ultra-550b-a55b':'Nemotron 3 Ultra'};
+// Repeated blind runs on the current engine: every one is listed, so a lucky run cannot stand alone.
+const repeats=c=>{const l=c.frozenRuns||[];if(l.length<2)return null;const ok=l.filter(x=>x.verdict==='VERIFIED_PASS').length;
+  return el('p',{class:'case-repeats small'},`Current engine, every blind run: repaired in ${ok} of ${l.length}: `,...l.flatMap((x,i)=>[i?' · ':'',el('a',{href:`./project.html?run=${x.run}${x.passedOn?'&attempt='+x.passedOn:''}#project-result`,text:`run ${i+1} ${x.verdict==='VERIFIED_PASS'?'✓':'✗'}`})]));};
 const modelName=id=>MODEL[String(id||'').split('/').pop()]||String(id||'Nemotron').split('/').pop();
 const STAGES=[['reproduce','Reproduce the bug',['PREPARING','BASELINE_RUNNING','FAILURE_CONFIRMED']],['locate','Find the source',['LOCALIZING']],['propose','Nemotron proposes a patch',['PLANNING_REPAIR']],['apply','Apply in an isolated copy',['PATCHING','BUILDING']],['replay','Replay in Chromium',['REPLAYING','VERIFYING']],['verdict','Verdict',['VERIFIED','FAILED','INCONCLUSIVE']]];
 let api=false,data=null,open=[],daily=null,gates=null,watching=null,clock=null;
@@ -67,7 +70,7 @@ function renderOpen(){
       ...(c.replays?.length?[el('ul',{class:'case-replays'},...c.replays.map(x=>el('li',{},el('a',{href:`./project.html?run=${x.run}#project-result`,text:`Replay of run ${x.fromRun.slice(0,8)} attempt ${x.attempt}`}),`: ${x.verdict==='VERIFIED_PASS'?'passes the stricter task':'rejected by the stricter task'} (browser only, no inference)`)))]:[]),
       el('p',{class:'case-src'},el('a',{href:c.issue,text:c.issue.includes('/issues?q=')?'Not reported yet · issues searched ↗':/Found by Tabstitch and reported/.test(c.status||'')?`Reported upstream by Tabstitch · #${c.issue.split('/').pop()} ↗`:'Open issue ↗'}),...(c.pendingHumanFix?[' · ',el('a',{href:c.pendingHumanFix,text:'Pending human fix ↗'}),' · ',el('a',{href:`./openbugs/${c.id}/pending-human.patch`,text:'its diff'})]:[])),
       ...(c.pendingHumanCheck?[el('p',{class:'case-note',text:c.pendingHumanCheck.keyboard==='VERIFIED_PASS'?'The pending human fix also passes this frozen task, so the task is fair. It was fetched only for comparison and never sent to the model.':c.pendingHumanCheck.note})]:[]),
-      el('p',{class:`case-status ${r?.verdict==='VERIFIED_PASS'?'ok':r?'no':''}`,text:status}),
+      el('p',{class:`case-status ${r?.verdict==='VERIFIED_PASS'?'ok':r?'no':''}`,text:status}),repeats(c),
       // Human reading of the patch after the browser verdict, only shown for the run it reviewed.
       ...(c.review&&r&&c.review.run===r.run?[el('details',{class:'case-review'},el('summary',{text:`Patch review: ${c.review.verdict}`}),el('p',{text:c.review.summary}),el('ul',{},...c.review.caveats.map(t=>el('li',{text:t}))),el('p',{class:'case-note',text:c.review.reviewer}))]:[]),actions));
   }
@@ -85,7 +88,7 @@ function renderCases(){
       el('p',{class:'case-lib'},el('span',{text:c.library}),c.category?el('span',{class:'tag',text:c.category}):null),
       el('h3',{text:c.title}),el('p',{class:'case-sum',text:c.summary}),
       el('p',{class:'case-src'},el('a',{href:c.issue,text:'Reported issue ↗'}),' · ',el('a',{href:c.fixUrl||`${c.repository}/commit/${c.fixCommit}`,text:`Maintainers' fix ${c.fixCommit.slice(0,7)} ↗`})),
-      el('p',{class:`case-status ${r?.verdict==='VERIFIED_PASS'?'ok':r?'no':''}`,text:status}),actions));
+      el('p',{class:`case-status ${r?.verdict==='VERIFIED_PASS'?'ok':r?'no':''}`,text:status}),repeats(c),actions));
   }
 }
 function renderScoreboard(){
@@ -98,7 +101,7 @@ function renderScoreboard(){
   // Earlier engine versions stay on the page: a rerun after a change must not hide the previous score.
   const b=data.benchmark,box=$('#versions');if(!b?.versions?.length){box.hidden=true;return;}
   box.hidden=false;box.replaceChildren(el('h3',{text:'Engine versions'}),...(b.note?[el('p',{class:'small',text:b.note})]:[]),
-    el('ol',{},...[...b.versions].reverse().map(v=>el('li',{class:v.current?'current':''},el('strong',{text:`${v.verified}/${v.runs}`}),el('span',{class:'small',text:` ${v.id}${v.current?' · this table':''}${v.runs<v.eligible?` · ${v.runs} of ${v.eligible} cases run`:''}`}),...(v.note?[el('p',{text:v.note})]:[])))));
+    el('ol',{},...[...b.versions].reverse().map(v=>el('li',{class:v.current?'current':''},el('strong',{text:`${v.verified}/${v.runs}`}),el('span',{class:'small',text:` ${v.id}${v.current?' · this table':''}${v.runs<v.eligible?` · ${v.runs} of ${v.eligible} cases run`:''}`}),...(v.repeats?[el('span',{class:'small',text:` · ${v.repeats.perCase} blind runs per bug, all counted: ${v.repeats.verified} of ${v.repeats.runs} runs repaired, ${v.repeats.casesRepairedOnce} of ${v.eligible} bugs repaired at least once`})]:[]),...(v.note?[el('p',{text:v.note})]:[])))));
 }
 // What the loop and the gates add, measured over every recorded blind run (scripts/gate-stats.mjs).
 function renderGates(){
