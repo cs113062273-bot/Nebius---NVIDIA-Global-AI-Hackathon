@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T05:13:25.182Z",
+  "policy": "auto",
+  "modelRun": "d2036bef-663f-4964-9ffe-11a73cad983b",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-f782c33ddc75f7ba5e45c7aa9bd31f6c",
+      "usage": {
+        "completion_tokens": 10342,
+        "prompt_tokens": 5039,
+        "total_tokens": 15381,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9464,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5039
+      },
+      "latencyMs": 46583,
+      "reservedCreditUsd": 0.0343044
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-2e8b3c38deb02c506784b935f77f129d",
+      "usage": {
+        "completion_tokens": 13712,
+        "prompt_tokens": 5582,
+        "total_tokens": 19294,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 11816,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5582
+      },
+      "latencyMs": 38713,
+      "reservedCreditUsd": 0.116733
+    }
+  ]
+}

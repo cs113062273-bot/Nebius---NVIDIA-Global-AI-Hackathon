@@ -1,0 +1,96 @@
+{
+  "completedAt": "2026-10-26T06:03:57.926Z",
+  "policy": "auto",
+  "modelRun": "778c5245-8581-47e2-b10d-340d61904175",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (js/Datepicker.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 1-9 match file lines 422-430, then before line 10 \"}\" differs from file line 431 \"\". The real file lines are in actual_source_region. Copy the region verbatim from the source."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-bd6b7d588395c8a49d58ec105ed140af",
+      "usage": {
+        "completion_tokens": 12243,
+        "prompt_tokens": 16921,
+        "total_tokens": 29164,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10881,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 16921
+      },
+      "latencyMs": 60872,
+      "reservedCreditUsd": 0.0460914
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-65d11b2af101fb43f99617fce2ee79eb",
+      "usage": {
+        "completion_tokens": 12909,
+        "prompt_tokens": 19166,
+        "total_tokens": 32075,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 12018,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19166
+      },
+      "latencyMs": 32805,
+      "reservedCreditUsd": 0.160351
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (js/Datepicker.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 1-9 match file lines 422-430, then before line 10 \"}\" differs from file line 431 \"\". The real file lines are in actual_source_region. Copy the region verbatim from the source.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-72173db91f83561e4793a2f7f9406727",
+      "usage": {
+        "completion_tokens": 9592,
+        "prompt_tokens": 20156,
+        "total_tokens": 29748,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8864,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 20156
+      },
+      "latencyMs": 25294,
+      "reservedCreditUsd": 0.164961
+    }
+  ]
+}

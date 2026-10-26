@@ -1,0 +1,93 @@
+{
+  "completedAt": "2026-10-26T05:31:32.322Z",
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "modelRun": "c3a8859d-e2c1-40a2-b869-75ab352d8bce",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (pikaday.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"} while ((pEl = pEl.parentNode));\"; closest is line 621: \"while ((pEl = pEl.parentNode));\". Best alignment: before lines 1-18 match file lines 602-619, then before line 19 \"} while ((pEl = pEl.parentNode));\" differs from file line 620 \"}\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: edits: Invalid input: expected array, received undefined",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-ae01468d59068fccc04b41b036239b7b",
+      "usage": {
+        "completion_tokens": 9822,
+        "prompt_tokens": 17725,
+        "total_tokens": 27547,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9493,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17725
+      },
+      "latencyMs": 55843
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (pikaday.js): before does not occur in the file. 4 of its lines are not in the source. not in file: \"self._onInputFocus = function() {\"; closest is line 602: \"self._onInputFocus = function()\" | not in file: \"sto.clear(self._b);\" | not in file: \"self._onInputBlur = function() {\"; closest is line 612: \"self._onInputBlur = function()\". Best alignment: before lines 16-21 match file lines 499-50",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-a17ea3115795092feee43f9a9cf0bd69",
+      "usage": {
+        "completion_tokens": 15092,
+        "prompt_tokens": 17789,
+        "total_tokens": 32881,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 14291,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 13056,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 13056,
+        "prompt_cache_miss_tokens": 4733
+      },
+      "latencyMs": 41637
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (pikaday.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"} while ((pEl = pEl.parentNode));\"; closest is line 621: \"while ((pEl = pEl.parentNode));\". Best alignment: before lines 1-18 match file lines 602-619, then before line 19 \"} while ((pEl = pEl.parentNode));\" differs from file line 620 \"}\". The real file lines are in actual_source_region. Cop",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-a6ea3b22c62b52811469ef3dcae1071b",
+      "usage": {
+        "completion_tokens": 3035,
+        "prompt_tokens": 19530,
+        "total_tokens": 22565,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2138,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19530
+      },
+      "latencyMs": 7381
+    }
+  ]
+}

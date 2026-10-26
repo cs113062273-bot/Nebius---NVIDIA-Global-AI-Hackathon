@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T06:33:16.838Z",
+  "policy": "auto",
+  "modelRun": "e557377c-9248-4432-a91e-3f85e7850171",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-8b734f4e7ec239a107a9a1ba8313c3fa",
+      "usage": {
+        "completion_tokens": 2234,
+        "prompt_tokens": 3343,
+        "total_tokens": 5577,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1687,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 3343
+      },
+      "latencyMs": 14905,
+      "reservedCreditUsd": 0.0326406
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-4737bf1d8aafbde36e8af0f07b8850cf",
+      "usage": {
+        "completion_tokens": 7874,
+        "prompt_tokens": 3824,
+        "total_tokens": 11698,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7278,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 3824
+      },
+      "latencyMs": 21844,
+      "reservedCreditUsd": 0.11097
+    }
+  ]
+}

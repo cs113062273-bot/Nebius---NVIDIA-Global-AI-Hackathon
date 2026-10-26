@@ -1,0 +1,98 @@
+{
+  "completedAt": "2026-10-26T04:56:36.212Z",
+  "policy": "auto",
+  "modelRun": "39a3a69c-89df-4b16-ba87-c40ae396726a",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 6 · #facts: expected \"#facts\", observed \"#history\"",
+    "Task evidence is missing or contradicts the verdict",
+    "Regression guard \"Escape in a first-level submenu returns to the menubar\": failed · Step 4 · #about: expected \"#about\", observed \"#overview\""
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/menubar.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 1-7 match file lines 483-489, then before line 8 \"}\" differs from file line 490 \"} else if (key === \\\"ArrowRight\\\") {\". The real file lines are in actual_source_region. Copy the region verbatim from the source.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-9d76b3bf589b5e6196399bc1934a83a2",
+      "usage": {
+        "completion_tokens": 6620,
+        "prompt_tokens": 37373,
+        "total_tokens": 43993,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5923,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 25296,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 37373
+      },
+      "latencyMs": 30194,
+      "reservedCreditUsd": 0.0681792
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-ae2b062bcabedd79a94734104057ef81",
+      "usage": {
+        "completion_tokens": 2050,
+        "prompt_tokens": 38672,
+        "total_tokens": 40722,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1354,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 38672
+      },
+      "latencyMs": 12197,
+      "reservedCreditUsd": 0.232297
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-2aa48807600b1b3ecae0a26f6a276a94",
+      "usage": {
+        "completion_tokens": 5299,
+        "prompt_tokens": 39076,
+        "total_tokens": 44375,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4603,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 39076
+      },
+      "latencyMs": 28349,
+      "reservedCreditUsd": 0.23435999999999998
+    }
+  ]
+}

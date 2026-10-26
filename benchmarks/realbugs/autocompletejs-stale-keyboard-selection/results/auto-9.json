@@ -1,0 +1,67 @@
+{
+  "completedAt": "2026-10-26T06:22:58.804Z",
+  "policy": "auto",
+  "modelRun": "3fea1ff7-23e4-4ecc-af69-9cc74991de43",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/controllers/navigationController.js): before does not occur in the file. 2 of its lines are not in the source. not in file: \"const navigateFn = config.resultsList.navigation || navigation;\"; closest is line 118: \"const navigate = config.resultsList.navigation || navigation;\" | not in file: \"config.inputField.addEventListener(\\\"keydown\\\", navigateFn);\"; closest is line 122: \"config.inpu",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-f0ebbb0a0ad03ce333bbd6880698a2c0",
+      "usage": {
+        "completion_tokens": 19519,
+        "prompt_tokens": 10105,
+        "total_tokens": 29624,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 18990,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10105
+      },
+      "latencyMs": 86797,
+      "reservedCreditUsd": 0.0397455
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-aa4b9ab4aaf4321d97a65194910c86fe",
+      "usage": {
+        "completion_tokens": 3075,
+        "prompt_tokens": 11258,
+        "total_tokens": 14333,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2514,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 11258
+      },
+      "latencyMs": 8949,
+      "reservedCreditUsd": 0.137216
+    }
+  ]
+}

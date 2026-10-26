@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T05:52:21.046Z",
+  "policy": "auto",
+  "modelRun": "b37c9574-e072-44c1-9a2b-de6a72a0a134",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-a9568d2024d7f7119688feff31055311",
+      "usage": {
+        "completion_tokens": 11090,
+        "prompt_tokens": 24658,
+        "total_tokens": 35748,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10538,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 24658
+      },
+      "latencyMs": 51895,
+      "reservedCreditUsd": 0.0566838
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-634b8dd69342fedd332633cf42812b66",
+      "usage": {
+        "completion_tokens": 10568,
+        "prompt_tokens": 24998,
+        "total_tokens": 35566,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9522,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 24998
+      },
+      "latencyMs": 26548,
+      "reservedCreditUsd": 0.1908
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "completedAt": "2026-10-26T05:28:30.824Z",
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "modelRun": "de7796ce-30aa-4f5e-948a-2ec109ea9de1",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (js/src/drawer.ts): before does not occur in the file. 7 of its lines are not in the source. not in file: \"protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\"; closest is line 102: \"protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {\" | not in file: \"this._openedAsModal = modal\" | not in file: \"if (modal) {\". Best alignment: before lines 8-9 match file lines 38-39, then before line 10 \"if (preventBodyScroll) {\" differs from file line 40 \"const Default: DrawerConfig = {\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-3e7a4c8f89b002d57087cc93a814a1a7",
+      "usage": {
+        "completion_tokens": 2701,
+        "prompt_tokens": 19421,
+        "total_tokens": 22122,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2284,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19421
+      },
+      "latencyMs": 14081
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-bc505bc7a351902a905d94dcb9f1bc13",
+      "usage": {
+        "completion_tokens": 6847,
+        "prompt_tokens": 19667,
+        "total_tokens": 26514,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5784,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19667
+      },
+      "latencyMs": 19012
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/src/drawer.ts): before does not occur in the file. 7 of its lines are not in the source. not in file: \"protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\"; closest is line 102: \"protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {\" | not in file: \"this._openedAsModal = modal\"",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-9e84cb2ece3f6c73c18d5975d7a5231a",
+      "usage": {
+        "completion_tokens": 9069,
+        "prompt_tokens": 21560,
+        "total_tokens": 30629,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8150,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21560
+      },
+      "latencyMs": 22936
+    }
+  ]
+}

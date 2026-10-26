@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T06:32:23.680Z",
+  "policy": "auto",
+  "modelRun": "dd3e95be-4a64-447c-9cb5-7ad6454cab37",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-133758a0be0283d663962e7893e9c53a",
+      "usage": {
+        "completion_tokens": 4094,
+        "prompt_tokens": 5039,
+        "total_tokens": 9133,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3682,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5039
+      },
+      "latencyMs": 21851,
+      "reservedCreditUsd": 0.0343044
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-a5bb7e18bf6a9c35353f1a48ef0a2120",
+      "usage": {
+        "completion_tokens": 11583,
+        "prompt_tokens": 5124,
+        "total_tokens": 16707,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10343,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5124
+      },
+      "latencyMs": 29085,
+      "reservedCreditUsd": 0.115114
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "completedAt": "2026-10-26T05:53:56.069Z",
+  "policy": "auto",
+  "modelRun": "a847158d-fc52-4c71-82c6-f5c145faf1e0",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (index.js): before does not occur in the file. 4 of its lines are not in the source. not in file: \"// Ensure tabbable nodes are up to date in case the DOM changed (e.g., focused element removed)\" | not in file: \"const focusNode = state.mostRecentlyFocusedNode;\"; closest is line 372: \"state.mostRecentlyFocusedNode = node;\" | not in file: \"if (!focusNode || !focusNode.isConnected || !isFocusable(focusNode, config.tabbableOptions)) {\"; closest is line 292: \"const focusableNodes = focusable(container, config.tabbableOptions);\". Best alignment: before lines 1-13 match file lines 420-432, then before line 14 \"// Ensure tabbable nodes are up to date in case the DOM changed (e.g., focused element removed)\" differs from file line 433 \"tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-6d999a95e6ee0f50f5564350a263f96b",
+      "usage": {
+        "completion_tokens": 3997,
+        "prompt_tokens": 18476,
+        "total_tokens": 22473,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3189,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 18476
+      },
+      "latencyMs": 21174,
+      "reservedCreditUsd": 0.0493836
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-9f96cc17bb4699d92d1fa6c817512746",
+      "usage": {
+        "completion_tokens": 10234,
+        "prompt_tokens": 19145,
+        "total_tokens": 29379,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9351,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19145
+      },
+      "latencyMs": 26439,
+      "reservedCreditUsd": 0.167709
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (index.js): before does not occur in the file. 4 of its lines are not in the source. not in file: \"// Ensure tabbable nodes are up to date in case the DOM changed (e.g., focused element removed)\" | not in file: \"const focusNode = state.mostRecentlyFocusedNode;\"; closest is line 372: \"state.mostRecentlyFocusedNode = node;\" | not in file: \"if (!focusNode || !focusNode.isConnected || !isFocusa",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-b1f26fd2e083009ddc1108a0473872af",
+      "usage": {
+        "completion_tokens": 13914,
+        "prompt_tokens": 20905,
+        "total_tokens": 34819,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 12872,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 20905
+      },
+      "latencyMs": 34851,
+      "reservedCreditUsd": 0.17424699999999999
+    }
+  ]
+}
