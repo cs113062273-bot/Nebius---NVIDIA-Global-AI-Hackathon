@@ -1,0 +1,20 @@
+[
+  { "id": "s1", "caption": "A keyboard trap in Bootstrap 6, found by Tabstitch, confirmed by a maintainer",
+    "say": "This Bootstrap 6 datepicker traps keyboard users: Tab never leaves the field. Nobody had reported it. Tabstitch found it, and a Bootstrap maintainer confirmed it the same day." },
+  { "id": "s2", "caption": "Nemotron writes the patch. A real browser decides.",
+    "say": "AI writes keyboard fixes in seconds. The hard part is knowing which fix you can merge. Tabstitch lets NVIDIA Nemotron on Nebius Token Factory write the patch, and lets a real browser decide." },
+  { "id": "s3", "caption": "A real Bootstrap bug, repaired blind: Super rejected by Chromium, Ultra fixes the library",
+    "say": "Here is a real bug that Bootstrap's maintainers fixed by hand. We pin the code from before their fix, and freeze the user's task: the keys, the data the form must submit, a pointer path, and guards for what already works. Nemotron 3 Super gets only the buggy source. Chromium replays its patch, and rejects it at step four. Nemotron 3 Ultra gets that exact failure, and fixes the library itself. Every gate passes." },
+  { "id": "s4", "caption": "Only now: the maintainers' own fix, which the model never saw",
+    "say": "Only now do we compare it with the maintainers' own fix, which the model never saw." },
+  { "id": "s5", "caption": "38 patches fixed the reported key and still broke something",
+    "say": "A passing test is not enough. Thirty-eight patches fixed the reported key and still broke something. One made a datepicker close correctly, but a user who picks June fourth with the mouse would submit May tenth. The gates caught every one." },
+  { "id": "s6", "caption": "26 real bugs, 12 libraries: 23 repaired on the first run, all in the library's code",
+    "say": "Twenty-six real bugs, in twelve libraries. The current engine repairs twenty-three on the first run, every one in the library's own code. Every engine version keeps its public score. Every bug gets three blind runs, and every run counts, including our own mistakes." },
+  { "id": "s7", "caption": "Bugs still open upstream: every passing patch is read, and gaps become stricter tasks",
+    "say": "On bugs still open upstream, we read every passing patch. When one passed but was wrong, the gap became a stricter frozen task, and every earlier patch was replayed against it, without inference." },
+  { "id": "s8", "caption": "Run it live: GitHub Actions makes a fresh Nemotron repair and replies on the issue",
+    "say": "Judges don't need to trust recordings. Run it live opens a GitHub issue. GitHub Actions makes a fresh Nemotron repair, capped at fifty cents of sponsor credits, and replies with the verdict." },
+  { "id": "s9", "caption": "Tabstitch · Nemotron writes the fix. The browser keeps the outcome.",
+    "say": "It also runs as a GitHub Action on pull requests. Nemotron writes the fix. The browser keeps the outcome. Tabstitch." }
+]

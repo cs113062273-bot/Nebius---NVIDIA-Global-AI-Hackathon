@@ -1,5 +1,7 @@
 # Demo script: 2 minutes 45 seconds
 
+A narrated, captioned recording of this walk-through is produced by [`scripts/record-demo.mjs`](../scripts/record-demo.mjs) from [`docs/demo/scenes.json`](demo/scenes.json): Windows text-to-speech (Microsoft David) reads each scene, Playwright records the site and the public GitHub pages, and ffmpeg writes `artifacts/demo/tabstitch-demo.mp4` (about 2 minutes 23 seconds). It can be uploaded as is, or used as a guide for a recording with your own voice.
+
 Record at 1440×900 in a normal Chrome window, with the judge site at 110% zoom. Everything shown is recorded evidence or a real live run; say "recorded" when you play a recording. Keep under three minutes, and use no music you have no licence for.
 
 Site: https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/

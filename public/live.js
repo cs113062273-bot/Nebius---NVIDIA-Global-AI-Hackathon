@@ -171,6 +171,7 @@ async function watch(id,c,{live=false,recorded=null}={}){
     await new Promise(r=>setTimeout(r,1000));
   }
 }
+const cardCache=new Map();
 const seen=(run,states)=>run.events?.some(e=>states.includes(e.state));
 function render(run,c){
   const current=run.state,last=STAGES.findIndex(([, ,s])=>s.includes(current));
@@ -187,7 +188,12 @@ function render(run,c){
     $('#baseline-text').textContent=step?`Step ${step.index+1}, “${step.title}”: ${describe(fail,step)}.`:(b.failure?.message||'The keyboard task fails.');
     $('#baseline-task').textContent='Frozen keys: '+(run.journey?.steps||[]).map(s=>s.action.kind==='press'?s.action.key:s.action.kind==='seek'?`Tab→${s.action.selector}`:s.action.kind==='type'?`type “${s.action.text}”`:s.action.kind).join(' · ');
   }
-  const box=$('#attempts');box.replaceChildren(...(run.attempts||[]).map(a=>attemptCard(run,a)));
+  // A replayed recording reveals attempts in order: an attempt appears when its proposal is requested and
+  // shows its outcome only once the run has moved past its verification. Unchanged cards are reused.
+  const box=$('#attempts'),planned=run.events?.filter(e=>e.state==='PLANNING_REPAIR').length??0,ended=['VERIFIED','FAILED','INCONCLUSIVE'].includes(run.state);
+  // An attempt is finished once the next one has started or the run has ended; until then it is in progress.
+  const shown=(run.attempts||[]).filter(a=>!run.__partial||a.attempt<=planned).map(a=>run.__partial&&!ended&&a.attempt===planned?{attempt:a.attempt,provenance:{model:a.provenance?.model}}:a);
+  box.replaceChildren(...shown.map(a=>{const key=`${run.id}:${a.attempt}:${a.category||''}:${a.verified}:${!!a.plan}`;let card=cardCache.get(key);if(!card){card=attemptCard(run,a);cardCache.set(key,card);}return card;}));
   if(['VERIFIED','FAILED','INCONCLUSIVE'].includes(current)&&!run.__partial)renderVerdict(run,c);
 }
 function describe(fail,step){
