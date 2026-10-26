@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "id": "bootstrap-modal-shift-tab-keyboard",
+  "title": "Move backwards through the delete confirmation",
+  "goal": "Shift+Tab from the first control wraps to the Delete button",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach Delete project",
+      "action": {
+        "kind": "seek",
+        "selector": "#open-delete",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open the confirmation",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#confirm-name",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Tab to the first control",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#confirm-close"
+        }
+      ]
+    },
+    {
+      "title": "Shift+Tab backwards",
+      "action": {
+        "kind": "press",
+        "key": "Shift+Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#confirm-delete"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#confirm-delete"
+    },
+    {
+      "kind": "visible",
+      "selector": "#confirm-name",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#confirm-name",
+      "value": true
+    },
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Active"
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,26 @@
+{
+  "root_cause": "The drawer is opened via show() instead of showModal(), which does not move focus into the dialog. This occurs because _getShowOptions returns modal:false due to a misconfiguration (e.g., backdrop false). The immediate issue is that focus remains on the trigger element after opening the drawer, preventing keyboard users from interacting with the filter controls.",
+  "repair_strategy": "Modify DialogBase._showElement to move focus to the first focusable element (or autofocus element) after showing the dialog, ensuring keyboard users can immediately interact with the dialog's controls.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }",
+      "after": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n\n    // Move focus to the dialog or first focusable element\n    const autofocus = this._element.querySelector('[autofocus]');\n    if (autofocus) {\n      autofocus.focus();\n    } else {\n      const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])';\n      const focusable = this._element.querySelector(focusableSelector);\n      if (focusable) {\n        focusable.focus();\n      } else {\n        this._element.focus();\n      }\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When the drawer opens, focus will be moved to the close button (or first focusable control), allowing users to tab to the In stock checkbox and activate the Show results button without needing a mouse.",
+  "functional_risks": [
+    "Changing focus behavior could interfere with pages that rely on focus remaining on the trigger element after opening a dialog.",
+    "If the dialog contains no focusable elements, the fallback focuses the dialog itself (made focusable via script) or the button, which may cause unexpected focus movement.",
+    "The focus adjustment runs for both modal and non-modal dialogs, which may alter existing behavior for non‑modal dialogs that intentionally do not move focus."
+  ],
+  "verification_requirements": [
+    "After activating the Filters button with Enter, focus should be on the close button (#filters-close).",
+    "Pressing Tab should move focus to the In stock checkbox (#in-stock).",
+    "Pressing Space should toggle the checkbox.",
+    "Pressing Tab twice should move focus to the Show results button (#apply).",
+    "Pressing Enter on Show results should update the applied filter text and close the drawer.",
+    "Pressing Escape should close the drawer and return focus to the Filters button."
+  ]
+}

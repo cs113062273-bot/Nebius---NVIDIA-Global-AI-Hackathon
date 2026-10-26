@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "autocomplete-pointer-pick",
+  "title": "Choose a fruit with the pointer",
+  "goal": "Clicking a suggestion fills the fruit field",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Focus the fruit field",
+      "action": {
+        "kind": "click",
+        "selector": "#fruit"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type bl",
+      "action": {
+        "kind": "type",
+        "text": "bl"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#autoComplete_result_2",
+          "value": "Blueberry"
+        }
+      ]
+    },
+    {
+      "title": "Click Blueberry",
+      "action": {
+        "kind": "click",
+        "selector": "#autoComplete_result_2"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#order-form",
+          "name": "fruit",
+          "value": [
+            "Blueberry"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Add to order",
+      "action": {
+        "kind": "click",
+        "selector": "#submit"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#status",
+          "value": "Added Blueberry"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Added Blueberry"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#order-form",
+      "name": "fruit",
+      "value": [
+        "Blueberry"
+      ]
+    }
+  ],
+  "forbidden": []
+}

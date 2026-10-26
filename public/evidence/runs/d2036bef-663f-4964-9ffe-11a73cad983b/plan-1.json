@@ -1,0 +1,31 @@
+{
+  "root_cause": "The radios module only updates ARIA attributes and conditional visibility on click events, not on change events triggered by keyboard navigation, causing conditional panels to remain visible when a different radio is selected via arrow keys.",
+  "repair_strategy": "Add a change event listener to the radios module that mirrors the click handler logic, invoking setAttributes on radios with aria-controls to ensure ARIA state and visibility are updated when the radio state changes via keyboard.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.addEventListener('change', this.handleChange.bind(this))\n}"
+    },
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}",
+      "after": "Radios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nRadios.prototype.handleChange = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle change\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now navigate between radio options using arrow keys and see associated conditional content show/hide correctly, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Both click and change listeners may execute for mouse interactions, causing setAttributes to run twice (idempotent).",
+    "Minimal performance overhead from additional event listener.",
+    "No impact on non-radio elements as listener is scoped to the module."
+  ],
+  "verification_requirements": [
+    "Verify that selecting a radio via arrow keys updates aria-expanded and toggles the correct conditional panel visibility.",
+    "Verify that mouse clicks continue to work as before.",
+    "Verify that choosing 'Text message' then arrowing to 'I do not want reminders' hides the mobile number field.",
+    "Verify that choosing 'Email' shows the email input field.",
+    "Ensure no regression in existing form submission or validation behavior."
+  ]
+}

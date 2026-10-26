@@ -1,0 +1,73 @@
+[
+  {
+    "path": "index.html",
+    "score": 8,
+    "signals": [
+      "actions-toggle",
+      "action-send",
+      "body",
+      "Invoice actions",
+      "Send reminder",
+      "Download PDF",
+      "Archive",
+      "Record payment"
+    ],
+    "sha256": "6753892a37b4dec485fcf06b07a12b42ca680c5549a27ad09620c6db6f43a37d"
+  },
+  {
+    "path": "js/src/dropdown.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "fc69a61b69ae1fa2c2bb923fdc393dd2742925e8af996376df5f98e38f8d810e"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "8a9c39e48d932c90c5a32d3f647876b5bd49419fa1300aef69b86fb55c8f16fe"
+  },
+  {
+    "path": "js/src/dom/event-handler.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/dropdown.js"
+    ],
+    "sha256": "95cf47da69cddb685026dd313df353e7674e3dbf3f2ee5b1710f7e74a6a8c090"
+  },
+  {
+    "path": "js/src/dom/manipulator.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/dropdown.js"
+    ],
+    "sha256": "1b16bdd17d1a6edd2b9aceb2d4f39c323fef3df2f6e8ab3e37fda792e5b8ac6c"
+  },
+  {
+    "path": "js/src/dom/selector-engine.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/dropdown.js"
+    ],
+    "sha256": "8c7b4a902ef92f711a3cdbdfcdf13420428eabcbfecf8c32ee7939959b0fd017"
+  },
+  {
+    "path": "js/src/base-component.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/dropdown.js"
+    ],
+    "sha256": "62e8a18b060ef94f6e04b72effaec2e18183341f1f3bade092633947f0230664"
+  },
+  {
+    "path": "js/src/dom/data.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/base-component.js"
+    ],
+    "sha256": "1f7b4b295dab1c7ecffb647383e62d1c6d3c0004c2c55fd5b5ba1f414e244b3c"
+  }
+]

@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "datepicker-pointer-next-month",
+  "title": "Move the delivery into June with the pointer",
+  "goal": "Clicking through the calendar to June and choosing a day fills the delivery date",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the calendar",
+      "action": {
+        "kind": "click",
+        "selector": "#delivery-date"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": ".datepicker",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Go to June",
+      "action": {
+        "kind": "click",
+        "selector": ".datepicker .next-btn"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Choose 4 June",
+      "action": {
+        "kind": "click",
+        "selector": ".datepicker-cell[data-date=\"1717459200000\"]"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#delivery-form",
+          "name": "delivery",
+          "value": [
+            "2024-06-04"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Save",
+      "action": {
+        "kind": "click",
+        "selector": "#submit"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#status",
+          "value": "Delivery set for 2024-06-04"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Delivery set for 2024-06-04"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#delivery-form",
+      "name": "delivery",
+      "value": [
+        "2024-06-04"
+      ]
+    }
+  ],
+  "forbidden": []
+}

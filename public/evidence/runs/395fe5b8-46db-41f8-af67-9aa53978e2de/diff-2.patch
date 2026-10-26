@@ -1,0 +1,39 @@
+diff --git a/src/controllers/navigationController.js b/src/controllers/navigationController.js
+index 22aeb48..917e69f 100644
+--- a/src/controllers/navigationController.js
++++ b/src/controllers/navigationController.js
+@@ -9,6 +9,10 @@ import eventEmitter from "../utils/eventEmitter";
+  *
+  */
+ const navigate = (config, dataFeedback) => {
++  // Remove previous keydown listener if exists
++  if (config._navListener) {
++    config.inputField.removeEventListener("keydown", config._navListener);
++  }
+   // Reset focus state
+   let currentFocus = -1;
+ 
+@@ -88,7 +92,7 @@ const navigate = (config, dataFeedback) => {
+   const navigation = (event) => {
+     let list = document.getElementById(config.resultsList.idName);
+ 
+-    if (!list) return config.inputField.removeEventListener("keydown", navigate);
++    if (!list) return config.inputField.removeEventListener("keydown", config._navListener);
+ 
+     list = list.getElementsByTagName(config.resultItem.element);
+ 
+@@ -115,11 +119,12 @@ const navigate = (config, dataFeedback) => {
+     }
+   };
+ 
+-  const navigate = config.resultsList.navigation || navigation;
++  const listener = config.resultsList.navigation || navigation;
++  config._navListener = listener;
+   /**
+    * @listens {keydown} Listens to all `keydown` events on the input field
+    **/
+-  config.inputField.addEventListener("keydown", navigate);
++  config.inputField.addEventListener("keydown", listener);
+ };
+ 
+ export { navigate };

@@ -1,0 +1,25 @@
+{
+  "root_cause": "The dropdown remains open when focus leaves the navigation via Tab because there is no focusout handler to close the menu.",
+  "repair_strategy": "Add a focusout listener on the top-level menu element that closes any open submenu toggles and the controller when focus leaves the menu.",
+  "edits": [
+    {
+      "path": "src/_baseMenu.js",
+      "sha256": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+      "before": "/**\\n   * Handles focus events throughout the menu for proper menu use.\\n   *\\n   * - Adds a `focus` listener to every menu item so when it gains focus,\\n   *   it will set the item's containing menu's focus state\\n   *   to \\\"self\\\".\\n   *\\n   * @protected\\n */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n  }\\n",
+      "after": "/**\\n   * Handles focus events throughout the menu for proper menu use.\\n   *\\n   * - Adds a `focus` listener to every menu item so when it gains focus,\\n   *   it will set the item's containing menu's focus state\\n   *   to \\\"self\\\".\\n   *\\n   * @protected\\n */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n\\n    // Close dropdowns when focus leaves the menu (top-level only)\\n    if (this.isTopLevel) {\\n      this.dom.menu.addEventListener(\\\"focusout\\\", (event) => {\\n        if (!this.dom.menu.contains(event.relatedTarget)) {\\n          this.closeChildren();\\n          if (this.elements.controller) {\\n            this.elements.controller.close();\\n          }\\n        }\\n      });\\n    }\\n  }\\n"
+    }
+  ],
+  "expected_accessibility_effect": "When a user tabs out of the navigation, the Shop dropdown will close, preventing it from covering page content.",
+  "functional_risks": [
+    "If focus moves to an element outside the menu that is not a descendant (e.g., a modal or dialog), the dropdown will close as intended.",
+    "Potential premature closure if a custom widget steals focus without being a DOM descendant of the menu.",
+    "May interfere with other scripts that manage focus if they also listen for focusout on the menu."
+  ],
+  "verification_requirements": [
+    "Tabbing from Shop button to Plants, Tools, then Search input results in Shop's aria-expanded becoming false and Plants hidden.",
+    "Navigating within the menu (e.g., Shop → Plants → Tools → Shop via Shift+Tab) keeps the dropdown open.",
+    "Clicking outside the menu with the mouse still closes the dropdown (existing behavior).",
+    "Pressing Escape while the dropdown is open closes it and returns focus to the Shop button (as per regression guard).",
+    "Optional arrow key navigation (if enabled) continues to work after the fix."
+  ]
+}

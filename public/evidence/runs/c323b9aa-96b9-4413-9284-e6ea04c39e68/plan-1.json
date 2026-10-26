@@ -1,0 +1,27 @@
+{
+  "root_cause": "ArrowRight navigation uses adjustDate with a fixed offset of 1 day, which does not skip days disabled by disableDayFn (weekends). Consequently, moving from Friday lands on the disabled Saturday and the input value reflects that date.",
+  "repair_strategy": "Replace the key‑handler for left/right/up/down arrows with a helper that steps one day (or week) at a time, validating each intermediate candidate against minDate, maxDate, and disableDayFn, and skipping invalid dates until the requested offset is satisfied.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self._adjustDateSkipDisabled(-1);\n                        break;\n                    case 38:\n                        self._adjustDateSkipDisabled(-7);\n                        break;\n                    case 39:\n                        self._adjustDateSkipDisabled(1);\n                        break;\n                    case 40:\n                        self._adjustDateSkipDisabled(7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };\n\n        self._adjustDateSkipDisabled = function(offset)\n        {\n            var start = self.getDate() || new Date()\n            var candidate = new Date(start.valueOf())\n            var step = offset > 0 ? 1 : -1\n            var absOffset = Math.abs(offset)\n            // Apply offset in steps of day, checking validity each step\n            for (var i = 0; i < absOffset; i++)\n            {\n                candidate = new Date(candidate.valueOf() + step * 24 * 60 * 60 * 1000)\n                // Ensure candidate respects min/max/disableDayFn\n                while (!self._isDateValid(candidate))\n                {\n                    candidate = new Date(candidate.valueOf() + step * 24 * 60 * 60 * 1000)\n                }\n            }\n            self.setDate(candidate)\n        };\n\n        self._isDateValid = function(date)\n        {\n            if (opts.minDate && date < opts.minDate)\n            {\n                return false\n            }\n            if (opts.maxDate && date > opts.maxDate)\n            {\n                return false\n            }\n            if (opts.disableDayFn && opts.disableDayFn(date))\n            {\n                return false\n            }\n            return true\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can reliably navigate to the next or previous selectable day using arrow keys, ensuring focus never lands on disabled (weekend) dates and improving usability for users who rely on keyboard navigation.",
+  "functional_risks": [
+    "If no valid dates exist within the min/max range, the stepping loop could become infinite (unlikely given typical ranges).",
+    "Week navigation (ArrowUp/Down) may skip weekends, altering the expectation of moving exactly seven calendar days; however, the result will still be a valid weekday.",
+    "Performance impact is negligible as loops iterate at most a few steps.",
+    "Manual date entry and month/year dropdowns remain unaffected."
+  ],
+  "verification_requirements": [
+    "Pressing ArrowRight from Friday 2026-11-20 must set the field to Monday 2026-11-23.",
+    "Pressing ArrowLeft from Monday 2026-11-23 must set the field to Friday 2026-11-20.",
+    "Pressing ArrowUp/Down must shift by weeks while skipping weekends (e.g., from Friday 2026-11-20, ArrowUp → Friday 2026-11-13).",
+    "Attempting to navigate past minDate or maxDate must stop at the nearest valid date within bounds.",
+    "Direct date entry via input field should continue to parse and accept any valid date (including weekends) as before.",
+    "Month navigation via the prev/next buttons should remain unchanged."
+  ]
+}

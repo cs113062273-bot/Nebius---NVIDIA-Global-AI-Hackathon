@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "id": "awesomplete-tab-past-suggestions",
+  "title": "Tab from the city field to dietary requirements",
+  "goal": "While suggestions are shown, one Tab press moves focus to the next form field",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the departure city field",
+      "action": {
+        "kind": "seek",
+        "selector": "#city",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type the start of a city",
+      "action": {
+        "kind": "type",
+        "text": "Ber"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#awesomplete_list_1",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Tab to the next field",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#dietary"
+        }
+      ]
+    },
+    {
+      "title": "Type dietary requirements",
+      "action": {
+        "kind": "type",
+        "text": "Vegetarian"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#register-form",
+          "name": "dietary",
+          "value": [
+            "Vegetarian"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#dietary"
+    },
+    {
+      "kind": "form-data",
+      "selector": "#register-form",
+      "name": "dietary",
+      "value": [
+        "Vegetarian"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#awesomplete_list_1",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

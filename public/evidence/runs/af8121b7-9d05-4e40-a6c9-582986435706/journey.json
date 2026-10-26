@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "id": "bootstrap-offcanvas-backdrop-keyboard",
+  "title": "Read the policy help panel with the keyboard",
+  "goal": "Focus moves into the open panel and Tab stays inside it",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the help button",
+      "action": {
+        "kind": "seek",
+        "selector": "#open-help",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open the help panel",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#help-text",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Tab to the panel's close button",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#help-close"
+        }
+      ]
+    },
+    {
+      "title": "Tab again without leaving the panel",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#help-close"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#help-close"
+    },
+    {
+      "kind": "visible",
+      "selector": "#help-text",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#help-text",
+      "value": true
+    },
+    {
+      "kind": "form-data",
+      "selector": "#report",
+      "name": "amount",
+      "value": [
+        "38.50"
+      ]
+    }
+  ],
+  "forbidden": []
+}

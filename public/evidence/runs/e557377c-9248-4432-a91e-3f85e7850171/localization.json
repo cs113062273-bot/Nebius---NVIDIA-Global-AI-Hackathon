@@ -1,0 +1,15 @@
+[
+  {
+    "path": "index.html",
+    "score": 6,
+    "signals": [
+      "past-day",
+      "body",
+      "Past day",
+      "Past week",
+      "Past month",
+      "View these applications on a map"
+    ],
+    "sha256": "24e8e15758ccfc9f3b17cadc01108c076cd71ab50482434408642d3a3ece9dfb"
+  }
+]

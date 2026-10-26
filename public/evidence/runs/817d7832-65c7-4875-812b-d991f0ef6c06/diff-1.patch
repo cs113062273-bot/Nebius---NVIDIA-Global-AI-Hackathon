@@ -1,0 +1,68 @@
+diff --git a/js/src/modal.js b/js/src/modal.js
+index 0e8346d..63b866d 100644
+--- a/js/src/modal.js
++++ b/js/src/modal.js
+@@ -85,6 +85,7 @@ class Modal extends BaseComponent {
+     this._ignoreBackdropClick = false
+     this._isTransitioning = false
+     this._scrollBar = new ScrollBarHelper()
++    this._keydownHandler = null
+   }
+ 
+   // Getters
+@@ -158,6 +159,7 @@ class Modal extends BaseComponent {
+     }
+ 
+     this._isShown = false
++    this._removeFocusListeners()
+     const isAnimated = this._isAnimated()
+ 
+     if (isAnimated) {
+@@ -242,6 +244,7 @@ class Modal extends BaseComponent {
+ 
+     if (this._config.focus) {
+       this._enforceFocus()
++      this._addFocusListeners()
+     }
+ 
+     const transitionComplete = () => {
+@@ -385,6 +388,39 @@ class Modal extends BaseComponent {
+     this._element.style.paddingRight = ''
+   }
+ 
++  _getFocusableElements() {
++    return SelectorEngine.find('button:not([disabled]), input:not([disabled])', this._element)
++  }
++
++  _addFocusListeners() {
++    this._keydownHandler = (event) => {
++      if (event.key === 'Tab') {
++        const focusable = this._getFocusableElements()
++        const first = focusable[0]
++        const last = focusable[focusable.length - 1]
++        if (event.shiftKey) { // Shift+Tab
++          if (document.activeElement === first) {
++            event.preventDefault()
++            last.focus()
++          }
++        } else { // Tab
++          if (document.activeElement === last) {
++            event.preventDefault()
++            first.focus()
++          }
++        }
++      }
++    }
++    this._element.addEventListener('keydown', this._keydownHandler)
++  }
++
++  _removeFocusListeners() {
++    if (this._keydownHandler) {
++      this._element.removeEventListener('keydown', this._keydownHandler)
++      this._keydownHandler = null
++    }
++  }
++
+   // Static
+ 
+   static jQueryInterface(config, relatedTarget) {

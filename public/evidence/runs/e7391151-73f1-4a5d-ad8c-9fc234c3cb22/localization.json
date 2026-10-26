@@ -1,0 +1,34 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "open",
+      "address-dialog",
+      "street",
+      "body",
+      "Add delivery address",
+      "Available once an address is saved",
+      "Street address",
+      "Save address",
+      "Cancel"
+    ],
+    "sha256": "85fb0980102bd0ea76fa350b8e2df6695a5bf878b5526a6a22d84ca1b8547611"
+  },
+  {
+    "path": "upstream-dependency/focus-trap/index.js",
+    "score": 8.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "ee197881b8a24cb3a2ac35dbc5bd68bc6ba13528e2330ff02ba12c7462f1d492"
+  },
+  {
+    "path": "src/index.js",
+    "score": 1,
+    "signals": [
+      "open"
+    ],
+    "sha256": "8f69e239e7365811abad1130954bb9d4772c0f0e31c477f37f22a3644de78652"
+  }
+]

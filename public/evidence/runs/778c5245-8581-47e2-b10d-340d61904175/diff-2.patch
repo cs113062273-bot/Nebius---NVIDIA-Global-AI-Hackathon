@@ -1,0 +1,27 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index 44431aa..cff5f63 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -484,4 +484,22 @@ export default class Datepicker {
+       this.update(opts);
+     }
+   }
++
++  /**
++   * Hide the picker element
++   */
++  hide() {
++    this.picker.hide();
++}
++
++  /**
++   * Handle blur event on the input field
++   */
++  _onBlur() {
++    if (this.config.updateOnBlur) {
++      this.update();
++    }
++    this.hide();
++  }
+ }
++

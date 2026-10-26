@@ -1,0 +1,29 @@
+{
+  "root_cause": "The Pikaday keyboard handler (_onKeyChange) does not handle the Tab key (keyCode 9). When the date picker is visible, the handler processes keydown events but lacks a case for Tab, allowing an internal refocus mechanism (a timeout set in draw() that returns focus to the input after showing the picker) to prevent the browser's default focus movement, trapping focus in the check-in field.",
+  "repair_strategy": "Store the refocus timeout ID on the instance and clear it when the Tab key is pressed, allowing the browser's default focus movement to proceed. Also add a no-op case for Tab in the switch so the handler explicitly acknowledges the key.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "            if (opts.bound) {\n                if(opts.field.type !== 'hidden') {\n                    sto(function() {\n                        opts.trigger.focus();\n                    }, 1);\n                }\n            }",
+      "after": "            if (opts.bound) {\n                if(opts.field.type !== 'hidden') {\n                    this._refocusTimeout = sto(function() {\n                        opts.trigger.focus();\n                    }, 1);\n                }\n            }"
+    },
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }",
+      "after": "                switch(e.keyCode){\n                    case 9:\n                        if (self._refocusTimeout) {\n                            clearTimeout(self._refocusTimeout);\n                            self._refocusTimeout = null;\n                        }\n                        break;\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }"
+    }
+  ],
+  "expected_accessibility_effect": "After entering a date and pressing Tab, focus will move to the guests field, allowing keyboard-only users to continue filling the form without being trapped in the date picker.",
+  "functional_risks": [
+    "Clearing the refocus timeout on Tab could interfere with screen reader announcements if the picker is opened and the user immediately tabs out (unlikely).",
+    "Ensure that the change does not affect existing keyboard shortcuts (Enter, Escape, arrow keys, Backspace/Delete)."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab after typing a date moves focus to the guests field.",
+    "Confirm that Enter and Escape still close the picker and blur the input as expected.",
+    "Confirm that arrow keys still adjust the date when the picker is open.",
+    "Confirm that typing a date still updates the input correctly."
+  ]
+}

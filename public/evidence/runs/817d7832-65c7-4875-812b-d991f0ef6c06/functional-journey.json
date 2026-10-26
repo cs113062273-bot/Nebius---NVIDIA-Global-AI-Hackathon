@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "id": "bootstrap-modal-shift-tab-pointer",
+  "title": "Delete the project with the mouse",
+  "goal": "Confirming deletes the project and closes the modal",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the confirmation",
+      "action": {
+        "kind": "click",
+        "selector": "#open-delete"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#confirm-name",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Confirm deletion",
+      "action": {
+        "kind": "click",
+        "selector": "#confirm-delete"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#status",
+          "value": "Deleted"
+        },
+        {
+          "kind": "visible",
+          "selector": "#confirm-name",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Deleted"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Deleted"
+    },
+    {
+      "kind": "visible",
+      "selector": "#confirm-name",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

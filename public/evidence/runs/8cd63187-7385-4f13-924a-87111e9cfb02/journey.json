@@ -1,0 +1,96 @@
+{
+  "version": 1,
+  "id": "bootstrap-offcanvas-scroll-keyboard",
+  "title": "Keep editing the report with the help panel open",
+  "goal": "Tab can reach the amount field while the non-modal panel is open",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the help button",
+      "action": {
+        "kind": "seek",
+        "selector": "#open-help",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open the help panel",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#help-text",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Tab to the amount field",
+      "action": {
+        "kind": "seek",
+        "selector": "#amount",
+        "maxTabs": 6
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#amount"
+        }
+      ]
+    },
+    {
+      "title": "Correct the amount",
+      "action": {
+        "kind": "type",
+        "text": "41.20",
+        "replace": true
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#report",
+          "name": "amount",
+          "value": [
+            "41.20"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#amount"
+    },
+    {
+      "kind": "form-data",
+      "selector": "#report",
+      "name": "amount",
+      "value": [
+        "41.20"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#help-text",
+      "value": true
+    },
+    {
+      "kind": "form-data",
+      "selector": "#report",
+      "name": "amount",
+      "value": [
+        "41.20"
+      ]
+    }
+  ],
+  "forbidden": []
+}

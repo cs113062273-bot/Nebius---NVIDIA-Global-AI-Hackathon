@@ -1,0 +1,16 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..b86ce2f 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -620,6 +620,11 @@
+             }
+             while ((pEl = pEl.parentNode));
+ 
++    // If focus moved to another field in the same form, keep datepicker open
++    if (opts.field.form && opts.field.form.contains(document.activeElement)) {
++        return;
++            }
++
+             if (!self._c) {
+                 self._b = sto(function() {
+                     self.hide();

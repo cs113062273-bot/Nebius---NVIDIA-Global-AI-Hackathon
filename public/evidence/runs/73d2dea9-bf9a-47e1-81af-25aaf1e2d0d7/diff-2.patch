@@ -1,0 +1,38 @@
+diff --git a/js/src/modal.js b/js/src/modal.js
+index 0e8346d..c25e2cb 100644
+--- a/js/src/modal.js
++++ b/js/src/modal.js
+@@ -279,8 +279,33 @@ class Modal extends BaseComponent {
+           this._triggerBackdropTransition()
+         }
+       })
++
++      // Handle Tab and Shift+Tab for focus wrapping within the modal
++      EventHandler.on(this._element, 'keydown.bs.modal', event => {
++        if (event.key === 'Tab') {
++          const focusableElements = this._dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
++          if (focusableElements.length === 0) return
++          const firstElement = focusableElements[0]
++          const lastElement = focusableElements[focusableElements.length - 1]
++
++          if (event.shiftKey) {
++            // Shift+Tab: move from first to last
++            if (document.activeElement === firstElement) {
++              event.preventDefault()
++              lastElement.focus()
++            }
++          } else {
++            // Tab: move from last to first
++            if (document.activeElement === lastElement) {
++              event.preventDefault()
++              firstElement.focus()
++            }
++          }
++        }
++      })
+     } else {
+       EventHandler.off(this._element, EVENT_KEYDOWN_DISMISS)
++      EventHandler.off(this._element, 'keydown.bs.modal')
+     }
+   }
+ 

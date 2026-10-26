@@ -1,0 +1,21 @@
+{
+  "root_cause": "The Space keypress on the checkbox unexpectedly closes the preferences modal, likely due to an intervening listener that treats Space as a close action.",
+  "repair_strategy": "Add an early return for Space (keyCode 32) in the Modal's onKeydown handler to prevent the key from propagating to any close logic while preserving existing ESC and Tab handling.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "    onKeydown (event) {\n      if (event.keyCode === 27) this.closeModal(event) // esc\n      if (event.keyCode === 9) this.retainFocus(event) // tab\n    }",
+      "after": "    onKeydown (event) {\n      if (event.keyCode === 32) { return; } // ignore space\n      if (event.keyCode === 27) this.closeModal(event) // esc\n      if (event.keyCode === 9) this.retainFocus(event) // tab\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Space on the weekly digest checkbox will toggle its state without closing the dialog, keeping the modal open and accessible.",
+  "functional_risks": [
+    "If any other component relied on Space to close the modal via this listener, that behavior will be lost."
+  ],
+  "verification_requirements": [
+    "Verify that Space on #weekly toggles the checkbox and leaves #prefs-modal with aria-hidden='false'.",
+    "Confirm that ESC still closes the modal and restores focus to the trigger.",
+    "Confirm that Tab still traps focus within the modal."
+  ]
+}

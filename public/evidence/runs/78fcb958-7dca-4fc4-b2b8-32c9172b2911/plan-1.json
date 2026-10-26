@@ -1,0 +1,37 @@
+{
+  "root_cause": "The datepicker component prevents the default action of the Tab keydown event on the input element, preventing focus from moving to the next field. This occurs because the datepicker's internal logic (likely from Vanilla Calendar Pro) captures the Tab key to manage calendar navigation, but fails to reset the state properly when tabbing out.",
+  "repair_strategy": "Add a keydown listener to the datepicker input element that specifically handles the Tab key by hiding the datepicker popup without preventing the default action. This allows the Tab key to proceed normally while ensuring the datepicker is closed when focus leaves the input.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onTabKey: ((event: KeyboardEvent) => void) | null\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    this._setupDismiss()\n\n    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n",
+      "after": "    this._setupDismiss()\n\n    // Hide datepicker on Tab key press to allow focus to leave the input\n    if (this._isInput && !this._isInline) {\n      this._onTabKey = (event: KeyboardEvent) => {\n        if (event.key === 'Tab' && this._isShown) {\n          this.hide();\n        }\n      };\n      EventHandler.on(this._element, 'keydown', this._onTabKey);\n    }\n\n    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n",
+      "after": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    // Clean up Tab key listener\n    if (this._onTabKey) {\n      EventHandler.off(this._element, 'keydown', this._onTabKey)\n      this._onTabKey = null\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }\n"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key navigation will move focus from the departure date field to the passengers field as expected, restoring logical tab order for keyboard users.",
+  "functional_risks": [
+    "The datepicker may not hide correctly if the Tab key is pressed while the calendar is open but focus remains within the datepicker popup (e.g., when navigating the calendar with Tab).",
+    "Adding the keydown listener could potentially conflict with other custom keyboard handlers attached to the input element.",
+    "If the datepicker is shown programmatically (not via user interaction), the Tab key listener might hide it prematurely."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the departure date field moves focus to the passengers field.",
+    "Verify that pressing Shift+Tab from the passengers field moves focus back to the departure date field.",
+    "Verify that the datepicker popup closes when tabbing out of the departure date field.",
+    "Verify that date selection via mouse or keyboard still functions correctly.",
+    "Verify that the datepicker does not interfere with Tab navigation in other form fields."
+  ]
+}

@@ -1,0 +1,13 @@
+diff --git a/index.html b/index.html
+index f26a4cc..d6bac8b 100644
+--- a/index.html
++++ b/index.html
+@@ -17,7 +17,7 @@ body{margin:0;font:19px/1.4 Arial,sans-serif;color:#212b32;background:#f0f4f5}
+ :focus{outline:4px solid #212b32;box-shadow:0 0 0 8px #ffeb3b}
+ </style>
+ <script type="importmap">
+-{"imports":{"/packages/nhsuk-frontend/src/nhsuk/common/index.mjs":"/packages/nhsuk-frontend/src/nhsuk/common/index.js","/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.mjs":"/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.js","/packages/nhsuk-frontend/src/nhsuk/component.mjs":"/packages/nhsuk-frontend/src/nhsuk/component.js","/packages/nhsuk-frontend/src/nhsuk/errors/index.mjs":"/packages/nhsuk-frontend/src/nhsuk/errors/index.js"}}
++{"imports":{"/packages/nhsuk-frontend/src/nhsuk/common/index.mjs":"/packages/nhsuk-frontend/src/nhsuk/common/index.js","/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.mjs":"/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.js","/packages/nhsuk-frontend/src/nhsuk/component.mjs":"/packages/nhsuk-frontend/src/nhsuk/component.js","/packages/nhsuk-frontend/src/nhsuk/errors/index.mjs":"/packages/nhsuk-frontend/src/nhsuk/errors/index.js","./packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js":"/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js"}}
+ </script>
+ </head>
+ <body class="nhsuk-frontend-supported">

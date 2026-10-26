@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "id": "bs6-datepicker-pointer-passengers",
+  "title": "Change the passengers with the pointer",
+  "goal": "Editing another field and saving submits the saved departure date",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Click passengers",
+      "action": {
+        "kind": "click",
+        "selector": "#passengers"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Change the passengers",
+      "action": {
+        "kind": "type",
+        "text": "3",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save",
+      "action": {
+        "kind": "click",
+        "selector": "#save"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#sent",
+      "value": "departure=2026-10-22&passengers=3"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "departure",
+      "value": [
+        "2026-10-22"
+      ]
+    }
+  ],
+  "forbidden": []
+}

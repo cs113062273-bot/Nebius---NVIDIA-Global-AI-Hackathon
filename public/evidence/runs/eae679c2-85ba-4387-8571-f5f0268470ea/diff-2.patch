@@ -1,0 +1,43 @@
+diff --git a/index.html b/index.html
+index 153d895..d447616 100644
+--- a/index.html
++++ b/index.html
+@@ -38,6 +38,38 @@ import Modal from './js/src/modal.js';
+ document.querySelector('#confirm-delete').addEventListener('click', () => {
+   document.querySelector('#status').textContent = 'Deleted';
+ });
++const confirmModal = document.querySelector('#confirm');
++let keydownHandler = null;
++confirmModal.addEventListener('shown.bs.modal', () => {
++  const focusable = confirmModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
++  const focusableArray = Array.from(focusable).filter(el => !el.disabled);
++  keydownHandler = (e) => {
++    if (e.key === 'Tab') {
++      const active = document.activeElement;
++      const idx = focusableArray.indexOf(active);
++      if (idx !== -1) {
++        if (e.shiftKey) {
++          if (idx === 0) {
++            e.preventDefault();
++            focusableArray[focusableArray.length - 1].focus();
++          }
++        } else {
++          if (idx === focusableArray.length - 1) {
++            e.preventDefault();
++            focusableArray[0].focus();
++          }
++        }
++      }
++    }
++  };
++  confirmModal.addEventListener('keydown', keydownHandler);
++});
++confirmModal.addEventListener('hidden.bs.modal', () => {
++  if (keydownHandler) {
++    confirmModal.removeEventListener('keydown', keydownHandler);
++    keydownHandler = null;
++  }
++});
+ window.__ready = true;
+ </script>
+ </body>

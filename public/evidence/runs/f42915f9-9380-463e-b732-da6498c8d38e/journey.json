@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "id": "govuk-tabs-arrow-down-keyboard",
+  "title": "Press the down arrow on a tab without being switched to another tab",
+  "goal": "The down arrow leaves the Past day tab selected and its panel shown, as only left and right arrows move between horizontal tabs",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the selected tab",
+      "action": {
+        "kind": "seek",
+        "selector": "a[href='#past-day']",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Press the down arrow to read on",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#past-day",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "a[href='#past-day']"
+    },
+    {
+      "kind": "attribute",
+      "selector": "a[href='#past-day']",
+      "name": "aria-selected",
+      "value": "true"
+    },
+    {
+      "kind": "visible",
+      "selector": "#past-day",
+      "value": true
+    },
+    {
+      "kind": "visible",
+      "selector": "#past-week",
+      "value": false
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#past-day",
+      "value": true
+    }
+  ],
+  "forbidden": []
+}

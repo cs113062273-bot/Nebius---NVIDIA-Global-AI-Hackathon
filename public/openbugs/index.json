@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T03:09:05.233Z",
+  "generatedAt": "2026-10-26T06:58:10.160Z",
   "cases": [
     {
       "id": "autocompletejs-escape-erases-edit",
@@ -28,13 +28,34 @@
       },
       "expectedBehaviour": "As proposed by the maintainer in #485: Escape closes the list only and keeps the input. The reporter of #402 suggested restoring the earlier value instead; this task follows the maintainer's plan.",
       "recorded": {
-        "run": "a47e4fb6-4e1d-43c0-b4e5-46ba69fec6e6",
+        "run": "6e9696ec-5015-41ae-85a7-ff91c2b50afb",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "6e9696ec-5015-41ae-85a7-ff91c2b50afb",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "ae0a8142-5865-4816-990a-da05eb1c7fb8",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "54de35ca-e227-4f2f-8596-46487166585c",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap6-datepicker-focus-rewrites-date",
@@ -72,13 +93,34 @@
       },
       "expectedBehaviour": "Only the part of the issue every proposal agrees on: focusing and leaving the field without picking keeps the submitted value 2026-10-22. What a newly picked date should submit is still being decided upstream and is not tested.",
       "recorded": {
-        "run": "e5b11819-4a22-4eff-a826-bbfbc95465fe",
+        "run": "fc4d9aed-b356-419f-bc34-3ccf9b0bbb01",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "fc4d9aed-b356-419f-bc34-3ccf9b0bbb01",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "1227138c-e061-454e-a346-f33874150a5c",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "1eed9dfb-b5b7-4fb8-909e-b83702dc5d1a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap6-datepicker-tab-trap",
@@ -89,7 +131,7 @@
       "repository": "https://github.com/twbs/bootstrap",
       "issue": "https://github.com/twbs/bootstrap/issues/43202",
       "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
-      "status": "Found by Tabstitch and reported upstream as twbs/bootstrap#43202 on 2026-10-26 (reduced test case re-checked against the published 6.0.0-alpha.1 bundle and main at d793f282). Reproduced in headless Chromium 156 and desktop Chrome 155.",
+      "status": "Found by Tabstitch and reported upstream as twbs/bootstrap#43202 on 2026-10-26 (reduced test case re-checked against the published 6.0.0-alpha.1 bundle and main at d793f282). Reproduced in headless Chromium 156 and desktop Chrome 155. A Bootstrap maintainer triaged it the same day, labelled confirmed, bug, accessibility and v6.",
       "derivedFrom": null,
       "addedAfterReview": null,
       "replays": [],
@@ -109,15 +151,35 @@
       },
       "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
       "recorded": {
-        "run": "2bb91b99-274b-46c2-bb10-05c83c3cb194",
+        "run": "2c5074cd-803a-45c6-b3a4-c499d4f169f2",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "2c5074cd-803a-45c6-b3a4-c499d4f169f2",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "8950eba7-7f58-416e-934a-ec281e7bc3af",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "ec752e63-aef3-406b-8c37-38575e03e498",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap6-datepicker-tab-trap-with-picker",
@@ -128,7 +190,7 @@
       "repository": "https://github.com/twbs/bootstrap",
       "issue": "https://github.com/twbs/bootstrap/issues/43202",
       "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
-      "status": "Found by Tabstitch and reported upstream as twbs/bootstrap#43202 on 2026-10-26 (reduced test case re-checked against the published 6.0.0-alpha.1 bundle and main at d793f282). Reproduced in headless Chromium 156 and desktop Chrome 155.",
+      "status": "Found by Tabstitch and reported upstream as twbs/bootstrap#43202 on 2026-10-26 (reduced test case re-checked against the published 6.0.0-alpha.1 bundle and main at d793f282). Reproduced in headless Chromium 156 and desktop Chrome 155. A Bootstrap maintainer triaged it the same day, labelled confirmed, bug, accessibility and v6.",
       "derivedFrom": "bootstrap6-datepicker-tab-trap",
       "addedAfterReview": "Added after reviewing the engine-v6 patch for bootstrap6-datepicker-tab-trap: it passed every frozen check by disabling input mode, which left the calendar invisible on click. The original case and its result are kept unchanged; this stricter task adds one pointer guard, and earlier patches are replayed against it without inference.",
       "replays": [
@@ -165,13 +227,35 @@
       },
       "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
       "recorded": {
-        "run": "2dfa5efb-16e0-4333-a4fe-39c84d7723da",
+        "run": "78fcb958-7dca-4fc4-b2b8-32c9172b2911",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 2,
         "models": [
-          "nemotron-3-super-120b-a12b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "78fcb958-7dca-4fc4-b2b8-32c9172b2911",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "d13a48d9-9e98-4893-b4f0-3355814e5651",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "21c85cef-486e-473d-bd9d-6809936c425e",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
     },
     {
       "id": "bootstrap6-dialog-escape-keyboard-false",
@@ -211,13 +295,34 @@
       },
       "expectedBehaviour": null,
       "recorded": {
-        "run": "c4e3444d-9f7a-4dce-a378-727ac8bedaf6",
+        "run": "f65e71f2-55f9-4cee-8adb-f350517e8aa6",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "f65e71f2-55f9-4cee-8adb-f350517e8aa6",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "933c47c5-9ec4-44f9-be0b-f192848407cb",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "fc6445d6-2245-4bd4-a07a-73769b3fd702",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap6-drawer-initial-focus",
@@ -253,15 +358,36 @@
       },
       "expectedBehaviour": "Focus lands on the first focusable control in the drawer, its close button, as for a native modal dialog. The compiled stylesheet is a dependency outside the editable source, so a repair has to be made in the TypeScript.",
       "recorded": {
-        "run": "562fdf10-be09-4efb-b03f-d64a4971ffe4",
+        "run": "de7796ce-30aa-4f5e-948a-2ec109ea9de1",
         "verdict": "VERIFIED_FAIL",
         "passedOn": null,
         "models": [
           "nemotron-3-super-120b-a12b",
           "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "de7796ce-30aa-4f5e-948a-2ec109ea9de1",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "df191007-b796-40e6-b777-ded30b3ea975",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "9846a03e-497f-412f-a624-b688ed68a9fa",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
     },
     {
       "id": "pikaday-keyboard-disabled-day",
@@ -281,15 +407,35 @@
       "review": null,
       "expectedBehaviour": "Author decision: the arrow key moves to the next day that is not disabled, as when a user skips over closed days with the pointer.",
       "recorded": {
-        "run": "413124db-af81-47a6-a49e-35ad005497e8",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "c323b9aa-96b9-4413-9284-e6ea04c39e68",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "c323b9aa-96b9-4413-9284-e6ea04c39e68",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "24dbef06-3a78-4352-9fec-fa6e304e87f7",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "d7e9be94-1acc-42e7-9ec8-77c24d07cf9e",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "pikaday-tab-after-typed-date",
@@ -319,13 +465,36 @@
       },
       "expectedBehaviour": null,
       "recorded": {
-        "run": "d2724498-2115-4211-b2f4-1f355db03568",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "run": "c3a8859d-e2c1-40a2-b869-75ab352d8bce",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
-          "nemotron-3-super-120b-a12b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "c3a8859d-e2c1-40a2-b869-75ab352d8bce",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "1e3e47bf-3640-4367-bca2-151347298aa3",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "c58c76d4-b4ae-492e-8f6b-e3a44833d73b",
+          "verdict": "INCONCLUSIVE",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
     }
   ]
 }

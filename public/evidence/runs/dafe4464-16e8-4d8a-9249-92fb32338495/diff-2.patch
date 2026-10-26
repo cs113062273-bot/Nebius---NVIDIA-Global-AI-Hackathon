@@ -1,0 +1,14 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index af9981d..6d199a3 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -311,6 +311,9 @@ export default class Datepicker {
+       }
+     }
+     this.picker.show();
++    if (this.inputField) {
++      this.inputField.focus();
++    }
+   }
+ 
+   /**

@@ -1,0 +1,21 @@
+{
+  "root_cause": "The datepicker does not hide on blur when the entered date is outside the allowed range, because the update/setDate logic early exits without hiding and no blur listener is registered to close the picker.",
+  "repair_strategy": "Add a blur event listener to the input field that calls this.picker.hide() to ensure the datepicker closes when the input loses focus, regardless of validation outcome.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    // set up event listeners in other modes\n    const onMousedownDocument = onClickOutside.bind(null, this);\n    const listeners = [\n      [inputField, 'keydown', onKeydown.bind(null, this)],\n      [inputField, 'focus', onFocus.bind(null, this)],\n      [inputField, 'mousedown', onMousedown.bind(null, this)],\n      [inputField, 'click', onClickInput.bind(null, this)],\n      [inputField, 'paste', onPaste.bind(null, this)],\n      [document, 'mousedown', onMousedownDocument],\n      [document, 'touchstart', onMousedownDocument],\n      [window, 'resize', picker.place.bind(picker)]\n    ];\n    registerListeners(this, listeners);",
+      "after": "    // set up event listeners in other modes\n    const onMousedownDocument = onClickOutside.bind(null, this);\n    const listeners = [\n      [inputField, 'keydown', onKeydown.bind(null, this)],\n      [inputField, 'focus', onFocus.bind(null, this)],\n      [inputField, 'mousedown', onMousedown.bind(null, this)],\n      [inputField, 'click', onClickInput.bind(null, this)],\n      [inputField, 'paste', onPaste.bind(null, this)],\n      [inputField, 'blur', () => this.picker.hide()],\n      [document, 'mousedown', onMousedownDocument],\n      [document, 'touchstart', onMousedownDocument],\n      [window, 'resize', picker.place.bind(picker)]\n    ];\n    registerListeners(this, listeners);"
+    }
+  ],
+  "expected_accessibility_effect": "Ensures keyboard users can navigate away from the date field using Tab and the datepicker calendar will close, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Hiding the picker on blur may affect workflows where users expect the picker to remain open while interacting with other controls, but this aligns with typical datepicker behavior."
+  ],
+  "verification_requirements": [
+    "After edit, typing a valid or invalid date and pressing Tab results in the datepicker closing (.datepicker not visible) and focus moving to the next element.",
+    "Selecting a date from the picker and then tabbing away also closes the picker.",
+    "All existing date selection and navigation functionality remains intact."
+  ]
+}

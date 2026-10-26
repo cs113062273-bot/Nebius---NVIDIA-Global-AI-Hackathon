@@ -1,0 +1,21 @@
+{
+  "root_cause": "The header component incorrectly sets aria-hidden=true on the navigation menu when the mobile menu is closed, causing the navigation links to be excluded from the accessibility tree on desktop where the menu is visually hidden via CSS but the JS still treats it as closed.",
+  "repair_strategy": "Modify the syncState method to refrain from setting aria-hidden on the menu, ensuring the navigation remains accessible regardless of the mobile menu state.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  this.$menu.setAttribute('aria-hidden', !isVisible)\n}",
+      "after": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n}"
+    }
+  ],
+  "expected_accessibility_effect": "The navigation links will be exposed as links with correct accessible names, allowing keyboard and screen‑reader users to reach them.",
+  "functional_risks": [
+    "On mobile when the menu is closed, the navigation links will remain in the accessibility tree (though visually hidden via display:none). This could lead to extra announcements for screen reader users, but the links are not focusable because display:none removes them from the tab order."
+  ],
+  "verification_requirements": [
+    "After applying the change, the AX assertion for #nav-apply should pass (role link, name Apply).",
+    "Pressing Tab from the service link should move focus to #nav-renew and assert its role link and name 'Renew a licence'.",
+    "The menu button should continue to toggle aria-expanded correctly and the mobile menu should open/close as expected."
+  ]
+}

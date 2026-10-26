@@ -1,0 +1,41 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..0c9637a 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,6 +118,7 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onKeyDown: (event: KeyboardEvent) => void
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+@@ -205,6 +206,11 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    if (this._onKeyDown) {
++      EventHandler.off(this._element, 'keydown' + EVENT_KEY, this._onKeyDown)
++      this._onKeyDown = null
++    }
++
+     if (this._calendar) {
+       this._calendar.destroy()
+     }
+@@ -396,6 +402,16 @@ class Datepicker extends BaseComponent {
+       EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++  if (this._isInput) {
++    this._onKeyDown = (event: KeyboardEvent) => {
++      if (event.key === 'Tab' && this._isShown) {
++        event.stopImmediatePropagation()
++        this.hide()
++        }
++      }
++      EventHandler.on(this._element, 'keydown' + EVENT_KEY, this._onKeyDown)
++    }
++
+     this._onOutside = ({ target }) => {
+       const mainElement = this._calendar?.context?.mainElement
+       const isOutside = !(target instanceof Node) || (!this._element.contains(target) && !mainElement?.contains(target))

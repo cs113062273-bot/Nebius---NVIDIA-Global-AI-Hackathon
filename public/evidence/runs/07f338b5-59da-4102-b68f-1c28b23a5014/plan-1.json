@@ -1,0 +1,23 @@
+{
+  "root_cause": "The Escape key pressed on the access toggle button is intercepted by the dropdown's data-api keydown handler, which prevents event propagation and stops the modal from receiving the Escape key to close.",
+  "repair_strategy": "Modify the dropdown's dataApiKeydownHandler to only handle the Escape key when the dropdown is open (isActive), allowing Escape to bubble up to the modal when the dropdown is closed.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    if (event.key === ESCAPE_KEY) {\n      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n      button.focus()\n      Dropdown.clearMenus()\n      return\n    }",
+      "after": "    if (event.key === ESCAPE_KEY && isActive) {\n      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]\n      button.focus()\n      Dropdown.clearMenus()\n      return\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will now close the share modal when focus is on the access button, providing a keyboard mechanism to dismiss the dialog as required.",
+  "functional_risks": [
+    "Escape will no longer close the dropdown when it is closed (which is correct behavior per BS5).",
+    "If any custom code relies on Escape being captured by the dropdown regardless of its open state, that behavior will change."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape when the dropdown is open still closes the dropdown.",
+    "Verify that pressing Escape when the dropdown is closed closes the share modal.",
+    "Verify that ArrowUp, ArrowDown, and Space keys continue to operate correctly for dropdown interaction.",
+    "Ensure no regression in other dropdown-related keyboard interactions."
+  ]
+}

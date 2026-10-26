@@ -1,0 +1,22 @@
+{
+  "root_cause": "When a remove button is activated via keyboard (Enter), the click handler removes the parent <li> from the DOM. The button loses focus because it's detached, and the focus trap's recovery mechanism does not restore focus to another element in the basket, causing focus to escape the trap.",
+  "repair_strategy": "After removing the list item, explicitly move focus to the close button (which is always present and focusable) to keep focus inside the basket dialog.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "1066727c664d002ea1edf703d1c958ccf4c20f27abcefe1c83f6416d6823b607",
+      "before": "document.getElementById('items').addEventListener('click', event => {\n  const button = event.target.closest('button');\n  if (!button) return;\n  button.closest('li').remove();\n  const left = document.querySelectorAll('#items li').length;\n  document.getElementById('count').textContent = left + (left === 1 ? ' item' : ' items');\n});",
+      "after": "document.getElementById('items').addEventListener('click', event => {\n  const button = event.target.closest('button');\n  if (!button) return;\n  button.closest('li').remove();\n  const left = document.querySelectorAll('#items li').length;\n  document.getElementById('count').textContent = left + (left === 1 ? ' item' : ' items');\n  document.getElementById('close').focus();\n});"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains inside the basket dialog after removing a row, allowing continued navigation without escaping the trap.",
+  "functional_risks": [
+    "Focusing the close button may announce it prematurely to screen readers, but does not alter functionality.",
+    "If the close button were hidden or disabled, focus would be lost; however, it is always present and enabled."
+  ],
+  "verification_requirements": [
+    "After activating a remove button with Enter, the #count updates correctly.",
+    "After removal, focus is inside the basket (e.g., on #close or another basket element).",
+    "Tab navigation continues to cycle within the basket trap."
+  ]
+}

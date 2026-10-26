@@ -1,0 +1,21 @@
+{
+  "root_cause": "The header JavaScript always sets aria-hidden=true on the navigation list because the menu button is hidden on desktop and the navigation never receives the 'open' class, causing the navigation and its links to be excluded from the accessibility tree.",
+  "repair_strategy": "Modify the syncState method to conditionally apply aria-hidden only when the menu button is visible (mobile). When the button is hidden (desktop), ensure the navigation is not hidden by setting aria-hidden=false.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  this.$menu.setAttribute('aria-hidden', !isVisible)\n}",
+      "after": "Header.prototype.syncState = function (isVisible) {\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', isVisible)\n  this.$menuButton.setAttribute('aria-expanded', isVisible)\n  if (this.$menuButton.offsetParent) {\n    // Menu button is visible (mobile)\n    this.$menu.setAttribute('aria-hidden', !isVisible);\n  } else {\n    // Menu button is hidden (desktop)\n    this.$menu.setAttribute('aria-hidden', 'false');\n  }\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links will be included in the accessibility tree, exposing their role as link and accessible name, allowing keyboard and screen‑reader users to reach them.",
+  "functional_risks": [
+    "If the menu button is hidden while the navigation is also visually hidden (e.g., due to custom CSS), the navigation could be incorrectly exposed to assistive technology."
+  ],
+  "verification_requirements": [
+    "The AX assertion for #nav-apply (name \"Apply\", role \"link\") must pass after the fix.",
+    "On mobile widths, opening and closing the menu via the button must correctly toggle aria-expanded and aria-hidden on the navigation.",
+    "On desktop widths, the navigation must remain visible and not be hidden from assistive technology regardless of menu button state."
+  ]
+}

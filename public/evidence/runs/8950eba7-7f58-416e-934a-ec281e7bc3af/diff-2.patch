@@ -1,0 +1,44 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..ca52fb4 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,6 +118,7 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onInputKeydown: ((event: KeyboardEvent) => void) | null
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+@@ -205,6 +206,11 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    if (this._onInputKeydown) {
++      this._element.removeEventListener('keydown', this._onInputKeydown)
++      this._onInputKeydown = null
++    }
++
+     if (this._calendar) {
+       this._calendar.destroy()
+     }
+@@ -238,6 +244,19 @@ class Datepicker extends BaseComponent {
+     this._positionElement = this._resolvePositionElement()
+     this._displayElement = this._resolveDisplayElement()
+ 
++    // Allow Tab to move focus to next element (close calendar if open)
++    if (this._isInput && !this._isInline) {
++      this._onInputKeydown = (event: KeyboardEvent) => {
++        if (event.key === 'Tab') {
++          event.stopImmediatePropagation()
++          if (this._isShown) {
++            this.hide()
++          }
++        }
++      }
++      this._element.addEventListener('keydown', this._onInputKeydown)
++    }
++
+     const calendarOptions = this._buildCalendarOptions()
+ 
+     // Create calendar on the position element (for correct popup positioning)

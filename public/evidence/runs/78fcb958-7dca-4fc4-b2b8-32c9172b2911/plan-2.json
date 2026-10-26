@@ -1,0 +1,37 @@
+{
+  "root_cause": "The vanilla-calendar-pro (VCP) library attaches a keydown listener to the date input during its init() call that prevents the default action on Tab key, blocking focus movement to the next form field. Bootstrap's datepicker wrapper initializes VCP before adding any custom keyboard handlers, so VCP's listener runs first and calls preventDefault().",
+  "repair_strategy": "Add a keydown listener on the date input BEFORE calling VCP's init(), so it registers first. On Tab key, hide the datepicker and call stopImmediatePropagation() to prevent VCP's listener from running, while allowing the default tab navigation to proceed. Clean up the listener on dispose.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onTabKey: ((event: KeyboardEvent) => void) | null"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Create calendar on the position element (for correct popup positioning)\n    // but value updates still go to this._element (the input)\n    this._calendar = new Calendar(this._positionElement, calendarOptions)\n    this._calendar.init()",
+      "after": "    // Create calendar on the position element (for correct popup positioning)\n    // but value updates still go to this._element (the input)\n    this._calendar = new Calendar(this._positionElement, calendarOptions)\n\n    // Handle Tab key to allow focus to leave the input while closing the datepicker\n    if (this._isInput && !this._isInline) {\n      this._onTabKey = (event: KeyboardEvent) => {\n        if (event.key === 'Tab' && this._isShown) {\n          this.hide()\n          event.stopImmediatePropagation()\n        }\n      }\n      EventHandler.on(this._element, 'keydown', this._onTabKey)\n    }\n\n    this._calendar.init()"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }",
+      "after": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    // Clean up Tab key listener\n    if (this._onTabKey) {\n      EventHandler.off(this._element, 'keydown', this._onTabKey)\n      this._onTabKey = null\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key navigation will move focus from the departure date field to the passengers field as expected, restoring logical tab order for keyboard users. The datepicker popup closes when tabbing out.",
+  "functional_risks": [
+    "If VCP changes its internal event handling in a future version, the stopImmediatePropagation approach may need adjustment.",
+    "The datepicker may not hide correctly if the Tab key is pressed while focus remains within the datepicker popup (e.g., when navigating the calendar with Tab).",
+    "Adding the keydown listener before VCP init could potentially conflict with other custom keyboard handlers attached to the input element."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the departure date field moves focus to the passengers field.",
+    "Verify that pressing Shift+Tab from the passengers field moves focus back to the departure date field.",
+    "Verify that the datepicker popup closes when tabbing out of the departure date field.",
+    "Verify that date selection via mouse or keyboard still functions correctly.",
+    "Verify that the datepicker does not interfere with Tab navigation in other form fields."
+  ]
+}

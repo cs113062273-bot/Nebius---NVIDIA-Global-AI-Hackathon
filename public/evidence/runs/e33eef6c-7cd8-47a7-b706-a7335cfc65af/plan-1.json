@@ -1,0 +1,23 @@
+{
+  "root_cause": "The focus trap listener (maintainFocus) remains active when restoring focus in hide(), causing it to steal focus back to the dialog after attempting to return focus to the opener.",
+  "repair_strategy": "Move the removal of the focus and keydown listeners before restoring focus in the hide() method, ensuring the focus trap does not interfere with focus restoration.",
+  "edits": [
+    {
+      "path": "src/a11y-dialog.js",
+      "sha256": "9dbd1daa87fcac8518db48e4cbb4b0eeea7c30c92a6171ff59cbc895938aaf4c",
+      "before": "/**\n   * Hide the dialog element, restore the focus to the previously active\n   * element, stop listening for some specific key presses and fire all\n   * registered callbacks for `hide` event\n   */\n         hide(event        ) {\n    // If the dialog is already closed, abort\n    if (!this.shown) return this\n\n    // Dispatch a `hide` event\n    const hideEvent = this.fire('hide', event)\n\n    // If the event was prevented, do not continue with the normal behavior\n    if (hideEvent.defaultPrevented) return this\n\n    this.shown = false\n    this.$el.setAttribute('aria-hidden', 'true')\n\n    // Ensure the previously focused element (if any) has a `focus` method\n    // before attempting to call it to account for SVG elements\n    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/108\n    this.previouslyFocused?.focus?.()\n\n    // Remove the focus event listener to the body element and stop listening\n    // for specific key presses\n    document.body.removeEventListener('focus', this.maintainFocus, true)\n    this.$el.removeEventListener('keydown', this.bindKeypress, true)\n\n    return this\n  }",
+      "after": "/**\n   * Hide the dialog element, restore the focus to the previously active\n   * element, stop listening for some specific key presses and fire all\n   * registered callbacks for `hide` event\n   */\n         hide(event        ) {\n    // If the dialog is already closed, abort\n    if (!this.shown) return this\n\n    // Dispatch a `hide` event\n    const hideEvent = this.fire('hide', event)\n\n    // If the event was prevented, do not continue with the normal behavior\n    if (hideEvent.defaultPrevented) return this\n\n    this.shown = false\n    this.$el.setAttribute('aria-hidden', 'true')\n\n    // Remove the focus event listener to the body element and stop listening\n    // for specific key presses\n    document.body.removeEventListener('focus', this.maintainFocus, true)\n    this.$el.removeEventListener('keydown', this.bindKeypress, true)\n\n    // Ensure the previously focused element (if any) has a `focus` method\n    // before attempting to call it to account for SVG elements\n    // See: https://github.com/KittyGiraudel/a11y-dialog/issues/108\n    this.previouslyFocused?.focus?.()\n\n    return this\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Focus returns to the opener button after the dialog is closed, preserving logical keyboard focus order.",
+  "functional_risks": [
+    "Removing listeners early could theoretically interfere with any pending asynchronous operations that rely on them, but the hide method completes synchronously and no such usage exists.",
+    "Ensure that the focus restoration still works for elements that may lose focusability (e.g., SVG) – the existing guard remains unchanged."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape closes the dialog and returns focus to the opener button.",
+    "Confirm that the dialog remains hidden (aria-hidden=true) after closing.",
+    "Ensure that opening and closing the dialog multiple times continues to work correctly.",
+    "Check that focus trapping still functions correctly while the dialog is open (tabbing within dialog does not escape)."
+  ]
+}

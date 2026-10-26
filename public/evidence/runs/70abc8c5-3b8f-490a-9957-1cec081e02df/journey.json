@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "id": "bootstrap-tabs-disabled-keyboard",
+  "title": "Arrow past a disabled settings tab",
+  "goal": "ArrowRight skips the disabled tab and selects the next enabled one",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the Account tab",
+      "action": {
+        "kind": "seek",
+        "selector": "#tab-account",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move right past the disabled Notifications tab",
+      "action": {
+        "kind": "press",
+        "key": "ArrowRight"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#tab-billing",
+          "name": "aria-selected",
+          "value": "true"
+        },
+        {
+          "kind": "focus",
+          "selector": "#tab-billing"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#tab-billing"
+    },
+    {
+      "kind": "visible",
+      "selector": "#billing-plan",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#tab-notifications",
+      "name": "aria-selected",
+      "value": "false"
+    },
+    {
+      "kind": "visible",
+      "selector": "#notify-email",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

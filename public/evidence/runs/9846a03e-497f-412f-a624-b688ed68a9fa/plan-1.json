@@ -1,0 +1,24 @@
+{
+  "root_cause": "When the drawer is opened via the Enter key, focus remains on the triggering button or the body instead of moving into the dialog, preventing keyboard users from interacting with the filter controls.",
+  "repair_strategy": "Modify DialogBase._showElement to move focus to the first focusable element inside the dialog after it is shown, ensuring keyboard focus is trapped within the drawer upon opening.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\\n    this._openedAsModal = modal\\n\\n    if (modal) {\\n      this._element.showModal()\\n    } else {\\n      this._element.show()\\n    }\\n\\n    if (preventBodyScroll) {\\n      // Lock scroll on the root element (not <body>) so it lands on the same\\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\\n    }\\n  }",
+      "after": "protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\\n    this._openedAsModal = modal\\n\\n    if (modal) {\\n      this._element.showModal()\\n    } else {\\n      this._element.show()\\n    }\\n\\n    if (preventBodyScroll) {\\n      // Lock scroll on the root element (not <body>) so it lands on the same\\n      // element that carries `scrollbar-gutter: stable`. Co-locating them keeps\\n      // the gutter reserved while the scrollbar is hidden, so the page doesn't\\n      // shift (and the ::backdrop covers the gutter instead of leaving a strip).\\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\\n    }\\n\\n    // Move focus to the first focusable element inside the dialog\\n    const focusableSelectors = [\\n      'a[href]',\\n      'area[href]',\\n      'input:not([disabled]):not([type=\"hidden\"])',\\n      'select:not([disabled])',\\n      'textarea:not([disabled])',\\n      'button:not([disabled])',\\n      'iframe',\\n      'object',\\n      'embed',\\n      '[contenteditable]',\\n      '[tabindex]:not([tabindex=\"-1\"])'\\n    ].join(',');\\n    const focusable = this._element.querySelectorAll(focusableSelectors);\\n    if (focusable.length) {\\n      (focusable[0] as HTMLElement).focus();\\n    }\\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "After opening the drawer with Enter, focus will shift to the close button (#filters-close), allowing subsequent Tab navigation to reach the In stock checkbox and other controls as expected.",
+  "functional_risks": [
+    "If the dialog contains no focusable elements, focus will not be moved (guarded by length check).",
+    "Potential conflict with subclasses that implement custom focus management; however, none are present in this codebase."
+  ],
+  "verification_requirements": [
+    "Pressing Enter on #filters-open results in focus on #filters-close.",
+    "Subsequent Tab moves focus to #in-stock.",
+    "Pressing Space toggles the checkbox.",
+    "Next Tab moves focus to #apply.",
+    "Pressing Enter on #apply updates the applied filter output to 'in'."
+  ]
+}

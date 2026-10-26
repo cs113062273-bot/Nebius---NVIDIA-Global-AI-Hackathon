@@ -1,0 +1,24 @@
+{
+  "root_cause": "When the focused 'Show all 4 results' button (#more) is removed by its click handler, focus leaves the dialog and the focus trap's checkFocusIn handler attempts to restore focus to the previously focused node (now detached). The existing fallback to getInitialFocusNode() may not reliably select a currently focusable node because the tabbable cache update timing or node connectivity checks fail in the test environment, leaving focus on the body element.",
+  "repair_strategy": "Modify checkFocusIn to immediately refresh the tabbable node cache and directly target the first tabbable node in the primary container group when focus escapes, bypassing the detached-node restoration logic entirely. This ensures a valid, connected focus target is selected from the current DOM state.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      // Ensure tabbable nodes are up to date in case the DOM changed (e.g., focused element removed)\n      updateTabbableNodes();\n      const focusNode = state.mostRecentlyFocusedNode;\n      if (!focusNode || !focusNode.isConnected || !isFocusable(focusNode, config.tabbableOptions)) {\n        tryFocus(getInitialFocusNode());\n      } else {\n        tryFocus(focusNode);\n      }\n    }\n  };",
+      "after": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to the first available tabbable node in the trap\n      e.stopImmediatePropagation();\n      // Ensure tabbable nodes are up to date in case the DOM changed (e.g., focused element removed)\n      updateTabbableNodes();\n      // Directly target the first tabbable node in the first container group\n      const firstGroup = state.tabbableGroups[0];\n      if (firstGroup && firstGroup.firstTabbableNode) {\n        tryFocus(firstGroup.firstTabbableNode);\n      } else {\n        // Fallback to initial focus logic if no tabbable groups exist\n        tryFocus(getInitialFocusNode());\n      }\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains trapped inside the dialog after activating a control that removes itself, ensuring users can continue navigating via Tab/Shift+Tab without escaping to the body element.",
+  "functional_risks": [
+    "Focus restoration now always targets the first tabbable node (close button) rather than the previously focused position, which may surprise users expecting focus to return near their last position.",
+    "If the first tabbable node is not the desired initial focus (e.g., initialFocus option specified), the fallback may not respect that option in escape scenarios.",
+    "Minimal performance overhead from updateTabbableNodes on focus escape (rare event)."
+  ],
+  "verification_requirements": [
+    "After clicking 'Show all 4 results', pressing Tab should move focus to the next focusable element inside the dialog (e.g., first list item or close button).",
+    "Escape key should still close the dialog and return focus to the opener button.",
+    "Opening the dialog should still place initial focus on the close button.",
+    "Removing other focusable elements inside the dialog should not break the trap's ability to retain focus."
+  ]
+}

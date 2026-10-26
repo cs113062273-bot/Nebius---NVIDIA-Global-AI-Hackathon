@@ -1,0 +1,35 @@
+{
+  "root_cause": "The radios component only listens for click events on its own module element. When a radio in a different module (but same radio group) is selected via keyboard, the change event does not bubble to the first module, so its conditional fields are not updated.",
+  "repair_strategy": "Make each Radios instance listen for click and change events on the document, and filter by the radio group name. This ensures that selection changes in any module of the same group trigger updates for all modules.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "function Radios ($module) {\n  this.$module = $module\n  this.$inputs = $module.querySelectorAll('input[type=\"radio\"]')\n}",
+      "after": "function Radios ($module) {\n  this.$module = $module\n  this.$inputs = $module.querySelectorAll('input[type=\"radio\"]')\n  this.name = this.$inputs[0] ? this.$inputs[0].getAttribute('name') : null\n}"
+    },
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.init = function () {\n  var $module = this.$module\n  var $inputs = this.$inputs\n\n  /**\n  * Loop over all items with [data-controls]\n  * Check if they have a matching conditional reveal\n  * If they do, assign attributes.\n  **/\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('data-aria-controls')\n\n    // Check if input controls anything\n    // Check if content exists, before setting attributes.\n    if (!controls || !$module.querySelector('#' + controls)) {\n      return\n    }\n\n    // If we have content that is controlled, set attributes.\n    $input.setAttribute('aria-controls', controls)\n    $input.removeAttribute('data-aria-controls')\n    this.setAttributes($input)\n  }.bind(this))\n\n  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "Radios.prototype.init = function () {\n  var $module = this.$module\n  var $inputs = this.$inputs\n\n  /**\n  * Loop over all items with [data-controls]\n  * Check if they have a matching conditional reveal\n  * If they do, assign attributes.\n  **/\n  nodeListForEach($inputs, function ($input) {\n    var controls = $input.getAttribute('data-aria-controls')\n\n    // Check if input controls anything\n    // Check if content exists, before setting attributes.\n    if (!controls || !$module.querySelector('#' + controls)) {\n      return\n    }\n\n    // If we have content that is controlled, set attributes.\n    $input.setAttribute('aria-controls', controls)\n    $input.removeAttribute('data-aria-controls')\n    this.setAttributes($input)\n  }.bind(this))\n\n  // Handle events on document to catch cross-module changes\n  document.addEventListener('click', this.handleClick.bind(this))\n  document.addEventListener('change', this.handleClick.bind(this))\n}"
+    },
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}",
+      "after": "Radios.prototype.handleClick = function (event) {\n  // Only handle events for radios in this group (by name)\n  var $target = event.target\n  var $radio = null\n  if ($target && $target.getAttribute('type') === 'radio' && $target.getAttribute('name') === this.name) {\n    $radio = $target\n  } else if ($target && $target.tagName === 'LABEL' && $target.getAttribute('for')) {\n    var $input = document.getElementById($target.getAttribute('for'))\n    if ($input && $input.getAttribute('type') === 'radio' && $input.getAttribute('name') === this.name) {\n      $radio = $input\n    }\n  }\n  if (!$radio) {\n    return\n  }\n\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate between radio options across modules and see conditional fields show/hide correctly, meeting WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Potential performance overhead from global event listeners; however, the component is lightweight and the filtering minimizes unnecessary work.",
+    "Risk of duplicate handling if multiple Radios instances exist for the same group, but setAttributes is idempotent."
+  ],
+  "verification_requirements": [
+    "Verify that arrowing between options updates aria-expanded and hides/shows conditionals correctly.",
+    "Verify that mouse clicks continue to work as before.",
+    "Verify that form data reflects the selected value after keyboard navigation.",
+    "Verify no regression in existing tests for the radios component."
+  ]
+}

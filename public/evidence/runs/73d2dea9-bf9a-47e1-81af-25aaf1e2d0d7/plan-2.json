@@ -1,0 +1,22 @@
+{
+  "root_cause": "The modal's focus trap only forces focus back to the modal element when focus leaves, but does not handle Tab/Shift+Tab key wrapping among the dialog's focusable elements. When the modal opens, the modal element (tabindex=-1) receives focus; the first Tab moves to the close button, but Shift+Tab from the close button would normally return to the modal element instead of wrapping to the last focusable element (Delete button).",
+  "repair_strategy": "Add a keydown event listener on the modal element that intercepts Tab and Shift+Tab keys while the modal is shown. The handler computes the first and last focusable elements in the dialog and moves focus accordingly, preventing the default browser behavior.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  _setEscapeEvent() {\n    if (this._isShown) {\n      EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {\n        if (this._config.keyboard && event.key === ESCAPE_KEY) {\n          event.preventDefault()\n          this.hide()\n        } else if (!this._config.keyboard && event.key === ESCAPE_KEY) {\n          this._triggerBackdropTransition()\n        }\n      })\n    } else {\n      EventHandler.off(this._element, EVENT_KEYDOWN_DISMISS)\n    }\n  }",
+      "after": "  _setEscapeEvent() {\n    if (this._isShown) {\n      EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {\n        if (this._config.keyboard && event.key === ESCAPE_KEY) {\n          event.preventDefault()\n          this.hide()\n        } else if (!this._config.keyboard && event.key === ESCAPE_KEY) {\n          this._triggerBackdropTransition()\n        }\n      })\n\n      // Handle Tab and Shift+Tab for focus wrapping within the modal\n      EventHandler.on(this._element, 'keydown.bs.modal', event => {\n        if (event.key === 'Tab') {\n          const focusableElements = this._dialog.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])')\n          if (focusableElements.length === 0) return\n          const firstElement = focusableElements[0]\n          const lastElement = focusableElements[focusableElements.length - 1]\n\n          if (event.shiftKey) {\n            // Shift+Tab: move from first to last\n            if (document.activeElement === firstElement) {\n              event.preventDefault()\n              lastElement.focus()\n            }\n          } else {\n            // Tab: move from last to first\n            if (document.activeElement === lastElement) {\n              event.preventDefault()\n              firstElement.focus()\n            }\n          }\n        }\n      })\n    } else {\n      EventHandler.off(this._element, EVENT_KEYDOWN_DISMISS)\n      EventHandler.off(this._element, 'keydown.bs.modal')\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate the modal dialog using Tab and Shift+Tab with proper focus wrapping between the first and last focusable controls, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "The generic focusable selector may include unintended elements if the dialog structure changes.",
+    "The new keydown listener could conflict with other keydown handlers on the modal element."
+  ],
+  "verification_requirements": [
+    "Open the delete confirmation modal, press Tab to reach the close button, then press Shift+Tab and verify focus moves to the Delete button.",
+    "Press Tab from the Delete button and verify focus wraps to the close button.",
+    "Ensure Escape key still closes the modal."
+  ]
+}

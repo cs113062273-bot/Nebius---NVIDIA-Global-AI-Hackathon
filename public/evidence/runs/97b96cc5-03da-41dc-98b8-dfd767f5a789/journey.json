@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "id": "bootstrap-dropdown-escape-keyboard",
+  "title": "Close the invoice actions menu with Escape",
+  "goal": "Escape closes the menu and focus returns to the toggle",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the actions toggle",
+      "action": {
+        "kind": "seek",
+        "selector": "#actions-toggle",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open the menu with ArrowDown",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#actions-toggle",
+          "name": "aria-expanded",
+          "value": "true"
+        },
+        {
+          "kind": "focus",
+          "selector": "#action-send"
+        }
+      ]
+    },
+    {
+      "title": "Close the menu with Escape",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#actions-toggle",
+          "name": "aria-expanded",
+          "value": "false"
+        },
+        {
+          "kind": "focus",
+          "selector": "#actions-toggle"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#actions-toggle"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#actions-menu",
+      "value": false
+    },
+    {
+      "kind": "text",
+      "selector": "#last-action",
+      "value": "None"
+    }
+  ],
+  "forbidden": []
+}

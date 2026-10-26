@@ -1,0 +1,12 @@
+diff --git a/js/src/offcanvas.js b/js/src/offcanvas.js
+index 2b6335b..9754be7 100644
+--- a/js/src/offcanvas.js
++++ b/js/src/offcanvas.js
+@@ -121,7 +121,6 @@ class Offcanvas extends BaseComponent {
+ 
+     const completeCallBack = () => {
+       EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })
+-      this._enforceFocusOnElement(this._element)
+     }
+ 
+     const transitionDuration = getTransitionDurationFromElement(this._element)

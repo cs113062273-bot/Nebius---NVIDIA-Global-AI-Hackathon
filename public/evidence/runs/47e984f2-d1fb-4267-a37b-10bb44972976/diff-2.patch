@@ -1,0 +1,19 @@
+diff --git a/lib/src/index.js b/lib/src/index.js
+index a290f08..f82f063 100644
+--- a/lib/src/index.js
++++ b/lib/src/index.js
+@@ -4,10 +4,10 @@ const MicroModal = (() => {
+   const FOCUSABLE_ELEMENTS = [
+     'a[href]',
+     'area[href]',
+-    'input:not([disabled]):not([type="hidden"]):not([aria-hidden])',
+-    'select:not([disabled]):not([aria-hidden])',
+-    'textarea:not([disabled]):not([aria-hidden])',
+-    'button:not([disabled]):not([aria-hidden])',
++    'input:not([disabled]):not([type="hidden"]):not([aria-hidden="true"])',
++    'select:not([disabled]):not([aria-hidden="true"])',
++    'textarea:not([disabled]):not([aria-hidden="true"])',
++    'button:not([disabled]):not([aria-hidden="true"])',
+     'iframe',
+     'object',
+     'embed',

@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "id": "accessible-menu-escape-keyboard",
+  "title": "Escape closes only the innermost open submenu",
+  "goal": "Escape in the Facts submenu returns to Facts while the About submenu stays open",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the menubar",
+      "action": {
+        "kind": "seek",
+        "selector": "#home",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to About",
+      "action": {
+        "kind": "press",
+        "key": "ArrowRight"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#about"
+        }
+      ]
+    },
+    {
+      "title": "Open About",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#overview"
+        },
+        {
+          "kind": "attribute",
+          "selector": "#about",
+          "name": "aria-expanded",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "title": "Move to Facts",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#facts"
+        }
+      ]
+    },
+    {
+      "title": "Open Facts",
+      "action": {
+        "kind": "press",
+        "key": "ArrowRight"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#history"
+        },
+        {
+          "kind": "attribute",
+          "selector": "#facts",
+          "name": "aria-expanded",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "title": "Close the Facts submenu",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#facts"
+        },
+        {
+          "kind": "attribute",
+          "selector": "#facts",
+          "name": "aria-expanded",
+          "value": "false"
+        },
+        {
+          "kind": "attribute",
+          "selector": "#about",
+          "name": "aria-expanded",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#facts"
+    },
+    {
+      "kind": "visible",
+      "selector": "#facts",
+      "value": true
+    },
+    {
+      "kind": "visible",
+      "selector": "#history",
+      "value": false
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#facts",
+      "name": "aria-expanded",
+      "value": "false"
+    }
+  ],
+  "forbidden": []
+}

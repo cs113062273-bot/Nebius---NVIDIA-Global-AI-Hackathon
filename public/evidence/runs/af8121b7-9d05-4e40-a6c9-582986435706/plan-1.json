@@ -1,0 +1,22 @@
+{
+  "root_cause": "The offcanvas component disables focus trap when the scroll configuration is true (data-bs-scroll=\"true\"), allowing focus to leave the panel when tabbing.",
+  "repair_strategy": "Ensure focus trap is always activated when the offcanvas is shown, regardless of scroll setting, by removing the conditional check in the show callback.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d",
+      "before": "    const completeCallBack = () => {\n      if (!this._config.scroll) {\n        this._focustrap.activate()\n      }\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }",
+      "after": "    const completeCallBack = () => {\n      this._focustrap.activate()\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab navigation will remain trapped within the offcanvas panel, allowing users to navigate focusable elements inside without escaping to underlying page.",
+  "functional_risks": [
+    "Potential conflict with scroll=true intent (though focus trap does not affect scrolling)."
+  ],
+  "verification_requirements": [
+    "After opening help panel, first Tab focuses #help-close.",
+    "Second Tab keeps focus inside panel (loops to #help-close or other focusable elements).",
+    "Offcanvas can still be dismissed via Escape, close button, or backdrop click.",
+    "Body scrolling behavior respects data-bs-scroll setting."
+  ]
+}

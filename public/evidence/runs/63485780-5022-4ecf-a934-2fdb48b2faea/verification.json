@@ -1,6 +1,0 @@
-{
-  "verdict": "VERIFIED_FAIL",
-  "reasons": [
-    "APPLICATION: Edit 1 (js/picker/Picker.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"element.tabIndex = -1;\". Best alignment: before lines 1-5 match file lines 155-159, then before line 6 \"element.tabIndex = -1;\" differs from file line 160 \"\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
-  ]
-}

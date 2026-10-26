@@ -1,0 +1,21 @@
+{
+  "root_cause": "The datepicker widget steals focus when opened and traps Tab navigation inside its popup, preventing focus from moving to the next form field.",
+  "repair_strategy": "After showing the datepicker, explicitly return focus to the associated input element so that subsequent Tab presses move to the next field.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+      "before": "  show() {\n    if (this.inputField) {\n      const {config, inputField} = this;\n      if (inputField.disabled || (inputField.readOnly && !config.enableOnReadonly)) {\n        return;\n      }\n      if (!isActiveElement(inputField) && !config.disableTouchKeyboard) {\n        this._showing = true;\n        inputField.focus();\n        delete this._showing;\n      }\n    }\n    this.picker.show();\n  }",
+      "after": "  show() {\n    if (this.inputField) {\n      const {config, inputField} = this;\n      if (inputField.disabled || (inputField.readOnly && !config.enableOnReadonly)) {\n        return;\n      }\n      if (!isActiveElement(inputField) && !config.disableTouchKeyboard) {\n        this._showing = true;\n        inputField.focus();\n        delete this._showing;\n      }\n    }\n    this.picker.show();\n    if (this.inputField) {\n      this.inputField.focus();\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key navigation will move focus from the visit date input to the access notes input when the datepicker is open, allowing keyboard users to continue filling the form.",
+  "functional_risks": [
+    "Potentially interfering with datepicker keyboard navigation if the input loses focus while the popup is open; however the datepicker still receives keystrokes via its listener on the input element, so date picking functionality should remain unchanged."
+  ],
+  "verification_requirements": [
+    "Tab from #visit-date moves focus to #notes when datepicker is open",
+    "Datepicker still responds to ArrowRight/Enter to select a date",
+    "Closing datepicker with Escape returns focus to input"
+  ]
+}

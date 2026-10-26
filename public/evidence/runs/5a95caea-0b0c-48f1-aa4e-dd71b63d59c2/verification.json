@@ -1,0 +1,12 @@
+{
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

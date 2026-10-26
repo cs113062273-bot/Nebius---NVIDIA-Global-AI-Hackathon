@@ -1,0 +1,12 @@
+diff --git a/index.html b/index.html
+index c7e45a4..248641b 100644
+--- a/index.html
++++ b/index.html
+@@ -47,6 +47,7 @@ document.getElementById('items').addEventListener('click', event => {
+   button.closest('li').remove();
+   const left = document.querySelectorAll('#items li').length;
+   document.getElementById('count').textContent = left + (left === 1 ? ' item' : ' items');
++  trap.updateContainerElements();
+ });
+ window.__ready = true;
+ </script>

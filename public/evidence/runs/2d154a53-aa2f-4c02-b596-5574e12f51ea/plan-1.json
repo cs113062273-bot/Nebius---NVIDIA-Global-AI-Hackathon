@@ -1,0 +1,24 @@
+{
+  "root_cause": "The NHSBoxexclusive module only responds to click events, so pressing Space on the exclusive 'No symptoms' checkbox does not trigger the clearing of other symptom checkboxes.",
+  "repair_strategy": "Add a change event listener to the exclusive checkbox that manually unchecks other checkboxes in the same group when it is checked via keyboard.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+      "before": "<script type=\"module\">\nimport { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'\ninitCheckboxes()\n</script>",
+      "after": "<script type=\"module\">\nimport { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'\ninitCheckboxes()\n// Fix exclusive behavior for keyboard\nconst symptomsNone = document.getElementById('symptoms-none');\nif (symptomsNone) {\n  symptomsNone.addEventListener('change', () => {\n    if (symptomsNone.checked) {\n      document.querySelectorAll('input[name^=\"symptoms[\"]:not(#symptoms-none)').forEach(el => {\n        el.checked = false;\n        el.dispatchEvent(new Event('change'));\n      });\n    }\n  });\n}\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now clear symptom selections by choosing 'No symptoms', satisfying WCAG 2.1.1 Keyboard and 2.4.3 Focus Order requirements.",
+  "functional_risks": [
+    "Duplicate listeners if the script is executed multiple times.",
+    "Overly broad selector could affect other forms if reused, but limited to symptoms form.",
+    "Manual dispatch of change events may interfere with other listeners expecting native events."
+  ],
+  "verification_requirements": [
+    "Check that selecting 'No symptoms' via Space after checking cough and fever clears those checkboxes.",
+    "Verify that mouse click on 'No symptoms' still works as before.",
+    "Ensure that checking other symptom boxes after 'No symptoms' does not re‑check the 'No symptoms' box.",
+    "Confirm that the form data for symptoms[cough] and symptoms[fever] is empty when 'No symptoms' is checked."
+  ]
+}

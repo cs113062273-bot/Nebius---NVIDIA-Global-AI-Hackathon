@@ -1,0 +1,36 @@
+[
+  {
+    "path": "index.html",
+    "score": 11,
+    "signals": [
+      "reminder",
+      "conditional-reminder-2",
+      "reminder-none",
+      "body",
+      "reminder-2",
+      "Email",
+      "Email address",
+      "Text message",
+      "Mobile number",
+      "I do not want reminders",
+      "Continue"
+    ],
+    "sha256": "34aaa9ab14ca45254e7c2deedcdc7e50476f54a7264750d5a18fa063e59a1685"
+  },
+  {
+    "path": "src/govuk/components/radios/radios.js",
+    "score": 10.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c"
+  },
+  {
+    "path": "src/govuk/common.js",
+    "score": 10,
+    "signals": [
+      "Imported runtime dependency of src/govuk/components/radios/radios.js"
+    ],
+    "sha256": "1cc1e2a84c89e7b8e5f90cb11a8e25d54ac8a0bcda29367407eb7bbbb0610539"
+  }
+]

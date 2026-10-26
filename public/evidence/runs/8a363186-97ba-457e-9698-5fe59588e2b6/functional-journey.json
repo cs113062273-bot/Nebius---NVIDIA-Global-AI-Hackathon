@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "id": "bootstrap-offcanvas-scroll-pointer",
+  "title": "Open and close the policy help panel",
+  "goal": "The panel opens and its close button hides it",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open help",
+      "action": {
+        "kind": "click",
+        "selector": "#open-help"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#help-text",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Close help",
+      "action": {
+        "kind": "click",
+        "selector": "#help-close"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#help-text",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#help-text",
+      "value": false
+    }
+  ],
+  "functional": [
+    {
+      "kind": "visible",
+      "selector": "#help-text",
+      "value": false
+    },
+    {
+      "kind": "form-data",
+      "selector": "#report",
+      "name": "amount",
+      "value": [
+        "38.50"
+      ]
+    }
+  ],
+  "forbidden": []
+}

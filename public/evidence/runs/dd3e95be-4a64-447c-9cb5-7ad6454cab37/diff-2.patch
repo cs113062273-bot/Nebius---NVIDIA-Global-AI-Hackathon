@@ -1,0 +1,37 @@
+diff --git a/src/govuk/components/radios/radios.js b/src/govuk/components/radios/radios.js
+index 659c970..c13b294 100644
+--- a/src/govuk/components/radios/radios.js
++++ b/src/govuk/components/radios/radios.js
+@@ -33,7 +33,11 @@ Radios.prototype.init = function () {
+   }.bind(this))
+ 
+   // Handle events
+-  $module.addEventListener('click', this.handleClick.bind(this))
++  $module.addEventListener('click', this.handleChange.bind(this))
++  var $form = $module.closest('form')
++  if ($form) {
++    $form.addEventListener('change', this.handleChange.bind(this))
++  }
+ }
+ 
+ Radios.prototype.setAttributes = function ($input) {
+@@ -46,12 +50,14 @@ Radios.prototype.setAttributes = function ($input) {
+   }
+ }
+ 
+-Radios.prototype.handleClick = function (event) {
+-  nodeListForEach(this.$inputs, function ($input) {
+-    // If a radio with aria-controls, handle click
+-    var isRadio = $input.getAttribute('type') === 'radio'
++Radios.prototype.handleChange = function (event) {
++  var $target = event.target
++  var radioName = $target.getAttribute('name')
++  if (!radioName) return
++  var allRadios = document.querySelectorAll('input[type="radio"][name="' + radioName + '"]')
++  nodeListForEach(allRadios, function ($input) {
+     var hasAriaControls = $input.getAttribute('aria-controls')
+-    if (isRadio && hasAriaControls) {
++    if (hasAriaControls) {
+       this.setAttributes($input)
+     }
+   }.bind(this))

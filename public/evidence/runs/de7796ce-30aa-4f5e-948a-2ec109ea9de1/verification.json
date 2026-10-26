@@ -1,0 +1,6 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (js/src/drawer.ts): before does not occur in the file. 7 of its lines are not in the source. not in file: \"protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\"; closest is line 102: \"protected override _getShowOptions(): { modal: boolean, preventBodyScroll: boolean } {\" | not in file: \"this._openedAsModal = modal\" | not in file: \"if (modal) {\". Best alignment: before lines 8-9 match file lines 38-39, then before line 10 \"if (preventBodyScroll) {\" differs from file line 40 \"const Default: DrawerConfig = {\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ]
+}

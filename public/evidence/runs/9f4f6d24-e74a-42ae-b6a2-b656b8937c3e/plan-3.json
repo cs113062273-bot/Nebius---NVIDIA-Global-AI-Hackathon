@@ -1,0 +1,21 @@
+{
+  "root_cause": "The Escape key handler in submenus incorrectly calls `this.elements.rootMenu.closeChildren()`, which closes all top-level submenus (including the parent About submenu). It then focuses the root menu's current child (About) instead of the immediate parent trigger (Facts).",
+  "repair_strategy": "Modify the Escape key handler in the submenu's keyup listener to close only the current submenu's toggle (via `this.elements.toggle.close()`) and focus its trigger link (`this.elements.toggle.dom.link.focus()`), without blurring the root menu's children. This preserves the parent submenu's open state and moves focus to the correct parent menu item.",
+  "edits": [
+    {
+      "path": "src/menubar.js",
+      "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864",
+      "before": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.rootMenu.closeChildren();\n          this.elements.rootMenu.focusCurrentChild();\n        }",
+      "after": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.toggle.close();\n          this.elements.toggle.dom.link.focus();\n        }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape in a first-level submenu (Facts) will now close only that submenu, keep the parent submenu (About) open, and move focus to the Facts trigger (#facts). This matches the APG keyboard pattern for submenus: Escape closes the submenu and returns focus to the parent menu item.",
+  "functional_risks": [
+    "If the submenu's toggle reference (`this.elements.toggle`) is not set correctly, the close may fail. However, the initialization ensures each submenu has a toggle.",
+    "The change only affects submenu Escape handling; top-level menubar Escape behavior is unchanged (not defined in APG)."
+  ],
+  "verification_requirements": [
+    "Run the provided journey: seek #home, ArrowRight to #about, ArrowDown to #overview, ArrowDown to #facts, ArrowRight to #history, then Escape. Verify focus lands on #facts, aria-expanded of #facts becomes false, aria-expanded of #about remains true, and #history is not visible.",
+    "Test Escape in deeper submenus (if any) to ensure they close only one level."
+  ]
+}

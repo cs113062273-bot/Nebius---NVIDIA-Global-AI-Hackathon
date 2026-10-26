@@ -1,0 +1,21 @@
+{
+  "root_cause": "The focus trap's initial focus is delayed by default (via setTimeout) and may not move focus synchronously after the dialog becomes visible, leaving focus on the triggering button. Additionally, the automatic first-tabstop detection might not run at the right time due to asynchronous activation.",
+  "repair_strategy": "Configure the focus trap to focus the street input immediately and synchronously by setting `initialFocus: '#street'` and `delayInitialFocus: false`.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "85fb0980102bd0ea76fa350b8e2df6695a5bf878b5526a6a22d84ca1b8547611",
+      "before": "const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; } });",
+      "after": "const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; }, initialFocus: '#street', delayInitialFocus: false });"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users will receive focus on the street input when the address dialog opens, meeting focus order expectations.",
+  "functional_risks": [
+    "Setting focus synchronously could, in rare cases, occur before the dialog is fully rendered; however the dialog is already present in the DOM and only its hidden attribute is toggled, making this risk minimal."
+  ],
+  "verification_requirements": [
+    "After pressing Enter on the #open button, focus must be on the #street input.",
+    "Pressing Tab from #street should move focus to the #save button.",
+    "Pressing Enter on #save should close the dialog and update the status field with the entered address."
+  ]
+}

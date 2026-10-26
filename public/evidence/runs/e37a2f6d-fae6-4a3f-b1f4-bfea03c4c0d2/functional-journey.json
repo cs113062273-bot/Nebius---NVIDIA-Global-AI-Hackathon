@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "id": "govuk-character-count-under-limit-pointer",
+  "title": "Write a short summary with a pointer",
+  "goal": "A summary under the limit is kept and the remaining count is shown",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Focus the summary field",
+      "action": {
+        "kind": "click",
+        "selector": "#summary"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type a short summary",
+      "action": {
+        "kind": "type",
+        "text": "Map does not load"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#summary-group .govuk-character-count__status",
+      "value": "You have 13 characters remaining"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#report-form",
+      "name": "summary",
+      "value": [
+        "Map does not load"
+      ]
+    },
+    {
+      "kind": "text",
+      "selector": "#summary-group .govuk-character-count__status",
+      "value": "You have 13 characters remaining"
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,22 @@
+{
+  "root_cause": "Dropdown remains open when focus leaves the navigation via Tab because there is no listener to close the submenu when focus exits the menu.",
+  "repair_strategy": "Add a focusout listener to the menu element that closes any open submenu when focus moves outside the menu.",
+  "edits": [
+    {
+      "path": "src/_baseMenu.js",
+      "sha256": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+      "before": "/**\\n   * Handles focus events throughout the menu for proper menu use.\\n   *\\n   * - Adds a `focus` listener to every menu item so when it gains focus,\\n   *   it will set the item's containing menu's focus state\\n   *   to \\\"self\\\".\\n   *\\n   * @protected\\n   */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n  }\\n",
+      "after": "/**\\n   * Handles focus events throughout the menu for proper menu use.\\n   *\\n   * - Adds a `focus` listener to every menu item so when it gains focus,\\n   *   it will set the item's containing menu's focus state\\n   *   to \\\"self\\\".\\n   *\\n   * @protected\\n   */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n    // Close open submenu when focus leaves the menu\\n    this.dom.menu.addEventListener(\\\"focusout\\\", (event) => {\\n      if (!this.dom.menu.contains(event.relatedTarget)) {\\n        this.closeChildren();\\n        this.focusState = \\\"none\\\";\\n      }\\n    });\\n  }\\n"
+    }
+  ],
+  "expected_accessibility_effect": "When a keyboard user tabs out of the navigation, any open dropdown will close, preventing it from covering page content.",
+  "functional_risks": [
+    "May interfere with custom focus management if subclasses rely on focusout for other purposes.",
+    "If the menu contains focusable elements that intentionally keep the menu open (e.g., a button that opens a dialog), they could cause unintended closure."
+  ],
+  "verification_requirements": [
+    "Tabbing from the shop button to the search input results in aria-expanded=\\\"false\\\" and #plants hidden.",
+    "Opening the dropdown via Enter and closing via Escape still works.",
+    "Tabbing within the menu (e.g., from shop to plants to tools) continues to work as expected."
+  ]
+}

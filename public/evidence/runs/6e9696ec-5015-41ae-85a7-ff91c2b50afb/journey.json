@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "id": "autocomplete-escape-keeps-edit",
+  "title": "Dismiss suggestions with Escape while editing a saved city",
+  "goal": "Escape closes the suggestion list and keeps the city the user typed",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the delivery city",
+      "action": {
+        "kind": "seek",
+        "selector": "#city",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type a new city",
+      "action": {
+        "kind": "type",
+        "text": "Porto",
+        "replace": true
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#city-list",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Dismiss the suggestions",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#city-list",
+          "value": false
+        },
+        {
+          "kind": "focus",
+          "selector": "#city"
+        },
+        {
+          "kind": "form-data",
+          "selector": "#profile",
+          "name": "city",
+          "value": [
+            "Porto"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#profile",
+      "name": "city",
+      "value": [
+        "Porto"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "focus",
+      "selector": "#city"
+    }
+  ],
+  "forbidden": []
+}

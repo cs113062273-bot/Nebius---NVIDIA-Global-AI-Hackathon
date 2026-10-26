@@ -1,0 +1,26 @@
+{
+  "root_cause": "The disclosure menu lacks a focusout/blur handler to close submenus when keyboard focus leaves the menu via Tab, causing the Shop dropdown to remain open and cover page content.",
+  "repair_strategy": "Add a focusout event listener to the root menu element that closes any open submenus when the related target is outside the menu, mirroring the existing pointerup outside-click behavior.",
+  "edits": [
+    {
+      "path": "src/_baseMenu.js",
+      "sha256": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+      "before": "  _handleFocus() {\n    this.elements.menuItems.forEach((menuItem, index) => {\n      menuItem.dom.link.addEventListener(\"focus\", () => {\n        this.focusState = \"self\";\n        this.currentChild = index;\n      });\n    });\n  }",
+      "after": "  _handleFocus() {\n    this.elements.menuItems.forEach((menuItem, index) => {\n      menuItem.dom.link.addEventListener(\"focus\", () => {\n        this.focusState = \"self\";\n        this.currentChild = index;\n      });\n    });\n\n    this.dom.menu.addEventListener(\"focusout\", (event) => {\n      if (!this.dom.menu.contains(event.relatedTarget)) {\n        this.closeChildren();\n        this.blur();\n        if (this.elements.controller) {\n          this.elements.controller.close();\n        }\n        this.elements.rootMenu.hasOpened = false;\n      }\n    });\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When a user tabs out of the navigation bar, any open disclosure menu will close, preventing it from obscuring page content and restoring expected visibility of underlying elements.",
+  "functional_risks": [
+    "Potential premature closure if focus temporarily leaves to a non-menu element that should keep the menu open (unlikely as focusout only fires when relatedTarget is outside).",
+    "May interfere with custom widgets that rely on focusout for other purposes.",
+    "Screen reader users might experience the menu closing automatically when exiting via Tab, which aligns with typical disclosure menu behavior."
+  ],
+  "verification_requirements": [
+    "After the change, tabbing from the Shop button to the search input must result in aria-expanded=\"false\" on the Shop button and the Plants link not being visible.",
+    "Keyboard opening of the Shop menu via Enter or Space must still work.",
+    "Navigation within the open menu using arrow keys, Home, End must remain functional.",
+    "Pressing Escape while the menu is open must close it and return focus to the Shop button.",
+    "Clicking outside the menu with the mouse must still close it.",
+    "Menu should not close when moving focus between items inside the menu (e.g., from button to link)."
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "id": "autocomplete-store-pointer-pick",
+  "title": "Choose a pickup store with the pointer",
+  "goal": "Clicking a suggestion fills the store field",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Focus the store field",
+      "action": {
+        "kind": "click",
+        "selector": "#store"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type ma",
+      "action": {
+        "kind": "type",
+        "text": "ma"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#autoCompleteJS_result_2",
+          "value": "Maple Avenue"
+        }
+      ]
+    },
+    {
+      "title": "Click Maple Avenue",
+      "action": {
+        "kind": "click",
+        "selector": "#autoCompleteJS_result_2"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#pickup-form",
+          "name": "store",
+          "value": [
+            "Maple Avenue"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Confirm",
+      "action": {
+        "kind": "click",
+        "selector": "#submit"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#status",
+          "value": "Pickup at Maple Avenue"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Pickup at Maple Avenue"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#pickup-form",
+      "name": "store",
+      "value": [
+        "Maple Avenue"
+      ]
+    }
+  ],
+  "forbidden": []
+}

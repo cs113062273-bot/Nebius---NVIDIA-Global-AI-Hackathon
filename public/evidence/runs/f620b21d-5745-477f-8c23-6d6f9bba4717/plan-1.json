@@ -1,0 +1,21 @@
+{
+  "root_cause": "The autocomplete list items have tabindex='0', making them focusable and intercepting Tab navigation when the list is open, causing focus to remain in the list instead of moving to the next form field.",
+  "repair_strategy": "Change the tabindex of autocomplete list items from '0' to '-1' to remove them from the tab order while keeping them accessible via arrow keys and aria-activedescendant, allowing Tab to move from the city input to the dietary input when suggestions are shown.",
+  "edits": [
+    {
+      "path": "awesomplete.js",
+      "sha256": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6",
+      "before": "_.ITEM = function (text, input, item_id) {\n\tvar html = input.trim() === \"\" ? text : text.replace(RegExp($.regExpEscape(input.trim()), \"gi\"), \"<mark>$&</mark>\");\n\treturn $.create(\"li\", {\n\t\tinnerHTML: html,\n\t\t\"role\": \"option\",\n\t\t\"aria-selected\": \"false\",\n\t\t\"tabindex\": '0', // for the Talkback screen reader\n\t\t\"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n\t});\n};",
+      "after": "_.ITEM = function (text, input, item_id) {\n\tvar html = input.trim() === \"\" ? text : text.replace(RegExp($.regExpEscape(input.trim()), \"gi\"), \"<mark>$&</mark>\");\n\treturn $.create(\"li\", {\n\t\tinnerHTML: html,\n\t\t\"role\": \"option\",\n\t\t\"aria-selected\": \"false\",\n\t\t\"tabindex\": '-1', // for the Talkback screen reader\n\t\t\"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n\t});\n};"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key will now move focus to the next form field (#dietary) when the autocomplete list is open, satisfying WCAG 2.1.1 keyboard accessibility and 2.4.3 focus order. Screen readers can still navigate options using arrow keys and aria-activedescendant.",
+  "functional_risks": [
+    "Removing tabindex='0' may affect Talkback screen reader reliance on tab focus for reading options; however arrow‑based navigation and aria-activedescendant remain functional, so impact is low."
+  ],
+  "verification_requirements": [
+    "After the change, performing the journey steps (type 'Ber', then Tab) results in focus on the #dietary input and allows entering 'Vegetarian'.",
+    "ArrowUp/ArrowDown navigation within the list still works to highlight options, and Enter selects the highlighted option.",
+    "The list opens and closes correctly on input and blur events, and the status live region updates as expected."
+  ]
+}

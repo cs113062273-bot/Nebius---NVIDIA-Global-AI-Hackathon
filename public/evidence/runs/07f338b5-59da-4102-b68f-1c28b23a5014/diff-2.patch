@@ -1,0 +1,29 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..ff818bb 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -463,9 +463,6 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
+-    event.preventDefault()
+-    event.stopPropagation()
+-
+     if (isDisabled(this)) {
+       return
+     }
+@@ -473,6 +470,14 @@ class Dropdown extends BaseComponent {
+     const parent = Dropdown.getParentFromElement(this)
+     const isActive = this.classList.contains(CLASS_NAME_SHOW)
+ 
++    // Allow Escape to propagate to modal when dropdown is closed
++    if (event.key === ESCAPE_KEY && !isActive) {
++      return
++    }
++
++    event.preventDefault()
++    event.stopPropagation()
++
+     if (event.key === ESCAPE_KEY) {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.focus()

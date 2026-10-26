@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Escape key handler in submenus incorrectly calls rootMenu.closeChildren() which closes all open submenus, and rootMenu.focusCurrentChild() which moves focus to the menubar item instead of the parent submenu item. This causes the About submenu to close and focus to move to About instead of staying on Facts.",
+  "repair_strategy": "Replace the Escape handler in the submenu branch to close only the current submenu via its parent menu item's toggle, then focus the parent menu's current child (the submenu trigger item). This preserves ancestor submenus' open state.",
+  "edits": [
+    {
+      "path": "src/menubar.js",
+      "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864",
+      "before": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.rootMenu.closeChildren();\n          this.elements.rootMenu.focusCurrentChild();\n        }",
+      "after": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          const parentMenu = this.elements.parentMenu;\n          if (parentMenu) {\n            const currentMenuItem = parentMenu.elements.menuItems[parentMenu.currentChild];\n            if (currentMenuItem && currentMenuItem.isSubmenuItem) {\n              currentMenuItem.elements.toggle.close();\n            }\n          }\n          if (parentMenu) {\n            parentMenu.focusCurrentChild();\n          }\n        }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape in the Facts submenu closes only the Facts submenu (aria-expanded becomes false on #facts), returns focus to the Facts menu item (#facts), and leaves the About submenu open (aria-expanded remains true on #about).",
+  "functional_risks": [
+    "If parentMenu.currentChild is stale due to unrelated focus bugs, focus may return to an unexpected sibling item.",
+    "If the parent menu's current item is not a submenu item (should not occur when inside a submenu), the toggle close is skipped but focus still moves to the parent menu's current item.",
+    "Deeply nested submenus (3+ levels) will correctly close only the immediate submenu and return focus to its direct parent item."
+  ],
+  "verification_requirements": [
+    "Verify Escape in Facts submenu (with About open) focuses #facts, sets #facts aria-expanded=false, and #about aria-expanded=true.",
+    "Verify Escape in top-level menubar (no submenu open) still closes controller if open and focuses controller.",
+    "Verify Escape in a submenu when parent's current item is not a submenu item does not error and focuses parent's current item.",
+    "Verify Escape in a three-level nested submenu closes only the innermost submenu and returns focus to its parent item."
+  ]
+}

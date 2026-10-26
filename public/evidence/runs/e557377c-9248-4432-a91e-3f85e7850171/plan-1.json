@@ -1,0 +1,22 @@
+{
+  "root_cause": "The GOVUK Tabs component treats ArrowDown and ArrowUp as navigation keys, moving focus to the adjacent tab instead of leaving focus unchanged.",
+  "repair_strategy": "Add a global keydown listener that prevents default for ArrowDown and ArrowUp when the target is a tab, preserving expected behavior while retaining left/right arrow navigation.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "24e8e15758ccfc9f3b17cadc01108c076cd71ab50482434408642d3a3ece9dfb",
+      "before": "<script type=\"module\">\nimport { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'\nnew Tabs(document.getElementById('applications-tabs'))\n</script>",
+      "after": "<script type=\"module\">\nimport { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'\nnew Tabs(document.getElementById('applications-tabs'))\n</script>\n<script>\n// Prevent ArrowDown/ArrowUp from changing tabs\ndocument.addEventListener('keydown', function(e) {\n  if (e.target.matches('.govuk-tabs__tab') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {\n    e.preventDefault();\n  }\n});\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowDown and ArrowUp keys will no longer shift focus between tabs, allowing users to use those keys for scrolling without losing context, satisfying WCAG 2.1.1 Keyboard and 2.4.3 Focus Order.",
+  "functional_risks": [
+    "If any custom logic relied on ArrowDown/ArrowUp within tabs, it will be suppressed; however the GOVUK Tabs component does not assign meaning to these keys.",
+    "Minimal risk of interfering with browser scroll behavior; preventing default only stops the component's erroneous focus move."
+  ],
+  "verification_requirements": [
+    "Confirm that pressing ArrowDown or ArrowUp on a tab does not change focus or aria-selected attribute.",
+    "Confirm that ArrowLeft and ArrowRight still move focus between tabs and update aria-selected accordingly.",
+    "Confirm that the associated tab panel visibility remains correct after ArrowDown/ArrowUp presses."
+  ]
+}

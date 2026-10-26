@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "focus-trap-ancestor-keyboard",
+  "title": "Focus stays in the basket dialog after removing a row",
+  "goal": "Removing the row that holds the focused button keeps keyboard focus inside the trapped dialog",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach basket trigger",
+      "action": {
+        "kind": "seek",
+        "selector": "#open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open basket",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#basket",
+          "value": true
+        },
+        {
+          "kind": "focus",
+          "selector": "#close"
+        }
+      ]
+    },
+    {
+      "title": "Move to the first Remove button",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#remove-1"
+        }
+      ]
+    },
+    {
+      "title": "Remove the hand trowel",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#count",
+          "value": "2 items"
+        },
+        {
+          "kind": "visible",
+          "selector": "#basket:focus-within",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#basket:focus-within",
+      "value": true
+    },
+    {
+      "kind": "visible",
+      "selector": "#basket",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#count",
+      "value": "2 items"
+    }
+  ],
+  "forbidden": []
+}

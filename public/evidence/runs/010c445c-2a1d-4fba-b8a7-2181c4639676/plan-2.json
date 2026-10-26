@@ -1,0 +1,23 @@
+{
+  "root_cause": "When the 'Show all 4 results' button (#more) is activated, it removes itself from the DOM. This causes the focused element to be deleted, resulting in focus shifting to the <body> and escaping the focus trap.",
+  "repair_strategy": "After removing the #more button, programmatically move focus to the close button (which remains in the dialog and is focusable) to maintain focus inside the trapped dialog.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "055c0550de662971fe9cedda11a3cfa87aef8f7264d198e304ddb4324c566634",
+      "before": "document.getElementById('more').addEventListener('click', event => {\n  for (const name of ['Steel trowel', 'Pointing trowel']) { const li = document.createElement('li'); li.textContent = name; document.getElementById('list').append(li); }\n  document.getElementById('count').textContent = '4 of 4 results';\n  event.currentTarget.remove();\n});",
+      "after": "document.getElementById('more').addEventListener('click', event => {\n  for (const name of ['Steel trowel', 'Pointing trowel']) { const li = document.createElement('li'); li.textContent = name; document.getElementById('list').append(li); }\n  document.getElementById('count').textContent = '4 of 4 results';\n  event.currentTarget.remove();\n  document.getElementById('close').focus();\n});"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus will remain inside the dialog after activating the 'Show all' button, allowing users to continue navigating with Tab or Shift+Tab without escaping the dialog.",
+  "functional_risks": [
+    "The close button must be present and focusable (it is in the current implementation).",
+    "If the close button were disabled or hidden, focusing it would fail, but it is neither.",
+    "The focus() call may cause a scroll if the close button is not visible, but the dialog is small and the button is in the header."
+  ],
+  "verification_requirements": [
+    "After clicking 'Show all 4 results', focus should be on the close button.",
+    "Pressing Tab should cycle focus between the close button and itself (since no other focusable elements exist in the dialog), maintaining the trap.",
+    "The dialog should remain operable via the close button or Escape key."
+  ]
+}

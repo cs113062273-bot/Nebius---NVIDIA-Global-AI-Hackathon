@@ -1,0 +1,23 @@
+diff --git a/index.html b/index.html
+index f26a4cc..096b69f 100644
+--- a/index.html
++++ b/index.html
+@@ -31,15 +31,15 @@ body{margin:0;font:19px/1.4 Arial,sans-serif;color:#212b32;background:#f0f4f5}
+       <!-- Each answer is posted as its own field, so the inputs have unique names and share an exclusive group. -->
+       <div class="nhsuk-checkboxes" data-module="nhsuk-checkboxes" id="symptoms-checkboxes">
+         <div class="nhsuk-checkboxes__item">
+-          <input class="nhsuk-checkboxes__input" id="symptoms-cough" name="symptoms[cough]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms">
++          <input class="nhsuk-checkboxes__input" id="symptoms-cough" name="symptoms[cough]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms" data-checkbox-exclusive="">
+           <label class="nhsuk-label nhsuk-checkboxes__label" for="symptoms-cough">A new continuous cough</label>
+         </div>
+         <div class="nhsuk-checkboxes__item">
+-          <input class="nhsuk-checkboxes__input" id="symptoms-fever" name="symptoms[fever]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms">
++          <input class="nhsuk-checkboxes__input" id="symptoms-fever" name="symptoms[fever]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms" data-checkbox-exclusive="">
+           <label class="nhsuk-label nhsuk-checkboxes__label" for="symptoms-fever">A high temperature</label>
+         </div>
+         <div class="nhsuk-checkboxes__item">
+-          <input class="nhsuk-checkboxes__input" id="symptoms-taste" name="symptoms[taste]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms">
++          <input class="nhsuk-checkboxes__input" id="symptoms-taste" name="symptoms[taste]" type="checkbox" value="yes" data-checkbox-exclusive-group="symptoms" data-checkbox-exclusive="">
+           <label class="nhsuk-label nhsuk-checkboxes__label" for="symptoms-taste">A loss or change to your sense of smell or taste</label>
+         </div>
+         <div class="nhsuk-checkboxes__divider">or</div>

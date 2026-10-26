@@ -26,6 +26,7 @@ export const WORST_RUN_USD = 0.5;
 
 const byRunNumber = (a, b) => a.localeCompare(b, undefined, { numeric: true });
 // Every auto run on the frozen engine, first to last; the first is the scored one, the rest are repeats.
+const engineShown = (results, frozen) => results.some(r => r.implementation === frozen) ? frozen : results.at(-1)?.implementation || null;
 const frozenRuns = (results, frozen, upstream) => Promise.all(results.filter(r => frozen && r.implementation === frozen && (r.policy || 'auto') === 'auto').map(async r => { const passedOn = r.attempts.find(a => a.verified)?.attempt || null; return { run: r.modelRun, verdict: r.verdict, passedOn, scope: await patchScope(r.modelRun, passedOn, upstream) }; }));
 export async function liveCases() {
   const out = [], frozen = (await readJson(path.join(CASES, 'summary.json')).catch(() => null))?.implementation;
@@ -38,10 +39,11 @@ export async function liveCases() {
     // Numeric order, so auto-10 follows auto-9 and the first run on an engine stays the first.
     for (const f of (await fs.readdir(path.join(root, 'results')).catch(() => [])).sort(byRunNumber)) results.push(await readJson(path.join(root, 'results', f)));
     // Same rule as the benchmark scoreboard: the first auto run on the frozen implementation.
-    const auto = results.filter(r => r.policy === 'auto'), recorded = auto.find(r => frozen && r.implementation === frozen) || auto.at(-1) || results.at(-1) || null;
+    // The engine shown is the frozen one, or, before it has runs, the newest engine that has; its first run is the scored one.
+    const auto = results.filter(r => r.policy === 'auto'), shown = engineShown(auto, frozen), recorded = auto.find(r => r.implementation === shown) || results.at(-1) || null;
     out.push({ id: entry.name, title: meta.title, summary: meta.summary, library: meta.library, category: meta.category || null, repository: meta.repository, issue: meta.issue, fixUrl: meta.fixUrl || null, fixCommit: meta.fixCommit, buggyCommit: meta.buggyCommit, split: meta.split || 'holdout', screenRun: commitment.screen.run,
       recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null), scope: await patchScope(recorded.modelRun, recorded.attempts.find(a => a.verified)?.attempt, meta.upstreamFiles) },
-      frozenRuns: await frozenRuns(results, frozen, meta.upstreamFiles) });
+      frozenRuns: await frozenRuns(results, shown, meta.upstreamFiles) });
   }
   return out.sort((a, b) => a.library.localeCompare(b.library) || a.id.localeCompare(b.id));
 }
@@ -59,10 +61,10 @@ export async function openCases() {
     // Earlier model patches replayed against this stricter task in the browser, without inference.
     for (const f of files) if (f.startsWith('replay-')) { const r = await readJson(path.join(root, 'results', f)); replays.push({ run: r.replayRun, verdict: r.verdict, fromCase: r.fromCase, fromRun: r.fromRun, attempt: r.attempt, engine: r.engine }); }
     // First run on the frozen implementation; runs on earlier engines stay in results/ as history.
-    const recorded = results.find(r => frozen && r.implementation === frozen) || results.at(-1) || null;
+    const shown = engineShown(results, frozen), recorded = results.find(r => r.implementation === shown) || results.at(-1) || null;
     out.push({ id: entry.name, title: meta.title, summary: meta.summary, library: meta.library, category: meta.category || null, repository: meta.repository, issue: meta.issue, pinnedCommit: meta.pinnedCommit, status: meta.status, derivedFrom: meta.derivedFrom || null, addedAfterReview: meta.addedAfterReview || null, replays, pendingHumanFix: meta.pendingHumanFix || null, pendingHumanCheck: await readJson(path.join(root, 'pending-human-check.json')).catch(() => null), review: await readJson(path.join(root, 'review.json')).catch(() => null), expectedBehaviour: meta.expectedBehaviour || null,
       recorded: recorded && { run: recorded.modelRun, verdict: recorded.verdict, passedOn: recorded.attempts.find(a => a.verified)?.attempt || null, models: recorded.attempts.map(a => a.model?.split('/')[1] || null), scope: await patchScope(recorded.modelRun, recorded.attempts.find(a => a.verified)?.attempt, meta.upstreamFiles) },
-      frozenRuns: await frozenRuns(results, frozen, meta.upstreamFiles) });
+      frozenRuns: await frozenRuns(results, shown, meta.upstreamFiles) });
   }
   return out.sort((a, b) => a.library.localeCompare(b.library) || a.id.localeCompare(b.id));
 }

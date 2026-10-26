@@ -1,0 +1,28 @@
+{
+  "root_cause": "When a focused element is removed as a descendant of a removed node (e.g., a button inside a deleted list item), the MutationObserver's removedNodes list does not include the focused element. Consequently, checkDomRemoval fails to detect the removal, and the subsequent focusin event on <body> attempts to restore focus but incorrectly tries to refocus the detached element, leaving focus on the body.",
+  "repair_strategy": "1) Enhance checkDomRemoval to also detect when the most recently focused node becomes disconnected from the document (using Node.isConnected or document.contains). 2) In checkFocusIn, when focus escapes and no next node is found, verify the most recently focused node is still connected and focusable before attempting to refocus it; otherwise fall back to the initial focus node.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };",
+      "after": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // Also check if the focused node is no longer connected (e.g., removed as a descendant)\n    const focusedNodeDisconnected = state.mostRecentlyFocusedNode && \n      (typeof state.mostRecentlyFocusedNode.isConnected === 'boolean' \n        ? !state.mostRecentlyFocusedNode.isConnected \n        : !doc.contains(state.mostRecentlyFocusedNode));\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved || focusedNodeDisconnected) {\n      tryFocus(getInitialFocusNode());\n    }\n  };"
+    },
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "      if (nextNode) {\n        tryFocus(nextNode);\n      } else {\n        tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n      }",
+      "after": "      if (nextNode) {\n        tryFocus(nextNode);\n      } else {\n        const mruNode = state.mostRecentlyFocusedNode;\n        if (mruNode && mruNode.isConnected && isFocusable(mruNode, config.tabbableOptions)) {\n          tryFocus(mruNode);\n        } else {\n          tryFocus(getInitialFocusNode());\n        }\n      }"
+    }
+  ],
+  "expected_accessibility_effect": "After removing a basket item via keyboard, focus remains trapped inside the dialog (on the close button or another item), allowing continued keyboard interaction without escaping to the page background.",
+  "functional_risks": [
+    "The Node.isConnected check may be undefined in older browsers; the fallback to document.contains handles that but may not work for nodes in shadow DOM (though the trap's containers are in the light DOM).",
+    "Checking document.contains on every mutation adds minimal overhead only when a focused node is removed."
+  ],
+  "verification_requirements": [
+    "After removing the first basket item via Enter key, focus must remain on the close button or another item in the basket.",
+    "Tab navigation must cycle correctly within the basket after item removal.",
+    "Closing and reopening the basket must restore initial focus to the close button."
+  ]
+}

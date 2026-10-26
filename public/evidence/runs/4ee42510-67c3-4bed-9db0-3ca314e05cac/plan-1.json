@@ -1,0 +1,24 @@
+{
+  "root_cause": "The ArrowRight keydown handler in tab.js prevents default and calls show() on the next tab but does not move focus to that tab, leaving focus on the previous element or body.",
+  "repair_strategy": "Modify the _keydown method in tab.js to focus the newly activated tab after invoking show(), ensuring arrow navigation moves focus as required by ARIA authoring practices.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "69ca6e1d090610fe209a5b54a151e20b738214aabf1464807c85c17c0e29848c",
+      "before": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const nextActiveElement = getNextActiveElement(this._getChildren().filter(element => !isDisabled(element)), event.target, isNext, true)\n\n    if (nextActiveElement) {\n      Tab.getOrCreateInstance(nextActiveElement).show()\n    }\n  }",
+      "after": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const nextActiveElement = getNextActiveElement(this._getChildren().filter(element => !isDisabled(element)), event.target, isNext, true)\n\n    if (nextActiveElement) {\n      Tab.getOrCreateInstance(nextActiveElement).show()\n      nextActiveElement.focus()\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Arrow key navigation will now move focus to the next or previous tab and update aria-selected accordingly, meeting keyboard operability and focus order requirements.",
+  "functional_risks": [
+    "Adding focus after show() is safe because show() does not already focus the tab; if future changes cause show() to focus, duplicate focus calls are harmless.",
+    "No impact on mouse click or programmatic tab activation."
+  ],
+  "verification_requirements": [
+    "Pressing ArrowRight from the Account tab should focus the Notifications tab and set its aria-selected to true.",
+    "Pressing ArrowRight again from the Notifications tab should focus the Billing tab and set its aria-selected to true.",
+    "ArrowLeft/Up/Down keys should similarly move focus in the opposite direction.",
+    "Regression guard: Tabbing from an active tab into its panel must keep the tab aria-selected true.",
+    "Ensure that mouse clicks and programmatic tab changes continue to work as before."
+  ]
+}

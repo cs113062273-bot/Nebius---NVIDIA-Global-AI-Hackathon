@@ -1,0 +1,42 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..8d078a7 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -455,11 +455,32 @@ class Dropdown extends BaseComponent {
+     //  - If key is other than escape
+     //    - If key is not up or down => not a dropdown command
+     //    - If trigger inside the menu => not a dropdown command
+-    if (/input|textarea/i.test(event.target.tagName) ?
+-      event.key === SPACE_KEY || (event.key !== ESCAPE_KEY &&
+-      ((event.key !== ARROW_DOWN_KEY && event.key !== ARROW_UP_KEY) ||
+-        event.target.closest(SELECTOR_MENU))) :
+-      !REGEXP_KEYDOWN.test(event.key)) {
++    let isDropdownCommand = false
++    if (/input|textarea/i.test(event.target.tagName)) {
++      if (event.key === SPACE_KEY || (event.key !== ESCAPE_KEY &&
++          ((event.key !== ARROW_DOWN_KEY && event.key !== ARROW_UP_KEY) ||
++            event.target.closest(SELECTOR_MENU)))) {
++        return
++      }
++      isDropdownCommand = true
++    } else {
++      if (event.key === ESCAPE_KEY) {
++        // Only a dropdown command if menu is open
++        const isActive = this.classList.contains(CLASS_NAME_SHOW)
++        if (isActive) {
++          isDropdownCommand = true
++        } else {
++          return
++        }
++      } else if (REGEXP_KEYDOWN.test(event.key)) {
++        // ArrowUp or ArrowDown
++        isDropdownCommand = true
++      } else {
++        return
++      }
++    }
++
++    if (!isDropdownCommand) {
+       return
+     }
+ 

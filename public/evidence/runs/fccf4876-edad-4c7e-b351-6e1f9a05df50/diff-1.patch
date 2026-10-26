@@ -1,0 +1,22 @@
+diff --git a/src/_baseMenu.js b/src/_baseMenu.js
+index b727d38..55e9ec2 100644
+--- a/src/_baseMenu.js
++++ b/src/_baseMenu.js
+@@ -1380,6 +1380,17 @@ class BaseMenu {
+         this.currentChild = index;
+       });
+     });
++
++    this.dom.menu.addEventListener("focusout", (event) => {
++      if (!this.dom.menu.contains(event.relatedTarget)) {
++        this.closeChildren();
++        this.blur();
++        if (this.elements.controller) {
++          this.elements.controller.close();
++        }
++        this.elements.rootMenu.hasOpened = false;
++      }
++    });
+   }
+ 
+   /**

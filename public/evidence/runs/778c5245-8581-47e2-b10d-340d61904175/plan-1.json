@@ -1,0 +1,29 @@
+{
+  "root_cause": "The datepicker does not hide when the input field loses focus via tab navigation, because there is no blur event listener to trigger the hide.",
+  "repair_strategy": "Add a blur event listener to the input field that calls the datepicker's hide() method.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    const listeners = [\n      [inputField, 'keydown', onKeydown.bind(null, this)],\n      [inputField, 'focus', onFocus.bind(null, this)],\n      [inputField, 'mousedown', onMousedown.bind(null, this)],\n      [inputField, 'click', onClickInput.bind(null, this)],\n      [inputField, 'paste', onPaste.bind(null, this)],\n      [document, 'mousedown', onMousedownDocument],\n      [document, 'touchstart', onMousedownDocument],\n      [window, 'resize', picker.place.bind(picker)]\n    ];",
+      "after": "    const listeners = [\n      [inputField, 'keydown', onKeydown.bind(null, this)],\n      [inputField, 'focus', onFocus.bind(null, this)],\n      [inputField, 'mousedown', onMousedown.bind(null, this)],\n      [inputField, 'click', onClickInput.bind(null, this)],\n      [inputField, 'paste', onPaste.bind(null, this)],\n      [inputField, 'blur', this._onBlur.bind(this)],\n      [document, 'mousedown', onMousedownDocument],\n      [document, 'touchstart', onMousedownDocument],\n      [window, 'resize', picker.place.bind(picker)]\n    ];"
+    },
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "  exitEditMode(options = undefined) {\n    if (this.inline || !this.editMode) {\n      return;\n    }\n    const opts = Object.assign({update: false}, options);\n    delete this.editMode;\n    this.inputField.classList.remove('in-edit');\n    if (opts.update) {\n      this.update(opts);\n    }\n  }\n\n  /**\n   * Update the selected date(s) with input field's value\n   * Not available on inline picker\n   *\n   * The input field will be refreshed with properly formatted date string.\n   *\n   * @param  {Object} [options] - function options\n   * - autohide: {boolean} - whether to hide the picker element after refresh\n   *     default: false\n   */\n  update(options = undefined) {\n    if (this.inline) {\n      return;\n    }\n\n    const opts = {clear: true, autohide: !!(options && options.autohide)};\n    const inputDates = stringToArray(this.inputField.value, this.config.dateDelimiter);\n    setDate(this, inputDates, opts);\n  }",
+      "after": "  exitEditMode(options = undefined) {\n    if (this.inline || !this.editMode) {\n      return;\n    }\n    const opts = Object.assign({update: false}, options);\n    delete this.editMode;\n    this.inputField.classList.remove('in-edit');\n    if (opts.update) {\n      this.update(opts);\n    }\n  }\n\n  _onBlur() {\n    this.hide();\n  }\n\n  /**\n   * Update the selected date(s) with input field's value\n   * Not available on inline picker\n   *\n   * The input field will be refreshed with properly formatted date string.\n   *\n   * @param  {Object} [options] - function options\n   * - autohide: {boolean} - whether to hide the picker element after refresh\n   *     default: false\n   */\n  update(options = undefined) {\n    if (this.inline) {\n      return;\n    }\n\n    const opts = {clear: true, autohide: !!(options && options.autohide)};\n    const inputDates = stringToArray(this.inputField.value, this.config.dateDelimiter);\n    setDate(this, inputDates, opts);\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When the user tabs away from the date input field, the datepicker will close, ensuring that it does not obscure subsequent content and allowing assistive technologies to navigate the page correctly.",
+  "functional_risks": [
+    "Hiding the picker on blur may cause the picker to disappear if the user intends to interact with it via an assistive technology that simulates focus loss without actual user intent to leave the field.",
+    "If the picker is made focusable in the future (e.g., by adding tabindex to its elements), the blur listener might hide it prematurely when navigating into the picker via keyboard."
+  ],
+  "verification_requirements": [
+    "Tabbing away from the date input field with a valid date should update the form data and hide the datepicker.",
+    "Tabbing away from the date input field with an invalid date (outside min/max) should hide the datepicker without updating the form data.",
+    "Clicking on the datepicker buttons should not cause the picker to hide unexpectedly.",
+    "The datepicker should still hide when clicking outside the picker (via the existing onClickOutside listener)."
+  ]
+}

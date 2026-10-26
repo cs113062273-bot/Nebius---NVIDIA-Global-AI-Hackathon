@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "id": "bootstrap-tabs-arrow-keyboard",
+  "title": "Walk the settings tabs with arrow keys",
+  "goal": "Each arrow press selects and focuses the next tab",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the Account tab",
+      "action": {
+        "kind": "seek",
+        "selector": "#tab-account",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to Notifications",
+      "action": {
+        "kind": "press",
+        "key": "ArrowRight"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#tab-notifications",
+          "name": "aria-selected",
+          "value": "true"
+        },
+        {
+          "kind": "focus",
+          "selector": "#tab-notifications"
+        }
+      ]
+    },
+    {
+      "title": "Move to Billing",
+      "action": {
+        "kind": "press",
+        "key": "ArrowRight"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#tab-billing",
+          "name": "aria-selected",
+          "value": "true"
+        },
+        {
+          "kind": "focus",
+          "selector": "#tab-billing"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#tab-billing"
+    },
+    {
+      "kind": "visible",
+      "selector": "#billing-plan",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#tab-billing",
+      "name": "aria-selected",
+      "value": "true"
+    },
+    {
+      "kind": "visible",
+      "selector": "#account-name",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

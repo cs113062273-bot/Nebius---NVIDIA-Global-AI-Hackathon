@@ -1,0 +1,23 @@
+{
+  "root_cause": "The radios component only updates ARIA attributes and conditional visibility on click events, not on keyboard-driven change events, causing the conditional content to remain visible when navigating away via arrow keys.",
+  "repair_strategy": "Add a change event listener that invokes the same attribute-update logic used for clicks, ensuring that selecting a radio via keyboard updates aria-expanded and toggles the associated conditional panel.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.addEventListener('change', this.handleClick.bind(this))"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now navigate the radio group with arrow keys and see conditional fields show/hide appropriately, meeting WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Potential duplicate handling if both click and change fire for the same interaction (e.g., mouse click may trigger both); however setAttributes is idempotent.",
+    "Slight performance overhead from iterating all radios on each change, but negligible given typical small radio groups."
+  ],
+  "verification_requirements": [
+    "Verify that arrowing between options updates aria-expanded and hides/shows conditionals correctly.",
+    "Verify that mouse clicks continue to work as before.",
+    "Verify that form data reflects the selected value after keyboard navigation.",
+    "Verify no regression in existing tests for the radios component."
+  ]
+}

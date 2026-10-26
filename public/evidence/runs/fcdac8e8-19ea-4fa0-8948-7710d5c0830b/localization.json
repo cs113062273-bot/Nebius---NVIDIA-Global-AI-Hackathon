@@ -1,0 +1,82 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "open-share",
+      "access-toggle",
+      "body",
+      "share",
+      "Share",
+      "Finance team",
+      "Everyone at Northwind",
+      "Cancel",
+      "Save"
+    ],
+    "sha256": "9c8af4e15643c1973b647ebcc5efa6f3087623a01852ed2ab70b3994c8486d9f"
+  },
+  {
+    "path": "js/src/dom/manipulator.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "71e9ccebf0a4286393399f9106d0051ffc32dbae212abe39e0739f8f9d0bf608"
+  },
+  {
+    "path": "js/src/dropdown.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18"
+  },
+  {
+    "path": "js/src/modal.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "c26bc84f25135e4bb3f80c29baee85385a52128fa53b4ebf065268ba88ecf1ee"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "21352887bc618447fa83f63f165e8c2ca5683db6c6f25ad6e04111bf412ade1f"
+  },
+  {
+    "path": "js/src/dom/data.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/dropdown.js"
+    ],
+    "sha256": "2246c6d65bc1ec929db176ad2c6d7e6ea282370a9e57f2099b3dbbeabf8b3a06"
+  },
+  {
+    "path": "js/src/dom/event-handler.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/dropdown.js"
+    ],
+    "sha256": "8a342f2aeaa2c314136afa32565a6c92f2d369aefba92c2c810467babcfcc0be"
+  },
+  {
+    "path": "js/src/dom/selector-engine.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/dropdown.js"
+    ],
+    "sha256": "95d0292b19e61340346547b89a82d0cb4de08b3f65d58506c7c8f259627e5805"
+  },
+  {
+    "path": "js/src/base-component.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/dropdown.js"
+    ],
+    "sha256": "f112362d5f7abc3678c04cbf60246121ad7897b96dd22ad6c96b7dbc4fe2f00c"
+  }
+]

@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "id": "autocomplete-refine-then-enter",
+  "title": "Refine the search and choose the highlighted fruit with Enter",
+  "goal": "After the suggestions are refined, Enter selects the suggestion that is highlighted",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the fruit field",
+      "action": {
+        "kind": "seek",
+        "selector": "#fruit",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type b",
+      "action": {
+        "kind": "type",
+        "text": "b"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#fruit",
+          "name": "aria-expanded",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "title": "Move down the suggestions",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move down again",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#autoComplete_result_1",
+          "name": "aria-selected",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "title": "Refine to bl",
+      "action": {
+        "kind": "type",
+        "text": "l"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#autoComplete_result_0",
+          "value": "Blackberry"
+        }
+      ]
+    },
+    {
+      "title": "Highlight the first refined suggestion",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#autoComplete_result_0",
+          "name": "aria-selected",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "title": "Choose the highlighted suggestion",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#order-form",
+          "name": "fruit",
+          "value": [
+            "Blackberry"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#order-form",
+      "name": "fruit",
+      "value": [
+        "Blackberry"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "focus",
+      "selector": "#fruit"
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "id": "govuk-character-count-over-limit-keyboard",
+  "title": "Type past the limit and be told how many characters are too many",
+  "goal": "The whole summary is kept and the count tells the user it is 4 characters too long",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the summary field",
+      "action": {
+        "kind": "seek",
+        "selector": "#summary",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type a summary longer than the limit",
+      "action": {
+        "kind": "type",
+        "text": "The search box ignores my postcode"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#report-form",
+          "name": "summary",
+          "value": [
+            "The search box ignores my postcode"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#report-form",
+      "name": "summary",
+      "value": [
+        "The search box ignores my postcode"
+      ]
+    },
+    {
+      "kind": "text",
+      "selector": "#summary-group .govuk-character-count__status",
+      "value": "You have 4 characters too many"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "focus",
+      "selector": "#summary"
+    }
+  ],
+  "forbidden": []
+}

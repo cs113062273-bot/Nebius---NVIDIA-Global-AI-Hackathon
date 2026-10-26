@@ -1,0 +1,6 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (js/Datepicker.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 1-9 match file lines 422-430, then before line 10 \"}\" differs from file line 431 \"\". The real file lines are in actual_source_region. Copy the region verbatim from the source."
+  ]
+}

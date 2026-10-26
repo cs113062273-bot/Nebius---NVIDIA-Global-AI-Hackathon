@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "id": "accessible-menu-escape-pointer",
+  "title": "Open nested submenus with the pointer",
+  "goal": "About and Facts submenus open on click",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open About",
+      "action": {
+        "kind": "click",
+        "selector": "#about"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#about",
+          "name": "aria-expanded",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "title": "Open Facts",
+      "action": {
+        "kind": "click",
+        "selector": "#facts"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#facts",
+          "name": "aria-expanded",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#history",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#about",
+      "name": "aria-expanded",
+      "value": "true"
+    },
+    {
+      "kind": "attribute",
+      "selector": "#facts",
+      "name": "aria-expanded",
+      "value": "true"
+    }
+  ],
+  "forbidden": []
+}

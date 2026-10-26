@@ -1,0 +1,37 @@
+{
+  "root_cause": "The vanilla-calendar-pro calendar intercepts the Tab keydown event on the date input when the calendar is open, preventing the default focus movement to the next form field.",
+  "repair_strategy": "Add a keydown event listener on the date input that stops immediate propagation and hides the calendar when the Tab key is pressed, allowing the browser's default focus navigation to proceed.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onKeyDown: (event: KeyboardEvent) => void"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  // VCP schedules a show on every click of its trigger, after the data API\n  // toggle runs. When that toggle closed the popup, cancel the reopen.\n  // `hide()` on VCP clears its pending show even when already hidden.\n  if (!this._isInput) {\n    this._onTriggerClick = () => {\n      if (!this._isShown) {\n        this._calendar?.hide()\n      }\n    }\n\n    EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n  }",
+      "after": "  // VCP schedules a show on every click of its trigger, after the data API\n  // toggle runs. When that toggle closed the popup, cancel the reopen.\n  // `hide()` on VCP clears its pending show even when already hidden.\n  if (!this._isInput) {\n    this._onTriggerClick = () => {\n      if (!this._isShown) {\n        this._calendar?.hide()\n      }\n    }\n\n    EventHandler.on(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n  }\n\n  if (this._isInput) {\n    this._onKeyDown = (event: KeyboardEvent) => {\n      if (event.key === 'Tab' && this._isShown) {\n        event.stopImmediatePropagation()\n        this.hide()\n      }\n    }\n    EventHandler.on(this._element, 'keydown' + EVENT_KEY, this._onKeyDown)\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  if (this._onTriggerClick) {\n    EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n  }",
+      "after": "  if (this._onTriggerClick) {\n    EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n  }\n\n  if (this._onKeyDown) {\n    EventHandler.off(this._element, 'keydown' + EVENT_KEY, this._onKeyDown)\n    this._onKeyDown = null\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab while the date field is focused will move focus to the next field (passengers) as expected, because the calendar will close and not intercept the Tab key.",
+  "functional_risks": [
+    "The calendar may hide unexpectedly if the user presses Tab while the calendar is open but the input is not focused (unlikely because listener is on the input).",
+    "The hide() call is asynchronous; however, we call it synchronously and set _isShown to false immediately. The calendar's internal hide might be synchronous, but there is a small risk of race conditions.",
+    "The stopImmediatePropagation might prevent other legitimate keydown listeners on the input (e.g., from other components). But the input is a simple date field, unlikely."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab when the date field has focus moves focus to the passengers field.",
+    "Verify that clicking the date field still shows the calendar.",
+    "Verify that pressing Escape when the calendar is shown hides the calendar and moves focus back to the date field (regression guard).",
+    "Verify that selecting a date from the calendar updates the input value correctly.",
+    "Verify that the calendar is positioned near the input field as intended."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "root_cause": "The datepicker's show() method opens the picker popup but does not guarantee the associated input retains focus after the picker is rendered. When the picker opens, browser focus can shift to the body, causing subsequent Tab key presses to start from body instead of the visit-date input, breaking keyboard navigation to the next form field.",
+  "repair_strategy": "After showing the picker, schedule a microtask (via requestAnimationFrame) to explicitly return focus to the input element. This ensures the input remains the active element once the picker's DOM changes have settled, allowing Tab to move to the next form field (notes).",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+      "before": "  show() {\n    if (this.inputField) {\n      const {config, inputField} = this;\n      if (inputField.disabled || (inputField.readOnly && !config.enableOnReadonly)) {\n        return;\n      }\n      if (!isActiveElement(inputField) && !config.disableTouchKeyboard) {\n        this._showing = true;\n        inputField.focus();\n        delete this._showing;\n      }\n    }\n    this.picker.show();\n  }",
+      "after": "  show() {\n    if (this.inputField) {\n      const {config, inputField} = this;\n      if (inputField.disabled || (inputField.readOnly && !config.enableOnReadonly)) {\n        return;\n      }\n      if (!isActiveElement(inputField) && !config.disableTouchKeyboard) {\n        this._showing = true;\n        inputField.focus();\n        delete this._showing;\n      }\n    }\n    this.picker.show();\n    if (this.inputField) {\n      requestAnimationFrame(() => {\n        this.inputField.focus();\n      });\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key navigation will move focus from the visit date input to the access notes input when the datepicker is open, allowing keyboard users to continue filling the form without being trapped in the datepicker popup.",
+  "functional_risks": [
+    "Minimal risk of focus flicker if the input already has focus; requestAnimationFrame defers until after browser paint.",
+    "Datepicker keyboard navigation (arrow keys, Enter, Escape) remains unchanged because the keydown listener stays on the input."
+  ],
+  "verification_requirements": [
+    "Tab from #visit-date moves focus to #notes when datepicker is open",
+    "Datepicker still responds to ArrowRight/Enter to select a date",
+    "Closing datepicker with Escape returns focus to input",
+    "No regression in mouse/touch interaction"
+  ]
+}

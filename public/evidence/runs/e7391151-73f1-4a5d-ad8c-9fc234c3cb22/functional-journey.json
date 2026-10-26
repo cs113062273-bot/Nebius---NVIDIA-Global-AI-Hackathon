@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "id": "tabbable-fieldset-pointer",
+  "title": "Save the address dialog with the pointer",
+  "goal": "The dialog opens, saves and closes",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open address dialog",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#address-dialog",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Save address",
+      "action": {
+        "kind": "click",
+        "selector": "#save"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#address-dialog",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Delivery address saved without a street."
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Delivery address saved without a street."
+    },
+    {
+      "kind": "visible",
+      "selector": "#address-dialog",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,20 @@
+{
+  "root_cause": "The modal's focus trap does not cycle focus on Shift+Tab from the first focusable element (close button) to the last (delete button), violating WCAG 2.1.1 and 2.4.3 for keyboard navigation.",
+  "repair_strategy": "Add a keydown event listener on the confirm modal to manually cycle focus between the first and last focusable elements when Tab/Shift+Tab is pressed, using the modal's shown/hidden events to attach/detach the listener.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "7f568907f270dee6ada3a5d9fa392f4458ef98ddda6b768ab16fdbb55b50acb1",
+      "before": "<script type=\"module\">\nimport Modal from './js/src/modal.js';\ndocument.querySelector('#confirm-delete').addEventListener('click', () => {\n  document.querySelector('#status').textContent = 'Deleted';\n});\nwindow.__ready = true;\n</script>",
+      "after": "<script type=\"module\">\nimport Modal from './js/src/modal.js';\ndocument.querySelector('#confirm-delete').addEventListener('click', () => {\n  document.querySelector('#status').textContent = 'Deleted';\n});\nconst confirmModal = document.querySelector('#confirm');\nlet keydownHandler = null;\nconfirmModal.addEventListener('shown.bs.modal', () => {\n  const focusable = confirmModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])');\n  const focusableArray = Array.from(focusable).filter(el => !el.disabled);\n  keydownHandler = (e) => {\n    if (e.key === 'Tab') {\n      const active = document.activeElement;\n      const idx = focusableArray.indexOf(active);\n      if (idx !== -1) {\n        if (e.shiftKey) {\n          if (idx === 0) {\n            e.preventDefault();\n            focusableArray[focusableArray.length - 1].focus();\n          }\n        } else {\n          if (idx === focusableArray.length - 1) {\n            e.preventDefault();\n            focusableArray[0].focus();\n          }\n        }\n      }\n    }\n  };\n  confirmModal.addEventListener('keydown', keydownHandler);\n});\nconfirmModal.addEventListener('hidden.bs.modal', () => {\n  if (keydownHandler) {\n    confirmModal.removeEventListener('keydown', keydownHandler);\n    keydownHandler = null;\n  }\n});\nwindow.__ready = true;\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now wrap backwards from the close button to the delete button in the delete confirmation dialog, completing a logical focus cycle.",
+  "functional_risks": [
+    "Custom focus cycling may conflict with Bootstrap's internal focus management if both are active; however, the listener is scoped to the specific modal and only activates when the modal is shown, minimizing risk."
+  ],
+  "verification_requirements": [
+    "The frozen journey test must pass (Shift+Tab from first control wraps to Delete button).",
+    "Ensure Tab from last control wraps to first control."
+  ]
+}

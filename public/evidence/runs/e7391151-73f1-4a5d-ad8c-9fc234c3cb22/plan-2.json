@@ -1,0 +1,22 @@
+{
+  "root_cause": "The focus trap's delayInitialFocus: true default defers initial focus via setTimeout, so focus remains on the opening button when the test checks immediately after dialog activation. Additionally, the automatic initial focus detection depends on tabbable node discovery which may not align with the test's synchronous expectation.",
+  "repair_strategy": "Explicitly configure initialFocus to target the street input (#street) and set delayInitialFocus: false to ensure synchronous focus during trap activation.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "85fb0980102bd0ea76fa350b8e2df6695a5bf878b5526a6a22d84ca1b8547611",
+      "before": "const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; } });",
+      "after": "const trap = createFocusTrap('#address-dialog', { onDeactivate: () => { backdrop.hidden = true; }, initialFocus: '#street', delayInitialFocus: false });"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users will receive focus on the street input field immediately when the address dialog opens, enabling them to type without an extra Tab press.",
+  "functional_risks": [
+    "Minimal risk: explicit focus target ensures correct behavior even if tabbable node detection timing varies."
+  ],
+  "verification_requirements": [
+    "After opening the dialog, focus must be on #street.",
+    "Typing an address and pressing Save must update the status correctly.",
+    "Pressing Escape must close the dialog and return focus to the #open button.",
+    "The dialog must still be dismissible via Cancel button."
+  ]
+}

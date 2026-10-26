@@ -1,0 +1,28 @@
+[
+  {
+    "path": "index.html",
+    "score": 10,
+    "signals": [
+      "open",
+      "prefs-modal",
+      "weekly",
+      "prefs",
+      "body",
+      "Newsletter preferences",
+      "Close preferences",
+      "Weekly digest",
+      "Product offers",
+      "Done"
+    ],
+    "sha256": "9a8ff8f0bafc0078985f2aeef3e26404daf29a450242205254a42aea6e1cee13"
+  },
+  {
+    "path": "lib/src/index.js",
+    "score": 2,
+    "signals": [
+      "open",
+      "body"
+    ],
+    "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c"
+  }
+]

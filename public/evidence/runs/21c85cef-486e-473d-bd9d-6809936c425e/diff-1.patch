@@ -1,0 +1,14 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..9b62633 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -294,6 +294,9 @@ class Datepicker extends BaseComponent {
+       const parent = this._element.closest<HTMLElement>('.form-adorn')
+       if (parent) {
+         positionElement = parent
++      } else {
++        // Use the parent element of the input for positioning to avoid the input being modified
++        positionElement = this._element.parentElement as HTMLElement || this._element
+       }
+     }
+ 

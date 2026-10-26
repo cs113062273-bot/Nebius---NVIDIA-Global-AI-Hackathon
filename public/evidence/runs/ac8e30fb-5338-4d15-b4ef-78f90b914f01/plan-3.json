@@ -1,0 +1,22 @@
+{
+  "root_cause": "The Safari workaround only restores the click target as the previously focused element when the active element is the BODY, but for keyboard activation the active element is the opener button, so the workaround does not trigger. However, the opener button should be the focus restoration target for both keyboard and mouse activation.",
+  "repair_strategy": "Expand the condition to capture the click event target for all click events (including keyboard-synthesized clicks), ensuring the element that triggered the dialog is stored as the focus restoration target.",
+  "edits": [
+    {
+      "path": "src/a11y-dialog.js",
+      "sha256": "9dbd1daa87fcac8518db48e4cbb4b0eeea7c30c92a6171ff59cbc895938aaf4c",
+      "before": "    this.shown = true\n    this.$el.removeAttribute('aria-hidden')\n    this.previouslyFocused = getActiveEl()               \n\n    // Due to a long lasting bug in Safari, clicking an interactive element\n    // (like a <button>) does *not* move the focus to that element, which means\n    // `document.activeElement` is whatever element is currently focused (like\n    // an <input>), or the <body> element otherwise. We can work around that\n    // problem by checking whether the focused element is the <body>, and if it,\n    // store the click event target.\n    // See: https://bugs.webkit.org/show_bug.cgi?id=22261\n    if (this.previouslyFocused?.tagName === 'BODY' && event?.target) {\n      this.previouslyFocused = event.target              \n    }",
+      "after": "    this.shown = true\n    this.$el.removeAttribute('aria-hidden')\n    this.previouslyFocused = getActiveEl()               \n\n    // When the dialog is opened via a click (including keyboard activation),\n    // the click target is the element that triggered the dialog. Use it as the\n    // focus restoration target. This also works around a Safari bug where\n    // clicking an interactive element does not move focus to it.\n    // See: https://bugs.webkit.org/show_bug.cgi?id=22261\n    if (event?.type === 'click' && event?.target) {\n      this.previouslyFocused = event.target              \n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Escape after opening the dialog via Enter returns focus to the opener button, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "If show() is called programmatically without a click event, getActiveEl() is used which may not be the intended opener.",
+    "If the click target is not focusable (e.g., a non-interactive element), focus restoration may fail."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape after opening the dialog via Enter returns focus to the opener button.",
+    "Verify that clicking the opener and pressing Escape also returns focus to the opener.",
+    "Ensure the existing Safari workaround for body-focused clicks continues to function correctly."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "root_cause": "Escape key pressed on the access toggle button inside the modal is intercepted by the dropdown's keydown handler, which unconditionally prevents default and stops propagation, preventing the modal's Escape listener from receiving the event.",
+  "repair_strategy": "Modify the dropdown's dataApiKeydownHandler to return early (allowing event propagation) when Escape is pressed and the dropdown menu is not shown, by adding a conditional check before the unconditional preventDefault/stopPropagation calls.",
+  "edits": [
+    {
+      "path": "js/src/dropdown.js",
+      "sha256": "db8d2f4faa0a928bd1599a71441f38ca61ac3fcb69f4631bcdc74dc9edd5aa18",
+      "before": "    event.preventDefault()\n    event.stopPropagation()",
+      "after": "    if (event.key === ESCAPE_KEY && !this.classList.contains(CLASS_NAME_SHOW)) {\n      return\n    }\n    event.preventDefault()\n    event.stopPropagation()"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will now close the share modal when focus is on the access toggle button, providing a keyboard‑accessible way to dismiss the dialog.",
+  "functional_risks": [
+    "Altering Escape handling could affect other components that rely on Escape to close dropdowns when the menu is not shown, though the condition preserves existing behavior for open menus.",
+    "If another modal or widget listens for Escape on the document, unintended closures could occur, but the check limits propagation to cases where the dropdown menu is inactive."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape with focus on the access toggle button (dropdown menu closed) closes the share modal.",
+    "Verify that pressing Escape with the dropdown menu open closes the menu but does not close the modal.",
+    "Verify that ArrowUp/ArrowDown navigation within the dropdown menu still functions when the menu is open.",
+    "Verify that the Space key continues to toggle or close the dropdown menu as before.",
+    "Verify that modal dismissal via backdrop click or Cancel button remains functional."
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "id": "govuk-radios-multiple-groups-keyboard",
+  "title": "Opt out of reminders with the keyboard after choosing Text message",
+  "goal": "Arrowing from Text message to the opt-out answer hides the mobile number field that no longer applies",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the reminder radios",
+      "action": {
+        "kind": "seek",
+        "selector": "#reminder",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to Text message",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#conditional-reminder-2",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Move to the opt-out answer",
+      "action": {
+        "kind": "press",
+        "key": "ArrowDown"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#reminder-none"
+        },
+        {
+          "kind": "visible",
+          "selector": "#conditional-reminder-2",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#conditional-reminder-2",
+      "value": false
+    },
+    {
+      "kind": "visible",
+      "selector": "#conditional-reminder",
+      "value": false
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#reminder-form",
+      "name": "reminder",
+      "value": [
+        "none"
+      ]
+    }
+  ],
+  "forbidden": []
+}

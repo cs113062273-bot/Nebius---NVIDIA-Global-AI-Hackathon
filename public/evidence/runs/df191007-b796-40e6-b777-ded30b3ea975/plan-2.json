@@ -1,0 +1,26 @@
+{
+  "root_cause": "The drawer opens via show()/showModal() but focus remains on the trigger button (or body) instead of moving into the dialog. The native <dialog> element does not automatically focus its first focusable child when shown via showModal() in this environment. The previous synchronous focus attempt in _showElement may execute before the dialog is fully ready to receive focus.",
+  "repair_strategy": "Modify DialogBase._showElement to defer focus management to a microtask after the dialog is shown, ensuring the dialog and its children are fully rendered and focusable before attempting to move focus. This preserves the existing show/showModal logic while adding robust focus initialization for keyboard users.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n  }",
+      "after": "  protected _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {\n    this._openedAsModal = modal\n\n    if (modal) {\n      this._element.showModal()\n    } else {\n      this._element.show()\n    }\n\n    if (preventBodyScroll) {\n      document.documentElement.classList.add(CLASS_NAME_OPEN)\n    }\n\n    // Move focus to the first focusable element after the dialog is shown\n    Promise.resolve().then(() => {\n      const autofocus = this._element.querySelector('[autofocus]');\n      if (autofocus) {\n        autofocus.focus();\n        return;\n      }\n      const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])';;\n      const focusable = this._element.querySelector(focusableSelector);\n      if (focusable) {\n        focusable.focus();\n      } else {\n        this._element.focus();\n      }\n    });\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When the Filters drawer opens, focus will reliably move to the close button (#filters-close) after a microtask, allowing keyboard users to immediately Tab to the In stock checkbox, toggle it with Space, Tab to Show results, and press Enter to apply filters — all without a mouse.",
+  "functional_risks": [
+    "Microtask focus may race with other microtasks in consumer code, but focus() is idempotent and safe.",
+    "If the dialog contains no focusable elements, focus falls back to the dialog element itself (which may need tabindex=-1 to be focusable).",
+    "Non-modal dialogs (show()) will also receive focus management, which may alter existing behavior for non-modal dialogs that intentionally do not move focus."
+  ],
+  "verification_requirements": [
+    "After activating the Filters button with Enter, focus should be on the close button (#filters-close).",
+    "Pressing Tab should move focus to the In stock checkbox (#in-stock).",
+    "Pressing Space should toggle the checkbox.",
+    "Pressing Tab twice should move focus to the Show results button (#apply).",
+    "Pressing Enter on Show results should update the applied filter text and close the drawer.",
+    "Pressing Escape should close the drawer and return focus to the Filters button."
+  ]
+}

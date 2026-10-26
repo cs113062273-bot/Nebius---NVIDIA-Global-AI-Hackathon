@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "id": "autocomplete-pointer-pick-city",
+  "title": "Pick a suggested city with the pointer",
+  "goal": "Typing part of a name and clicking a suggestion saves that city",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Click the delivery city",
+      "action": {
+        "kind": "click",
+        "selector": "#city"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type part of a city",
+      "action": {
+        "kind": "type",
+        "text": "Bra",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Choose Braga",
+      "action": {
+        "kind": "click",
+        "selector": "#city-list li:first-child"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#profile",
+      "name": "city",
+      "value": [
+        "Braga"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#profile",
+      "name": "city",
+      "value": [
+        "Braga"
+      ]
+    }
+  ],
+  "forbidden": []
+}

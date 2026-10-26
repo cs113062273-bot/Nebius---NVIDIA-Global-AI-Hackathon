@@ -1,0 +1,24 @@
+{
+  "root_cause": "The character count plugin removes the maxlength attribute from the container div ($module) instead of the textarea ($textarea), leaving the hard limit in place and truncating user input.",
+  "repair_strategy": "Change the attribute removal target from $module to $textarea so the hard limit is lifted only on the input element, allowing the script to enforce limits via dynamic counting and messaging.",
+  "edits": [
+    {
+      "path": "src/govuk/components/character-count/character-count.js",
+      "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90",
+      "before": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')",
+      "after": "  // Remove hard limit if set\n  $textarea.removeAttribute('maxlength')"
+    }
+  ],
+  "expected_accessibility_effect": "Users can enter text beyond the limit and receive accurate visible and screen‑reader feedback about excess characters, satisfying WCAG 2.1.1 (keyboard), 2.4.3 (focus order), and 4.1.2 (name, role, value).",
+  "functional_risks": [
+    "If other code mistakenly expects the maxlength attribute to be removed from the container, removing it from the textarea instead could leave the attribute on the container (harmless).",
+    "The change does not affect the fallback maxlength for users without JavaScript, which remains on the textarea."
+  ],
+  "verification_requirements": [
+    "Type more than 30 characters into the summary field and verify the full text is retained.",
+    "Verify the textarea receives the govuk-textarea--error class and the visible counter shows a negative remaining count.",
+    "Confirm the screen‑reader live region announces the excess count.",
+    "Ensure form submission includes the complete text.",
+    "Confirm that with JavaScript disabled, the maxlength attribute still prevents entry beyond 30 characters."
+  ]
+}

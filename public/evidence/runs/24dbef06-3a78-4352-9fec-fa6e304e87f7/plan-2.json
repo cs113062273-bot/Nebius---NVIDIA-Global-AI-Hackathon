@@ -1,0 +1,19 @@
+{
+  "root_cause": "ArrowRight increments the date by one day without skipping disabled weekend days, causing selection of closed days.",
+  "repair_strategy": "Modify adjustDate to loop forward/backward by one day until a non-disabled date (respecting minDate, maxDate, disableWeekends, and disableDayFn) is found.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        adjustDate: function(sign, days) {\n\n            var day = this.getDate() || new Date();\n            var difference = parseInt(days)*24*60*60*1000;\n\n            var newDay;\n\n            if (sign === 'add') {\n                newDay = new Date(day.valueOf() + difference);\n            } else if (sign === 'subtract') {\n                newDay = new Date(day.valueOf() - difference);\n            }\n\n            this.setDate(newDay);\n        },",
+      "after": "        adjustDate: function(sign, days) {\n            var day = this.getDate() || new Date();\n            var difference = parseInt(days) * 24 * 60 * 60 * 1000;\n            var newDay;\n            if (sign === 'add') {\n                newDay = new Date(day.valueOf() + difference);\n            } else if (sign === 'subtract') {\n                newDay = new Date(day.valueOf() - difference);\n            }\n            var step = sign === 'add' ? 1 : -1;\n            var msPerDay = 24 * 60 * 60 * 1000;\n            while (true) {\n                var disabled = false;\n                if (this._o.minDate && newDay < this._o.minDate) disabled = true;\n                else if (this._o.maxDate && newDay > this._o.maxDate) disabled = true;\n                else if (this._o.disableWeekends && (newDay.getDay() === 0 || newDay.getDay() === 6)) disabled = true;\n                else if (this._o.disableDayFn && this._o.disableDayFn(newDay)) disabled = true;\n                if (!disabled) break;\n                newDay = new Date(newDay.valueOf() + step * msPerDay);\n            }\n            this.setDate(newDay);\n        },"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard navigation with ArrowRight/Left/Up/Down will now skip over disabled weekend dates, ensuring users can only select valid weekdays.",
+  "functional_risks": [
+    "Risk of infinite loop if all dates are disabled (unlikely). Slight performance impact due to looping; adjustDate is only used for arrow key navigation, so other functionality remains unchanged."
+  ],
+  "verification_requirements": [
+    "Test that ArrowRight from Friday 2026-11-20 yields Monday 2026-11-23; ArrowLeft from Monday yields Friday; verify that arrow keys never land on Saturday or Sunday; ensure month navigation and direct date input still work."
+  ]
+}

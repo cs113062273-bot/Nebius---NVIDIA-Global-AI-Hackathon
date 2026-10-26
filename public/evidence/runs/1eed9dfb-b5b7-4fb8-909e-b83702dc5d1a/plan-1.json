@@ -1,0 +1,22 @@
+{
+  "root_cause": "The datepicker formats the input value to a locale-specific date string during initialization, altering the submitted value when the user does not pick a date.",
+  "repair_strategy": "Conditionally update the input/display only when there are preselected dates, preserving the original ISO format value when no date is chosen.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()",
+      "after": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    if (this._config.selectedDates.length > 0) {\n      this._updateDisplayWithSelectedDates()\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "No change to keyboard navigation or screen reader behavior; the date field remains usable and its value format remains consistent.",
+  "functional_risks": [
+    "Preselected dates (if any) will still be displayed because the guard checks selectedDates length.",
+    "If other code depends on the formatted input value for non-datepicker logic, it may need adjustment, but internal state uses selectedDates."
+  ],
+  "verification_requirements": [
+    "After tabbing through the departure field without selecting a date, the submitted departure value must remain in yyyy-mm-dd format.",
+    "When a date is selected via the calendar, the input must update to the formatted locale string.",
+    "If the page includes preselected dates via data-bs-selected-dates, those dates must be displayed correctly."
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "root_cause": "Pikaday adds a global keydown listener that handles arrow keys to navigate the calendar regardless of which element has focus. When the calendar is visible, ArrowLeft in another input (e.g., #notes) is prevented from moving the caret, causing the space to be appended after 'Gate4' instead of inserting a space between 'Gate' and '4'.",
+  "repair_strategy": "Modify pikaday's _onKeyChange handler to early‑return when the keydown event target is not the bound input field (opts.field). This preserves calendar keyboard navigation when the date field is focused while allowing normal caret movement in other inputs.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "662123ec9f429dee9cffaacfcf89b05ed9c3c30a78d33ecfd113e6778349cc77",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n                // Ignore keyboard navigation if focus is not on the bound field\n                if (opts.field && e.target !== opts.field) {\n                    return;\n                }\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowLeft, ArrowRight, ArrowUp, and ArrowDown keys will now move the caret in the notes input when the calendar is open, allowing users to correct typos without interfering with date picker navigation.",
+  "functional_risks": [
+    "If the pikaday instance is bound to a non-input element, arrow keys may be incorrectly ignored.",
+    "If multiple pikaday instances exist on the page, the check uses opts.field which is specific to each instance, so risk is low.",
+    "Custom keyboards or assistive technology that synthesize keydown events with different targets may be affected."
+  ],
+  "verification_requirements": [
+    "Verify that ArrowLeft/Right/Up/Down in the notes input moves the caret when the calendar is visible.",
+    "Verify that ArrowLeft/Right/Up/Down in the delivery-date input still changes the selected date when the calendar is visible.",
+    "Verify that Enter and Esc still close the picker and blur the field when the delivery-date input is focused.",
+    "Ensure that typing and other keys continue to work normally in both inputs."
+  ]
+}

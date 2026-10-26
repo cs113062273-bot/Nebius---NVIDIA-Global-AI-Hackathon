@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "id": "datepicker-tab-to-next-field",
+  "title": "Tab out of the visit date into the access notes",
+  "goal": "Pressing Tab in the open date field moves focus to the next form field so the user can keep typing",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the visit date field",
+      "action": {
+        "kind": "seek",
+        "selector": "#visit-date",
+        "maxTabs": 24
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#visit-date"
+        }
+      ]
+    },
+    {
+      "title": "Tab to the next field",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#notes"
+        }
+      ]
+    },
+    {
+      "title": "Type access notes",
+      "action": {
+        "kind": "type",
+        "text": "Use the side gate"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#visit-form",
+          "name": "notes",
+          "value": [
+            "Use the side gate"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "focus",
+      "selector": "#notes"
+    },
+    {
+      "kind": "form-data",
+      "selector": "#visit-form",
+      "name": "notes",
+      "value": [
+        "Use the side gate"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#visit-form",
+      "name": "visit",
+      "value": [
+        "2024-03-15"
+      ]
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "govuk-header-nav-pointer",
+  "title": "Follow a header navigation link with a pointer",
+  "goal": "Clicking Fishing rules takes the user to that section and the collapsed menu state is unchanged",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Click Fishing rules",
+      "action": {
+        "kind": "click",
+        "selector": "#nav-rules"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#rules",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#rules",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#menu-button",
+      "name": "aria-expanded",
+      "value": "false"
+    },
+    {
+      "kind": "visible",
+      "selector": "#nav-rules",
+      "value": true
+    }
+  ],
+  "forbidden": []
+}

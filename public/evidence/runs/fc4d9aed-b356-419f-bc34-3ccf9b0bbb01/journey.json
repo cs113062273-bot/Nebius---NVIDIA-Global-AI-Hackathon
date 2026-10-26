@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "id": "bs6-datepicker-leave-keeps-date",
+  "title": "Leave the saved departure date untouched and change the passengers",
+  "goal": "Moving through the date field without picking a date leaves the submitted departure date unchanged",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the departure date",
+      "action": {
+        "kind": "seek",
+        "selector": "#departure",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Close the calendar without picking",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach passengers",
+      "action": {
+        "kind": "seek",
+        "selector": "#passengers",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Change the passengers",
+      "action": {
+        "kind": "type",
+        "text": "2",
+        "replace": true
+      },
+      "assertions": []
+    },
+    {
+      "title": "Reach Save changes",
+      "action": {
+        "kind": "seek",
+        "selector": "#save",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Save",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#sent",
+      "value": "departure=2026-10-22&passengers=2"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "departure",
+      "value": [
+        "2026-10-22"
+      ]
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,68 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..67d5a7f 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -552,16 +552,16 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                        self._adjustDateSkipDisabled(-1);
+                         break;
+                     case 38:
+-                        self.adjustDate('subtract', 7);
++                        self._adjustDateSkipDisabled(-7);
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                        self._adjustDateSkipDisabled(1);
+                         break;
+                     case 40:
+-                        self.adjustDate('add', 7);
++                        self._adjustDateSkipDisabled(7);
+                         break;
+                     case 8:
+                     case 46:
+@@ -571,6 +571,42 @@
+             }
+         };
+ 
++        self._adjustDateSkipDisabled = function(offset)
++        {
++            var start = self.getDate() || new Date()
++            var candidate = new Date(start.valueOf())
++            var step = offset > 0 ? 1 : -1
++            var absOffset = Math.abs(offset)
++            // Apply offset in steps of day, checking validity each step
++            for (var i = 0; i < absOffset; i++)
++            {
++                candidate = new Date(candidate.valueOf() + step * 24 * 60 * 60 * 1000)
++                // Ensure candidate respects min/max/disableDayFn
++                while (!self._isDateValid(candidate))
++                {
++                    candidate = new Date(candidate.valueOf() + step * 24 * 60 * 60 * 1000)
++                }
++            }
++            self.setDate(candidate)
++        };
++
++        self._isDateValid = function(date)
++        {
++            if (opts.minDate && date < opts.minDate)
++            {
++                return false
++            }
++            if (opts.maxDate && date > opts.maxDate)
++            {
++                return false
++            }
++            if (opts.disableDayFn && opts.disableDayFn(date))
++            {
++                return false
++            }
++            return true
++        };
++
+         self._parseFieldValue = function()
+         {
+             if (opts.parse) {

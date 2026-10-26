@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "id": "pikaday-pointer-pick-day",
+  "title": "Pick a check-in day with the pointer",
+  "goal": "Clicking a day fills the check-in date and the guests field still takes input",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the calendar",
+      "action": {
+        "kind": "click",
+        "selector": "#checkin"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Choose 25 November",
+      "action": {
+        "kind": "click",
+        "selector": ".pika-button[data-pika-year=\"2026\"][data-pika-month=\"10\"][data-pika-day=\"25\"]"
+      },
+      "assertions": [
+        {
+          "kind": "form-data",
+          "selector": "#booking",
+          "name": "checkin",
+          "value": [
+            "2026-11-25"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Click the guests field",
+      "action": {
+        "kind": "click",
+        "selector": "#guests"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Enter the number of guests",
+      "action": {
+        "kind": "type",
+        "text": "3"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "guests",
+      "value": [
+        "3"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "checkin",
+      "value": [
+        "2026-11-25"
+      ]
+    }
+  ],
+  "forbidden": []
+}

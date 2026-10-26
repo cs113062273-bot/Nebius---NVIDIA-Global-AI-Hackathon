@@ -1,0 +1,25 @@
+{
+  "root_cause": "The Escape key handler in the list controller's navigate function clears the input value (ctx.input.value = ''), causing the typed city to be lost when the suggestion list is dismissed.",
+  "repair_strategy": "Remove the line that clears the input value in the Escape case (keyCode 27) within the navigate function, while retaining the clear event emission and list closure to preserve existing behavior aside from the unwanted value reset.",
+  "edits": [
+    {
+      "path": "src/controllers/listController.js",
+      "sha256": "913fcec2ffc448fd458cae19dd873623256f7e1c1ba3eab15225d68f74351f8f",
+      "before": "    // Tab\n    case 9:\n      // Select on Tab if enabled\n      if (ctx.resultsList.tabSelect && ctx.cursor >= 0) select(ctx, event);\n\n      break;\n    // Esc\n    case 27:\n      // Clear \"input\" value\n      ctx.input.value = \"\";\n\n      /**\n       * @emit {clear} event on input clear\n       **/\n      eventEmitter('clear', ctx);\n\n      close(ctx);\n      break;",
+      "after": "    // Tab\n    case 9:\n      // Select on Tab if enabled\n      if (ctx.resultsList.tabSelect && ctx.cursor >= 0) select(ctx, event);\n\n      break;\n    // Esc\n    case 27:\n      /**\n       * @emit {clear} event on input clear\n       **/\n      eventEmitter('clear', ctx);\n\n      close(ctx);\n      break;"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close the suggestion list without clearing the input, preserving the user's typed value, keeping focus on the input field, and maintaining accessible combobox state (aria-expanded false).",
+  "functional_risks": [
+    "Any code that relied on the input being emptied after Escape may now see the previous value persist.",
+    "If the 'clear' event is used elsewhere to reset state, emitting it without clearing the input could cause inconsistencies."
+  ],
+  "verification_requirements": [
+    "After typing a value and pressing Escape, the suggestion list must be hidden (aria-expanded false, list has hidden attribute).",
+    "The input must retain the typed value.",
+    "Focus must remain on the input field.",
+    "Form data (e.g., new FormData(form).get('city')) must reflect the typed value.",
+    "Escape should still close the list when no suggestions are open (no adverse effect).",
+    "ArrowDown/Enter selection and Tab navigation (if tabSelect enabled) must continue to work as before."
+  ]
+}

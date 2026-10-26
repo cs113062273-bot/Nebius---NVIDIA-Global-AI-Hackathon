@@ -1,0 +1,16 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "lib/src/index.js",
+      "pass": true,
+      "kind": "syntax"
+    }
+  ],
+  "scope": "Static HTML structure, JavaScript syntax (classic or ESM) and erasable TypeScript only; no framework compilation claim."
+}

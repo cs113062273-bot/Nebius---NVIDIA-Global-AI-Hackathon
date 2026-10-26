@@ -1,0 +1,50 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..19d7a99 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,6 +118,7 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  private _isUserSelected: boolean = false;
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+@@ -220,8 +221,10 @@ class Datepicker extends BaseComponent {
+ 
+   setSelectedDates(dates: DatesArr): void {
+     if (this._calendar) {
++      this._isUserSelected = true
+       this._calendar.set({ selectedDates: dates })
+       this._syncSelectedDates([...this._calendar.context.selectedDates])
++      this._isUserSelected = false
+     }
+   }
+ 
+@@ -270,7 +273,9 @@ class Datepicker extends BaseComponent {
+   protected _syncSelectedDates(selectedDates: string[]): void {
+     const formattedDate = this._formatDateForInput(selectedDates)
+     if (this._isInput) {
+-      this._element.value = formattedDate
++      if (this._isUserSelected) {
++        this._element.value = formattedDate
++      }
+     }
+ 
+     if (this._boundInput) {
+@@ -467,6 +472,7 @@ class Datepicker extends BaseComponent {
+   }
+ 
+   protected _handleDateClick(self: Calendar, event: MouseEvent): void {
++    this._isUserSelected = true
+     const selectedDates = [...self.context.selectedDates]
+     this._syncSelectedDates(selectedDates)
+ 
+@@ -476,6 +482,7 @@ class Datepicker extends BaseComponent {
+     })
+ 
+     this._maybeHideAfterSelection(selectedDates)
++    this._isUserSelected = false
+   }
+ 
+   protected _maybeHideAfterSelection(selectedDates: string[]): void {

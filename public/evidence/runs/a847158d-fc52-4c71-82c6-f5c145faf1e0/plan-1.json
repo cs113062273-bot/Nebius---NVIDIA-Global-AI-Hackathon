@@ -1,0 +1,24 @@
+{
+  "root_cause": "When the focused button inside the dialog is removed by its click handler, focus leaves the dialog and the focus-trap's checkFocusIn attempts to restore focus to the previously focused node, which is now detached, resulting in focus not being restored inside the dialog.",
+  "repair_strategy": "Modify checkFocusIn to verify that the most recently focused node is still connected and focusable before attempting to refocus it; otherwise fallback to the initial focus node (or first tabbable node) within the trap.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n    }\n  };\n",
+      "after": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      const focusNode = state.mostRecentlyFocusedNode;\n      if (!focusNode || !focusNode.isConnected || !isFocusable(focusNode, config.tabbableOptions)) {\n        tryFocus(getInitialFocusNode());\n      } else {\n        tryFocus(focusNode);\n      }\n    }\n  };\n"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains trapped inside the dialog after activating a control that removes itself, ensuring users can continue navigating via Tab/Shift+Tab without escaping.",
+  "functional_risks": [
+    "Altered focus restoration logic might affect edge cases where a detached node is legitimately the intended restore target (unlikely).",
+    "Additional isFocusable check may introduce minimal performance overhead.",
+    "If isFocusable throws for certain nodes, the guard prevents exceptions but may cause unexpected fallback."
+  ],
+  "verification_requirements": [
+    "After clicking 'Show all 4 results', pressing Tab should move focus to the next focusable element inside the dialog (e.g., first list item).",
+    "Escape key should still close the dialog and return focus to the opener button.",
+    "Opening the dialog should still place initial focus on the close button.",
+    "Removing other focusable elements inside the dialog should not break the trap's ability to retain focus."
+  ]
+}

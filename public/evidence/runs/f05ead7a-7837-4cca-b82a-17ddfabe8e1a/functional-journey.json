@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "id": "bootstrap-dropdown-escape-pointer",
+  "title": "Archive the invoice from the actions menu",
+  "goal": "The chosen action runs and the menu closes",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the menu",
+      "action": {
+        "kind": "click",
+        "selector": "#actions-toggle"
+      },
+      "assertions": [
+        {
+          "kind": "visible",
+          "selector": "#action-archive",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Choose Archive",
+      "action": {
+        "kind": "click",
+        "selector": "#action-archive"
+      },
+      "assertions": [
+        {
+          "kind": "text",
+          "selector": "#last-action",
+          "value": "Archived"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#last-action",
+      "value": "Archived"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#last-action",
+      "value": "Archived"
+    },
+    {
+      "kind": "visible",
+      "selector": "#actions-menu",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

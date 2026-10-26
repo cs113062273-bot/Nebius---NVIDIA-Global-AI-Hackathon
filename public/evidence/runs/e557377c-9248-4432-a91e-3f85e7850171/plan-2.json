@@ -1,0 +1,22 @@
+{
+  "root_cause": "The GOVUK Tabs component's keydown handler responds to ArrowDown and ArrowUp by moving focus to the next/previous tab, which is incorrect for horizontal tabs where only Left/Right arrows should navigate.",
+  "repair_strategy": "Insert a capture-phase keydown listener on the tabs container before the component initializes. This listener stops propagation for ArrowDown/ArrowUp events targeting a tab, preventing the component's handler from seeing the event and thus preserving focus on the current tab.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "24e8e15758ccfc9f3b17cadc01108c076cd71ab50482434408642d3a3ece9dfb",
+      "before": "<script type=\"module\">\nimport { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'\nnew Tabs(document.getElementById('applications-tabs'))\n</script>",
+      "after": "<script>\nconst tabsContainer = document.getElementById('applications-tabs');\ntabsContainer.addEventListener('keydown', function(e) {\n  if (e.target.matches('.govuk-tabs__tab') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {\n    e.stopPropagation();\n  }\n}, true);\n</script>\n<script type=\"module\">\nimport { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'\nnew Tabs(document.getElementById('applications-tabs'))\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowDown and ArrowUp keys no longer trigger tab switching, allowing keyboard users to scroll vertically without losing their place in the tab interface, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "If the component attaches its keydown listener in the capture phase on the same element, our listener must be registered first; placing the script before the component initialization ensures this.",
+    "Stopping propagation may prevent other legitimate capture-phase listeners from seeing the event, but the tabs container is unlikely to have other capture listeners."
+  ],
+  "verification_requirements": [
+    "Confirm that pressing ArrowDown or ArrowUp on any tab does not change focus or the aria-selected attribute.",
+    "Confirm that ArrowLeft and ArrowRight still move focus between tabs and update aria-selected accordingly.",
+    "Confirm that the associated tab panel visibility remains correct after ArrowDown/ArrowUp presses."
+  ]
+}

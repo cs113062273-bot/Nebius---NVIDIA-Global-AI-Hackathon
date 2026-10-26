@@ -1,0 +1,26 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..0637b16 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -545,6 +545,12 @@
+             if (self.isVisible()) {
+ 
+                 switch(e.keyCode){
++                    case 9:
++                        if (self._refocusTimeout) {
++                            clearTimeout(self._refocusTimeout);
++                            self._refocusTimeout = null;
++                        }
++                        break;
+                     case 13:
+                     case 27:
+                         if (opts.field) {
+@@ -1052,7 +1058,7 @@
+ 
+             if (opts.bound) {
+                 if(opts.field.type !== 'hidden') {
+-                    sto(function() {
++                    this._refocusTimeout = sto(function() {
+                         opts.trigger.focus();
+                     }, 1);
+                 }

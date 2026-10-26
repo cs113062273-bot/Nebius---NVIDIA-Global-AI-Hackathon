@@ -1,0 +1,24 @@
+{
+  "root_cause": "The offcanvas component's _enforceFocusOnElement method unconditionally enforces focus trapping (modal behavior) even when the offcanvas is configured as non-modal via data-bs-backdrop=\"false\" and data-bs-scroll=\"true\". This adds a document focusin listener that forces focus back to the offcanvas, preventing keyboard navigation to other page elements like the amount field.",
+  "repair_strategy": "Modify _enforceFocusOnElement to only enforce focus trap when the offcanvas is truly modal (backdrop=true and scroll=false). For non-modal panels, skip focus enforcement entirely, allowing free keyboard navigation while preserving modal behavior for true dialogs.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "  _enforceFocusOnElement(element) {\n    EventHandler.off(document, EVENT_FOCUSIN) // guard against infinite focus loop\n    EventHandler.on(document, EVENT_FOCUSIN, event => {\n      if (document !== event.target &&\n        element !== event.target &&\n        !element.contains(event.target)) {\n        element.focus()\n      }\n    })\n    element.focus()\n  }",
+      "after": "  _enforceFocusOnElement(element) {\n    // Only enforce focus trap for truly modal offcanvas (backdrop && !scroll)\n    if (this._config.backdrop && !this._config.scroll) {\n      EventHandler.off(document, EVENT_FOCUSIN) // guard against infinite focus loop\n      EventHandler.on(document, EVENT_FOCUSIN, event => {\n        if (document !== event.target &&\n          element !== event.target &&\n          !element.contains(event.target)) {\n          element.focus()\n        }\n      })\n      element.focus()\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can tab out of the open help panel to reach the amount field and other form controls, while modal offcanvas instances (with backdrop) retain focus trapping for accessibility compliance.",
+  "functional_risks": [
+    "Modal offcanvas instances (backdrop=true, scroll=false) must still trap focus correctly",
+    "The initial focus() call on show() is also skipped for non-modal; this may change initial focus behavior but aligns with non-modal pattern",
+    "Existing tests for modal offcanvas should verify focus trap still works"
+  ],
+  "verification_requirements": [
+    "Tab from help-close button reaches amount field when help panel is open (non-modal)",
+    "Escape key still closes help panel (keyboard config)",
+    "Modal offcanvas (with backdrop) still traps focus",
+    "Focus returns to trigger button when help panel closes"
+  ]
+}

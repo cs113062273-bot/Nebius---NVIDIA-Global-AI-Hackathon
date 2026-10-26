@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "id": "micromodal-form-keyboard",
+  "title": "Ticking a checkbox inside the preferences dialog keeps it open",
+  "goal": "Space ticks the checkbox and the dialog stays open",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach preferences trigger",
+      "action": {
+        "kind": "seek",
+        "selector": "#open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open preferences",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#prefs-modal",
+          "name": "aria-hidden",
+          "value": "false"
+        },
+        {
+          "kind": "focus",
+          "selector": "#weekly"
+        }
+      ]
+    },
+    {
+      "title": "Tick weekly digest",
+      "action": {
+        "kind": "press",
+        "key": "Space"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#prefs-modal",
+          "name": "aria-hidden",
+          "value": "false"
+        },
+        {
+          "kind": "form-data",
+          "selector": "#prefs",
+          "name": "digest",
+          "value": [
+            "weekly"
+          ]
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "attribute",
+      "selector": "#prefs-modal",
+      "name": "aria-hidden",
+      "value": "false"
+    },
+    {
+      "kind": "form-data",
+      "selector": "#prefs",
+      "name": "digest",
+      "value": [
+        "weekly"
+      ]
+    },
+    {
+      "kind": "focus",
+      "selector": "#weekly"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#prefs",
+      "name": "digest",
+      "value": [
+        "weekly"
+      ]
+    }
+  ],
+  "forbidden": []
+}

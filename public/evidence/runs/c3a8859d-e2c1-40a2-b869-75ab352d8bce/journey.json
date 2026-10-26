@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "id": "pikaday-type-date-then-tab",
+  "title": "Type a check-in date, then Tab to the guests field",
+  "goal": "After typing a date and pressing Tab, focus stays on the next field so the user can keep filling the form",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach the check-in field",
+      "action": {
+        "kind": "seek",
+        "selector": "#checkin",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type a new date",
+      "action": {
+        "kind": "type",
+        "text": "2026-12-04"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to the guests field",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#guests"
+        }
+      ]
+    },
+    {
+      "title": "Enter the number of guests",
+      "action": {
+        "kind": "type",
+        "text": "2"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#guests"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "checkin",
+      "value": [
+        "2026-12-04"
+      ]
+    },
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "guests",
+      "value": [
+        "2"
+      ]
+    }
+  ],
+  "functional": [
+    {
+      "kind": "form-data",
+      "selector": "#booking",
+      "name": "checkin",
+      "value": [
+        "2026-12-04"
+      ]
+    }
+  ],
+  "forbidden": []
+}

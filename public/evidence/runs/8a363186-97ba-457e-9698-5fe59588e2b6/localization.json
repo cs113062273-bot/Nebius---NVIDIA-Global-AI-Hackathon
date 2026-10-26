@@ -1,0 +1,91 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "open-help",
+      "help-text",
+      "amount",
+      "body",
+      "help",
+      "Policy help",
+      "Amount (EUR)",
+      "Submit report",
+      "Close help"
+    ],
+    "sha256": "e5127d6fca2c59a8007140e024eeefa4a1e9ccf9c8c9ee7cdbf12fd8dc6dc651"
+  },
+  {
+    "path": "js/src/offcanvas.js",
+    "score": 8.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7"
+  },
+  {
+    "path": "js/src/dom/data.js",
+    "score": 8,
+    "signals": [
+      "Imported runtime dependency of js/src/offcanvas.js"
+    ],
+    "sha256": "2246c6d65bc1ec929db176ad2c6d7e6ea282370a9e57f2099b3dbbeabf8b3a06"
+  },
+  {
+    "path": "js/src/base-component.js",
+    "score": 8,
+    "signals": [
+      "Imported runtime dependency of js/src/offcanvas.js"
+    ],
+    "sha256": "75d79edd9292ac63d023ec39e014b613f8839cf157113cd45314d81c88ac0fd3"
+  },
+  {
+    "path": "js/src/util/backdrop.js",
+    "score": 2,
+    "signals": [
+      "body",
+      "help"
+    ],
+    "sha256": "5fec2addfd748487284ef3b367d7b74c8f901b1c2ef533a2a52523a392e36cca"
+  },
+  {
+    "path": "js/src/dom/event-handler.js",
+    "score": 1.5,
+    "signals": [
+      "Imported runtime dependency of js/src/util/backdrop.js"
+    ],
+    "sha256": "4f8ce09df4933a51cf88c6b88d6372e55e13451912cd84e57cf0e6595e317d2e"
+  },
+  {
+    "path": "js/src/dom/manipulator.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "71e9ccebf0a4286393399f9106d0051ffc32dbae212abe39e0739f8f9d0bf608"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "ef39c843d3859c05ec5db9340e67c34559863b0c839ee59e72d1baeee2f23e1c"
+  },
+  {
+    "path": "js/src/util/scrollbar.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "9bf2959419294f39a2ef927c67f4b751ebbc4fb1d7b1949eec3553902c09cb92"
+  },
+  {
+    "path": "js/src/dom/selector-engine.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/util/scrollbar.js"
+    ],
+    "sha256": "95d0292b19e61340346547b89a82d0cb4de08b3f65d58506c7c8f259627e5805"
+  }
+]

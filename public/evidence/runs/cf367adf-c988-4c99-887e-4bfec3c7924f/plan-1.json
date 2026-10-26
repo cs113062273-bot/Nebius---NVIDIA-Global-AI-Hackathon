@@ -1,0 +1,23 @@
+{
+  "root_cause": "The GOVUK Tabs component interprets ArrowDown as a request to move to the next tab, causing focus and selection to shift from the Past day tab to the Past week tab when the down arrow is pressed.",
+  "repair_strategy": "Add a global keydown listener that prevents the default action for ArrowDown and ArrowUp keys when the event target is a tab (.govuk-tabs__tab), preserving horizontal tab navigation via left/right arrows only.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "24e8e15758ccfc9f3b17cadc01108c076cd71ab50482434408642d3a3ece9dfb",
+      "before": "<script type=\"module\">\nimport { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'\nnew Tabs(document.getElementById('applications-tabs'))\n</script>\n</body>\n</html>",
+      "after": "<script type=\"module\">\nimport { Tabs } from './packages/govuk-frontend/src/govuk/components/tabs/tabs.js'\nnew Tabs(document.getElementById('applications-tabs'))\n</script>\n<script>\ndocument.addEventListener('keydown', function(e) {\n  if (e.target.matches('.govuk-tabs__tab') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {\n    e.preventDefault();\n  }\n});\n</script>\n</body>\n</html>"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing the Down or Up arrow keys while focused on a tab will no longer change the selected tab or panel, allowing users to scroll the page or interact with tab panel content without unintended navigation.",
+  "functional_risks": [
+    "If any custom functionality legitimately relied on ArrowDown/ArrowUp within tabs, it will be blocked.",
+    "Screen readers that use arrow keys for internal navigation may experience altered behavior, though ARIA authoring practices advise against using arrow keys for tablist navigation horizontally."
+  ],
+  "verification_requirements": [
+    "Verify that pressing ArrowDown on a tab does not change the selected tab attribute or panel visibility.",
+    "Verify that pressing ArrowLeft and ArrowRight still correctly move focus and selection between tabs.",
+    "Ensure that tab panels remain correctly shown/hidden according to the selected tab after arrow key interactions.",
+    "Confirm that other page controls (links, buttons, form fields) retain normal keyboard operation."
+  ]
+}

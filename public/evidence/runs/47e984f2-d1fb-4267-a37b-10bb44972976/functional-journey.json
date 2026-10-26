@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "id": "micromodal-hidden-leak-pointer",
+  "title": "Upload a report with the pointer",
+  "goal": "The dialog opens, uploads and closes",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open upload dialog",
+      "action": {
+        "kind": "click",
+        "selector": "#open"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#upload-modal",
+          "name": "aria-hidden",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "title": "Upload",
+      "action": {
+        "kind": "click",
+        "selector": "#upload"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#upload-modal",
+          "name": "aria-hidden",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Uploaded report.pdf."
+    }
+  ],
+  "functional": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Uploaded report.pdf."
+    },
+    {
+      "kind": "attribute",
+      "selector": "#upload-modal",
+      "name": "aria-hidden",
+      "value": "true"
+    }
+  ],
+  "forbidden": []
+}

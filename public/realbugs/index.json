@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T03:09:05.200Z",
+  "generatedAt": "2026-10-26T06:58:10.125Z",
   "enabled": false,
   "cases": [
     {
@@ -16,13 +16,36 @@
       "split": "development",
       "screenRun": "b1323d20-7eca-4307-9122-1028cfb7b60a",
       "recorded": {
-        "run": "5c1a0351-ccc4-4c7d-a766-97614550c826",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "run": "ac8e30fb-5338-4d15-b4ef-78f90b914f01",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
-          "nemotron-3-super-120b-a12b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "ac8e30fb-5338-4d15-b4ef-78f90b914f01",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "7d17235d-c105-4927-b362-f1a364765e82",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "e33eef6c-7cd8-47a7-b706-a7335cfc65af",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "accessible-menu-escape-level",
@@ -38,13 +61,36 @@
       "split": "holdout",
       "screenRun": "1ddb58be-6a35-4d54-8a86-699a73fa82be",
       "recorded": {
-        "run": "ffb805f6-12e6-4a4a-95b0-9f29cc5ed7a0",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "run": "39a3a69c-89df-4b16-ba87-c40ae396726a",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
-          "nemotron-3-super-120b-a12b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "39a3a69c-89df-4b16-ba87-c40ae396726a",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "9f4f6d24-e74a-42ae-b6a2-b656b8937c3e",
+          "verdict": "INCONCLUSIVE",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "baaf4687-af42-4bf4-a4bb-cbec564b52b9",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "accessible-menu-focusout-close",
@@ -60,14 +106,34 @@
       "split": "holdout",
       "screenRun": "06ec9c99-8063-426b-bf48-3b3742505e23",
       "recorded": {
-        "run": "f7fd7e86-a984-4eae-8688-f9eefe41fa32",
+        "run": "fccf4876-edad-4c7e-b351-6e1f9a05df50",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b"
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "fccf4876-edad-4c7e-b351-6e1f9a05df50",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "e1fe2215-cb4d-4e01-8012-5f4c0d1da703",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "3b6d0d31-afb0-492a-bddc-24c0a055015f",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "autocompletejs-activedescendant-id",
@@ -83,13 +149,34 @@
       "split": "holdout",
       "screenRun": "c3735af7-f04f-4263-ae33-3b8de7bc02bb",
       "recorded": {
-        "run": "3352ba8e-efb1-4b4d-b73e-c283de01469a",
+        "run": "dd8d0470-3190-4511-8190-65a952b7a923",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "dd8d0470-3190-4511-8190-65a952b7a923",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "0949f198-7b38-480e-888b-ecbb0cf5f3f2",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "33068868-24e4-4298-9248-ec2420124530",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "autocompletejs-stale-keyboard-selection",
@@ -105,14 +192,36 @@
       "split": "holdout",
       "screenRun": "6aafa56d-ec50-45bf-9b7a-4d6ce3365d33",
       "recorded": {
-        "run": "1fa9016e-10f8-4757-b9be-e4b1c29adb8f",
+        "run": "2d0147d1-76e9-4cc3-ab11-ec93ce175a18",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 3,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "2d0147d1-76e9-4cc3-ab11-ec93ce175a18",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "scope": "library"
+        },
+        {
+          "run": "395fe5b8-46db-41f8-af67-9aa53978e2de",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "3fea1ff7-23e4-4ecc-af69-9cc74991de43",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "awesomplete-tab-to-next-field",
@@ -128,14 +237,35 @@
       "split": "holdout",
       "screenRun": "256b1a25-6338-457b-aa33-b902a0006e54",
       "recorded": {
-        "run": "2ede266f-6035-40e0-9e89-3e9b592d2999",
+        "run": "61b77456-e07f-403e-9260-e831ef10a68e",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "61b77456-e07f-403e-9260-e831ef10a68e",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "2b87bf7c-8f28-4baa-bc7c-41f37dc0de43",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "f620b21d-5745-477f-8c23-6d6f9bba4717",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap-dropdown-escape-in-modal",
@@ -151,14 +281,35 @@
       "split": "holdout",
       "screenRun": "85f9651a-6cb2-433a-a6fd-838c123c3058",
       "recorded": {
-        "run": "acca4ae9-a122-44f0-9031-11ecf67e1fc9",
+        "run": "07f338b5-59da-4102-b68f-1c28b23a5014",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "07f338b5-59da-4102-b68f-1c28b23a5014",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "fcdac8e8-19ea-4fa0-8948-7710d5c0830b",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "88954a23-ae34-4a9b-b7fe-90e7c249f454",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap-modal-shift-tab-wrap",
@@ -174,15 +325,35 @@
       "split": "holdout",
       "screenRun": "c21cb036-3711-4490-8214-d204193f5f5a",
       "recorded": {
-        "run": "050e29dc-7b1e-4495-bcef-87a93ac7fd7c",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "73d2dea9-bf9a-47e1-81af-25aaf1e2d0d7",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "73d2dea9-bf9a-47e1-81af-25aaf1e2d0d7",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "eae679c2-85ba-4387-8571-f5f0268470ea",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        },
+        {
+          "run": "817d7832-65c7-4875-812b-d991f0ef6c06",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap-offcanvas-scroll-focus-release",
@@ -198,13 +369,34 @@
       "split": "holdout",
       "screenRun": "7c36e31c-5304-46e9-878a-f36acfe75d0d",
       "recorded": {
-        "run": "ba20bcc2-b177-4df3-8cac-492e0b61116d",
+        "run": "0a324928-96d2-450c-8a2c-ce005f8b6ca5",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "0a324928-96d2-450c-8a2c-ce005f8b6ca5",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "8a363186-97ba-457e-9698-5fe59588e2b6",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "8cd63187-7385-4f13-924a-87111e9cfb02",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap-dropdown-escape-focus",
@@ -220,14 +412,34 @@
       "split": "holdout",
       "screenRun": "05000179-773a-42b0-be97-19f6cca1b123",
       "recorded": {
-        "run": "41832922-46c1-462c-a3b4-0136b7749c50",
+        "run": "f05ead7a-7837-4cca-b82a-17ddfabe8e1a",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b"
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "f05ead7a-7837-4cca-b82a-17ddfabe8e1a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "97b96cc5-03da-41dc-98b8-dfd767f5a789",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "16ea6c6c-1733-455d-b8f3-213188dea4a0",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap-offcanvas-backdrop-focus-trap",
@@ -243,13 +455,34 @@
       "split": "holdout",
       "screenRun": "99bf7b0b-058c-4b59-a64f-8f452ec83a79",
       "recorded": {
-        "run": "42f61f83-a92f-4d37-a63b-6c1d5dd2a145",
+        "run": "af8121b7-9d05-4e40-a6c9-582986435706",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "af8121b7-9d05-4e40-a6c9-582986435706",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "19c0bf9a-f0d6-4ad8-8a89-46c85e58f10b",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "69a85ec6-056a-45a9-b9c3-0d4bc1c1323a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "page"
+        }
+      ]
     },
     {
       "id": "bootstrap-tabs-arrow-focus",
@@ -265,13 +498,34 @@
       "split": "holdout",
       "screenRun": "6f1c7b4b-9102-439e-9908-26a1f904befe",
       "recorded": {
-        "run": "ea5cffe6-75e3-4636-8052-cbc8636d1992",
+        "run": "4ee42510-67c3-4bed-9db0-3ca314e05cac",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "4ee42510-67c3-4bed-9db0-3ca314e05cac",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "127c3356-539d-4a0e-a343-b18014e5d950",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "a9ed8b6c-9efa-409e-95c1-04adbaea15bd",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "bootstrap-tabs-skip-disabled",
@@ -287,13 +541,34 @@
       "split": "holdout",
       "screenRun": "ca54db63-5ea3-4fc6-8ad3-157b257aa32c",
       "recorded": {
-        "run": "87af7bf7-185b-437e-b275-9c234e7d951f",
+        "run": "70abc8c5-3b8f-490a-9957-1cec081e02df",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "70abc8c5-3b8f-490a-9957-1cec081e02df",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "701c9c46-fcba-433e-9b98-85d39563a233",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "99dce250-fa24-445d-a466-15ba709bb402",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "focus-trap-removed-ancestor",
@@ -309,13 +584,36 @@
       "split": "holdout",
       "screenRun": "d5ceebfc-80bd-4580-83a8-a48c27697bc6",
       "recorded": {
-        "run": "36ba88d6-2c71-4d38-9200-231836e2683d",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "run": "fc3bc2d6-4616-439e-819f-ca4376ff61b8",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
-          "nemotron-3-super-120b-a12b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "fc3bc2d6-4616-439e-819f-ca4376ff61b8",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "b37c9574-e072-44c1-9a2b-de6a72a0a134",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "3dcd9bb6-dcbe-4aa3-9de4-21e3590646d1",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        }
+      ]
     },
     {
       "id": "focus-trap-removed-focus",
@@ -331,14 +629,34 @@
       "split": "holdout",
       "screenRun": "cd73bcb1-b6ac-4439-8a2a-0b3e9318952b",
       "recorded": {
-        "run": "5e2a101a-a677-485d-8e29-c6c8a9f72296",
+        "run": "6e341541-215c-45d9-9c71-592ecfc91ea8",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b"
+        ],
+        "scope": "page"
+      },
+      "frozenRuns": [
+        {
+          "run": "6e341541-215c-45d9-9c71-592ecfc91ea8",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "page"
+        },
+        {
+          "run": "a847158d-fc52-4c71-82c6-f5c145faf1e0",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "010c445c-2a1d-4fba-b8a7-2181c4639676",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        }
+      ]
     },
     {
       "id": "govuk-character-count-maxlength",
@@ -354,13 +672,34 @@
       "split": "holdout",
       "screenRun": "87e39e0a-911d-43fd-a03d-47ee81666625",
       "recorded": {
-        "run": "4ea4d0da-3c45-4956-8030-e62d45e2b20c",
+        "run": "e37a2f6d-fae6-4a3f-b1f4-bfea03c4c0d2",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "e37a2f6d-fae6-4a3f-b1f4-bfea03c4c0d2",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "091e4172-00cb-410a-a3ea-67699e4e38df",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "c5fb070b-a38d-4dd6-ad95-b6815999eeeb",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "govuk-header-nav-aria-hidden",
@@ -376,13 +715,34 @@
       "split": "holdout",
       "screenRun": "a01bb35f-60a6-4508-8f54-1ad4c1e482ed",
       "recorded": {
-        "run": "44a7156a-4da1-4a96-b179-e435018c8e26",
+        "run": "792f9c9c-f5f2-4b4b-9421-09b9a4fb50f4",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "792f9c9c-f5f2-4b4b-9421-09b9a4fb50f4",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "5a95caea-0b0c-48f1-aa4e-dd71b63d59c2",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "1ac1d971-1118-4bc0-a722-9bd1818eb4b2",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "govuk-radios-conditional-multiple-groups",
@@ -398,15 +758,35 @@
       "split": "holdout",
       "screenRun": "848a8b7a-0764-40d9-91ed-6d7fe9f78f39",
       "recorded": {
-        "run": "66b21846-62b9-4e40-bb17-8f994a27763a",
+        "run": "d2036bef-663f-4964-9ffe-11a73cad983b",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "d2036bef-663f-4964-9ffe-11a73cad983b",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "fc96d2cb-dd4b-4adf-a10e-8483fdcf5594",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "scope": "library"
+        },
+        {
+          "run": "dd3e95be-4a64-447c-9cb5-7ad6454cab37",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "govuk-tabs-vertical-arrows",
@@ -422,14 +802,36 @@
       "split": "holdout",
       "screenRun": "ee96cce4-3c72-44de-9dc6-0dee61068737",
       "recorded": {
-        "run": "8743f80f-bf23-4eb9-ad0e-dcd33ddc9718",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "run": "f42915f9-9380-463e-b732-da6498c8d38e",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "f42915f9-9380-463e-b732-da6498c8d38e",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "cf367adf-c988-4c99-887e-4bfec3c7924f",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        },
+        {
+          "run": "e557377c-9248-4432-a91e-3f85e7850171",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        }
+      ]
     },
     {
       "id": "micromodal-form-click-closes",
@@ -445,13 +847,36 @@
       "split": "holdout",
       "screenRun": "4202b573-f40f-4c27-85d5-cde5932842a1",
       "recorded": {
-        "run": "0b1c868d-7867-41ff-9f73-45b46a12ce49",
+        "run": "332ea322-4ddf-44a0-b7e7-67b7abe1d60a",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 3,
         "models": [
-          "nemotron-3-super-120b-a12b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "332ea322-4ddf-44a0-b7e7-67b7abe1d60a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "scope": "library"
+        },
+        {
+          "run": "c467752d-195f-483d-b8e2-19322c1c0bdd",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        },
+        {
+          "run": "1e3ec6d8-ddc8-44c4-82b0-2b954bf9f897",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        }
+      ]
     },
     {
       "id": "micromodal-hidden-focus-leak",
@@ -467,14 +892,36 @@
       "split": "development",
       "screenRun": "1e53cc4b-1b50-4cd0-8e03-6491a5a7adce",
       "recorded": {
-        "run": "c4c834e1-b0f9-456c-a6b7-2340f88dacfb",
+        "run": "47e984f2-d1fb-4267-a37b-10bb44972976",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 3,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "47e984f2-d1fb-4267-a37b-10bb44972976",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "scope": "library"
+        },
+        {
+          "run": "2d3392e8-3fd6-43ff-b143-cac298a4b7f3",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "f12d3ab1-987e-44c1-84e1-4bd002cd0267",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
     },
     {
       "id": "nhsuk-checkboxes-exclusive-unique-names",
@@ -490,15 +937,34 @@
       "split": "holdout",
       "screenRun": "2b36fa59-dedb-4a08-94f1-d47a5f9038ea",
       "recorded": {
-        "run": "1c62a67a-4ab7-4673-b653-cba47ba28d35",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "2d154a53-aa2f-4c02-b596-5574e12f51ea",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+          "nemotron-3-super-120b-a12b"
+        ],
+        "scope": "page"
+      },
+      "frozenRuns": [
+        {
+          "run": "2d154a53-aa2f-4c02-b596-5574e12f51ea",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "page"
+        },
+        {
+          "run": "44e09f8f-2b29-4a50-9e8e-a1b033e823c7",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "e50a20e3-0f71-42d9-8092-767a33365222",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
     },
     {
       "id": "pikaday-arrow-left-other-field",
@@ -514,13 +980,34 @@
       "split": "holdout",
       "screenRun": "69df69ba-9d14-472d-8f3f-4f7692c6546f",
       "recorded": {
-        "run": "f876d753-39a2-4afb-b2ab-651544f69423",
+        "run": "dfbc3fc2-fa1b-4bb1-98a1-0a009cbcb61d",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
           "nemotron-3-super-120b-a12b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "dfbc3fc2-fa1b-4bb1-98a1-0a009cbcb61d",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "6adc9f56-3904-4460-a9d7-6a68ea898925",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "fb31df73-6be4-4da1-b131-321482ab0e2b",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
     },
     {
       "id": "tabbable-disabled-fieldset",
@@ -536,14 +1023,35 @@
       "split": "holdout",
       "screenRun": "83b8eb31-ef77-4bce-9b63-47ee6b76b7d8",
       "recorded": {
-        "run": "6c84bc79-50fc-4725-895a-0a8207382222",
+        "run": "e7391151-73f1-4a5d-ad8c-9fc234c3cb22",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "page"
+      },
+      "frozenRuns": [
+        {
+          "run": "e7391151-73f1-4a5d-ad8c-9fc234c3cb22",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        },
+        {
+          "run": "d8350836-b4ba-4ebc-8140-4e415499bb80",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "page"
+        },
+        {
+          "run": "75708589-c9e0-4cb1-9cf8-0b756d33d5d4",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
     },
     {
       "id": "vanillajs-datepicker-invalid-date-blur",
@@ -559,15 +1067,36 @@
       "split": "holdout",
       "screenRun": "b0d35143-a165-4155-974e-8ed35cce340b",
       "recorded": {
-        "run": "00be85d0-f046-4602-a9b4-b48dc241d361",
+        "run": "8e3484b8-7c24-49dc-83e4-9f6e4cc5cafa",
         "verdict": "VERIFIED_FAIL",
         "passedOn": null,
         "models": [
           "nemotron-3-super-120b-a12b",
           "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "8e3484b8-7c24-49dc-83e4-9f6e4cc5cafa",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "778c5245-8581-47e2-b10d-340d61904175",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "4f46928f-785f-4a53-92a3-0e6139000f7a",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
     },
     {
       "id": "vanillajs-datepicker-tab-next-field",
@@ -583,25 +1112,46 @@
       "split": "holdout",
       "screenRun": "961c7d87-daa3-473c-a685-2fb1b27248ae",
       "recorded": {
-        "run": "63485780-5022-4ecf-a934-2fdb48b2faea",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "0feaeb61-b2b6-4eaf-baa3-ab2b23b475b3",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
-        ]
-      }
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "0feaeb61-b2b6-4eaf-baa3-ab2b23b475b3",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "dafe4464-16e8-4d8a-9249-92fb32338495",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "ab93260d-a278-4365-b676-2a40012c84f7",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        }
+      ]
     }
   ],
   "benchmark": {
-    "note": "Each frozen implementation is scored on its own: one auto run per screened case, first run on that version. Changing the engine or a run limit starts a new version; every case is rerun and earlier scores stay listed.",
+    "note": "Each frozen implementation is scored on its own: the first auto run per screened case on that version is the score. From engine v9, every case gets three blind runs and every run counts; none is picked. Changing the engine or a run limit starts a new version; every case is rerun and earlier scores stay listed.",
     "versions": [
       {
         "id": "72ea5a9e",
         "current": false,
         "runs": 8,
         "verified": 7,
+        "libraryVerified": 6,
         "eligible": 26,
         "note": "First frozen engine, run while the case set was still being built. No indentation-insensitive patch matching."
       },
@@ -610,6 +1160,7 @@
         "current": false,
         "runs": 26,
         "verified": 19,
+        "libraryVerified": 15,
         "eligible": 26,
         "note": "Adds indentation-insensitive patch matching. Output limit 12,000 tokens, prompt limit 96,000 characters: three Ultra replies were cut off before the patch and one case was never sent."
       },
@@ -618,6 +1169,7 @@
         "current": false,
         "runs": 26,
         "verified": 20,
+        "libraryVerified": 17,
         "eligible": 26,
         "note": "Output limit 32,000 tokens, prompt limit 240,000 characters, five-minute call timeout. All 26 cases rerun. Later review: one of its 20 passes (bootstrap-modal-shift-tab-wrap) hardcoded the test page's #confirm-close and #confirm-delete into modal.js; version 6 rejects such patches."
       },
@@ -626,6 +1178,7 @@
         "current": false,
         "runs": 26,
         "verified": 22,
+        "libraryVerified": 17,
         "eligible": 26,
         "note": "When a patch does not apply, the model is told which of its lines are not in the file and the closest real line, or where an ambiguous match occurs, instead of a one-line error. Same limits. All 26 cases rerun."
       },
@@ -634,6 +1187,7 @@
         "current": false,
         "runs": 26,
         "verified": 21,
+        "libraryVerified": 15,
         "eligible": 26,
         "note": "Adds an overfitting gate: a patch that makes component code name one of the test page's element ids is rejected and sent back (it caught two earlier passes that hardcoded the page). The browser now records, for each key, whether it was cancelled and whether a dialog's cancel event could be cancelled, and the model sees that trace. All 26 cases and all open bugs rerun."
       },
@@ -642,16 +1196,34 @@
         "current": false,
         "runs": 26,
         "verified": 18,
+        "libraryVerified": 17,
         "eligible": 26,
         "note": "When a patch does not apply, the retry gets the file lines it was aimed at and the first line that differs; a path naming only the tail of one allowed file is resolved. Scored 18/26, below v6: most misses were patches that did not apply because the model misremembered an unchanged line (a dropped semicolon, self for this) or copied lines from its own rejected patch. That led to version 8. All 26 cases and all open bugs rerun."
       },
       {
         "id": "4ee73b81",
-        "current": true,
+        "current": false,
         "runs": 26,
         "verified": 22,
+        "libraryVerified": 19,
         "eligible": 26,
         "note": "An unchanged line the model misremembered (spacing, a trailing semicolon, self for this) is replaced by the file's own line; changed lines may differ only in formatting and no line may be inserted. Advisory fields nested inside an edit are moved back to the plan, and after an unapplied patch the model is told nothing was applied. Verification is unchanged. All 26 cases and all open bugs rerun."
+      },
+      {
+        "id": "ea20b422",
+        "current": false,
+        "runs": 26,
+        "verified": 21,
+        "libraryVerified": 18,
+        "eligible": 26,
+        "note": "A patch whose before misremembers, invents or omits context lines is applied hunk by hunk to the real region when the lines it deletes exist verbatim and contiguously, the region is unique and every insertion has a defined place; the ignored context is recorded. An axe finding counts as new only if no recorded path on the original (keyboard, pointer, guards) showed the same rule on the same kind of element. Committed on 2026-10-26 after the first 4 of its runs: every case gets three blind runs on this engine and every run counts; the first run is the score comparable with earlier versions.",
+        "repeats": {
+          "runs": 78,
+          "verified": 63,
+          "libraryVerified": 51,
+          "casesRepairedOnce": 25,
+          "perCase": 3
+        }
       }
     ]
   }

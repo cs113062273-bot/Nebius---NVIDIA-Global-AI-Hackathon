@@ -1,0 +1,14 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..d98759f 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -463,6 +463,9 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
++    if (event.key === ESCAPE_KEY && !this.classList.contains(CLASS_NAME_SHOW)) {
++      return
++    }
+     event.preventDefault()
+     event.stopPropagation()
+ 

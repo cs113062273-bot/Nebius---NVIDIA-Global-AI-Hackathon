@@ -1,0 +1,49 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..a67f561 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,12 +118,14 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onKeyDown: (event: KeyboardEvent) => void
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+ 
+     this._calendar = null
+     this._isShown = false
++    this._onKeyDown = null
+ 
+     this._initCalendar()
+   }
+@@ -205,6 +207,12 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    // Remove our keydown listener if we added one
++    if (this._isInput && this._onKeyDown) {
++      this._element.removeEventListener('keydown', this._onKeyDown, { capture: true })
++      this._onKeyDown = null
++    }
++
+     if (this._calendar) {
+       this._calendar.destroy()
+     }
+@@ -250,6 +258,16 @@ class Datepicker extends BaseComponent {
+ 
+     this._setupDismiss()
+ 
++    // Add keydown listener for Tab to hide the datepicker and allow focus to change
++    if (this._isInput) {
++      this._onKeyDown = (event: KeyboardEvent) => {
++        if (event.key === 'Tab' && this._isShown) {
++          this.hide()
++        }
++      }
++      this._element.addEventListener('keydown', this._onKeyDown, { capture: true })
++    }
++
+     // Set initial value if input has a value
+     if (this._isInput && this._element.value) {
+       this._parseInputValue()

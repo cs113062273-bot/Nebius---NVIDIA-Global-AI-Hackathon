@@ -1,0 +1,25 @@
+{
+  "root_cause": "The datepicker component passes the input element as the positionElement to vanilla-calendar-pro, which modifies the input's inline styles (setting left/top) and interferes with keyboard event handling, preventing the Tab key from functioning normally.",
+  "repair_strategy": "Modify the datepicker component to use the parent element of the input as the positionElement for the calendar (when the input is not inline and not in a form-adorn) to prevent direct modification of the input element by vanilla-calendar-pro.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Use input's parent if in form-adorn\n    if (!positionElement && this._isInput && !this._isInline) {\n      const parent = this._element.closest<HTMLElement>('.form-adorn')\n      if (parent) {\n        positionElement = parent\n      }\n    }\n",
+      "after": "    // Use input's parent if in form-adorn\n    if (!positionElement && this._isInput && !this._isInline) {\n      const parent = this._element.closest<HTMLElement>('.form-adorn')\n      if (parent) {\n        positionElement = parent\n      } else {\n        // Use the parent element of the input for positioning to avoid the input being modified\n        positionElement = this._element.parentElement as HTMLElement || this._element\n      }\n    }\n"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key will move focus from the date field to the next field as expected, because the input element will no longer have its inline styles modified by the calendar and will not interfere with keyboard events.",
+  "functional_risks": [
+    "Calendar may be positioned incorrectly if the parent element lacks appropriate positioning context.",
+    "Calendar may appear in an unexpected location for inputs in complex layouts.",
+    "Change might affect calendar positioning for inputs that are direct children of body or other unpositioned elements."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab when the date field has focus moves focus to the passengers field.",
+    "Verify that clicking the date field still shows the calendar.",
+    "Verify that pressing Escape when the calendar is shown hides the calendar and moves focus back to the date field (as per regression guard).",
+    "Verify that selecting a date from the calendar updates the input value correctly.",
+    "Verify that the calendar is positioned near the input field as intended."
+  ]
+}

@@ -1,0 +1,67 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..56caaff 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -544,6 +544,13 @@
+ 
+             if (self.isVisible()) {
+ 
++                function isValidDate(d) {
++                    if (self._o.minDate && d < self._o.minDate) return false;
++                    if (self._o.maxDate && d > self._o.maxDate) return false;
++                    if (typeof self._o.disableDayFn === 'function' && self._o.disableDayFn(d)) return false;
++                    return true;
++                }
++
+                 switch(e.keyCode){
+                     case 13:
+                     case 27:
+@@ -552,16 +559,44 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                        var prev = self.getDate();
++                        do {
++                            self.adjustDate('subtract', 1);
++                            var curr = self.getDate();
++                            if (!curr) break;
++                            if (curr.getTime() === prev.getTime()) break;
++                            prev = curr;
++                        } while (!isValidDate(curr));
+                         break;
+                     case 38:
+-                        self.adjustDate('subtract', 7);
++                        var prev = self.getDate();
++                        do {
++                            self.adjustDate('subtract', 7);
++                            var curr = self.getDate();
++                            if (!curr) break;
++                            if (curr.getTime() === prev.getTime()) break;
++                            prev = curr;
++                        } while (!isValidDate(curr));
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                        var prev = self.getDate();
++                        do {
++                            self.adjustDate('add', 1);
++                            var curr = self.getDate();
++                            if (!curr) break;
++                            if (curr.getTime() === prev.getTime()) break;
++                            prev = curr;
++                        } while (!isValidDate(curr));
+                         break;
+                     case 40:
+-                        self.adjustDate('add', 7);
++                        var prev = self.getDate();
++                        do {
++                            self.adjustDate('add', 7);
++                            var curr = self.getDate();
++                            if (!curr) break;
++                            if (curr.getTime() === prev.getTime()) break;
++                            prev = curr;
++                        } while (!isValidDate(curr));
+                         break;
+                     case 8:
+                     case 46:

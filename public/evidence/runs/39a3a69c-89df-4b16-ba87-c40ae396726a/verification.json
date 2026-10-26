@@ -1,0 +1,17 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 6 · #facts: expected \"#facts\", observed \"#history\"",
+    "Task evidence is missing or contradicts the verdict",
+    "Regression guard \"Escape in a first-level submenu returns to the menubar\": failed · Step 4 · #about: expected \"#about\", observed \"#overview\""
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_FAIL",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true,
+    "regressionGuards": "0/1"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

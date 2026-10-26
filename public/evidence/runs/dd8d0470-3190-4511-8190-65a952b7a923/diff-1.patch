@@ -1,0 +1,13 @@
+diff --git a/src/controllers/navigationController.js b/src/controllers/navigationController.js
+index 3f5d451..ecb27fc 100644
+--- a/src/controllers/navigationController.js
++++ b/src/controllers/navigationController.js
+@@ -32,7 +32,7 @@ const navigate = (config, results, dataFeedback) => {
+     }
+     // and add "active" class to the list item
+     addActive(list);
+-    config.inputField.setAttribute("aria-activedescendant", list[currentFocus].dataset.value);
++    config.inputField.setAttribute("aria-activedescendant", list[currentFocus].id);
+     /**
+      * @emits {navigation} Emits Event on results list navigation
+      **/

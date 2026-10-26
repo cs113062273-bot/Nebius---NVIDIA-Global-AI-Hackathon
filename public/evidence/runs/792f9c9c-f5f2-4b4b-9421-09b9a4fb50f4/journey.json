@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "id": "govuk-header-nav-exposed-keyboard",
+  "title": "Reach the header navigation links as named links on a desktop-width page",
+  "goal": "The visible navigation links in the header are exposed to assistive technology as links a keyboard and screen reader user can use",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Tab to the first header navigation link",
+      "action": {
+        "kind": "seek",
+        "selector": "#nav-apply",
+        "maxTabs": 24
+      },
+      "assertions": [
+        {
+          "kind": "ax",
+          "role": "link",
+          "name": "Apply"
+        }
+      ]
+    },
+    {
+      "title": "Tab to the next header navigation link",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#nav-renew"
+        },
+        {
+          "kind": "ax",
+          "role": "link",
+          "name": "Renew a licence"
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "ax",
+      "role": "link",
+      "name": "Apply"
+    },
+    {
+      "kind": "ax",
+      "role": "link",
+      "name": "Renew a licence"
+    },
+    {
+      "kind": "ax",
+      "role": "link",
+      "name": "Fishing rules"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#menu-button",
+      "name": "aria-expanded",
+      "value": "false"
+    }
+  ],
+  "forbidden": []
+}

@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "id": "bootstrap-tabs-arrow-pointer",
+  "title": "Switch settings sections with the mouse",
+  "goal": "Clicking a tab shows its panel",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open Billing",
+      "action": {
+        "kind": "click",
+        "selector": "#tab-billing"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#tab-billing",
+          "name": "aria-selected",
+          "value": "true"
+        },
+        {
+          "kind": "visible",
+          "selector": "#billing-plan",
+          "value": true
+        }
+      ]
+    },
+    {
+      "title": "Return to Account",
+      "action": {
+        "kind": "click",
+        "selector": "#tab-account"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#tab-account",
+          "name": "aria-selected",
+          "value": "true"
+        },
+        {
+          "kind": "visible",
+          "selector": "#account-name",
+          "value": true
+        }
+      ]
+    }
+  ],
+  "success": [
+    {
+      "kind": "visible",
+      "selector": "#account-name",
+      "value": true
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#tab-account",
+      "name": "aria-selected",
+      "value": "true"
+    },
+    {
+      "kind": "visible",
+      "selector": "#billing-plan",
+      "value": false
+    }
+  ],
+  "forbidden": []
+}

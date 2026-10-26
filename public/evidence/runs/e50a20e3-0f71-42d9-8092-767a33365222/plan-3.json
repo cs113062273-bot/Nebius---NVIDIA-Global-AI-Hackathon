@@ -1,0 +1,22 @@
+{
+  "root_cause": "The import map lacks an entry for the relative specifier './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js' used in the module script, so initCheckboxes() fails to load and the exclusive checkbox behavior (data-checkbox-exclusive-group) is not initialized for keyboard interaction.",
+  "repair_strategy": "Add the missing import map entry mapping the relative specifier used in the script to the absolute module path, enabling the checkboxes module to load and apply exclusive group behavior when 'No symptoms' is selected via keyboard.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+      "before": "<script type=\"importmap\">\n{\"imports\":{\"/packages/nhsuk-frontend/src/nhsuk/common/index.mjs\":\"/packages/nhsuk-frontend/src/nhsuk/common/index.js\",\"/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.mjs\":\"/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.js\",\"/packages/nhsuk-frontend/src/nhsuk/component.mjs\":\"/packages/nhsuk-frontend/src/nhsuk/component.js\",\"/packages/nhsuk-frontend/src/nhsuk/errors/index.mjs\":\"/packages/nhsuk-frontend/src/nhsuk/errors/index.js\"}}\n</script>",
+      "after": "<script type=\"importmap\">\n{\"imports\":{\"/packages/nhsuk-frontend/src/nhsuk/common/index.mjs\":\"/packages/nhsuk-frontend/src/nhsuk/common/index.js\",\"/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.mjs\":\"/packages/nhsuk-frontend/src/nhsuk/common/nhsuk-frontend-version.js\",\"/packages/nhsuk-frontend/src/nhsuk/component.mjs\":\"/packages/nhsuk-frontend/src/nhsuk/component.js\",\"/packages/nhsuk-frontend/src/nhsuk/errors/index.mjs\":\"/packages/nhsuk-frontend/src/nhsuk/errors/index.js\",\"./packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js\":\"/packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js\"}}\n</script>"
+    }
+  ],
+  "expected_accessibility_effect": "Ensures that selecting the mutually exclusive 'No symptoms' option clears other symptom selections via keyboard, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "Adding the module may affect other pages if they unexpectedly rely on its absence, but the component is benign when not used.",
+    "If another import map entry for the same specifier exists, duplication could cause conflicts; however the current map lacks this entry."
+  ],
+  "verification_requirements": [
+    "After pressing Space on #symptoms-none, verify that symptoms[cough] and symptoms[fever] are unchecked.",
+    "Confirm that the exclusive group works for both mouse clicks and keyboard interaction.",
+    "Ensure no console errors related to module loading appear after the change."
+  ]
+}

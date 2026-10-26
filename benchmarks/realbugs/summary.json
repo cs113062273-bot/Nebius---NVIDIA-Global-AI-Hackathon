@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-10-26T06:52:46.489Z",
-  "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
+  "generatedAt": "2026-10-26T06:53:28.810Z",
+  "implementation": "9980d4bb6ed51fa6de8df4361811596a2a6972715eb776f3a687bc73adf920cc",
   "cases": 26,
   "eligible": 26,
-  "autoRuns": 26,
-  "autoVerified": 21,
-  "libraryVerified": 18,
+  "autoRuns": 0,
+  "autoVerified": 0,
+  "libraryVerified": 0,
   "versions": [
     {
       "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
@@ -100,7 +100,7 @@
     },
     {
       "implementation": "ea20b4222d1d4a5e3a4c1746e9178d05173d8c1491037ba6758f5f0416988eaf",
-      "current": true,
+      "current": false,
       "autoRuns": 26,
       "autoVerified": 21,
       "libraryVerified": 18,

@@ -86,8 +86,8 @@ A second component, [Pikaday](https://github.com/Pikaday/Pikaday/issues/955), sh
 
 - Every repair proposal is a live `chat/completions` call to Nebius Token Factory with an NVIDIA Nemotron model selected from the authenticated catalog: `nvidia/Nemotron-3-Ultra-550b-a55b` or `nvidia/nemotron-3-super-120b-a12b`.
 - The model receives the failing browser evidence, the frozen requirements and the full allowlisted source with SHA-256 hashes. It returns root cause, strategy and exact before/after edits as JSON.
-- Ultra handled the hardest form reasoning (16,000-token output limit). Super handled the larger calendar component.
-- Ledger to date: **38 requests**, 669,899 prompt and 230,964 completion tokens. That is about **US$0.94** at the catalog prices returned by the API, paid from sponsor credits. Seven requests failed, were truncated or returned invalid output; they are recorded, never counted as success.
+- Routing: Nemotron 3 Super makes the first attempt with no browser feedback; Nemotron 3 Ultra makes up to two retries, each given Chromium's exact failure report. Nemotron 3 Nano drafts task files from a one-sentence description (`tabstitch draft`). Since engine v10, repairs ask for schema-constrained JSON with `response_format`.
+- Every call reserves its worst-case cost from catalog prices in a local ledger before it is sent, under a US$ ceiling per benchmark scope. Per-model calls, latency, token use, failure classes and cost are aggregated in [`public/inference-stats.json`](public/inference-stats.json). Failed, truncated and unparseable calls are recorded and never counted as success. What we learned about the models and the platform is in [`docs/nvidia_feedback.md`](docs/nvidia_feedback.md) and [`docs/nebius_feedback.md`](docs/nebius_feedback.md).
 - Raw requests and responses, including reasoning, request IDs, usage and latency, are published with each run under `public/evidence/runs/<run>/model-*.json`.
 
 ## What the gate checks
@@ -98,7 +98,7 @@ A candidate passes only when all of these hold in fresh Chromium contexts:
 2. The independent pointer path still passes, and its outcome is unchanged.
 3. Every regression guard that passed on the original still passes, without runtime errors.
 4. Assertions read native browser `FormData`, not display text.
-5. The patch touches only allowlisted, hash-matched files, matches its preimage exactly once, parses, adds no new axe findings and keeps the initial page visually stable.
+5. The patch touches only allowlisted, hash-matched files, matches its preimage exactly once (or applies hunk by hunk where the lines it deletes exist verbatim), parses, adds no axe finding that no recorded path on the original showed, and keeps the initial page visually stable.
 6. Component code is not fitted to the test page. A patch that makes a library file name one of the page's element ids (for example `querySelector('#filters-close')` inside `drawer.ts`) is rejected before the browser runs and sent back to the model. Application files that already refer to the page's ids are exempt. This gate exists because two earlier patches passed every browser check by doing exactly that.
 
 When a key press does not do what the task expects, the model also gets the browser's key trace: which element received each key, whether a listener cancelled it, and whether a dialog's `cancel` event could be cancelled at all.
@@ -107,7 +107,11 @@ The four verdicts are `VERIFIED_PASS`, `VERIFIED_FAIL`, `INCONCLUSIVE` and `NOT_
 
 ## Provenance, honestly
 
-- **Original cases.** Both components are pinned and unmodified upstream code inside author-created pages. They are real reported issues, not production customers.
+- **Blind real bugs.** Each library is pinned, unmodified, at the commit before a published maintainer fix, inside an author-built page. The maintainers' fix must pass the frozen task before any inference and is never sent to the model; every request is scanned for lines unique to that fix. Public fixes may still be in model training data.
+- **Every version, every run.** A change to the engine or a run limit is a new version, and every case is rerun on it; earlier scores stay on the scoreboard. From engine v9, each bug gets three blind runs and every run counts.
+- **Where a pass fixed the bug.** Each pass is labelled by its diff: a change to the library's own files, or only a workaround in the author-built page. Before engine v10 the page was editable, and 35 of 193 passing runs only worked around the bug there.
+- **The gate's own errors.** Three Pikaday patches were rejected before engine v9 for colour contrast the library already had. They are listed on the scoreboard and are not counted as catches.
+- **Original case studies.** The GOV.UK autocomplete and Pikaday studies below are real reported issues in author-created pages, not production customers.
 - **Post-hoc strengthening.** Every stricter task was added after review. Each one was frozen in `benchmarks/<case>/commitment.json` before the next inference, together with source hashes, task hashes and repair-implementation hashes.
 - **Implementation amendments.** Two changes were made after recorded failures: accepting a lone string for advisory lists, and adding optional regression guards. Both are disclosed in `amendment*.json`; source and tasks stayed frozen.
 - **Withheld checks.** These were omitted from model requests, but their markup is visible in the source. This is not a blind evaluation.
@@ -156,9 +160,9 @@ To reproduce an experiment, run `node scripts/evaluate-followup.mjs --prepare|--
 
 ## Limits
 
-- Static HTML/CSS/JS only. Framework builds are verified as built output, not repaired at framework source.
+- Static HTML, CSS, JavaScript and TypeScript sources. Framework builds are verified as built output, not repaired at framework source.
 - Chromium only. No NVDA, VoiceOver or JAWS testing.
 - A pass is only as strong as the frozen tasks and guards. The recorded history shows patches that passed a weaker contract before review found the gap.
-- The public site is read-only. Live repair runs locally because it executes browsers and spends credits.
+- The public site is static. Fresh runs happen in GitHub Actions when someone opens a live-run issue (12 a day, 3 per person, US$0.50 each) or locally with your own key.
 
 MIT for our code. Pinned upstream components keep their own licenses in each `original/LICENSE.txt`. Playwright (Apache-2.0), axe-core (MPL-2.0), Zod (MIT) and pngjs (MIT) keep their licenses.

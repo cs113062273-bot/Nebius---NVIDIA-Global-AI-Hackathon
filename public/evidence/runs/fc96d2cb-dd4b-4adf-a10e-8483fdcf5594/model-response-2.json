@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-26T05:55:10.750Z",
+  "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+  "requestId": "chatcmpl-8c31438b74b22d471cc50f54365d46f4",
+  "finishReason": "stop",
+  "usage": {
+    "completion_tokens": 605,
+    "prompt_tokens": 5149,
+    "total_tokens": 5754,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 148,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 5149
+  },
+  "latencyMs": 2569,
+  "structuredOutput": false,
+  "content": "{\n  \"root_cause\": \"The radios component only updates ARIA attributes and conditional visibility on click events, not on keyboard-driven change events. When navigating with arrow keys between radio options, a 'change' event fires but 'click' does not, so conditional fields remain visible when they should be hidden.\",\n  \"repair_strategy\": \"Add a 'change' event listener that invokes the same attribute-update logic used for clicks, ensuring that selecting a radio via keyboard updates aria-expanded and toggles the associated conditional panel.\",\n  \"edits\": [\n    {\n      \"path\": \"src/govuk/components/radios/radios.js\",\n      \"sha256\": \"a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c\",\n      \"before\": \"  // Handle events\\n  $module.addEventListener('click', this.handleClick.bind(this))\",\n      \"after\": \"  // Handle events\\n  $module.addEventListener('click', this.handleClick.bind(this))\\n  $module.addEventListener('change', this.handleClick.bind(this))\"\n    }\n  ],\n  \"expected_accessibility_effect\": \"Keyboard users can now navigate the radio group with arrow keys and see conditional fields show/hide appropriately, meeting WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).\",\n  \"functional_risks\": [\n    \"Potential duplicate handling if both click and change fire for the same interaction (e.g., mouse click may trigger both); however setAttributes is idempotent.\",\n    \"Slight performance overhead from iterating all radios on each change, but negligible given typical small radio groups.\"\n  ],\n  \"verification_requirements\": [\n    \"Verify that arrowing between options updates aria-expanded and hides/shows conditionals correctly.\",\n    \"Verify that mouse clicks continue to work as before.\",\n    \"Verify that form data reflects the selected value after keyboard navigation.\",\n    \"Verify no regression in existing tests for the radios component.\"\n  ]\n}",
+  "reasoning": "The issue is that when navigating with keyboard arrow keys between radio options, the conditional fields don't hide/show properly. The radios component only handles click events, not change events from keyboard navigation.\n\nLooking at the radios.js code, the `init` method only adds a click event listener. When using arrow keys to navigate radio buttons, a `change` event fires but not a `click` event. The `handleClick` method updates the ARIA attributes and conditional visibility, but it's only called on click.\n\nThe fix is to also listen for `change` events and call the same handler. This will ensure keyboard navigation updates the conditional fields correctly.\n\nLet me create the minimal edit to add a change event listener alongside the click event listener."
+}

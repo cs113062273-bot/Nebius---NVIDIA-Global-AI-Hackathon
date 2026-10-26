@@ -1,0 +1,22 @@
+{
+  "root_cause": "The Awesomplete widget assigns tabindex='0' to each suggestion list item, making them focusable. When the popup is open, pressing Tab cycles focus within the list instead of exiting the combobox and moving to the next form field.",
+  "repair_strategy": "Remove the tabindex attribute from list items in the ITEM function so that only the combobox input remains focusable. Arrow‑key navigation and selection continue to work via aria-activedescendant and aria-selected, preserving functionality while allowing Tab to leave the popup.",
+  "edits": [
+    {
+      "path": "awesomplete.js",
+      "sha256": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6",
+      "before": "\t\t\"tabindex\": '0', // for the Talkback screen reader\n",
+      "after": "\t\t// tabindex removed for proper Tab navigation\n"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab while the combobox suggestions are visible will move focus to the next form field (e.g., the dietary requirements input) rather than trapping focus inside the suggestion list.",
+  "functional_risks": [
+    "Removing tabindex may affect Talkback users who previously relied on item focus; however ARIA activedescendant and aria-selected should still convey selection.",
+    "Any custom CSS that depends on :focus states of list items will no longer apply a visual focus indicator."
+  ],
+  "verification_requirements": [
+    "Verify that typing in the city field opens the suggestion list and a subsequent Tab press moves focus to the dietary input field.",
+    "Confirm that arrow keys still navigate suggestions and that Enter (or click) selects the highlighted suggestion.",
+    "Ensure screen readers continue to announce the number of results and the currently selected suggestion."
+  ]
+}
