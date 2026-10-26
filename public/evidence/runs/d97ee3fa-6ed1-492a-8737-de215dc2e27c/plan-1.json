@@ -1,0 +1,24 @@
+{
+  "root_cause": "The focus trap treats all focusable nodes, including the close button, when determining wrap‑to‑start behavior. A visually hidden button (display:none) is still considered focusable, so Tab from the last visible control moves to the hidden button, which the browser skips, causing focus to leave the modal.",
+  "repair_strategy": "Filter out elements matching the modal’s close trigger attribute from the focusable set used for wrapping and initial focus, falling back to the full set if no nodes remain, ensuring the tab loop respects only truly focusable, non‑close controls.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    maintainFocus (event) {\n      const focusableNodes = this.getFocusableNodes()\n\n      // if disableFocus is true\n      if (!this.modal.contains(document.activeElement)) {\n        focusableNodes[0].focus()\n      } else {\n        const focusedItemIndex = focusableNodes.indexOf(document.activeElement)\n\n        if (event.shiftKey && focusedItemIndex === 0) {\n          focusableNodes[focusableNodes.length - 1].focus()\n          event.preventDefault()\n        }\n\n        if (!event.shiftKey && focusableNodes.length > 0 && focusedItemIndex === focusableNodes.length - 1) {\n          focusableNodes[0].focus()\n          event.preventDefault()\n        }\n      }\n    }",
+      "after": "    maintainFocus (event) {\n      const focusableNodes = this.getFocusableNodes()\n      const focusableNodesWithoutClose = focusableNodes.filter(node => !node.hasAttribute(this.config.closeTrigger))\n      const usableNodes = focusableNodesWithoutClose.length ? focusableNodesWithoutClose : focusableNodes\n\n      // if disableFocus is true\n      if (!this.modal.contains(document.activeElement)) {\n        usableNodes[0].focus()\n      } else {\n        const focusedItemIndex = usableNodes.indexOf(document.activeElement)\n\n        if (event.shiftKey && focusedItemIndex === 0) {\n          usableNodes[usableNodes.length - 1].focus()\n          event.preventDefault()\n        }\n\n        if (!event.shiftKey && usableNodes.length > 0 && focusedItemIndex === usableNodes.length - 1) {\n          usableNodes[0].focus()\n          event.preventDefault()\n        }\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tabbing inside the upload dialog now cycles correctly among the filename input, Upload button, and close button (or wraps to the first element), keeping focus within the modal and preventing escape to page elements.",
+  "functional_risks": [
+    "If a modal contains only close‑trigger elements, fallback may place focus on the close button, altering initial focus.",
+    "Removing close button from the tab order could affect users who expect to reach it via Tab; however it remains reachable via Shift+Tab from the first element or via screen reader navigation."
+  ],
+  "verification_requirements": [
+    "After opening the dialog, first focus is on #filename.",
+    "Pressing Tab moves focus: #filename → #upload → #modal-close → (wrap) #filename.",
+    "Shift+Tab reverses the order.",
+    "The hidden #retry button never receives focus.",
+    "Escape key closes the dialog and returns focus to the triggering button."
+  ]
+}

@@ -1,0 +1,42 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..1287347 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -124,6 +124,7 @@ class Datepicker extends BaseComponent {
+ 
+     this._calendar = null
+     this._isShown = false
++    this._onTabKeyDown = null
+ 
+     this._initCalendar()
+   }
+@@ -209,6 +210,12 @@ class Datepicker extends BaseComponent {
+       this._calendar.destroy()
+     }
+ 
++    // Clean up Tab key listener
++    if (this._onTabKeyDown) {
++      EventHandler.off(this._element, 'keydown', this._onTabKeyDown);
++      this._onTabKeyDown = null;
++    }
++
+     this._calendar = null
+     super.dispose()
+   }
+@@ -257,6 +264,16 @@ class Datepicker extends BaseComponent {
+ 
+     // Populate input/display with preselected dates
+     this._updateDisplayWithSelectedDates()
++
++    // Set up Tab key listener to hide the calendar when tabbing out
++    if (this._isInput) {
++      this._onTabKeyDown = (event: KeyboardEvent) => {
++        if (event.key === 'Tab') {
++          this.hide();
++        }
++      };
++      EventHandler.on(this._element, 'keydown', this._onTabKeyDown);
++    }
+   }
+ 
+   protected _updateDisplayWithSelectedDates(): void {

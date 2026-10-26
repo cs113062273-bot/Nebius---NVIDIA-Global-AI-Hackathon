@@ -1,0 +1,24 @@
+{
+  "root_cause": "The focus trap incorrectly includes hidden focusable elements (e.g., the .retry button with display:none) in the list of focusable nodes, causing the tab focus to move beyond the modal's last visible control instead of wrapping to the first.",
+  "repair_strategy": "Filter the focusable nodes returned by getFocusableNodes to exclude elements that are not rendered (offsetParent === null), ensuring only visible, focusable items are considered for wrapping behavior.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes)\n    }",
+      "after": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes).filter(node => node.offsetParent !== null)\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tabbing within the upload dialog will now cycle correctly among visible controls (#filename → #upload → #modal-close → #filename) and Shift+Tab will reverse, keeping focus inside the modal and preventing escape to page-level elements.",
+  "functional_risks": [
+    "Elements that are intentionally zero‑size but still meant to be focusable could be inadvertently excluded (unlikely in this UI).",
+    "Custom visibility techniques that preserve offsetParent (e.g., off‑screen positioning) remain unaffected."
+  ],
+  "verification_requirements": [
+    "After opening the modal, pressing Tab moves focus: #filename → #upload → #modal-close → then back to #filename.",
+    "Shift+Tab moves focus in the reverse order.",
+    "The hidden #retry button remains non‑focusable and does not affect the tab order.",
+    "Modal opening via mouse click continues to set initial focus to #filename.",
+    "Escape key still closes the modal and restores focus to the trigger button."
+  ]
+}

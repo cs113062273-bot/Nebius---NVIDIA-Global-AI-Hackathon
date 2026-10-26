@@ -1,0 +1,28 @@
+{
+  "at": "2026-10-26T08:39:33.658Z",
+  "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+  "requestId": "chatcmpl-b4e927739c766beac0e53eb7dad584d5",
+  "finishReason": "stop",
+  "usage": {
+    "completion_tokens": 1166,
+    "prompt_tokens": 6282,
+    "total_tokens": 7448,
+    "completion_tokens_details": {
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 123,
+      "rejected_prediction_tokens": null
+    },
+    "prompt_tokens_details": {
+      "audio_tokens": null,
+      "cached_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "prompt_cache_hit_tokens": 0,
+    "prompt_cache_miss_tokens": 6282
+  },
+  "latencyMs": 2922,
+  "structuredOutput": false,
+  "content": "{\n  \"root_cause\": \"The Govuk radios component only updates ARIA attributes and conditional visibility on click events. Keyboard arrow navigation changes the checked state of radio buttons without firing a click event, so the associated conditional content remains visible when it should be hidden.\",\n  \"repair_strategy\": \"Add a 'change' event listener to the radios module that invokes the same attribute-update logic as the click handler, ensuring that any change to a radio's checked state (whether via mouse, keyboard, or other input) correctly shows or hides its associated conditional content.\",\n  \"edits\": [\n    {\n      \"path\": \"src/govuk/components/radios/radios.js\",\n      \"sha256\": \"a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c\",\n      \"before\": \"  // Handle events\\n  $module.addEventListener('click', this.handleClick.bind(this))\\n}\\n\\nRadios.prototype.setAttributes = function ($input) {\\n  var inputIsChecked = $input.checked\\n  $input.setAttribute('aria-expanded', inputIsChecked)\\n\\n  var $content = this.$module.querySelector('#' + $input.getAttribute('aria-controls'))\\n  if ($content) {\\n    $content.classList.toggle('govuk-radios__conditional--hidden', !inputIsChecked)\\n  }\\n}\\n\\nRadios.prototype.handleClick = function (event) {\\n  nodeListForEach(this.$inputs, function ($input) {\\n    // If a radio with aria-controls, handle click\\n    var isRadio = $input.getAttribute('type') === 'radio'\\n    var hasAriaControls = $input.getAttribute('aria-controls')\\n    if (isRadio && hasAriaControls) {\\n      this.setAttributes($input)\\n    }\\n  }.bind(this))\\n}\\n\\nexport default Radios\",\n      \"after\": \"  // Handle events\\n  $module.addEventListener('click', this.handleClick.bind(this))\\n  $module.addEventListener('change', this.handleChange.bind(this))\\n}\\n\\nRadios.prototype.setAttributes = function ($input) {\\n  var inputIsChecked = $input.checked\\n  $input.setAttribute('aria-expanded', inputIsChecked)\\n\\n  var $content = this.$module.querySelector('#' + $input.getAttribute('aria-controls'))\\n  if ($content) {\\n    $content.classList.toggle('govuk-radios__conditional--hidden', !inputIsChecked)\\n  }\\n}\\n\\nRadios.prototype.handleClick = function (event) {\\n  nodeListForEach(this.$inputs, function ($input) {\\n    // If a radio with aria-controls, handle click\\n    var isRadio = $input.getAttribute('type') === 'radio'\\n    var hasAriaControls = $input.getAttribute('aria-controls')\\n    if (isRadio && hasAriaControls) {\\n      this.setAttributes($input)\\n    }\\n  }.bind(this))\\n}\\n\\nRadios.prototype.handleChange = function (event) {\\n  nodeListForEach(this.$inputs, function ($input) {\\n    // If a radio with aria-controls, handle change\\n    var isRadio = $input.getAttribute('type') === 'radio'\\n    var hasAriaControls = $input.getAttribute('aria-controls')\\n    if (isRadio && hasAriaControls) {\\n      this.setAttributes($input)\\n    }\\n  }.bind(this))\\n}\\n\\nexport default Radios\"\n    }\n  ],\n  \"expected_accessibility_effect\": \"Keyboard navigation via arrow keys will now correctly show or hide conditional fields, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value).\",\n  \"functional_risks\": [\n    \"Both click and change events may fire for the same user interaction, causing duplicate attribute updates; however, the outcome is idempotent and harmless.\",\n    \"The change listener will only affect radio inputs that have an aria-controls attribute, leaving other form controls unaffected.\"\n  ],\n  \"verification_requirements\": [\n    \"Verify that pressing ArrowDown from the Text message radio hides the mobile number field when moving to the opt-out radio.\",\n    \"Verify that pressing ArrowUp from the opt-out radio shows the mobile number field when moving back to the Text message radio.\",\n    \"Verify that mouse clicks on radios continue to show/hide conditionals correctly.\",\n    \"Verify that the existing regression guard (choose email via keyboard and enter address) still passes.\",\n    \"Verify that form data reflects the selected radio value after keyboard navigation.\"\n  ]\n}",
+  "reasoning": "The issue is that the radios component only handles click events, but keyboard navigation (arrow keys) changes the checked state of radio buttons without firing a click event. This means conditional content visibility isn't updated when navigating with arrow keys.\n\nLooking at the current radios.js, it only has a click event listener. I need to add a change event listener that also calls the same attribute update logic.\n\nThe fix should be minimal - just add the change event listener in the init method, and create a handleChange method that does the same thing as handleClick.\n\nLet me check the current code structure and make the minimal edit."
+}

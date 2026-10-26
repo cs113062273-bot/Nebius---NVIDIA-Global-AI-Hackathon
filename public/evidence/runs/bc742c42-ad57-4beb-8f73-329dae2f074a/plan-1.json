@@ -1,0 +1,22 @@
+{
+  "root_cause": "Escape key handling in submenus incorrectly closes all submenus via rootMenu.closeChildren() instead of closing only the current submenu.",
+  "repair_strategy": "Replace the Escape case in the submenu keyup handler to close the current submenu using its controller and focus the controller's toggle element.",
+  "edits": [
+    {
+      "path": "src/menubar.js",
+      "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864",
+      "before": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.rootMenu.closeChildren();\n          this.elements.rootMenu.focusCurrentChild();\n",
+      "after": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          if (this.elements.controller) {\n            this.elements.controller.close();\n          }\n          this.elements.controller.dom.toggle.focus();\n"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close only the innermost open submenu and return focus to its parent menu item, keeping parent submenus open as expected.",
+  "functional_risks": [
+    "If a submenu somehow lacks a controller, the close operation will be skipped (no error).",
+    "Focusing the toggle element may not scroll into view if the container overflows, but this matches the original behavior for menu items."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape on #history results in focus on #facts, aria-expanded facts=false, aria-expanded about=true.",
+    "Verify that Escape on a top-level menubar item still closes the menubar and focuses the controller.",
+    "Verify that Escape on a submenu item that has its own submenu (e.g., #overview if it had a submenu) correctly closes that submenu and focuses the parent item."
+  ]
+}

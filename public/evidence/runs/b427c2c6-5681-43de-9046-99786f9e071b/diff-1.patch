@@ -1,0 +1,58 @@
+diff --git a/js/src/modal.js b/js/src/modal.js
+index 0e8346d..9fd6387 100644
+--- a/js/src/modal.js
++++ b/js/src/modal.js
+@@ -277,6 +277,8 @@ class Modal extends BaseComponent {
+           this.hide()
+         } else if (!this._config.keyboard && event.key === ESCAPE_KEY) {
+           this._triggerBackdropTransition()
++        } else if (event.key === 'Tab') {
++          this._handleTabKey(event);
+         }
+       })
+     } else {
+@@ -284,6 +286,44 @@ class Modal extends BaseComponent {
+     }
+   }
+ 
++  _getFocusableElements() {
++    const selectors = [
++      'a[href]',
++      'area[href]',
++      'input:not([disabled]):not([type="hidden"])',
++      'select:not([disabled])',
++      'textarea:not([disabled])',
++      'button:not([disabled])',
++      'iframe',
++      'object',
++      'embed',
++      '[tabindex]:not([tabindex="-1"])',
++      '[contenteditable]'
++    ].join(',');
++    const elements = SelectorEngine.find(selectors, this._element);
++    return elements.filter(el => !el.hasAttribute('disabled') && !el.classList.contains('disabled'));
++  }
++
++  _handleTabKey(event) {
++    const focusable = this._getFocusableElements();
++    if (focusable.length === 0) {
++      return;
++    }
++    const first = focusable[0];
++    const last = focusable[focusable.length - 1];
++    if (event.shiftKey) {
++      if (document.activeElement === first) {
++        event.preventDefault();
++        last.focus();
++      }
++    } else {
++      if (document.activeElement === last) {
++        event.preventDefault();
++        first.focus();
++      }
++    }
++  }
++
+   _setResizeEvent() {
+     if (this._isShown) {
+       EventHandler.on(window, EVENT_RESIZE, () => this._adjustDialog())

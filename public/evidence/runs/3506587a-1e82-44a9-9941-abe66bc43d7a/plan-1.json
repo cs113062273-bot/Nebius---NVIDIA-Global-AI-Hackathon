@@ -1,0 +1,24 @@
+{
+  "root_cause": "The radios component only updates conditional panels on click events. Keyboard navigation changes the checked state via arrow keys without firing a click, so the associated conditional panel remains visible when its radio becomes unchecked.",
+  "repair_strategy": "Add a change event listener to the radios container that invokes the same update logic used for clicks, ensuring conditional panels are shown or hidden whenever a radio's checked state changes, regardless of input method.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.addEventListener('change', this.handleClick.bind(this))"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now navigate between radio options using ArrowDown/ArrowUp and see conditional fields appear/disappear correctly, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Both click and change events may fire for the same interaction, but handleClick is idempotent and safe.",
+    "No impact on non-radio inputs or other components."
+  ],
+  "verification_requirements": [
+    "Selecting 'Text message' via ArrowDown shows the mobile number field.",
+    "Moving to 'I do not want reminders' via another ArrowDown hides the mobile number field.",
+    "Clicking radios with mouse continues to work as before.",
+    "Form data reflects the correct selected value after keyboard navigation.",
+    "Rapid keyboard navigation does not cause stale states."
+  ]
+}

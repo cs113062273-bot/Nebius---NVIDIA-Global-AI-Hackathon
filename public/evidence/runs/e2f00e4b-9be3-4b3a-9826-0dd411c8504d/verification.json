@@ -1,0 +1,6 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 4 (pikaday.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source."
+  ]
+}

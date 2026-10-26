@@ -1,0 +1,35 @@
+{
+  "root_cause": "The datepicker component's Vanilla Calendar Pro (VCPro) implementation prevents the default action of the Tab key when the calendar is open, trapping focus inside the datepicker and preventing focus from moving to the next form field.",
+  "repair_strategy": "Add a capture-phase keydown listener on the document that hides the calendar when Tab is pressed and the calendar is shown. This ensures the calendar is hidden before VCPro processes the event, allowing the default Tab action (focus move) to proceed. Clean up the listener in dispose to avoid memory leaks.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void",
+      "after": "  protected declare _onOutside: (event: Event) => void\n  protected declare _onTriggerClick: () => void\n  protected declare _onTabKey: (event: KeyboardEvent) => void"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)\n    EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)\n  }",
+      "after": "    EventHandler.on(document, EVENT_FOCUSIN, this._onOutside)\n    EventHandler.on(document, EVENT_POINTERDOWN, this._onOutside)\n\n    // Handle Tab key to hide the calendar and allow focus to move\n    this._onTabKey = (event: KeyboardEvent) => {\n      if (event.key === 'Tab' && this._isShown) {\n        this.hide();\n      }\n    };\n\n    document.addEventListener('keydown', this._onTabKey, true);\n  }"
+    },
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }",
+      "after": "    if (this._onTriggerClick) {\n      EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)\n    }\n\n    if (this._onTabKey) {\n      document.removeEventListener('keydown', this._onTabKey, true);\n      this._onTabKey = null;\n    }\n\n    if (this._calendar) {\n      this._calendar.destroy()\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key will move focus from the departure date field to the passengers field when the datepicker calendar is open, restoring expected form navigation behavior.",
+  "functional_risks": [
+    "The calendar may hide unexpectedly if Tab is pressed while the calendar is open, potentially disrupting date selection if the user intended to navigate the calendar with Tab (though VCPro typically uses arrow keys for navigation).",
+    "Adding a global capture-phase keydown listener could theoretically conflict with other keyboard shortcuts on the page, though the listener is specific to Tab and only active when the datepicker is shown."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the departure date field moves focus to the passengers field when the datepicker calendar is open.",
+    "Verify that pressing Escape still closes the calendar (regression guard).",
+    "Verify that clicking the date field still shows the calendar (regression guard).",
+    "Verify that the calendar hides when clicking outside or pressing Tab, and that focus moves correctly to the next element after hiding."
+  ]
+}

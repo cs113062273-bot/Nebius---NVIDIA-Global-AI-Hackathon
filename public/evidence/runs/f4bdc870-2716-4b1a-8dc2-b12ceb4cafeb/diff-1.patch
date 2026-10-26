@@ -1,0 +1,25 @@
+diff --git a/src/govuk/components/header/header.js b/src/govuk/components/header/header.js
+index 84eb54f..1e1c2f5 100644
+--- a/src/govuk/components/header/header.js
++++ b/src/govuk/components/header/header.js
+@@ -21,7 +21,19 @@ Header.prototype.init = function () {
+     return
+   }
+ 
+-  this.syncState(this.$menu.classList.contains('govuk-header__navigation--open'))
++  // Determine if menu button is visible (i.e., not display:none)
++  var buttonVisible = window.getComputedStyle(this.$menuButton).getPropertyValue('display') !== 'none'
++
++  if (buttonVisible) {
++    // Mobile: menu hidden initially
++    this.$menu.setAttribute('aria-hidden', 'true')
++    this.$menuButton.setAttribute('aria-expanded', 'false')
++  } else {
++    // Desktop: menu visible initially
++    this.$menu.removeAttribute('aria-hidden')
++    this.$menuButton.setAttribute('aria-expanded', 'false')
++  }
++
+   this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))
+ }
+ 

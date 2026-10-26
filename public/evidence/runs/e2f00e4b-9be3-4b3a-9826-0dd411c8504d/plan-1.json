@@ -1,0 +1,22 @@
+{
+  "root_cause": "The date picker's keydown handler (_onKeyChange) does not include a case for the Tab key (keyCode 9). When the picker is open, this missing case allows the handler to inadvertently interfere with default focus movement, causing focus to remain on the check‑in input after typing a date and pressing Tab.",
+  "repair_strategy": "Add an explicit no‑op case for keyCode 9 in the _onKeyChange switch statement. This ensures the handler does not suppress the Tab key's default action, allowing focus to move to the next focusable element (the guests field) when the date picker is visible.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\\n        {\\n            e = e || window.event;\\n\\n            if (self.isVisible()) {\\n\\n                switch(e.keyCode){\\n                    case 13:\\n                    case 27:\\n                        if (opts.field) {\\n                            opts.field.blur();\\n                        }\\n                        break;\\n                    case 37:\\n                        self.adjustDate('subtract', 1);\\n                        break;\\n                    case 38:\\n                        self.adjustDate('subtract', 7);\\n                        break;\\n                    case 39:\\n                        self.adjustDate('add', 1);\\n                        break;\\n                    case 40:\\n                        self.adjustDate('add', 7);\\n                        break;\\n                    case 8:\\n                    case 46:\\n                        self.setDate(null);\\n                        break;\\n                }\\n            }\\n        };",
+      "after": "        self._onKeyChange = function(e)\\n        {\\n            e = e || window.event;\\n\\n            if (self.isVisible()) {\\n\\n                switch(e.keyCode){\\n                    case 13:\\n                    case 27:\\n                        if (opts.field) {\\n                            opts.field.blur();\\n                        }\\n                        break;\\n                    case 37:\\n                        self.adjustDate('subtract', 1);\\n                        break;\\n                    case 38:\\n                        self.adjustDate('subtract', 7);\\n                        break;\\n                    case 39:\\n                        self.adjustDate('add', 1);\\n                        break;\\n                    case 40:\\n                        self.adjustDate('add', 7);\\n                        break;\\n                    case 8:\\n                    case 46:\\n                        self.setDate(null);\\n                        break;\\n                    case 9:\\n                        break;\\n                }\\n            }\\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "After entering a date in the check‑in field and pressing Tab, focus will move to the guests field, enabling keyboard‑only users to continue filling the form without interruption.",
+  "functional_risks": [
+    "Adding a no‑op case for Tab could theoretically interfere with any future custom handling of Tab, but no such handling exists in the current code."
+  ],
+  "verification_requirements": [
+    "Confirm that typing a date and pressing Tab moves focus to the guests field.",
+    "Verify that arrow keys (left/right/up/down) still adjust the date when the picker is open.",
+    "Ensure that Enter and Escape still close the picker and blur the field as expected.",
+    "Check that manual date entry via keyboard continues to update the field correctly."
+  ]
+}

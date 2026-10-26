@@ -1,0 +1,26 @@
+{
+  "root_cause": "Micromodal's getFocusableNodes returns all elements matching the focusable selector list, including those that are not visually focusable due to CSS display:none or visibility hidden. This causes the focus‑trap logic to miscalculate the last focusable element, allowing Tab to move focus outside the modal.",
+  "repair_strategy": "Modify getFocusableNodes to filter the node list by computed style, excluding nodes with display none or visibility hidden, so only visibly focusable items are considered for tab wrapping.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "41dd4805c18bcc8ad0daec586c08042986c4d2e0f06b3d70183ec0c045c43b6c",
+      "before": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes)\n    }\n",
+      "after": "    getFocusableNodes () {\n      const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)\n      return Array(...nodes).filter(node => {\n        const style = window.getComputedStyle(node)\n        return style.display !== 'none' && style.visibility !== 'hidden'\n      })\n    }\n"
+    }
+  ],
+  "expected_accessibility_effect": "Tabbing from the last visible control inside the upload dialog will wrap to the first focusable element (the filename input), keeping keyboard focus trapped within the modal as required.",
+  "functional_risks": [
+    "Added getComputedStyle calls may have minor performance impact when many focusable elements exist.",
+    "Elements intentionally hidden but meant to be programmatically focusable (e.g., off‑screen accessible hints) would be excluded from tab order, potentially affecting custom accessibility patterns.",
+    "If an element's visibility changes dynamically after modal open, the cached focusableNodes list (computed each time getFocusableNodes is called) will reflect current state, so risk is low."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab repeatedly cycles focus within the modal: open → filename → upload → close → filename …",
+    "Verify that Shift+Tab cycles in reverse order.",
+    "Verify that Escape key closes the modal and returns focus to the triggering button.",
+    "Verify that the hidden “Try again” button remains non‑focusable and does not appear in the tab order.",
+    "Verify that screen reader announcement of modal title and content remains unchanged.",
+    "Verify that the modal’s close button remains accessible and operable via mouse and keyboard."
+  ]
+}

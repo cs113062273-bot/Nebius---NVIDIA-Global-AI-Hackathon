@@ -1,0 +1,91 @@
+[
+  {
+    "path": "index.html",
+    "score": 7,
+    "signals": [
+      "visit-date",
+      "notes",
+      "body",
+      "Contact name",
+      "Visit date (yyyy-mm-dd)",
+      "Access notes",
+      "Request visit"
+    ],
+    "sha256": "8cbcb674a7a1ff21bd30080aaf698a95d01b13e0509e6c5fd55ac5f954f0329c",
+    "editable": false
+  },
+  {
+    "path": "js/Datepicker.js",
+    "score": 6.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595"
+  },
+  {
+    "path": "js/lib/date-format.js",
+    "score": 6,
+    "signals": [
+      "Imported runtime dependency of js/Datepicker.js"
+    ],
+    "sha256": "3c95fb2a8e554079a6a0b6271538c56c759d000cfc2a4efca223c672cc402b11"
+  },
+  {
+    "path": "js/options/defaultOptions.js",
+    "score": 6,
+    "signals": [
+      "Imported runtime dependency of js/Datepicker.js"
+    ],
+    "sha256": "af7f4bdb67de4f9bc7099f1ae2327405ddea3ea2e238181e21a721b3c29221b5"
+  },
+  {
+    "path": "js/options/processOptions.js",
+    "score": 6,
+    "signals": [
+      "Imported runtime dependency of js/Datepicker.js"
+    ],
+    "sha256": "a51e6c679e9a528ca80a2e21b56a20b06c109a1d79e9ea0612cf6a22e0f4965f"
+  },
+  {
+    "path": "js/options/shortcutKeys.js",
+    "score": 6,
+    "signals": [
+      "Imported runtime dependency of js/Datepicker.js"
+    ],
+    "sha256": "7f0a2e1e07d65bdf2dc9100a58cf424fe1ca7f8f136a5701c0fc5b7a91381c8a"
+  },
+  {
+    "path": "js/events/otherListeners.js",
+    "score": 6,
+    "signals": [
+      "Imported runtime dependency of js/Datepicker.js"
+    ],
+    "sha256": "e455ad95dd77a232ecc7b0148d3e01529e17f088c6d492317a7de5a98d91bece"
+  },
+  {
+    "path": "js/i18n/base-locales.js",
+    "score": 2,
+    "signals": [
+      "Today",
+      "Clear"
+    ],
+    "sha256": "602b63fdd73d4e7e4808f9999f01f2838d42c1d953d088c5e32470a9a7732676"
+  },
+  {
+    "path": "js/picker/Picker.js",
+    "score": 2,
+    "signals": [
+      "body",
+      "Today"
+    ],
+    "sha256": "bdad6c1434285abe75a3ea29c3be21b923eb1d7c828d09d29f38bf07e1d76ba2"
+  },
+  {
+    "path": "js/lib/event.js",
+    "score": 1.5,
+    "signals": [
+      "Imported runtime dependency of js/picker/Picker.js"
+    ],
+    "sha256": "42e773edd789a832d15bb40c2ad29850c6fba9ce3133adc419a41a74e7733f48"
+  }
+]

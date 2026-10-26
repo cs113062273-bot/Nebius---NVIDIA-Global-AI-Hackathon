@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T08:02:22.057Z",
+  "policy": "auto",
+  "modelRun": "3506587a-1e82-44a9-9941-abe66bc43d7a",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-ca2203d4cdce8adb69ac9b6b3d73029a",
+      "usage": {
+        "completion_tokens": 2645,
+        "prompt_tokens": 4964,
+        "total_tokens": 7609,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2196,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4964
+      },
+      "latencyMs": 19338,
+      "reservedCreditUsd": 0.0343221
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-261df38f644eb3211af39e263d881696",
+      "usage": {
+        "completion_tokens": 8239,
+        "prompt_tokens": 5085,
+        "total_tokens": 13324,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6942,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5085
+      },
+      "latencyMs": 24269,
+      "reservedCreditUsd": 0.115327
+    }
+  ]
+}

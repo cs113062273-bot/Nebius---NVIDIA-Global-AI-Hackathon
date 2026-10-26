@@ -1,8 +1,21 @@
 diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
-index 54bbd76..e3955d7 100644
+index 54bbd76..5fab27d 100644
 --- a/js/src/dialog-base.ts
 +++ b/js/src/dialog-base.ts
-@@ -321,10 +321,19 @@ class DialogBase extends BaseComponent {
+@@ -307,12 +307,9 @@ class DialogBase extends BaseComponent {
+     // removes only this listener, not a consumer's own `cancel` listener.
+     this._cancelHandler = event => {
+       event.preventDefault()
+-
+       if (!this._config.keyboard) {
+-        this._triggerBackdropTransition()
+         return
+       }
+-
+       this._onCancel()
+       this.hide()
+     }
+@@ -321,7 +318,7 @@ class DialogBase extends BaseComponent {
  
      // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())
      EventHandler.on(this._element, `keydown${eventKey}`, event => {
@@ -11,15 +24,14 @@ index 54bbd76..e3955d7 100644
          return
        }
  
+@@ -331,6 +328,10 @@ class DialogBase extends BaseComponent {
+         return
+       }
+ 
 +      if (this._openedAsModal) {
-+        if (!this._config.keyboard) {
-+          event.preventDefault()
-+          return
-+        }
-+        // fall through to hide for modal with keyboard:true
++        return
 +      }
 +
-+      // non-modal dialog
-       event.preventDefault()
- 
-       if (!this._config.keyboard) {
+       this._onCancel()
+       this.hide()
+     })

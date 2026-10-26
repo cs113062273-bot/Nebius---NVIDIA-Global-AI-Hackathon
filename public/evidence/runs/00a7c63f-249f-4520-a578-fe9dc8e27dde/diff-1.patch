@@ -1,0 +1,22 @@
+diff --git a/lib/src/index.js b/lib/src/index.js
+index d4e2d21..0900707 100644
+--- a/lib/src/index.js
++++ b/lib/src/index.js
+@@ -128,10 +128,16 @@ const MicroModal = (() => {
+     }
+ 
+     onClick (event) {
+-      if (event.target.closest(`[${ this.config.closeTrigger }]`)) {
++      const target = event.target;
++      if (target.hasAttribute(this.config.closeTrigger)) {
+         event.preventDefault()
+         event.stopPropagation()
+         this.closeModal(event)
++        return;
++      }
++      // Prevent clicks inside the modal from bubbling to the overlay
++      if (target.closest('.modal__container')) {
++        event.stopPropagation()
+       }
+     }
+ 

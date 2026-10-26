@@ -1,0 +1,23 @@
+{
+  "root_cause": "The Pikaday datepicker does not handle the Tab key (keyCode 9) in its _onKeyChange handler. When the datepicker is visible and the user presses Tab, the default focus movement is allowed but the datepicker remains visible and subsequently steals focus back to the input, preventing focus from advancing to the next form field.",
+  "repair_strategy": "Add a case for keyCode 9 (Tab) in the _onKeyChange method that hides the datepicker. This ensures that when Tab is pressed while the datepicker is open, the popup is closed before the focus change, allowing focus to move to the next focusable element.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 9:\n                        self.hide();\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab after entering a date will move focus to the Guests field, enabling keyboard-only users to continue filling the form without being trapped in the datepicker.",
+  "functional_risks": [
+    "Hiding the datepicker on Tab could interrupt date selection if a user attempts to navigate the calendar using Tab (not a supported interaction).",
+    "Users who rely on Shift+Tab to reverse focus may experience unexpected hiding; however, Shift+Tab is not handled and will behave as before."
+  ],
+  "verification_requirements": [
+    "Verify that after typing a valid date and pressing Tab, focus shifts to the Guests field.",
+    "Confirm that date selection via mouse clicks or arrow keys continues to work correctly.",
+    "Ensure that the datepicker still opens when the input receives focus.",
+    "Check that Shift+Tab does not cause regressions (focus moves to previous field as expected)."
+  ]
+}

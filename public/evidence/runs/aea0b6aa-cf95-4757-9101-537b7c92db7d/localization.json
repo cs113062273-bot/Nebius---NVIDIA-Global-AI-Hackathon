@@ -1,0 +1,35 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "city",
+      "dietary",
+      "body",
+      "Full name",
+      "Departure city",
+      "Dietary requirements",
+      "Register",
+      "Bern",
+      "Berlin"
+    ],
+    "sha256": "bb3f8d0223976f74edc431bb1a4b0f304d0514a19ac11c5d88f69440ac673de0",
+    "editable": false
+  },
+  {
+    "path": "awesomplete.js",
+    "score": 8.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6"
+  },
+  {
+    "path": "awesomplete.css",
+    "score": 1,
+    "signals": [
+      "city"
+    ],
+    "sha256": "5ae718965f4c9f6144ebc9511eb4e9070cd60be45adc8784a24d2b7b84c19a07"
+  }
+]

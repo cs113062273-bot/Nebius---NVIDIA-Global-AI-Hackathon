@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-26T06:53:30.177Z",
+  "generatedAt": "2026-10-26T09:10:01.354Z",
   "note": "Fractions: every recorded blind run of the 26 real bugs, across all engine versions; a run is one bug on one engine version, up to three attempts (Super, then Ultra with the browser failure report). Rejected patches: real-bug and open-bug runs.",
-  "runs": 296,
-  "realRuns": 243,
-  "attempts": 547,
-  "firstTry": 109,
-  "withFeedback": 84,
-  "notRepaired": 50,
-  "libraryFixed": 158,
-  "caughtAfterKeyboardPass": 28,
+  "runs": 406,
+  "realRuns": 323,
+  "attempts": 745,
+  "firstTry": 151,
+  "withFeedback": 103,
+  "notRepaired": 69,
+  "libraryFixed": 219,
+  "caughtAfterKeyboardPass": 38,
   "caughtReasons": {
-    "functional": 19,
-    "guards": 9,
+    "functional": 25,
+    "guards": 13,
     "rules": 0,
     "other": 0
   },
@@ -45,7 +45,7 @@
     }
   ],
   "overfitRejected": 1,
-  "unappliedPatches": 69,
+  "unappliedPatches": 102,
   "caught": [
     {
       "case": "bootstrap-dropdown-escape-in-modal",
@@ -125,6 +125,78 @@
       "version": "c985a43a",
       "run": "5d37c9fa-3e74-49e0-85e1-c4e8b03d7cc9",
       "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "2a8f0bbe",
+      "run": "4d205458-05a2-48dc-ac25-8b47b0ac58bd",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "2a8f0bbe",
+      "run": "4d205458-05a2-48dc-ac25-8b47b0ac58bd",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "2a8f0bbe",
+      "run": "a207f594-215c-42dc-8bc8-995547251f90",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "2a8f0bbe",
+      "run": "1f618dc3-559a-4207-8061-08b6f4c9c516",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "2a8f0bbe",
+      "run": "1f618dc3-559a-4207-8061-08b6f4c9c516",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "functional"
+      ],
+      "reason": "Independent functional candidate: inconclusive · #status: expected \"Delivery set for 2024-06-04\", observed \"\""
+    },
+    {
+      "case": "vanillajs-datepicker-invalid-date-blur",
+      "kind": "real",
+      "version": "2a8f0bbe",
+      "run": "1f618dc3-559a-4207-8061-08b6f4c9c516",
+      "attempt": 3,
       "model": "Nemotron-3-Ultra-550b-a55b",
       "why": [
         "functional"
@@ -360,6 +432,18 @@
       "reason": "Regression guard \"Escape still closes the calendar\": failed · #passengers: expected \"#passengers\", observed false"
     },
     {
+      "case": "bootstrap6-dialog-escape-keyboard-false-default-dialog",
+      "kind": "open",
+      "version": "2a8f0bbe",
+      "run": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Escape still closes a dialog with the default options\": failed · #help-dialog open: expected \"assertion satisfied\", observed \"\""
+    },
+    {
       "case": "pikaday-keyboard-disabled-day",
       "kind": "open",
       "version": "55874e83",
@@ -382,6 +466,42 @@
         "guards"
       ],
       "reason": "Regression guard \"Arrow keys still move between open days\": failed · Step 3 · #appointment day: expected [\"2026-11-26\"], observed [\"2026-11-30\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day-max-date",
+      "kind": "open",
+      "version": "2a8f0bbe",
+      "run": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+      "attempt": 1,
+      "model": "nemotron-3-super-120b-a12b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Arrow keys still move between open days\": failed · Step 3 · #appointment day: expected [\"2026-11-26\"], observed [\"2026-11-27\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day-max-date",
+      "kind": "open",
+      "version": "2a8f0bbe",
+      "run": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Arrow keys still move between open days\": failed · Step 3 · #appointment day: expected [\"2026-11-26\"], observed [\"2026-11-27\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day-max-date",
+      "kind": "open",
+      "version": "2a8f0bbe",
+      "run": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "why": [
+        "guards"
+      ],
+      "reason": "Regression guard \"Arrow keys still move between open days\": failed · Step 3 · #appointment day: expected [\"2026-11-26\"], observed [\"2026-11-27\"]"
     }
   ]
 }

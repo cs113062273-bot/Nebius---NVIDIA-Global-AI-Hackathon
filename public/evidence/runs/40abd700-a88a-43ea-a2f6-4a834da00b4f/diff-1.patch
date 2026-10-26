@@ -1,0 +1,16 @@
+diff --git a/src/controllers/navigationController.js b/src/controllers/navigationController.js
+index 22aeb48..731701b 100644
+--- a/src/controllers/navigationController.js
++++ b/src/controllers/navigationController.js
+@@ -119,7 +119,10 @@ const navigate = (config, dataFeedback) => {
+   /**
+    * @listens {keydown} Listens to all `keydown` events on the input field
+    **/
+-  config.inputField.addEventListener("keydown", navigate);
++  if (!config.inputField._navListenerAttached) {
++    config.inputField.addEventListener("keydown", navigate);
++    config.inputField._navListenerAttached = true;
++  }
+ };
+ 
+ export { navigate };

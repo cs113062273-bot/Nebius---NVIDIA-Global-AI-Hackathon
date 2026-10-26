@@ -1,0 +1,25 @@
+{
+  "root_cause": "The _keydown method in tab.js uses getNextActiveElement which does not consider the disabled state of tabs, causing arrow navigation to move focus onto disabled tabs instead of skipping them.",
+  "repair_strategy": "Replace the _keydown implementation with logic that iterates over the tablist children in the requested direction, skipping any disabled tabs, and wrapping to the start/end when needed, then activates the first enabled tab found.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "7ad4e9f0424d0d4b95bcf399a1639e44cfec200c874382dc7a8b34016a74228f",
+      "before": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const nextActiveElement = getNextActiveElement(this._getChildren(), event.target, isNext, true)\n    Tab.getOrCreateInstance(nextActiveElement).show()\n  }",
+      "after": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const children = this._getChildren()\n    let index = children.indexOf(event.target)\n    if (index === -1) {\n      index = isNext ? 0 : children.length - 1\n    }\n    let nextIndex = index\n    do {\n      nextIndex = isNext ? (nextIndex + 1) % children.length : (nextIndex - 1 + children.length) % children.length\n      const candidate = children[nextIndex]\n      if (!isDisabled(candidate)) {\n        break\n      }\n      if (nextIndex === index) {\n        break\n      }\n    } while (true)\n    const nextActiveElement = children[nextIndex]\n    Tab.getOrCreateInstance(nextActiveElement).show()\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight will skip the disabled Notifications tab and move focus to the Billing tab, updating aria-selected to true on Billing and showing its panel, while ArrowLeft will similarly skip disabled tabs in the reverse direction.",
+  "functional_risks": [
+    "If all tabs are disabled, the logic may keep the current tab active (no change).",
+    "Vertical arrow keys (Up/Down) will also skip disabled tabs, which aligns with ARIA tablist behavior but could differ if upstream consumers relied on stopping at disabled tabs.",
+    "Change modifies the wrapping behavior when encountering consecutive disabled tabs at the edges."
+  ],
+  "verification_requirements": [
+    "ArrowRight from Account tab moves focus to Billing tab and sets aria-selected=true on Billing.",
+    "ArrowLeft from Billing tab moves focus to Account tab and sets aria-selected=true on Account.",
+    "ArrowRight/Left never focus the disabled Notifications tab.",
+    "Tab panels show/hide correctly when activation occurs via arrow navigation.",
+    "Wrap‑around from last tab to first (and vice‑versa) still works when skipping disabled tabs."
+  ]
+}

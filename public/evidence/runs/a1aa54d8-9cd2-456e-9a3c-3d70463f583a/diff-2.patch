@@ -1,0 +1,12 @@
+diff --git a/index.js b/index.js
+index 6d88fbd..13a4226 100644
+--- a/index.js
++++ b/index.js
+@@ -990,6 +990,7 @@ const createFocusTrap = function (elements, userOptions) {
+     // If the currently focused is removed then browsers will move focus to the
+     // <body> element. If this happens, try to move focus back into the trap.
+     if (isFocusedNodeRemoved) {
++      updateTabbableNodes();
+       tryFocus(getInitialFocusNode());
+     }
+   };

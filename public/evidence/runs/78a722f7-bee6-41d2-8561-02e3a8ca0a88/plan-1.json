@@ -1,0 +1,26 @@
+{
+  "root_cause": "The datepicker component updates the input value to a locale-specific string during initialization when the input has a value, causing the submitted departure date to change from ISO format (YYYY-MM-DD) to locale format (MM/DD/YYYY) even when the user cancels the date picker without selecting a date.",
+  "repair_strategy": "Remove the call to _updateDisplayWithSelectedDates in _initCalendar to prevent the input value from being updated during initialization. The _parseInputValue method already sets the calendar's internal state from the input value without updating the input, so removing the subsequent call preserves the input's original value.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }\n\n    // Populate input/display with preselected dates\n    this._updateDisplayWithSelectedDates()",
+      "after": "    // Set initial value if input has a value\n    if (this._isInput && this._element.value) {\n      this._parseInputValue()\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Users can now cancel the date picker without altering the input value, preserving the initially set ISO format date for form submission. Keyboard-only users retain expected behavior when dismissing the date picker with Escape.",
+  "functional_risks": [
+    "If the input value is invalid or not a date, the calendar will not show a selected date (same as before).",
+    "Programmatic date setting via setSelectedDates will still update the input as expected.",
+    "Inline datepickers are unaffected as they skip the removed logic.",
+    "The visual representation of the date in the input will remain in ISO format until a date is selected, which may deviate from locale expectations but matches the initial value."
+  ],
+  "verification_requirements": [
+    "Verify that focusing the departure input does not change its value.",
+    "Verify that pressing Escape after focusing the departure input leaves the value unchanged.",
+    "Verify that submitting the form after changing only the passengers field sends the departure value in ISO format.",
+    "Verify that selecting a date from the date picker updates the input to the locale-specific format (if locale is set) or ISO format (if no locale formatting is configured).",
+    "Verify that inline datepickers continue to function correctly."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "root_cause": "The NHS UK frontend checkboxes component does not clear other checkboxes in the same exclusive group when the exclusive 'none' checkbox is activated via keyboard (Space key). The component likely only handles mouse clicks or misses the change event for keyboard interactions, leaving previously selected symptom checkboxes checked.",
+  "repair_strategy": "Add a supplemental module script in index.html that listens for 'change' events on checkboxes with data-checkbox-exclusive attribute. When such a checkbox is checked, uncheck all other checkboxes in the same exclusive group and dispatch a change event to ensure form data updates. This works around the component bug without modifying the third-party library.",
+  "edits": [
+    {
+      "path": "index.html",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "before": "<script type=\"module\">\nimport { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'\ninitCheckboxes()\n</script>\n</body>\n</html>",
+      "after": "<script type=\"module\">\nimport { initCheckboxes } from './packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js'\ninitCheckboxes()\n</script>\n<script type=\"module\">\n// Fix exclusive checkbox behavior for keyboard activation\ndocument.addEventListener('change', (e) => {\n  const target = e.target;\n  if (target.matches('input[type=checkbox][data-checkbox-exclusive]')) {\n    const group = target.getAttribute('data-checkbox-exclusive-group');\n    if (group && target.checked) {\n      document.querySelectorAll(`input[type=checkbox][data-checkbox-exclusive-group=\"${group}\"]:not([data-checkbox-exclusive])`).forEach(cb => {\n        cb.checked = false;\n        cb.dispatchEvent(new Event('change', { bubbles: true }));\n      });\n    }\n  }\n});\n</script>\n</body>\n</html>"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now select 'No, I do not have any of these symptoms' and have previously ticked symptom checkboxes automatically cleared, matching the expected behavior for exclusive checkbox groups and satisfying WCAG 2.1.1 (Keyboard) and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "Duplicate change event handling if the component is later fixed, potentially causing double unchecking.",
+    "The fix relies on the exclusive group attribute being present on all related checkboxes; if markup changes, the fix may not apply."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: tab to cough, press Space, tab to fever, press Space, tab to none, press Space; verify form data symptoms[cough] and symptoms[fever] are empty.",
+    "Test mouse click on 'none' checkbox still clears other checkboxes.",
+    "Ensure contact checkboxes (different group) are unaffected."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (js/src/dialog-base.ts): before does not occur in the file. 2 of its lines are not in the source. not in file: \"protected override _onCancel(): void {\"; closest is line 198: \"protected _onCancel(): void {\" | not in file: \"EventHandler.trigger(this._element, EVENT_CANCEL)\"; closest is line 106: \"EventHandler.trigger(\". Copy before verbatim from source_candidates."
+  ]
+}

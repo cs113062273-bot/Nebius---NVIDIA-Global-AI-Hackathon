@@ -1,0 +1,30 @@
+diff --git a/js/Datepicker.js b/js/Datepicker.js
+index 44431aa..1e9fcc0 100644
+--- a/js/Datepicker.js
++++ b/js/Datepicker.js
+@@ -198,12 +198,25 @@ export default class Datepicker {
+     } else {
+       // set up event listeners in other modes
+       const onMousedownDocument = onClickOutside.bind(null, this);
++      // Flag to ignore blur when interacting with picker
++      this._ignoreBlur = false;
++      const onPickerMousedown = () => {
++        this._ignoreBlur = true;
++        // Reset after a short delay to allow click events to process
++        setTimeout(() => { this._ignoreBlur = false; }, 0);
++      };
+       const listeners = [
+         [inputField, 'keydown', onKeydown.bind(null, this)],
+         [inputField, 'focus', onFocus.bind(null, this)],
+         [inputField, 'mousedown', onMousedown.bind(null, this)],
+         [inputField, 'click', onClickInput.bind(null, this)],
+         [inputField, 'paste', onPaste.bind(null, this)],
++        [inputField, 'blur', () => {
++          if (!this._ignoreBlur) {
++            this.hide();
++          }
++        }],
++        [this.picker.element, 'mousedown', onPickerMousedown],
+         [document, 'mousedown', onMousedownDocument],
+         [document, 'touchstart', onMousedownDocument],
+         [window, 'resize', picker.place.bind(picker)]

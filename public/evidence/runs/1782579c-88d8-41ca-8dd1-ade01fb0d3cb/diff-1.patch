@@ -1,0 +1,13 @@
+diff --git a/lib/src/index.js b/lib/src/index.js
+index a290f08..8d0f2cc 100644
+--- a/lib/src/index.js
++++ b/lib/src/index.js
+@@ -138,7 +138,7 @@ const MicroModal = (() => {
+ 
+     getFocusableNodes () {
+       const nodes = this.modal.querySelectorAll(FOCUSABLE_ELEMENTS)
+-      return Array(...nodes)
++      return Array(...nodes).filter(node => node.offsetParent !== null)
+     }
+ 
+     /**

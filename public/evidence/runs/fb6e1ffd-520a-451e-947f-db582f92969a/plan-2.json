@@ -1,0 +1,29 @@
+{
+  "root_cause": "The cancel handler for modal dialogs calls _triggerBackdropTransition when keyboard:false, which may cause side effects. Additionally, the keydown handler for Escape does not prevent the keydown event for modal dialogs when keyboard:false, allowing the native dialog to fire a cancel event that becomes non-cancelable after multiple presses.",
+  "repair_strategy": "Remove the _triggerBackdropTransition call in the cancel handler when keyboard:false. Also, modify the keydown handler to prevent the Escape keydown event for modal dialogs when keyboard:false, so the native cancel event is not fired.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "    this._cancelHandler = event => {\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        this._triggerBackdropTransition()\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    }",
+      "after": "    this._cancelHandler = event => {\n      event.preventDefault()\n      if (!this._config.keyboard) {\n        return\n      }\n      this._onCancel()\n      this.hide()\n    }"
+    },
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "    EventHandler.on(this._element, `keydown${eventKey}`, event => {\n      if (event.key !== 'Escape' || this._openedAsModal) {\n        return\n      }\n\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    })",
+      "after": "    EventHandler.on(this._element, `keydown${eventKey}`, event => {\n      if (event.key !== 'Escape') {\n        return\n      }\n\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        return\n      }\n\n      if (this._openedAsModal) {\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    })"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will no longer dismiss the dialog when keyboard:false, allowing users to remain focused on the OTP input and complete the transfer without unexpected loss of focus.",
+  "functional_risks": [
+    "Removing _triggerBackdropTransition eliminates the visual 'bounce' feedback for Escape when keyboard:false, but this feedback was unnecessary because Escape should be inert.",
+    "The keydown handler change may affect non-modal dialogs, but the condition ensures non-modal dialogs still work as before."
+  ],
+  "verification_requirements": [
+    "Confirm that with keyboard:false, pressing Escape any number of times leaves the dialog open and focus retained in the OTP field.",
+    "Confirm that with keyboard:true, pressing Escape once closes the dialog.",
+    "Confirm that the Cancel and Send buttons continue to work as expected.",
+    "Confirm that backdrop clicks with backdrop:'static' still trigger the bounce transition and do not close the dialog."
+  ]
+}

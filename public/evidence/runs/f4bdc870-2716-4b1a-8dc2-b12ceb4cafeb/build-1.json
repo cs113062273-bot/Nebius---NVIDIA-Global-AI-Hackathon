@@ -1,0 +1,56 @@
+{
+  "pass": true,
+  "checks": [
+    {
+      "file": "index.html",
+      "pass": true,
+      "kind": "document-structure"
+    },
+    {
+      "file": "src/govuk/components/header/header.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/govuk/vendor/polyfills/DOMTokenList.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/govuk/vendor/polyfills/Document.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/govuk/vendor/polyfills/Element.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/govuk/vendor/polyfills/Element/prototype/classList.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/govuk/vendor/polyfills/Event.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/govuk/vendor/polyfills/Function/prototype/bind.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/govuk/vendor/polyfills/Object/defineProperty.js",
+      "pass": true,
+      "kind": "syntax"
+    },
+    {
+      "file": "src/govuk/vendor/polyfills/Window.js",
+      "pass": true,
+      "kind": "syntax"
+    }
+  ],
+  "scope": "Static HTML structure, JavaScript syntax (classic or ESM) and erasable TypeScript only; no framework compilation claim."
+}

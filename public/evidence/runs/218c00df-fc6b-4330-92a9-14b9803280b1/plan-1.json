@@ -1,0 +1,21 @@
+{
+  "root_cause": "The Escape key handler in the list controller unconditionally clears the input value, causing the typed city to be lost when dismissing suggestions.",
+  "repair_strategy": "Remove the line that sets ctx.input.value = '' in the Escape case of the navigate function in src/controllers/listController.js, keeping the close and clear event emission.",
+  "edits": [
+    {
+      "path": "src/controllers/listController.js",
+      "sha256": "913fcec2ffc448fd458cae19dd873623256f7e1c1ba3eab15225d68f74351f8f",
+      "before": "      ctx.input.value = \"\";",
+      "after": ""
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close the suggestion list without clearing the input, preserving user input and maintaining keyboard operability per WCAG 2.1.1 and 2.4.3.",
+  "functional_risks": [
+    "Any code that relies on the input being cleared after Escape may behave differently; however the clear event is still emitted."
+  ],
+  "verification_requirements": [
+    "After typing a city and pressing Escape, the suggestion list must be hidden, focus must return to the input, and the input value must remain as typed.",
+    "Pressing Escape when the suggestion list is already open must close it without altering the input value.",
+    "Pressing Escape when no suggestions are present must not cause errors."
+  ]
+}

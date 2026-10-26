@@ -1,6 +1,0 @@
-{
-  "verdict": "VERIFIED_FAIL",
-  "reasons": [
-    "APPLICATION: Edit 1 (pikaday.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"} while ((pEl = pEl.parentNode));\"; closest is line 621: \"while ((pEl = pEl.parentNode));\". Best alignment: before lines 1-18 match file lines 602-619, then before line 19 \"} while ((pEl = pEl.parentNode));\" differs from file line 620 \"}\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
-  ]
-}

@@ -1,0 +1,92 @@
+{
+  "completedAt": "2026-10-26T09:07:17.992Z",
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "modelRun": "49457ef2-4c33-4464-ad1c-f462a9609d32",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (js/src/dialog-base.ts): before does not occur in the file. 2 of its lines are not in the source. not in file: \"protected override _onCancel(): void {\"; closest is line 198: \"protected _onCancel(): void {\" | not in file: \"EventHandler.trigger(this._element, EVENT_CANCEL)\"; closest is line 106: \"EventHandler.trigger(\". Copy before verbatim from source_candidates."
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/src/dialog-base.ts): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// The `cancel` listener is unnamespaced, so super.dispose()'s EVENT_KEY\\\\n    // teardown misses it — remove this instance's own handler here.\"; closest is line 165: \"// The `cancel` listener is unnamespaced, so super.dispose()'s EVENT_KEY\". Copy before verbatim from source_candi",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-8bf83373de83fb1b91e7cd8c3e972f07",
+      "usage": {
+        "completion_tokens": 8171,
+        "prompt_tokens": 17852,
+        "total_tokens": 26023,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7179,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 17824,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 17824,
+        "prompt_cache_miss_tokens": 28
+      },
+      "latencyMs": 42123
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-b1cd00ce5bf22c4bd4f9815d1cf75966",
+      "usage": {
+        "completion_tokens": 4984,
+        "prompt_tokens": 19076,
+        "total_tokens": 24060,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3995,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19076
+      },
+      "latencyMs": 11513
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (js/src/dialog-base.ts): before does not occur in the file. 2 of its lines are not in the source. not in file: \"protected override _onCancel(): void {\"; closest is line 198: \"protected _onCancel(): void {\" | not in file: \"EventHandler.trigger(this._element, EVENT_CANCEL)\"; closest is line 106: \"EventHandler.trigger(\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-4a58b9798b406a5d441dfb4e6304b58a",
+      "usage": {
+        "completion_tokens": 14436,
+        "prompt_tokens": 20158,
+        "total_tokens": 34594,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13782,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 20158
+      },
+      "latencyMs": 36887
+    }
+  ]
+}

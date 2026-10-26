@@ -1,0 +1,50 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..c15450b 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,12 +118,14 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onTabKeyDownCapture: (event: KeyboardEvent) => void | null
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+ 
+     this._calendar = null
+     this._isShown = false
++    this._onTabKeyDownCapture = null
+ 
+     this._initCalendar()
+   }
+@@ -205,6 +207,12 @@ class Datepicker extends BaseComponent {
+       EventHandler.off(this._positionElement, EVENT_CLICK, this._onTriggerClick)
+     }
+ 
++    // Clean up Tab key capture listener
++    if (this._onTabKeyDownCapture) {
++      this._element.removeEventListener('keydown', this._onTabKeyDownCapture, { capture: true })
++      this._onTabKeyDownCapture = null
++    }
++
+     if (this._calendar) {
+       this._calendar.destroy()
+     }
+@@ -257,6 +265,17 @@ class Datepicker extends BaseComponent {
+ 
+     // Populate input/display with preselected dates
+     this._updateDisplayWithSelectedDates()
++
++    // Set up Tab key capture listener to hide calendar without preventing default focus move
++    if (this._isInput) {
++      this._onTabKeyDownCapture = (event: KeyboardEvent) => {
++        if (event.key === 'Tab') {
++          event.stopImmediatePropagation()
++          this.hide()
++        }
++      }
++      this._element.addEventListener('keydown', this._onTabKeyDownCapture, { capture: true })
++    }
+   }
+ 
+   protected _updateDisplayWithSelectedDates(): void {

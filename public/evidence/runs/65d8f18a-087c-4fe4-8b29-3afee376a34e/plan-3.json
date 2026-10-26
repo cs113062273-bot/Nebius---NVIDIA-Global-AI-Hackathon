@@ -1,0 +1,23 @@
+{
+  "root_cause": "The checkboxes component checks for the exclusive attribute using `input.getAttribute('data-checkbox-exclusive')`, which returns an empty string for `data-checkbox-exclusive=\"\"` and evaluates as falsy, preventing the exclusive logic from running. The attribute should be treated as a boolean flag.",
+  "repair_strategy": "Modify the component to detect the exclusive attribute via `element.hasAttribute('data-checkbox-exclusive')` instead of checking its value, so that both `data-checkbox-exclusive` and `data-checkbox-exclusive=\"\"` activate the exclusive behavior.",
+  "edits": [
+    {
+      "path": "packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "before": "      const exclusive = input.getAttribute('data-checkbox-exclusive');\n      if (exclusive) {\n        const group = input.getAttribute('data-checkbox-exclusive-group');\n        if (group) {\n          root.querySelectorAll(`[data-checkbox-exclusive-group=\"${group}\"]`).forEach(other => {\n            if (other !== input) other.checked = false;\n          });\n        } else {\n          root.querySelectorAll('[data-checkbox-exclusive]').forEach(other => {\n            if (other !== input) other.checked = false;\n          });\n        }\n      }",
+      "after": "      const exclusive = input.hasAttribute('data-checkbox-exclusive');\n      if (exclusive) {\n        const group = input.getAttribute('data-checkbox-exclusive-group');\n        if (group) {\n          root.querySelectorAll(`[data-checkbox-exclusive-group=\"${group}\"]`).forEach(other => {\n            if (other !== input) other.checked = false;\n          });\n        } else {\n          root.querySelectorAll('[data-checkbox-exclusive]').forEach(other => {\n            if (other !== input) other.checked = false;\n          });\n        }\n      }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now clear symptom selections by activating the exclusive 'No symptoms' checkbox, meeting WCAG 2.1.1, 2.4.3, and 4.1.2.",
+  "functional_risks": [
+    "If other parts of the component rely on the attribute value being a specific string, changing to hasAttribute could affect them; however the attribute is used only as a boolean flag.",
+    "The change affects all checkboxes modules on the page, but the behavior is consistent with the boolean attribute pattern used elsewhere."
+  ],
+  "verification_requirements": [
+    "Verify that selecting 'No symptoms' clears any previously selected symptom checkboxes via keyboard and mouse.",
+    "Ensure that selecting a symptom after 'No symptoms' clears the 'No symptoms' checkbox.",
+    "Confirm that form data reflects the correct exclusive group state.",
+    "Test that the contact group exclusive behavior (Do not contact me) continues to work."
+  ]
+}

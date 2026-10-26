@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T07:17:01.085Z",
+  "policy": "auto",
+  "modelRun": "c5ff4406-0d78-4eae-a583-9b9ceb104773",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-1b00fc9652f1fd4e03b8bdf87c1e6e8d",
+      "usage": {
+        "completion_tokens": 10630,
+        "prompt_tokens": 24451,
+        "total_tokens": 35081,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9942,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 24451
+      },
+      "latencyMs": 50289,
+      "reservedCreditUsd": 0.056658
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-cdab431d16bcc58391e932710880573b",
+      "usage": {
+        "completion_tokens": 6396,
+        "prompt_tokens": 24927,
+        "total_tokens": 31323,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5393,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 24927
+      },
+      "latencyMs": 16938,
+      "reservedCreditUsd": 0.19115300000000002
+    }
+  ]
+}

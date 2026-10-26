@@ -1,0 +1,45 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..aaf8afd 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -464,7 +464,6 @@ class Dropdown extends BaseComponent {
+     }
+ 
+     event.preventDefault()
+-    event.stopPropagation()
+ 
+     if (isDisabled(this)) {
+       return
+@@ -477,17 +476,24 @@ class Dropdown extends BaseComponent {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.focus()
+       Dropdown.clearMenus()
++      if (!isActive) {
++        // Allow event to bubble up to modals etc.
++        return
++      }
++      event.stopPropagation()
+       return
+     }
+ 
+     if (!isActive && (event.key === ARROW_UP_KEY || event.key === ARROW_DOWN_KEY)) {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+       button.click()
++      event.stopPropagation()
+       return
+     }
+ 
+     if (!isActive || event.key === SPACE_KEY) {
+       Dropdown.clearMenus()
++      event.stopPropagation()
+       return
+     }
+ 
+@@ -513,6 +519,7 @@ class Dropdown extends BaseComponent {
+     index = index === -1 ? 0 : index
+ 
+     items[index].focus()
++    event.stopPropagation()
+   }
+ }
+ 

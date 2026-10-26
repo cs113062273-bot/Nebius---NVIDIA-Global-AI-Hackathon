@@ -1,0 +1,33 @@
+{
+  "root_cause": "The date picker's focusable elements (day buttons, previous/next month buttons) lack `tabindex=\"-1\"`, causing them to be included in the page's tab order. When the picker is open, pressing Tab from the date input moves focus into the picker instead of to the next form field (#guests).",
+  "repair_strategy": "Add `tabindex=\"-1\"` to all focusable buttons within the picker (day buttons, previous/next month buttons) to remove them from the sequential tab order, allowing Tab to move directly from the date input to the next form field.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "             '<button class=\"pika-button pika-day\" type=\"button\" ' +\n",
+      "after": "             '<button class=\"pika-button pika-day\" type=\"button\" tabindex=\"-1\" ' +\n"
+    },
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        html += '<button class=\"pika-prev' + (prev ? '' : ' is-disabled') + '\" type=\"button\">' + opts.i18n.previousMonth + '</button>';\n",
+      "after": "        html += '<button class=\"pika-prev' + (prev ? '' : ' is-disabled') + '\" type=\"button\" tabindex=\"-1\">' + opts.i18n.previousMonth + '</button>';\n"
+    },
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        html += '<button class=\"pika-next' + (next ? '' : ' is-disabled') + '\" type=\"button\">' + opts.i18n.nextMonth + '</button>';\n",
+      "after": "        html += '<button class=\"pika-next' + (next ? '' : ' is-disabled') + '\" type=\"button\" tabindex=\"-1\">' + opts.i18n.nextMonth + '</button>';\n"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can tab from the check-in date field directly to the guests field without being trapped in the date picker's internal controls.",
+  "functional_risks": [
+    "Adding tabindex=\"-1\" prevents programmatic focus on these buttons, but they are only operated via arrow keys or mouse. No known functionality relies on tabbing to them."
+  ],
+  "verification_requirements": [
+    "Confirm that typing a date and pressing Tab moves focus to the guests field.",
+    "Verify that arrow keys still navigate the picker when it is open.",
+    "Ensure that mouse interaction with picker buttons still works."
+  ]
+}

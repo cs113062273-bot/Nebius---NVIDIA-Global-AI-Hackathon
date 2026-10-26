@@ -1,0 +1,15 @@
+{
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Regression guard \"Arrow keys stop at the last bookable day\": inconclusive · Hard journey deadline exceeded; browser context terminated"
+  ],
+  "uncertain": [],
+  "newRules": [],
+  "gates": {
+    "keyboard": "VERIFIED_PASS",
+    "independentFunctional": "VERIFIED_PASS",
+    "functionalOutputUnchanged": true,
+    "regressionGuards": "1/2"
+  },
+  "scope": "Verified only for frozen journey, functional assertions and recorded conditions. Manual review remains required."
+}

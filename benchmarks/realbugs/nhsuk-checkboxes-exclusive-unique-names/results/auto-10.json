@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T07:24:42.410Z",
+  "policy": "auto",
+  "modelRun": "c3d22899-7291-4f03-a6f5-8ade5ea160af",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit outside localized allowlist: \"./packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js\". Allowed paths: "
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: edits.0.sha256: Invalid string: must match pattern /^[a-f0-9]{64}$/",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-6d29b8c7c36eafeb0dad00fb1bc80510",
+      "usage": {
+        "completion_tokens": 2540,
+        "prompt_tokens": 4389,
+        "total_tokens": 6929,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2065,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4389
+      },
+      "latencyMs": 14631
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 changes \"index.html\", the page that uses the component. It is read-only context: repair the component's own code in .",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-1412348d9d656d76307ecc09a89ce7a6",
+      "usage": {
+        "completion_tokens": 11712,
+        "prompt_tokens": 4487,
+        "total_tokens": 16199,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10983,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4487
+      },
+      "latencyMs": 28285,
+      "reservedCreditUsd": 0.11304800000000001
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit outside localized allowlist: \"./packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js\". Allowed paths: ",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-f6e0745e9a595bbe8f217fb4f7f26480",
+      "usage": {
+        "completion_tokens": 10402,
+        "prompt_tokens": 5274,
+        "total_tokens": 15676,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9395,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5274
+      },
+      "latencyMs": 27421,
+      "reservedCreditUsd": 0.116277
+    }
+  ]
+}

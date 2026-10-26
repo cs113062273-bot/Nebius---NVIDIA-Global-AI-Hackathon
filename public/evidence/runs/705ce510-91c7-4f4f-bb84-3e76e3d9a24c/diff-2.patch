@@ -1,0 +1,18 @@
+diff --git a/index.js b/index.js
+index 0a2a74a..9397ea1 100644
+--- a/index.js
++++ b/index.js
+@@ -430,7 +430,12 @@ const createFocusTrap = function (elements, userOptions) {
+     } else {
+       // escaped! pull it back in to where it just left
+       e.stopImmediatePropagation();
+-      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
++      let fallbackNode = state.mostRecentlyFocusedNode;
++      // If the most recently focused node is no longer attached (e.g., removed), use initial focus node.
++      if (fallbackNode && !isNodeAttached(fallbackNode)) {
++        fallbackNode = getInitialFocusNode();
++      }
++      tryFocus(fallbackNode);
+     }
+   };
+ 

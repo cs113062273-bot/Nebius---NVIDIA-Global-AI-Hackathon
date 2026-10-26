@@ -1,0 +1,25 @@
+{
+  "root_cause": "The Govuk radios component only updates ARIA attributes and conditional visibility on click events within each module. Keyboard arrow navigation changes the checked state of radio buttons across different modules (same radio group name) without firing a click event on the original module, so conditional content in the first module remains visible when it should be hidden.",
+  "repair_strategy": "Add a 'change' event listener on the document that filters for radio buttons sharing a name with any radio in this module that has aria-controls. When such a radio changes, update all radios in this module to show/hide their conditionals based on checked state.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}\n\nRadios.prototype.setAttributes = function ($input) {\n  var inputIsChecked = $input.checked\n  $input.setAttribute('aria-expanded', inputIsChecked)\n\n  var $content = this.$module.querySelector('#' + $input.getAttribute('aria-controls'))\n  if ($content) {\n    $content.classList.toggle('govuk-radios__conditional--hidden', !inputIsChecked)\n  }\n}\n\nRadios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nexport default Radios",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  document.addEventListener('change', this.handleChange.bind(this))\n}\n\nRadios.prototype.setAttributes = function ($input) {\n  var inputIsChecked = $input.checked\n  $input.setAttribute('aria-expanded', inputIsChecked)\n\n  var $content = this.$module.querySelector('#' + $input.getAttribute('aria-controls'))\n  if ($content) {\n    $content.classList.toggle('govuk-radios__conditional--hidden', !inputIsChecked)\n  }\n}\n\nRadios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nRadios.prototype.handleChange = function (event) {\n  var $target = event.target\n  if ($target.tagName !== 'INPUT' || $target.type !== 'radio') {\n    return\n  }\n\n  // Collect names of radios in this module that have aria-controls\n  var relevantNames = []\n  nodeListForEach(this.$inputs, function ($input) {\n    if ($input.getAttribute('aria-controls') && $input.name) {\n      relevantNames.push($input.name)\n    }\n  })\n\n  // If the changed radio shares a name, update all radios in this module\n  if (relevantNames.indexOf($target.name) !== -1) {\n    nodeListForEach(this.$inputs, function ($input) {\n      var isRadio = $input.getAttribute('type') === 'radio'\n      var hasAriaControls = $input.getAttribute('aria-controls')\n      if (isRadio && hasAriaControls) {\n        this.setAttributes($input)\n      }\n    }.bind(this))\n  }\n}\n\nexport default Radios"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard navigation via arrow keys across radio modules will now correctly show or hide conditional fields, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "Document-level change listener adds minimal overhead; filtered by radio name to avoid unrelated form changes.",
+    "Both click and change events may fire for the same interaction, causing duplicate attribute updates; outcome is idempotent and harmless.",
+    "The change listener only affects radio inputs that have an aria-controls attribute in this module, leaving other form controls unaffected."
+  ],
+  "verification_requirements": [
+    "Verify that pressing ArrowDown from the Text message radio hides the mobile number field when moving to the opt-out radio.",
+    "Verify that pressing ArrowUp from the opt-out radio shows the mobile number field when moving back to the Text message radio.",
+    "Verify that mouse clicks on radios continue to show/hide conditionals correctly.",
+    "Verify that the existing regression guard (choose email via keyboard and enter address) still passes.",
+    "Verify that form data reflects the selected radio value after keyboard navigation."
+  ]
+}

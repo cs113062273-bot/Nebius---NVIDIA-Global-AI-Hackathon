@@ -1,0 +1,23 @@
+{
+  "root_cause": "The disclosure menu does not close when keyboard focus moves outside the menu via Tab, leaving the dropdown open and covering page content.",
+  "repair_strategy": "Add a focusout listener on the root menu element that closes any open submenu toggles when focus leaves the menu entirely, while ensuring focus movements inside the menu (e.g., from button to menu item) do not trigger a close.",
+  "edits": [
+    {
+      "path": "src/disclosureMenu.js",
+      "sha256": "ca4cd96d5ab9b2275e2c8f4989766af90595913fd63bb25320c2b0b8853b564b",
+      "before": "  initialize() {\n    try {\n      super.initialize();\n\n      this._handleFocus();\n      this._handleClick();\n      this._handleHover();\n      this._handleKeydown();\n      this._handleKeyup();\n    } catch (error) {\n      console.error(error);\n    }\n  }",
+      "after": "  initialize() {\n    try {\n      super.initialize();\n\n      // Close dropdown when focus leaves the menu\n      this.dom.menu.addEventListener('focusout', (event) => {\n        const relatedTarget = event.relatedTarget;\n        if (relatedTarget && !this.dom.menu.contains(relatedTarget)) {\n          this.elements.submenuToggles.forEach(toggle => {\n            if (toggle.isOpen) {\n              toggle.close();\n            }\n          });\n        }\n      });\n\n      this._handleFocus();\n      this._handleClick();\n      this._handleHover();\n      this._handleKeydown();\n      this._handleKeyup();\n    } catch (error) {\n      console.error(error);\n    }\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When a user tabs out of the navigation, the Shop dropdown will close, preventing it from obscuring underlying content and restoring the expected state (aria-expanded=\"false\" and #plants hidden).",
+  "functional_risks": [
+    "Incorrectly closing the dropdown when focus moves from the button to a menu item (mitigated by checking that the relatedTarget is not inside the menu).",
+    "Attempting to close when the toggle is not open (guarded by conditional checks)."
+  ],
+  "verification_requirements": [
+    "After fixing, tabbing from the Shop button to the search input should result in aria-expanded=\"false\" on #shop and #plants hidden.",
+    "Opening the dropdown via Enter should still work and allow navigation inside the dropdown with Tab.",
+    "Shift+Tab from the first menu item back to the button should keep the dropdown open.",
+    "Clicking outside the menu with the mouse should continue to close the dropdown (existing behavior unchanged)."
+  ]
+}

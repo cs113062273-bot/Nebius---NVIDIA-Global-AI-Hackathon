@@ -1,0 +1,13 @@
+diff --git a/awesomplete.js b/awesomplete.js
+index 861abb9..463f899 100644
+--- a/awesomplete.js
++++ b/awesomplete.js
+@@ -397,7 +397,7 @@ _.ITEM = function (text, input, item_id) {
+ 		innerHTML: html,
+ 		"role": "option",
+ 		"aria-selected": "false",
+-		"tabindex": '0', // for the Talkback screen reader
++		"tabindex": '-1', // for the Talkback screen reader (non-focusable)
+ 		"id": "awesomplete_list_" + this.count + "_item_" + item_id
+ 	});
+ };

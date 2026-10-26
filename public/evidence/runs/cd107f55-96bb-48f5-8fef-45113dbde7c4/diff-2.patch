@@ -1,0 +1,28 @@
+diff --git a/src/index.js b/src/index.js
+index 713f73c..57b7c39 100644
+--- a/src/index.js
++++ b/src/index.js
+@@ -165,11 +165,23 @@ const isHidden = function (node, displayCheck) {
+   return false;
+ };
+ 
++const isInDisabledFieldset = function (node) {
++  let parent = node.parentElement;
++  while (parent) {
++    if (parent.tagName === 'FIELDSET' && parent.disabled) {
++      return true;
++    }
++    parent = parent.parentElement;
++  }
++  return false;
++};
++
+ const isNodeMatchingSelectorFocusable = function (options, node) {
+   if (
+     node.disabled ||
+     isHiddenInput(node) ||
+     isHidden(node, options.displayCheck) ||
++    isInDisabledFieldset(node) ||
+     /* For a details element with a summary, the summary element gets the focused  */
+     isDetailsWithSummary(node)
+   ) {

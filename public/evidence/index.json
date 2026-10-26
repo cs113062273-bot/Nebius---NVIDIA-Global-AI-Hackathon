@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T06:58:10.792Z",
+  "generatedAt": "2026-10-26T09:16:14.579Z",
   "note": "Read-only published evidence. Screenshots, plans, diffs and raw model requests/responses are byte-identical to the run manifests. run.json is a reduced, path-sanitized view; complete archives are attached where marked.",
   "groups": [
     {
@@ -7,232 +7,234 @@
       "summary": "Each library is pinned just before a published maintainer fix. The maintainers' fix passes the frozen task; Nemotron gets only the buggy source, Super first and Ultra after a rejection.",
       "runs": [
         {
-          "id": "ac8e30fb-5338-4d15-b4ef-78f90b914f01",
+          "id": "7902e385-1460-4af7-bcf9-8981d9e7f406",
           "label": "a11y-dialog · Escape must return focus to the button that opened the dialog",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "907f2e1629ea6b2f0c57c5475d913605401b9b0a45b147881991c1407b8473e2",
-          "proofArchive": true
-        },
-        {
-          "id": "39a3a69c-89df-4b16-ba87-c40ae396726a",
-          "label": "accessible-menu · Escape in a nested menubar submenu must close only that submenu and return focus to its parent item",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "ac6fb665d4bf627d1329524fe945f1ffef64dbce7d57f7b9326ab7debbe6b841",
-          "proofArchive": true
-        },
-        {
-          "id": "fccf4876-edad-4c7e-b351-6e1f9a05df50",
-          "label": "accessible-menu · An open disclosure-navigation dropdown must close when keyboard focus moves out of the navigation",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "9895c23ef59f188bde5b0327f6c8d86e5ba4541651198f4ea8c7d37e01cb28d3",
+          "rootHash": "72f48ba4314ca5f5c064ab400b51e9c6608090b3fe948d39c1e73faa97a07d10",
           "proofArchive": true
         },
         {
-          "id": "dd8d0470-3190-4511-8190-65a952b7a923",
+          "id": "e296de19-649a-4068-be12-36fec3835cbd",
+          "label": "accessible-menu · Escape in a nested menubar submenu must close only that submenu and return focus to its parent item",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "93d916a7f0a6b52e7d93d238faa357be88468cda8e7131ab300f3c753d1075ef",
+          "proofArchive": true
+        },
+        {
+          "id": "0cecfa83-10d9-4db0-925c-42a2cafd3ee2",
+          "label": "accessible-menu · An open disclosure-navigation dropdown must close when keyboard focus moves out of the navigation",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "572646c0942106c4fc861506f94cd95c26ab355c6784b644be0bbb97b7dfb9a4",
+          "proofArchive": true
+        },
+        {
+          "id": "c0c77285-6d49-4b6f-b562-7a29d4f98bb5",
           "label": "autoComplete.js · The combobox's aria-activedescendant must reference the highlighted suggestion element",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "cb7685fb5e155c4056da949ae63de2ad7a104bd6b5cb5b10a048cfed9d05afc0",
+          "rootHash": "c8fd7d980429ceb71a53782e8e30a8a444cd7944568479e23b968ee7bf23f73c",
           "proofArchive": true
         },
         {
-          "id": "2d0147d1-76e9-4cc3-ab11-ec93ce175a18",
+          "id": "a6ce32fc-12c9-452b-ab4f-81aaff1048b4",
           "label": "autoComplete.js · Enter must choose the suggestion that is highlighted after the search is refined",
-          "attempt": 3,
+          "attempt": 1,
           "verdict": "VERIFIED_PASS",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "6b202c53f809686bf7e5c66efda948b35149628fba13f4384d3aedc7a8f7f209",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "88b8e4a6a305e694132e1ecdea69213f26202eb27c1a5c9e835d46b764732860",
           "proofArchive": true
         },
         {
-          "id": "61b77456-e07f-403e-9260-e831ef10a68e",
+          "id": "aea0b6aa-cf95-4757-9101-537b7c92db7d",
           "label": "awesomplete · One Tab press must move from an autocomplete field with open suggestions to the next form field",
-          "attempt": 2,
+          "attempt": 1,
           "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "d60676cada388b69773e06d6a2a8e52bf9239b69fbb3e31be6dfc666afc7582e",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "a8775d7db0254410139dc36ec55dfbb8052d14d84e5c1ca729d5b3257b0f1aff",
           "proofArchive": true
         },
         {
-          "id": "07f338b5-59da-4102-b68f-1c28b23a5014",
+          "id": "37d60d3e-aa6f-4004-b1b1-97b41a58e719",
           "label": "Bootstrap 5.0 (dropdown, modal) · Escape on a closed dropdown toggle inside a modal must close the modal",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "3ec7ce972518ee353692bb8f1300d9dabcc2a095698e9f0c4b6f6f012e7bfed7",
+          "rootHash": "4bd1335853ddf4cf914de8cf5fbadc2fb70483e5e754d7893316b5b3e66fcabe",
           "proofArchive": true
         },
         {
-          "id": "73d2dea9-bf9a-47e1-81af-25aaf1e2d0d7",
+          "id": "62f2cb3a-52e6-41b6-b1e8-ee08f88708c8",
           "label": "Bootstrap 5.0 (modal) · Shift+Tab from the first control in a modal must wrap to the modal's last control",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "84b6d7d00056aa859bd54f0b64874c9a593d102cd83134efce161eb7d65c5ab0",
+          "rootHash": "c577b321cd031061472775cefe1af81c9dafbeeae2c56a831b7869af7c78d742",
           "proofArchive": true
         },
         {
-          "id": "0a324928-96d2-450c-8a2c-ce005f8b6ca5",
+          "id": "2155499b-1004-4cae-b8ea-b6edd849f1c5",
           "label": "Bootstrap 5.0 (offcanvas) · A non-modal offcanvas panel that allows page scrolling must not trap keyboard focus",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "90547fadc2736b87d9558f1c90c7d646b637ca219901e68daea2ffa9a13ce5bd",
+          "rootHash": "2d9aa158b6128e5b8b77c9829fa914611d1c99e98c710d756ebb703b579f4170",
           "proofArchive": true
         },
         {
-          "id": "f05ead7a-7837-4cca-b82a-17ddfabe8e1a",
+          "id": "2fbb7177-8003-4cb9-992c-36074a11363f",
           "label": "Bootstrap 5.1 (dropdown) · Escape must close the dropdown menu and return focus to its toggle button",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "10c3232d199569f18b9871d8a291926d18bc873e9fabaec76480beec40cb2516",
+          "rootHash": "2bf1d84fa90044adce60160158b3f57ba06e9078089108470f99cd4950de8deb",
           "proofArchive": true
         },
         {
-          "id": "af8121b7-9d05-4e40-a6c9-582986435706",
+          "id": "9c15eb7c-aac4-47c7-8736-1c2275bcde17",
           "label": "Bootstrap 5.2 (offcanvas) · An offcanvas panel opened with a backdrop must keep keyboard focus inside the panel",
-          "attempt": 1,
+          "attempt": 2,
           "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "baf8c6343885d45d7d23f85f832d5c8321a81fb31fe0d3c4eca46c7a8e2c88d8",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "9d57918a612cd98c81ab0ae290e2dd88acb883ff7d613d1fbe2e11cfdeb334a4",
           "proofArchive": true
         },
         {
-          "id": "4ee42510-67c3-4bed-9db0-3ca314e05cac",
+          "id": "613ad64a-167a-4734-9aaa-aa4671ff9111",
           "label": "Bootstrap 5.2 (tab) · Arrow keys in a tab list must move keyboard focus to the newly selected tab",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "49d13b1f708e45e1ec5eec24f4345eb2937f4345635ec83fec2eee2d5fdd17c5",
+          "rootHash": "4ff12bfb769a878642b2608b68e5fbbfc85356766f466f7b306cc0be8977da87",
           "proofArchive": true
         },
         {
-          "id": "70abc8c5-3b8f-490a-9957-1cec081e02df",
+          "id": "92b73cc4-0013-4561-bae9-156f606e2913",
           "label": "Bootstrap 5.2 alpha (tab) · Arrow keys in a tab list must skip disabled tabs",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "53cc59caebf1fe3291cac71de710c73bed0c109f73822b811b44ddeabdd7d6d1",
+          "rootHash": "2db5edd755978844a78c79f0c55386318e9bbef9c3f652932f303e09deb2fe47",
           "proofArchive": true
         },
         {
-          "id": "fc3bc2d6-4616-439e-819f-ca4376ff61b8",
+          "id": "c5ff4406-0d78-4eae-a583-9b9ceb104773",
           "label": "focus-trap · When a list row containing the focused button is removed inside a focus trap, focus must stay inside the trap",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "23bff707b2f1eea6165971d3e5082aa2517b95bfbd634a3119eb9bdd3b6de414",
+          "proofArchive": true
+        },
+        {
+          "id": "70463689-552d-40af-9b64-019c2c7b90d4",
+          "label": "focus-trap · When the focused control inside a focus trap removes itself, focus must stay inside the trap",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "82cc25f34f1c6a930cf492de141769fbe4dbd62145c34304910c8fe6c14d79ab",
+          "rootHash": "2c0e5eda9c1e32fe01eb0c13e506448e573819b562a6ab48ee9be7a316cbe515",
           "proofArchive": true
         },
         {
-          "id": "6e341541-215c-45d9-9c71-592ecfc91ea8",
-          "label": "focus-trap · When the focused control inside a focus trap removes itself, focus must stay inside the trap",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "d7a95127bd354952163271ae03fdab49026c355fd1ba5bb987ef46f95e844409",
-          "proofArchive": true
-        },
-        {
-          "id": "e37a2f6d-fae6-4a3f-b1f4-bfea03c4c0d2",
+          "id": "00c24ef0-faae-451e-b905-7baa99f60336",
           "label": "GOV.UK Frontend · Typing past a character limit must keep the text and say how many characters are too many",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "8764f08a56d07d30a64a10bef275dd94724dbbfc003c239c0191c0ad5a33c326",
+          "rootHash": "2b35bef862fd7ec2b17a3ce97ecfe43b9bbce6b8af201172ac8fc08fbbdcc61d",
           "proofArchive": true
         },
         {
-          "id": "792f9c9c-f5f2-4b4b-9421-09b9a4fb50f4",
+          "id": "f4bdc870-2716-4b1a-8dc2-b12ceb4cafeb",
           "label": "GOV.UK Frontend · Header navigation links that are visible on a desktop-width page must not be hidden from screen readers",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "d9f4d4687f21805a986aec1be4eb731ad61b2767d4d499925fbee1b0d84699a3",
+          "rootHash": "bd531d4c6fcd04f043984eb145250f4c60a19b1eb224fcb884bf309d18cef613",
           "proofArchive": true
         },
         {
-          "id": "d2036bef-663f-4964-9ffe-11a73cad983b",
+          "id": "be6b8dc8-ae74-4771-ac6b-c47712947fd4",
           "label": "GOV.UK Frontend · Moving to a radio in another group with the same name must hide the conditional question that no longer applies",
-          "attempt": 2,
+          "attempt": 3,
           "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "33e8c3ff17a996c3d832185d4a91daa15388c8c5f22ad56f99889fcc49f753ca",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "eea431bc7c06ef34e44ee49661664304a702b3f64830b5ead26ef1e3d61aaa69",
           "proofArchive": true
         },
         {
-          "id": "f42915f9-9380-463e-b732-da6498c8d38e",
+          "id": "62aaad2f-8c0b-434a-b74f-ae3803b1be49",
           "label": "GOV.UK Frontend · The up and down arrow keys must not switch between horizontal tabs",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "4d9f538e91f9a9591d93e3b2c3dcedd6dfeb48e23cfd188e468513bb485fa3da",
+          "rootHash": "22aa9f549cb0a0774e49c77baf9e1b89533031ed3c65e1fadb6f4528b31eb2dc",
           "proofArchive": true
         },
         {
-          "id": "332ea322-4ddf-44a0-b7e7-67b7abe1d60a",
+          "id": "5e3f0f33-94ba-45a5-899b-3f7848c56e71",
           "label": "micromodal · Activating a form control inside a modal must not close the modal",
-          "attempt": 3,
-          "verdict": "VERIFIED_PASS",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "333667ad33a22ff1c911e87594802e26eff99f0a80862972753ebf5e5043689f",
-          "proofArchive": true
-        },
-        {
-          "id": "47e984f2-d1fb-4267-a37b-10bb44972976",
-          "label": "micromodal · Tabbing past the last visible control of a modal must wrap inside the modal even when it contains hidden buttons",
-          "attempt": 3,
-          "verdict": "VERIFIED_PASS",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "d4e28a1457208fcaa8da1bbad7a3f42209472755a2ce08feba7942e1ec60ec8c",
-          "proofArchive": true
-        },
-        {
-          "id": "2d154a53-aa2f-4c02-b596-5574e12f51ea",
-          "label": "NHS.UK frontend · Ticking a 'None of these' checkbox must clear the other answers in its group even when each checkbox has its own name",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "6a93792a88621886044f6727aaf2f1ff3a3cc0fd8ccd5b5addb8a1570411b9cb",
+          "rootHash": "6e76c511a3763b05fe54f6434e8b27f2967f5efe6e4ea587a3addaf1098663d3",
           "proofArchive": true
         },
         {
-          "id": "dfbc3fc2-fa1b-4bb1-98a1-0a009cbcb61d",
+          "id": "495309d6-6320-428c-8d0d-aba0cb7fdd67",
+          "label": "micromodal · Tabbing past the last visible control of a modal must wrap inside the modal even when it contains hidden buttons",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "111fb9888d08a64e16a167d7e38537adbf611e8b024711303234d6258d1f4b2d",
+          "proofArchive": true
+        },
+        {
+          "id": "c3d22899-7291-4f03-a6f5-8ade5ea160af",
+          "label": "NHS.UK frontend · Ticking a 'None of these' checkbox must clear the other answers in its group even when each checkbox has its own name",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "9b33b962239dbd496ce606f5f1f8a97e6cb2bde825f6f8a550b54dec7ace691f",
+          "proofArchive": true
+        },
+        {
+          "id": "2c4a8a53-0e50-4171-b898-7be9a37a21c0",
           "label": "Pikaday · ArrowLeft must keep moving the caret in other text fields while a calendar is shown",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "be4afb2b8ebefe926616b26baf0490ebcb138a6f2180043f4f05530c8e02168a",
+          "rootHash": "127dafc5535baced6c7c4fd7c6812e30c8d3e66ed2839f39a5f1bfb91ed287cf",
           "proofArchive": true
         },
         {
-          "id": "e7391151-73f1-4a5d-ad8c-9fc234c3cb22",
+          "id": "cd107f55-96bb-48f5-8fef-45113dbde7c4",
           "label": "tabbable · Form fields inside a disabled fieldset must not be treated as tabbable, so a focus-trapped dialog focuses its first usable field",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "3e7c56a6545e159e7925ee392b77feaeb3c46abf32562de640d5ddd6fa421252",
+          "rootHash": "e1ced65aa21840f8e906c0c12d0c4b1187d2b80573b4e1e0299f6e97d2d1ba14",
           "proofArchive": true
         },
         {
-          "id": "8e3484b8-7c24-49dc-83e4-9f6e4cc5cafa",
+          "id": "4d205458-05a2-48dc-ac25-8b47b0ac58bd",
           "label": "vanillajs-datepicker · Tabbing out of a date field with an out-of-range date must close the calendar",
-          "verdict": "VERIFIED_FAIL",
+          "attempt": 3,
+          "verdict": "VERIFIED_PASS",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "8fa76abcaff97bb09a427bdd59c8b2d4a51187ca3c1e44f531421649cd092d1f",
+          "rootHash": "1c3f206414c53bdc9294dc6bda10212d545ec9226f168594cd5e17aa31430daf",
           "proofArchive": true
         },
         {
-          "id": "0feaeb61-b2b6-4eaf-baa3-ab2b23b475b3",
+          "id": "8f51ad29-5f30-4e8d-ba5c-01831b130691",
           "label": "vanillajs-datepicker · Pressing Tab in an open date field must move focus to the next form field",
-          "attempt": 2,
+          "attempt": 1,
           "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "169ac42a25a72618fcde280a8d1ab5a9fbfd3e81eaed943f4ed8b1d46ba06446",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "8c830e88ea1dc3ca49c1a152e0758f5194d3f365d174370dd53d76d26bc8fed2",
           "proofArchive": true
         }
       ]
@@ -242,73 +244,90 @@
       "summary": "Each library is pinned at its current head, where a reported keyboard bug is still unfixed. There is no maintainers' fix to compare; the bug must reproduce while the pointer path and every guard pass. Super first, Ultra after a rejection.",
       "runs": [
         {
-          "id": "6e9696ec-5015-41ae-85a7-ff91c2b50afb",
+          "id": "c2f93867-3b85-4328-875e-3afbebc64411",
           "label": "autoComplete.js · Escape must close the suggestion list without erasing what the user typed",
-          "attempt": 1,
+          "attempt": 2,
           "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "4f4b7ef5155948be1a1a3579f741a59c919c0df8db7b07963be2565938a47146",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "b6e8b2cab0581a1c8ce039cdffbb01b163b8211241624b6f6d3e01636b6fcc9f",
           "proofArchive": true
         },
         {
-          "id": "fc4d9aed-b356-419f-bc34-3ccf9b0bbb01",
+          "id": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
           "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Passing through a prefilled datepicker must not change the date the form submits",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "9c9ec2a11792a81b9f7b9402e58d1f4ccb3fc548aff99b32636097878105dc65",
+          "rootHash": "358cd6707b86b2fcd6166eb936dce9f6cf18647ea584c42f92c2f2844d3f777a",
           "proofArchive": true
         },
         {
-          "id": "2c5074cd-803a-45c6-b3a4-c499d4f169f2",
+          "id": "a9cf0d32-ee10-4b02-ab78-f8487748594a",
           "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Tab must leave a datepicker input for the next field",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "7358e9b1b3ffb5919b8f1a67f1d6fd9d35cf9223409bf2da5725aea9df992f0a",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "7cc648b76248454f00c6f3fb28317e216f87f0f8ea6baf1eafa913a78fb1df86",
           "proofArchive": true
         },
         {
-          "id": "78fcb958-7dca-4fc4-b2b8-32c9172b2911",
+          "id": "ddfef893-7cb5-43c4-bcb1-efcb238548f7",
           "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Tab must leave a datepicker input for the next field, and a click must still show the calendar",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "60a178bec0a1db9d9d3c19b00f79c67f1d77405d9c0f72637413642fa95875be",
-          "proofArchive": true
-        },
-        {
-          "id": "f65e71f2-55f9-4cee-8adb-f350517e8aa6",
-          "label": "Bootstrap 6.0 alpha (dialog, TypeScript source) · A dialog created with keyboard: false must stay open however often Escape is pressed",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "fba8b040a48f6a3abefdcde442ad355d2b6e8bffeb4d94b6e3b4517acabf6f74",
+          "rootHash": "44badf804e26387976e5d0de9114a7b42ed2c969184237879f70d12f54af66b0",
           "proofArchive": true
         },
         {
-          "id": "de7796ce-30aa-4f5e-948a-2ec109ea9de1",
-          "label": "Bootstrap 6.0 alpha (drawer, TypeScript source) · Opening a drawer must move keyboard focus into it",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "70b36c6af1a986cbfb16e94729eda1cbb9222f4991e3b031bee26abd42c8a2cd",
-          "proofArchive": true
-        },
-        {
-          "id": "c323b9aa-96b9-4413-9284-e6ea04c39e68",
-          "label": "Pikaday · Arrow keys must not select a day that disableDayFn closes",
+          "id": "fb6e1ffd-520a-451e-947f-db582f92969a",
+          "label": "Bootstrap 6.0 alpha (dialog, TypeScript source) · A dialog created with keyboard: false must stay open however often Escape is pressed",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "8bd63f99bc6adef40b61fa92debd4adba468716a4dbc066b7dbcdeeec645ffef",
+          "rootHash": "04f1866aab15d3a1a22391e0ffc8491bd178cad5b7e57455d45f8e26a1cee3f2",
           "proofArchive": true
         },
         {
-          "id": "c3a8859d-e2c1-40a2-b869-75ab352d8bce",
+          "id": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
+          "label": "Bootstrap 6.0 alpha (dialog, TypeScript source) · A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close",
+          "attempt": 3,
+          "verdict": "VERIFIED_PASS",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "1c52203a7b3cbc4aded359cf9a38c07507f6ecb55d78b1de09c6d9ec8ba8ed43",
+          "proofArchive": true
+        },
+        {
+          "id": "a74a9036-7db1-4b46-a154-006a3c40eb7f",
+          "label": "Bootstrap 6.0 alpha (drawer, TypeScript source) · Opening a drawer must move keyboard focus into it",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "8419d9c6016ff56fac387647f624373b6c033a3df379e3f08d93a9ec208c8e5a",
+          "proofArchive": true
+        },
+        {
+          "id": "c71c63e9-f789-480c-8f0c-593920943998",
+          "label": "Pikaday · Arrow keys must not select a day that disableDayFn closes",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "2db87d592efd7726d121eb3b4fd4b3cce51ed75b0560ac263b54ac5f8c593bc8",
+          "proofArchive": true
+        },
+        {
+          "id": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+          "label": "Pikaday · Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "c8c4fbb08006d9854f4da5ae283b59acb55529e8ab28707100243206dda11fb1",
+          "proofArchive": true
+        },
+        {
+          "id": "ebd9a598-43a3-4b3e-b128-78f5bc5c2229",
           "label": "Pikaday · Tab after typing a date must move to the next field, not jump back into the date field",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "ff25d3d89deeb4fefc609f9a9d0b0bb1792ef64b36e7acf3d32bd86b680cd8e9",
+          "rootHash": "7bb1c2d339648ac2b01ef0bf717569d8a34372799f7dd20df69d0f7220c5a410",
           "proofArchive": true
         },
         {
@@ -325,6 +344,78 @@
           "verdict": "VERIFIED_PASS",
           "execution": "human-supplied candidate · no inference",
           "rootHash": "3c2f87b0256c4549b190863f9d8b85f558426d12b70c7658ccee6e73818f9ec7",
+          "proofArchive": false
+        },
+        {
+          "id": "3624e2e0-f406-41b5-b4fd-74a148367e39",
+          "label": "Replay without inference · run 8c28f644 attempt 1 against: A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close",
+          "verdict": "VERIFIED_PASS",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "9a4a74bb73f7bd6e5d371211e0e3e3fc19b125989abce5288ab54f10cba18f05",
+          "proofArchive": false
+        },
+        {
+          "id": "5962d0c7-3cd2-48e7-a6d2-bd644798c220",
+          "label": "Replay without inference · run c4e3444d attempt 1 against: A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close",
+          "verdict": "VERIFIED_PASS",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "dea51dbf7ac730b4c8efe0de686ffce946d3126a02d3cc6555953fad6c479816",
+          "proofArchive": false
+        },
+        {
+          "id": "794c6805-049f-48c2-8a1d-b9db95916db2",
+          "label": "Replay without inference · run f65e71f2 attempt 1 against: A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close",
+          "verdict": "VERIFIED_PASS",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "07ffa25dea074bb3f73857197a58ed1f9622f1672826fd9261f7c2242824cc68",
+          "proofArchive": false
+        },
+        {
+          "id": "f802df82-6c02-4202-9d6a-ce03df781a91",
+          "label": "Replay without inference · run fc6445d6 attempt 1 against: A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close",
+          "verdict": "VERIFIED_PASS",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "c2e4ea4b6e4de35a29da62b595dd4bc2dad68c6b5748880a19c6c793df1cedc6",
+          "proofArchive": false
+        },
+        {
+          "id": "bfab1838-860e-4cb1-9e45-1483263bf349",
+          "label": "Replay without inference · run fb6e1ffd attempt 2 against: A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "fd0f966ec2fa77cc1dc566f37538257e90c92343f4c5889dee2fda615eb8acd8",
+          "proofArchive": false
+        },
+        {
+          "id": "eac0e900-7e4e-431a-b47f-28a4e2f350f4",
+          "label": "Replay without inference · run c323b9aa attempt 2 against: Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate",
+          "verdict": "VERIFIED_PASS",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "4baddaf8410327196b36ce0e2360a669cdc88a50f3dd7a6abe2540c2305a05b4",
+          "proofArchive": false
+        },
+        {
+          "id": "b40fb046-56ad-46e6-bde7-1ae1ab7279fb",
+          "label": "Replay without inference · run 24dbef06 attempt 2 against: Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate",
+          "verdict": "VERIFIED_PASS",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "ddd9be36ee82894de31058c1e443b81523c17004530f7eb60d19f9141a5a49e4",
+          "proofArchive": false
+        },
+        {
+          "id": "2e283223-9769-4f84-a187-0543bc1833d0",
+          "label": "Replay without inference · run d7e9be94 attempt 1 against: Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate",
+          "verdict": "VERIFIED_PASS",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "f0fe95cc8158cfc3af1141c98e526fef9d9bac0eb778bf9510f99f4ed0481d6b",
+          "proofArchive": false
+        },
+        {
+          "id": "d54bd084-fa9e-45ed-98ba-bcaa6afcedf0",
+          "label": "Replay without inference · run c71c63e9 attempt 1 against: Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "human-supplied candidate · no inference",
+          "rootHash": "025bab84bd1bb93ba6516254de0a112c1e3b0e2bf0f2aa7411a5325edfce102f",
           "proofArchive": false
         }
       ]
@@ -853,6 +944,60 @@
           "proofArchive": false
         },
         {
+          "id": "4d205458-05a2-48dc-ac25-8b47b0ac58bd",
+          "label": "vanillajs-datepicker-invalid-date-blur · attempt 1 · engine 2a8f0bbe",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "1c3f206414c53bdc9294dc6bda10212d545ec9226f168594cd5e17aa31430daf",
+          "proofArchive": false
+        },
+        {
+          "id": "4d205458-05a2-48dc-ac25-8b47b0ac58bd",
+          "label": "vanillajs-datepicker-invalid-date-blur · attempt 2 · engine 2a8f0bbe",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "1c3f206414c53bdc9294dc6bda10212d545ec9226f168594cd5e17aa31430daf",
+          "proofArchive": false
+        },
+        {
+          "id": "a207f594-215c-42dc-8bc8-995547251f90",
+          "label": "vanillajs-datepicker-invalid-date-blur · attempt 3 · engine 2a8f0bbe",
+          "attempt": 3,
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "9f8706509fa36fab500d7185f34998a037e406a2e42b917f265af921ea411503",
+          "proofArchive": false
+        },
+        {
+          "id": "1f618dc3-559a-4207-8061-08b6f4c9c516",
+          "label": "vanillajs-datepicker-invalid-date-blur · attempt 1 · engine 2a8f0bbe",
+          "attempt": 1,
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "ee488c5cdd6f60981aa0aadb25bbe289561a8ad41621793b4bbe9bc86a2246b5",
+          "proofArchive": false
+        },
+        {
+          "id": "1f618dc3-559a-4207-8061-08b6f4c9c516",
+          "label": "vanillajs-datepicker-invalid-date-blur · attempt 2 · engine 2a8f0bbe",
+          "attempt": 2,
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "ee488c5cdd6f60981aa0aadb25bbe289561a8ad41621793b4bbe9bc86a2246b5",
+          "proofArchive": false
+        },
+        {
+          "id": "1f618dc3-559a-4207-8061-08b6f4c9c516",
+          "label": "vanillajs-datepicker-invalid-date-blur · attempt 3 · engine 2a8f0bbe",
+          "attempt": 3,
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "ee488c5cdd6f60981aa0aadb25bbe289561a8ad41621793b4bbe9bc86a2246b5",
+          "proofArchive": false
+        },
+        {
           "id": "8a56dfe1-16af-477c-89d8-b6eebd41360d",
           "label": "vanillajs-datepicker-invalid-date-blur · attempt 1 · engine e4179877",
           "attempt": 1,
@@ -1024,6 +1169,15 @@
           "proofArchive": false
         },
         {
+          "id": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
+          "label": "bootstrap6-dialog-escape-keyboard-false-default-dialog · attempt 2 · engine 2a8f0bbe",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "1c52203a7b3cbc4aded359cf9a38c07507f6ecb55d78b1de09c6d9ec8ba8ed43",
+          "proofArchive": false
+        },
+        {
           "id": "1e3667fc-6ac9-40d9-ab2a-db08966c3842",
           "label": "pikaday-keyboard-disabled-day · attempt 2 · engine 55874e83",
           "attempt": 2,
@@ -1039,6 +1193,33 @@
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
           "rootHash": "8bd63f99bc6adef40b61fa92debd4adba468716a4dbc066b7dbcdeeec645ffef",
+          "proofArchive": false
+        },
+        {
+          "id": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+          "label": "pikaday-keyboard-disabled-day-max-date · attempt 1 · engine 2a8f0bbe",
+          "attempt": 1,
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "c8c4fbb08006d9854f4da5ae283b59acb55529e8ab28707100243206dda11fb1",
+          "proofArchive": false
+        },
+        {
+          "id": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+          "label": "pikaday-keyboard-disabled-day-max-date · attempt 2 · engine 2a8f0bbe",
+          "attempt": 2,
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "c8c4fbb08006d9854f4da5ae283b59acb55529e8ab28707100243206dda11fb1",
+          "proofArchive": false
+        },
+        {
+          "id": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+          "label": "pikaday-keyboard-disabled-day-max-date · attempt 3 · engine 2a8f0bbe",
+          "attempt": 3,
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "c8c4fbb08006d9854f4da5ae283b59acb55529e8ab28707100243206dda11fb1",
           "proofArchive": false
         }
       ]
@@ -1081,600 +1262,648 @@
       "summary": "The same bug run again on the same frozen engine. Every run counts in the score; none is picked.",
       "runs": [
         {
-          "id": "7d17235d-c105-4927-b362-f1a364765e82",
+          "id": "9b0426eb-beba-4247-980a-8992995a2f38",
           "label": "a11y-dialog · Escape must return focus to the button that opened the dialog · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "e0b18de29487494038074f3acf2712ada5ce9827ef86c0b584bb7cabec90f0c7",
+          "rootHash": "dab05f9e3075f04477982113dd833643993233551abc6e94f9bd279e1ae63000",
           "proofArchive": false
         },
         {
-          "id": "e33eef6c-7cd8-47a7-b706-a7335cfc65af",
+          "id": "be73eb09-174b-4cac-a8e1-c1d4fcb3d3cb",
           "label": "a11y-dialog · Escape must return focus to the button that opened the dialog · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "bb4c3d4f26a8ac4f24cbdc905226f2aa0c907155db7b8818b11003c9235a7697",
+          "rootHash": "fc0ea19dc58a33c1f3ceb540f8e0c0a44c563818dfbddfbe765b9662b8b7c1c9",
           "proofArchive": false
         },
         {
-          "id": "9f4f6d24-e74a-42ae-b6a2-b656b8937c3e",
+          "id": "da3f988e-4844-48ca-a4d9-03273a64c888",
           "label": "accessible-menu · Escape in a nested menubar submenu must close only that submenu and return focus to its parent item · repeated run",
-          "verdict": "INCONCLUSIVE",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "fbdd6ef359b8e2863b75dd4c67b436a98536c5dbb7e07346e2632be4456950f1",
+          "proofArchive": false
+        },
+        {
+          "id": "bc742c42-ad57-4beb-8f73-329dae2f074a",
+          "label": "accessible-menu · Escape in a nested menubar submenu must close only that submenu and return focus to its parent item · repeated run",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "7b893a0955b3e63257122f00d273ee55d8aeb4b204d6a2494cb2c2fe5395ca6f",
+          "proofArchive": false
+        },
+        {
+          "id": "6017b948-ebec-492d-a495-d6c6d0052b7c",
+          "label": "accessible-menu · An open disclosure-navigation dropdown must close when keyboard focus moves out of the navigation · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "dd59395c9e9b57ff9453dece965357faac806f4c8e02f9135ae190c3606f97dd",
+          "proofArchive": false
+        },
+        {
+          "id": "b03f1bbb-ba79-4036-a6cc-8c4215811246",
+          "label": "accessible-menu · An open disclosure-navigation dropdown must close when keyboard focus moves out of the navigation · repeated run",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "91026f48db2b6f560a8c4b66198028f188b1d75ac35e920d1142a9f005cf4bab",
+          "proofArchive": false
+        },
+        {
+          "id": "dc4f7fbc-3369-472d-9744-e3aca6810fc9",
+          "label": "autoComplete.js · The combobox's aria-activedescendant must reference the highlighted suggestion element · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "e48993f0b8927a435f16a568da1daf36ec233a81555dbf0dbc8dc32e6595710e",
+          "proofArchive": false
+        },
+        {
+          "id": "6f2d6ca5-08c8-45fc-a631-0a39f865b6a9",
+          "label": "autoComplete.js · The combobox's aria-activedescendant must reference the highlighted suggestion element · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "692551e1203071565002fe7a26320ebfa5ae702075ada5a05bec22eee8344e05",
+          "proofArchive": false
+        },
+        {
+          "id": "40abd700-a88a-43ea-a2f6-4a834da00b4f",
+          "label": "autoComplete.js · Enter must choose the suggestion that is highlighted after the search is refined · repeated run",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "3f8d434a6e31483da3fb656279ed8c25dd41673bccb8d4ffecd95fe1456ef3e6",
+          "proofArchive": false
+        },
+        {
+          "id": "2270bf88-89f9-4384-baaf-6289d14a477e",
+          "label": "autoComplete.js · Enter must choose the suggestion that is highlighted after the search is refined · repeated run",
+          "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "8ceefd414f5b57e1e9301755f209ba0014f23079015713fd542a5313f467fa34",
+          "rootHash": "9749fc7a2c83659c68c0fd5fc4d5d2b28f4bfc8209b618296b831e0a88ef3cb3",
           "proofArchive": false
         },
         {
-          "id": "baaf4687-af42-4bf4-a4bb-cbec564b52b9",
-          "label": "accessible-menu · Escape in a nested menubar submenu must close only that submenu and return focus to its parent item · repeated run",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "b68c3cd98816d738d41a8254e8a8353de51b6622f080b754b20b9cf69937173f",
-          "proofArchive": false
-        },
-        {
-          "id": "e1fe2215-cb4d-4e01-8012-5f4c0d1da703",
-          "label": "accessible-menu · An open disclosure-navigation dropdown must close when keyboard focus moves out of the navigation · repeated run",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "df4343587ac79bbe8f1bf8030ebc26087686b87f1a0b390ddea99f1cbecf3513",
-          "proofArchive": false
-        },
-        {
-          "id": "3b6d0d31-afb0-492a-bddc-24c0a055015f",
-          "label": "accessible-menu · An open disclosure-navigation dropdown must close when keyboard focus moves out of the navigation · repeated run",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "0df65110cacec865a8a939def2d85cbd12c0a473f372aaed071673089ec9e818",
-          "proofArchive": false
-        },
-        {
-          "id": "0949f198-7b38-480e-888b-ecbb0cf5f3f2",
-          "label": "autoComplete.js · The combobox's aria-activedescendant must reference the highlighted suggestion element · repeated run",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "d38b2e31752394545d4669fb24a2e960ab3a99fc91d30123b31476cb29edbba8",
-          "proofArchive": false
-        },
-        {
-          "id": "33068868-24e4-4298-9248-ec2420124530",
-          "label": "autoComplete.js · The combobox's aria-activedescendant must reference the highlighted suggestion element · repeated run",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "24aa4de152ea3e3bc3f4679be8af5ddc8bdbc2bb84d6cd3803ed9bc576b93149",
-          "proofArchive": false
-        },
-        {
-          "id": "395fe5b8-46db-41f8-af67-9aa53978e2de",
-          "label": "autoComplete.js · Enter must choose the suggestion that is highlighted after the search is refined · repeated run",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "e0962bff0f3df95be66603c0d9e217e184f94145e3554288fe01f3568202f605",
-          "proofArchive": false
-        },
-        {
-          "id": "3fea1ff7-23e4-4ecc-af69-9cc74991de43",
-          "label": "autoComplete.js · Enter must choose the suggestion that is highlighted after the search is refined · repeated run",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "3355cb6b2d69193db5d6fb84356f5c59344bede383d09c62903c10b407882b4e",
-          "proofArchive": false
-        },
-        {
-          "id": "2b87bf7c-8f28-4baa-bc7c-41f37dc0de43",
+          "id": "c219d2d8-63bd-4fe6-a71b-f5413a8fcc35",
           "label": "awesomplete · One Tab press must move from an autocomplete field with open suggestions to the next form field · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "096d85fcd148d025a0b09d863cc835828bcf3b3a4062300afab972a55a0c4a92",
+          "rootHash": "0deb62b6df73a8c37270e5de09f381f1c9c30eca2c930b8d796529a5bbad426d",
           "proofArchive": false
         },
         {
-          "id": "f620b21d-5745-477f-8c23-6d6f9bba4717",
+          "id": "8bfe462a-fd26-46eb-bead-507fd87cd5d2",
           "label": "awesomplete · One Tab press must move from an autocomplete field with open suggestions to the next form field · repeated run",
-          "attempt": 1,
+          "attempt": 3,
           "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "bbf7d9bab646686d205b4f37674e64b9029afc6718daa0fa93381eb8bdc714ec",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "501e4cabb8c80294415eefdda6c67e85d0a7acdb976e15af77600430dce837bd",
           "proofArchive": false
         },
         {
-          "id": "fcdac8e8-19ea-4fa0-8948-7710d5c0830b",
+          "id": "684716c1-acc3-45b2-a24f-a143fbc3ae60",
           "label": "Bootstrap 5.0 (dropdown, modal) · Escape on a closed dropdown toggle inside a modal must close the modal · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "4a9f823b71144e3d05262452c38df3f7b62a1216f386bbcb7bdf5e07e0c97547",
+          "rootHash": "cfb11ba4aa80325eb8269d6e4651c0e8b3ff215dd915e1b06b8ef4d726c7e874",
           "proofArchive": false
         },
         {
-          "id": "88954a23-ae34-4a9b-b7fe-90e7c249f454",
+          "id": "b66a4ab8-6f9a-40fc-8ee2-b5dfce001add",
           "label": "Bootstrap 5.0 (dropdown, modal) · Escape on a closed dropdown toggle inside a modal must close the modal · repeated run",
-          "attempt": 2,
+          "attempt": 1,
           "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "3aa5ae7da6529e7e883a74e92f6d029d67db64d34e9d491f0922012a5caa6455",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "baa3c28dda6311140e3f294b04e8900a038515af6f39c6ff65695d49c7e8b357",
           "proofArchive": false
         },
         {
-          "id": "eae679c2-85ba-4387-8571-f5f0268470ea",
+          "id": "a9e60d70-58ed-4fc2-8e42-4703db9c3a70",
           "label": "Bootstrap 5.0 (modal) · Shift+Tab from the first control in a modal must wrap to the modal's last control · repeated run",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "82743859f11961209fca2a15e3033767cf786356ea84e0e77bf30e59f9ff765c",
+          "rootHash": "6a3fea0d32a99210e8d6f2dc79d8733f078353d71b0b53de3d8b5b3c6b52b02e",
           "proofArchive": false
         },
         {
-          "id": "817d7832-65c7-4875-812b-d991f0ef6c06",
+          "id": "b427c2c6-5681-43de-9046-99786f9e071b",
           "label": "Bootstrap 5.0 (modal) · Shift+Tab from the first control in a modal must wrap to the modal's last control · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "522f5947770ba63824fe23cefa94f671ee2bb8fadf33187e02627d034c9737d6",
+          "rootHash": "334aa8e0b60ca5b5ff8e2d0efe7aee1bbd2dccf5a752e1197fdc828a09a62997",
           "proofArchive": false
         },
         {
-          "id": "8a363186-97ba-457e-9698-5fe59588e2b6",
+          "id": "22599fed-beb8-44d2-be99-1f98b3852d40",
           "label": "Bootstrap 5.0 (offcanvas) · A non-modal offcanvas panel that allows page scrolling must not trap keyboard focus · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "711853b16895f388b9abfc78e6a91f1be755c71bf612e0e9062e025d5844ef05",
+          "rootHash": "e619c12806f7b08c4f9bd028c5625bc671a77a0bf0d6ed29d513c8022a1be497",
           "proofArchive": false
         },
         {
-          "id": "8cd63187-7385-4f13-924a-87111e9cfb02",
+          "id": "ed79a3b6-f195-4704-8092-99b6c9317b36",
           "label": "Bootstrap 5.0 (offcanvas) · A non-modal offcanvas panel that allows page scrolling must not trap keyboard focus · repeated run",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "4bed22daf439e0b2d2fe9bec462bd9e0c4abb6e6b1859bc8f818f1ef09b86f6f",
+          "rootHash": "035f2d535d118da0099857c647779567384321671fddb8365fba05d5685922ef",
           "proofArchive": false
         },
         {
-          "id": "97b96cc5-03da-41dc-98b8-dfd767f5a789",
+          "id": "2248d925-3f8b-4c2f-a099-f5f44d165d5d",
           "label": "Bootstrap 5.1 (dropdown) · Escape must close the dropdown menu and return focus to its toggle button · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "796420c91f5a281d4320441efd2179d988642730ee1af8899de8e9a314a16bb0",
+          "rootHash": "a6cb24e535f682417562d2d650fbb385ba5e8a4e3824e89b28464b782a5e596e",
           "proofArchive": false
         },
         {
-          "id": "16ea6c6c-1733-455d-b8f3-213188dea4a0",
+          "id": "4b6ea90d-00d8-41e3-8459-0da280d74974",
           "label": "Bootstrap 5.1 (dropdown) · Escape must close the dropdown menu and return focus to its toggle button · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "98c55edc9a88130601149fb8f7b35becae63317f79efa0e705f6029eb6fd4fbb",
+          "rootHash": "32ee54a15bb0e85167907e70fdaedce3e0e8a917372094356194ee4b49917157",
           "proofArchive": false
         },
         {
-          "id": "19c0bf9a-f0d6-4ad8-8a89-46c85e58f10b",
+          "id": "d1a04b33-bd9a-4856-9dfb-821d2452107a",
           "label": "Bootstrap 5.2 (offcanvas) · An offcanvas panel opened with a backdrop must keep keyboard focus inside the panel · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "1d87074b0f771287efeb62a486f671093876ccf1206ef4d56424737f5c9a71eb",
+          "rootHash": "0d0b8aed96473716af1f7435493973a13090c36cf0ee316d4ca121d9e2e12fda",
           "proofArchive": false
         },
         {
-          "id": "69a85ec6-056a-45a9-b9c3-0d4bc1c1323a",
+          "id": "6d83b225-8025-415c-8254-465f7c1ca863",
           "label": "Bootstrap 5.2 (offcanvas) · An offcanvas panel opened with a backdrop must keep keyboard focus inside the panel · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "6a25c05b5570b614a015501b145f2834d6711083a0002e931baaeba6eb3745f8",
+          "rootHash": "15b619d535cbdc3dff61bce40a0d2c24197f73e1561334243fa08b5c27536f17",
           "proofArchive": false
         },
         {
-          "id": "127c3356-539d-4a0e-a343-b18014e5d950",
+          "id": "841e2505-a166-4193-8bee-d6e2cb745345",
           "label": "Bootstrap 5.2 (tab) · Arrow keys in a tab list must move keyboard focus to the newly selected tab · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "5dc3ebd6ed26f77b5c9f189c260462d81bb199e6af349eae7524353e68970c8e",
+          "rootHash": "e29e15e1177a8f2077feaa77e8e3f8d6d317480dfbdf4de30858853697c0b5bd",
           "proofArchive": false
         },
         {
-          "id": "a9ed8b6c-9efa-409e-95c1-04adbaea15bd",
+          "id": "d0d8145e-5075-420b-956c-0c742d091a56",
           "label": "Bootstrap 5.2 (tab) · Arrow keys in a tab list must move keyboard focus to the newly selected tab · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "93961a7cf1923737a159708bda4ebfedaf70ab5c0f8b0be4038504af556f38b6",
+          "rootHash": "341b70d382b9d6027a2c288841dd012b80276358877fd005b148c819f9064450",
           "proofArchive": false
         },
         {
-          "id": "701c9c46-fcba-433e-9b98-85d39563a233",
+          "id": "012939c3-d2bb-4576-a3af-e135a33123ea",
           "label": "Bootstrap 5.2 alpha (tab) · Arrow keys in a tab list must skip disabled tabs · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "7b7c9570d0849bbae302523af463f0bb12c5234b93bbcafcd3daef1a007972e2",
+          "rootHash": "0d0963d14eb9a5e643c4a4df4208a915c6b78f05e44e1c09bd8161e20e042f37",
           "proofArchive": false
         },
         {
-          "id": "99dce250-fa24-445d-a466-15ba709bb402",
+          "id": "8378c9d9-d005-47a3-a753-1656698c8be3",
           "label": "Bootstrap 5.2 alpha (tab) · Arrow keys in a tab list must skip disabled tabs · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "1a16e0b9ff2d21304f9570b64e71d6f3cd1d61aa20aafc8393e021b4cff00338",
+          "rootHash": "a841114fd372c25607312fc2973cb8600cc48319cbd6d822524af861ea6add7e",
           "proofArchive": false
         },
         {
-          "id": "b37c9574-e072-44c1-9a2b-de6a72a0a134",
+          "id": "1f1fc9d7-5253-46b4-a449-cfe02602b860",
           "label": "focus-trap · When a list row containing the focused button is removed inside a focus trap, focus must stay inside the trap · repeated run",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "3ad5ac9e1895029ff7bfb4404475db25037cb685b2a050015be911b005354e64",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "40a22b810e079d7a2225a13d4237f32340c211f37fe08b8dd1f7992118d7cf2a",
           "proofArchive": false
         },
         {
-          "id": "3dcd9bb6-dcbe-4aa3-9de4-21e3590646d1",
+          "id": "a1aa54d8-9cd2-456e-9a3c-3d70463f583a",
           "label": "focus-trap · When a list row containing the focused button is removed inside a focus trap, focus must stay inside the trap · repeated run",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "05ef919ee49267af87c2aec419bf63edb3fbf3012b190b7511a00ece3fc99db2",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "111d1f5d782fe044e6b153755476fb872f742d206bfdc87a7c6285bfa13fe97a",
           "proofArchive": false
         },
         {
-          "id": "a847158d-fc52-4c71-82c6-f5c145faf1e0",
+          "id": "705ce510-91c7-4f4f-bb84-3e76e3d9a24c",
           "label": "focus-trap · When the focused control inside a focus trap removes itself, focus must stay inside the trap · repeated run",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "47177d58d90569231e24049e8f53b5241c44184a86a799dd0050bca6811ae3b3",
+          "rootHash": "47e7ffe41be1df8229139d9d71c11099652a2717a9a638a6923474c46a8d40a8",
           "proofArchive": false
         },
         {
-          "id": "010c445c-2a1d-4fba-b8a7-2181c4639676",
+          "id": "35e41359-f3fc-4591-8c86-e677fc5cca7a",
           "label": "focus-trap · When the focused control inside a focus trap removes itself, focus must stay inside the trap · repeated run",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "ecbcf29d69208d70a701659d956067550579e5804996451e9a391440cbe126c6",
+          "proofArchive": false
+        },
+        {
+          "id": "b6d1dd25-3060-4adf-8424-453a6666e00f",
+          "label": "GOV.UK Frontend · Typing past a character limit must keep the text and say how many characters are too many · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "199ebee45ffd14e2ac4780529851ee44735ec2d619f61f52437bf7772ec63512",
+          "proofArchive": false
+        },
+        {
+          "id": "c26ea413-3ef4-46a8-b9ee-02e0db160d3a",
+          "label": "GOV.UK Frontend · Typing past a character limit must keep the text and say how many characters are too many · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "99286c49212f32b71547990c149d1c8d41923de57db76d40c8f540d64e88267b",
+          "proofArchive": false
+        },
+        {
+          "id": "65bb61ed-340e-42ff-8049-ad1d965a40a5",
+          "label": "GOV.UK Frontend · Header navigation links that are visible on a desktop-width page must not be hidden from screen readers · repeated run",
+          "attempt": 3,
+          "verdict": "VERIFIED_PASS",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "71a30c8eddb97ee421ac3c7f7f188d4f8b86e4d211847a50172b77d83c93ffc6",
+          "proofArchive": false
+        },
+        {
+          "id": "e70104dc-d075-4168-af26-1032b40055da",
+          "label": "GOV.UK Frontend · Header navigation links that are visible on a desktop-width page must not be hidden from screen readers · repeated run",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "240f643aaad66f4880348a27eaf552f9231ef08202b92d76b09e710b3c7e2cb3",
+          "rootHash": "2babd29d9286852fdc43c4bee5fc9e78668ba5bc3f85619af94fb7a04f2519f8",
           "proofArchive": false
         },
         {
-          "id": "091e4172-00cb-410a-a3ea-67699e4e38df",
-          "label": "GOV.UK Frontend · Typing past a character limit must keep the text and say how many characters are too many · repeated run",
-          "attempt": 1,
+          "id": "3506587a-1e82-44a9-9941-abe66bc43d7a",
+          "label": "GOV.UK Frontend · Moving to a radio in another group with the same name must hide the conditional question that no longer applies · repeated run",
+          "attempt": 2,
           "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "0d2c015d03a85b2f9919e6e4730e06d618bff60f61d873d662e8eb1f3ea8b73a",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "a2c2a21862f0fca448676a60b3da392a7728132c6660b101a50bce8aa70d493d",
           "proofArchive": false
         },
         {
-          "id": "c5fb070b-a38d-4dd6-ad95-b6815999eeeb",
-          "label": "GOV.UK Frontend · Typing past a character limit must keep the text and say how many characters are too many · repeated run",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "e0ec313440044f5c14c55311e890c8c0332e501ab6ac84ec97dfadfb2a737cce",
-          "proofArchive": false
-        },
-        {
-          "id": "5a95caea-0b0c-48f1-aa4e-dd71b63d59c2",
-          "label": "GOV.UK Frontend · Header navigation links that are visible on a desktop-width page must not be hidden from screen readers · repeated run",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "0ae5dcdcf247e4368b2a15009a13877805be6e6fbcbc3623febdf3d9ef82bef9",
-          "proofArchive": false
-        },
-        {
-          "id": "1ac1d971-1118-4bc0-a722-9bd1818eb4b2",
-          "label": "GOV.UK Frontend · Header navigation links that are visible on a desktop-width page must not be hidden from screen readers · repeated run",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "0ed658812b80335cf279f3b2bbd748db689286e7c2ed1fb690bb31173b2d0e3d",
-          "proofArchive": false
-        },
-        {
-          "id": "fc96d2cb-dd4b-4adf-a10e-8483fdcf5594",
+          "id": "51b2f107-a488-4427-a728-6850e34d83c5",
           "label": "GOV.UK Frontend · Moving to a radio in another group with the same name must hide the conditional question that no longer applies · repeated run",
           "attempt": 3,
           "verdict": "VERIFIED_PASS",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "7efc1bf30bf2a22ec75d2e2813888ae53c33b52a94e903b549d6be327956e010",
+          "rootHash": "d2e5168d665548e7e94a6fa94a57d3b330b03cc56cab8cd22f01df7f602d66cf",
           "proofArchive": false
         },
         {
-          "id": "dd3e95be-4a64-447c-9cb5-7ad6454cab37",
-          "label": "GOV.UK Frontend · Moving to a radio in another group with the same name must hide the conditional question that no longer applies · repeated run",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "956b491b7923271facc149b435bd5216b661eb89b612d2aadee267aeee73cb04",
-          "proofArchive": false
-        },
-        {
-          "id": "cf367adf-c988-4c99-887e-4bfec3c7924f",
+          "id": "a23f090e-9b62-4dd1-88cc-11223c2efdbd",
           "label": "GOV.UK Frontend · The up and down arrow keys must not switch between horizontal tabs · repeated run",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "ca2c931380ed41cb7690aee123659e7d503eb47c40319ce80fa2c0feb71fe37d",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "e3748890106c61c569247a0453bd039165f88ef464fb57c43c86f2470c6310a0",
           "proofArchive": false
         },
         {
-          "id": "e557377c-9248-4432-a91e-3f85e7850171",
+          "id": "68f2538f-ac61-4c42-a6fd-749af93d73f1",
           "label": "GOV.UK Frontend · The up and down arrow keys must not switch between horizontal tabs · repeated run",
-          "attempt": 2,
-          "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "42314ecdca4ef3dad2a445ccd319a694153cbe575e4ddae10c0a7ae58f515cd7",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "2dfe7f276f7de6df23c6409b43322e68ea654fc56675e5b6239e1c6fbb2b5089",
           "proofArchive": false
         },
         {
-          "id": "c467752d-195f-483d-b8e2-19322c1c0bdd",
+          "id": "00a7c63f-249f-4520-a578-fe9dc8e27dde",
           "label": "micromodal · Activating a form control inside a modal must not close the modal · repeated run",
-          "attempt": 2,
+          "attempt": 1,
           "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "b885cb3dcd038c8128735e377834e09be7872a2fa5dedac42e32d1fda2a7f3d0",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "b83c3bff0cc85e2ebfbc5804ab2fb6c667047cce528d295090702a7bafc76882",
           "proofArchive": false
         },
         {
-          "id": "1e3ec6d8-ddc8-44c4-82b0-2b954bf9f897",
+          "id": "258cc93b-5bcb-4998-9b14-2d72044c82f6",
           "label": "micromodal · Activating a form control inside a modal must not close the modal · repeated run",
-          "attempt": 2,
+          "attempt": 1,
           "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "2b553b39263ebec9c4204af89981d8ec973c017a9c81b504be8a802b751a1119",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "8f62528837df394b3fa6f50a12f2a38d98f052eaf1f4c0c592fb81d829704f24",
           "proofArchive": false
         },
         {
-          "id": "2d3392e8-3fd6-43ff-b143-cac298a4b7f3",
+          "id": "d97ee3fa-6ed1-492a-8737-de215dc2e27c",
           "label": "micromodal · Tabbing past the last visible control of a modal must wrap inside the modal even when it contains hidden buttons · repeated run",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "ca8a2e0dc14468c75cd29089da15e956bc2bf02be147766de43f80b97f0bacf9",
+          "rootHash": "ea9c155c732044ec11165804d787528c8d56a286ceb234fb56534fd51caadab3",
           "proofArchive": false
         },
         {
-          "id": "f12d3ab1-987e-44c1-84e1-4bd002cd0267",
+          "id": "1782579c-88d8-41ca-8dd1-ade01fb0d3cb",
           "label": "micromodal · Tabbing past the last visible control of a modal must wrap inside the modal even when it contains hidden buttons · repeated run",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "c578985df6235c3b1280a9b7c121caa8c6716117ed996a6ab7580ed41d333a4a",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "1f6440a5073178394792f7404d262c828c02aaf8af743a0b5fef0ccbaa932a58",
           "proofArchive": false
         },
         {
-          "id": "44e09f8f-2b29-4a50-9e8e-a1b033e823c7",
+          "id": "65d8f18a-087c-4fe4-8b29-3afee376a34e",
           "label": "NHS.UK frontend · Ticking a 'None of these' checkbox must clear the other answers in its group even when each checkbox has its own name · repeated run",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "2235bb8a7d8284d2edbc6e0c8c442d7ef48c7bda73389ef678075d4e33f55b58",
+          "rootHash": "8d93ef91cd145c65ef2fe884a9e95003b070ffca6ed134dfb449b5f5dfecf1e9",
           "proofArchive": false
         },
         {
-          "id": "e50a20e3-0f71-42d9-8092-767a33365222",
+          "id": "4250ec27-76a2-4df6-b961-6ce792db1eed",
           "label": "NHS.UK frontend · Ticking a 'None of these' checkbox must clear the other answers in its group even when each checkbox has its own name · repeated run",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "03a37d6b20792b75dee037f05ec53f5cc8036a1bca0a9bf380cb9f2168775e8a",
+          "rootHash": "27e461022ffb1d986a94a2c2c73bfe2b64868619c8adad60c4198fbe7c6b3b36",
           "proofArchive": false
         },
         {
-          "id": "6adc9f56-3904-4460-a9d7-6a68ea898925",
+          "id": "8773dc93-91ee-4ee9-81dc-567dce0e387e",
           "label": "Pikaday · ArrowLeft must keep moving the caret in other text fields while a calendar is shown · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "afb891f8df8c2cb91d48698f5e0efb06f57859dabb84f65d2c3efa20b10b6e48",
+          "rootHash": "9464dcf6dc44e3da7b183310518a9c351489e95528afdde3fba4d2ef38167876",
           "proofArchive": false
         },
         {
-          "id": "fb31df73-6be4-4da1-b131-321482ab0e2b",
+          "id": "d1b4a571-ee7b-4fe2-bc2e-961130fc85c6",
           "label": "Pikaday · ArrowLeft must keep moving the caret in other text fields while a calendar is shown · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "c4a91e4a297a1e54857bf635c3b6faa4bf7f4e8a717aa02f2ebd46a5343ece7b",
+          "rootHash": "3207cb4beb63960761b1d168d5c89de5bb8fea91ebccd3c016076aa277ff03f2",
           "proofArchive": false
         },
         {
-          "id": "d8350836-b4ba-4ebc-8140-4e415499bb80",
+          "id": "8ef0b5a7-d61c-4277-84dd-62349d3ba2d8",
           "label": "tabbable · Form fields inside a disabled fieldset must not be treated as tabbable, so a focus-trapped dialog focuses its first usable field · repeated run",
-          "attempt": 2,
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "48f7e0d7577a82bd62a899fc613191688e47c2997064343163f3851e4d3261af",
+          "proofArchive": false
+        },
+        {
+          "id": "ef976606-05c5-4351-991c-576c5d27e483",
+          "label": "tabbable · Form fields inside a disabled fieldset must not be treated as tabbable, so a focus-trapped dialog focuses its first usable field · repeated run",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "8493dfcde6a5269be851ac97d20a15049581ac2dcb24643da43a301b8ebb830d",
+          "proofArchive": false
+        },
+        {
+          "id": "a207f594-215c-42dc-8bc8-995547251f90",
+          "label": "vanillajs-datepicker · Tabbing out of a date field with an out-of-range date must close the calendar · repeated run",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "9f8706509fa36fab500d7185f34998a037e406a2e42b917f265af921ea411503",
+          "proofArchive": false
+        },
+        {
+          "id": "1f618dc3-559a-4207-8061-08b6f4c9c516",
+          "label": "vanillajs-datepicker · Tabbing out of a date field with an out-of-range date must close the calendar · repeated run",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "ee488c5cdd6f60981aa0aadb25bbe289561a8ad41621793b4bbe9bc86a2246b5",
+          "proofArchive": false
+        },
+        {
+          "id": "05de0ab2-b575-4958-97b1-429255e27372",
+          "label": "vanillajs-datepicker · Pressing Tab in an open date field must move focus to the next form field · repeated run",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "1b6ccf1b378dc34aaf5d6c5d4e884e0f55b4fb1e4e9adee76b9ccae152e65927",
+          "proofArchive": false
+        },
+        {
+          "id": "7d43d7ee-54bc-4783-aea1-bef1fa973edd",
+          "label": "vanillajs-datepicker · Pressing Tab in an open date field must move focus to the next form field · repeated run",
+          "attempt": 1,
           "verdict": "VERIFIED_PASS",
-          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "bc19aaafac73ce0f1b39b2c642632b78d0036ceac9c2c02f9daf11c8fbddb1ee",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "2e89a5958f1205781450d0280a75e57b31a098757f937fb23fecc0a49bd25bf4",
           "proofArchive": false
         },
         {
-          "id": "75708589-c9e0-4cb1-9cf8-0b756d33d5d4",
-          "label": "tabbable · Form fields inside a disabled fieldset must not be treated as tabbable, so a focus-trapped dialog focuses its first usable field · repeated run",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "8770bb323a55993b4d41abe65151468896119e8fc81fcfec9421a5bf9baa9c78",
-          "proofArchive": false
-        },
-        {
-          "id": "778c5245-8581-47e2-b10d-340d61904175",
-          "label": "vanillajs-datepicker · Tabbing out of a date field with an out-of-range date must close the calendar · repeated run",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "db41a2ced5f2c2a87f00d19a6c71d58ab9970ce88c808bfc898261fc6baef85b",
-          "proofArchive": false
-        },
-        {
-          "id": "4f46928f-785f-4a53-92a3-0e6139000f7a",
-          "label": "vanillajs-datepicker · Tabbing out of a date field with an out-of-range date must close the calendar · repeated run",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "ce58e482c1a21f8bac0e2909eb58311baa8ff5cd51bdd248298879c06ae3fd39",
-          "proofArchive": false
-        },
-        {
-          "id": "dafe4464-16e8-4d8a-9249-92fb32338495",
-          "label": "vanillajs-datepicker · Pressing Tab in an open date field must move focus to the next form field · repeated run",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "7b9189e47024ac7e801b7e4f01ff0f7766194d48452c1a5833e03f4268b27cd7",
-          "proofArchive": false
-        },
-        {
-          "id": "ab93260d-a278-4365-b676-2a40012c84f7",
-          "label": "vanillajs-datepicker · Pressing Tab in an open date field must move focus to the next form field · repeated run",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "7b817c3bc7f289e1ebc01b93ce6309a90ff0113f56489f34ce501694b3dd59b8",
-          "proofArchive": false
-        },
-        {
-          "id": "ae0a8142-5865-4816-990a-da05eb1c7fb8",
+          "id": "218c00df-fc6b-4330-92a9-14b9803280b1",
           "label": "autoComplete.js · Escape must close the suggestion list without erasing what the user typed · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "a77a67adc9e0fad5f3ec7036387233e5e299b999530b38b288ade61ddf745dc7",
+          "rootHash": "4320f2b17ba037abedc72ef4415b6db157930803fa93d676a8a4d090cdc245aa",
           "proofArchive": false
         },
         {
-          "id": "54de35ca-e227-4f2f-8596-46487166585c",
+          "id": "023ae492-d0fd-4a32-96fc-48918e180d51",
           "label": "autoComplete.js · Escape must close the suggestion list without erasing what the user typed · repeated run",
-          "attempt": 1,
+          "attempt": 3,
           "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "0e7d3f674514d7cab2cfcb629cd318687d4cadf105fd0fc15ba9e1ed2585ec50",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "39c47b99cfecc9c0e8ac93ce34e89fefa88685abf6b981ab4d3b41357169e265",
           "proofArchive": false
         },
         {
-          "id": "1227138c-e061-454e-a346-f33874150a5c",
+          "id": "78a722f7-bee6-41d2-8561-02e3a8ca0a88",
           "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Passing through a prefilled datepicker must not change the date the form submits · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "b826792517db34bf2bdab0e34836c725476c4e019b65ccd5db72be8ccda98c29",
+          "rootHash": "82084f824265f3da5a09fedd8261598bea46d1f13d47f416787ff73dc2f6a18f",
           "proofArchive": false
         },
         {
-          "id": "1eed9dfb-b5b7-4fb8-909e-b83702dc5d1a",
+          "id": "b5912388-7261-4a59-8874-b6518b2c6721",
           "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Passing through a prefilled datepicker must not change the date the form submits · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "2ad7080848600d16d6ac082a80b2f722fd55129ce217485c4a99e9ba48aa384a",
+          "rootHash": "40b367364304165d31156452a9b1eb26c2263a222344002d5843f811c971f06b",
           "proofArchive": false
         },
         {
-          "id": "8950eba7-7f58-416e-934a-ec281e7bc3af",
+          "id": "26109a26-b352-419f-8e32-c1094c0cf855",
           "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Tab must leave a datepicker input for the next field · repeated run",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "a9eacaa1aec96359b3dc6d0876be7704f67ce25a0fcf438f2e8ddeef5c8feee6",
+          "rootHash": "eaa00fe212a5f3973046d02f092920f40f0057bc85c50f98ea0342c978bcffe5",
           "proofArchive": false
         },
         {
-          "id": "ec752e63-aef3-406b-8c37-38575e03e498",
+          "id": "c6c5283f-8a6f-424b-9d8c-d4ceb9ccca4d",
           "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Tab must leave a datepicker input for the next field · repeated run",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "3432cc5c89b702c27d56b1837a255edacd7e36c76e88ef703d3081e287beb6b1",
+          "rootHash": "edf7c816345ea2548c0a50db7971c0c040deda058e8c40a8cba7c1a6ccf7fb16",
           "proofArchive": false
         },
         {
-          "id": "d13a48d9-9e98-4893-b4f0-3355814e5651",
+          "id": "6f082ad3-ec81-4fb4-914f-81ae33897f67",
+          "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Tab must leave a datepicker input for the next field, and a click must still show the calendar · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "dcfcc7c7f818bb1e79dfaaddad2e5be30dc751106c5fa50276f24b8cbab6749c",
+          "proofArchive": false
+        },
+        {
+          "id": "92e3f823-050a-4cb5-a98b-dcb58147b100",
           "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Tab must leave a datepicker input for the next field, and a click must still show the calendar · repeated run",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "278fa79c5d1e5c46bb36dab3a0a0198987fe4cb58f4cd1b15aef4cd50ce17198",
+          "rootHash": "f1b4f318428f83212eb1f45856b4a528c9b6936f09c9621804a0e028b08812df",
           "proofArchive": false
         },
         {
-          "id": "21c85cef-486e-473d-bd9d-6809936c425e",
-          "label": "Bootstrap 6.0 alpha (datepicker, TypeScript source) · Tab must leave a datepicker input for the next field, and a click must still show the calendar · repeated run",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "b2dc714bf7dd073dc24b05dc3f124daaa17f9709be358c7cae4461f15cd736e6",
-          "proofArchive": false
-        },
-        {
-          "id": "933c47c5-9ec4-44f9-be0b-f192848407cb",
-          "label": "Bootstrap 6.0 alpha (dialog, TypeScript source) · A dialog created with keyboard: false must stay open however often Escape is pressed · repeated run",
-          "verdict": "VERIFIED_FAIL",
-          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "6e60982cc0cd6d9a665f29a4f8ca7087e3abcbc3f30ae78d98e1f452991b214b",
-          "proofArchive": false
-        },
-        {
-          "id": "fc6445d6-2245-4bd4-a07a-73769b3fd702",
+          "id": "ef0a3121-c675-4128-a513-e76d4b755bf4",
           "label": "Bootstrap 6.0 alpha (dialog, TypeScript source) · A dialog created with keyboard: false must stay open however often Escape is pressed · repeated run",
           "attempt": 1,
           "verdict": "VERIFIED_PASS",
           "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "238f048cc3b71a2a06627e3c4143ad378acf1fcf08243c8e380351ff2f2fae08",
+          "rootHash": "422bfcb62d83449e27480975e02a990fc76c6b310c7fcde85a34b3d1c41cf31f",
           "proofArchive": false
         },
         {
-          "id": "df191007-b796-40e6-b777-ded30b3ea975",
+          "id": "a8709acf-7736-4f88-a87f-3801f5040173",
+          "label": "Bootstrap 6.0 alpha (dialog, TypeScript source) · A dialog created with keyboard: false must stay open however often Escape is pressed · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "5de813b28133fa9f80b9ea4f52c9f83c2995af3f020e2633be9e082c5313bc9b",
+          "proofArchive": false
+        },
+        {
+          "id": "9445c733-3aa9-42fa-aa71-2983425ef125",
+          "label": "Bootstrap 6.0 alpha (dialog, TypeScript source) · A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "c5f7c63bc93d4d9dda4fea42b128c16340e36cb5663e4f17fcd4717bea83c919",
+          "proofArchive": false
+        },
+        {
+          "id": "49457ef2-4c33-4464-ad1c-f462a9609d32",
+          "label": "Bootstrap 6.0 alpha (dialog, TypeScript source) · A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close · repeated run",
+          "verdict": "VERIFIED_FAIL",
+          "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "6ff3d2b077c2148d4695be41e9b33265b9dfc95908a5364fd4b01fc551eb27c2",
+          "proofArchive": false
+        },
+        {
+          "id": "d1cb2dcb-1807-434e-a2bd-1ecbf29cb30c",
           "label": "Bootstrap 6.0 alpha (drawer, TypeScript source) · Opening a drawer must move keyboard focus into it · repeated run",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "71d8827ecb1c73d2cbc8b402f632f4348ba81f403f574d2991033294cd0bc543",
+          "rootHash": "60853dce830512c9f07c78559ae6bd7f85f76fc284f90ce4e05dbf9e6d913508",
           "proofArchive": false
         },
         {
-          "id": "9846a03e-497f-412f-a624-b688ed68a9fa",
+          "id": "414a2da3-fc11-4e8c-a0e4-2d54b26891c0",
           "label": "Bootstrap 6.0 alpha (drawer, TypeScript source) · Opening a drawer must move keyboard focus into it · repeated run",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "c9091794cceddd200a686aa551674d2a206a9a5b5170308f7f690ed8b9a253ff",
+          "rootHash": "28e86af15a134b7eba6cb19f211f3ee4cb702ce2b04b7db0556e831b55e3136d",
           "proofArchive": false
         },
         {
-          "id": "24dbef06-3a78-4352-9fec-fa6e304e87f7",
+          "id": "128ec657-8433-4ce6-b953-7cf30fc30414",
           "label": "Pikaday · Arrow keys must not select a day that disableDayFn closes · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "cb12360b6209739affd3d21122b338a0a2672a75be7b2617ad10081f56cf46c1",
+          "proofArchive": false
+        },
+        {
+          "id": "ed2fecfa-1454-4352-b254-fda7333dc60e",
+          "label": "Pikaday · Arrow keys must not select a day that disableDayFn closes · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "a76f260cc08f58b67ad8f72f093a095ed45de0213cd5c27e557138a1d5b159fb",
+          "proofArchive": false
+        },
+        {
+          "id": "cb4fc16a-9732-4181-9bab-ec662a9fd022",
+          "label": "Pikaday · Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate · repeated run",
+          "attempt": 1,
+          "verdict": "VERIFIED_PASS",
+          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
+          "rootHash": "9512742d725e0c3a5e48ee52ce62a60c14090dd8b6fae5299b83e3ed1b214657",
+          "proofArchive": false
+        },
+        {
+          "id": "f38e9f65-da95-4d28-8ccc-226d6922bf8d",
+          "label": "Pikaday · Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate · repeated run",
           "attempt": 2,
           "verdict": "VERIFIED_PASS",
           "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "e239d33d746fe8995494a783dd120ca43275f9572f117d78c2f633746bfc0633",
+          "rootHash": "246033ef661e7ecfaab3ada01c24b18cd0fb99e4f3ee179e71ed27acf97fb6c6",
           "proofArchive": false
         },
         {
-          "id": "d7e9be94-1acc-42e7-9ec8-77c24d07cf9e",
-          "label": "Pikaday · Arrow keys must not select a day that disableDayFn closes · repeated run",
-          "attempt": 1,
-          "verdict": "VERIFIED_PASS",
-          "execution": "1 Nemotron proposal · nvidia/nemotron-3-super-120b-a12b",
-          "rootHash": "db0da1f6749bbe019132d9352fec834fd6fa6fdf9a99b255a9f4dc249a2de56b",
-          "proofArchive": false
-        },
-        {
-          "id": "1e3e47bf-3640-4367-bca2-151347298aa3",
+          "id": "1fb6d50b-3d55-4b0c-83b9-cfa07a2c5fa8",
           "label": "Pikaday · Tab after typing a date must move to the next field, not jump back into the date field · repeated run",
           "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "c2da33727f9b2b21d76b31a309fd773eefffcd4901b6946beb0fee764783facf",
+          "rootHash": "33691f03bb775035f8d1197fb83f76cb0bf3516575f661e16340c0f47368e528",
           "proofArchive": false
         },
         {
-          "id": "c58c76d4-b4ae-492e-8f6b-e3a44833d73b",
+          "id": "e2f00e4b-9be3-4b3a-9826-0dd411c8504d",
           "label": "Pikaday · Tab after typing a date must move to the next field, not jump back into the date field · repeated run",
-          "verdict": "INCONCLUSIVE",
+          "verdict": "VERIFIED_FAIL",
           "execution": "3 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
-          "rootHash": "5378037cf58088a0048191b9dda0a17a4e466d79045c99193e939754ce08d30f",
+          "rootHash": "37a4a1ea8fc32d4e3ad6c10c53d37c00b3461553d460c47987d37b20f7fbb358",
           "proofArchive": false
+        }
+      ]
+    },
+    {
+      "title": "Featured",
+      "summary": "Linked from the home page.",
+      "runs": [
+        {
+          "id": "07f338b5-59da-4102-b68f-1c28b23a5014",
+          "label": "Bootstrap 5.0 dropdown in a modal · engine v9 · featured on the home page",
+          "attempt": 2,
+          "verdict": "VERIFIED_PASS",
+          "execution": "2 Nemotron proposals · nvidia/nemotron-3-super-120b-a12b, nvidia/Nemotron-3-Ultra-550b-a55b",
+          "rootHash": "3ec7ce972518ee353692bb8f1300d9dabcc2a095698e9f0c4b6f6f012e7bfed7",
+          "proofArchive": true
         }
       ]
     }

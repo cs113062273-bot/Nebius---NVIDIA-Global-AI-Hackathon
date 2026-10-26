@@ -1,0 +1,19 @@
+{
+  "root_cause": "When a focused element inside the focus trap is removed from the DOM (e.g., a button that removes itself), the browser moves focus to the body. The focus trap's `checkFocusIn` handler attempts to restore focus to the most recently focused node, but that node is no longer in the document, so focusing it fails silently, leaving focus on the body.",
+  "repair_strategy": "Modify `checkFocusIn` to detect when the most recently focused node is detached (using `isNodeAttached`), and fall back to the initial focus node (the first tabbable node in the trap) in that case.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n    }\n  };",
+      "after": "  // In case focus escapes the trap for some strange reason, pull it back in.\n  const checkFocusIn = function (e) {\n    const target = getActualTarget(e);\n    const targetContained = findContainerIndex(target, e) >= 0;\n\n    // In Firefox when you Tab out of an iframe the Document is briefly focused.\n    if (targetContained || target instanceof Document) {\n      if (targetContained) {\n        state.mostRecentlyFocusedNode = target;\n      }\n    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      let fallbackNode = state.mostRecentlyFocusedNode;\n      // If the most recently focused node is no longer attached (e.g., removed), use initial focus node.\n      if (fallbackNode && !isNodeAttached(fallbackNode)) {\n        fallbackNode = getInitialFocusNode();\n      }\n      tryFocus(fallbackNode);\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains trapped inside the dialog after a control removes itself, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by ensuring focus is not lost to the page body.",
+  "functional_risks": [
+    "Minimal; the change only affects the focus restoration path when the previously focused node is detached. Could theoretically affect iframe focus restoration if the node is detached but still in the trap, but unlikely."
+  ],
+  "verification_requirements": [
+    "Run the provided journey test; ensure the step \"Show all results\" passes with `#results:focus-within` true."
+  ]
+}

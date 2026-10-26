@@ -1,0 +1,24 @@
+{
+  "root_cause": "The modal's click handler treats any click on an element with the data-micromodal-close attribute as a close action, including clicks that bubble up from inner controls (e.g., checkboxes) to the overlay, causing the modal to close unexpectedly when interacting with those controls.",
+  "repair_strategy": "Update the onClick handler to close the modal only when the click target itself has the close-trigger attribute, and to stop propagation of clicks originating inside the modal container that lack the close-trigger attribute, preventing them from reaching the overlay.",
+  "edits": [
+    {
+      "path": "lib/src/index.js",
+      "sha256": "0db2038c36c8c8c4730018c0ea419249e45923efa8315729f12b4d8da0d5fa2c",
+      "before": "    onClick (event) {\n      if (event.target.closest(`[${ this.config.closeTrigger }]`)) {\n        event.preventDefault()\n        event.stopPropagation()\n        this.closeModal(event)\n      }\n    }",
+      "after": "    onClick (event) {\n      const target = event.target;\n      if (target.hasAttribute(this.config.closeTrigger)) {\n        event.preventDefault()\n        event.stopPropagation()\n        this.closeModal(event)\n        return;\n      }\n      // Prevent clicks inside the modal from bubbling to the overlay\n      if (target.closest('.modal__container')) {\n        event.stopPropagation()\n      }\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Space on a checkbox inside the modal will toggle the checkbox without closing the modal, keeping the dialog open and focus managed within it, satisfying WCAG 2.1.1 keyboard operability and 2.4.3 focus order.",
+  "functional_risks": [
+    "Potential interference with custom click handlers that rely on event bubbling from internal modal elements.",
+    "Incorrectly stopping propagation could hinder other functionality if developers depend on the bubbling behavior of clicks inside the modal."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Space on a checkbox toggles its state and the modal remains open (aria-hidden false).",
+    "Confirm that clicking the overlay or close button still closes the modal as expected.",
+    "Ensure focus returns to the trigger element when the modal is closed via overlay or close button.",
+    "Check that regression guards (e.g., Done closes dialog from keyboard) continue to pass.",
+    "Ensure no adverse effects on other modal instances or usage patterns."
+  ]
+}

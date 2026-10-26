@@ -1,0 +1,60 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..43fed9b 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -544,6 +544,34 @@
+ 
+             if (self.isVisible()) {
+ 
++                var opts = self._o;
++                function isDateDisabled(d) {
++                    if (opts.minDate && d < opts.minDate) return true;
++                    if (opts.maxDate && d > opts.maxDate) return true;
++                    if (opts.disableWeekends && (d.getDay()===0 || d.getDay()===6)) return true;
++                    if (opts.disableDayFn && opts.disableDayFn(d)) return true;
++                    return false;
++                }
++                function shiftDate(sign, days) {
++                    var step = sign === 'add' ? 1 : -1;
++                    var count = Math.abs(days);
++                    var date = self.getDate() || new Date();
++                    while (count > 0) {
++                        date = new Date(date.getTime() + step * 24 * 60 * 60 * 1000);
++                        if (opts.minDate && date < opts.minDate) {
++                            date = new Date(opts.minDate);
++                            break;
++                        }
++                        if (opts.maxDate && date > opts.maxDate) {
++                            date = new Date(opts.maxDate);
++                            break;
++                        }
++                        if (!isDateDisabled(date)) {
++                            count--;
++                        }
++                    }
++                    return date;
++                }
+                 switch(e.keyCode){
+                     case 13:
+                     case 27:
+@@ -552,16 +580,16 @@
+                         }
+                         break;
+                     case 37:
+-                        self.adjustDate('subtract', 1);
++                        self.setDate(shiftDate('subtract', 1));
+                         break;
+                     case 38:
+-                        self.adjustDate('subtract', 7);
++                        self.setDate(shiftDate('subtract', 7));
+                         break;
+                     case 39:
+-                        self.adjustDate('add', 1);
++                        self.setDate(shiftDate('add', 1));
+                         break;
+                     case 40:
+-                        self.adjustDate('add', 7);
++                        self.setDate(shiftDate('add', 7));
+                         break;
+                     case 8:
+                     case 46:

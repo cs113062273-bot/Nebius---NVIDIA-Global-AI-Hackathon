@@ -1,0 +1,20 @@
+{
+  "root_cause": "The closeAllLists function iterates over a live HTMLCollection while removing items, causing it to skip elements when multiple lists exist. This can leave stale lists in the DOM, leading to duplicate IDs and the navigation controller operating on an outdated list, which causes Enter to select the wrong suggestion.",
+  "repair_strategy": "Change the iteration in closeAllLists to traverse the collection backwards (or convert to a static array) so that removing elements does not affect the indices of yet‑to‑be processed items, ensuring all matching lists are removed.",
+  "edits": [
+    {
+      "path": "src/controllers/listController.js",
+      "sha256": "0d0d446adae1a014da3d8ab13ee99cb73e0094218b8a48458756f2145b850fea",
+      "before": "const closeAllLists = (config, element) => {\n  // Get all autoComplete lists\n  const list = document.getElementsByClassName(config.resultsList.className);\n  // Iterate over all autoComplete open lists in the document\n  for (let index = 0; index < list.length; index++) {\n    // Close all lists\n    // except the ones passed as an argument\n    if (element !== list[index] && element !== config.inputField) list[index].parentNode.removeChild(list[index]);\n  }\n  // Remove active descendant\n  config.inputField.removeAttribute(\"aria-activedescendant\");\n  // Set list to closed\n  config.inputField.setAttribute(\"aria-expanded\", false);\n};",
+      "after": "const closeAllLists = (config, element) => {\n  // Get all autoComplete lists\n  const list = document.getElementsByClassName(config.resultsList.className);\n  // Iterate over all autoComplete open lists in the document\n  for (let index = list.length - 1; index >= 0; index--) {\n    // Close all lists\n    // except the ones passed as an argument\n    if (element !== list[index] && element !== config.inputField) list[index].parentNode.removeChild(list[index]);\n  }\n  // Remove active descendant\n  config.inputField.removeAttribute(\"aria-activedescendant\");\n  // Set list to closed\n  config.inputField.setAttribute(\"aria-expanded\", false);\n};"
+    }
+  ],
+  "expected_accessibility_effect": "Ensures only the current suggestion list resides in the DOM, eliminating duplicate IDs and guaranteeing that keyboard navigation, active descendant updates, and item selection operate on the correct list, preserving the announced state and correct value commitment.",
+  "functional_risks": [
+    "Altering removal order could, in theory, affect behavior if the function relied on the order of removal, but it only deletes nodes; order is irrelevant."
+  ],
+  "verification_requirements": [
+    "After the sequence: focus #fruit, type 'b', ArrowDown ×2, type 'l', ArrowDown, Enter, the input value must be 'Blackberry'.",
+    "Confirm that no more than one element with ID 'autoComplete_list' exists in the DOM after each interaction."
+  ]
+}

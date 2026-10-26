@@ -1,0 +1,22 @@
+{
+  "root_cause": "When the 'Show all' button (#more) is activated, it removes itself from the DOM. If this button had focus when removed, focus moves to the body element. The focus trap's focusin handler then attempts to refocus the most recently focused node (#more), but since it's no longer in the DOM, focusing it fails and focus remains on the body, causing the trap to lose containment.",
+  "repair_strategy": "Modify the focusin handler to validate that the most recently focused node is still connected to the DOM and focusable before attempting to refocus it. If not, fall back to the initial focus node (typically the first tabbable element in the trap). This ensures focus remains trapped inside the dialog after dynamic removals.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "5a4e96cb8f9bb206fe799f923488aab6f2f6d9fc4f1f9fc6023f04aa63ad9a0d",
+      "before": "    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n    }",
+      "after": "    } else {\n      // escaped! pull it back in to where it just left\n      e.stopImmediatePropagation();\n      let focusNode = state.mostRecentlyFocusedNode;\n      // If the most recently focused node is no longer focusable or not connected, use the initial focus node.\n      if (\n        !focusNode ||\n        !focusNode.isConnected ||\n        !isFocusable(focusNode, config.tabbableOptions)\n      ) {\n        focusNode = getInitialFocusNode();\n      }\n      tryFocus(focusNode);\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus will remain trapped inside the dialog after the 'Show all' button removes itself, ensuring users can continue navigating the dialog contents without focus escaping to the body or browser chrome.",
+  "functional_risks": [
+    "If getInitialFocusNode() returns false (no initial focus node), tryFocus will exit early and focus may remain on the body. However, the trap requires at least one focusable element, so this scenario should not occur in valid configurations.",
+    "The isFocusable check adds minimal overhead but could theoretically fail if the tabbableOptions change dynamically. The trap updates tabbable nodes on relevant events, so this risk is low."
+  ],
+  "verification_requirements": [
+    "After activating the dialog, pressing Tab to focus the 'Show all' button, then pressing Enter to activate it, focus should remain on the close button (or another focusable element inside the dialog).",
+    "Pressing Shift+Tab after the 'Show all' button removal should cycle focus to the last tabbable element in the dialog (the close button).",
+    "The dialog should still report as containing focus via :focus-within after the button removal."
+  ]
+}

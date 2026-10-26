@@ -1,0 +1,27 @@
+{
+  "root_cause": "The modal's focus trap does not handle shift+tab wrapping from the first focusable element to the last; instead, focus leaves the modal and is returned to the modal container due to the focusin listener, causing focus to land on the modal element (tabindex=\"-1\") rather than wrapping.",
+  "repair_strategy": "Add Tab and Shift+Tab keydown listener to the modal that prevents default and moves focus to the opposite end of the focusable elements when at boundaries, implementing a circular focus trap.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  _setEscapeEvent() {\n    if (this._isShown) {\n      EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {\n        if (this._config.keyboard && event.key === ESCAPE_KEY) {\n          event.preventDefault()\n          this.hide()\n        } else if (!this._config.keyboard && event.key === ESCAPE_KEY) {\n          this._triggerBackdropTransition()\n        }\n      })\n    } else {\n      EventHandler.off(this._element, EVENT_KEYDOWN_DISMISS)\n    }\n  }\n\n",
+      "after": "  _setEscapeEvent() {\n    if (this._isShown) {\n      EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {\n        if (this._config.keyboard && event.key === ESCAPE_KEY) {\n          event.preventDefault()\n          this.hide()\n        } else if (!this._config.keyboard && event.key === ESCAPE_KEY) {\n          this._triggerBackdropTransition()\n        } else if (event.key === 'Tab') {\n          this._handleTabKey(event);\n        }\n      })\n    } else {\n      EventHandler.off(this._element, EVENT_KEYDOWN_DISMISS)\n    }\n  }\n\n  _getFocusableElements() {\n    const selectors = [\n      'a[href]',\n      'area[href]',\n      'input:not([disabled]):not([type=\"hidden\"])',\n      'select:not([disabled])',\n      'textarea:not([disabled])',\n      'button:not([disabled])',\n      'iframe',\n      'object',\n      'embed',\n      '[tabindex]:not([tabindex=\"-1\"])',\n      '[contenteditable]'\n    ].join(',');\n    const elements = SelectorEngine.find(selectors, this._element);\n    return elements.filter(el => !el.hasAttribute('disabled') && !el.classList.contains('disabled'));\n  }\n\n  _handleTabKey(event) {\n    const focusable = this._getFocusableElements();\n    if (focusable.length === 0) {\n      return;\n    }\n    const first = focusable[0];\n    const last = focusable[focusable.length - 1];\n    if (event.shiftKey) {\n      if (document.activeElement === first) {\n        event.preventDefault();\n        last.focus();\n      }\n    } else {\n      if (document.activeElement === last) {\n        event.preventDefault();\n        first.focus();\n      }\n    }\n  }\n\n"
+    }
+  ],
+  "expected_accessibility_effect": "Shift+Tab from the first focusable element (close button) will now move focus to the last focusable element (delete button), satisfying the requirement that backward navigation wraps within the modal.",
+  "functional_risks": [
+    "Custom keyboard handlers in modal content may interfere with the added Tab listener.",
+    "If the modal contains no focusable elements, focus wrapping may not work as expected.",
+    "The focusable element selector may not match all focusable cases (e.g., elements with tabindex>=0 or contenteditable), leading to incorrect wrapping.",
+    "Potential performance impact from querying focusable elements on each keydown (negligible)."
+  ],
+  "verification_requirements": [
+    "Verify that Tab moves focus forward through all focusable elements and wraps from last to first.",
+    "Verify that Shift+Tab moves focus backward and wraps from first to last.",
+    "Ensure Escape key still closes the modal.",
+    "Ensure modal initial focus still works when shown.",
+    "Ensure focus is not trapped when modal contains no focusable elements (should fallback to modal itself).",
+    "Verify that clicking outside or on backdrop still dismisses the modal as configured."
+  ]
+}

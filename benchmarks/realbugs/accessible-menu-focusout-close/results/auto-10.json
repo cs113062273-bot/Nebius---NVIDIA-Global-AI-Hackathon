@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T07:08:09.510Z",
+  "policy": "auto",
+  "modelRun": "0cecfa83-10d9-4db0-925c-42a2cafd3ee2",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 1,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-986eaeafa28403b776bb06ce6bfb629c",
+      "usage": {
+        "completion_tokens": 14144,
+        "prompt_tokens": 33582,
+        "total_tokens": 47726,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13330,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 33552,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 33552,
+        "prompt_cache_miss_tokens": 30
+      },
+      "latencyMs": 58908,
+      "reservedCreditUsd": 0.06407879999999999
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-9d4ccc7abfa3e38d43f224073f63b4de",
+      "usage": {
+        "completion_tokens": 7866,
+        "prompt_tokens": 34255,
+        "total_tokens": 42121,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7050,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 34255
+      },
+      "latencyMs": 22101,
+      "reservedCreditUsd": 0.216516
+    }
+  ]
+}

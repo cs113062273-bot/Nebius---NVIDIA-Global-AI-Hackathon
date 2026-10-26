@@ -1,0 +1,98 @@
+{
+  "completedAt": "2026-10-26T08:03:06.171Z",
+  "policy": "auto",
+  "modelRun": "a23f090e-9b62-4dd1-88cc-11223c2efdbd",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit outside localized allowlist: \"./packages/govuk-frontend/src/govuk/components/tabs/tabs.js\". Allowed paths: "
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit outside localized allowlist: \"./packages/govuk-frontend/src/govuk/components/tabs/tabs.js\". Allowed paths: ",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-4827c614f70db0efba4ed62541628a17",
+      "usage": {
+        "completion_tokens": 3344,
+        "prompt_tokens": 3270,
+        "total_tokens": 6614,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2800,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 3270
+      },
+      "latencyMs": 21468,
+      "reservedCreditUsd": 0.032658599999999996
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit outside localized allowlist: \"./packages/govuk-frontend/src/govuk/components/tabs/tabs.js\". Allowed paths: ",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-f4a31c4cf003c14ab43ad8766b9a4ba9",
+      "usage": {
+        "completion_tokens": 2165,
+        "prompt_tokens": 3896,
+        "total_tokens": 6061,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1622,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 3896
+      },
+      "latencyMs": 6539,
+      "reservedCreditUsd": 0.111278
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit outside localized allowlist: \"./packages/govuk-frontend/src/govuk/components/tabs/tabs.js\". Allowed paths: ",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-18dd76af0ac20c3f2822c96aa6d3c7bd",
+      "usage": {
+        "completion_tokens": 2310,
+        "prompt_tokens": 4502,
+        "total_tokens": 6812,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1767,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4502
+      },
+      "latencyMs": 7734,
+      "reservedCreditUsd": 0.113626
+    }
+  ]
+}

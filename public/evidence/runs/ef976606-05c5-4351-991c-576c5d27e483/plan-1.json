@@ -1,0 +1,22 @@
+{
+  "root_cause": "The focus trap does not move focus to the first field because the tabbable utility treats elements inside a hidden parent (display:none) as non-tabbable, causing the trap to find no focusable nodes and thus not move focus.",
+  "repair_strategy": "Modify the isHidden function in src/index.js to skip the display:none check when displayCheck is undefined (or falsy), preserving only visibility hidden and details-not-open checks. This allows the focus trap to consider the dialog's fields as tabbable even while the backdrop is still hidden, enabling initial focus to be set correctly once the dialog becomes visible.",
+  "edits": [
+    {
+      "path": "src/index.js",
+      "sha256": "8f69e239e7365811abad1130954bb9d4772c0f0e31c477f37f22a3644de78652",
+      "before": "  if (!displayCheck || displayCheck === 'full') {\n    while (node) {\n      if (getComputedStyle(node).display === 'none') {\n        return true;\n      }\n      node = node.parentElement;\n    }\n  } else if (displayCheck === 'non-zero-area') {\n    const { width, height } = node.getBoundingClientRect();\n    return width === 0 && height === 0;\n  }",
+      "after": "  if (displayCheck === 'full') {\n    while (node) {\n      if (getComputedStyle(node).display === 'none') {\n        return true;\n      }\n      node = node.parentElement;\n    }\n  } else if (displayCheck === 'non-zero-area') {\n    const { width, height } = node.getBoundingClientRect();\n    return width === 0 && height === 0;\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users will now receive focus on the first input (#street) when opening the address dialog, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Considering elements with display:none as tabbable may cause unintended focus behavior in other contexts where tabbable is used on truly hidden elements; however, the component's usage is limited to the focus trap which ensures containers become visible before interaction, mitigating risk."
+  ],
+  "verification_requirements": [
+    "After clicking the Add delivery address button, focus shifts to the #street input.",
+    "Typing an address and pressing Save updates the status accordingly.",
+    "Escape key closes dialog and returns focus to the button (regression guard).",
+    "The dialog remains accessible via screen readers (role dialog, aria-modal)."
+  ]
+}

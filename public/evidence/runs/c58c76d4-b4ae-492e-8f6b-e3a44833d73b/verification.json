@@ -1,6 +1,0 @@
-{
-  "verdict": "INCONCLUSIVE",
-  "reasons": [
-    "TRUNCATED: Model output truncated at max_tokens; reasoning may have consumed the output limit"
-  ]
-}

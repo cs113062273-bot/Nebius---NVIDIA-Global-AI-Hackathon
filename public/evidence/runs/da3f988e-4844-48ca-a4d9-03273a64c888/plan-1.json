@@ -1,0 +1,23 @@
+{
+  "root_cause": "The Escape key handler for submenus incorrectly calls this.elements.rootMenu.closeChildren(), which closes all submenus of the root menu, instead of closing only the current submenu.",
+  "repair_strategy": "In menubar.js, replace the Escape handling in the non-top-level case of _handleKeyup to close the current submenu via its toggle on the parent menu item and move focus to that parent menu item.",
+  "edits": [
+    {
+      "path": "src/menubar.js",
+      "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864",
+      "before": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.rootMenu.closeChildren();\n          this.elements.rootMenu.focusCurrentChild();\n        } else if (key === \"ArrowRight\") {",
+      "after": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.parentMenu.currentMenuItem.elements.toggle.close();\n          this.elements.parentMenu.focusCurrentChild();\n        } else if (key === \"ArrowRight\") {"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close only the innermost open submenu and return focus to its parent menu item, preserving the state of other open submenus.",
+  "functional_risks": [
+    "If a submenu somehow lacks a parent menu item or toggle, the close could fail, but this condition cannot occur in the current menu structure.",
+    "Ensure that the change does not affect Escape behavior when no submenu is open (should remain unchanged)."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape in the Facts submenu returns focus to the Facts item and keeps the About submenu open (aria-expanded true).",
+    "Verify that pressing Escape in the About submenu returns focus to the About item and closes the About submenu.",
+    "Verify that pressing Escape when no submenu is open does not alter the menubar state.",
+    "Verify that Arrow navigation (Right, Down, Left, Up) continues to work as expected after the change."
+  ]
+}

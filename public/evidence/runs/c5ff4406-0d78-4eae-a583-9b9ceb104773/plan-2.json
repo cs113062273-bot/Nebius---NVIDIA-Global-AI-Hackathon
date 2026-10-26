@@ -1,0 +1,28 @@
+{
+  "root_cause": "When a focused element is removed from the DOM (e.g., clicking 'Remove' on a focused button), the mutation observer's checkDomRemoval only detects if the focused node itself is in the removedNodes list. Since the focused button is a descendant of the removed <li>, it is not in removedNodes, so the trap doesn't immediately refocus. The browser then moves focus to <body>, triggering checkFocusIn. The fallback in checkFocusIn attempts to refocus the detached MRU node (state.mostRecentlyFocusedNode) because it's truthy, but that node is no longer in the document, so focus remains on <body>.",
+  "repair_strategy": "1) Enhance checkDomRemoval to also detect when an ancestor of the focused node is removed, so the trap can immediately refocus to the initial focus node. 2) Make the fallback in checkFocusIn verify that the MRU node is still attached to a trap container before attempting to refocus it; otherwise fall back to the initial focus node.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };",
+      "after": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode || node.contains(state.mostRecentlyFocusedNode);\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };"
+    },
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "      if (nextNode) {\n        tryFocus(nextNode);\n      } else {\n        tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\n      }",
+      "after": "      if (nextNode) {\n        tryFocus(nextNode);\n      } else {\n        const fallbackNode =\n          state.mostRecentlyFocusedNode &&\n          findContainerIndex(state.mostRecentlyFocusedNode) >= 0\n            ? state.mostRecentlyFocusedNode\n            : getInitialFocusNode();\n        tryFocus(fallbackNode);\n      }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus will remain inside the basket dialog after removing a focused row, ensuring the trap retains focus as required by WCAG 2.1.1 and 2.4.3.",
+  "functional_risks": [
+    "The mutation observer change may cause an extra refocus attempt if an ancestor of the focused node is removed but the focused node remains in the document (unlikely in this pattern).",
+    "The fallback logic now depends on findContainerIndex which uses container.contains; a detached node will correctly return -1."
+  ],
+  "verification_requirements": [
+    "After removing the focused row, #basket:focus-within must be true.",
+    "The item count must update correctly (e.g., '2 items').",
+    "Tab navigation should continue to loop within the basket dialog."
+  ]
+}

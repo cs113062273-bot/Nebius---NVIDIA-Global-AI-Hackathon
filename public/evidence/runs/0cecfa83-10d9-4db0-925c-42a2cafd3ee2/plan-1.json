@@ -1,0 +1,22 @@
+{
+  "root_cause": "The disclosure menu does not close when focus leaves the menu via keyboard navigation (e.g., Tabbing out). The focusState is only set on focus-in but never reset on focus-out, so the dropdown remains open.",
+  "repair_strategy": "Add a focusout listener to the menu element that detects when the related target is outside the menu and closes the controlling toggle (either the menu's own controller for top-level menus or the parent menu's controller for submenus).",
+  "edits": [
+    {
+      "path": "src/_baseMenu.js",
+      "sha256": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+      "before": "/**\\n * Handles focus events throughout the menu for proper menu use.\\n *\\n * - Adds a `focus` listener to every menu item so when it gains focus,\\n *   it will set the item's containing menu's focus state\\n *   to \\\"self\\\".\\n *\\n * @protected\\n */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n  }",
+      "after": "/**\\n * Handles focus events throughout the menu for proper menu use.\\n *\\n * - Adds a `focus` listener to every menu item so when it gains focus,\\n *   it will set the item's containing menu's focus state\\n *   to \\\"self\\\".\\n *\\n * @protected\\n */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n    // Close the menu when focus leaves the menu\\n    this.dom.menu.addEventListener(\\\"focusout\\\", (event) => {\\n      if (!this.dom.menu.contains(event.relatedTarget)) {\\n        const toggle = this.elements.controller ?? this.elements.parentMenu?.elements.controller;\\n        if (toggle) {\\n          toggle.close();\\n        }\\n      }\\n    });\\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When focus leaves the menu via keyboard (Tab), the dropdown closes, ensuring aria-expanded becomes false and the submenu is hidden.",
+  "functional_risks": [
+    "May close menus prematurely if focus moves to a widget outside the menu that is programmatically triggered (e.g., a dialog opened from a menu item).",
+    "For submenus, closing when focus leaves to parent button is expected, but could interfere with custom widgets that expect the submenu to stay open while interacting with an external trigger."
+  ],
+  "verification_requirements": [
+    "Tabbing from the Shop button to the search input should result in aria-expanded=\\\"false\\\" on #shop and #plants not visible.",
+    "Escape key should still close the Shop dropdown and return focus to the Shop button.",
+    "Opening the Shop dropdown with Enter and then pressing Tab to navigate within the dropdown should keep it open until focus leaves the menu."
+  ]
+}

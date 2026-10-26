@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T08:04:47.369Z",
+  "policy": "auto",
+  "modelRun": "d97ee3fa-6ed1-492a-8737-de215dc2e27c",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-5ce05c109443f626d778f5e6bdc992f4",
+      "usage": {
+        "completion_tokens": 5466,
+        "prompt_tokens": 5876,
+        "total_tokens": 11342,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4637,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5876
+      },
+      "latencyMs": 27941,
+      "reservedCreditUsd": 0.0356226
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-f348aeb7c473d76bc9217797c71a390c",
+      "usage": {
+        "completion_tokens": 5282,
+        "prompt_tokens": 6391,
+        "total_tokens": 11673,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4784,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6391
+      },
+      "latencyMs": 13997,
+      "reservedCreditUsd": 0.121242
+    }
+  ]
+}

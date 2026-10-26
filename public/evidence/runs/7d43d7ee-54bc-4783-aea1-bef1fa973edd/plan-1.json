@@ -1,0 +1,24 @@
+{
+  "root_cause": "The datepicker's keydown listener prevents the default action of the Tab key, trapping focus inside the datepicker popup and blocking navigation to the next form field.",
+  "repair_strategy": "Modify the Datepicker constructor to intercept Tab (and Shift+Tab) events, hide the datepicker, and allow default tab traversal, while delegating all other keys to the original keydown handler.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "26c130b5380a4d36ae7de5ca8e06affc4ed327048a689e12fc9a8804eb63b595",
+      "before": "    // set up picekr element\n    const picker = this.picker = new Picker(this);\n\n    const keydownListener = [element, 'keydown', onKeydown.bind(null, this)];\n    if (inputField) {",
+      "after": "    // set up picekr element\n    const picker = this.picker = new Picker(this);\n\n    const handleKeyDown = (event) => {\n      if (event.key === 'Tab') {\n        this.hide();\n        return;\n      }\n      onKeydown(this, event);\n    };\n    const keydownListener = [element, 'keydown', handleKeyDown];\n    if (inputField) {"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab or Shift+Tab from the date input will move focus to the next or previous focusable element in the tab order, allowing keyboard-only users to exit the datepicker without needing to close it via mouse or Escape.",
+  "functional_risks": [
+    "Hiding the datepicker on Tab could interfere with users who expect to navigate within the datepicker using Tab, but the datepicker relies on arrow keys for internal navigation, so the risk is low.",
+    "Ensure that Shift+Tab also works to move focus backward."
+  ],
+  "verification_requirements": [
+    "Tab from #visit-date moves focus to #notes and hides the datepicker.",
+    "Shift+Tab from #visit-date moves focus to #contact (previous field) and hides the datepicker.",
+    "ArrowRight then Enter still selects the next day (regression guard).",
+    "Datepicker still opens on focus and mouse click.",
+    "No JavaScript errors are introduced."
+  ]
+}

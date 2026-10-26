@@ -1,0 +1,24 @@
+{
+  "root_cause": "The header component incorrectly sets aria-hidden=true on the navigation menu when the menu button is not visible (desktop view), removing the navigation links from the accessibility tree.",
+  "repair_strategy": "Update the init method to compute the initial visibility of the menu based on whether the menu button is hidden (indicating desktop) or the presence of the 'govuk-header__navigation--open' class, ensuring aria-hidden reflects actual visibility.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "\n  this.syncState(this.$menu.classList.contains('govuk-header__navigation--open'))\n  this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))",
+      "after": "\n  const isVisible = !this.$menuButton.offsetParent || this.$menu.classList.contains('govuk-header__navigation--open')\n  this.syncState(isVisible)\n  this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links will be exposed as links with correct name and role, allowing keyboard and screen‑reader users to reach them via Tab.",
+  "functional_risks": [
+    "If the menu button's display property is changed for reasons other than viewport width, visibility detection may be incorrect.",
+    "Future changes to the CSS that affect the button's layout could break the offsetParent check.",
+    "The component continues to rely on the open class for mobile menu state; ensuring that class toggling remains correct is essential."
+  ],
+  "verification_requirements": [
+    "On desktop width, verify that the navigation menu has aria-hidden=false and the menu button has aria-expanded=false.",
+    "On mobile width, verify that clicking the menu button toggles the open class, aria-expanded, and aria-hidden appropriately.",
+    "Confirm that Tab navigation reaches the #nav-apply element with role='link' and name='Apply' in both viewport states.",
+    "Ensure that the menu button remains functional for showing/hiding the menu on mobile."
+  ]
+}

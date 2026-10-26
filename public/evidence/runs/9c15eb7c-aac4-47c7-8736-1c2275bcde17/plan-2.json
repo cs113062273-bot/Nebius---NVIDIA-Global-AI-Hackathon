@@ -1,0 +1,28 @@
+{
+  "root_cause": "The offcanvas component does not activate the focus trap when the 'scroll' option is true (data-bs-scroll=\"true\"). The focus trap is responsible for keeping keyboard focus inside the panel. Without it, Tab moves focus to the next focusable element outside the panel (the amount input).",
+  "repair_strategy": "Modify the offcanvas component to always activate the focus trap when the panel is shown, regardless of the scroll option. Also disable autofocus on the focus trap to avoid programmatically focusing the offcanvas element on show, preserving the existing focus order (trigger button remains focused until user presses Tab).",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d",
+      "before": "  _initializeFocusTrap() {\n    return new FocusTrap({\n      trapElement: this._element\n    })\n  }",
+      "after": "  _initializeFocusTrap() {\n    return new FocusTrap({\n      trapElement: this._element,\n      autofocus: false\n    })\n  }"
+    },
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d",
+      "before": "    const completeCallBack = () => {\n      if (!this._config.scroll) {\n        this._focustrap.activate()\n      }\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }",
+      "after": "    const completeCallBack = () => {\n      this._focustrap.activate()\n\n      this._element.classList.add(CLASS_NAME_SHOW)\n      this._element.classList.remove(CLASS_NAME_SHOWING)\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus will be trapped inside the open help panel. Pressing Tab repeatedly will cycle focus among focusable elements within the panel (currently only the close button), preventing focus from escaping to the background form.",
+  "functional_risks": [
+    "Activating focus trap with scroll=true may conflict with background scrolling expectations, but focus trapping is required for modal-like keyboard navigation.",
+    "Disabling autofocus ensures the trigger button retains focus on panel open, preserving current focus order."
+  ],
+  "verification_requirements": [
+    "Run the provided journey: open help with Enter, press Tab twice, verify focus stays on #help-close.",
+    "Verify that the help panel remains scrollable (scroll=true) and backdrop click still dismisses.",
+    "Verify that Escape key still closes the panel."
+  ]
+}

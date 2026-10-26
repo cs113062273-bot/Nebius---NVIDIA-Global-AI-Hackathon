@@ -1,0 +1,24 @@
+{
+  "root_cause": "The Tab component's _activate method does not move focus to the newly activated tab after blurring the previous tab, causing keyboard navigation with ArrowRight/ArrowLeft to lose focus.",
+  "repair_strategy": "Add element.focus() in the complete callback of _activate after setting aria-selected true, ensuring the tab receives focus once it becomes active.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "69ca6e1d090610fe209a5b54a151e20b738214aabf1464807c85c17c0e29848c",
+      "before": "    const complete = () => {\n      if (element.getAttribute('role') !== 'tab') {\n        element.classList.add(CLASS_NAME_SHOW)\n        return\n      }\n\n      element.removeAttribute('tabindex')\n      element.setAttribute('aria-selected', true)\n      this._toggleDropDown(element, true)\n      EventHandler.trigger(element, EVENT_SHOWN, {\n        relatedTarget: relatedElem\n      })\n    }",
+      "after": "    const complete = () => {\n      if (element.getAttribute('role') !== 'tab') {\n        element.classList.add(CLASS_NAME_SHOW)\n        return\n      }\n\n      element.removeAttribute('tabindex')\n      element.setAttribute('aria-selected', true)\n      element.focus()\n      this._toggleDropDown(element, true)\n      EventHandler.trigger(element, EVENT_SHOWN, {\n        relatedTarget: relatedElem\n      })\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight and ArrowLeft keys will move focus to the adjacent tab and update aria-selected accordingly, satisfying keyboard operability requirements for a tablist (WCAG 2.1.1, 2.4.3).",
+  "functional_risks": [
+    "Duplicate focus calls when a tab is activated via mouse click (button already focuses), but focus() is harmless.",
+    "Potential change in behavior for callers who rely on blur patterns; unlikely to break existing usage."
+  ],
+  "verification_requirements": [
+    "Press ArrowRight from the Account tab: focus moves to Notifications tab and aria-selected becomes true.",
+    "Press ArrowLeft from the Billing tab: focus moves to Notifications tab and aria-selected becomes true.",
+    "Programmatic invocation of tab.show() results in the tab receiving focus.",
+    "Mouse clicks on tabs continue to work and maintain focus.",
+    "Keyboard navigation wraps correctly at the ends of the tablist."
+  ]
+}

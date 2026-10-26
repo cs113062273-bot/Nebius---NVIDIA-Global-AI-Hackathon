@@ -1,0 +1,13 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..f073c2b 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -567,6 +567,8 @@
+                     case 46:
+                         self.setDate(null);
+                         break;
++                    case 9:
++                        break;
+                 }
+             }
+         };

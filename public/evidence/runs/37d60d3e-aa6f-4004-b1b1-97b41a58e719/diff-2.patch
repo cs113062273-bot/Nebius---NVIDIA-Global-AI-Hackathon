@@ -1,0 +1,39 @@
+diff --git a/js/src/dropdown.js b/js/src/dropdown.js
+index 97bf6e1..9e18518 100644
+--- a/js/src/dropdown.js
++++ b/js/src/dropdown.js
+@@ -463,6 +463,19 @@ class Dropdown extends BaseComponent {
+       return
+     }
+ 
++    const isActive = this.classList.contains(CLASS_NAME_SHOW)
++
++    if (event.key === ESCAPE_KEY) {
++      if (isActive) {
++        event.preventDefault()
++        event.stopPropagation()
++        const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
++        button.focus()
++        Dropdown.clearMenus()
++      }
++      return
++    }
++
+     event.preventDefault()
+     event.stopPropagation()
+ 
+@@ -471,14 +484,6 @@ class Dropdown extends BaseComponent {
+     }
+ 
+     const parent = Dropdown.getParentFromElement(this)
+-    const isActive = this.classList.contains(CLASS_NAME_SHOW)
+-
+-    if (event.key === ESCAPE_KEY) {
+-      const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]
+-      button.focus()
+-      Dropdown.clearMenus()
+-      return
+-    }
+ 
+     if (!isActive && (event.key === ARROW_UP_KEY || event.key === ARROW_DOWN_KEY)) {
+       const button = this.matches(SELECTOR_DATA_TOGGLE) ? this : SelectorEngine.prev(this, SELECTOR_DATA_TOGGLE)[0]

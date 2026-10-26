@@ -1,0 +1,23 @@
+{
+  "root_cause": "The tabs component's keyboard handler incorrectly processes ArrowDown and ArrowUp keys for horizontal tabs, moving focus to the next/previous tab instead of leaving the current tab selected. According to WAI-ARIA APG, only left/right arrows should navigate between horizontal tabs.",
+  "repair_strategy": "Modify the tabs component's keydown event handler to ignore ArrowUp and ArrowDown keys when the tab list is horizontal (the default), allowing those keys to fall through to the browser for default scrolling or panel focus behavior.",
+  "edits": [
+    {
+      "path": "./packages/govuk-frontend/src/govuk/components/tabs/tabs.js",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "before": "  _onKeyDown(event) {\n    const tabs = this._getTabs()\n    const currentIndex = tabs.findIndex(tab => tab === document.activeElement)\n    let nextIndex\n    switch (event.key) {\n      case 'ArrowLeft':\n        nextIndex = currentIndex - 1\n        break\n      case 'ArrowRight':\n        nextIndex = currentIndex + 1\n        break\n      case 'ArrowUp':\n        nextIndex = currentIndex - 1\n        break\n      case 'ArrowDown':\n        nextIndex = currentIndex + 1\n        break\n      case 'Home':\n        nextIndex = 0\n        break\n      case 'End':\n        nextIndex = tabs.length - 1\n        break\n      default:\n        return\n    }\n    event.preventDefault()\n    this._activateTab(tabs[nextIndex])\n  }",
+      "after": "  _onKeyDown(event) {\n    const tabs = this._getTabs()\n    const currentIndex = tabs.findIndex(tab => tab === document.activeElement)\n    let nextIndex\n    switch (event.key) {\n      case 'ArrowLeft':\n        nextIndex = currentIndex - 1\n        break\n      case 'ArrowRight':\n        nextIndex = currentIndex + 1\n        break\n      case 'Home':\n        nextIndex = 0\n        break\n      case 'End':\n        nextIndex = tabs.length - 1\n        break\n      default:\n        return\n    }\n    event.preventDefault()\n    this._activateTab(tabs[nextIndex])\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing the down arrow on a horizontal tab no longer switches to the next tab, allowing the key to be used for scrolling or moving focus into the tab panel, consistent with ARIA APG keyboard navigation for horizontal tabs.",
+  "functional_risks": [
+    "Vertical tab implementations (if any) would lose up/down navigation; however, the component currently assumes horizontal orientation.",
+    "Existing tests for vertical tabs might fail if they exist."
+  ],
+  "verification_requirements": [
+    "Run the provided journey: seek to Past day tab, press ArrowDown, verify Past day tab remains selected and its panel visible.",
+    "Run regression guard: seek to Past day tab, press ArrowRight then ArrowLeft, verify Past day tab remains selected.",
+    "Test left/right arrow navigation still works between all tabs.",
+    "Test Home/End keys still navigate to first/last tab."
+  ]
+}

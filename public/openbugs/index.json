@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T06:58:10.160Z",
+  "generatedAt": "2026-10-26T09:16:13.706Z",
   "cases": [
     {
       "id": "autocompletejs-escape-erases-edit",
@@ -17,42 +17,44 @@
       "pendingHumanFix": null,
       "pendingHumanCheck": null,
       "review": {
-        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-        "reviewedAt": "2026-10-26T03:08:35.468Z",
-        "run": "a47e4fb6-4e1d-43c0-b4e5-46ba69fec6e6",
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T07:48:10.653Z",
+        "run": "c2f93867-3b85-4328-875e-3afbebc64411",
         "verdict": "Sound",
-        "summary": "Escape no longer empties the input; it only closes the list. This is the default the maintainer proposes in #485, and the same change an earlier run made.",
+        "summary": "Escape now only closes the list: the lines that emptied the input and emitted the clear event on Escape are removed, which is the behaviour the maintainer proposed in #485.",
         "caveats": [
-          "The clear event is no longer emitted on Escape, because nothing is cleared. A consumer that listened for it on Escape would need the option the maintainer describes."
+          "A page that listened for the clear event on Escape no longer receives it; #485 accepts that.",
+          "The reporter of #402 suggested restoring the earlier value instead; this patch keeps what the user typed, as the maintainer planned."
         ]
       },
       "expectedBehaviour": "As proposed by the maintainer in #485: Escape closes the list only and keeps the input. The reporter of #402 suggested restoring the earlier value instead; this task follows the maintainer's plan.",
       "recorded": {
-        "run": "6e9696ec-5015-41ae-85a7-ff91c2b50afb",
+        "run": "c2f93867-3b85-4328-875e-3afbebc64411",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 2,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "6e9696ec-5015-41ae-85a7-ff91c2b50afb",
+          "run": "c2f93867-3b85-4328-875e-3afbebc64411",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "218c00df-fc6b-4330-92a9-14b9803280b1",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "ae0a8142-5865-4816-990a-da05eb1c7fb8",
+          "run": "023ae492-d0fd-4a32-96fc-48918e180d51",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
-          "scope": "library"
-        },
-        {
-          "run": "54de35ca-e227-4f2f-8596-46487166585c",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
+          "passedOn": 3,
           "scope": "library"
         }
       ]
@@ -81,19 +83,19 @@
         "note": "The pending human fix passes the same frozen task. It was fetched for comparison and is never part of a model request."
       },
       "review": {
-        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-        "reviewedAt": "2026-10-26T03:08:35.468Z",
-        "run": "e5b11819-4a22-4eff-a826-bbfbc95465fe",
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T07:48:10.653Z",
+        "run": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
         "verdict": "Works, but not acceptable upstream as written",
-        "summary": "The field keeps an ISO date because the default display format becomes YYYY-MM-DD. That fixes the submitted value, but every datepicker without its own dateFormat would now show ISO dates instead of locale-formatted ones.",
+        "summary": "For an input without a separate display element, the date formatter now returns YYYY-MM-DD before it looks at the dateFormat option, so focusing no longer rewrites a saved ISO value.",
         "caveats": [
-          "The pending human fix keeps the localized display and changes only what is submitted; that is the better trade-off.",
-          "Useful for an app that wants ISO in the field; not proposed upstream."
+          "Every input datepicker now shows ISO dates and ignores a configured dateFormat, including a custom formatter function.",
+          "The pending human fixes keep the configured format and separate the displayed text from the submitted value; this patch does not."
         ]
       },
       "expectedBehaviour": "Only the part of the issue every proposal agrees on: focusing and leaving the field without picking keeps the submitted value 2026-10-22. What a newly picked date should submit is still being decided upstream and is not tested.",
       "recorded": {
-        "run": "fc4d9aed-b356-419f-bc34-3ccf9b0bbb01",
+        "run": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -103,19 +105,19 @@
       },
       "frozenRuns": [
         {
-          "run": "fc4d9aed-b356-419f-bc34-3ccf9b0bbb01",
+          "run": "4ad571ea-377b-450f-9fb8-fb78f6a7330d",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "1227138c-e061-454e-a346-f33874150a5c",
+          "run": "78a722f7-bee6-41d2-8561-02e3a8ca0a88",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "1eed9dfb-b5b7-4fb8-909e-b83702dc5d1a",
+          "run": "b5912388-7261-4a59-8874-b6518b2c6721",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -138,7 +140,7 @@
       "pendingHumanFix": null,
       "pendingHumanCheck": null,
       "review": {
-        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
         "reviewedAt": "2026-10-26T03:08:35.468Z",
         "run": "2bb91b99-274b-46c2-bb10-05c83c3cb194",
         "verdict": "Removes the trap, with trade-offs",
@@ -151,30 +153,31 @@
       },
       "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
       "recorded": {
-        "run": "2c5074cd-803a-45c6-b3a4-c499d4f169f2",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "run": "a9cf0d32-ee10-4b02-ab78-f8487748594a",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ],
-        "scope": "library"
+        "scope": null
       },
       "frozenRuns": [
         {
-          "run": "2c5074cd-803a-45c6-b3a4-c499d4f169f2",
+          "run": "a9cf0d32-ee10-4b02-ab78-f8487748594a",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "26109a26-b352-419f-8e32-c1094c0cf855",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
         },
         {
-          "run": "8950eba7-7f58-416e-934a-ec281e7bc3af",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
-        },
-        {
-          "run": "ec752e63-aef3-406b-8c37-38575e03e498",
+          "run": "c6c5283f-8a6f-424b-9d8c-d4ceb9ccca4d",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
@@ -214,46 +217,44 @@
       "pendingHumanFix": null,
       "pendingHumanCheck": null,
       "review": {
-        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-        "reviewedAt": "2026-10-26T03:08:35.468Z",
-        "run": "2dfa5efb-16e0-4333-a4fe-39c84d7723da",
-        "verdict": "Workaround in the page, not a library fix",
-        "summary": "The patch changes only the consumer page: it wraps the field in Bootstrap’s .form-adorn wrapper, which makes the datepicker position (and attach its key handling) to the wrapper instead of the input. Tab leaves the field, Escape still closes the calendar and a click still shows it.",
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T07:48:10.653Z",
+        "run": "ddfef893-7cb5-43c4-bcb1-efcb238548f7",
+        "verdict": "Removes the trap by changing when the calendar opens",
+        "summary": "Inputs no longer open the calendar on focus; a click opens it instead, so tabbing through the field never enters vanilla-calendar-pro’s key handling.",
         "caveats": [
-          "The library bug remains for every page that does not use the wrapper.",
-          "Whether Tab still moves into a calendar opened by click was not part of the frozen task and was not checked.",
-          "A reasonable stopgap for an app team until twbs/bootstrap#43202 is fixed."
+          "Opening on focus was the designed behaviour for input datepickers; keyboard users now open the calendar another way (click, or the page’s own control).",
+          "The underlying Tab handling inside the open calendar is unchanged; twbs/bootstrap#43202 is still open and this patch is not proposed there."
         ]
       },
       "expectedBehaviour": "With the calendar closed, Tab moves to the next field (WCAG 2.1.2 No Keyboard Trap). When the calendar is open, for example after a click, Tab moving into it is the library's intended design and is not changed by this task. Escape keeps closing the calendar.",
       "recorded": {
-        "run": "78fcb958-7dca-4fc4-b2b8-32c9172b2911",
+        "run": "ddfef893-7cb5-43c4-bcb1-efcb238548f7",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "78fcb958-7dca-4fc4-b2b8-32c9172b2911",
+          "run": "ddfef893-7cb5-43c4-bcb1-efcb238548f7",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
+          "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "d13a48d9-9e98-4893-b4f0-3355814e5651",
+          "run": "6f082ad3-ec81-4fb4-914f-81ae33897f67",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
+          "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "21c85cef-486e-473d-bd9d-6809936c425e",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
+          "run": "92e3f823-050a-4cb5-a98b-dcb58147b100",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
         }
       ]
     },
@@ -283,44 +284,159 @@
         "note": "The pending human fix passes the same frozen task. It was fetched for comparison and is never part of a model request."
       },
       "review": {
-        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
-        "reviewedAt": "2026-10-26T03:08:35.468Z",
-        "run": "c4e3444d-9f7a-4dce-a378-727ac8bedaf6",
-        "verdict": "Sound, and close to the pending human fix",
-        "summary": "The Escape keydown handler now runs for modal dialogs too, so with keyboard: false the key is cancelled before Chromium sends a close request that can no longer be cancelled. Pending pull request #43077 makes the same change.",
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T07:48:10.653Z",
+        "run": "fb6e1ffd-520a-451e-947f-db582f92969a",
+        "verdict": "Rejected on review: breaks Escape for every default dialog",
+        "summary": "The Escape keydown handler now runs for modal dialogs too and calls preventDefault() before it checks the keyboard option, so the keyboard: false dialog stays open, as the task requires.",
         "caveats": [
-          "With keyboard: false the human fix also plays the static-backdrop bounce on each press for modal dialogs; this patch does not.",
-          "The cancel handler stays as the fallback for close requests that do not come from a key."
+          "An ordinary dialog with the default keyboard: true no longer closes on Escape either, checked in Chromium without inference. The frozen task had no such dialog.",
+          "The stricter case bootstrap6-dialog-escape-keyboard-false-default-dialog adds one with a guard. This patch fails it, while the four earlier model patches for this bug and the pending human fix (#43077) pass it.",
+          "It also removes the static-backdrop bounce that signals a dialog cannot be dismissed."
         ]
       },
       "expectedBehaviour": null,
       "recorded": {
-        "run": "f65e71f2-55f9-4cee-8adb-f350517e8aa6",
+        "run": "fb6e1ffd-520a-451e-947f-db582f92969a",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 2,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "f65e71f2-55f9-4cee-8adb-f350517e8aa6",
+          "run": "fb6e1ffd-520a-451e-947f-db582f92969a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "ef0a3121-c675-4128-a513-e76d4b755bf4",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "933c47c5-9ec4-44f9-be0b-f192848407cb",
+          "run": "a8709acf-7736-4f88-a87f-3801f5040173",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
+    },
+    {
+      "id": "bootstrap6-dialog-escape-keyboard-false-default-dialog",
+      "title": "A dialog created with keyboard: false must stay open on Escape, and a default dialog must still close",
+      "summary": "keyboard: false only calls preventDefault() on the native cancel event. Escape does not count as user activation, so after a few presses Chromium fires cancel with cancelable=false and the dialog closes anyway.",
+      "library": "Bootstrap 6.0 alpha (dialog, TypeScript source)",
+      "category": "Unwanted dismissal",
+      "repository": "https://github.com/twbs/bootstrap",
+      "issue": "https://github.com/twbs/bootstrap/issues/43070",
+      "pinnedCommit": "2bb544eb426e9b1e019c2a98798e0002b8a41d35",
+      "status": "Open and labelled confirmed. A maintainer-side fix is proposed in pull request #43077, not merged at pinnedCommit. That pull request is never sent to the model; it is kept for comparison after it merges.",
+      "derivedFrom": "bootstrap6-dialog-escape-keyboard-false",
+      "addedAfterReview": "Added after reviewing the engine-v11 patch for bootstrap6-dialog-escape-keyboard-false: it passed every frozen check by cancelling every Escape keydown, so an ordinary dialog with the default keyboard: true no longer closed on Escape. The page now also has a default dialog, and a guard requires Escape to close it. Earlier patches are replayed against this stricter task without inference.",
+      "replays": [
+        {
+          "run": "3624e2e0-f406-41b5-b4fd-74a148367e39",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+          "fromRun": "8c28f644-3bef-49ed-bebf-c95413cee13a",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "5962d0c7-3cd2-48e7-a6d2-bd644798c220",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+          "fromRun": "c4e3444d-9f7a-4dce-a378-727ac8bedaf6",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "794c6805-049f-48c2-8a1d-b9db95916db2",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+          "fromRun": "f65e71f2-55f9-4cee-8adb-f350517e8aa6",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "f802df82-6c02-4202-9d6a-ce03df781a91",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+          "fromRun": "fc6445d6-2245-4bd4-a07a-73769b3fd702",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "bfab1838-860e-4cb1-9e45-1483263bf349",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "A dialog created with keyboard: false must stay open however often Escape is pressed",
+          "fromRun": "fb6e1ffd-520a-451e-947f-db582f92969a",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        }
+      ],
+      "pendingHumanFix": "https://github.com/twbs/bootstrap/pull/43077",
+      "pendingHumanCheck": {
+        "checkedAt": "2026-10-26T07:47:55.752Z",
+        "pullRequest": "https://github.com/twbs/bootstrap/pull/43077",
+        "applied": "js/src changes only (tests omitted)",
+        "run": "a89149f7-0325-4f01-9c7e-e843b3b2a185",
+        "keyboard": "VERIFIED_PASS",
+        "pointer": "VERIFIED_PASS",
+        "guards": [
+          "VERIFIED_PASS",
+          "VERIFIED_PASS"
+        ],
+        "note": "The pending human fix passes this stricter task, including the default-dialog guard. It was fetched for comparison and is never part of a model request."
+      },
+      "review": {
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T09:09:50.151Z",
+        "run": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
+        "verdict": "Sound, close to the pending human fix",
+        "summary": "For modal dialogs, the Escape keydown handler now calls preventDefault() only when keyboard is false, so the close request never starts; dialogs with the default options still close through the native cancel path.",
+        "caveats": [
+          "Pressing Escape on the keyboard: false dialog no longer plays the static-backdrop bounce; the pending human fix (#43077) keeps it.",
+          "The same explanatory comment is added twice.",
+          "Ultra wrote it on the third attempt, after a rejected proposal and a browser rejection."
+        ]
+      },
+      "expectedBehaviour": null,
+      "recorded": {
+        "run": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 3,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": "library"
+      },
+      "frozenRuns": [
+        {
+          "run": "a0053686-eb3c-4b74-9c6f-ca1f39a36ed3",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "scope": "library"
+        },
+        {
+          "run": "9445c733-3aa9-42fa-aa71-2983425ef125",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "49457ef2-4c33-4464-ad1c-f462a9609d32",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
-        },
-        {
-          "run": "fc6445d6-2245-4bd4-a07a-73769b3fd702",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
-          "scope": "library"
         }
       ]
     },
@@ -345,44 +461,41 @@
         "note": "The pending human fix changes scss/_drawer.scss. This case serves the published 6.0.0-alpha.1 stylesheet, so the SCSS change was not compiled or checked here."
       },
       "review": {
-        "reviewer": "Project author, after the browser verdict. This is a reading of the attempts, not another test.",
-        "reviewedAt": "2026-10-25T18:34:30.997Z",
-        "run": "ca7bb8b1-eb32-4b73-9453-cef90b272e45",
-        "verdict": "Not repaired",
-        "summary": "Ultra now looked for the drawer dismiss button generically ([data-bs-dismiss=\"drawer\"]) instead of naming the test page, but focused it while the drawer was still visibility: hidden, so focus stayed on body.",
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T07:48:10.653Z",
+        "run": "a74a9036-7db1-4b46-a154-006a3c40eb7f",
+        "verdict": "Works, with caveats",
+        "summary": "After the drawer’s shown event, focus moves to the first focusable element inside it, so keyboard focus no longer falls back to the body.",
         "caveats": [
-          "A working repair has to move focus once the slide-in transition has made the content visible.",
-          "The version 5 run passed this case only by hardcoding the page id #filters-close; version 6 rejects that, and this honest failure replaces the earlier pass.",
-          "Pending pull request #43139 fixes it in the stylesheet, which this case cannot edit."
+          "The selector list does not prefer an [autofocus] element and does not skip disabled or hidden controls.",
+          "Focus moves only after the slide-in transition ends; the pending human fix in #43139 instead fixes the visibility timing so the native dialog focusing steps work."
         ]
       },
       "expectedBehaviour": "Focus lands on the first focusable control in the drawer, its close button, as for a native modal dialog. The compiled stylesheet is a dependency outside the editable source, so a repair has to be made in the TypeScript.",
       "recorded": {
-        "run": "de7796ce-30aa-4f5e-948a-2ec109ea9de1",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "a74a9036-7db1-4b46-a154-006a3c40eb7f",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
-        "scope": null
+        "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "de7796ce-30aa-4f5e-948a-2ec109ea9de1",
+          "run": "a74a9036-7db1-4b46-a154-006a3c40eb7f",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "d1cb2dcb-1807-434e-a2bd-1ecbf29cb30c",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "df191007-b796-40e6-b777-ded30b3ea975",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
-        },
-        {
-          "run": "9846a03e-497f-412f-a624-b688ed68a9fa",
+          "run": "414a2da3-fc11-4e8c-a0e4-2d54b26891c0",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
@@ -404,35 +517,127 @@
       "replays": [],
       "pendingHumanFix": null,
       "pendingHumanCheck": null,
-      "review": null,
+      "review": {
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
+        "reviewedAt": "2026-10-26T07:48:10.653Z",
+        "run": "c71c63e9-f789-480c-8f0c-593920943998",
+        "verdict": "Rejected on review: hangs at maxDate",
+        "summary": "Arrow keys now step past days that minDate, maxDate, disableWeekends or disableDayFn close, instead of selecting them.",
+        "caveats": [
+          "At a range boundary the do…while loop never finds an allowed date: with a maxDate set, ArrowRight on that day hung the page in Chromium, while the unpatched library stayed on the day.",
+          "The stricter case pikaday-keyboard-disabled-day-max-date adds a maxDate and a guard. This patch fails it, while the three earlier model patches for this bug pass it.",
+          "It keeps Pikaday’s own 24-hour millisecond steps, which can land on the wrong day across a daylight-saving change (a separate flaw that the original adjustDate shares)."
+        ]
+      },
       "expectedBehaviour": "Author decision: the arrow key moves to the next day that is not disabled, as when a user skips over closed days with the pointer.",
       "recorded": {
-        "run": "c323b9aa-96b9-4413-9284-e6ea04c39e68",
+        "run": "c71c63e9-f789-480c-8f0c-593920943998",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "c323b9aa-96b9-4413-9284-e6ea04c39e68",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
-        },
-        {
-          "run": "24dbef06-3a78-4352-9fec-fa6e304e87f7",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
-        },
-        {
-          "run": "d7e9be94-1acc-42e7-9ec8-77c24d07cf9e",
+          "run": "c71c63e9-f789-480c-8f0c-593920943998",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "128ec657-8433-4ce6-b953-7cf30fc30414",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "ed2fecfa-1454-4352-b254-fda7333dc60e",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        }
+      ]
+    },
+    {
+      "id": "pikaday-keyboard-disabled-day-max-date",
+      "title": "Arrow keys must not select a day that disableDayFn closes, and must stop at maxDate",
+      "summary": "A disabled day cannot be clicked, but ArrowRight from Friday selects the closed Saturday and the form submits it.",
+      "library": "Pikaday",
+      "category": "Wrong submitted data",
+      "repository": "https://github.com/Pikaday/Pikaday",
+      "issue": "https://github.com/Pikaday/Pikaday/issues/955",
+      "pinnedCommit": "9a90eea5cdbc48784d3a909ddb36e052c16bf25d",
+      "status": "Open since July 2025 and confirmed by a second user. The repository was archived, so no upstream fix will ship.",
+      "derivedFrom": "pikaday-keyboard-disabled-day",
+      "addedAfterReview": "Added after reviewing the engine-v11 patch for pikaday-keyboard-disabled-day: it passed every frozen check, but its loop that skips closed days never ends at a maxDate, and the page hung. The page now ends the booking window with a maxDate, and a guard requires the arrow keys to stop on that day. Earlier patches are replayed against this stricter task without inference.",
+      "replays": [
+        {
+          "run": "eac0e900-7e4e-431a-b47f-28a4e2f350f4",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Arrow keys must not select a day that disableDayFn closes",
+          "fromRun": "c323b9aa-96b9-4413-9284-e6ea04c39e68",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "b40fb046-56ad-46e6-bde7-1ae1ab7279fb",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Arrow keys must not select a day that disableDayFn closes",
+          "fromRun": "24dbef06-3a78-4352-9fec-fa6e304e87f7",
+          "attempt": 2,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "2e283223-9769-4f84-a187-0543bc1833d0",
+          "verdict": "VERIFIED_PASS",
+          "fromCase": "Arrow keys must not select a day that disableDayFn closes",
+          "fromRun": "d7e9be94-1acc-42e7-9ec8-77c24d07cf9e",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        },
+        {
+          "run": "d54bd084-fa9e-45ed-98ba-bcaa6afcedf0",
+          "verdict": "VERIFIED_FAIL",
+          "fromCase": "Arrow keys must not select a day that disableDayFn closes",
+          "fromRun": "c71c63e9-f789-480c-8f0c-593920943998",
+          "attempt": 1,
+          "engine": "browser replay, no inference"
+        }
+      ],
+      "pendingHumanFix": null,
+      "pendingHumanCheck": null,
+      "review": null,
+      "expectedBehaviour": "Author decision: the arrow key moves to the next day that is not disabled, as when a user skips over closed days with the pointer.",
+      "recorded": {
+        "run": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
+        "models": [
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
+        ],
+        "scope": null
+      },
+      "frozenRuns": [
+        {
+          "run": "7af316d1-2d65-439b-bc4f-16c51563ecaf",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "cb4fc16a-9732-4181-9bab-ec662a9fd022",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "f38e9f65-da95-4d28-8ccc-226d6922bf8d",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
           "scope": "library"
         }
       ]
@@ -453,7 +658,7 @@
       "pendingHumanFix": null,
       "pendingHumanCheck": null,
       "review": {
-        "reviewer": "Project author, after the browser verdict. This is a reading of the patch, not another test.",
+        "reviewer": "Project review after the browser verdict, written with Claude Code (the AI assistant that built this project). A reading of the patch, not another test.",
         "reviewedAt": "2026-10-26T03:08:35.468Z",
         "run": "d2724498-2115-4211-b2f4-1f355db03568",
         "verdict": "Sound",
@@ -465,7 +670,7 @@
       },
       "expectedBehaviour": null,
       "recorded": {
-        "run": "c3a8859d-e2c1-40a2-b869-75ab352d8bce",
+        "run": "ebd9a598-43a3-4b3e-b128-78f5bc5c2229",
         "verdict": "VERIFIED_FAIL",
         "passedOn": null,
         "models": [
@@ -477,20 +682,20 @@
       },
       "frozenRuns": [
         {
-          "run": "c3a8859d-e2c1-40a2-b869-75ab352d8bce",
+          "run": "ebd9a598-43a3-4b3e-b128-78f5bc5c2229",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "1e3e47bf-3640-4367-bca2-151347298aa3",
+          "run": "1fb6d50b-3d55-4b0c-83b9-cfa07a2c5fa8",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "c58c76d4-b4ae-492e-8f6b-e3a44833d73b",
-          "verdict": "INCONCLUSIVE",
+          "run": "e2f00e4b-9be3-4b3a-9826-0dd411c8504d",
+          "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         }

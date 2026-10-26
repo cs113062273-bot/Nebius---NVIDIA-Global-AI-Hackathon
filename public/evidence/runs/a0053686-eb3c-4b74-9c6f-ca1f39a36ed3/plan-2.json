@@ -1,0 +1,23 @@
+{
+  "root_cause": "The confirm dialog is configured with `keyboard: false` to prevent Escape from closing it. The Bootstrap dialog component adds a 'cancel' event listener (`_cancelHandler`) that calls `event.preventDefault()` when `keyboard` is false. However, the test shows that after two prevented Escape presses, the third 'cancel' event becomes non-cancelable (`cancelable: false`), causing the dialog to close. This suggests the browser may stop allowing prevention after multiple cancels. Additionally, a keydown listener for non-modal dialogs is added unconditionally; though it returns early for modal dialogs, it does not prevent default on the keydown event, which might allow the browser to count Escape presses and eventually force-close the dialog.",
+  "repair_strategy": "Modify the keydown listener in `DialogBase._addDialogListeners` to always prevent default on Escape key, then return early if the dialog is modal or `keyboard` is false. This may prevent the browser from firing the 'cancel' event or counting the Escape presses. The 'cancel' event listener (`_cancelHandler`) remains as a fallback.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "    // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show()).\n    EventHandler.on(this._element, `keydown${eventKey}`, event => {\n      if (event.key !== 'Escape' || this._openedAsModal) {\n        return\n      }\n\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    })",
+      "after": "    // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show()).\n    // Also prevent default on Escape for modal dialogs to avoid browser counting presses.\n    EventHandler.on(this._element, `keydown${eventKey}`, event => {\n      if (event.key !== 'Escape') {\n        return\n      }\n      event.preventDefault()\n      if (this._openedAsModal || !this._config.keyboard) {\n        return\n      }\n      this._onCancel()\n      this.hide()\n    })"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will no longer dismiss the confirmation dialog when `keyboard: false` is set, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by ensuring the dialog remains open and focus stays on the OTP input.",
+  "functional_risks": [
+    "Preventing default on Escape for modal dialogs might interfere with other Escape handling in the page, but the dialog is modal and should trap focus.",
+    "The change could affect non-modal dialogs if `_openedAsModal` is incorrectly set, but the condition `!this._config.keyboard` guards the early return."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: open confirm dialog, press Escape three times, verify dialog stays open and focus remains on #otp.",
+    "Verify that the help dialog (default options) still closes on Escape.",
+    "Verify that clicking 'Cancel transfer' button still closes the dialog and sets status to 'Cancelled'.",
+    "Verify that entering a 6-digit code and pressing 'Send' closes the dialog and sets status to 'Sent'."
+  ]
+}

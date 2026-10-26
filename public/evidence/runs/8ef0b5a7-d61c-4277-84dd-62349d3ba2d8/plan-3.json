@@ -1,0 +1,23 @@
+{
+  "root_cause": "The tabbable library (src/index.js) uses an invalid CSS selector 'details>summary:first-of-type' which causes querySelectorAll to throw a SyntaxError, breaking the focus trap's ability to compute tabbable nodes and move initial focus to the street input.",
+  "repair_strategy": "Replace the invalid pseudo-class ':first-of-type' with the standard ':first-child' in the candidateSelectors array so that tabbable() can successfully query focusable elements and the focus trap can set initial focus on the first usable field (#street).",
+  "edits": [
+    {
+      "path": "src/index.js",
+      "sha256": "8f69e239e7365811abad1130954bb9d4772c0f0e31c477f37f22a3644de78652",
+      "before": "const candidateSelectors = [\n  'input',\n  'select',\n  'textarea',\n  'a[href]',\n  'button',\n  '[tabindex]',\n  'audio[controls]',\n  'video[controls]',\n  '[contenteditable]:not([contenteditable=\"false\"])',\n  'details>summary:first-of-type',\n  'details',\n];",
+      "after": "const candidateSelectors = [\n  'input',\n  'select',\n  'textarea',\n  'a[href]',\n  'button',\n  '[tabindex]',\n  'audio[controls]',\n  'video[controls]',\n  '[contenteditable]:not([contenteditable=\"false\"])',\n  'details>summary:first-child',\n  'details',\n];"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users opening the address dialog will have focus immediately placed on the street address input field, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by ensuring the first usable control receives focus without requiring extra tab presses.",
+  "functional_risks": [
+    "If other pages rely on the previous (broken) selector behavior, they may see changed tabbable element sets, though the previous behavior was non-functional due to the syntax error.",
+    "The change modifies a shared dependency; any consumer of the tabbable package will receive the corrected selector."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: open dialog with Enter, verify focus lands on #street.",
+    "Confirm tab order within dialog cycles through #street, #save, #cancel (since #speed is disabled).",
+    "Verify Escape closes dialog and returns focus to #open button.",
+    "Check that clicking outside dialog does not break focus trap."
+  ]
+}

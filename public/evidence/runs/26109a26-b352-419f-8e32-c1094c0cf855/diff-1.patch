@@ -1,0 +1,56 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..e596dc2 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -118,6 +118,7 @@ class Datepicker extends BaseComponent {
+   protected declare _themeAncestor: Element | null | undefined
+   protected declare _onOutside: (event: Event) => void
+   protected declare _onTriggerClick: () => void
++  protected declare _onTabKeyDown: ((event: KeyboardEvent) => void) | null;
+ 
+   constructor(element?: string | Element | null, config?: Partial<DatepickerConfig> | null) {
+     super(element, config)
+@@ -168,6 +169,16 @@ class Datepicker extends BaseComponent {
+     this._isShown = true
+ 
+     EventHandler.trigger(this._element, EVENT_SHOWN)
++
++    // ADD: Add tab key listener to hide popup on Tab key
++    if (this._isInput) {
++      this._onTabKeyDown = (event: KeyboardEvent) => {
++        if (event.key === 'Tab') {
++          this.hide();
++        }
++      };
++      this._element.addEventListener('keydown', this._onTabKeyDown);
++    }
+   }
+ 
+   async hide(): Promise<void> {
+@@ -188,6 +199,12 @@ class Datepicker extends BaseComponent {
+     this._isShown = false
+ 
+     EventHandler.trigger(this._element, EVENT_HIDDEN)
++
++    // REMOVE: Remove tab key listener
++    if (this._isInput && this._onTabKeyDown) {
++      this._element.removeEventListener('keydown', this._onTabKeyDown);
++      this._onTabKeyDown = null;
++    }
+   }
+ 
+   override dispose(): void {
+@@ -210,6 +227,13 @@ class Datepicker extends BaseComponent {
+     }
+ 
+     this._calendar = null
++
++    // REMOVE: Remove tab key listener if not already removed
++    if (this._isInput && this._onTabKeyDown) {
++      this._element.removeEventListener('keydown', this._onTabKeyDown);
++      this._onTabKeyDown = null;
++    }
++
+     super.dispose()
+   }
+ 

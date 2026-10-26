@@ -1,0 +1,19 @@
+diff --git a/index.js b/index.js
+index 0a2a74a..5e8800d 100644
+--- a/index.js
++++ b/index.js
+@@ -551,6 +551,14 @@ const createFocusTrap = function (elements, userOptions) {
+       // no groups available
+       // NOTE: the fallbackFocus option does not support returning false to opt-out
+       destinationNode = getNodeForOption('fallbackFocus');
++      // If we still don't have a destination node, try to focus the first focusable node in the first container, or the container itself.
++      if (!destinationNode) {
++        // Try to get the first focusable node in the first container
++        if (state.containers.length > 0) {
++          const focusableNodes = focusable(state.containers[0], config.tabbableOptions);
++          destinationNode = focusableNodes[0] || state.containers[0];
++        }
++      }
+     }
+ 
+     if (destinationNode) {

@@ -1,0 +1,29 @@
+{
+  "root_cause": "The offcanvas plugin treats the panel as a modal dialog, adding aria-modal=true, role=dialog, and a focus-in listener that returns focus to the panel when it leaves, preventing tab navigation to fields outside the panel.",
+  "repair_strategy": "Remove the modal-specific attribute settings and focus-enforcement logic from the show and hide methods, making the offcanvas behave as a non-modal pane while preserving show/hide animation and backdrop handling.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "    this._element.removeAttribute('aria-hidden')\\n    this._element.setAttribute('aria-modal', true)\\n    this._element.setAttribute('role', 'dialog')\\n    this._element.classList.add(CLASS_NAME_SHOW)\\n\\n    const completeCallBack = () => {\\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\\n      this._enforceFocusOnElement(this._element)\\n    }",
+      "after": "    this._element.removeAttribute('aria-hidden')\\n    this._element.classList.add(CLASS_NAME_SHOW)\\n\\n    const completeCallBack = () => {\\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\\n    }"
+    },
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "    EventHandler.off(document, EVENT_FOCUSIN)\\n    this._element.blur()\\n    this._isShown = false\\n    this._element.classList.remove(CLASS_NAME_SHOW)\\n    this._backdrop.hide()\\n\\n    const completeCallback = () => {\\n      this._element.setAttribute('aria-hidden', true)\\n      this._element.removeAttribute('aria-modal')\\n      this._element.removeAttribute('role')\\n      this._element.style.visibility = 'hidden'\\n\\n      if (!this._config.scroll) {\\n        scrollBarReset()\\n      }\\n\\n      EventHandler.trigger(this._element, EVENT_HIDDEN)\\n    }",
+      "after": "    this._element.blur()\\n    this._isShown = false\\n    this._element.classList.remove(CLASS_NAME_SHOW)\\n    this._backdrop.hide()\\n\\n    const completeCallback = () => {\\n      this._element.setAttribute('aria-hidden', true)\\n      this._element.style.visibility = 'hidden'\\n\\n      if (!this._config.scroll) {\\n        scrollBarReset()\\n      }\\n\\n      EventHandler.trigger(this._element, EVENT_HIDDEN)\\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab navigation will now pass through the offcanvas panel, allowing the amount field to receive focus within the allowed number of tab presses when the panel is open.",
+  "functional_risks": [
+    "Users relying on the offcanvas as a modal dialog may lose modal focus trapping, potentially causing confusion for screen‑reader users.",
+    "Removing the focus-in listener may allow focus to wander off the panel when it is intended to be modal."
+  ],
+  "verification_requirements": [
+    "Confirm that the amount field receives focus within 6 tab presses after opening the help panel.",
+    "Ensure the help panel can still be opened and closed via its trigger and close button.",
+    "Verify that the panel’s visibility, hide/show animations, and backdrop behavior remain unchanged.",
+    "Check that scrolling behavior when the panel is open is unaffected."
+  ]
+}

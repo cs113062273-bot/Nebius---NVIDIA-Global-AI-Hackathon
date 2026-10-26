@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "id": "bs6-dialog-pointer-send",
+  "title": "Confirm with the pointer",
+  "goal": "Clicking the backdrop does not close the dialog; entering the code and clicking Send completes the transfer",
+  "source": "authored",
+  "profile": "pointer",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Open the confirmation",
+      "action": {
+        "kind": "click",
+        "selector": "#confirm-open"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Type the code",
+      "action": {
+        "kind": "type",
+        "text": "482913"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Send",
+      "action": {
+        "kind": "click",
+        "selector": "#send"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Sent"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#confirm-dialog",
+      "name": "open",
+      "value": null
+    }
+  ],
+  "forbidden": []
+}

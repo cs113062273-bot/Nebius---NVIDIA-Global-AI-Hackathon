@@ -1,0 +1,24 @@
+{
+  "root_cause": "The suggestion list items have tabindex='0', placing them in the tab order. When the list is open, pressing Tab from the city input focuses the first suggestion instead of moving to the next form field.",
+  "repair_strategy": "Change the tabindex of list items from '0' to '-1' in the Awesomplete ITEM function, removing them from the tab order while preserving ARIA roles and screen‑reader accessibility via aria-activedescendant.",
+  "edits": [
+    {
+      "path": "awesomplete.js",
+      "sha256": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6",
+      "before": "_.ITEM = function (text, input, item_id) {\n\tvar html = input.trim() === \"\" ? text : text.replace(RegExp($.regExpEscape(input.trim()), \"gi\"), \"<mark>$&</mark>\");\n\treturn $.create(\"li\", {\n\t\tinnerHTML: html,\n\t\t\"role\": \"option\",\n\t\t\"aria-selected\": \"false\",\n\t\t\"tabindex\": '0', // for the Talkback screen reader\n\t\t\"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n\t});\n};",
+      "after": "_.ITEM = function (text, input, item_id) {\n\tvar html = input.trim() === \"\" ? text : text.replace(RegExp($.regExpEscape(input.trim()), \"gi\"), \"<mark>$&</mark>\");\n\treturn $.create(\"li\", {\n\t\tinnerHTML: html,\n\t\t\"role\": \"option\",\n\t\t\"aria-selected\": \"false\",\n\t\t\"tabindex\": '-1', // for the Talkback screen reader\n\t\t\"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n\t});\n};"
+    }
+  ],
+  "expected_accessibility_effect": "Pressing Tab while the autocomplete list is visible will move focus to the next form field (#dietary) instead of trapping focus in the suggestion list, restoring correct tab order.",
+  "functional_risks": [
+    "Talkback or other screen readers that relied on tabindex='0' for list item navigation may need to rely on aria-activedescendant; however the widget already sets this attribute when an item is highlighted, so impact is minimal.",
+    "Any custom CSS that styles :focus on list items based on tabindex may no longer apply; verify that visual focus indicators are still provided via arrow-key navigation."
+  ],
+  "verification_requirements": [
+    "After typing at least two characters in the city field, the suggestion list appears.",
+    "Pressing Tab moves focus to the dietary requirements field when the list is open.",
+    "ArrowUp/ArrowDown still navigate within the suggestion list.",
+    "Enter key selects the highlighted suggestion and closes the list.",
+    "Screen readers can still announce suggestions and the selected value via the combobox's aria-activedescendant."
+  ]
+}

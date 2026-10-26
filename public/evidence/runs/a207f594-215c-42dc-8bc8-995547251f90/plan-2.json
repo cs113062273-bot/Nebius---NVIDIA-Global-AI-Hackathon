@@ -1,0 +1,23 @@
+{
+  "root_cause": "The datepicker does not close when the input field loses focus (e.g., pressing Tab). The library registers event listeners for keydown, focus, mousedown, click, and paste, but not for blur. Therefore, the picker remains visible after the user tabs away from the date field.",
+  "repair_strategy": "Add a blur event listener to the input field in the Datepicker constructor (for non-inline pickers) that calls picker.hide(). This will close the calendar when the field loses focus, regardless of whether the typed date is valid or outside the delivery window.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "     } else {\n       // set up event listeners\n       registerListeners(this, [\n         [inputField, 'keydown', onKeydown.bind(null, this)],\n         [inputField, 'focus', onFocus.bind(null, this)],\n         [inputField, 'mousedown', onMousedown.bind(null, this)],\n         [inputField, 'click', onClickInput.bind(null, this)],\n         [inputField, 'paste', onPaste.bind(null, this)],\n       ]);\n     }",
+      "after": "     } else {\n       // set up event listeners\n       registerListeners(this, [\n         [inputField, 'keydown', onKeydown.bind(null, this)],\n         [inputField, 'focus', onFocus.bind(null, this)],\n         [inputField, 'mousedown', onMousedown.bind(null, this)],\n         [inputField, 'click', onClickInput.bind(null, this)],\n         [inputField, 'paste', onPaste.bind(null, this)],\n         [inputField, 'blur', function() { if (!this.inline) this.picker.hide(); }.bind(this)],\n       ]);\n     }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can tab away from the date field and the calendar will close, preventing the calendar from obscuring subsequent content. This improves focus management and reduces visual clutter for all users, especially those relying on keyboard navigation.",
+  "functional_risks": [
+    "The blur handler may fire when the user clicks inside the picker (which refocuses the input). The picker's onClickPicker handler refocuses the input, so the blur event may not occur or may be immediately followed by focus. The hide() method checks active state, so redundant calls are safe.",
+    "If the picker is inline, the hide() call is skipped because inline pickers should not close on blur."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey: type an unavailable date (2024-07-15) and press Tab; verify the datepicker is no longer visible.",
+    "Run the regression guard: type a valid date (2024-05-21) and press Tab; verify the datepicker closes and the form data updates.",
+    "Test with mouse click outside the picker to ensure it still closes (existing onClickOutside behavior).",
+    "Test with an inline datepicker (if any) to ensure it does not close on blur."
+  ]
+}

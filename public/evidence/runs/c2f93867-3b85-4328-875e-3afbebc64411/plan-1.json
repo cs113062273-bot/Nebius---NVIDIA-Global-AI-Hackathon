@@ -1,0 +1,24 @@
+{
+  "root_cause": "Escape key handler in listController.navigate clears the input value, causing loss of user-typed city when closing suggestions.",
+  "repair_strategy": "Remove the lines that set ctx.input.value to empty and emit the clear event on Escape, keeping only the close(list) call to hide the suggestion list while preserving the input value.",
+  "edits": [
+    {
+      "path": "src/controllers/listController.js",
+      "sha256": "913fcec2ffc448fd458cae19dd873623256f7e1c1ba3eab15225d68f74351f8f",
+      "before": "    // Esc\n    case 27:\n      // Clear \"input\" value\n      ctx.input.value = \"\";\n\n      /**\n       * @emit {clear} event on input clear\n       */\n      eventEmitter('clear', ctx);\n\n      close(ctx);\n      break;",
+      "after": "    // Esc\n    case 27:\n      close(ctx);\n      break;"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close the suggestion list without altering the input value, preserving keyboard operability and ensuring the user's entered city remains available for submission.",
+  "functional_risks": [
+    "Removing the clear event may affect any custom listeners that rely on the 'clear' event triggered by Escape.",
+    "If other code expects the input to be emptied on Escape, they may need to adjust."
+  ],
+  "verification_requirements": [
+    "Escape closes the suggestion list (aria-expanded false, list hidden).",
+    "Input value remains unchanged after Escape.",
+    "Focus returns to the city input.",
+    "Form data reflects the typed city after Escape.",
+    "ArrowDown and Enter selection still works as before."
+  ]
+}

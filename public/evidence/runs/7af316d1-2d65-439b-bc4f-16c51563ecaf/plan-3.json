@@ -1,0 +1,25 @@
+{
+  "root_cause": "Arrow key navigation uses adjustDate which adds/subtracts days without checking if the resulting date is disabled (e.g., weekends, outside min/max, or disabled by disableDayFn). Additionally, the _onKeyChange function references an undefined 'opts' variable for Escape/Enter keys.",
+  "repair_strategy": "Replace the key handling logic in _onKeyChange with a helper that steps day-by-day, skipping disabled dates according to minDate, maxDate, disableWeekends, and disableDayFn, then sets the corrected date. Also define opts = self._o for the Escape/Enter cases.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }",
+      "after": "            if (self.isVisible()) {\n                var opts = self._o;\n                function isDateDisabled(d) {\n                    if (opts.minDate && d < opts.minDate) return true;\n                    if (opts.maxDate && d > opts.maxDate) return true;\n                    if (opts.disableWeekends && (d.getDay()===0 || d.getDay()===6)) return true;\n                    if (opts.disableDayFn && opts.disableDayFn(d)) return true;\n                    return false;\n                }\n                function shiftDate(sign, days) {\n                    var step = sign === 'add' ? 1 : -1;\n                    var count = Math.abs(days);\n                    var date = self.getDate() || new Date();\n                    while (count > 0) {\n                        date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + step);\n                        if (opts.minDate && date < opts.minDate) {\n                            date = new Date(opts.minDate);\n                            break;\n                        }\n                        if (opts.maxDate && date > opts.maxDate) {\n                            date = new Date(opts.maxDate);\n                            break;\n                        }\n                        if (!isDateDisabled(date)) {\n                            count--;\n                        }\n                    }\n                    return date;\n                }\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.setDate(shiftDate('subtract', 1));\n                        break;\n                    case 38:\n                        self.setDate(shiftDate('subtract', 7));\n                        break;\n                    case 39:\n                        self.setDate(shiftDate('add', 1));\n                        break;\n                    case 40:\n                        self.setDate(shiftDate('add', 7));\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate to the next/previous selectable day using arrow keys, ensuring focus moves only to enabled dates, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Performance impact is negligible as date ranges are limited; worst-case loops a few dozen iterations.",
+    "If minDate exceeds maxDate or all dates are disabled, the loop will terminate at the boundary due to clamping.",
+    "No change to mouse selection or other API methods; adjustDate remains unchanged for other callers."
+  ],
+  "verification_requirements": [
+    "ArrowRight from Friday 2026-11-20 yields Monday 2026-11-23.",
+    "ArrowLeft from Monday 2026-11-23 yields Friday 2026-11-20.",
+    "ArrowUp/Down shift by weeks while skipping weekends and respecting min/max bounds.",
+    "Navigation stops at minDate and maxDate boundaries.",
+    "Existing mouse selection and manual date entry remain functional."
+  ]
+}

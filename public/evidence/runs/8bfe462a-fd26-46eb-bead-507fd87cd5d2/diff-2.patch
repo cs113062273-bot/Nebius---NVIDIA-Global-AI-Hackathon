@@ -1,0 +1,21 @@
+diff --git a/awesomplete.js b/awesomplete.js
+index 861abb9..4003a56 100644
+--- a/awesomplete.js
++++ b/awesomplete.js
+@@ -86,9 +86,13 @@ var _ = function (input, o) {
+ 						evt.preventDefault();
+ 						me.select(undefined, undefined, evt);
+ 					}
+-					else if (c === 9 && me.selected && me.tabSelect) {
+-						evt.preventDefault();
+-						me.select(undefined, undefined, evt);
++					else if (c === 9) { // Tab
++						if (me.selected && me.tabSelect) {
++							evt.preventDefault();
++							me.select(undefined, undefined, evt);
++						} else {
++							me.close({ reason: "tab" });
++						}
+ 					}
+ 					else if (c === 27) { // Esc
+ 						me.close({ reason: "esc" });

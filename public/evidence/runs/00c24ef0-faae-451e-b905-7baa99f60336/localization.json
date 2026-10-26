@@ -1,0 +1,23 @@
+[
+  {
+    "path": "index.html",
+    "score": 5,
+    "signals": [
+      "summary",
+      "report-form",
+      "body",
+      "Summary of the problem",
+      "Send report"
+    ],
+    "sha256": "6ff9f54298e41bf4c758a3d3122930f052320818f7e3832ad564977239e71a03",
+    "editable": false
+  },
+  {
+    "path": "src/govuk/components/character-count/character-count.js",
+    "score": 4.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90"
+  }
+]

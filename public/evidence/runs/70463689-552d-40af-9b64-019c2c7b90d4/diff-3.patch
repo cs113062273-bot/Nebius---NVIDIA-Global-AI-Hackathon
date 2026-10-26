@@ -1,0 +1,34 @@
+diff --git a/index.js b/index.js
+index 0a2a74a..a833d56 100644
+--- a/index.js
++++ b/index.js
+@@ -418,6 +418,11 @@ const createFocusTrap = function (elements, userOptions) {
+   };
+ 
+   // In case focus escapes the trap for some strange reason, pull it back in.
++  const isNodeAttached = function (node) {
++    // Check if node is still connected to the DOM (standard API) or fallback to ownerDocument containment
++    return node?.isConnected ?? (node?.ownerDocument?.documentElement?.contains?.(node) ?? false);
++  };
++
+   const checkFocusIn = function (e) {
+     const target = getActualTarget(e);
+     const targetContained = findContainerIndex(target, e) >= 0;
+@@ -430,7 +435,16 @@ const createFocusTrap = function (elements, userOptions) {
+     } else {
+       // escaped! pull it back in to where it just left
+       e.stopImmediatePropagation();
+-      tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());
++      let focusNode = state.mostRecentlyFocusedNode;
++      // If the most recently focused node is no longer attached or not focusable, use the initial focus node.
++      if (
++        !focusNode ||
++        !isNodeAttached(focusNode) ||
++        !isFocusable(focusNode, config.tabbableOptions)
++      ) {
++        focusNode = getInitialFocusNode();
++      }
++      tryFocus(focusNode);
+     }
+   };
+ 

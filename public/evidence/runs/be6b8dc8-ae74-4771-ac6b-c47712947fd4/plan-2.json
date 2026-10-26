@@ -1,0 +1,29 @@
+{
+  "root_cause": "The radios component only updates conditional visibility on click events via handleClick, which loops through all radios with aria-controls. Keyboard navigation fires change events, but the previous handleChange only processed the target input. When arrowing from a radio with aria-controls (text message) to one without (opt-out), the change event fires on the opt-out radio, so the text message's conditional field remains visible.",
+  "repair_strategy": "Add a change event listener in init() and a handleChange method that loops through all radios with aria-controls (mirroring handleClick), ensuring keyboard selection updates all conditional fields based on current checked states.",
+  "edits": [
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n}",
+      "after": "  // Handle events\n  $module.addEventListener('click', this.handleClick.bind(this))\n  $module.addEventListener('change', this.handleChange.bind(this))\n}"
+    },
+    {
+      "path": "src/govuk/components/radios/radios.js",
+      "sha256": "a5f3970a55a7d3dd59bfdfb0ef82c8f9f8fd2ace3eefa606ec486fb263e86b8c",
+      "before": "Radios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nexport default Radios",
+      "after": "Radios.prototype.handleClick = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle click\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nRadios.prototype.handleChange = function (event) {\n  nodeListForEach(this.$inputs, function ($input) {\n    // If a radio with aria-controls, handle change\n    var isRadio = $input.getAttribute('type') === 'radio'\n    var hasAriaControls = $input.getAttribute('aria-controls')\n    if (isRadio && hasAriaControls) {\n      this.setAttributes($input)\n    }\n  }.bind(this))\n}\n\nexport default Radios"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard navigation (arrow keys) will correctly show/hide conditional fields when moving between radio options, including hiding the mobile number field when opting out after selecting Text message, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Duplicate handling if both click and change events fire for the same interaction, but setAttributes is idempotent.",
+    "If another script also listens for change events on the same radios, there could be unintended side effects, though the change event is standard and unlikely to conflict."
+  ],
+  "verification_requirements": [
+    "Verify that pressing ArrowDown from the email radio to the text radio hides the email input and shows the mobile number input.",
+    "Verify that pressing ArrowDown from the text radio to the opt-out radio hides the mobile number input.",
+    "Verify that mouse clicks still correctly show/hide the associated conditional fields.",
+    "Verify that the aria-expanded attribute on each radio reflects its checked state after keyboard selection."
+  ]
+}

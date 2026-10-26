@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T08:23:04.707Z",
+  "policy": "auto",
+  "modelRun": "b03f1bbb-ba79-4036-a6cc-8c4215811246",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-65671a2cbec42a4633018459ba10245f",
+      "usage": {
+        "completion_tokens": 3935,
+        "prompt_tokens": 33582,
+        "total_tokens": 37517,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3289,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 33582
+      },
+      "latencyMs": 23784,
+      "reservedCreditUsd": 0.06407879999999999
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-f4da842d429a5d72ab5d7a16a2bd80cf",
+      "usage": {
+        "completion_tokens": 4628,
+        "prompt_tokens": 34082,
+        "total_tokens": 38710,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3962,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 34082
+      },
+      "latencyMs": 15011,
+      "reservedCreditUsd": 0.216007
+    }
+  ]
+}

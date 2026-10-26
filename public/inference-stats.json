@@ -1,65 +1,65 @@
 {
-  "generatedAt": "2026-10-26T06:53:31.402Z",
+  "generatedAt": "2026-10-26T09:10:03.296Z",
   "note": "Every call made from this project's local machine to Nebius Token Factory, from the call ledger; GitHub Actions live runs keep their own ledgers and are not included. No recorded outcome: reserved but never completed (in flight, or the process stopped). Unusable output: a completion that ended normally but was not valid JSON for the repair schema. Repair attempts: what Chromium and the gates decided about each model's parsed proposals.",
-  "calls": 602,
-  "catalogUsd": 13.08,
+  "calls": 801,
+  "catalogUsd": 17.79,
   "models": {
     "Nemotron-3-Ultra-550b-a55b": {
-      "calls": 279,
-      "completed": 267,
-      "truncatedAtOutputLimit": 7,
+      "calls": 367,
+      "completed": 354,
+      "truncatedAtOutputLimit": 8,
       "unusableOutput": 3,
       "noRecordedOutcome": 2,
       "otherFailures": 0,
       "latencySeconds": {
-        "p50": 17,
-        "p90": 33.9
+        "p50": 17.1,
+        "p90": 34.3
       },
-      "promptTokensP50": 15863,
-      "completionTokensP50": 6182,
-      "reasoningTokensP50": 4886,
-      "catalogUsd": 9.74,
-      "usdPerCompletedCall": 0.0365,
+      "promptTokensP50": 16681,
+      "completionTokensP50": 6202,
+      "reasoningTokensP50": 5056,
+      "catalogUsd": 13.13,
+      "usdPerCompletedCall": 0.0371,
       "firstCall": "2026-10-21",
       "lastCall": "2026-10-26",
       "repairAttempts": {
-        "attempts": 273,
-        "verified": 108,
+        "attempts": 361,
+        "verified": 135,
         "byCategory": {
-          "VERIFICATION": 117,
-          "APPLICATION": 39,
-          "TRUNCATED": 6,
+          "VERIFICATION": 154,
+          "APPLICATION": 62,
+          "TRUNCATED": 7,
           "PROPOSAL": 3
         }
       }
     },
     "nemotron-3-super-120b-a12b": {
-      "calls": 321,
-      "completed": 272,
-      "truncatedAtOutputLimit": 7,
-      "unusableOutput": 42,
-      "noRecordedOutcome": 0,
+      "calls": 432,
+      "completed": 364,
+      "truncatedAtOutputLimit": 9,
+      "unusableOutput": 58,
+      "noRecordedOutcome": 1,
       "otherFailures": 0,
       "latencySeconds": {
-        "p50": 28.2,
-        "p90": 63.6
+        "p50": 29.1,
+        "p90": 66.2
       },
-      "promptTokensP50": 14554,
-      "completionTokensP50": 5232,
-      "reasoningTokensP50": 4572,
-      "catalogUsd": 3.34,
-      "usdPerCompletedCall": 0.0123,
+      "promptTokensP50": 14680,
+      "completionTokensP50": 5699,
+      "reasoningTokensP50": 4985,
+      "catalogUsd": 4.66,
+      "usdPerCompletedCall": 0.0128,
       "firstCall": "2026-10-21",
       "lastCall": "2026-10-26",
       "repairAttempts": {
-        "attempts": 313,
-        "verified": 134,
+        "attempts": 423,
+        "verified": 190,
         "byCategory": {
-          "VERIFICATION": 88,
-          "APPLICATION": 37,
-          "PROPOSAL": 41,
+          "VERIFICATION": 114,
+          "APPLICATION": 47,
+          "PROPOSAL": 57,
           "BUILD": 5,
-          "TRUNCATED": 7,
+          "TRUNCATED": 9,
           "OVERFIT": 1
         }
       }

@@ -1,0 +1,86 @@
+[
+  {
+    "path": "index.html",
+    "score": 4,
+    "signals": [
+      "store",
+      "body",
+      "Store suggestions",
+      "Confirm store"
+    ],
+    "sha256": "8411e321e70f4666979bedd766dad8d752361db7c41f9fdf5701c3a566c41f69",
+    "editable": false
+  },
+  {
+    "path": "src/autoComplete.js",
+    "score": 3.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "7972b1ca607338bb3595d09e773edb6259cad86799bcca3412a208604d0e8ce6"
+  },
+  {
+    "path": "src/components/Input.js",
+    "score": 3,
+    "signals": [
+      "Imported runtime dependency of src/autoComplete.js"
+    ],
+    "sha256": "d05ee4a7dd8c690424fd55d1178ec96cd4c2af4749f9066d6ee2de18f111f7ac"
+  },
+  {
+    "path": "src/controllers/listController.js",
+    "score": 3,
+    "signals": [
+      "Imported runtime dependency of src/autoComplete.js"
+    ],
+    "sha256": "76a2205fe038ed4978c716e8899a9b8aae81ec812d1334ec9e71dbc8c1fc7402"
+  },
+  {
+    "path": "src/controllers/navigationController.js",
+    "score": 3,
+    "signals": [
+      "Imported runtime dependency of src/autoComplete.js"
+    ],
+    "sha256": "3f7f66612501cb9d0fbe0a4d8b3d7732ca01228bf922d9b794daa60f87a0c4a4"
+  },
+  {
+    "path": "src/controllers/dataController.js",
+    "score": 3,
+    "signals": [
+      "Imported runtime dependency of src/autoComplete.js"
+    ],
+    "sha256": "79985671d01a7410dd3caa709f6372a05c9a524998a5622da03afe49da748311"
+  },
+  {
+    "path": "src/utils/debouncer.js",
+    "score": 3,
+    "signals": [
+      "Imported runtime dependency of src/autoComplete.js"
+    ],
+    "sha256": "fc257624ccd18bca91f61070e16d38d3fb9cb8e6a903f5ca0613b7605484aebb"
+  },
+  {
+    "path": "src/utils/eventEmitter.js",
+    "score": 3,
+    "signals": [
+      "Imported runtime dependency of src/autoComplete.js"
+    ],
+    "sha256": "46178a6d9ff07d4c72a8192804c48b95b03dc1d5d941136b7558c497f468fd0e"
+  },
+  {
+    "path": "src/components/List.js",
+    "score": 2.5,
+    "signals": [
+      "Imported runtime dependency of src/controllers/listController.js"
+    ],
+    "sha256": "e7b8529bc4af65cf7d11f4795eba073efbc67a6791a2a4250d77bfb2bcc26e79"
+  },
+  {
+    "path": "src/components/Item.js",
+    "score": 2.5,
+    "signals": [
+      "Imported runtime dependency of src/controllers/listController.js"
+    ],
+    "sha256": "161167d779cdf06c066a6edff1d2f50dd73256cca63d9c9a81dfb0144a9e1b1d"
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "root_cause": "The component incorrectly removes the maxlength attribute from the container div ($module) instead of the textarea ($textarea), leaving the browser-enforced limit active and truncating user input beyond the limit.",
+  "repair_strategy": "Change the removal target from $module to $textarea so the textarea's maxlength attribute is removed, allowing the custom character count to manage input length and provide accurate overflow messaging.",
+  "edits": [
+    {
+      "path": "src/govuk/components/character-count/character-count.js",
+      "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90",
+      "before": "  // Save the element limit\n  this.maxLength = $module.getAttribute(countAttribute)\n\n  // Check for limit\n  if (!this.maxLength) {\n    return\n  }\n\n  // Remove hard limit if set\n  $module.removeAttribute('maxlength')\n\n  this.bindChangeEvents()",
+      "after": "  // Save the element limit\n  this.maxLength = $module.getAttribute(countAttribute)\n\n  // Check for limit\n  if (!this.maxLength) {\n    return\n  }\n\n  // Remove hard limit if set\n  $textarea.removeAttribute('maxlength')\n\n  this.bindChangeEvents()"
+    }
+  ],
+  "expected_accessibility_effect": "Users will receive correct character count feedback when exceeding the limit, ensuring error messages are announced via live region and visual error styling is applied, satisfying WCAG 2.1.1 (Keyboard), 2.4.3 (Focus Order), and 4.1.2 (Name, Role, Value).",
+  "functional_risks": [
+    "Potential regression if other code expects the maxlength attribute to remain on the textarea, but the component already manages the limit, so risk is low.",
+    "Ensure that the non-JavaScript fallback still works (hard maxlength remains for noscript); the change only affects when JavaScript is enabled."
+  ],
+  "verification_requirements": [
+    "Verify that typing beyond the limit shows the correct overflow count (e.g., 'You have 4 characters too many') and applies error styling to the textarea.",
+    "Verify that the textarea value is not truncated and contains the full user input.",
+    "Verify that screen readers receive the updated message through the live region.",
+    "Verify that deleting characters reduces the count correctly and removes the error state when within limit.",
+    "Verify that existing tests for input within the limit continue to pass."
+  ]
+}

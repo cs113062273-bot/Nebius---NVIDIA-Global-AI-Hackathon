@@ -1,0 +1,20 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..0b0ce01 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -127,6 +127,15 @@ class Drawer extends DialogBase {
+     return this._isAnimated()
+   }
+ 
++  protected override _showElement({ modal = true, preventBodyScroll = true }: { modal?: boolean, preventBodyScroll?: boolean } = {}): void {
++    super._showElement({ modal, preventBodyScroll })
++    // Focus the close button after showing
++    const closeButton = this._element.querySelector('[data-bs-dismiss="drawer"]')
++    if (closeButton instanceof HTMLElement) {
++      closeButton.focus()
++    }
++  }
++
+   // Private
+ 
+   protected _initResizeObserver(): void {

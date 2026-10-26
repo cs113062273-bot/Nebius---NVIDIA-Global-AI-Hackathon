@@ -1,0 +1,26 @@
+[
+  {
+    "path": "index.html",
+    "score": 8,
+    "signals": [
+      "nav-apply",
+      "body",
+      "GOV.UK",
+      "Apply for a fishing licence",
+      "Show or hide navigation menu",
+      "Apply",
+      "Renew a licence",
+      "Fishing rules"
+    ],
+    "sha256": "e93915064cfc032e4ccdfc1aea233d09a6dc7554e7b128feab1738c7bf3e45b6",
+    "editable": false
+  },
+  {
+    "path": "src/govuk/components/header/header.js",
+    "score": 7.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424"
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "root_cause": "The suggestion list items have tabindex='0', making them focusable and part of the tab order. When the list is open, pressing Tab moves focus to the first suggestion instead of skipping to the next form field.",
+  "repair_strategy": "Change the tabindex of listbox option elements from '0' to '-1' (or remove) to exclude them from the tab order while preserving arrow-key navigation and screen reader support via aria-activedescendant.",
+  "edits": [
+    {
+      "path": "awesomplete.js",
+      "sha256": "b60dd8ec51ae96e979d58de3e9681449056b74a3d44031eb1121f325bc2e3af6",
+      "before": "_.ITEM = function (text, input, item_id) {\n\tvar html = input.trim() === \"\" ? text : text.replace(RegExp($.regExpEscape(input.trim()), \"gi\"), \"<mark>$&</mark>\");\n\treturn $.create(\"li\", {\n\t\tinnerHTML: html,\n\t\t\"role\": \"option\",\n\t\t\"aria-selected\": \"false\",\n\t\t\"tabindex\": '0', // for the Talkback screen reader\n\t\t\"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n\t});\n}",
+      "after": "_.ITEM = function (text, input, item_id) {\n\tvar html = input.trim() === \"\" ? text : text.replace(RegExp($.regExpEscape(input.trim()), \"gi\"), \"<mark>$&</mark>\");\n\treturn $.create(\"li\", {\n\t\tinnerHTML: html,\n\t\t\"role\": \"option\",\n\t\t\"aria-selected\": \"false\",\n\t\t\"tabindex\": '-1', // for the Talkback screen reader\n\t\t\"id\": \"awesomplete_list_\" + this.count + \"_item_\" + item_id\n\t});\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key will now move focus from the city combobox to the next form field (dietary requirements) when the suggestion list is visible, satisfying WCAG 2.1.1 keyboard operability and providing a logical tab order.",
+  "functional_risks": [
+    "Talkback screen reader may rely on tabindex='0' for option discovery; changing to '-1' could reduce its effectiveness, though aria-activedescendant should still convey selection.",
+    "Ensure that mouse selection and Enter key selection remain unaffected."
+  ],
+  "verification_requirements": [
+    "Type 'Ber' in the city field to open suggestions, then press Tab and verify focus moves to the dietary requirements field.",
+    "Verify that Arrow Up/Down keys still navigate the list and that Enter selects the highlighted suggestion and closes the list.",
+    "Confirm that the selected city value is correctly inserted into the input after selection."
+  ]
+}

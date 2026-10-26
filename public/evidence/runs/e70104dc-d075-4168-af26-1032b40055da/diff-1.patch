@@ -1,0 +1,14 @@
+diff --git a/src/govuk/components/header/header.js b/src/govuk/components/header/header.js
+index 84eb54f..432cdd4 100644
+--- a/src/govuk/components/header/header.js
++++ b/src/govuk/components/header/header.js
+@@ -21,7 +21,8 @@ Header.prototype.init = function () {
+     return
+   }
+ 
+-  this.syncState(this.$menu.classList.contains('govuk-header__navigation--open'))
++  const isVisible = !this.$menuButton.offsetParent || this.$menu.classList.contains('govuk-header__navigation--open')
++  this.syncState(isVisible)
+   this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))
+ }
+ 

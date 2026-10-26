@@ -1,0 +1,25 @@
+{
+  "root_cause": "The arrow key handlers in _onKeyChange adjust the date by a fixed amount without checking whether the resulting date is disabled (e.g., weekends via disableDayFn), allowing navigation to closed days.",
+  "repair_strategy": "Replace the fixed-step adjustments in _onKeyChange with loops that step by the requested increment (1 day or 7 days) and repeatedly adjust until the resulting date passes the same validation used for rendering (minDate, maxDate, disableWeekends, disableDayFn).",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "            if (self.isVisible()) {\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }",
+      "after": "            if (self.isVisible()) {\n                function isAllowedDate(date) {\n                    if (!isDate(date)) return false;\n                    if (self._o.minDate && date < self._o.minDate) return false;\n                    if (self._o.maxDate && date > self._o.maxDate) return false;\n                    if (self._o.disableWeekends && isWeekend(date)) return false;\n                    if (self._o.disableDayFn && self._o.disableDayFn(date)) return false;\n                    return true;\n                }\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        var newDate = self.getDate() || new Date();\n                        do {\n                            newDate = new Date(newDate.valueOf() - 24*60*60*1000);\n                        } while (!isAllowedDate(newDate));\n                        self.setDate(newDate);\n                        break;\n                    case 38:\n                        var newDate = self.getDate() || new Date();\n                        do {\n                            newDate = new Date(newDate.valueOf() - 7*24*60*60*1000);\n                        } while (!isAllowedDate(newDate));\n                        self.setDate(newDate);\n                        break;\n                    case 39:\n                        var newDate = self.getDate() || new Date();\n                        do {\n                            newDate = new Date(newDate.valueOf() + 24*60*60*1000);\n                        } while (!isAllowedDate(newDate));\n                        self.setDate(newDate);\n                        break;\n                    case 40:\n                        var newDate = self.getDate() || new Date();\n                        do {\n                            newDate = new Date(newDate.valueOf() + 7*24*60*60*1000);\n                        } while (!isAllowedDate(newDate));\n                        self.setDate(newDate);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now navigate only to enabled weekdays using arrow keys, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) by preventing focus on disabled dates.",
+  "functional_risks": [
+    "Potential infinite loop if all dates are disabled (unlikely given typical usage).",
+    "Week navigation may skip multiple weeks if many consecutive disabled days.",
+    "Boundary behavior at min/max dates must still work."
+  ],
+  "verification_requirements": [
+    "Verify ArrowRight from a Friday moves to the following Monday.",
+    "Verify ArrowLeft from a Monday moves to the previous Friday.",
+    "Ensure navigation respects minDate and maxDate limits.",
+    "Confirm week arrows (Up/Down) skip weekends.",
+    "Ensure navigation does not get stuck when all days in a range are disabled."
+  ]
+}

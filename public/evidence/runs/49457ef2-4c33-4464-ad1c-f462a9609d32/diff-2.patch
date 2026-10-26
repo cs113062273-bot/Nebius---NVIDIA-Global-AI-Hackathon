@@ -1,0 +1,26 @@
+diff --git a/js/src/dialog-base.ts b/js/src/dialog-base.ts
+index 54bbd76..b207473 100644
+--- a/js/src/dialog-base.ts
++++ b/js/src/dialog-base.ts
+@@ -162,9 +162,9 @@ class DialogBase extends BaseComponent {
+     // leave a later instance on the same element showing an invisible dialog.
+     this._element.classList.remove('hiding')
+ 
+-    // The `cancel` listener is unnamespaced, so super.dispose()'s EVENT_KEY
+-    // teardown misses it — remove this instance's own handler here.
+-    EventHandler.off(this._element, 'cancel', this._cancelHandler)
++    // The `cancel` listener is namespaced, so super.dispose()'s EVENT_KEY
++    // teardown will remove it — remove this instance's own handler here.
++    EventHandler.off(this._element, EVENT_CANCEL, this._cancelHandler)
+ 
+     super.dispose()
+   }
+@@ -317,7 +317,7 @@ class DialogBase extends BaseComponent {
+       this.hide()
+     }
+ 
+-    EventHandler.on(this._element, 'cancel', this._cancelHandler)
++    EventHandler.on(this._element, EVENT_CANCEL, this._cancelHandler)
+ 
+     // Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())
+     EventHandler.on(this._element, `keydown${eventKey}`, event => {

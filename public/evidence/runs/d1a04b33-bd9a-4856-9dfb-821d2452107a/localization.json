@@ -1,0 +1,91 @@
+[
+  {
+    "path": "index.html",
+    "score": 9,
+    "signals": [
+      "open-help",
+      "help-text",
+      "help-close",
+      "body",
+      "amount",
+      "Policy help",
+      "Amount (EUR)",
+      "Submit report",
+      "Close help"
+    ],
+    "sha256": "60f9c30eaf2574c405d38683a298cad18c74b612a5860995a330a93d1aec35fc",
+    "editable": false
+  },
+  {
+    "path": "js/src/offcanvas.js",
+    "score": 8.5,
+    "signals": [
+      "Imported runtime dependency of index.html"
+    ],
+    "sha256": "8008243ad710528ccfdcada0687a6c260bd75c80964dcae1fa020fc9aa2e4f1d"
+  },
+  {
+    "path": "js/src/base-component.js",
+    "score": 8,
+    "signals": [
+      "Imported runtime dependency of js/src/offcanvas.js"
+    ],
+    "sha256": "09bbfc45c4b6e1439bb8916a2af866f9a00c84f5d8aa843d5b32b3bddeac338c"
+  },
+  {
+    "path": "js/src/util/focustrap.js",
+    "score": 8,
+    "signals": [
+      "Imported runtime dependency of js/src/offcanvas.js"
+    ],
+    "sha256": "f7bbd09ce32c3fcc1814193706a2b5b1ee5e1feecfe420b6e49991fb974ed673"
+  },
+  {
+    "path": "js/src/util/component-functions.js",
+    "score": 8,
+    "signals": [
+      "Imported runtime dependency of js/src/offcanvas.js"
+    ],
+    "sha256": "60c405489812fb679b00923e9d9e28bbd5bafad822d68a0ce58d7b951ecb32b3"
+  },
+  {
+    "path": "js/src/dom/data.js",
+    "score": 7.5,
+    "signals": [
+      "Imported runtime dependency of js/src/base-component.js"
+    ],
+    "sha256": "ef15ca97a901434c306e044d51df73f21e920f5084d2872d528c34d8cf981028"
+  },
+  {
+    "path": "js/src/util/backdrop.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "f19a9a6ec4e32d0d71ffdb9926205e0da431b33513b13147e8ca829e90f4a6b1"
+  },
+  {
+    "path": "js/src/util/index.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "6f7cb91b17496c3606cc8b485063063f374b8956d8b83fe503bb6084d15a7536"
+  },
+  {
+    "path": "js/src/util/scrollbar.js",
+    "score": 1,
+    "signals": [
+      "body"
+    ],
+    "sha256": "6cbc0fb09329984ba01330aca9e00ce6c359d1863b60e8788453d72d8c3ee2bf"
+  },
+  {
+    "path": "js/src/dom/event-handler.js",
+    "score": 1,
+    "signals": [
+      "Imported runtime dependency of js/src/util/backdrop.js"
+    ],
+    "sha256": "974b866421effbb5c305821eae59a49e65f9d10e1eb484775bcd9734527cebaa"
+  }
+]

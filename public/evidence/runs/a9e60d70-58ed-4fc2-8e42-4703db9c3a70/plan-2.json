@@ -1,0 +1,32 @@
+{
+  "root_cause": "The modal's focus trap (_enforceFocus) only handles forward focus escape via focusin event, but lacks a keydown handler for Shift+Tab backward wrapping. When Shift+Tab is pressed on the first focusable element (#confirm-close), focus should wrap to the last focusable element (#confirm-delete), but no logic intercepts this.",
+  "repair_strategy": "Add a keydown event listener on the modal element for Tab key that wraps focus bidirectionally: Shift+Tab on first focusable element focuses last, Tab on last focuses first. Register in _enforceFocus (called on show transition complete) and deregister in hide.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "const EVENT_KEYDOWN_DISMISS = `keydown.dismiss${EVENT_KEY}`\nconst EVENT_MOUSEUP_DISMISS = `mouseup.dismiss${EVENT_KEY}`",
+      "after": "const EVENT_KEYDOWN_DISMISS = `keydown.dismiss${EVENT_KEY}`\nconst EVENT_KEYDOWN_TAB = `keydown.tab${EVENT_KEY}`\nconst EVENT_MOUSEUP_DISMISS = `mouseup.dismiss${EVENT_KEY}`"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  _enforceFocus() {\n    EventHandler.off(document, EVENT_FOCUSIN) // guard against infinite focus loop\n    EventHandler.on(document, EVENT_FOCUSIN, event => {\n      if (document !== event.target &&\n          this._element !== event.target &&\n          !this._element.contains(event.target)) {\n        this._element.focus()\n      }\n    })\n  }",
+      "after": "  _enforceFocus() {\n    EventHandler.off(document, EVENT_FOCUSIN) // guard against infinite focus loop\n    EventHandler.on(document, EVENT_FOCUSIN, event => {\n      if (document !== event.target &&\n          this._element !== event.target &&\n          !this._element.contains(event.target)) {\n        this._element.focus()\n      }\n    })\n\n    EventHandler.on(this._element, EVENT_KEYDOWN_TAB, event => {\n      if (event.key !== 'Tab') return\n\n      const focusable = this._dialog.querySelectorAll(\n        'button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])'\n      )\n      const focusableArray = Array.from(focusable).filter(el =>\n        el.offsetParent !== null && !el.disabled && !el.hidden\n      )\n\n      if (focusableArray.length === 0) return\n\n      const first = focusableArray[0]\n      const last = focusableArray[focusableArray.length - 1]\n      const active = document.activeElement\n\n      if (event.shiftKey) {\n        if (active === first) {\n          event.preventDefault()\n          last.focus()\n        }\n      } else {\n        if (active === last) {\n          event.preventDefault()\n          first.focus()\n        }\n      }\n    })\n  }"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "    EventHandler.off(document, EVENT_FOCUSIN)\n\n    this._element.classList.remove(CLASS_NAME_SHOW)",
+      "after": "    EventHandler.off(document, EVENT_FOCUSIN)\n    EventHandler.off(this._element, EVENT_KEYDOWN_TAB)\n\n    this._element.classList.remove(CLASS_NAME_SHOW)"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can navigate the delete confirmation modal bidirectionally with Tab/Shift+Tab, meeting WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Minimal - only adds focus wrapping logic; no changes to existing focusin trap, backdrop, or dismissal behavior."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey \"Move backwards through the delete confirmation\" - Shift+Tab from Close button should focus Delete button.",
+    "Verify Tab from Delete button wraps to Close button."
+  ]
+}

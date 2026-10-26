@@ -1,0 +1,25 @@
+{
+  "root_cause": "The Escape key handler in submenu contexts incorrectly closes all submenus of the menubar instead of only the currently open submenu, causing focus to shift to the parent menubar item rather than the parent button of the closed submenu.",
+  "repair_strategy": "Modify the Escape key handling in the submenu case (_handleKeyup when !this.isTopLevel) to close only the submenu controlled by the toggle that opened it and move focus to that toggle's link, preserving the state of parent submenus.",
+  "edits": [
+    {
+      "path": "src/menubar.js",
+      "sha256": "35aa52673b33aeb4479c15d3f7863ce741e0ce9eee109ee5c70ae02a87a30864",
+      "before": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          this.elements.rootMenu.closeChildren();\n          this.elements.rootMenu.focusCurrentChild();\n        }",
+      "after": "        } else if (key === \"Escape\") {\n          // Hitting Escape:\n          // - Closes submenu.\n          // - Moves focus to parent menubar item.\n          preventEvent(event);\n          const parentMenu = this.elements.parentMenu;\n          if (parentMenu) {\n            const toggle = parentMenu.elements.submenuToggles.find(\n              t => t.elements.controlledMenu === this\n            );\n            if (toggle) {\n              toggle.close();\n              toggle.dom.toggle.focus();\n            }\n          }\n        }"
+    }
+  ],
+  "expected_accessibility_effect": "Escape will close only the innermost open submenu and return focus to its parent button, conforming to the ARIA Menubar design pattern.",
+  "functional_risks": [
+    "If a submenu is opened without an associated toggle (unlikely), the fallback guard prevents errors.",
+    "Depth‑greater‑than‑two submenu chains rely on the immediate parent menu's toggle list, which remains correct.",
+    "Ensure that toggle.close() properly closes the submenu and any of its own child submenus, which is the intended behavior."
+  ],
+  "verification_requirements": [
+    "Verify the specific journey: Escape in the Facts submenu returns focus to the Facts link and leaves the About submenu open.",
+    "Check that Escape in the About submenu closes About and returns focus to the About link.",
+    "Confirm that Escape when no submenu is open does not affect focus or menubar state.",
+    "Test nested submenus (if any) to ensure Escape closes only the current level.",
+    "Validate that aria‑expired attributes update correctly for the toggles involved."
+  ]
+}

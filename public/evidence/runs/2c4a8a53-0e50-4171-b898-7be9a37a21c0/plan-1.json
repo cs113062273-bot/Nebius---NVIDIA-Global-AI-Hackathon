@@ -1,0 +1,23 @@
+{
+  "root_cause": "Pikaday's global keydown listener processes ArrowLeft (and other arrow keys) whenever the calendar is visible, regardless of which element has focus. This prevents the default caret movement in other inputs, causing the space to be inserted at the end instead of between characters.",
+  "repair_strategy": "Modify _onKeyChange to early‑return when the calendar is visible but neither the associated field nor the picker container contains the active element. This preserves datepicker keyboard navigation when focus is inside the field or the calendar, while allowing normal editing behavior elsewhere.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "662123ec9f429dee9cffaacfcf89b05ed9c3c30a78d33ecfd113e6778349cc77",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n                if (opts.field !== document.activeElement && !self.el.contains(document.activeElement)) {\n                    return;\n                }\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        e.preventDefault();\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                }\n            }\n        };"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowLeft and ArrowRight will now move the caret in text inputs when the datepicker calendar is visible, enabling users to correct typos without the datepicker interfering.",
+  "functional_risks": [
+    "If a user focuses an element outside the field and picker while the calendar is open, arrow keys will no longer adjust the date (they previously would have). This is the intended behavior.",
+    "If opts.field is null and the picker is container‑only, reliance on self.el.contains ensures arrow keys work only when focus is inside the calendar."
+  ],
+  "verification_requirements": [
+    "Verify that ArrowLeft in the #notes input moves the caret left when the calendar is visible.",
+    "Verify that ArrowLeft/Right/Up/Dow​n still change the selected date when focus is inside the calendar or the delivery-date field.",
+    "Verify that Enter and Esc still close the picker when focus is inside the field or calendar.",
+    "Verify that typing in other inputs is not affected by the calendar's visibility."
+  ]
+}

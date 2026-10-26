@@ -1,0 +1,23 @@
+{
+  "root_cause": "The offcanvas component always enforces focus trapping and sets aria-modal=true regardless of the backdrop setting, preventing keyboard navigation to elements outside the panel when backdrop=false.",
+  "repair_strategy": "Make the offcanvas non‑modal when backdrop is false: conditionally apply aria-modal/role attributes and the focus‑enforcement listener only when this._config.backdrop is true, preserving the existing modal behavior when backdrop=true.",
+  "edits": [
+    {
+      "path": "js/src/offcanvas.js",
+      "sha256": "acd803008c3e6a0a08baaaad65fc36f204036f14190f4b30ac770f0097cd96b7",
+      "before": "  show(relatedTarget) {\n    if (this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW, { relatedTarget })\n\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._isShown = true\n    this._element.style.visibility = 'visible'\n\n    this._backdrop.show()\n\n    if (!this._config.scroll) {\n      scrollBarHide()\n    }\n\n    this._element.removeAttribute('aria-hidden')\n    this._element.setAttribute('aria-modal', true)\n    this._element.setAttribute('role', 'dialog')\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      this._enforceFocusOnElement(this._element)\n    }\n\n    const transitionDuration = getTransitionDurationFromElement(this._element)\n    EventHandler.one(this._element, 'transitionend', completeCallBack)\n    emulateTransitionEnd(this._element, transitionDuration)\n  }",
+      "after": "  show(relatedTarget) {\n    if (this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW, { relatedTarget })\n\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._isShown = true\n    this._element.style.visibility = 'visible'\n\n    this._backdrop.show()\n\n    if (!this._config.scroll) {\n      scrollBarHide()\n    }\n\n    this._element.removeAttribute('aria-hidden')\n    if (this._config.backdrop) {\n      this._element.setAttribute('aria-modal', true)\n      this._element.setAttribute('role', 'dialog')\n    } else {\n      this._element.removeAttribute('aria-modal')\n      this._element.removeAttribute('role')\n    }\n    this._element.classList.add(CLASS_NAME_SHOW)\n\n    const completeCallBack = () => {\n      EventHandler.trigger(this._element, EVENT_SHOWN, { relatedTarget })\n      if (this._config.backdrop) {\n        this._enforceFocusOnElement(this._element)\n      }\n    }\n\n    const transitionDuration = getTransitionDurationFromElement(this._element)\n    EventHandler.one(this._element, 'transitionend', completeCallBack)\n    emulateTransitionEnd(this._element, transitionDuration)\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Users can tab from the help panel into the amount field and other form controls while the panel is open, meeting WCAG 2.1.1 keyboard and 2.4.3 focus order requirements.",
+  "functional_risks": [
+    "Removing modal attributes may change how assistive technologies announce the panel, but the panel is intended to be non‑modal when backdrop=false.",
+    "Ensure that the default backdrop=true case continues to trap focus and behave as a modal dialog."
+  ],
+  "verification_requirements": [
+    "With data-bs-backdrop=\"false\" (as in the test), tabbing from the panel should reach #amount within ≤6 tabs.",
+    "With data-bs-backdrop=\"true\" or default, focus should remain trapped inside the panel when tabbing.",
+    "Opening and closing the panel via the button and ESC key should work correctly in both configurations.",
+    "ARIA attributes (aria-modal, role) should be present only when backdrop=true."
+  ]
+}

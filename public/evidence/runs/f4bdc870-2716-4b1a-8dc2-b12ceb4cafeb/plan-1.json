@@ -1,0 +1,22 @@
+{
+  "root_cause": "The header component incorrectly hides the navigation menu from assistive technology on initial load by setting aria-hidden=true regardless of viewport width, causing navigation links to be inaccessible on desktop.",
+  "repair_strategy": "Modify the init method to detect whether the menu button is visible (mobile) or hidden (desktop). If the button is visible (mobile), keep the navigation hidden with aria-hidden=true; if the button is hidden (desktop), ensure the navigation is visible by removing aria-hidden. This aligns the accessibility state with the CSS media query behavior.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.init = function () {\n  if (!this.$module || !this.$menuButton || !this.$menu) {\n    return\n  }\n\n  this.syncState(this.$menu.classList.contains('govuk-header__navigation--open'))\n  this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))\n}",
+      "after": "Header.prototype.init = function () {\n  if (!this.$module || !this.$menuButton || !this.$menu) {\n    return\n  }\n\n  // Determine if menu button is visible (i.e., not display:none)\n  var buttonVisible = window.getComputedStyle(this.$menuButton).getPropertyValue('display') !== 'none'\n\n  if (buttonVisible) {\n    // Mobile: menu hidden initially\n    this.$menu.setAttribute('aria-hidden', 'true')\n    this.$menuButton.setAttribute('aria-expanded', 'false')\n  } else {\n    // Desktop: menu visible initially\n    this.$menu.removeAttribute('aria-hidden')\n    this.$menuButton.setAttribute('aria-expanded', 'false')\n  }\n\n  this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))\n}"
+    }
+  ],
+  "expected_accessibility_effect": "Navigation links will be exposed as links to assistive technology on desktop widths, allowing keyboard and screen‑reader users to reach them via Tab.",
+  "functional_risks": [
+    "If getComputedStyle returns an empty string (e.g., element not yet in document), the visibility check could fail, but init runs after the module is constructed and the button is in the DOM.",
+    "The component does not respond to window resize changes; however, the original behavior also lacked resize handling, so risk is unchanged."
+  ],
+  "verification_requirements": [
+    "On desktop viewport, verify that the navigation ul has no aria-hidden attribute (or aria-hidden='false') and that the links have role='link' and accessible names matching their text content.",
+    "On mobile viewport, verify that the navigation ul has aria-hidden='true' and the menu button's aria-expanded toggles correctly when clicked.",
+    "Ensure keyboard focus order remains unchanged and that activating the menu button still shows/hides the navigation as expected."
+  ]
+}

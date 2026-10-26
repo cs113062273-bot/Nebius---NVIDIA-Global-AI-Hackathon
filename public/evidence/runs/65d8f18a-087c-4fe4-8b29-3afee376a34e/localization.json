@@ -1,0 +1,22 @@
+[
+  {
+    "path": "index.html",
+    "score": 13,
+    "signals": [
+      "symptoms-cough",
+      "symptoms-fever",
+      "symptoms-none",
+      "symptoms-form",
+      "body",
+      "A new continuous cough",
+      "A high temperature",
+      "A loss or change to your sense of smell or taste",
+      "No, I do not have any of these symptoms",
+      "Text message",
+      "Email",
+      "Do not contact me"
+    ],
+    "sha256": "6828d82d86a82e3e4e9364d8442eedcafd0b8f0740235e0d231082ffcd75878e",
+    "editable": false
+  }
+]

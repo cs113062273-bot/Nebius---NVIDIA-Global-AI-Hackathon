@@ -1,0 +1,25 @@
+{
+  "root_cause": "The modal's focus management (_enforceFocus) only traps focus via focusin event but does not handle keyboard wrap-around for Shift+Tab on the first focusable element or Tab on the last focusable element.",
+  "repair_strategy": "Add a keydown event listener on the modal element that intercepts Tab key presses, detects when focus is on the first/last focusable element in the dialog, and manually moves focus to the last/first element respectively with preventDefault.",
+  "edits": [
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "  _enforceFocus() {\n    EventHandler.off(document, EVENT_FOCUSIN) // guard against infinite focus loop\n    EventHandler.on(document, EVENT_FOCUSIN, event => {\n      if (document !== event.target &&\n          this._element !== event.target &&\n          !this._element.contains(event.target)) {\n        this._element.focus()\n      }\n    })\n  }\n\n  _setEscapeEvent() {",
+      "after": "  _enforceFocus() {\n    EventHandler.off(document, EVENT_FOCUSIN) // guard against infinite focus loop\n    EventHandler.on(document, EVENT_FOCUSIN, event => {\n      if (document !== event.target &&\n          this._element !== event.target &&\n          !this._element.contains(event.target)) {\n        this._element.focus()\n      }\n    })\n  }\n\n  _setFocusTrap() {\n    EventHandler.on(this._element, `keydown${EVENT_KEY}`, event => {\n      if (event.key !== 'Tab') {\n        return\n      }\n      const focusableElements = this._dialog.querySelectorAll(\n        'button, [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])'\n      )\n      if (focusableElements.length === 0) {\n        return\n      }\n      const firstElement = focusableElements[0]\n      const lastElement = focusableElements[focusableElements.length - 1]\n      const activeElement = document.activeElement\n\n      if (event.shiftKey && activeElement === firstElement) {\n        event.preventDefault()\n        lastElement.focus()\n      } else if (!event.shiftKey && activeElement === lastElement) {\n        event.preventDefault()\n        firstElement.focus()\n      }\n    })\n  }\n\n  _setEscapeEvent() {"
+    },
+    {
+      "path": "js/src/modal.js",
+      "sha256": "af810eae7fa73e5cb3f1e21175173eb0cee6a70c544a5fe8c70af93c9721a283",
+      "before": "    if (this._config.focus) {\n      this._enforceFocus()\n    }\n\n    const transitionComplete = () => {",
+      "after": "    if (this._config.focus) {\n      this._enforceFocus()\n      this._setFocusTrap()\n    }\n\n    const transitionComplete = () => {"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now navigate backwards (Shift+Tab) from the first control (Close button) to the last control (Delete button) in the delete confirmation modal, satisfying WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order).",
+  "functional_risks": [
+    "Low - the change only adds a keydown handler for Tab key when modal is shown, with proper cleanup via existing namespaced event disposal in BaseComponent.dispose()."
+  ],
+  "verification_requirements": [
+    "Run the frozen journey test \"Move backwards through the delete confirmation\" which presses Shift+Tab from #confirm-close and expects focus on #confirm-delete."
+  ]
+}

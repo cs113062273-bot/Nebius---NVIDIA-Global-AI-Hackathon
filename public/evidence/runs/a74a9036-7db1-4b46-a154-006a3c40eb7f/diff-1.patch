@@ -1,0 +1,17 @@
+diff --git a/js/src/drawer.ts b/js/src/drawer.ts
+index d91307e..a552905 100644
+--- a/js/src/drawer.ts
++++ b/js/src/drawer.ts
+@@ -64,6 +64,12 @@ class Drawer extends DialogBase {
+     this._swipeHelper = null
+     this._resizeObserver = null
+     this._resizeFrame = null
++    EventHandler.on(this._element, this.constructor.eventName('shown'), () => {
++      const focusable = this._element.querySelector('[autofocus], button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
++      if (focusable) {
++        focusable.focus();
++      }
++    });
+     this._initResizeObserver()
+   }
+ 

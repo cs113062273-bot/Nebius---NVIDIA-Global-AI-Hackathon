@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T08:42:53.558Z",
+  "policy": "auto",
+  "modelRun": "4250ec27-76a2-4df6-b961-6ce792db1eed",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 changes \"index.html\", the page that uses the component. It is read-only context: repair the component's own code in ."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: edits.0.sha256: Invalid string: must match pattern /^[a-f0-9]{64}$/; edits.0.before: Too small: expected string to have >=1 characters",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-3fbb5958a57b404d3ac1fccf3f8d0691",
+      "usage": {
+        "completion_tokens": 1553,
+        "prompt_tokens": 4389,
+        "total_tokens": 5942,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1271,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4389
+      },
+      "latencyMs": 9803
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit outside localized allowlist: \"packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js\". Allowed paths: ",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-c07b6c68c879b006b6b99e4ea00a86b6",
+      "usage": {
+        "completion_tokens": 4654,
+        "prompt_tokens": 4521,
+        "total_tokens": 9175,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3884,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4521
+      },
+      "latencyMs": 14208,
+      "reservedCreditUsd": 0.113182
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 changes \"index.html\", the page that uses the component. It is read-only context: repair the component's own code in .",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-5aeb0f7845d0a0164d9e2677accd8816",
+      "usage": {
+        "completion_tokens": 10310,
+        "prompt_tokens": 5340,
+        "total_tokens": 15650,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9565,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 5340
+      },
+      "latencyMs": 26374,
+      "reservedCreditUsd": 0.116858
+    }
+  ]
+}

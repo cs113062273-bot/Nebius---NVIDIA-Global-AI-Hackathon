@@ -18,9 +18,11 @@ try{
 }catch{/* Optional. */}
 // Open upstream bugs: how many reproduce on current code, and how many Nemotron repaired.
 try{
-  const open=(await (await fetch('./openbugs/index.json')).json()).cases,fixed=open.filter(c=>c.recorded?.verdict==='VERIFIED_PASS');
-  document.querySelector('#proof-open').textContent=fixed.length?`${fixed.length}/${open.length}`:String(open.length);
-  // A browser pass is not the last word: count only patches the author's review called sound.
+  // One count per upstream bug: a stricter case added after review replaces the case it was derived from.
+  const open=(await (await fetch('./openbugs/index.json')).json()).cases,derived=new Set(open.map(c=>c.derivedFrom).filter(Boolean));
+  const strictest=open.filter(c=>!derived.has(c.id)),fixed=strictest.filter(c=>c.recorded?.verdict==='VERIFIED_PASS');
+  document.querySelector('#proof-open').textContent=fixed.length?`${fixed.length}/${strictest.length}`:String(strictest.length);
+  // A browser pass is not the last word: count only patches the review called sound.
   const sound=fixed.filter(c=>c.review?.run===c.recorded.run&&/^Sound/.test(c.review.verdict)).length;
-  document.querySelector('#proof-open-text').textContent=fixed.length?`bugs still unfixed upstream, repaired and browser-verified on each library's current code; ${sound} of those patches judged sound on review, the rest work with trade-offs`:`keyboard and form bugs still unfixed upstream, reproduced on each library's current code`;
+  document.querySelector('#proof-open-text').textContent=fixed.length?`keyboard and form bugs still unfixed upstream, repaired and browser-verified on each library's current code and its strictest frozen task; ${sound} of those patches judged sound on review`:`keyboard and form bugs still unfixed upstream, reproduced on each library's current code`;
 }catch{/* Static copy remains. */}

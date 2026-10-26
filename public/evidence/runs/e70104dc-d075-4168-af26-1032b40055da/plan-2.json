@@ -1,0 +1,24 @@
+{
+  "root_cause": "The header component incorrectly determines initial menu visibility by only checking for the 'govuk-header__navigation--open' class. On desktop, the menu is visible by default (without this class) while the menu button is hidden, but the component sets aria-expanded=true on the hidden button and aria-hidden=true on the visible menu.",
+  "repair_strategy": "In the init method, detect whether the menu button is rendered (mobile) or hidden (desktop) using offsetParent. Compute menu visibility and button expanded state separately: menu is visible on desktop or when open on mobile; button is expanded only on mobile when menu is open. Set aria-expanded on button and aria-hidden on menu accordingly.",
+  "edits": [
+    {
+      "path": "src/govuk/components/header/header.js",
+      "sha256": "33e331b7a1f44087522e90d1e295dbc0f915c8b8a82e8afd57a794d21fff4424",
+      "before": "Header.prototype.init = function () {\n  if (!this.$module || !this.$menuButton || !this.$menu) {\n    return\n  }\n\n  this.syncState(this.$menu.classList.contains('govuk-header__navigation--open'))\n  this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))\n}",
+      "after": "Header.prototype.init = function () {\n  if (!this.$module || !this.$menuButton || !this.$menu) {\n    return\n  }\n\n  var isMobile = !!this.$menuButton.offsetParent\n  var menuOpen = this.$menu.classList.contains('govuk-header__navigation--open')\n  var menuVisible = !isMobile || menuOpen\n  var buttonExpanded = isMobile && menuOpen\n\n  this.$menuButton.classList.toggle('govuk-header__menu-button--open', buttonExpanded)\n  this.$menuButton.setAttribute('aria-expanded', buttonExpanded)\n  this.$menu.setAttribute('aria-hidden', !menuVisible)\n\n  this.$menuButton.addEventListener('click', this.handleMenuButtonClick.bind(this))\n}"
+    }
+  ],
+  "expected_accessibility_effect": "On desktop, the navigation menu will have aria-hidden=\"false\" and the menu button will have aria-expanded=\"false\", exposing the navigation links to assistive technology. On mobile, the menu button will correctly reflect the menu state.",
+  "functional_risks": [
+    "If the menu button's display property changes for reasons other than viewport width, visibility detection may be incorrect.",
+    "Future CSS changes affecting the button's layout could break the offsetParent check.",
+    "The component relies on the 'govuk-header__navigation--open' class for mobile menu state; ensuring that class toggling remains correct is essential."
+  ],
+  "verification_requirements": [
+    "On desktop width, verify that the navigation menu has aria-hidden=\"false\" and the menu button has aria-expanded=\"false\".",
+    "On mobile width, verify that clicking the menu button toggles the open class, aria-expanded, and aria-hidden appropriately.",
+    "Confirm that Tab navigation reaches the #nav-apply element with role=\"link\" and name=\"Apply\" in both viewport states.",
+    "Ensure that the menu button remains functional for showing/hiding the menu on mobile."
+  ]
+}

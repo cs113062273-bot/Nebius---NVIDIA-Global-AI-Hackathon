@@ -1,0 +1,14 @@
+diff --git a/pikaday.js b/pikaday.js
+index cede5d3..46c96ad 100644
+--- a/pikaday.js
++++ b/pikaday.js
+@@ -551,6 +551,9 @@
+                             opts.field.blur();
+                         }
+                         break;
++                    case 9:
++                        self.hide();
++                        break;
+                     case 37:
+                         self.adjustDate('subtract', 1);
+                         break;

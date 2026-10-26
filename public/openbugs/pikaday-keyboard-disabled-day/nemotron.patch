@@ -1,58 +1,56 @@
 diff --git a/pikaday.js b/pikaday.js
-index cede5d3..d9f7fb2 100644
+index cede5d3..af029b2 100644
 --- a/pikaday.js
 +++ b/pikaday.js
-@@ -552,16 +552,16 @@
+@@ -543,6 +543,14 @@
+             e = e || window.event;
+ 
+             if (self.isVisible()) {
++                function isAllowedDate(date) {
++                    if (!isDate(date)) return false;
++                    if (self._o.minDate && date < self._o.minDate) return false;
++                    if (self._o.maxDate && date > self._o.maxDate) return false;
++                    if (self._o.disableWeekends && isWeekend(date)) return false;
++                    if (self._o.disableDayFn && self._o.disableDayFn(date)) return false;
++                    return true;
++                }
+ 
+                 switch(e.keyCode){
+                     case 13:
+@@ -552,16 +560,32 @@
                          }
                          break;
                      case 37:
 -                        self.adjustDate('subtract', 1);
-+                        self._adjustDateWithSkip(-1);
++                        var newDate = self.getDate() || new Date();
++                        do {
++                            newDate = new Date(newDate.valueOf() - 24*60*60*1000);
++                        } while (!isAllowedDate(newDate));
++                        self.setDate(newDate);
                          break;
                      case 38:
 -                        self.adjustDate('subtract', 7);
-+                        self._adjustDateWithSkip(-7);
++                        var newDate = self.getDate() || new Date();
++                        do {
++                            newDate = new Date(newDate.valueOf() - 7*24*60*60*1000);
++                        } while (!isAllowedDate(newDate));
++                        self.setDate(newDate);
                          break;
                      case 39:
 -                        self.adjustDate('add', 1);
-+                        self._adjustDateWithSkip(1);
++                        var newDate = self.getDate() || new Date();
++                        do {
++                            newDate = new Date(newDate.valueOf() + 24*60*60*1000);
++                        } while (!isAllowedDate(newDate));
++                        self.setDate(newDate);
                          break;
                      case 40:
 -                        self.adjustDate('add', 7);
-+                        self._adjustDateWithSkip(7);
++                        var newDate = self.getDate() || new Date();
++                        do {
++                            newDate = new Date(newDate.valueOf() + 7*24*60*60*1000);
++                        } while (!isAllowedDate(newDate));
++                        self.setDate(newDate);
                          break;
                      case 8:
                      case 46:
-@@ -571,6 +571,32 @@
-             }
-         };
- 
-+        self._adjustDateWithSkip = function(offset)
-+        {
-+            var start = self.getDate() || new Date();
-+            var candidate = new Date(start.valueOf() + offset * 24 * 60 * 60 * 1000);
-+            var step = offset > 0 ? 1 : -1;
-+            // Ensure candidate respects min/max/disableDayFn
-+            while (!self._isDateValid(candidate)) {
-+                candidate = new Date(candidate.valueOf() + step * 24 * 60 * 60 * 1000);
-+            }
-+            self.setDate(candidate);
-+        };
-+
-+        self._isDateValid = function(date)
-+        {
-+            if (opts.minDate && date < opts.minDate) {
-+                return false;
-+            }
-+            if (opts.maxDate && date > opts.maxDate) {
-+                return false;
-+            }
-+            if (opts.disableDayFn && opts.disableDayFn(date)) {
-+                return false;
-+            }
-+            return true;
-+        };
-+
-         self._parseFieldValue = function()
-         {
-             if (opts.parse) {

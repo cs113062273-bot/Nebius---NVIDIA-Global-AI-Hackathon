@@ -1,0 +1,25 @@
+{
+  "root_cause": "The datepicker popup does not manage focus when opened, causing the Tab key to be prevented from moving focus to the next form field. Specifically, when the datepicker is shown, focus remains on the input element, and the Tab keydown event is prevented (likely by the Vanilla Calendar Pro library's focus trapping mechanism) because focus is not inside the popup.",
+  "repair_strategy": "Modify the datepicker's show and hide methods to move focus to the popup's main element when shown (making it focusable with tabindex=-1) and remove the tabindex when hidden. This ensures that when the popup is open, focus is inside the popup and can be managed by Tab key presses, allowing focus to exit the popup to the next form field when appropriate.",
+  "edits": [
+    {
+      "path": "js/src/datepicker.ts",
+      "sha256": "333ada052b9200667edf9078b105036dee5c1406a86e3865f6534e2ddb18c53a",
+      "before": "  async show(): Promise<void> {\n    if (this._config.inline) {\n      return // Inline calendars are always visible\n    }\n\n    if (!this._calendar || isDisabled(this._element) || this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW)\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._calendar.show()\n    this._isShown = true\n\n    EventHandler.trigger(this._element, EVENT_SHOWN)\n  }\n\n  async hide(): Promise<void> {\n    if (this._config.inline) {\n      return // Inline calendars are always visible\n    }\n\n    if (!this._calendar || !this._isShown) {\n      return\n    }\n\n    const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE)\n    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    this._calendar.hide()\n    this._isShown = false\n\n    EventHandler.trigger(this._element, EVENT_HIDDEN)\n  }",
+      "after": "  async show(): Promise<void> {\n    if (this._config.inline) {\n      return // Inline calendars are always visible\n    }\n\n    if (!this._calendar || isDisabled(this._element) || this._isShown) {\n      return\n    }\n\n    const showEvent = EventHandler.trigger(this._element, EVENT_SHOW)\n    if (showEvent.defaultPrevented) {\n      return\n    }\n\n    this._calendar.show()\n    this._isShown = true\n\n    // Move focus to the calendar for popup mode\n    const mainElement = this._calendar.context.mainElement\n    if (mainElement) {\n      mainElement.setAttribute('tabindex', '-1')\n      mainElement.focus()\n    }\n\n    EventHandler.trigger(this._element, EVENT_SHOWN)\n  }\n\n  async hide(): Promise<void> {\n    if (this._config.inline) {\n      return // Inline calendars are always visible\n    }\n\n    if (!this._calendar || !this._isShown) {\n      return\n    }\n\n    const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE)\n    if (hideEvent.defaultPrevented) {\n      return\n    }\n\n    this._calendar.hide()\n    this._isShown = false\n\n    // Remove tabindex from the main element\n    const mainElement = this._calendar?.context?.mainElement\n    if (mainElement) {\n      mainElement.removeAttribute('tabindex')\n    }\n\n    EventHandler.trigger(this._element, EVENT_HIDDEN)\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "Tab key will move focus from the departure date field to the passengers field when the datepicker popup is open, restoring expected form navigation behavior.",
+  "functional_risks": [
+    "The calendar's main element may not be focusable after setting tabindex=-1 due to CSS or other attributes.",
+    "Removing tabindex on hide may leave the element with no tabindex if it had a positive value before, but this is unlikely for a div.",
+    "Focus may not be returned to the input after hiding the calendar, but the current behavior does not do this either, so no regression is introduced."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Tab from the departure date field moves focus to the passengers field when the datepicker popup is open.",
+    "Verify that pressing Tab from the departure date field moves focus to the passengers field when the datepicker popup is closed (existing behavior).",
+    "Verify that Esc key still closes the calendar when open.",
+    "Verify that clicking the date field still shows the calendar.",
+    "Verify that focus is trapped within the calendar popup when open (Tab and Shift+Tab cycle within the popup)."
+  ]
+}

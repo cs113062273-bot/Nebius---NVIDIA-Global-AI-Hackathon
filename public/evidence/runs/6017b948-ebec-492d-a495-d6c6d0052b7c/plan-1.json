@@ -1,0 +1,25 @@
+{
+  "root_cause": "The disclosure menu does not close when focus leaves the widget via Tab; missing focusout handler to close the dropdown when focus moves to an element outside the menu and its controller.",
+  "repair_strategy": "Add a focusout listener to the menu element in _handleFocus that checks if the related target is outside the menu and controller, then blur the menu, close any open submenus, and close the controller if present.",
+  "edits": [
+    {
+      "path": "src/_baseMenu.js",
+      "sha256": "659255a214409c4048ca6d6312846a5e9c5c368e5c777b8499f437fdb9418447",
+      "before": "/**\\n * Handles focus events throughout the menu for proper menu use.\\n *\\n * - Adds a `focus` listener to every menu item so when it gains focus,\\n *   it will set the item's containing menu's focus state\\n *   to \\\"self\\\".\\n *\\n * @protected\\n */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n  }",
+      "after": "/**\\n * Handles focus events throughout the menu for proper menu use.\\n *\\n * - Adds a `focus` listener to every menu item so when it gains focus,\\n *   it will set the item's containing menu's focus state\\n *   to \\\"self\\\".\\n *\\n * @protected\\n */\\n  _handleFocus() {\\n    this.elements.menuItems.forEach((menuItem, index) => {\\n      menuItem.dom.link.addEventListener(\\\"focus\\\", () => {\\n        this.focusState = \\\"self\\\";\\n        this.currentChild = index;\\n      });\\n    });\\n    this.dom.menu.addEventListener(\\\"focusout\\\", (event) => {\\n      const related = event.relatedTarget;\\n      if (!this.dom.menu.contains(related) && !(this.elements.controller && this.elements.controller.dom.toggle.contains(related))) {\\n        this.blur();\\n        this.closeChildren();\\n        if (this.elements.controller) {\\n          this.elements.controller.close();\\n        }\\n      }\\n    });\\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "When focus leaves the navigation (e.g., tabbing to the search input), the Shop dropdown will close, removing the overlay and allowing keyboard users to interact with page content without the dropdown obstructing view.",
+  "functional_risks": [
+    "Potential side‑click: if a user relies on the dropdown remaining open while navigating away via mouse (unlikely), the change may close prematurely.",
+    "If the controller element is null (unexpected), the guard prevents errors.",
+    "Ensuring that the focusout listener does not fire when focus moves between menu items or into the controller (e.g., Shift+Tab from first dropdown item to the button) – the condition excludes the controller, so the dropdown stays open as expected."
+  ],
+  "verification_requirements": [
+    "After pressing Enter on #shop, aria-expanded must be true and #plants visible.",
+    "After subsequently pressing Tab to move focus to #search, aria-expanded on #shop must be false and #plants hidden.",
+    "Ensure that opening the dropdown via Enter still works.",
+    "Ensure that pressing Escape still closes the dropdown and returns focus to the button.",
+    "Ensure that navigating within the dropdown via Tab does not close it prematurely."
+  ]
+}

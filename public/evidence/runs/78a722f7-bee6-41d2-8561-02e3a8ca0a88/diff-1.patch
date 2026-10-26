@@ -1,0 +1,14 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..085ab55 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -254,9 +254,6 @@ class Datepicker extends BaseComponent {
+     if (this._isInput && this._element.value) {
+       this._parseInputValue()
+     }
+-
+-    // Populate input/display with preselected dates
+-    this._updateDisplayWithSelectedDates()
+   }
+ 
+   protected _updateDisplayWithSelectedDates(): void {

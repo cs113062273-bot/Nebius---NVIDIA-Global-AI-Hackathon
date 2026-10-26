@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T08:11:58.071Z",
+  "policy": "auto",
+  "modelRun": "05de0ab2-b575-4958-97b1-429255e27372",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (js/picker/Picker.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"this.element.hidden = false;\"; closest is line 242: \"this.active = false;\" | not in file: \"showElement(this.element);\"; closest is line 202: \"this.element.remove();\" | not in file: \"registerListeners(this, [\"; closest is line 165: \"registerListeners(datepicker, [\". Best alignment: before lines 1-4 match file lines 205-208, then before line 5 \"this.active = true;\" differs from file line 209 \"\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "2a8f0bbe9381bffab42d5eb3e79e2668b79dd77b4d733b38dbd11a5685d566f8",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (js/Datepicker.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"const keydownListener = [element, 'keydown', onKeydown.bind(null, thing)];\"; closest is line 203: \"const keydownListener = [element, 'keydown', onKeydown.bind(null, this)];\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-c812bd5dd82c29276c83f532fbd9735d",
+      "usage": {
+        "completion_tokens": 8018,
+        "prompt_tokens": 21529,
+        "total_tokens": 29547,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7508,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21529
+      },
+      "latencyMs": 34500,
+      "reservedCreditUsd": 0.0510696
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-2956cf9a8557b69b009fedb4cdb27d2f",
+      "usage": {
+        "completion_tokens": 3176,
+        "prompt_tokens": 22243,
+        "total_tokens": 25419,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2667,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 22243
+      },
+      "latencyMs": 9359,
+      "reservedCreditUsd": 0.173128
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/picker/Picker.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"this.element.hidden = false;\"; closest is line 242: \"this.active = false;\" | not in file: \"showElement(this.element);\"; closest is line 202: \"this.element.remove();\" | not in file: \"registerListeners(this, [\"; closest is line 165: \"registerListeners(datepicker, [\". Best alignment: b",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-fe4dc50c0ff4f76b0a16c417165719ed",
+      "usage": {
+        "completion_tokens": 5592,
+        "prompt_tokens": 21117,
+        "total_tokens": 26709,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4264,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21117
+      },
+      "latencyMs": 16411,
+      "reservedCreditUsd": 0.170201
+    }
+  ]
+}

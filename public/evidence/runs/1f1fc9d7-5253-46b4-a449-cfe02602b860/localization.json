@@ -1,0 +1,41 @@
+[
+  {
+    "path": "index.html",
+    "score": 11,
+    "signals": [
+      "open",
+      "basket",
+      "close",
+      "remove-1",
+      "count",
+      "body",
+      "View basket",
+      "Close basket",
+      "Remove hand trowel",
+      "Remove pruning shears",
+      "Remove kneeling pad"
+    ],
+    "sha256": "1066727c664d002ea1edf703d1c958ccf4c20f27abcefe1c83f6416d6823b607",
+    "editable": false
+  },
+  {
+    "path": "index.js",
+    "score": 3,
+    "signals": [
+      "open",
+      "close",
+      "body"
+    ],
+    "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90"
+  },
+  {
+    "path": "upstream-dependency/tabbable/index.js",
+    "score": 2,
+    "signals": [
+      "open",
+      "close"
+    ],
+    "sha256": "bb8d0cce7375d8a2771f2cfd25458368ff8a0fa31aeb7b27c34b6117b80c3812",
+    "editable": false
+  }
+]

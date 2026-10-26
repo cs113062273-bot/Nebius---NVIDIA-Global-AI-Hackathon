@@ -1,0 +1,30 @@
+{
+  "root_cause": "The cancel listener for the native Escape key is bound without a namespace, making it vulnerable to being removed by generic EventHandler.off calls elsewhere in the codebase. After two Escape presses, something (likely internal cleanup) unbinds the listener, causing the third Escape to trigger the dialog's default close action.",
+  "repair_strategy": "Replace the raw 'cancel' event strings with the namespaced EVENT_CANCEL constant when attaching and detaching the native cancel listener in DialogBase, ensuring the listener is uniquely scoped and not inadvertently removed by other code.",
+  "edits": [
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "    // Handle native cancel event (Escape key) — only fires for modal dialogs.\n    // Bound unnamespaced because `cancel` is a real native event, not one of\n    // our namespaced custom events. Keep a per-instance handler so dispose()\\n    // removes only this listener, not a consumer's own `cancel` listener.\n    this._cancelHandler = event => {\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        this._triggerBackdropTransition()\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    }\n\n    EventHandler.on(this._element, 'cancel', this._cancelHandler)",
+      "after": "    // Handle native cancel event (Escape key) — only fires for modal dialogs.\n    // Bound unnamespaced because `cancel` is a real native event, not one of\n    // our namespaced custom events. Keep a per-instance handler so dispose()\\n    // removes only this listener, not a consumer's own `cancel` listener.\n    this._cancelHandler = event => {\n      event.preventDefault()\n\n      if (!this._config.keyboard) {\n        this._triggerBackdropTransition()\n        return\n      }\n\n      this._onCancel()\n      this.hide()\n    }\n\n    EventHandler.on(this._element, EVENT_CANCEL, this._cancelHandler)"
+    },
+    {
+      "path": "js/src/dialog-base.ts",
+      "sha256": "365b3e69778c2fdc18db529770b50c1881f0588747bead1c79c46c86f9ca9f1b",
+      "before": "    // The `cancel` listener is unnamespaced, so super.dispose()'s EVENT_KEY\\n    // teardown misses it — remove this instance's own handler here.\n    EventHandler.off(this._element, 'cancel', this._cancelHandler)",
+      "after": "    // The `cancel` listener is namespaced, so super.dispose()'s EVENT_KEY\\n    // teardown will remove it — remove this instance's own handler here.\n    EventHandler.off(this._element, EVENT_CANCEL, this._cancelHandler)"
+    }
+  ],
+  "expected_accessibility_effect": "Escape key will no longer dismiss the confirmation dialog when it is initialized with keyboard: false, allowing users to repeatedly press Escape to dismiss transient warnings or refocus without losing the OTP input field.",
+  "functional_risks": [
+    "If other code intentionally relies on unbinding the raw 'cancel' listener to suppress Escape behavior, those callers will no longer affect the dialog.",
+    "Changing the event name may interfere with any external listeners that expect the bare 'cancel' event (though such usage is non-standard and discouraged)."
+  ],
+  "verification_requirements": [
+    "Verify that pressing Escape any number of times while the confirmation dialog is open does not close the dialog when keyboard: false and backdrop: static.",
+    "Verify that pressing Escape still closes non‑modal dialogs and modal dialogs with keyboard: true.",
+    "Ensure that the backdrop 'static' bounce effect still occurs on Escape when keyboard: false.",
+    "Confirm that disposing the dialog properly removes the namespaced listener.",
+    "Check that no JavaScript errors are introduced in the event‑handling flow."
+  ]
+}

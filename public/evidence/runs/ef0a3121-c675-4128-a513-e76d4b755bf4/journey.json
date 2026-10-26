@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "id": "bs6-dialog-escape-ignored",
+  "title": "Escape must not dismiss a dialog opened with keyboard: false",
+  "goal": "The confirmation dialog stays open however often Escape is pressed, so the user can still enter the code and send the transfer",
+  "source": "authored",
+  "profile": "keyboard",
+  "path": "/",
+  "steps": [
+    {
+      "title": "Reach Confirm transfer",
+      "action": {
+        "kind": "seek",
+        "selector": "#confirm-open",
+        "maxTabs": 24
+      },
+      "assertions": []
+    },
+    {
+      "title": "Open the confirmation",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#otp"
+        }
+      ]
+    },
+    {
+      "title": "Press Escape",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#confirm-dialog",
+          "name": "open",
+          "value": ""
+        },
+        {
+          "kind": "focus",
+          "selector": "#otp"
+        }
+      ]
+    },
+    {
+      "title": "Press Escape again",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#confirm-dialog",
+          "name": "open",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "title": "Press Escape a third time",
+      "action": {
+        "kind": "press",
+        "key": "Escape"
+      },
+      "assertions": [
+        {
+          "kind": "attribute",
+          "selector": "#confirm-dialog",
+          "name": "open",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "title": "Enter the code",
+      "action": {
+        "kind": "type",
+        "text": "482913"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to Send",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": []
+    },
+    {
+      "title": "Move to Send",
+      "action": {
+        "kind": "press",
+        "key": "Tab"
+      },
+      "assertions": [
+        {
+          "kind": "focus",
+          "selector": "#send"
+        }
+      ]
+    },
+    {
+      "title": "Send the transfer",
+      "action": {
+        "kind": "press",
+        "key": "Enter"
+      },
+      "assertions": []
+    }
+  ],
+  "success": [
+    {
+      "kind": "text",
+      "selector": "#status",
+      "value": "Sent"
+    }
+  ],
+  "functional": [
+    {
+      "kind": "attribute",
+      "selector": "#confirm-dialog",
+      "name": "open",
+      "value": null
+    }
+  ],
+  "forbidden": []
+}

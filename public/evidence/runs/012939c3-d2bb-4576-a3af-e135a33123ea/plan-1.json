@@ -1,0 +1,24 @@
+{
+  "root_cause": "The _keydown method in tab.js uses getNextActiveElement which does not filter out disabled tabs, causing ArrowRight to move focus to a disabled tab instead of skipping to the next enabled one.",
+  "repair_strategy": "Modify the _keydown method to repeatedly call getNextActiveElement until the resulting element is not disabled, stopping if we return to the original element to avoid infinite loops.",
+  "edits": [
+    {
+      "path": "js/src/tab.js",
+      "sha256": "7ad4e9f0424d0d4b95bcf399a1639e44cfec200c874382dc7a8b34016a74228f",
+      "before": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const nextActiveElement = getNextActiveElement(this._getChildren(), event.target, isNext, true)\n    Tab.getOrCreateInstance(nextActiveElement).show()\n  }",
+      "after": "  _keydown(event) {\n    if (!([ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key))) {\n      return\n    }\n\n    event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page\n    event.preventDefault()\n    const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)\n    const children = this._getChildren()\n    let nextActiveElement = getNextActiveElement(children, event.target, isNext, true)\n    // Skip disabled tabs\n    while (isDisabled(nextActiveElement) && nextActiveElement !== event.target) {\n      nextActiveElement = getNextActiveElement(children, nextActiveElement, isNext, true)\n    }\n    Tab.getOrCreateInstance(nextActiveElement).show()\n  }"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight and ArrowLeft keyboard navigation will skip over disabled tabs, moving focus only to enabled tabs, preventing focus on disabled controls and conforming to ARIA tablist practices.",
+  "functional_risks": [
+    "If all tabs are disabled, the loop would return to the original element and still call show on it (which is disabled but may be unexpected).",
+    "Changes to _keydown affect only the tab component; other components using getNextActiveElement are unaffected.",
+    "Ensure that disabled tabs retain correct ARIA attributes (aria-selected=false, tabindex=-1) and are not inadvertently activated via other means."
+  ],
+  "verification_requirements": [
+    "Press ArrowRight from the first tab when the second tab is disabled; focus should move to the third tab and aria-selected should update accordingly.",
+    "Press ArrowLeft from the third tab with the second disabled; focus should wrap to the first tab.",
+    "Disabled tabs must not receive focus via keyboard navigation and must remain excluded from the tab sequence.",
+    "Programmatic activation (tab.show()) and click activation of tabs should continue to work as expected."
+  ]
+}

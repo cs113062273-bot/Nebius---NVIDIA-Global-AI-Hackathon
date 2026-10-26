@@ -1,0 +1,18 @@
+diff --git a/js/src/tab.js b/js/src/tab.js
+index 135e929..7fed760 100644
+--- a/js/src/tab.js
++++ b/js/src/tab.js
+@@ -168,7 +168,12 @@ class Tab extends BaseComponent {
+     event.stopPropagation()// stopPropagation/preventDefault both added to support up/down keys without scrolling the page
+     event.preventDefault()
+     const isNext = [ARROW_RIGHT_KEY, ARROW_DOWN_KEY].includes(event.key)
+-    const nextActiveElement = getNextActiveElement(this._getChildren(), event.target, isNext, true)
++    const children = this._getChildren()
++    let nextActiveElement = getNextActiveElement(children, event.target, isNext, true)
++    // Skip disabled tabs
++    while (isDisabled(nextActiveElement) && nextActiveElement !== event.target) {
++      nextActiveElement = getNextActiveElement(children, nextActiveElement, isNext, true)
++    }
+     Tab.getOrCreateInstance(nextActiveElement).show()
+   }
+ 

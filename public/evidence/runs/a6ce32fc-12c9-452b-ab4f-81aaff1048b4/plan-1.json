@@ -1,0 +1,24 @@
+{
+  "root_cause": "Multiple keydown listeners accumulate in the navigation controller because a new listener is added on every results render without removing the previous one, causing stale focus state and incorrect selection when Enter is pressed.",
+  "repair_strategy": "Modify the navigation controller to remove any existing keydown listener before adding a new one, storing the listener reference on the input field to prevent duplication.",
+  "edits": [
+    {
+      "path": "src/controllers/navigationController.js",
+      "sha256": "cb38337c041e8e0543c4f7b31666374956d6dc85011604e12ff127c9bf67ddde",
+      "before": "  const navigate = config.resultsList.navigation || navigation;\n  /**\n   * @listens {keydown} Listens to all `keydown` events on the input field\n   **/\n  config.inputField.addEventListener(\"keydown\", navigate);",
+      "after": "  const navigateFn = config.resultsList.navigation || navigation;\n  // Remove previous listener if exists\n  if (config.inputField._autoCompleteNavigateListener) {\n    config.inputField.removeEventListener(\"keydown\", config.inputField._autoCompleteNavigateListener);\n  }\n  config.inputField.addEventListener(\"keydown\", navigateFn);\n  config.inputField._autoCompleteNavigateListener = navigateFn;"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard navigation will correctly highlight and select the intended suggestion, ensuring ARIA attributes reflect the active item and preventing duplicate event handlers that could interfere with assistive technology.",
+  "functional_risks": [
+    "If a custom navigation function is provided via config.resultsList.navigation, it will be replaced on each render, which may affect consumers expecting a persistent listener.",
+    "The cleanup property _autoCompleteNavigateListener must be considered in any teardown logic to avoid memory leaks."
+  ],
+  "verification_requirements": [
+    "After typing 'bl' and pressing ArrowDown, pressing Enter should set the input value to 'Blackberry'.",
+    "Only one keydown listener should be present on the input field after multiple renders.",
+    "ArrowUp and ArrowDown navigation should correctly cycle through suggestions across multiple renders.",
+    "Pressing ESC should clear the input and close the suggestion list.",
+    "Form submission should reflect the correctly selected suggestion."
+  ]
+}

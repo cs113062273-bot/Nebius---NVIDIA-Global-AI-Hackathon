@@ -1,0 +1,12 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..9e7b274 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -430,6 +430,7 @@ class Datepicker extends BaseComponent {
+       type: this._config.displayMonthsCount > 1 ? 'multiple' : 'default',
+       selectedTheme: vcpTheme,
+       themeAttrDetect: '[data-bs-theme]',
++      trapFocus: false,
+       onClickDate: (self, event) => this._handleDateClick(self, event),
+       onInit: self => {
+         this._syncThemeAttribute(self.context.mainElement)

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-26T06:58:10.125Z",
+  "generatedAt": "2026-10-26T09:16:13.599Z",
   "enabled": false,
   "cases": [
     {
@@ -16,31 +16,29 @@
       "split": "development",
       "screenRun": "b1323d20-7eca-4307-9122-1028cfb7b60a",
       "recorded": {
-        "run": "ac8e30fb-5338-4d15-b4ef-78f90b914f01",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "7902e385-1460-4af7-bcf9-8981d9e7f406",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
-        "scope": null
+        "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "ac8e30fb-5338-4d15-b4ef-78f90b914f01",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
-        },
-        {
-          "run": "7d17235d-c105-4927-b362-f1a364765e82",
+          "run": "7902e385-1460-4af7-bcf9-8981d9e7f406",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "e33eef6c-7cd8-47a7-b706-a7335cfc65af",
+          "run": "9b0426eb-beba-4247-980a-8992995a2f38",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "be73eb09-174b-4cac-a8e1-c1d4fcb3d3cb",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -61,31 +59,29 @@
       "split": "holdout",
       "screenRun": "1ddb58be-6a35-4d54-8a86-699a73fa82be",
       "recorded": {
-        "run": "39a3a69c-89df-4b16-ba87-c40ae396726a",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "e296de19-649a-4068-be12-36fec3835cbd",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
-        "scope": null
+        "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "39a3a69c-89df-4b16-ba87-c40ae396726a",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
+          "run": "e296de19-649a-4068-be12-36fec3835cbd",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
         },
         {
-          "run": "9f4f6d24-e74a-42ae-b6a2-b656b8937c3e",
-          "verdict": "INCONCLUSIVE",
-          "passedOn": null,
-          "scope": null
+          "run": "da3f988e-4844-48ca-a4d9-03273a64c888",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
         },
         {
-          "run": "baaf4687-af42-4bf4-a4bb-cbec564b52b9",
+          "run": "bc742c42-ad57-4beb-8f73-329dae2f074a",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
@@ -106,31 +102,32 @@
       "split": "holdout",
       "screenRun": "06ec9c99-8063-426b-bf48-3b3742505e23",
       "recorded": {
-        "run": "fccf4876-edad-4c7e-b351-6e1f9a05df50",
+        "run": "0cecfa83-10d9-4db0-925c-42a2cafd3ee2",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 2,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "fccf4876-edad-4c7e-b351-6e1f9a05df50",
+          "run": "0cecfa83-10d9-4db0-925c-42a2cafd3ee2",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "6017b948-ebec-492d-a495-d6c6d0052b7c",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "e1fe2215-cb4d-4e01-8012-5f4c0d1da703",
+          "run": "b03f1bbb-ba79-4036-a6cc-8c4215811246",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
-          "scope": "library"
-        },
-        {
-          "run": "3b6d0d31-afb0-492a-bddc-24c0a055015f",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
+          "passedOn": 2,
           "scope": "library"
         }
       ]
@@ -149,7 +146,7 @@
       "split": "holdout",
       "screenRun": "c3735af7-f04f-4263-ae33-3b8de7bc02bb",
       "recorded": {
-        "run": "dd8d0470-3190-4511-8190-65a952b7a923",
+        "run": "c0c77285-6d49-4b6f-b562-7a29d4f98bb5",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -159,19 +156,19 @@
       },
       "frozenRuns": [
         {
-          "run": "dd8d0470-3190-4511-8190-65a952b7a923",
+          "run": "c0c77285-6d49-4b6f-b562-7a29d4f98bb5",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "0949f198-7b38-480e-888b-ecbb0cf5f3f2",
+          "run": "dc4f7fbc-3369-472d-9744-e3aca6810fc9",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "33068868-24e4-4298-9248-ec2420124530",
+          "run": "6f2d6ca5-08c8-45fc-a631-0a39f865b6a9",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -192,34 +189,32 @@
       "split": "holdout",
       "screenRun": "6aafa56d-ec50-45bf-9b7a-4d6ce3365d33",
       "recorded": {
-        "run": "2d0147d1-76e9-4cc3-ab11-ec93ce175a18",
+        "run": "a6ce32fc-12c9-452b-ab4f-81aaff1048b4",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "2d0147d1-76e9-4cc3-ab11-ec93ce175a18",
+          "run": "a6ce32fc-12c9-452b-ab4f-81aaff1048b4",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 3,
+          "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "395fe5b8-46db-41f8-af67-9aa53978e2de",
+          "run": "40abd700-a88a-43ea-a2f6-4a834da00b4f",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
         },
         {
-          "run": "3fea1ff7-23e4-4ecc-af69-9cc74991de43",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
+          "run": "2270bf88-89f9-4384-baaf-6289d14a477e",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         }
       ]
     },
@@ -237,32 +232,31 @@
       "split": "holdout",
       "screenRun": "256b1a25-6338-457b-aa33-b902a0006e54",
       "recorded": {
-        "run": "61b77456-e07f-403e-9260-e831ef10a68e",
+        "run": "aea0b6aa-cf95-4757-9101-537b7c92db7d",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "61b77456-e07f-403e-9260-e831ef10a68e",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
-        },
-        {
-          "run": "2b87bf7c-8f28-4baa-bc7c-41f37dc0de43",
+          "run": "aea0b6aa-cf95-4757-9101-537b7c92db7d",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "f620b21d-5745-477f-8c23-6d6f9bba4717",
+          "run": "c219d2d8-63bd-4fe6-a71b-f5413a8fcc35",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
+          "scope": "library"
+        },
+        {
+          "run": "8bfe462a-fd26-46eb-bead-507fd87cd5d2",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
           "scope": "library"
         }
       ]
@@ -281,7 +275,7 @@
       "split": "holdout",
       "screenRun": "85f9651a-6cb2-433a-a6fd-838c123c3058",
       "recorded": {
-        "run": "07f338b5-59da-4102-b68f-1c28b23a5014",
+        "run": "37d60d3e-aa6f-4004-b1b1-97b41a58e719",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -292,21 +286,21 @@
       },
       "frozenRuns": [
         {
-          "run": "07f338b5-59da-4102-b68f-1c28b23a5014",
+          "run": "37d60d3e-aa6f-4004-b1b1-97b41a58e719",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
         },
         {
-          "run": "fcdac8e8-19ea-4fa0-8948-7710d5c0830b",
+          "run": "684716c1-acc3-45b2-a24f-a143fbc3ae60",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "88954a23-ae34-4a9b-b7fe-90e7c249f454",
+          "run": "b66a4ab8-6f9a-40fc-8ee2-b5dfce001add",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
+          "passedOn": 1,
           "scope": "library"
         }
       ]
@@ -325,7 +319,7 @@
       "split": "holdout",
       "screenRun": "c21cb036-3711-4490-8214-d204193f5f5a",
       "recorded": {
-        "run": "73d2dea9-bf9a-47e1-81af-25aaf1e2d0d7",
+        "run": "62f2cb3a-52e6-41b6-b1e8-ee08f88708c8",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
@@ -336,19 +330,19 @@
       },
       "frozenRuns": [
         {
-          "run": "73d2dea9-bf9a-47e1-81af-25aaf1e2d0d7",
+          "run": "62f2cb3a-52e6-41b6-b1e8-ee08f88708c8",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
         },
         {
-          "run": "eae679c2-85ba-4387-8571-f5f0268470ea",
+          "run": "a9e60d70-58ed-4fc2-8e42-4703db9c3a70",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
-          "scope": "page"
+          "scope": "library"
         },
         {
-          "run": "817d7832-65c7-4875-812b-d991f0ef6c06",
+          "run": "b427c2c6-5681-43de-9046-99786f9e071b",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -369,7 +363,7 @@
       "split": "holdout",
       "screenRun": "7c36e31c-5304-46e9-878a-f36acfe75d0d",
       "recorded": {
-        "run": "0a324928-96d2-450c-8a2c-ce005f8b6ca5",
+        "run": "2155499b-1004-4cae-b8ea-b6edd849f1c5",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -379,19 +373,19 @@
       },
       "frozenRuns": [
         {
-          "run": "0a324928-96d2-450c-8a2c-ce005f8b6ca5",
+          "run": "2155499b-1004-4cae-b8ea-b6edd849f1c5",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "8a363186-97ba-457e-9698-5fe59588e2b6",
+          "run": "22599fed-beb8-44d2-be99-1f98b3852d40",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "8cd63187-7385-4f13-924a-87111e9cfb02",
+          "run": "ed79a3b6-f195-4704-8092-99b6c9317b36",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
@@ -412,7 +406,7 @@
       "split": "holdout",
       "screenRun": "05000179-773a-42b0-be97-19f6cca1b123",
       "recorded": {
-        "run": "f05ead7a-7837-4cca-b82a-17ddfabe8e1a",
+        "run": "2fbb7177-8003-4cb9-992c-36074a11363f",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -422,19 +416,19 @@
       },
       "frozenRuns": [
         {
-          "run": "f05ead7a-7837-4cca-b82a-17ddfabe8e1a",
+          "run": "2fbb7177-8003-4cb9-992c-36074a11363f",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "97b96cc5-03da-41dc-98b8-dfd767f5a789",
+          "run": "2248d925-3f8b-4c2f-a099-f5f44d165d5d",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "16ea6c6c-1733-455d-b8f3-213188dea4a0",
+          "run": "4b6ea90d-00d8-41e3-8459-0da280d74974",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -455,32 +449,33 @@
       "split": "holdout",
       "screenRun": "99bf7b0b-058c-4b59-a64f-8f452ec83a79",
       "recorded": {
-        "run": "af8121b7-9d05-4e40-a6c9-582986435706",
+        "run": "9c15eb7c-aac4-47c7-8736-1c2275bcde17",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "passedOn": 2,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "af8121b7-9d05-4e40-a6c9-582986435706",
+          "run": "9c15eb7c-aac4-47c7-8736-1c2275bcde17",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "d1a04b33-bd9a-4856-9dfb-821d2452107a",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "19c0bf9a-f0d6-4ad8-8a89-46c85e58f10b",
+          "run": "6d83b225-8025-415c-8254-465f7c1ca863",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
-        },
-        {
-          "run": "69a85ec6-056a-45a9-b9c3-0d4bc1c1323a",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
-          "scope": "page"
         }
       ]
     },
@@ -498,7 +493,7 @@
       "split": "holdout",
       "screenRun": "6f1c7b4b-9102-439e-9908-26a1f904befe",
       "recorded": {
-        "run": "4ee42510-67c3-4bed-9db0-3ca314e05cac",
+        "run": "613ad64a-167a-4734-9aaa-aa4671ff9111",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -508,19 +503,19 @@
       },
       "frozenRuns": [
         {
-          "run": "4ee42510-67c3-4bed-9db0-3ca314e05cac",
+          "run": "613ad64a-167a-4734-9aaa-aa4671ff9111",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "127c3356-539d-4a0e-a343-b18014e5d950",
+          "run": "841e2505-a166-4193-8bee-d6e2cb745345",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "a9ed8b6c-9efa-409e-95c1-04adbaea15bd",
+          "run": "d0d8145e-5075-420b-956c-0c742d091a56",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -541,7 +536,7 @@
       "split": "holdout",
       "screenRun": "ca54db63-5ea3-4fc6-8ad3-157b257aa32c",
       "recorded": {
-        "run": "70abc8c5-3b8f-490a-9957-1cec081e02df",
+        "run": "92b73cc4-0013-4561-bae9-156f606e2913",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -551,19 +546,19 @@
       },
       "frozenRuns": [
         {
-          "run": "70abc8c5-3b8f-490a-9957-1cec081e02df",
+          "run": "92b73cc4-0013-4561-bae9-156f606e2913",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "701c9c46-fcba-433e-9b98-85d39563a233",
+          "run": "012939c3-d2bb-4576-a3af-e135a33123ea",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "99dce250-fa24-445d-a466-15ba709bb402",
+          "run": "8378c9d9-d005-47a3-a753-1656698c8be3",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -584,34 +579,33 @@
       "split": "holdout",
       "screenRun": "d5ceebfc-80bd-4580-83a8-a48c27697bc6",
       "recorded": {
-        "run": "fc3bc2d6-4616-439e-819f-ca4376ff61b8",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "c5ff4406-0d78-4eae-a583-9b9ceb104773",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ],
-        "scope": null
+        "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "fc3bc2d6-4616-439e-819f-ca4376ff61b8",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
-        },
-        {
-          "run": "b37c9574-e072-44c1-9a2b-de6a72a0a134",
+          "run": "c5ff4406-0d78-4eae-a583-9b9ceb104773",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
         },
         {
-          "run": "3dcd9bb6-dcbe-4aa3-9de4-21e3590646d1",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "page"
+          "run": "1f1fc9d7-5253-46b4-a449-cfe02602b860",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "a1aa54d8-9cd2-456e-9a3c-3d70463f583a",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         }
       ]
     },
@@ -629,32 +623,34 @@
       "split": "holdout",
       "screenRun": "cd73bcb1-b6ac-4439-8a2a-0b3e9318952b",
       "recorded": {
-        "run": "6e341541-215c-45d9-9c71-592ecfc91ea8",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "run": "70463689-552d-40af-9b64-019c2c7b90d4",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
-        "scope": "page"
+        "scope": null
       },
       "frozenRuns": [
         {
-          "run": "6e341541-215c-45d9-9c71-592ecfc91ea8",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
-          "scope": "page"
-        },
-        {
-          "run": "a847158d-fc52-4c71-82c6-f5c145faf1e0",
+          "run": "70463689-552d-40af-9b64-019c2c7b90d4",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "010c445c-2a1d-4fba-b8a7-2181c4639676",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "page"
+          "run": "705ce510-91c7-4f4f-bb84-3e76e3d9a24c",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "35e41359-f3fc-4591-8c86-e677fc5cca7a",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         }
       ]
     },
@@ -672,7 +668,7 @@
       "split": "holdout",
       "screenRun": "87e39e0a-911d-43fd-a03d-47ee81666625",
       "recorded": {
-        "run": "e37a2f6d-fae6-4a3f-b1f4-bfea03c4c0d2",
+        "run": "00c24ef0-faae-451e-b905-7baa99f60336",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -682,19 +678,19 @@
       },
       "frozenRuns": [
         {
-          "run": "e37a2f6d-fae6-4a3f-b1f4-bfea03c4c0d2",
+          "run": "00c24ef0-faae-451e-b905-7baa99f60336",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "091e4172-00cb-410a-a3ea-67699e4e38df",
+          "run": "b6d1dd25-3060-4adf-8424-453a6666e00f",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "c5fb070b-a38d-4dd6-ad95-b6815999eeeb",
+          "run": "c26ea413-3ef4-46a8-b9ee-02e0db160d3a",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -715,7 +711,7 @@
       "split": "holdout",
       "screenRun": "a01bb35f-60a6-4508-8f54-1ad4c1e482ed",
       "recorded": {
-        "run": "792f9c9c-f5f2-4b4b-9421-09b9a4fb50f4",
+        "run": "f4bdc870-2716-4b1a-8dc2-b12ceb4cafeb",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -725,21 +721,21 @@
       },
       "frozenRuns": [
         {
-          "run": "792f9c9c-f5f2-4b4b-9421-09b9a4fb50f4",
+          "run": "f4bdc870-2716-4b1a-8dc2-b12ceb4cafeb",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "5a95caea-0b0c-48f1-aa4e-dd71b63d59c2",
+          "run": "65bb61ed-340e-42ff-8049-ad1d965a40a5",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
+          "passedOn": 3,
           "scope": "library"
         },
         {
-          "run": "1ac1d971-1118-4bc0-a722-9bd1818eb4b2",
+          "run": "e70104dc-d075-4168-af26-1032b40055da",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
+          "passedOn": 2,
           "scope": "library"
         }
       ]
@@ -758,32 +754,33 @@
       "split": "holdout",
       "screenRun": "848a8b7a-0764-40d9-91ed-6d7fe9f78f39",
       "recorded": {
-        "run": "d2036bef-663f-4964-9ffe-11a73cad983b",
+        "run": "be6b8dc8-ae74-4771-ac6b-c47712947fd4",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 3,
         "models": [
           "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "d2036bef-663f-4964-9ffe-11a73cad983b",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "library"
-        },
-        {
-          "run": "fc96d2cb-dd4b-4adf-a10e-8483fdcf5594",
+          "run": "be6b8dc8-ae74-4771-ac6b-c47712947fd4",
           "verdict": "VERIFIED_PASS",
           "passedOn": 3,
           "scope": "library"
         },
         {
-          "run": "dd3e95be-4a64-447c-9cb5-7ad6454cab37",
+          "run": "3506587a-1e82-44a9-9941-abe66bc43d7a",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
+          "scope": "library"
+        },
+        {
+          "run": "51b2f107-a488-4427-a728-6850e34d83c5",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
           "scope": "library"
         }
       ]
@@ -802,7 +799,7 @@
       "split": "holdout",
       "screenRun": "ee96cce4-3c72-44de-9dc6-0dee61068737",
       "recorded": {
-        "run": "f42915f9-9380-463e-b732-da6498c8d38e",
+        "run": "62aaad2f-8c0b-434a-b74f-ae3803b1be49",
         "verdict": "VERIFIED_FAIL",
         "passedOn": null,
         "models": [
@@ -814,22 +811,22 @@
       },
       "frozenRuns": [
         {
-          "run": "f42915f9-9380-463e-b732-da6498c8d38e",
+          "run": "62aaad2f-8c0b-434a-b74f-ae3803b1be49",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "cf367adf-c988-4c99-887e-4bfec3c7924f",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "page"
+          "run": "a23f090e-9b62-4dd1-88cc-11223c2efdbd",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         },
         {
-          "run": "e557377c-9248-4432-a91e-3f85e7850171",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "page"
+          "run": "68f2538f-ac61-4c42-a6fd-749af93d73f1",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         }
       ]
     },
@@ -847,34 +844,32 @@
       "split": "holdout",
       "screenRun": "4202b573-f40f-4c27-85d5-cde5932842a1",
       "recorded": {
-        "run": "332ea322-4ddf-44a0-b7e7-67b7abe1d60a",
+        "run": "5e3f0f33-94ba-45a5-899b-3f7848c56e71",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "332ea322-4ddf-44a0-b7e7-67b7abe1d60a",
+          "run": "5e3f0f33-94ba-45a5-899b-3f7848c56e71",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 3,
+          "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "c467752d-195f-483d-b8e2-19322c1c0bdd",
+          "run": "00a7c63f-249f-4520-a578-fe9dc8e27dde",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "page"
+          "passedOn": 1,
+          "scope": "library"
         },
         {
-          "run": "1e3ec6d8-ddc8-44c4-82b0-2b954bf9f897",
+          "run": "258cc93b-5bcb-4998-9b14-2d72044c82f6",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "page"
+          "passedOn": 1,
+          "scope": "library"
         }
       ]
     },
@@ -892,34 +887,32 @@
       "split": "development",
       "screenRun": "1e53cc4b-1b50-4cd0-8e03-6491a5a7adce",
       "recorded": {
-        "run": "47e984f2-d1fb-4267-a37b-10bb44972976",
+        "run": "495309d6-6320-428c-8d0d-aba0cb7fdd67",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 3,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "47e984f2-d1fb-4267-a37b-10bb44972976",
+          "run": "495309d6-6320-428c-8d0d-aba0cb7fdd67",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 3,
+          "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "2d3392e8-3fd6-43ff-b143-cac298a4b7f3",
+          "run": "d97ee3fa-6ed1-492a-8737-de215dc2e27c",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
           "scope": "library"
         },
         {
-          "run": "f12d3ab1-987e-44c1-84e1-4bd002cd0267",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
+          "run": "1782579c-88d8-41ca-8dd1-ade01fb0d3cb",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
         }
       ]
     },
@@ -937,29 +930,31 @@
       "split": "holdout",
       "screenRun": "2b36fa59-dedb-4a08-94f1-d47a5f9038ea",
       "recorded": {
-        "run": "2d154a53-aa2f-4c02-b596-5574e12f51ea",
-        "verdict": "VERIFIED_PASS",
-        "passedOn": 1,
+        "run": "c3d22899-7291-4f03-a6f5-8ade5ea160af",
+        "verdict": "VERIFIED_FAIL",
+        "passedOn": null,
         "models": [
-          "nemotron-3-super-120b-a12b"
+          "nemotron-3-super-120b-a12b",
+          "Nemotron-3-Ultra-550b-a55b",
+          "Nemotron-3-Ultra-550b-a55b"
         ],
-        "scope": "page"
+        "scope": null
       },
       "frozenRuns": [
         {
-          "run": "2d154a53-aa2f-4c02-b596-5574e12f51ea",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 1,
-          "scope": "page"
-        },
-        {
-          "run": "44e09f8f-2b29-4a50-9e8e-a1b033e823c7",
+          "run": "c3d22899-7291-4f03-a6f5-8ade5ea160af",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "e50a20e3-0f71-42d9-8092-767a33365222",
+          "run": "65d8f18a-087c-4fe4-8b29-3afee376a34e",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
+        },
+        {
+          "run": "4250ec27-76a2-4df6-b961-6ce792db1eed",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
@@ -980,7 +975,7 @@
       "split": "holdout",
       "screenRun": "69df69ba-9d14-472d-8f3f-4f7692c6546f",
       "recorded": {
-        "run": "dfbc3fc2-fa1b-4bb1-98a1-0a009cbcb61d",
+        "run": "2c4a8a53-0e50-4171-b898-7be9a37a21c0",
         "verdict": "VERIFIED_PASS",
         "passedOn": 1,
         "models": [
@@ -990,19 +985,19 @@
       },
       "frozenRuns": [
         {
-          "run": "dfbc3fc2-fa1b-4bb1-98a1-0a009cbcb61d",
+          "run": "2c4a8a53-0e50-4171-b898-7be9a37a21c0",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "6adc9f56-3904-4460-a9d7-6a68ea898925",
+          "run": "8773dc93-91ee-4ee9-81dc-567dce0e387e",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "fb31df73-6be4-4da1-b131-321482ab0e2b",
+          "run": "d1b4a571-ee7b-4fe2-bc2e-961130fc85c6",
           "verdict": "VERIFIED_PASS",
           "passedOn": 1,
           "scope": "library"
@@ -1023,30 +1018,30 @@
       "split": "holdout",
       "screenRun": "83b8eb31-ef77-4bce-9b63-47ee6b76b7d8",
       "recorded": {
-        "run": "e7391151-73f1-4a5d-ad8c-9fc234c3cb22",
+        "run": "cd107f55-96bb-48f5-8fef-45113dbde7c4",
         "verdict": "VERIFIED_PASS",
         "passedOn": 2,
         "models": [
           "nemotron-3-super-120b-a12b",
           "Nemotron-3-Ultra-550b-a55b"
         ],
-        "scope": "page"
+        "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "e7391151-73f1-4a5d-ad8c-9fc234c3cb22",
+          "run": "cd107f55-96bb-48f5-8fef-45113dbde7c4",
           "verdict": "VERIFIED_PASS",
           "passedOn": 2,
-          "scope": "page"
+          "scope": "library"
         },
         {
-          "run": "d8350836-b4ba-4ebc-8140-4e415499bb80",
-          "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
-          "scope": "page"
+          "run": "8ef0b5a7-d61c-4277-84dd-62349d3ba2d8",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "scope": null
         },
         {
-          "run": "75708589-c9e0-4cb1-9cf8-0b756d33d5d4",
+          "run": "ef976606-05c5-4351-991c-576c5d27e483",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
@@ -1067,31 +1062,31 @@
       "split": "holdout",
       "screenRun": "b0d35143-a165-4155-974e-8ed35cce340b",
       "recorded": {
-        "run": "8e3484b8-7c24-49dc-83e4-9f6e4cc5cafa",
-        "verdict": "VERIFIED_FAIL",
-        "passedOn": null,
+        "run": "4d205458-05a2-48dc-ac25-8b47b0ac58bd",
+        "verdict": "VERIFIED_PASS",
+        "passedOn": 3,
         "models": [
           "nemotron-3-super-120b-a12b",
           "Nemotron-3-Ultra-550b-a55b",
           "Nemotron-3-Ultra-550b-a55b"
         ],
-        "scope": null
+        "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "8e3484b8-7c24-49dc-83e4-9f6e4cc5cafa",
+          "run": "4d205458-05a2-48dc-ac25-8b47b0ac58bd",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "scope": "library"
+        },
+        {
+          "run": "a207f594-215c-42dc-8bc8-995547251f90",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "778c5245-8581-47e2-b10d-340d61904175",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
-        },
-        {
-          "run": "4f46928f-785f-4a53-92a3-0e6139000f7a",
+          "run": "1f618dc3-559a-4207-8061-08b6f4c9c516",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
@@ -1112,33 +1107,32 @@
       "split": "holdout",
       "screenRun": "961c7d87-daa3-473c-a685-2fb1b27248ae",
       "recorded": {
-        "run": "0feaeb61-b2b6-4eaf-baa3-ab2b23b475b3",
+        "run": "8f51ad29-5f30-4e8d-ba5c-01831b130691",
         "verdict": "VERIFIED_PASS",
-        "passedOn": 2,
+        "passedOn": 1,
         "models": [
-          "nemotron-3-super-120b-a12b",
-          "Nemotron-3-Ultra-550b-a55b"
+          "nemotron-3-super-120b-a12b"
         ],
         "scope": "library"
       },
       "frozenRuns": [
         {
-          "run": "0feaeb61-b2b6-4eaf-baa3-ab2b23b475b3",
+          "run": "8f51ad29-5f30-4e8d-ba5c-01831b130691",
           "verdict": "VERIFIED_PASS",
-          "passedOn": 2,
+          "passedOn": 1,
           "scope": "library"
         },
         {
-          "run": "dafe4464-16e8-4d8a-9249-92fb32338495",
+          "run": "05de0ab2-b575-4958-97b1-429255e27372",
           "verdict": "VERIFIED_FAIL",
           "passedOn": null,
           "scope": null
         },
         {
-          "run": "ab93260d-a278-4365-b676-2a40012c84f7",
-          "verdict": "VERIFIED_FAIL",
-          "passedOn": null,
-          "scope": null
+          "run": "7d43d7ee-54bc-4783-aea1-bef1fa973edd",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "scope": "library"
         }
       ]
     }
@@ -1222,6 +1216,31 @@
           "verified": 63,
           "libraryVerified": 51,
           "casesRepairedOnce": 25,
+          "perCase": 3
+        }
+      },
+      {
+        "id": "9980d4bb",
+        "current": false,
+        "runs": 2,
+        "verified": 0,
+        "libraryVerified": 0,
+        "eligible": 26,
+        "note": "Engine v10, stopped after 2 of its planned 78 runs. It asked Nemotron 3 for schema-constrained JSON (response_format). The replies parsed, but code inside the strings came back corrupted (newlines as a bare n or dropped, quotes as guillemets), so all six patches failed to apply. Both runs stay recorded; they are not a fair score of the other changes, which carry on in v11."
+      },
+      {
+        "id": "2a8f0bbe",
+        "current": true,
+        "runs": 26,
+        "verified": 23,
+        "libraryVerified": 23,
+        "eligible": 26,
+        "note": "Engine v11: v10 without response_format. The page around the library is read-only context: the model sees it without a hash, and an edit to it is refused with the list of component files, so a pass has to change the library (35 of 193 earlier passing runs only worked around the bug in the page). A reply that does not parse has only its bracket structure repaired (18 of 30 recorded Super failures recover). Committed on 2026-10-26 before any run: three blind runs per bug, every run counted; the first run is the score comparable with earlier versions.",
+        "repeats": {
+          "runs": 78,
+          "verified": 61,
+          "libraryVerified": 61,
+          "casesRepairedOnce": 23,
           "perCase": 3
         }
       }

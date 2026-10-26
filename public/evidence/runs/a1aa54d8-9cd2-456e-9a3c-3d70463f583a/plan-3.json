@@ -1,0 +1,20 @@
+{
+  "root_cause": "The MutationObserver callback `checkDomRemoval` relies on `state.mostRecentlyFocusedNode` to detect removal of the focused node. However, when a focused node is removed, the browser immediately moves focus to the body, triggering a `focusin` event that updates `state.mostRecentlyFocusedNode` to the body before the mutation observer fires. Consequently, the condition fails and focus is not restored.",
+  "repair_strategy": "Enhance `checkDomRemoval` to also detect when any node inside the trap is removed while the trap is active and focus has escaped to outside the trap. In that case, refresh the tabbable node cache and restore focus to the initial focus node.",
+  "edits": [
+    {
+      "path": "index.js",
+      "sha256": "17ff10072d68a0aabb1e15fdc42b3a1dee1774dc2ced6facc4753e9a5ae89f90",
+      "before": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved) {\n      tryFocus(getInitialFocusNode());\n    }\n  };",
+      "after": "  const checkDomRemoval = function (mutations) {\n    const isFocusedNodeRemoved = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return node === state.mostRecentlyFocusedNode;\n      });\n    });\n\n    // Also check if any removed node was in the trap and focus has escaped.\n    const focusEscaped = state.active && !state.paused && !state.containers.some(container => container.contains(document.activeElement));\n    const removedNodeInTrap = mutations.some(function (mutation) {\n      const removedNodes = Array.from(mutation.removedNodes);\n      return removedNodes.some(function (node) {\n        return state.containers.some(container => container.contains(node));\n      });\n    });\n\n    // If the currently focused is removed then browsers will move focus to the\n    // <body> element. If this happens, try to move focus back into the trap.\n    if (isFocusedNodeRemoved || (removedNodeInTrap && focusEscaped)) {\n      updateTabbableNodes();\n      tryFocus(getInitialFocusNode());\n    }\n  };"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard focus remains trapped inside the basket dialog after removing the row containing the focused button, preventing focus loss to the page body and maintaining WCAG 2.1.1 (Keyboard) and 2.4.3 (Focus Order) conformance for modal dialogs.",
+  "functional_risks": [
+    "Minimal; the additional condition only triggers when the trap is active, not paused, and focus is outside the trap, which aligns with the intended focus restoration behavior."
+  ],
+  "verification_requirements": [
+    "Run the provided journey: open dialog, Tab to first remove button, Enter to remove row, verify #basket:focus-within is true and #count reads '2 items'.",
+    "Verify Shift+Tab from first tabbable node wraps to last tabbable node inside dialog (regression guard)."
+  ]
+}

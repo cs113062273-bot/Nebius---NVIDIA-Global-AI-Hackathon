@@ -1,0 +1,25 @@
+{
+  "root_cause": "The component removes the maxlength attribute from the wrapper div instead of the textarea, leaving the hard limit in place and causing input to be truncated at 30 characters.",
+  "repair_strategy": "Change the line that removes the maxlength attribute to target the textarea element ($textarea) rather than the container ($module).",
+  "edits": [
+    {
+      "path": "src/govuk/components/character-count/character-count.js",
+      "sha256": "b17688138faafe0e8e1b3b435f890c52c8dc6ca9fbcbb8644f2e93a5125f7b90",
+      "before": "  // Remove hard limit if set\n  $module.removeAttribute('maxlength')",
+      "after": "  // Remove hard limit if set\n  $textarea.removeAttribute('maxlength')"
+    }
+  ],
+  "expected_accessibility_effect": "Users can exceed the limit and receive accurate character count feedback, with error messages and live region updates reflecting the true state, ensuring conformance with WCAG 2.1.1, 2.4.3, and 4.1.2.",
+  "functional_risks": [
+    "Unlikely regression as only the textarea's maxlength affects input limitation; the wrapper's attribute is unused.",
+    "Potential impact if other code erroneously relied on the wrapper's maxlength attribute (none identified).",
+    "Ensuring noscript fallback retains the maxlength attribute for users without JavaScript."
+  ],
+  "verification_requirements": [
+    "After initialization, the textarea must have no maxlength attribute.",
+    "Typing more than 30 characters retains the full input and the counter shows negative remaining characters (e.g., 'You have 4 characters too many').",
+    "Error styling (govuk-textarea--error, govuk-error-message) applies when over limit.",
+    "Screen‑reader live region updates politely with the count message on each change.",
+    "With JavaScript disabled, the hard limit still enforces the 30‑character maximum."
+  ]
+}

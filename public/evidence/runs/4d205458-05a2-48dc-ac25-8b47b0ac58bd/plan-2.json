@@ -1,0 +1,23 @@
+{
+  "root_cause": "The datepicker remains open when focus leaves the input field via Tab because there is no blur event listener to hide the picker; it only hides on mousedown outside the picker.",
+  "repair_strategy": "Add a blur event listener to the input field in the Datepicker constructor (non‑inline mode) that calls the picker's hide method to close the picker when the input loses focus.",
+  "edits": [
+    {
+      "path": "js/Datepicker.js",
+      "sha256": "55bc634a806da095ca30921bdc0d463fdc2fd63dff3eeab32b3d673bab3ef609",
+      "before": "    } else {\n      // set up event listeners\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }",
+      "after": "    } else {\n      // set up event listeners\n      const onMousedownDocument = onClickOutside.bind(null, this);\n      const listeners = [\n        [inputField, 'keydown', onKeydown.bind(null, this)],\n        [inputField, 'focus', onFocus.bind(null, this)],\n        [inputField, 'mousedown', onMousedown.bind(null, this)],\n        [inputField, 'click', onClickInput.bind(null, this)],\n        [inputField, 'paste', onPaste.bind(null, this)],\n        [inputField, 'blur', picker.hide.bind(picker)],\n        [document, 'mousedown', onMousedownDocument],\n        [document, 'touchstart', onMousedownDocument],\n        [window, 'resize', picker.place.bind(picker)]\n      ];\n      registerListeners(this, listeners);\n    }"
+    }
+  ],
+  "expected_accessibility_effect": "Keyboard users can now close the datepicker when moving focus away with Tab, satisfying WCAG 2.1.1 Keyboard and 2.4.3 Focus Order.",
+  "functional_risks": [
+    "Potential premature hiding if focus temporarily leaves the input while interacting with the datepicker popup via keyboard (e.g., arrow navigation).",
+    "Clicking inside the datepicker may cause the input to lose focus and trigger blur before the click is processed, potentially hiding the picker prematurely. Inline datepickers are unaffected because the listener is added only in the non‑inline branch."
+  ],
+  "verification_requirements": [
+    "After typing a date and pressing Tab, the datepicker must close.",
+    "Selecting a date via mouse or keyboard within the popup should still work and close appropriately.",
+    "Opening the datepicker via focus must still show the picker.",
+    "Inline datepickers should continue to behave as before."
+  ]
+}

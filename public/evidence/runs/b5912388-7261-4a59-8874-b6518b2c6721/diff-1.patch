@@ -1,0 +1,26 @@
+diff --git a/js/src/datepicker.ts b/js/src/datepicker.ts
+index e71d8df..ebace53 100644
+--- a/js/src/datepicker.ts
++++ b/js/src/datepicker.ts
+@@ -255,8 +255,19 @@ class Datepicker extends BaseComponent {
+       this._parseInputValue()
+     }
+ 
+-    // Populate input/display with preselected dates
+-    this._updateDisplayWithSelectedDates()
++    // Update boundInput and displayElement from the calendar's state, but do not update the main input
++    // to preserve the initial ISO format in the input until a date is selected.
++    const calendarDates = this._calendar?.context?.selectedDates || []
++    const selectedDates = calendarDates.length > 0 ? calendarDates : this._config.selectedDates
++    if (selectedDates.length > 0) {
++      const formattedDate = this._formatDateForInput(selectedDates)
++      if (this._boundInput) {
++        this._boundInput.value = selectedDates.join(',')
++      }
++      if (this._displayElement) {
++        this._displayElement.textContent = formattedDate
++      }
++    }
+   }
+ 
+   protected _updateDisplayWithSelectedDates(): void {

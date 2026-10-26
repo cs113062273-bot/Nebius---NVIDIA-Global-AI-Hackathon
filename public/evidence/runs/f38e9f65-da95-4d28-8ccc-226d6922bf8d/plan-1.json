@@ -1,0 +1,32 @@
+{
+  "root_cause": "The keyboard navigation handlers (_onKeyChange) call adjustDate directly, which does not skip dates disabled by disableDayFn, disableWeekends, minDate, or maxDate.",
+  "repair_strategy": "Replace the arrow key cases in _onKeyChange with calls to a new helper _adjustDateSkipDisabled that steps by the requested increment while skipping disabled dates (outside min/max, weekends, or disableDayFn) and only updates the date if an enabled date is found within bounds.",
+  "edits": [
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self.adjustDate('subtract', 1);\n                        break;\n                    case 38:\n                        self.adjustDate('subtract', 7);\n                        break;\n                    case 39:\n                        self.adjustDate('add', 1);\n                        break;\n                    case 40:\n                        self.adjustDate('add', 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        }\n;\n",
+      "after": "        self._onKeyChange = function(e)\n        {\n            e = e || window.event;\n\n            if (self.isVisible()) {\n\n                switch(e.keyCode){\n                    case 13:\n                    case 27:\n                        if (opts.field) {\n                            opts.field.blur();\n                        }\n                        break;\n                    case 37:\n                        self._adjustDateSkipDisabled(-1, 1);\n                        break;\n                    case 38:\n                        self._adjustDateSkipDisabled(-1, 7);\n                        break;\n                    case 39:\n                        self._adjustDateSkipDisabled(1, 1);\n                        break;\n                    case 40:\n                        self._adjustDateSkipDisabled(1, 7);\n                        break;\n                    case 8:\n                    case 46:\n                        self.setDate(null);\n                        break;\n                }\n            }\n        }\n;\n"
+    },
+    {
+      "path": "pikaday.js",
+      "sha256": "a50b66482ec18884a7200882e9b523d9192b224b40b296cdd4080530f114fa75",
+      "before": "        };\n        self._parseFieldValue = function()\n        {\n",
+      "after": "        };\n        self._adjustDateSkipDisabled = function(sign, days)\n        {\n            var opts = this._o;\n            var current = this.getDate() || new Date();\n            var time = current.getTime();\n            var stepMs = (sign > 0 ? 1 : -1) * days * 24 * 60 * 60 * 1000;\n            var candidate = new Date(time + stepMs);\n            var safety = 0;\n            while (safety < 100)\n            {\n                var disabled = false;\n                if (this._o.minDate && candidate.getTime() < this._o.minDate.getTime()) disabled = true;\n                else if (this._o.maxDate && candidate.getTime() > this._o.maxDate.getTime()) disabled = true;\n                else if (this._o.disableWeekends && isWeekend(candidate)) disabled = true;\n                else if (this._o.disableDayFn && this._o.disableDayFn(candidate)) disabled = true;\n                if (!disabled) break;\n                candidate = new Date(candidate.getTime() + stepMs);\n                safety++;\n            }\n            if (safety < 100 && (!this._o.minDate || candidate.getTime() >= this._o.minDate.getTime()) && (!this._o.maxDate || candidate.getTime() <= this._o.maxDate.getTime()))\n            {\n                this.setDate(candidate);\n            }\n        };\n        self._parseFieldValue = function()\n        {\n"
+    }
+  ],
+  "expected_accessibility_effect": "ArrowRight and ArrowLeft will now move to the next or previous enabled weekday, preventing focus on disabled weekend days and satisfying WCAG 2.1.1 Keyboard and 2.4.3 Focus Order.",
+  "functional_risks": [
+    "Potential infinite loop if all dates in a direction are disabled (mitigated by safety counter).",
+    "Behavior change if minDate/maxDate are set to disabled dates (should not occur in normal usage).",
+    "Week arrow keys (ArrowUp/ArrowDown) may skip multiple weeks when encountering disabled dates, but still respect min/max bounds.",
+    "The added safety counter may prematurely abort in extremely rare edge cases with many consecutive disabled dates (>100 days)."
+  ],
+  "verification_requirements": [
+    "ArrowRight from Friday 2026-11-20 yields Monday 2026-11-23.",
+    "ArrowLeft from Monday 2026-11-23 yields Friday 2026-11-20.",
+    "ArrowUp/ArrowDown adjust by week while skipping weekends.",
+    "At minDate/maxDate boundaries, arrow keys stop at the last/first enabled date.",
+    "Existing regression guards (Arrow keys still move between open days, Arrow keys stop at the last bookable day) continue to pass."
+  ]
+}

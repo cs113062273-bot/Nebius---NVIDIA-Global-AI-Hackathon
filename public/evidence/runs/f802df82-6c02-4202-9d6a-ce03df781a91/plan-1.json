@@ -1,0 +1,4 @@
+{
+  "root_cause": "Human-supplied edited files; no model diagnosis.",
+  "repair_strategy": "Verify added, removed and modified static files in isolation."
+}
