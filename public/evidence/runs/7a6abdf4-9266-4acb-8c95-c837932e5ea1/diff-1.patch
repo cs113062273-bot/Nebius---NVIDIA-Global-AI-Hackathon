@@ -1,0 +1,58 @@
+diff --git a/js/src/util/index.js b/js/src/util/index.js
+index 4e52fd3..e0e44a7 100644
+--- a/js/src/util/index.js
++++ b/js/src/util/index.js
+@@ -285,7 +285,7 @@ const executeAfterTransition = (callback, transitionElement, waitForTransition =
+ }
+ 
+ /**
+- * Return the previous/next element of a list.
++ * Return the previous/next element of a list, skipping disabled elements.
+  *
+  * @param {array} list    The list of elements
+  * @param activeElement   The active element
+@@ -294,22 +294,35 @@ const executeAfterTransition = (callback, transitionElement, waitForTransition =
+  * @return {Element|elem} The proper element
+  */
+ const getNextActiveElement = (list, activeElement, shouldGetNext, isCycleAllowed) => {
+-  const listLength = list.length
+-  let index = list.indexOf(activeElement)
++  if (list.length === 0) {
++    return activeElement
++  }
+ 
+-  // if the element does not exist in the list return an element
+-  // depending on the direction and if cycle is allowed
+-  if (index === -1) {
+-    return !shouldGetNext && isCycleAllowed ? list[listLength - 1] : list[0]
++  const enabled = list.filter(el => !isDisabled(el))
++  if (enabled.length === 0) {
++    // All elements are disabled, keep current
++    return activeElement
+   }
+ 
+-  index += shouldGetNext ? 1 : -1
++  let enabledIndex = enabled.indexOf(activeElement)
++  if (enabledIndex === -1) {
++    // activeElement is disabled; treat as starting point based on direction
++    enabledIndex = shouldGetNext ? 0 : enabled.length - 1
++  }
+ 
++  let newIndex = enabledIndex + (shouldGetNext ? 1 : -1)
++  const len = enabled.length
+   if (isCycleAllowed) {
+-    index = (index + listLength) % listLength
++    newIndex = (newIndex + len) % len
++  } else {
++    if (newIndex < 0) {
++      newIndex = 0
++    } else if (newIndex >= len) {
++      newIndex = len - 1
++    }
+   }
+ 
+-  return list[Math.max(0, Math.min(index, listLength - 1))]
++  return enabled[newIndex]
+ }
+ 
+ export {

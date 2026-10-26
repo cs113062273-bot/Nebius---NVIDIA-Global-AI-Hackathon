@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-26",
+  "at": "2026-10-26T03:15:59.643Z",
+  "run": "7a6abdf4-9266-4acb-8c95-c837932e5ea1",
+  "kind": "real",
+  "case": "bootstrap-tabs-skip-disabled",
+  "title": "Arrow keys in a tab list must skip disabled tabs",
+  "library": "Bootstrap 5.2 alpha (tab)",
+  "verdict": "VERIFIED_PASS",
+  "passedOn": 1,
+  "models": [
+    "nemotron-3-super-120b-a12b"
+  ],
+  "failures": [
+    null
+  ],
+  "costUsd": 0.0112,
+  "seconds": 50,
+  "trigger": "schedule",
+  "actionsRun": "https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/actions/runs/40263038026"
+}
