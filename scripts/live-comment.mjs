@@ -16,7 +16,7 @@ else if (r.status === 'RAN') {
     r.verdict === 'VERIFIED_PASS' ? `### ✅ Repaired and verified on attempt ${r.passedOn}` : `### ❌ Not repaired in ${r.models.length} attempt${r.models.length > 1 ? 's' : ''}`,
     `**${r.library} · ${r.title}** (\`${r.case}\`, ${r.kind === 'real' ? 'fixed upstream; the model never saw the maintainers’ fix' : 'still open upstream'})`,
     `| Attempt | Model | Browser verdict |\n|---|---|---|\n${rows}`,
-    `${r.seconds ? `${Math.round(r.seconds / 60)} min · ` : ''}US$${r.costUsd.toFixed(3)} of sponsor credits · run \`${r.run.slice(0, 8)}\``,
+    `${r.seconds ? (r.seconds < 90 ? `${r.seconds} s · ` : `${Math.round(r.seconds / 60)} min · `) : ''}US$${r.costUsd.toFixed(3)} of sponsor credits · run \`${r.run.slice(0, 8)}\``,
     `**[Open the evidence page](${page})**: captures before and after, the diff, every assertion and the raw model request and response.`,
     r.verdict === 'VERIFIED_PASS' ? 'Verified only for the frozen keyboard task, the pointer path and the regression guards; it is not a full accessibility audit.' : 'A rejected run is a real result too: the page shows what Chromium caught.',
   ].join('\n\n');

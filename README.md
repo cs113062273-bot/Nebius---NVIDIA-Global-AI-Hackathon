@@ -7,6 +7,8 @@ Tabstitch repairs keyboard and form bugs in web pages with **NVIDIA Nemotron on 
 **Judge site (read-only, no setup):** https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/
 Start at **See the verified repair**, then **Browse all 73 recorded runs**. Every page shows recorded browser captures, assertions, diffs and the raw model request and response. Viewing makes no model call.
 
+**Run it live yourself (GitHub account only):** every bug card on the [live page](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html) has a **Run it live** button. It opens a prefilled `[live run] <bug>` issue; GitHub Actions ([`judge-live.yml`](.github/workflows/judge-live.yml)) gives Nemotron the buggy source, replays the result in Chromium, publishes the evidence and replies on the issue with the verdict, usually within 3 to 10 minutes. Each run is capped at US$0.50 of sponsor credits, with 12 requested runs a day and 3 per person.
+
 ## Real bugs, repaired blind
 
 [**Real bugs, live**](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html) lists 26 keyboard and form bugs that were reported and fixed by hand in 12 open-source libraries (Bootstrap, GOV.UK Frontend, NHS.UK frontend, focus-trap, tabbable, MicroModal, a11y-dialog, accessible-menu, Pikaday, vanillajs-datepicker, Awesomplete, autoComplete.js). Each library is pinned at the commit before the maintainers' fix, and a browser task is frozen. The maintainers' own fix must pass that task first (26/26). Nemotron then gets only the buggy source: Super first, Ultra after a rejection, at most three proposals.
