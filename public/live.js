@@ -2,6 +2,10 @@
 // on the static judge site it replays the recorded blind run for each real bug.
 const $=s=>document.querySelector(s),el=(tag,attrs={},...kids)=>{const n=document.createElement(tag);for(const [k,v]of Object.entries(attrs))if(v!=null)k==='class'?n.className=v:k==='text'?n.textContent=v:n.setAttribute(k,v);n.append(...kids.filter(k=>k!=null));return n;};
 const LIVE_URL=document.querySelector('meta[name="tabstitch-live"]')?.content||'';
+// Without a live host, a live run is requested by opening an issue; GitHub Actions runs it and replies there.
+const REPO='https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon';
+const issueUrl=id=>`${REPO}/issues/new?template=live-run.yml&title=${encodeURIComponent('[live run] '+id)}`;
+const runLive=id=>el('a',{class:'secondary run-live',href:issueUrl(id),target:'_blank',rel:'noopener',text:'Run it live ↗'});
 const MODEL={'nemotron-3-super-120b-a12b':'Nemotron 3 Super','Nemotron-3-Ultra-550b-a55b':'Nemotron 3 Ultra'};
 const modelName=id=>MODEL[String(id||'').split('/').pop()]||String(id||'Nemotron').split('/').pop();
 const STAGES=[['reproduce','Reproduce the bug',['PREPARING','BASELINE_RUNNING','FAILURE_CONFIRMED']],['locate','Find the source',['LOCALIZING']],['propose','Nemotron proposes a patch',['PLANNING_REPAIR']],['apply','Apply in an isolated copy',['PATCHING','BUILDING']],['replay','Replay in Chromium',['REPLAYING','VERIFYING']],['verdict','Verdict',['VERIFIED','FAILED','INCONCLUSIVE']]];
@@ -26,7 +30,7 @@ function renderMode(){
   else if(api){m.textContent='RECORDED · LIVE PAUSED';m.className='mode';}
   else{m.textContent='RECORDED RUNS';m.className='mode';}
   const b=data.budget;
-  $('#budget').textContent=api&&data.enabled&&b?`Live budget today: US$${Math.max(0,b.dailyLimitUsd-b.todayUsd).toFixed(2)} of ${b.dailyLimitUsd.toFixed(2)} left · total cap US$${b.totalLimitUsd.toFixed(0)}`:api?(data.reason||''):LIVE_URL?'':'Showing recorded runs. Each recorded run made real Nemotron calls when it was captured; viewing makes none.';
+  $('#budget').textContent=api&&data.enabled&&b?`Live budget today: US$${Math.max(0,b.dailyLimitUsd-b.todayUsd).toFixed(2)} of ${b.dailyLimitUsd.toFixed(2)} left · total cap US$${b.totalLimitUsd.toFixed(0)}`:api?(data.reason||''):LIVE_URL?'':'Recorded runs made real Nemotron calls when they were captured; viewing makes none. Run it live opens a GitHub issue: Actions makes a fresh Nemotron repair (capped at US$0.50) and replies there with the verdict in about 3 to 10 minutes.';
 }
 function renderStats(){
   const cases=data.cases,libs=new Set(cases.map(c=>c.repository.replace(/\/+$/,'').toLowerCase())),runs=cases.filter(c=>c.recorded),passed=runs.filter(c=>c.recorded.verdict==='VERIFIED_PASS');
@@ -37,8 +41,8 @@ function renderStats(){
 function renderDaily(){
   const runs=daily?.runs||[];$('#daily').hidden=!runs.length;if(!runs.length)return;
   $('#daily-note').textContent=daily.note||'';
-  $('#daily-list').replaceChildren(...runs.slice(0,5).map(x=>el('article',{class:'daily-run'},
-    el('p',{class:'case-lib'},el('span',{class:'mono',text:x.date}),el('span',{class:'tag',text:x.kind==='open'?'still open upstream':'fixed upstream, run blind'})),
+  $('#daily-list').replaceChildren(...runs.slice(0,6).map(x=>el('article',{class:'daily-run'},
+    el('p',{class:'case-lib'},el('span',{class:'mono',text:x.date}),el('span',{class:'tag',text:x.kind==='open'?'still open upstream':'fixed upstream, run blind'}),x.trigger==='issue'?el('a',{class:'tag',href:`${REPO}/issues/${x.issue}`,text:`requested in issue #${x.issue}`}):el('span',{class:'tag',text:'daily scheduled run'})),
     el('h3',{},el('a',{href:`./project.html?run=${x.run}${x.passedOn?'&attempt='+x.passedOn:''}#project-result`,text:`${x.library} · ${x.title}`})),
     el('p',{class:`case-status ${x.verdict==='VERIFIED_PASS'?'ok':'no'}`,text:x.verdict==='VERIFIED_PASS'?`Repaired on attempt ${x.passedOn} · ${modelName(x.models[x.passedOn-1])} · US$${x.costUsd.toFixed(3)}`:`Not repaired · ${x.models.length} attempt${x.models.length>1?'s':''} · US$${x.costUsd.toFixed(3)}`}),
     x.actionsRun?el('p',{class:'small'},el('a',{href:x.actionsRun,text:'GitHub Actions log for this run ↗'})):null)));
@@ -51,6 +55,7 @@ function renderOpen(){
     const actions=el('div',{class:'case-actions'});
     if(r){const b=el('button',{class:'primary',type:'button',text:'Watch the repair'});b.onclick=()=>void showRecorded(c);actions.append(b);}
     if(r?.passedOn)actions.append(el('a',{class:'secondary',href:`./openbugs/${c.id}/nemotron.patch`,download:`${c.id}.patch`,text:'Download the patch'}));
+    if(!api&&!LIVE_URL)actions.append(runLive(c.id));
     box.append(el('article',{class:'case open'},
       el('p',{class:'case-lib'},el('span',{text:c.library}),c.category?el('span',{class:'tag',text:c.category}):null),
       el('h3',{text:c.title}),el('p',{class:'case-sum',text:c.summary}),
@@ -73,6 +78,7 @@ function renderCases(){
     if(api&&data.enabled){const b=el('button',{class:'primary',type:'button',text:'Repair live with Nemotron'});b.onclick=()=>void startLive(c,b);actions.append(b);}
     else if(LIVE_URL)actions.append(el('a',{class:'primary',href:`${LIVE_URL}/live.html?case=${c.id}`,text:'Repair live ↗'}));
     if(r){const b=el('button',{class:api&&data.enabled?'secondary':'primary',type:'button',text:'Watch the recorded run'});b.onclick=()=>void showRecorded(c);actions.append(b);}
+    if(!api&&!LIVE_URL)actions.append(runLive(c.id));
     list.append(el('article',{class:'case'},
       el('p',{class:'case-lib'},el('span',{text:c.library}),c.category?el('span',{class:'tag',text:c.category}):null),
       el('h3',{text:c.title}),el('p',{class:'case-sum',text:c.summary}),

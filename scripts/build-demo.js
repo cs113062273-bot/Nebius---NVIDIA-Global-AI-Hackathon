@@ -12,6 +12,12 @@ for(const entry of await fs.readdir(path.join(ROOT,'public'))){
  if(localOnly.has(entry))continue;
  await fs.cp(path.join(ROOT,'public',entry),path.join(out,entry),{recursive:true});
 }
+// Live runs made in GitHub Actions each commit their own file; the site reads one index, newest first.
+const liveDir=path.join(ROOT,'public','live-runs','runs'),live=[];
+for(const f of await fs.readdir(liveDir).catch(()=>[]))if(f.endsWith('.json'))live.push(JSON.parse(await fs.readFile(path.join(liveDir,f),'utf8')));
+live.sort((a,b)=>b.at.localeCompare(a.at));
+await fs.mkdir(path.join(out,'live-runs'),{recursive:true});
+await json(path.join(out,'live-runs','index.json'),{note:'Fresh Nemotron runs made by GitHub Actions at the time shown: one a day during judging, plus any run someone requested by opening a live-run issue. Each is capped at US$0.50 of sponsor credits.',runs:live});
 await fs.copyFile(path.join(ROOT,'LICENSE'),path.join(out,'LICENSE'));
 await fs.writeFile(path.join(out,'.nojekyll'),'');
 // Fail closed if an environment file, credential-like text or a local path enters the public build.

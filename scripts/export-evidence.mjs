@@ -51,7 +51,8 @@ const recordedRealbugs = realbugs.filter(c => c.recorded);
 if (recordedRealbugs.length) groups.unshift({ title: 'Real upstream bugs · blind Nemotron runs', summary: "Each library is pinned just before a published maintainer fix. The maintainers' fix passes the frozen task; Nemotron gets only the buggy source, Super first and Ultra after a rejection.",
  runs: recordedRealbugs.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })) });
 // Daily live runs were made in CI and exist only in public/; keep their evidence folders.
-const liveRuns = new Set(((await readJson(path.join(ROOT, 'public', 'live-runs', 'index.json')).catch(() => ({ runs: [] }))).runs || []).map(x => x.run));
+const liveDir = path.join(ROOT, 'public', 'live-runs', 'runs'), liveRuns = new Set();
+for (const f of await fs.readdir(liveDir).catch(() => [])) if (f.endsWith('.json')) liveRuns.add((await readJson(path.join(liveDir, f))).run);
 for (const entry of await fs.readdir(path.join(out, 'runs')).catch(() => [])) if (!liveRuns.has(entry)) await fs.rm(path.join(out, 'runs', entry), { recursive: true, force: true });
 const index = { generatedAt: new Date().toISOString(), note: 'Read-only published evidence. Screenshots, plans, diffs and raw model requests/responses are byte-identical to the run manifests. run.json is a reduced, path-sanitized view; complete archives are attached where marked.', groups: [] };
 let bytes = 0;

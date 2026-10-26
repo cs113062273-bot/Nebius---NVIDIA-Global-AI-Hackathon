@@ -1,0 +1,111 @@
+name: Live run on request
+
+# Anyone can open a "[live run] <case-id>" issue (from the judge site's "Run it live" button or the
+# issue form). GitHub Actions runs a fresh, budget-capped Nemotron repair on that case, commits the
+# evidence, redeploys the judge site and replies on the issue with the verdict. The issue text is
+# passed only through environment variables and is used only to pick a screened case id.
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+jobs:
+  run:
+    if: startsWith(github.event.issue.title, '[live run]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    outputs:
+      ran: ${{ steps.repair.outputs.ran }}
+    steps:
+      - name: Acknowledge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LOG: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body "Started. Nemotron is reading the buggy source now; the verdict will be posted here in about 3 to 10 minutes. [Watch the GitHub Actions log]($LOG)."
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium
+      - name: Repair the requested bug with Nemotron
+        id: repair
+        env:
+          NEBIUS_API_KEY: ${{ secrets.NEBIUS_API_KEY }}
+          TABSTITCH_MAX_USD: '0.5'
+          TABSTITCH_ISSUE: ${{ github.event.issue.number }}
+          TABSTITCH_REQUESTER: ${{ github.event.issue.user.login }}
+          TABSTITCH_ISSUE_TITLE: ${{ github.event.issue.title }}
+          TABSTITCH_ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          node scripts/daily-live.mjs
+          if grep -q '"status": "RAN"' artifacts/live-result.json; then echo "ran=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Commit the run's evidence
+        if: steps.repair.outputs.ran == 'true'
+        run: |
+          git config user.name "tabstitch-live"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/live-runs public/evidence/runs
+          git commit -m "Live Nemotron run requested in issue #${{ github.event.issue.number }}"
+          for i in 1 2 3 4 5; do git pull --rebase && git push && break; sleep $((i * 7)); done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-result
+          path: artifacts/live-result.json
+          if-no-files-found: ignore
+
+  site:
+    needs: run
+    if: needs.run.outputs.ran == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts
+      - run: node scripts/build-demo.js
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: artifacts/judge-demo
+
+  deploy:
+    needs: site
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  reply:
+    needs: [run, deploy]
+    if: always() && needs.run.result != 'skipped'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: live-result
+          path: result
+      - name: Post the verdict
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ACTIONS_RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          node scripts/live-comment.mjs result/live-result.json > reply.md
+          gh issue comment ${{ github.event.issue.number }} --repo ${{ github.repository }} --body-file reply.md
+          gh issue close ${{ github.event.issue.number }} --repo ${{ github.repository }} --reason completed

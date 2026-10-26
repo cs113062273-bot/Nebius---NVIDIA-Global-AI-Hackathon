@@ -1,0 +1,50 @@
+name: Run a live Nemotron repair
+description: Start a fresh NVIDIA Nemotron repair on one real bug. A real browser decides the verdict and the bot replies here.
+title: "[live run] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        GitHub Actions gives Nemotron (via Nebius Token Factory) only the buggy source of the bug you choose. Nemotron 3 Super tries first; if Chromium rejects its patch, Nemotron 3 Ultra gets the exact failure. A run takes about 3 to 10 minutes and is capped at US$0.50 of sponsor credits. The verdict, the patch and the full evidence page are posted on this issue when it finishes.
+
+        Limits: 12 requested runs a day in total, 3 per person.
+  - type: dropdown
+    id: case
+    attributes:
+      label: Bug
+      description: Real bugs fixed upstream (the model never sees the maintainers' fix) and bugs still open upstream. If you came from the judge site, the title already names the bug; the title wins.
+      options:
+        - a11y-dialog-focus-restore
+        - accessible-menu-escape-level
+        - accessible-menu-focusout-close
+        - autocompletejs-activedescendant-id
+        - autocompletejs-stale-keyboard-selection
+        - awesomplete-tab-to-next-field
+        - bootstrap-dropdown-escape-in-modal
+        - bootstrap-modal-shift-tab-wrap
+        - bootstrap-offcanvas-scroll-focus-release
+        - bootstrap-dropdown-escape-focus
+        - bootstrap-offcanvas-backdrop-focus-trap
+        - bootstrap-tabs-arrow-focus
+        - bootstrap-tabs-skip-disabled
+        - focus-trap-removed-ancestor
+        - focus-trap-removed-focus
+        - govuk-character-count-maxlength
+        - govuk-header-nav-aria-hidden
+        - govuk-radios-conditional-multiple-groups
+        - govuk-tabs-vertical-arrows
+        - micromodal-form-click-closes
+        - micromodal-hidden-focus-leak
+        - nhsuk-checkboxes-exclusive-unique-names
+        - pikaday-arrow-left-other-field
+        - tabbable-disabled-fieldset
+        - vanillajs-datepicker-invalid-date-blur
+        - vanillajs-datepicker-tab-next-field
+        - autocompletejs-escape-erases-edit
+        - bootstrap6-datepicker-focus-rewrites-date
+        - bootstrap6-datepicker-tab-trap
+        - bootstrap6-datepicker-tab-trap-with-picker
+        - bootstrap6-dialog-escape-keyboard-false
+        - bootstrap6-drawer-initial-focus
+        - pikaday-keyboard-disabled-day
+        - pikaday-tab-after-typed-date
