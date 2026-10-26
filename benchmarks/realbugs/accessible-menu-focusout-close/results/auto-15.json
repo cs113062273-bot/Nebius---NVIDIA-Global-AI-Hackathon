@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T12:11:28.610Z",
+  "policy": "auto",
+  "modelRun": "63adf1b0-8b86-4e4b-a869-ddb4da029723",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 1,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-4275d049d41759b7d304673601d91720",
+      "usage": {
+        "completion_tokens": 4678,
+        "prompt_tokens": 33582,
+        "total_tokens": 38260,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3799,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 33582
+      },
+      "latencyMs": 25772,
+      "reservedCreditUsd": 0.06407879999999999
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-5e45b9d3e2a4871021f2d8a3a21be5f8",
+      "usage": {
+        "completion_tokens": 13501,
+        "prompt_tokens": 34317,
+        "total_tokens": 47818,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 12587,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 34317
+      },
+      "latencyMs": 36261,
+      "reservedCreditUsd": 0.216858
+    }
+  ]
+}

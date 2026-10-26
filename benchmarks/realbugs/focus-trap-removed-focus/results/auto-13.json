@@ -1,0 +1,96 @@
+{
+  "completedAt": "2026-10-26T10:47:59.008Z",
+  "policy": "auto",
+  "modelRun": "655686b3-707d-4943-99cf-6512a11dc2b4",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (index.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"let node = state.mostRecentlyFocusedNode;\"; closest is line 374: \"state.mostRecentlyFocusedNode = node;\" | not in file: \"// If the most recently focused node is no longer in the trap (e.g., removed from DOM), fall back to initial focus node.\" | not in file: \"if (node && !state.containers.some(container => container === node || container.contains(node))) {\"; closest is line 367: \"const isNodeInContainers = state.containers.some(container => container.contains(node));\". Best alignment: before lines 1-13 match file lines 422-434, then before line 14 \"let node = state.mostRecentlyFocusedNode;\" differs from file line 435 \"tryFocus(state.mostRecentlyFocusedNode || getInitialFocusNode());\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-86cfb26f1f61860b886766a57938a8e5",
+      "usage": {
+        "completion_tokens": 23396,
+        "prompt_tokens": 18279,
+        "total_tokens": 41675,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 22610,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 18279
+      },
+      "latencyMs": 130781,
+      "reservedCreditUsd": 0.04935779999999999
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-21f4c0f97924b7db8517a5bda36fd6f7",
+      "usage": {
+        "completion_tokens": 7494,
+        "prompt_tokens": 19094,
+        "total_tokens": 26588,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6618,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19094
+      },
+      "latencyMs": 19640,
+      "reservedCreditUsd": 0.16825299999999999
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (index.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"let node = state.mostRecentlyFocusedNode;\"; closest is line 374: \"state.mostRecentlyFocusedNode = node;\" | not in file: \"// If the most recently focused node is no longer in the trap (e.g., removed from DOM), fall back to initial focus node.\" | not in file: \"if (node && !state.containers.some(",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-ba2de23ba755d6d29feed142ff524296",
+      "usage": {
+        "completion_tokens": 15133,
+        "prompt_tokens": 20765,
+        "total_tokens": 35898,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13462,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 20765
+      },
+      "latencyMs": 39571,
+      "reservedCreditUsd": 0.174419
+    }
+  ]
+}

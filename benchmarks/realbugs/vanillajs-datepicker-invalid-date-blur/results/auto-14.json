@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T11:51:18.222Z",
+  "policy": "auto",
+  "modelRun": "adae8548-c7fd-483d-b753-f1623a4978f3",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 3 · .datepicker: expected false, observed true",
+    "Task evidence is missing or contradicts the verdict"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-eaf3e593aada39ab1c73e0e4d9e7f6b7",
+      "usage": {
+        "completion_tokens": 3231,
+        "prompt_tokens": 16846,
+        "total_tokens": 20077,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2666,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 16846
+      },
+      "latencyMs": 15746,
+      "reservedCreditUsd": 0.0461091
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/Datepicker.js): before does not occur in the file. 4 of its lines are not in the source. not in file: \"const opts = {clear: true, render: true, autohide: true};\"; closest is line 93: \"let {clear, render, autohide} = options;\" | not in file: \"if (options) {\"; closest is line 278: \"setOptions(options) {\" | not in file: \"Object.assign(opts, options);\"; closest is line 281: \"Object.assign(t",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-a3943f19bba6ad9c25b30b6fa73ba41e",
+      "usage": {
+        "completion_tokens": 11492,
+        "prompt_tokens": 17320,
+        "total_tokens": 28812,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10630,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17320
+      },
+      "latencyMs": 29306,
+      "reservedCreditUsd": 0.15587299999999998
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-62cfb50284333a45e07d2b5183181d11",
+      "usage": {
+        "completion_tokens": 3640,
+        "prompt_tokens": 19638,
+        "total_tokens": 23278,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2844,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19638
+      },
+      "latencyMs": 9819,
+      "reservedCreditUsd": 0.163857
+    }
+  ]
+}

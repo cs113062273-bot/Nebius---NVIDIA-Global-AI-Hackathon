@@ -1,0 +1,42 @@
+{
+  "completedAt": "2026-10-26T12:27:32.948Z",
+  "policy": "auto",
+  "modelRun": "0f7b593e-b461-4ce6-b2c9-5a06d803558e",
+  "verdict": "INCONCLUSIVE",
+  "reasons": [
+    "INFRA: EPERM: operation not permitted, rename 'C:\\Users\\chinh\\Desktop\\Nebius---NVIDIA-Global-AI-Hackathon\\artifacts\\runs\\0f7b593e-b461-4ce6-b2c9-5a06d803558e\\run.json.tmp' -> 'C:\\Users\\chinh\\Desktop\\Nebius---NVIDIA-Global-AI-Hackathon\\artifacts\\runs\\0f7b593e-b461-4ce6-b2c9-5a06d803558e\\run.json'"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "INFRA",
+      "failure": "EPERM: operation not permitted, rename 'C:\\Users\\chinh\\Desktop\\Nebius---NVIDIA-Global-AI-Hackathon\\artifacts\\runs\\0f7b593e-b461-4ce6-b2c9-5a06d803558e\\run.json.tmp' -> 'C:\\Users\\chinh\\Desktop\\Nebius---NVIDIA-Global-AI-Hackathon\\artifacts\\runs\\0f7b593e-b461-4ce6-b2c9-5a06d803558e\\run.json'",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-c24ab91b4a9e5d0030b30b38c3c25a71",
+      "usage": {
+        "completion_tokens": 4013,
+        "prompt_tokens": 4664,
+        "total_tokens": 8677,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3468,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4664
+      },
+      "latencyMs": 20545,
+      "reservedCreditUsd": 0.0341265
+    }
+  ]
+}

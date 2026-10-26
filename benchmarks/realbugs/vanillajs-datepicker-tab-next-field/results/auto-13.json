@@ -1,0 +1,94 @@
+{
+  "completedAt": "2026-10-26T11:01:05.265Z",
+  "policy": "auto",
+  "modelRun": "aa1d2da3-3efb-4486-96a6-d596e6b49663",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-b90a1afdaba30fec35be47612e6b78e7",
+      "usage": {
+        "completion_tokens": 12211,
+        "prompt_tokens": 21529,
+        "total_tokens": 33740,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10378,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21529
+      },
+      "latencyMs": 49943,
+      "reservedCreditUsd": 0.0510696
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/Datepicker.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"*   - args:\"; closest is line 233: \"* - args:\" | not in file: \"*     - date: {Date} - Date instance of the date passed to the method\"; closest is line 234: \"*   - date: {Date} - Date instance of the date passed to the method\" | not in file: \"*     - format: {Object} - the format object",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-cf5560707a359ed1d3367bd05cea469c",
+      "usage": {
+        "completion_tokens": 7475,
+        "prompt_tokens": 21795,
+        "total_tokens": 29270,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5611,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21795
+      },
+      "latencyMs": 17961,
+      "reservedCreditUsd": 0.17282999999999998
+    },
+    {
+      "attempt": 3,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-e862c18303948403f69b8f99e6f5d889",
+      "usage": {
+        "completion_tokens": 5720,
+        "prompt_tokens": 26255,
+        "total_tokens": 31975,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4049,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 26255
+      },
+      "latencyMs": 14011,
+      "reservedCreditUsd": 0.188124
+    }
+  ]
+}

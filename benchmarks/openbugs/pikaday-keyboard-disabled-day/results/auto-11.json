@@ -1,0 +1,63 @@
+{
+  "completedAt": "2026-10-26T12:06:23.078Z",
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "modelRun": "04fe424f-63d1-41b0-8c5a-1d57f48c1e63",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "BUILD",
+      "failure": "Candidate build failed: [{\"file\":\"pikaday.js\",\"pass\":false,\"kind\":\"syntax\",\"message\":\"JavaScript syntax check failed\"}]",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-753656d050eba9fd1b27604739983241",
+      "usage": {
+        "completion_tokens": 5637,
+        "prompt_tokens": 17212,
+        "total_tokens": 22849,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4640,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17212
+      },
+      "latencyMs": 29072
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-d713c0f5d4a4af900f9b0ee4e8166800",
+      "usage": {
+        "completion_tokens": 11735,
+        "prompt_tokens": 18262,
+        "total_tokens": 29997,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10741,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 18262
+      },
+      "latencyMs": 30196
+    }
+  ]
+}

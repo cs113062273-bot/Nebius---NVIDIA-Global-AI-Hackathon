@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T12:38:02.545Z",
+  "policy": "auto",
+  "modelRun": "5f2a16d1-50d6-46c1-ad5a-c17dde1a3e76",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · Step 2 · #street: expected \"#street\", observed \"#open\"",
+    "Task evidence is missing or contradicts the verdict"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-9451530c504e525af1168e41816b10f3",
+      "usage": {
+        "completion_tokens": 10166,
+        "prompt_tokens": 10218,
+        "total_tokens": 20384,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9485,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10218
+      },
+      "latencyMs": 61822,
+      "reservedCreditUsd": 0.040273199999999995
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "OVERFIT",
+      "failure": "Patch hardcodes the test page into component code: src/index.js now names #street. Component code must work on any page that uses it; repair the component's behaviour without referring to this page's ids.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-8a224772231ea9ae21da827a196b3a98",
+      "usage": {
+        "completion_tokens": 22460,
+        "prompt_tokens": 10739,
+        "total_tokens": 33199,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 21466,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10739
+      },
+      "latencyMs": 58727,
+      "reservedCreditUsd": 0.13627
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-17f9477bb2cea0b4e5df338cf2ecfd15",
+      "usage": {
+        "completion_tokens": 8997,
+        "prompt_tokens": 12344,
+        "total_tokens": 21341,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8257,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 12344
+      },
+      "latencyMs": 25212,
+      "reservedCreditUsd": 0.1422
+    }
+  ]
+}

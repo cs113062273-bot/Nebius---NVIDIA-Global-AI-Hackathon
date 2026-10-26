@@ -1,0 +1,96 @@
+{
+  "completedAt": "2026-10-26T10:59:23.824Z",
+  "policy": "auto",
+  "modelRun": "66828102-d281-4d3b-a2f2-3eefe21cde27",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "BUILD: Candidate build failed: [{\"file\":\"js/Datepicker.js\",\"pass\":false,\"kind\":\"syntax\",\"message\":\"JavaScript syntax check failed\"}]"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-3d2d41f5f84f036fbce2b6bd5f0bc164",
+      "usage": {
+        "completion_tokens": 9686,
+        "prompt_tokens": 16846,
+        "total_tokens": 26532,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8837,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 16846
+      },
+      "latencyMs": 41858,
+      "reservedCreditUsd": 0.0461091
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-70042e8c22fb098e2567db6c32d030c5",
+      "usage": {
+        "completion_tokens": 3436,
+        "prompt_tokens": 17718,
+        "total_tokens": 21154,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2558,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17718
+      },
+      "latencyMs": 8846,
+      "reservedCreditUsd": 0.157082
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "BUILD",
+      "failure": "Candidate build failed: [{\"file\":\"js/Datepicker.js\",\"pass\":false,\"kind\":\"syntax\",\"message\":\"JavaScript syntax check failed\"}]",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-033aea65bb0d5b2b0f31db1796d3afd6",
+      "usage": {
+        "completion_tokens": 14563,
+        "prompt_tokens": 19253,
+        "total_tokens": 33816,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13216,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19253
+      },
+      "latencyMs": 36004,
+      "reservedCreditUsd": 0.16283399999999998
+    }
+  ]
+}

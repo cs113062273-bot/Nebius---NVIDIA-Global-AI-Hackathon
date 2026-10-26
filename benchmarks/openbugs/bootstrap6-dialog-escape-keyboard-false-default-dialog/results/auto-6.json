@@ -1,0 +1,63 @@
+{
+  "completedAt": "2026-10-26T12:49:41.028Z",
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "modelRun": "082fa6e5-183f-4373-8bcd-5d2a083aaf17",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (js/src/dialog-base.ts): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// Handle Escape key for non-modal dialogs (native cancel doesn\\\\'t fire for show())\\\\n    EventHandler.on(this._element, `keydown${eventKey}`, event => {\"; closest is line 322: \"// Handle Escape key for non-modal dialogs (native cancel doesn't fire for show())\". Best alignment: b",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-a733c13c0dfd43a74fcfa9cd5db36f7d",
+      "usage": {
+        "completion_tokens": 10136,
+        "prompt_tokens": 17852,
+        "total_tokens": 27988,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9517,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17852
+      },
+      "latencyMs": 57090
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-9c7173d044745ee064f636286b3ce4b7",
+      "usage": {
+        "completion_tokens": 12436,
+        "prompt_tokens": 19155,
+        "total_tokens": 31591,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 11724,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19155
+      },
+      "latencyMs": 31579
+    }
+  ]
+}

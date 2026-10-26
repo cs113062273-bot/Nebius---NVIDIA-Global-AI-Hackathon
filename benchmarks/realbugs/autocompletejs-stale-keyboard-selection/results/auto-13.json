@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T10:36:03.470Z",
+  "policy": "auto",
+  "modelRun": "b38c71ed-c766-4a6f-9d52-4eed749897f9",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (src/controllers/navigationController.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"for (let i = 0; i < list.length; i++) {\"; closest is line 56: \"for (let index = 0; index < list.length; index++) {\" | not in file: \"list[i].removeAttribute(\\\"aria-selected\\\");\"; closest is line 58: \"list[index].removeAttribute(\\\"aria-selected\\\");\" | not in file: \"list[i].classList.remove(\\\"autoComplete_selected\\\");\"; closest is line 60: \"list[index].classList.remove(\\\"autoComplete_selected\\\");\". Best alignment: before lines 1-47 match file lines 1-47, then before line 48 \"const addActive = (list) => {\" differs from file line 48 \"/**\". The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 5 (src/controllers/navigationController.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-5b7acf90178b5d16d47ead6c50f8506f",
+      "usage": {
+        "completion_tokens": 20982,
+        "prompt_tokens": 10022,
+        "total_tokens": 31004,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 19020,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10022
+      },
+      "latencyMs": 87638,
+      "reservedCreditUsd": 0.0397632
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-e952c7c4017d2296373f6770f815fd77",
+      "usage": {
+        "completion_tokens": 7615,
+        "prompt_tokens": 11999,
+        "total_tokens": 19614,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5388,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 11999
+      },
+      "latencyMs": 16179,
+      "reservedCreditUsd": 0.139503
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/controllers/navigationController.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"for (let i = 0; i < list.length; i++) {\"; closest is line 56: \"for (let index = 0; index < list.length; index++) {\" | not in file: \"list[i].removeAttribute(\\\"aria-selected\\\");\"; closest is line 58: \"list[index].removeAttribute(\\\"aria-selected\\\");\" | not in file: ",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-ebdb53dffe2c7729b1f3f8f9cbb0e606",
+      "usage": {
+        "completion_tokens": 15582,
+        "prompt_tokens": 14427,
+        "total_tokens": 30009,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13046,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 14427
+      },
+      "latencyMs": 35910,
+      "reservedCreditUsd": 0.148465
+    }
+  ]
+}

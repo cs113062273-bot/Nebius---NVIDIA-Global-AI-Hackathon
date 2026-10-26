@@ -1,0 +1,99 @@
+{
+  "completedAt": "2026-10-26T12:34:35.901Z",
+  "policy": "auto",
+  "modelRun": "9072e965-8b6e-4e53-9bd0-398efa21bd76",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Keyboard candidate: failed · #symptoms-form symptoms[fever]: expected [], observed [\"yes\"]",
+    "Task evidence is missing or contradicts the verdict",
+    "Independent functional candidate: failed · #symptoms-form symptoms[cough]: expected [\"yes\"], observed []",
+    "Functional output changed"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "TRUNCATED",
+      "failure": "Model output truncated at max_tokens; reasoning may have consumed the output limit",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-799b404508bc190eadcf1c566acc93fd",
+      "usage": {
+        "completion_tokens": 32000,
+        "prompt_tokens": 8701,
+        "total_tokens": 40701,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 32000,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 8701
+      },
+      "latencyMs": 192088
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// GOV.UK Frontend behaviour and uncheck all with the same name attribute\"; closest is line 100: \"// GOV.UK Frontend behaviour to uncheck all with the same name attribute\". Best alignment: before lines 1-11 match file lines 116-126, ",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-d313a0385bb01434c22378e6dab09008",
+      "usage": {
+        "completion_tokens": 4974,
+        "prompt_tokens": 8761,
+        "total_tokens": 13735,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4153,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 8761
+      },
+      "latencyMs": 13876,
+      "reservedCreditUsd": 0.12803900000000001
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-05b0c919103ec50de147ff3137e23567",
+      "usage": {
+        "completion_tokens": 1240,
+        "prompt_tokens": 10507,
+        "total_tokens": 11747,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 427,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 10507
+      },
+      "latencyMs": 4218,
+      "reservedCreditUsd": 0.13469799999999998
+    }
+  ]
+}

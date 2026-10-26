@@ -1,0 +1,91 @@
+{
+  "completedAt": "2026-10-26T11:06:45.460Z",
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "modelRun": "d043441d-525e-4c4d-94fa-1eda5cf18b11",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 2 (js/src/datepicker.ts): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// Only handle if not an input (inputs use focusin)\"; closest is line 560: \"// Only handle if not an input (inputs use focus)\". Best alignment: before lines 3-10 match file lines 561-568. The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-3ec20627bbdefea4f10169dc2ac706ee",
+      "usage": {
+        "completion_tokens": 7777,
+        "prompt_tokens": 16643,
+        "total_tokens": 24420,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7339,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 16643
+      },
+      "latencyMs": 37815
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-4df6d13164c52358ac84a4c55fd5ed3e",
+      "usage": {
+        "completion_tokens": 5495,
+        "prompt_tokens": 17011,
+        "total_tokens": 22506,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4570,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17011
+      },
+      "latencyMs": 14540
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/src/datepicker.ts): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// Only handle if not an input (inputs use focusin)\"; closest is line 560: \"// Only handle if not an input (inputs use focus)\". Best alignment: before lines 3-10 match file lines 561-568. The real file lines are in actual_source_region. Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-6da739fe92aa435b1b5a1238f4010440",
+      "usage": {
+        "completion_tokens": 10344,
+        "prompt_tokens": 18381,
+        "total_tokens": 28725,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 9478,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 18381
+      },
+      "latencyMs": 26997
+    }
+  ]
+}

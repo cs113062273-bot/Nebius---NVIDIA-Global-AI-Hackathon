@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T12:30:16.857Z",
+  "policy": "auto",
+  "modelRun": "571372bf-b327-4871-92ae-334bb6aa100a",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: expected_accessibility_effect: Invalid input: expected string, received undefined; functional_risks: Invalid input: expected array, received undefined; verification_requirements: Invalid input: expected array, received undefined",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-2cee025a319bdb1b4425281cd75c807b",
+      "usage": {
+        "completion_tokens": 2643,
+        "prompt_tokens": 6084,
+        "total_tokens": 8727,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2316,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6084
+      },
+      "latencyMs": 16577
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-ba2c898ab4d0f67df1135346a34b5dc2",
+      "usage": {
+        "completion_tokens": 5390,
+        "prompt_tokens": 6208,
+        "total_tokens": 11598,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4868,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 6208
+      },
+      "latencyMs": 15517,
+      "reservedCreditUsd": 0.120281
+    }
+  ]
+}

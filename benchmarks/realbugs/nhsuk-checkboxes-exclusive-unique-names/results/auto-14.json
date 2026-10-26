@@ -1,0 +1,94 @@
+{
+  "completedAt": "2026-10-26T11:46:42.674Z",
+  "policy": "auto",
+  "modelRun": "0f547a95-4cf0-4a65-8dc2-4f7de3d5f7c5",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Bad escaped character in JSON at position 684 (line 8 column 87)",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-8f1531743a1a7b7c493aab9217002ccc",
+      "usage": {
+        "completion_tokens": 28362,
+        "prompt_tokens": 8701,
+        "total_tokens": 37063,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 27450,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 8701
+      },
+      "latencyMs": 148677
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (packages/nhsuk-frontend/src/nhsuk/components/checkboxes/checkboxes.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// GOV.UK Frontend behaviour and uncheck all with the same name attribute\"; closest is line 100: \"// GOV.UK Frontend behaviour to uncheck all with the same name attribute\". Best alignment: before lines 20-37 match file lines 116-133.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-12144371055ab6eacdb3521ac6805109",
+      "usage": {
+        "completion_tokens": 6282,
+        "prompt_tokens": 8777,
+        "total_tokens": 15059,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4955,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 8777
+      },
+      "latencyMs": 16657,
+      "reservedCreditUsd": 0.128023
+    },
+    {
+      "attempt": 3,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-08298c140e7c766498c405d011906c3a",
+      "usage": {
+        "completion_tokens": 5067,
+        "prompt_tokens": 11314,
+        "total_tokens": 16381,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3565,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 11314
+      },
+      "latencyMs": 12005,
+      "reservedCreditUsd": 0.137738
+    }
+  ]
+}

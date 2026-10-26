@@ -1,0 +1,66 @@
+{
+  "completedAt": "2026-10-26T11:39:47.307Z",
+  "policy": "auto",
+  "modelRun": "c40baa36-f1c4-4347-a651-515a72389e39",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "humanFixLinesInRequest": 0,
+  "implementation": "11d7ef4df61dc476077438a8c2d1e46b2f33763e04220963cf6a6e20346c39b1",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-840d7474c315bfa35d2c9fbc8c97953a",
+      "usage": {
+        "completion_tokens": 2345,
+        "prompt_tokens": 4664,
+        "total_tokens": 7009,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 1745,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4664
+      },
+      "latencyMs": 13919,
+      "reservedCreditUsd": 0.0341265
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-1c1c9bde6360e5858cc61755fed2e5bf",
+      "usage": {
+        "completion_tokens": 6247,
+        "prompt_tokens": 4528,
+        "total_tokens": 10775,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 4827,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 4528
+      },
+      "latencyMs": 15583,
+      "reservedCreditUsd": 0.114142
+    }
+  ]
+}
