@@ -57,6 +57,14 @@ if (recordedOpen.length) groups.unshift({ title: 'Open upstream bugs · Nemotron
 const recordedRealbugs = realbugs.filter(c => c.recorded);
 if (recordedRealbugs.length) groups.unshift({ title: 'Real upstream bugs · blind Nemotron runs', summary: "Each library is pinned just before a published maintainer fix. The maintainers' fix passes the frozen task; Nemotron gets only the buggy source, Super first and Ultra after a rejection.",
  runs: recordedRealbugs.map(c => r(c.recorded.run, `${c.library} · ${c.title}`, { ...(c.recorded.passedOn ? { attempt: c.recorded.passedOn } : {}), proof: true })) });
+// Every further blind run on the current engine, so each run linked from a card has its evidence.
+const repeats = [...realbugs, ...openbugs].flatMap(c => (c.frozenRuns || []).filter(x => x.run !== c.recorded?.run).map(x => r(x.run, `${c.library} · ${c.title} · repeated run`, { ...(x.passedOn ? { attempt: x.passedOn } : {}) })));
+if (repeats.length) groups.push({ title: 'Repeated blind runs on the current engine', summary: 'The same bug run again on the same frozen engine. Every run counts in the score; none is picked.', runs: repeats });
+// The home page links straight to this blind run (Super rejected in Chromium, Ultra fixed the library), so it stays published.
+const FEATURED = [['07f338b5-59da-4102-b68f-1c28b23a5014', 2, 'Bootstrap 5.0 dropdown in a modal · engine v9 · featured on the home page']];
+const listed = new Set(groups.flatMap(g => g.runs.map(x => x.id)));
+const featured = FEATURED.filter(([id]) => !listed.has(id)).map(([id, attempt, title]) => r(id, title, { attempt, proof: true }));
+if (featured.length) groups.push({ title: 'Featured', summary: 'Linked from the home page.', runs: featured });
 // Daily live runs were made in CI and exist only in public/; keep their evidence folders.
 const liveDir = path.join(ROOT, 'public', 'live-runs', 'runs'), liveRuns = new Set();
 for (const f of await fs.readdir(liveDir).catch(() => [])) if (f.endsWith('.json')) liveRuns.add((await readJson(path.join(liveDir, f))).run);
