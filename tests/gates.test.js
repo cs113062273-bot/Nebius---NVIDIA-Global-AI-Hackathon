@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { Journey } from '../src/schema.js';
 import { taskSpecificEdits, preimageReport, resolvePreimage, applyPlan } from '../src/repair.js';
-import { normalizeAdvisory } from '../src/nebius.js';
+import { normalizeAdvisory, extractJson } from '../src/nebius.js';
 import { digest } from '../src/schema.js';
 
 const journey = Journey.parse({ version: 1, id: 'open-drawer', title: 'Open the drawer', goal: 'Focus moves into the drawer', source: 'authored', profile: 'keyboard', path: '/',
@@ -64,4 +64,18 @@ test('A read-only page cannot be patched; the refusal names the editable compone
   const plan = { root_cause: 'r', repair_strategy: 's', expected_accessibility_effect: 'e', functional_risks: ['none'], verification_requirements: ['v'], edits: [{ path: 'index.html', sha256: digest('<p>page</p>\n'), before: '<p>page</p>', after: '<p>fixed</p>' }] };
   await assert.rejects(applyPlan(root, plan, ['lib.js'], { readOnly: ['index.html'] }), /read-only context: repair the component's own code in "lib.js"/);
   assert.equal(await fs.readFile(path.join(root, 'index.html'), 'utf8'), '<p>page</p>\n');
+});
+
+test('Model JSON with misplaced closers is repaired structurally; string contents are kept', () => {
+  let repaired = 0; const mark = () => repaired++;
+  // The edits array never closed before the next key.
+  assert.deepEqual(extractJson('{"edits":[{"after":"a]}"},"note":"n"}', mark), { edits: [{ after: 'a]}' }], note: 'n' });
+  // '}' written for ']', a trailing comma and a stray closer at the end.
+  assert.deepEqual(extractJson('{"edits":[{"p":"x",}},"n":1}}', mark), { edits: [{ p: 'x' }], n: 1 });
+  // A raw newline inside a string.
+  assert.deepEqual(extractJson('{"after":"a\nb"}', mark), { after: 'a\nb' });
+  assert.equal(repaired, 3);
+  // Valid JSON is parsed as is, and hopeless text still fails.
+  assert.deepEqual(extractJson('{"a":[1]}', mark), { a: [1] }); assert.equal(repaired, 3);
+  assert.throws(() => extractJson('{"a": nope}'));
 });

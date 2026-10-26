@@ -13,11 +13,56 @@ export async function boundedJson(response) {
   return JSON.parse(Buffer.concat(parts).toString('utf8'));
 }
 // Reasoning models may wrap answers in <think> blocks or code fences; schema validation still decides.
-export function extractJson(text) {
+export function extractJson(text, onRepair=()=>{}) {
   const visible=String(text??'').replace(/<think>[\s\S]*?<\/think>/gi,'').trim();
   const start=visible.indexOf('{'), end=visible.lastIndexOf('}');
   if(start<0 || end<start) throw new Error('Model returned no JSON object');
-  return JSON.parse(visible.slice(start,end+1));
+  const body=visible.slice(start,end+1);
+  try { return JSON.parse(body); }
+  catch(error) {
+    // Nemotron 3 Super often closes an edit with '}' and forgets the ']' of the edits array. Only the
+    // structure is repaired; the schema still decides, and the repair is recorded in provenance.
+    try { const value=JSON.parse(repairJsonStructure(body)); onRepair(); return value; } catch { throw error; }
+  }
+}
+export function repairJsonStructure(text) {
+  let out = '', inString = false, escaped = false, stringStart = 0; const stack = [];
+  const next = from => { for (let k = from; k < text.length; k++) if (!/\s/.test(text[k])) return text[k]; return null; };
+  const close = () => { out += stack.pop() === '{' ? '}' : ']'; };
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inString) {
+      if (escaped) { escaped = false; out += ch; }
+      else if (ch === '\\') { escaped = true; out += ch; }
+      else if (ch === '"') {
+        inString = false; out += ch;
+        // A key directly inside an array: the array before it was never closed.
+        if (next(i + 1) === ':' && stack.at(-1) === '[') {
+          const comma = out.lastIndexOf(',', stringStart);
+          if (comma >= 0 && !out.slice(comma + 1, stringStart).trim()) { out = out.slice(0, comma) + ']' + out.slice(comma); stack.pop(); }
+        }
+      }
+      else out += ch === '\n' ? '\\n' : ch === '\r' ? '\\r' : ch === '\t' ? '\\t' : ch;
+      continue;
+    }
+    if (ch === '"') { inString = true; stringStart = out.length; out += ch; continue; }
+    if (ch === '{' || ch === '[') { stack.push(ch); out += ch; continue; }
+    if (ch !== '}' && ch !== ']') { out += ch; continue; }
+    if (!stack.length) continue; // stray closer after the root object
+    out = out.replace(/,(\s*)$/, '$1'); // trailing comma
+    const want = ch === '}' ? '{' : '[';
+    if (stack.at(-1) !== want) {
+      // '}' while an array is open: the array was never closed ('}' written for ']').
+      // ']' while an object is open: the object inside the array was never closed.
+      if (ch === '}') { stack.pop(); out += ']'; if (stack.at(-1) !== '{') continue; }
+      else { close(); if (stack.at(-1) !== '[') continue; }
+    }
+    stack.pop(); out += ch;
+    // The root object closed but more members follow: that closer was premature.
+    if (!stack.length && next(i + 1) === ',') { out = out.slice(0, -1); stack.push('{'); }
+  }
+  while (stack.length) close();
+  return out;
 }
 // Advisory lists never reach the patcher. A lone string is wrapped instead of discarding
 // the whole proposal; edits and every other field remain strictly schema-checked.
@@ -145,9 +190,9 @@ export class NebiusClient {
         await json(path.join(this.dir,record.responseFile),{at:record.at,model,requestId:record.requestId,finishReason:record.finishReason,usage:record.usage,latencyMs:record.latencyMs,structuredOutput:structured,content:String(choice.message?.content??''),reasoning:String(choice.message?.reasoning_content??choice.message?.reasoning??'')});
         if(choice.finish_reason==='length') throw new Error('Model output truncated at max_tokens; reasoning may have consumed the output limit');
         if(choice.finish_reason!=='stop') throw new Error('Incomplete or unsupported model completion');
-        const value=parse(extractJson(choice.message?.content));
+        let jsonRepaired=false;const value=parse(extractJson(choice.message?.content,()=>{jsonRepaired=true;}));if(jsonRepaired)record.jsonRepaired=true;
         record.status='COMPLETED';
-        const provenance={provider:'Nebius Token Factory',model,requestId:record.requestId,promptHash:digest(content),...(schemaVersion?{schemaVersion}:{}),structuredOutput:structured,latencyMs:record.latencyMs,usage:record.usage,pricing:entry.pricing,reservedCreditUsd,budgetScope,cacheHit:false,retries:0,attemptedCompletions:1};
+        const provenance={provider:'Nebius Token Factory',model,requestId:record.requestId,promptHash:digest(content),...(jsonRepaired?{jsonRepaired:true}:{}),...(schemaVersion?{schemaVersion}:{}),structuredOutput:structured,latencyMs:record.latencyMs,usage:record.usage,pricing:entry.pricing,reservedCreditUsd,budgetScope,cacheHit:false,retries:0,attemptedCompletions:1};
         await json(ledgerPath,ledger);
         return {value,provenance:{...provenance,responseFile:record.responseFile,requestFile:record.requestFile}};
       } catch(error) {record.status='FAILED_OR_UNCERTAIN';record.error=/^(Nebius|Model)/.test(error.message)?error.message.slice(0,400):'Invalid/failed model completion';await json(ledgerPath,ledger);error.provenance={provider:'Nebius Token Factory',model,status:'FAILED_OR_UNCERTAIN',attemptedCompletions:1,requestId:record.requestId||null,finishReason:record.finishReason||null,usage:record.usage||null,responseFile:record.responseFile||null,requestFile:record.requestFile||null,latencyMs:record.latencyMs||Math.round(performance.now()-started)};throw error;}
