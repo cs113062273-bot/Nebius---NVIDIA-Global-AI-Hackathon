@@ -84,7 +84,77 @@ export function resolvePreimage(current, before, after) {
     const block = contextTolerant(current, b, a, crlf);
     if (block) return { ...block, normalization: (label === 'as-written' ? '' : label + '+') + 'context-lines' };
   }
+  for (const [label, b, a] of variants) {
+    const block = hunkTolerant(current, b, a, crlf);
+    if (block) return { ...block, normalization: (label === 'as-written' ? '' : label + '+') + 'hunks' };
+  }
   throw new Error('Patch preimage must match exactly once');
+}
+// Line-level LCS: the pairs (i, j) of equal items, in order.
+function lcsPairs(a, b, eq) {
+  const n = a.length, m = b.length, t = Array.from({ length: n + 1 }, () => new Uint16Array(m + 1));
+  for (let i = n - 1; i >= 0; i--) for (let j = m - 1; j >= 0; j--) t[i][j] = eq(a[i], b[j]) ? t[i + 1][j + 1] + 1 : Math.max(t[i + 1][j], t[i][j + 1]);
+  const out = []; for (let i = 0, j = 0; i < n && j < m;) { if (eq(a[i], b[j])) { out.push([i, j]); i++; j++; } else if (t[i + 1][j] >= t[i][j + 1]) i++; else j++; }
+  return out;
+}
+// Like `patch` with fuzz, but stricter. The model's before -> after diff is applied hunk by hunk to
+// the file's real region: lines it deletes must exist verbatim (ignoring surrounding whitespace) and
+// contiguously; context it misremembered, invented or left out stays exactly as the file has it.
+// Refused when the region is not unique, when too little of before is found, or when an insertion
+// point falls between file lines the model never saw.
+function hunkTolerant(current, before, after, crlf) {
+  const want = before.split(/\r*\n/), got = after.split(/\r*\n/), t = l => l.trim();
+  while (want.length && !t(want[0])) want.shift();
+  while (want.length && !t(want.at(-1))) want.pop();
+  const real = want.filter(l => t(l)).length;
+  if (real < 3) return null;
+  const clean = current.split('\n').map(l => l.replace(/\r$/, ''));
+  const anchor = alignment(current, want.join('\n'));
+  if (!anchor || anchor.length < 2) return null;
+  // The anchor run must be unique, or the region is ambiguous.
+  const run = want.slice(anchor.from, anchor.from + anchor.length).map(t);
+  let runs = 0; for (let i = 0; i + run.length <= clean.length && runs < 2; i++) if (run.every((r, k) => t(clean[i + k]) === r)) runs++;
+  if (runs !== 1) return null;
+  const lo = Math.max(0, anchor.at - anchor.from - 8), hi = Math.min(clean.length, anchor.at + (want.length - anchor.from) + 8);
+  const map = new Map(lcsPairs(want, clean.slice(lo, hi), (a, b) => t(a) === t(b)).map(([i, j]) => [i, lo + j]));
+  const matched = [...map.keys()].filter(k => t(want[k])).length;
+  if (matched < 3 || matched < 0.6 * real) return null;
+  // The model's own change: which before lines it deletes, and what it inserts after which before line.
+  const keep = new Map(lcsPairs(want, got, (a, b) => t(a) === t(b)).map(([i, j]) => [i, j]));
+  const dels = new Set(), inserts = new Map(); let prevW = -1, nextJ = 0;
+  for (let i = 0; i <= want.length; i++) {
+    const j = i < want.length ? keep.get(i) : got.length;
+    if (j === undefined) { dels.add(i); continue; }
+    if (j > nextJ) inserts.set(prevW, got.slice(nextJ, j));
+    nextJ = j + 1; prevW = i;
+  }
+  for (const k of dels) if (t(want[k]) && !map.has(k)) return null;
+  // Deleted runs must be contiguous in the file too.
+  const sorted = [...dels].filter(k => map.has(k)).sort((a, b) => a - b);
+  for (let x = 1; x < sorted.length; x++) if (sorted[x] === sorted[x - 1] + 1 && map.get(sorted[x]) !== map.get(sorted[x - 1]) + 1) return null;
+  const files = [...map.values()], from = Math.min(...files), to = Math.max(...files);
+  const lead = l => l.match(/^\s*/)[0];
+  const indentFor = k => { for (let d = 0; d < want.length; d++) for (const c of [k - d, k + d + 1]) if (map.has(c) && t(want[c])) return [lead(want[c]), lead(clean[map.get(c)])]; return ['', '']; };
+  const shift = (lines, k) => { const [w, f] = indentFor(k); return lines.map(l => t(l) && l.startsWith(w) ? f + l.slice(w.length) : l); };
+  // Where each insertion goes in the file: after the file image of the before line it follows.
+  const placed = new Map();
+  for (const [k, lines] of inserts) {
+    // A replacement goes where its first deleted line was; a pure insertion follows the kept line
+    // before it and must not straddle file lines the model never saw.
+    const next = [...map.keys()].filter(c => c > k).sort((a, b) => a - b)[0];
+    let at;
+    if (next !== undefined && dels.has(next)) at = map.get(next) - 1;
+    else if (k < 0) at = map.get(next) - 1;
+    else if (map.has(k)) { at = map.get(k); if (next !== undefined && clean.slice(at + 1, map.get(next)).some(l => t(l))) return null; }
+    else return null;
+    placed.set(at, [...(placed.get(at) || []), ...shift(lines, k)]);
+  }
+  const gone = new Set(sorted.map(k => map.get(k))), out = [];
+  if (placed.has(from - 1)) out.push(...placed.get(from - 1));
+  for (let f = from; f <= to; f++) { if (!gone.has(f)) out.push(clean[f]); if (placed.has(f)) out.push(...placed.get(f)); }
+  const eol = crlf ? '\r\n' : '\n', region = clean.slice(from, to + 1).join(eol), next = out.join(eol);
+  if (region === next || current.split(region).length !== 2) return null;
+  return { before: region, after: next, ignoredContext: want.filter((l, k) => t(l) && !map.has(k)).length };
 }
 // Models often misremember an unchanged context line (a dropped semicolon, `self` for `this`).
 // Accepted only when the region has the same number of lines, at most two lines differ, each
@@ -185,7 +255,7 @@ export async function applyPlan(root, rawPlan, allowedFiles) {
     let resolved;
     try { resolved = resolvePreimage(current, edit.before, edit.after); }
     catch(error) { const region = actualRegion(current, edit.before); throw Object.assign(new Error(`Edit ${plan.edits.indexOf(edit)+1} (${edit.path}): ${preimageReport(current, edit.before)}`), region ? { actualRegion: { path: edit.path, ...region } } : {}); }
-    if(resolved.normalization) normalizations.push({path:edit.path,normalization:resolved.normalization});
+    if(resolved.normalization) normalizations.push({path:edit.path,normalization:resolved.normalization,...(resolved.ignoredContext?{ignoredContext:resolved.ignoredContext}:{})});
     const after = current.replace(resolved.before,()=>resolved.after);
     size += Math.abs(after.length-current.length) + resolved.before.length + resolved.after.length;
     if(size>40000 || after.length>80000 || staged.size>=5 && !staged.has(file)) throw new Error('Patch scope exceeds bounds');

@@ -11,7 +11,7 @@ import {verifyProof} from '../src/proof.js';
 // maintainer fix, wraps it in an author-written consumer page and freezes a browser task.
 // `screen` proves the task fails on the buggy source and passes with the maintainers' own
 // fix (no inference). `run` gives Nemotron only the buggy source; the human fix is never sent.
-const BASE=path.resolve('benchmarks','realbugs'),SCOPE='realbugs-20261025',USD_CEILING='30';
+const BASE=path.resolve('benchmarks','realbugs'),SCOPE='realbugs-20261025',USD_CEILING='34';
 const ROUTE={super:'nvidia/nemotron-3-super-120b-a12b',ultra:'nvidia/Nemotron-3-Ultra-550b-a55b'};
 // Everyday calls go to Super; a rejected patch escalates to Ultra with the browser's failure attached.
 const POLICIES={auto:[ROUTE.super,ROUTE.ultra,ROUTE.ultra],super:[ROUTE.super,ROUTE.super,ROUTE.super],ultra:[ROUTE.ultra,ROUTE.ultra,ROUTE.ultra]};

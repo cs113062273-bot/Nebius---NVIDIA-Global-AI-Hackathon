@@ -1,6 +1,8 @@
 import { canonical } from './schema.js';
 
-export const violationKeys = result => new Set(result.checkpoints.flatMap(c => (c.axe?.violations || []).flatMap(v => v.nodes.map(n => v.id + ':' + n.target.join('|')))));
+export const violationKeys = result => new Set((result?.checkpoints || []).flatMap(c => (c.axe?.violations || []).flatMap(v => v.nodes.map(n => v.id + ':' + n.target.join('|')))));
+// Numbered siblings and numeric attribute values (a calendar day, a list position) name the same kind of element.
+const elementKind = key => key.replace(/="\d+"/g, '="#"').replace(/:nth-child\(\d+\)/g, ':nth-child(#)');
 const failedAssertion = result => {
   for(const s of result?.steps||[]){const c=s.assertions?.find(c=>!c.pass);if(c)return {c,step:s.index+1,focus:s.after?.selector};}
   const c=[...result?.checks||[],...result?.functional||[]].find(c=>!c.pass);
@@ -29,8 +31,11 @@ export function verifyRepair({ before, after, functionalBefore, functionalAfter,
   for(const [label,result] of [['Independent functional baseline',functionalBefore],['Independent functional candidate',functionalAfter]]){const reason=evidenceReason(label,result);if(reason)reasons.push(reason);}
   if (functionalBefore && functionalAfter && (functionalBefore.journeyHash !== functionalAfter.journeyHash || canonical(functionalBefore.environment) !== canonical(functionalAfter.environment) || functionalBefore.browser !== functionalAfter.browser)) reasons.push('Functional oracle/environment mismatch');
   if (functionalBefore && functionalAfter && canonical(functionalBefore.functional.map(c => c.observed)) !== canonical(functionalAfter.functional.map(c => c.observed))) reasons.push('Functional output changed');
-  const oldRules = violationKeys(before), newRules = [...violationKeys(after)].filter(key => !oldRules.has(key));
-  if(functionalBefore&&functionalAfter){const oldFunctional=violationKeys(functionalBefore);for(const key of violationKeys(functionalAfter))if(!oldFunctional.has(key)&&!newRules.includes(key))newRules.push(key);}
+  // A finding is new only if no recorded path on the original (keyboard, pointer or guard) showed the
+  // same rule on the same kind of element. A candidate that gets further than the failing baseline
+  // reaches states the baseline never rendered, such as another calendar day with the library's own colours.
+  const oldRules = new Set([before, functionalBefore, ...guardsBefore].filter(Boolean).flatMap(r => [...violationKeys(r)].map(elementKind)));
+  const newRules = [...new Set([after, functionalAfter, ...guardsAfter].filter(Boolean).flatMap(r => [...violationKeys(r)]))].filter(key => !oldRules.has(elementKind(key)));
   if (newRules.length) reasons.push('New automated-rule findings: ' + newRules.join(', '));
   if (after.consoleErrors.length) reasons.push('Replay has runtime/console errors');
   if (functionalAfter?.consoleErrors.length) reasons.push('Functional replay has runtime/console errors');

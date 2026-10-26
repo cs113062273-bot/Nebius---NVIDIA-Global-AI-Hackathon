@@ -39,8 +39,15 @@ test('Misremembered context lines are tolerated only when the patch keeps them; 
   assert.equal(source.replace(ok.before, ok.after), source.replace('return a;', 'return a + 1;'));
   // A changed line that differs in substance is not guessed.
   assert.throws(() => resolvePreimage(source, '  if (a) {\n    input.addEventListener("paste", onPaste.bind(null, self))\n  }\n  return a;', '  if (a) {\n    stop()\n  }\n  return a;'));
-  // An invented line is never accepted, even if after keeps it.
-  assert.throws(() => resolvePreimage(source, '  if (a) {\n    prevent();\n    input.addEventListener("paste", onPaste.bind(null, this));\n  }', '  if (a) {\n    prevent();\n    input.addEventListener("paste", onPaste.bind(null, this));\n    done();\n  }'));
+  // An invented line the patch changes is never accepted.
+  assert.throws(() => resolvePreimage(source, '  if (a) {\n    prevent();\n    input.addEventListener("paste", onPaste.bind(null, this));\n  }', '  if (a) {\n    stop();\n    input.addEventListener("paste", onPaste.bind(null, this));\n  }'));
+  // An invented line the patch keeps is ignored: only the model's own change is applied, at its anchored place.
+  const hunk = resolvePreimage(source, '  if (a) {\n    prevent();\n    input.addEventListener("paste", onPaste.bind(null, this));\n  }', '  if (a) {\n    prevent();\n    input.addEventListener("paste", onPaste.bind(null, this));\n    done();\n  }');
+  assert.equal(hunk.normalization, 'hunks');
+  assert.equal(source.replace(hunk.before, hunk.after), source.replace('this));\n', 'this));\n    done();\n'));
+  // An insertion between two lines with an unseen file line between them has no defined place.
+  const gap = 'a();\nb();\nunseen();\nc();\nd();\n';
+  assert.throws(() => resolvePreimage(gap, 'a();\nb();\nc();\nd();', 'a();\nb();\nnew();\nc();\nd();'));
 });
 
 test('Advisory fields written inside an edit are moved to the top level', () => {
