@@ -18,7 +18,10 @@ const ROUTE=['nvidia/nemotron-3-super-120b-a12b','nvidia/Nemotron-3-Ultra-550b-a
 const [mode,id]=process.argv.slice(2);
 // Same frozen implementation as the real-bug benchmark, so both scoreboards name one engine version.
 const implementationFiles=['src/engine.js','src/nebius.js','src/repair.js','src/runner.js','src/schema.js','src/static.js','src/verifier.js'];
-const CONFIG={maxOutputTokens:32000,maxPromptChars:240000,timeoutMs:300000,policies:{auto:ROUTE,super:[ROUTE[0],ROUTE[0],ROUTE[0]],ultra:[ROUTE[1],ROUTE[1],ROUTE[1]]}};
+const CONFIG={maxOutputTokens:32000,maxPromptChars:240000,timeoutMs:300000,policies:{auto:ROUTE,super:[ROUTE[0],ROUTE[0],ROUTE[0]],ultra:[ROUTE[1],ROUTE[1],ROUTE[1]]},pageReadOnly:true};
+// The library's own files are editable; the author-built page around it is read-only context.
+const pageFiles=async(original,upstream=[])=>Object.keys(await hashTree(original)).filter(f=>!upstream.includes(f));
+
 const implementation=async()=>digest({...Object.fromEntries(await Promise.all(implementationFiles.map(async f=>[f,digest(await fs.readFile(f))]))),config:digest(CONFIG)});
 const write=async(file,value,flag='wx')=>fs.writeFile(file,JSON.stringify(value,null,2)+'\n',{flag});
 async function load(caseId){
@@ -45,7 +48,7 @@ if(mode==='screen'){
   Object.assign(process.env,parseEnv(await fs.readFile('.env','utf8')));
   const ledger=await readJson('artifacts/inference/budget.json');
   Object.assign(process.env,{NEBIUS_MAX_CALLS:String(ledger.calls+3),NEBIUS_MAX_TOTAL_TOKENS:String(ledger.reservedTokens+900000),NEBIUS_MAX_CREDIT_USD:USD_CEILING,NEBIUS_BUDGET_SCOPE:SCOPE,NEBIUS_MAX_OUTPUT_TOKENS:'32000',NEBIUS_TIMEOUT_MS:'300000'});
-  const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:3,freshInference:true,models:ROUTE,
+  const run=await runRepair({fixture:'custom-project',mode:'nebius',sourceRoot:c.original,readOnly:await pageFiles(c.original,c.meta.upstreamFiles),journey:c.tasks.journey,functionalJourney:c.tasks.functionalJourney,guards:c.tasks.guards,maxAttempts:3,freshInference:true,models:ROUTE,
     sourceMetadata:{kind:'source',name:c.meta.title,originalRoot:c.original,scope:`Open upstream bug (${c.meta.issue}) at ${c.meta.pinnedCommit}, unfixed when pinned. Routing Super, then Ultra.`}});
   assert.equal((await verifyProof(`artifacts/runs/${run.id}`)).pass,true);
   const result={completedAt:new Date().toISOString(),implementation:await implementation(),modelRun:run.id,verdict:run.verification.verdict,reasons:run.verification.reasons,

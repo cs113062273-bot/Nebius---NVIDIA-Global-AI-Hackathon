@@ -242,11 +242,12 @@ export function actualRegion(current, before) {
   const lines = current.split(/\r?\n/), start = Math.max(0, where.at - where.from - 2), end = Math.min(lines.length, start + where.want.length + 6, start + 80);
   return { lines: `${start + 1}-${end}`, text: lines.slice(start, end).join('\n') };
 }
-export async function applyPlan(root, rawPlan, allowedFiles) {
+export async function applyPlan(root, rawPlan, allowedFiles, { readOnly = [] } = {}) {
   const plan = RepairPlan.parse(rawPlan), staged = new Map(), normalizations = []; let changed = 0, size=0;
   for(const edit of plan.edits) {
     // A path missing only its leading folders is resolved when exactly one allowed file ends with it.
     if(!allowedFiles.includes(edit.path)) { const match = allowedFiles.filter(f => f.endsWith('/'+edit.path.replace(/^\.?\//,''))); if(match.length===1) { normalizations.push({path:match[0],normalization:'path-prefix',written:edit.path}); edit.path=match[0]; } }
+    if(readOnly.includes(edit.path)) throw new Error(`Edit ${plan.edits.indexOf(edit)+1} changes ${JSON.stringify(edit.path)}, the page that uses the component. It is read-only context: repair the component's own code in ${allowedFiles.slice(0,12).map(f=>JSON.stringify(f)).join(', ')}.`);
     if(!allowedSource(edit.path) || !allowedFiles.includes(edit.path)) throw new Error(`Edit outside localized allowlist: ${JSON.stringify(edit.path)}. Allowed paths: ${allowedFiles.slice(0,12).map(f=>JSON.stringify(f)).join(', ')}`);
     const file = await contained(root,edit.path);
     const original = await fs.readFile(file,'utf8');
