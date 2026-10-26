@@ -28,7 +28,8 @@ async function boot(){
   try{daily=await getJson('./live-runs/index.json');}catch{daily=null;}
   try{gates=await getJson('./gate-stats.json');}catch{gates=null;}
   renderMode();renderDaily();renderStats();renderOpen();renderCases();renderScoreboard();renderGates();
-  const wanted=new URLSearchParams(location.search).get('case');if(wanted){const c=[...data.cases,...open].find(c=>c.id===wanted);if(c)void showRecorded(c);}
+  // ?case=<id> plays that bug's recorded run; &run=<uuid> pins one specific published run of it.
+  const params=new URLSearchParams(location.search),wanted=params.get('case'),pin=params.get('run');if(wanted){const c=[...data.cases,...open].find(c=>c.id===wanted);if(c)void showRecorded(c,/^[0-9a-f-]{36}$/.test(pin||'')?pin:null);}
   if(api&&data.active)void watch(data.active.id,data.cases.find(c=>c.id===data.active.case),{live:true});
 }
 function renderMode(){
@@ -142,9 +143,9 @@ async function startLive(c,button){
   catch(e){notice(e.message);if(e.body?.active){const a=data.cases.find(x=>x.id===e.body.active.case);if(a)void watch(e.body.active.id,a,{live:true});}}
   finally{button.disabled=false;try{data={...data,...await getJson('./api/live')};renderMode();}catch{}}
 }
-async function showRecorded(c){
-  const r=c.recorded;if(!r)return;
-  let run;try{run=await getJson(`./evidence/runs/${r.run}/run.json`);run.__static=true;}catch{notice('This recorded run is not in the published evidence bundle.');return;}
+async function showRecorded(c,pin=null){
+  const r=c.recorded;if(!r&&!pin)return;
+  let run;try{run=await getJson(`./evidence/runs/${pin||r.run}/run.json`);run.__static=true;}catch{notice('This recorded run is not in the published evidence bundle.');return;}
   await watch(run.id,c,{recorded:run});
 }
 // Recorded runs are revealed stage by stage from their own event log; nothing is re-executed.
