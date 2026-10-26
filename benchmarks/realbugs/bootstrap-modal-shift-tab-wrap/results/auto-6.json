@@ -1,0 +1,95 @@
+{
+  "completedAt": "2026-10-26T01:56:44.892Z",
+  "policy": "auto",
+  "modelRun": "8bc0f30b-d9fb-4248-bbb3-f4f1e96bc239",
+  "verdict": "INCONCLUSIVE",
+  "reasons": [
+    "PROPOSAL: Invalid proposal schema: expected_accessibility_effect: Invalid input: expected string, received undefined; functional_risks: Invalid input: expected array, received undefined; verification_requirements: Invalid input: expected array, received undefined"
+  ],
+  "humanFixLinesInRequest": 10,
+  "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: edits.0: Unrecognized keys: \"expected_accessibility_effect\", \"functional_risks\", \"verification_requirements\"; edits.1: Unrecognized keys: \"expected_accessibility_effect\", \"functional_risks\", \"verification_requirements\"; edits.2: Unrecognized keys: \"expected_accessibility_effect\", \"functional_risks\", \"verification_requirements\"; edits.3: Unrecognized keys: \"expected_accessi",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-8633a68179446c68776f7903465aa594",
+      "usage": {
+        "completion_tokens": 15625,
+        "prompt_tokens": 17143,
+        "total_tokens": 32768,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 13551,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17143
+      },
+      "latencyMs": 77917
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: edits.0.before: Too big: expected string to have <=12000 characters",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-a40dce84d91e1b0d7529665c6b0658fe",
+      "usage": {
+        "completion_tokens": 8308,
+        "prompt_tokens": 17457,
+        "total_tokens": 25765,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 588,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17457
+      },
+      "latencyMs": 16657
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Invalid proposal schema: expected_accessibility_effect: Invalid input: expected string, received undefined; functional_risks: Invalid input: expected array, received undefined; verification_requirements: Invalid input: expected array, received undefined",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-2f2b0bd910d98b9de17afaf4a734aa86",
+      "usage": {
+        "completion_tokens": 3850,
+        "prompt_tokens": 17413,
+        "total_tokens": 21263,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 3042,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17413
+      },
+      "latencyMs": 10136
+    }
+  ]
+}

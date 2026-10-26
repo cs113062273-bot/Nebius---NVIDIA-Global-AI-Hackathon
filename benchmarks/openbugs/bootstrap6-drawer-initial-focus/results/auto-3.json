@@ -1,0 +1,63 @@
+{
+  "completedAt": "2026-10-26T02:20:38.575Z",
+  "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+  "modelRun": "3bd01302-203b-4959-80d9-10bca5a5e6ea",
+  "verdict": "VERIFIED_PASS",
+  "reasons": [],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (js/src/drawer.ts): before occurs 35 times (lines 38, 44, 50, 68); include surrounding lines so it matches exactly once.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-40f35cfc94851eb8595d535b05647de5",
+      "usage": {
+        "completion_tokens": 6851,
+        "prompt_tokens": 19421,
+        "total_tokens": 26272,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6293,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19421
+      },
+      "latencyMs": 35138
+    },
+    {
+      "attempt": 2,
+      "verified": true,
+      "category": null,
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-fc802666b450fbbfaf5bbc20036e7ff3",
+      "usage": {
+        "completion_tokens": 1194,
+        "prompt_tokens": 20189,
+        "total_tokens": 21383,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 426,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 20189
+      },
+      "latencyMs": 3986
+    }
+  ]
+}

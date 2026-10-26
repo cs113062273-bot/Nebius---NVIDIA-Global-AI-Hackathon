@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-25T19:04:28.579Z",
-  "implementation": "55874e835c0f72431904aaa778bca8f59fe0c5200304e758084b134924853ba6",
+  "generatedAt": "2026-10-26T02:28:31.898Z",
+  "implementation": "4ee73b81fd1057bef76d7820808d250a8dbeb3528af67e5ae219cd32d5985ea7",
   "cases": 26,
   "eligible": 26,
-  "autoRuns": 26,
-  "autoVerified": 21,
+  "autoRuns": 0,
+  "autoVerified": 0,
   "versions": [
     {
       "implementation": "72ea5a9e62fc135e496b43179424cc03b1bb468a459e85867305f2ebe0cf39d0",
@@ -36,10 +36,17 @@
     },
     {
       "implementation": "55874e835c0f72431904aaa778bca8f59fe0c5200304e758084b134924853ba6",
-      "current": true,
+      "current": false,
       "autoRuns": 26,
       "autoVerified": 21,
       "firstRun": "0e246881-c582-43df-8fe4-deabd7647c8b"
+    },
+    {
+      "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+      "current": false,
+      "autoRuns": 26,
+      "autoVerified": 18,
+      "firstRun": "02a7660e-e7b0-4122-a567-d329b0369917"
     }
   ],
   "rows": [
@@ -123,6 +130,18 @@
           "attempts": 3,
           "tokens": 71042,
           "leaked": 0
+        },
+        {
+          "file": "auto-7.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "56794f28-b3db-4c9c-8f42-3056ca928d87",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 47762,
+          "leaked": 0
         }
       ]
     },
@@ -181,6 +200,18 @@
           "passedModel": "nvidia/nemotron-3-super-120b-a12b",
           "attempts": 1,
           "tokens": 44726,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "83dc508b-2635-48f2-902f-567f821d7035",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 149440,
           "leaked": 0
         }
       ]
@@ -241,6 +272,18 @@
           "attempts": 3,
           "tokens": 124580,
           "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "a7b20e58-16e3-4f57-b4c1-364d6647e342",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 3,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 3,
+          "tokens": 116638,
+          "leaked": 1
         }
       ]
     },
@@ -299,6 +342,18 @@
           "passedModel": "nvidia/nemotron-3-super-120b-a12b",
           "attempts": 1,
           "tokens": 13175,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "48418e3b-8d24-484a-8406-204b3615478c",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 13982,
           "leaked": 0
         }
       ]
@@ -359,6 +414,18 @@
           "attempts": 2,
           "tokens": 44858,
           "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "71b12fb3-dc6d-4125-80f8-c43a93ed76c7",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 44323,
+          "leaked": 0
         }
       ]
     },
@@ -417,6 +484,18 @@
           "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
           "attempts": 2,
           "tokens": 26055,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "2d5b08e8-2a63-4257-b297-fa251ce031be",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 13545,
           "leaked": 0
         }
       ]
@@ -489,6 +568,18 @@
           "attempts": 1,
           "tokens": 19318,
           "leaked": 0
+        },
+        {
+          "file": "auto-6.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "7448a2e8-bb74-4573-a04b-f52611348e49",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 19244,
+          "leaked": 0
         }
       ]
     },
@@ -559,6 +650,18 @@
           "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
           "attempts": 3,
           "tokens": 79677,
+          "leaked": 0
+        },
+        {
+          "file": "auto-6.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "98245b12-f27a-4d7a-bfde-23671aa774c7",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 25693,
           "leaked": 0
         }
       ]
@@ -631,6 +734,18 @@
           "attempts": 2,
           "tokens": 61520,
           "leaked": 10
+        },
+        {
+          "file": "auto-6.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "8bc0f30b-d9fb-4248-bbb3-f4f1e96bc239",
+          "verdict": "INCONCLUSIVE",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 79796,
+          "leaked": 10
         }
       ]
     },
@@ -701,6 +816,18 @@
           "passedModel": "nvidia/nemotron-3-super-120b-a12b",
           "attempts": 1,
           "tokens": 17678,
+          "leaked": 0
+        },
+        {
+          "file": "auto-6.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "f64e7ae5-2b81-4a6f-9429-beba30ab444b",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 39633,
           "leaked": 0
         }
       ]
@@ -773,6 +900,18 @@
           "attempts": 1,
           "tokens": 20197,
           "leaked": 0
+        },
+        {
+          "file": "auto-6.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "1239eac4-bdc0-40ba-a03d-3b2d81a84624",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 17742,
+          "leaked": 0
         }
       ]
     },
@@ -843,6 +982,18 @@
           "passedModel": "nvidia/nemotron-3-super-120b-a12b",
           "attempts": 1,
           "tokens": 19708,
+          "leaked": 0
+        },
+        {
+          "file": "auto-6.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "582bfed2-fe8e-4b71-b285-cbfac227f068",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 17727,
           "leaked": 0
         }
       ]
@@ -915,6 +1066,18 @@
           "attempts": 1,
           "tokens": 17316,
           "leaked": 0
+        },
+        {
+          "file": "auto-6.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "02a7660e-e7b0-4122-a567-d329b0369917",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 22174,
+          "leaked": 0
         }
       ]
     },
@@ -973,6 +1136,18 @@
           "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
           "attempts": 2,
           "tokens": 63300,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "46b7ce40-fac0-4c6e-bd46-aa526e03001e",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 105809,
           "leaked": 0
         }
       ]
@@ -1033,6 +1208,18 @@
           "attempts": 2,
           "tokens": 43578,
           "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "9adb2a8d-ad52-4587-b7fb-dcf02b4635df",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 72205,
+          "leaked": 0
         }
       ]
     },
@@ -1091,6 +1278,18 @@
           "passedModel": "nvidia/nemotron-3-super-120b-a12b",
           "attempts": 1,
           "tokens": 8451,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "d9d09ac7-ac0f-4087-9ddc-d63c76282bca",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 9026,
           "leaked": 0
         }
       ]
@@ -1151,6 +1350,18 @@
           "attempts": 1,
           "tokens": 6742,
           "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "bf4ac93e-aadd-446c-8a92-d8606a9de76d",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 18044,
+          "leaked": 0
         }
       ]
     },
@@ -1209,6 +1420,18 @@
           "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
           "attempts": 2,
           "tokens": 20747,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "d369ba35-db13-4484-8b79-3d0cfc863454",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 22592,
           "leaked": 0
         }
       ]
@@ -1269,6 +1492,18 @@
           "attempts": 2,
           "tokens": 15437,
           "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "2231e5ea-1c0c-490c-9da7-53d367773ecb",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 11582,
+          "leaked": 0
         }
       ]
     },
@@ -1327,6 +1562,18 @@
           "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
           "attempts": 3,
           "tokens": 33661,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "fe0fd40e-d641-455f-907a-178cdc0f190a",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 9539,
           "leaked": 0
         }
       ]
@@ -1387,6 +1634,18 @@
           "attempts": 2,
           "tokens": 18390,
           "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "8ccc4897-865d-4587-a488-9a8790a56762",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 2,
+          "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
+          "attempts": 2,
+          "tokens": 24512,
+          "leaked": 0
         }
       ]
     },
@@ -1445,6 +1704,18 @@
           "passedModel": null,
           "attempts": 3,
           "tokens": 39011,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "eb78795b-30c9-4dd1-b4f9-039092318505",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 32229,
           "leaked": 0
         }
       ]
@@ -1505,6 +1776,18 @@
           "attempts": 3,
           "tokens": 81381,
           "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "81309053-c5a8-48df-b7e3-8980f7312230",
+          "verdict": "VERIFIED_PASS",
+          "passedOn": 1,
+          "passedModel": "nvidia/nemotron-3-super-120b-a12b",
+          "attempts": 1,
+          "tokens": 20739,
+          "leaked": 0
         }
       ]
     },
@@ -1563,6 +1846,18 @@
           "passedModel": "nvidia/Nemotron-3-Ultra-550b-a55b",
           "attempts": 2,
           "tokens": 33555,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "3c2bec9e-545b-47e4-85b5-a704faaf1bea",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 44121,
           "leaked": 0
         }
       ]
@@ -1623,6 +1918,18 @@
           "attempts": 3,
           "tokens": 64093,
           "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "f99d9124-1385-42fd-8402-e709a4ebf540",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 80751,
+          "leaked": 0
         }
       ]
     },
@@ -1681,6 +1988,18 @@
           "passedModel": null,
           "attempts": 3,
           "tokens": 91198,
+          "leaked": 0
+        },
+        {
+          "file": "auto-5.json",
+          "policy": "auto",
+          "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+          "run": "bfb82baa-b62a-4e69-b9d8-023e9f22996c",
+          "verdict": "VERIFIED_FAIL",
+          "passedOn": null,
+          "passedModel": null,
+          "attempts": 3,
+          "tokens": 112436,
           "leaked": 0
         }
       ]

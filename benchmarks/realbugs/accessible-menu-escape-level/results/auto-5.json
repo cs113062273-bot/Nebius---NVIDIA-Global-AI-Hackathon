@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T01:49:54.248Z",
+  "policy": "auto",
+  "modelRun": "83dc508b-2635-48f2-902f-567f821d7035",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (src/menubar.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"const parentMenu = this.elements.parentMenu;\"; closest is line 525: \"if (this.elements.parentMenu === this.elements.rootMenu) {\" | not in file: \"if (parentMenu && parentMenu.currentMenuItem && parentMenu.currentMenuItem.elements.toggle) {\"; closest is line 520: \"if (this.elements.parentMenu.currentMenuItem.isSubmenuItem) {\" | not in file: \"parentMenu.currentMenuItem.elements.toggle.close();\"; closest is line 522: \"this.elements.parentMenu.currentMenuItem.elements.toggle.close();\". Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-476699d45b5d76c6262805d4e6a5f90a",
+      "usage": {
+        "completion_tokens": 8871,
+        "prompt_tokens": 37373,
+        "total_tokens": 46244,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8440,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 25296,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 37373
+      },
+      "latencyMs": 38552,
+      "reservedCreditUsd": 0.0681792
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (src/menubar.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"this.elements.rootMenu.focusCurrentChild();\"; closest is line 528: \"this.elements.parentMenu.focusCurrentChild();\". Best alignment: before lines 1-5 match file lines 483-487, then before line 6 \"this.elements.rootMenu.closeChildren();\" differs from file line 488 \"const parentMenu = this.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-73a50f71f1f487502f16364b2a8da3e3",
+      "usage": {
+        "completion_tokens": 8582,
+        "prompt_tokens": 37890,
+        "total_tokens": 46472,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7644,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 37890
+      },
+      "latencyMs": 23660,
+      "reservedCreditUsd": 0.229914
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/menubar.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"const parentMenu = this.elements.parentMenu;\"; closest is line 525: \"if (this.elements.parentMenu === this.elements.rootMenu) {\" | not in file: \"if (parentMenu && parentMenu.currentMenuItem && parentMenu.currentMenuItem.elements.toggle) {\"; closest is line 520: \"if (this.elements.parentM",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-cee1ef3afb16b33fd0773ebc255f152a",
+      "usage": {
+        "completion_tokens": 16733,
+        "prompt_tokens": 39991,
+        "total_tokens": 56724,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 16134,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 39991
+      },
+      "latencyMs": 47423,
+      "reservedCreditUsd": 0.237491
+    }
+  ]
+}

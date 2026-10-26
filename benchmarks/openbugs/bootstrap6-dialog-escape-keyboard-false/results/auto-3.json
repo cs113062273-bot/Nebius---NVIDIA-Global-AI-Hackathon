@@ -1,0 +1,92 @@
+{
+  "completedAt": "2026-10-26T02:19:48.915Z",
+  "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+  "modelRun": "b27ed319-829f-4fa6-93ed-86b887f586fe",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (js/src/dialog-base.ts): before does not occur in the file. 2 of its lines are not in the source. not in file: \"EventHandler.on(this._element, EVENT_CANCEL, this._cancelHandler)\"; closest is line 320: \"EventHandler.on(this._element, 'cancel', this._cancelHandler)\" | not in file: \"EventHandler.on(this._element, `keydown${EVENT_KEY}`, event => {\"; closest is line 323: \"EventHandler.on(this._element, `keydown${eventKey}`, event => {\". Copy before verbatim from source_candidates."
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Stale source preimage",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-fe11d2b781432ac7c35955f180eaaf7e",
+      "usage": {
+        "completion_tokens": 7486,
+        "prompt_tokens": 17571,
+        "total_tokens": 25057,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 7155,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17571
+      },
+      "latencyMs": 42479
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-397ec9ebc48941853e8c29e4d4a23049",
+      "usage": {
+        "completion_tokens": 7002,
+        "prompt_tokens": 17909,
+        "total_tokens": 24911,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6641,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17909
+      },
+      "latencyMs": 18717
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (js/src/dialog-base.ts): before does not occur in the file. 2 of its lines are not in the source. not in file: \"EventHandler.on(this._element, EVENT_CANCEL, this._cancelHandler)\"; closest is line 320: \"EventHandler.on(this._element, 'cancel', this._cancelHandler)\" | not in file: \"EventHandler.on(this._element, `keydown${EVENT_KEY}`, event => {\"; closest is line 323: \"EventHandler.on(this._e",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-dd3cc78f5067a4006bd51e309ea885e5",
+      "usage": {
+        "completion_tokens": 9316,
+        "prompt_tokens": 18219,
+        "total_tokens": 27535,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8628,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 18219
+      },
+      "latencyMs": 24358
+    }
+  ]
+}

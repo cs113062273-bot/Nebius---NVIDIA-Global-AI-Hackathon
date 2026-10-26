@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T02:01:12.599Z",
+  "policy": "auto",
+  "modelRun": "46b7ce40-fac0-4c6e-bd46-aa526e03001e",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (index.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"const mutationObserver = typeof window !== 'undefined' && typeof window.MutationObserver === 'function'\"; closest is line 1000: \"typeof window !== 'undefined' && 'MutationObserver' in window\" | not in file: \"? new MutationObserver(function (mutations) {\"; closest is line 1005: \"if (!mutationObserver) {\" | not in file: \"checkFocusIn({ target: document.activeElement });\". Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-3a9ee5597771a0997465425d139a8bf3",
+      "usage": {
+        "completion_tokens": 12607,
+        "prompt_tokens": 24658,
+        "total_tokens": 37265,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 11882,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 24658
+      },
+      "latencyMs": 59335,
+      "reservedCreditUsd": 0.0566838
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (index.html): before does not occur in the file. 1 of its lines are not in the source. not in file: \"trap.updateContainerElements(trap.containers);\". Best alignment: before lines 1-6 match file lines 44-49, then before line 7 \"trap.updateContainerElements(trap.containers);\" differs from file line 50 \"});\". The real file lines are in actual_source_region. Copy before verbatim from source_can",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-3139039541bcddceb7e3992827a9d8db",
+      "usage": {
+        "completion_tokens": 9239,
+        "prompt_tokens": 25420,
+        "total_tokens": 34659,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8219,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 25420
+      },
+      "latencyMs": 27391,
+      "reservedCreditUsd": 0.19266699999999998
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (index.js): before does not occur in the file. 5 of its lines are not in the source. not in file: \"const mutationObserver = typeof window !== 'undefined' && typeof window.MutationObserver === 'function'\"; closest is line 1000: \"typeof window !== 'undefined' && 'MutationObserver' in window\" | not in file: \"? new MutationObserver(function (mutations) {\"; closest is line 1005: \"if (!mutationOb",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-f36b5e747050d72d10b942ca6c62bda3",
+      "usage": {
+        "completion_tokens": 5879,
+        "prompt_tokens": 28006,
+        "total_tokens": 33885,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5273,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 28006
+      },
+      "latencyMs": 17195,
+      "reservedCreditUsd": 0.20160899999999998
+    }
+  ]
+}

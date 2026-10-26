@@ -1,0 +1,98 @@
+{
+  "completedAt": "2026-10-26T02:14:05.467Z",
+  "policy": "auto",
+  "modelRun": "bfb82baa-b62a-4e69-b9d8-023e9f22996c",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 3 (js/Datepicker.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"[inputField, 'paste', onPaste.bind(null, self)],\"; closest is line 210: \"[inputField, 'paste', onPaste.bind(null, this)],\". Best alignment: before lines 9-21 match file lines 211-223. The real file lines are in actual_source_region. Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 3 (js/options/processOptions.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"return config\"; closest is line 356: \"return config;\". Best alignment: before lines 1-2 match file lines 24-25, then before line 3 \"return config\" differs from file line 26 \"function determineGetWeekMethod(numberingMode, weekStart) {\". The real file lines are in actual_sour",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-f244dffeb15037ce965f6a951093649c",
+      "usage": {
+        "completion_tokens": 27904,
+        "prompt_tokens": 21608,
+        "total_tokens": 49512,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 26351,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 21608
+      },
+      "latencyMs": 139059,
+      "reservedCreditUsd": 0.0510519
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 3 (js/options/processOptions.js): before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Best alignment: before lines 1-2 match file lines 24-25, then before line 3 \"return config;\" differs from file line 26 \"function determineGetWeekMethod(numberingMode, weekStart) {\". The real file lines are in actual_source_region. Copy the region ve",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-4bd315966b1e7ae22fbb71c294dfd57f",
+      "usage": {
+        "completion_tokens": 7060,
+        "prompt_tokens": 23552,
+        "total_tokens": 30612,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5392,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 23552
+      },
+      "latencyMs": 16998,
+      "reservedCreditUsd": 0.177045
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 3 (js/Datepicker.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"[inputField, 'paste', onPaste.bind(null, self)],\"; closest is line 210: \"[inputField, 'paste', onPaste.bind(null, this)],\". Best alignment: before lines 9-21 match file lines 211-223. The real file lines are in actual_source_region. Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-18d9fb4eb3e40435b697f60e9f78dad6",
+      "usage": {
+        "completion_tokens": 6945,
+        "prompt_tokens": 25367,
+        "total_tokens": 32312,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5263,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 25367
+      },
+      "latencyMs": 21710,
+      "reservedCreditUsd": 0.183575
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "completedAt": "2026-10-26T02:11:00.114Z",
+  "policy": "auto",
+  "modelRun": "f99d9124-1385-42fd-8402-e709a4ebf540",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "Independent functional candidate: failed · Step 3 · #delivery-form delivery: expected [\"2024-06-04\"], observed [\"2024-05-10\"]",
+    "Functional output changed"
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "e64c7d19dc4b0080539009710e31835f4883d61a634cdb1286b743228539c8c9",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "PROPOSAL",
+      "failure": "Expected ',' or ']' after array element in JSON at position 1916 (line 11 column 5)",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-1846cb01fc04c6165c8a7ef57062f4aa",
+      "usage": {
+        "completion_tokens": 9327,
+        "prompt_tokens": 16921,
+        "total_tokens": 26248,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 8465,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 8432,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 16921
+      },
+      "latencyMs": 44574
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 2 (js/Datepicker.js): before does not occur in the file. 6 of its lines are not in the source. not in file: \"// set up event listeners\"; closest is line 202: \"// set up event listeners in other modes\" | not in file: \"registerListeners(this, [\"; closest is line 326: \"unregisterListeners(this);\" | not in file: \"[document, 'mousedown', onClickOutside.bind(null, this)],\"; closest is line 203: \"co",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-313e03bc18b068aba882d90a03bf1a52",
+      "usage": {
+        "completion_tokens": 12160,
+        "prompt_tokens": 17009,
+        "total_tokens": 29169,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 10881,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17009
+      },
+      "latencyMs": 29683,
+      "reservedCreditUsd": 0.153976
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "VERIFICATION",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-45c6b3bd2413ba9ead91566d95540afd",
+      "usage": {
+        "completion_tokens": 6182,
+        "prompt_tokens": 19152,
+        "total_tokens": 25334,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5259,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 19152
+      },
+      "latencyMs": 24791,
+      "reservedCreditUsd": 0.16134199999999999
+    }
+  ]
+}
