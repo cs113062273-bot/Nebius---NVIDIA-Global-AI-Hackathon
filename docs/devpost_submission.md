@@ -28,9 +28,9 @@ It runs where developers work: a CLI, a reusable GitHub Action that posts the ve
 - Current engine (v8): **22 of 26** repaired and browser-verified.
 - Every engine version keeps its own public score (7/8, 19, 20, 22, 21, 18, 22 of 26). Any engine change reruns every case, so a worse version stays visible.
 - Across all versions: **130 of 165 blind runs repaired (79%)**. Super's first patch passed 44% of the time; sending Chromium's failure report to Ultra added 58 more repairs.
-- **22 patches fixed the reported key and still broke something**: the submitted data, the pointer path, a guarded behaviour or a new axe finding. A test of the reported bug alone would have merged them. Each one is linked on the scoreboard.
+- **19 patches fixed the reported key and still broke something**: the submitted data, the pointer path or a guarded behaviour. A test of the reported bug alone would have merged them. Each one is linked on the scoreboard, and so are 3 patches our own axe gate wrongly rejected before engine v9 (it blamed Pikaday's existing day colours on the patch); those are not counted.
 
-**8 bugs still open upstream.** 6 are repaired and browser-verified on each library's current code. On review, 3 patches are sound (one matches a pending Bootstrap pull request, one matches the fix a maintainer proposed) and 3 work with stated trade-offs. One bug, a Bootstrap 6 datepicker keyboard trap that nobody had reported, was found by Tabstitch and is now [twbs/bootstrap#43202](https://github.com/twbs/bootstrap/issues/43202).
+**8 bugs still open upstream.** 6 are repaired and browser-verified on each library's current code. On review, 3 patches are sound (one matches a pending Bootstrap pull request, one matches the fix a maintainer proposed) and 3 work with stated trade-offs. One bug, a Bootstrap 6 datepicker keyboard trap that nobody had reported, was found by Tabstitch and is now [twbs/bootstrap#43202](https://github.com/twbs/bootstrap/issues/43202), labelled confirmed by a Bootstrap maintainer the same day.
 
 **A GOV.UK autocomplete case study** shows why the contract matters: independent review strengthened the task four times, and five plausible model patches were rejected for concrete reasons (one erased saved countries only when the options were pretty-printed) before a final repair passed every gate.
 

@@ -1,19 +1,48 @@
 {
-  "generatedAt": "2026-10-26T03:09:01.758Z",
+  "generatedAt": "2026-10-26T04:55:31.543Z",
   "note": "Fractions: every recorded blind run of the 26 real bugs, across all engine versions; a run is one bug on one engine version, up to three attempts (Super, then Ultra with the browser failure report). Rejected patches: real-bug and open-bug runs.",
-  "runs": 194,
-  "realRuns": 165,
-  "attempts": 362,
+  "runs": 195,
+  "realRuns": 166,
+  "attempts": 365,
   "firstTry": 72,
   "withFeedback": 58,
-  "notRepaired": 35,
-  "caughtAfterKeyboardPass": 22,
+  "notRepaired": 36,
+  "caughtAfterKeyboardPass": 19,
   "caughtReasons": {
     "functional": 12,
     "guards": 7,
-    "rules": 4,
+    "rules": 0,
     "other": 0
   },
+  "falseRejections": [
+    {
+      "case": "pikaday-keyboard-disabled-day",
+      "kind": "open",
+      "version": "55874e83",
+      "run": "1e3667fc-6ac9-40d9-ab2a-db08966c3842",
+      "attempt": 3,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day",
+      "kind": "open",
+      "version": "e64c7d19",
+      "run": "0926b773-c058-48e9-9882-5911e96d364f",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
+    },
+    {
+      "case": "pikaday-keyboard-disabled-day",
+      "kind": "open",
+      "version": "4ee73b81",
+      "run": "413124db-af81-47a6-a49e-35ad005497e8",
+      "attempt": 2,
+      "model": "Nemotron-3-Ultra-550b-a55b",
+      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"], color-contrast:abbr[title=\"Sunday\"], color-contrast:abbr[title=\"Monday\"], color-contrast:abbr[title=\"Tuesday\"], color-contrast:abbr[title=\"Wednesday"
+    }
+  ],
   "overfitRejected": 1,
   "unappliedPatches": 56,
   "caught": [
@@ -241,46 +270,9 @@
       "attempt": 2,
       "model": "Nemotron-3-Ultra-550b-a55b",
       "why": [
-        "guards",
-        "rules"
+        "guards"
       ],
-      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
-    },
-    {
-      "case": "pikaday-keyboard-disabled-day",
-      "kind": "open",
-      "version": "55874e83",
-      "run": "1e3667fc-6ac9-40d9-ab2a-db08966c3842",
-      "attempt": 3,
-      "model": "Nemotron-3-Ultra-550b-a55b",
-      "why": [
-        "rules"
-      ],
-      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
-    },
-    {
-      "case": "pikaday-keyboard-disabled-day",
-      "kind": "open",
-      "version": "e64c7d19",
-      "run": "0926b773-c058-48e9-9882-5911e96d364f",
-      "attempt": 2,
-      "model": "Nemotron-3-Ultra-550b-a55b",
-      "why": [
-        "rules"
-      ],
-      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"]"
-    },
-    {
-      "case": "pikaday-keyboard-disabled-day",
-      "kind": "open",
-      "version": "4ee73b81",
-      "run": "413124db-af81-47a6-a49e-35ad005497e8",
-      "attempt": 2,
-      "model": "Nemotron-3-Ultra-550b-a55b",
-      "why": [
-        "rules"
-      ],
-      "reason": "New automated-rule findings: color-contrast:button[data-pika-day=\"23\"], color-contrast:abbr[title=\"Sunday\"], color-contrast:abbr[title=\"Monday\"], color-contrast:abbr[title=\"Tuesday\"], color-contrast:abbr[title=\"Wednesday"
+      "reason": "Regression guard \"Arrow keys still move between open days\": failed · Step 3 · #appointment day: expected [\"2026-11-26\"], observed [\"2026-11-20\"]"
     }
   ]
 }

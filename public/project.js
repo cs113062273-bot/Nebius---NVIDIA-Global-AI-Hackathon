@@ -215,7 +215,8 @@ $('#project-form').onsubmit=event=>{event.preventDefault();if(!busy&&frozen)void
 $('#rerun-browser').onclick=()=>{if(!busy&&lastRun)void startRun({attempt:Number($('#result-attempt').value),inference:false},`./api/runs/${lastRun.id}/repeat`);};
 $('#rerun-model').onclick=()=>{if(!busy&&lastRun&&confirm(`Start a new Nemotron inference using sponsor credits?\n\nSource run: ${lastRun.id}\nSelected attempt: ${$('#result-attempt').value}\n\nViewing recorded evidence uses no inference. Continue only if you intend to spend configured credits.`))void startRun({attempt:Number($('#result-attempt').value),inference:true},`./api/runs/${lastRun.id}/repeat`);};
 if(new URLSearchParams(location.search).has('run')){$('#project-result').hidden=false;text('#result-title','Loading recorded browser evidence…');text('#project-verdict','LOADING');$('#project-result').scrollIntoView({behavior:'instant',block:'start'});}
-try{config=await api('./api/config');}catch{staticMode=true;}
+// GitHub Pages serves only the static build; skip the API probe there.
+try{if(/\.github\.io$/.test(location.hostname))throw new Error('static');config=await api('./api/config');}catch{staticMode=true;}
 readOnly=staticMode||!!config?.publicMode;
 if(readOnly){document.body.classList.add('read-only');for(const el of document.querySelectorAll('[data-local-only]'))el.hidden=true;text('.masthead .source-link','PUBLISHED EVIDENCE · READ ONLY');
  const params=new URLSearchParams(location.search);if(!params.has('run')||params.has('evidence')){$('#evidence-index').hidden=false;void renderEvidenceIndex();}if(params.has('run')){busy=true;$('#project-result').hidden=false;void poll(params.get('run'));}else{notice('Recorded evidence only. Importing source, capturing tasks and new inference need the local workbench.');if(params.has('evidence'))requestAnimationFrame(()=>$('#evidence-index').scrollIntoView({behavior:'instant'}));}}

@@ -16,7 +16,8 @@ const artifactUrl=(run,file)=>run.__static?`./evidence/runs/${run.id}/${file}`:`
 const humanPatchUrl=id=>api?`./api/live/cases/${id}/human.patch`:`./realbugs/${id}/human.patch`;
 
 async function boot(){
-  try{data=await getJson('./api/live');api=true;}
+  // GitHub Pages serves only the static build, so there is no live API to probe there.
+  try{if(/.github.io$/.test(location.hostname))throw new Error('static');data=await getJson('./api/live');api=true;}
   catch{try{data=await getJson('./realbugs/index.json');}catch{$('#mode').textContent='OFFLINE';notice('The bug list could not be loaded.');return;}}
   try{open=api&&data.open?data.open:(await getJson('./openbugs/index.json')).cases;}catch{open=[];}
   try{daily=await getJson('./live-runs/index.json');}catch{daily=null;}
@@ -102,7 +103,7 @@ function renderScoreboard(){
 // What the loop and the gates add, measured over every recorded blind run (scripts/gate-stats.mjs).
 function renderGates(){
   const g=gates,box=$('#gates');if(!g?.realRuns){box.hidden=true;return;}box.hidden=false;
-  const pct=n=>Math.round(n/g.realRuns*100)+'%',WHY={functional:'changed the submitted data or broke the pointer path',guards:'broke a guarded behaviour',rules:'added an axe finding'};
+  const pct=n=>Math.round(n/g.realRuns*100)+'%',WHY={functional:'changed the submitted data or broke the pointer path',guards:'broke a guarded behaviour',rules:'added an axe finding the original never showed'};
   box.replaceChildren(el('h3',{text:'What the browser loop and the gates add'}),el('p',{class:'small',text:g.note}),
     el('dl',{class:'gate-stats'},
       el('div',{},el('dt',{text:`${g.firstTry}/${g.realRuns}`}),el('dd',{text:`repaired by Nemotron 3 Super's first patch (${pct(g.firstTry)})`})),
@@ -112,7 +113,11 @@ function renderGates(){
       el('ul',{},...Object.values(Object.groupBy(g.caught,c=>c.case)).map(list=>el('li',{},
         el('strong',{text:list[0].case}),` · ${list.length} patch${list.length>1?'es':''}: ${[...new Set(list.flatMap(c=>c.why))].map(w=>WHY[w]||w).join('; ')}. `,
         el('span',{class:'small',text:list[0].reason||''}),
-        el('span',{class:'gate-links'},...list.map((c,i)=>el('a',{href:`./project.html?run=${c.run}&attempt=${c.attempt}#project-result`,text:`${modelName(c.model)} · attempt ${c.attempt}${c.version?` · engine ${c.version}`:""}`}))))))));
+        el('span',{class:'gate-links'},...list.map((c,i)=>el('a',{href:`./project.html?run=${c.run}&attempt=${c.attempt}#project-result`,text:`${modelName(c.model)} · attempt ${c.attempt}${c.version?` · engine ${c.version}`:""}`}))))))),
+    // The gate's own mistakes stay visible: rejections the corrected axe check (engine v9) does not support.
+    ...(g.falseRejections?.length?[el('details',{class:'gate-caught'},el('summary',{text:`${g.falseRejections.length} patches the gate itself got wrong`}),
+      el('p',{class:'small',text:'Before engine v9, an axe finding counted as new if the failing keyboard baseline lacked that exact selector. A patch that got further reached calendar days the baseline never rendered, and the library\'s own day colours were blamed on the patch. Engine v9 compares with every recorded path on the original by element kind; these patches show no new finding under that check, so they are not counted as caught above. Their recorded verdicts are unchanged.'}),
+      el('p',{class:'gate-links'},...g.falseRejections.map(c=>el('a',{href:`./project.html?run=${c.run}&attempt=${c.attempt}#project-result`,text:`${c.case} · ${modelName(c.model)} · attempt ${c.attempt} · engine ${c.version}`}))))]:[]));
 }
 // Crop a 1280×720 capture to the focused element so the result is visible at a glance.
 function focusShot(img,src,state,tone){
