@@ -108,23 +108,45 @@ const similarity = (a, b) => { let hit = 0, total = 0; for (const [k, n] of a) {
 export function preimageReport(current, before) {
   const lines = current.split(/\r?\n/), trimmed = new Set(lines.map(l => l.trim())), count = current.split(before).length - 1;
   if (count > 1) { const at = []; for (let i = 0, k = current.indexOf(before); k >= 0 && i < 4; i++, k = current.indexOf(before, k + 1)) at.push(current.slice(0, k).split('\n').length); return `before occurs ${count} times (lines ${at.join(', ')}); include surrounding lines so it matches exactly once.`; }
-  const missing = before.split(/\r?\n/).filter(l => l.trim() && !trimmed.has(l.trim()));
-  if (!missing.length) return 'before matches no contiguous region: every line exists in the file, but not in this order or with this spacing. Copy the region verbatim from the source.';
+  const missing = before.split(/\r?\n/).filter(l => l.trim() && !trimmed.has(l.trim())), where = alignment(current, before);
+  const diverge = where ? ` Best alignment: before lines ${where.from + 1}-${where.from + where.length} match file lines ${where.at + 1}-${where.at + where.length}` + (where.next < where.want.length ? `, then before line ${where.next + 1} ${JSON.stringify(where.want[where.next].slice(0, 160))} differs from file line ${where.at + where.length + 1} ${JSON.stringify((lines[where.at + where.length] || '').trim().slice(0, 160))}.` : '.') + ' The real file lines are in actual_source_region.' : '';
+  if (!missing.length) return 'before matches no contiguous region: every line exists in the file, but not in this order or with this spacing.' + diverge + ' Copy the region verbatim from the source.';
   const grams = lines.map(bigrams), report = missing.slice(0, 3).map(l => { const g = bigrams(l); let best = -1, score = 0; grams.forEach((x, i) => { const v = similarity(g, x); if (v > score) { score = v; best = i; } });
     return `not in file: ${JSON.stringify(l.trim().slice(0, 160))}` + (best >= 0 && score > 0.5 ? `; closest is line ${best + 1}: ${JSON.stringify(lines[best].trim().slice(0, 160))}` : ''); });
-  return `before does not occur in the file. ${missing.length} of its lines are not in the source. ${report.join(' | ')}. Copy before verbatim from source_candidates.`;
+  return `before does not occur in the file. ${missing.length} of its lines are not in the source. ${report.join(' | ')}.${diverge} Copy before verbatim from source_candidates.`;
+}
+// The longest run of consecutive before-lines (ignoring surrounding whitespace) found in the file.
+// Models usually get most of a region right and invent or drop one line; this locates that line.
+function alignment(current, before) {
+  const want = before.split(/\r?\n/).map(l => l.trim()), file = current.split(/\r?\n/).map(l => l.trim());
+  let best = null;
+  for (let j = 0; j < want.length; j++) if (want[j]) for (let i = 0; i < file.length; i++) {
+    if (file[i] !== want[j]) continue;
+    let n = 0; while (j + n < want.length && i + n < file.length && file[i + n] === want[j + n]) n++;
+    if (!best || n > best.length) best = { from: j, at: i, length: n };
+  }
+  if (!best || best.length < 2) return null;
+  return { ...best, want, next: best.from + best.length };
+}
+// The file's own text where before was evidently aimed, so a retry can copy it instead of recalling it.
+export function actualRegion(current, before) {
+  const where = alignment(current, before); if (!where) return null;
+  const lines = current.split(/\r?\n/), start = Math.max(0, where.at - where.from - 2), end = Math.min(lines.length, start + where.want.length + 6, start + 80);
+  return { lines: `${start + 1}-${end}`, text: lines.slice(start, end).join('\n') };
 }
 export async function applyPlan(root, rawPlan, allowedFiles) {
   const plan = RepairPlan.parse(rawPlan), staged = new Map(), normalizations = []; let changed = 0, size=0;
   for(const edit of plan.edits) {
-    if(!allowedSource(edit.path) || !allowedFiles.includes(edit.path)) throw new Error('Edit outside localized allowlist');
+    // A path missing only its leading folders is resolved when exactly one allowed file ends with it.
+    if(!allowedFiles.includes(edit.path)) { const match = allowedFiles.filter(f => f.endsWith('/'+edit.path.replace(/^\.?\//,''))); if(match.length===1) { normalizations.push({path:match[0],normalization:'path-prefix',written:edit.path}); edit.path=match[0]; } }
+    if(!allowedSource(edit.path) || !allowedFiles.includes(edit.path)) throw new Error(`Edit outside localized allowlist: ${JSON.stringify(edit.path)}. Allowed paths: ${allowedFiles.slice(0,12).map(f=>JSON.stringify(f)).join(', ')}`);
     const file = await contained(root,edit.path);
     const original = await fs.readFile(file,'utf8');
     if(digest(original)!==edit.sha256) throw new Error('Stale source preimage');
     const current = staged.get(file)?.after ?? original;
     let resolved;
     try { resolved = resolvePreimage(current, edit.before, edit.after); }
-    catch(error) { throw new Error(`Edit ${plan.edits.indexOf(edit)+1} (${edit.path}): ${preimageReport(current, edit.before)}`); }
+    catch(error) { const region = actualRegion(current, edit.before); throw Object.assign(new Error(`Edit ${plan.edits.indexOf(edit)+1} (${edit.path}): ${preimageReport(current, edit.before)}`), region ? { actualRegion: { path: edit.path, ...region } } : {}); }
     if(resolved.normalization) normalizations.push({path:edit.path,normalization:resolved.normalization});
     const after = current.replace(resolved.before,()=>resolved.after);
     size += Math.abs(after.length-current.length) + resolved.before.length + resolved.after.length;
