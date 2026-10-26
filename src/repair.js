@@ -80,7 +80,45 @@ export function resolvePreimage(current, before, after) {
     const block = indentInsensitive(current, b, a, crlf);
     if (block) return { ...block, normalization: (label === 'as-written' ? '' : label + '+') + 'indentation' };
   }
+  for (const [label, b, a] of variants) {
+    const block = contextTolerant(current, b, a, crlf);
+    if (block) return { ...block, normalization: (label === 'as-written' ? '' : label + '+') + 'context-lines' };
+  }
   throw new Error('Patch preimage must match exactly once');
+}
+// Models often misremember an unchanged context line (a dropped semicolon, `self` for `this`).
+// Accepted only when the region has the same number of lines, at most two lines differ, each
+// differing line is near-identical to the file's line and appears unchanged in `after` (so the
+// patch never meant to edit it), and the region is unique. Those lines take the file's text in both
+// before and after, so the applied change is exactly the lines the model did mean to change.
+// A line that differs only in spacing or a trailing semicolon/comma says the same thing, whether the
+// patch keeps it or replaces it; any other difference is tolerated only on a line the patch keeps.
+const formatOnly = (a, b) => { const f = s => s.replace(/\s+/g, '').replace(/[;,]$/, ''); return f(a) === f(b); };
+function contextTolerant(current, before, after, crlf) {
+  const want = before.split(/\r*\n/);
+  while (want.length && !want[0].trim()) want.shift();
+  while (want.length && !want.at(-1).trim()) want.pop();
+  const lines = want.filter(l => l.trim()).length;
+  if (lines < 2) return null;
+  const kept = new Set(after.split(/\r*\n/).map(l => l.trim())), limit = Math.min(2, Math.max(1, Math.floor(want.length / 8)));
+  const near = (w, f) => w.trim() && f.trim() && (formatOnly(w, f) || lines >= 4 && w.trim().length >= 8 && kept.has(w.trim()) && similarity(bigrams(w), bigrams(f)) >= 0.75);
+  const clean = current.split('\n').map(l => l.replace(/\r$/, '')), hits = [];
+  for (let i = 0; i + want.length <= clean.length && hits.length < 2; i++) {
+    const off = [];
+    for (let k = 0; k < want.length && off.length <= limit; k++) if (clean[i + k].trim() !== want[k].trim()) off.push(k);
+    if (!off.length || off.length > limit) continue;
+    if (off.every(k => near(want[k], clean[i + k]))) hits.push({ at: i, off });
+  }
+  if (hits.length !== 1) return null;
+  const { at, off } = hits[0], source = clean.slice(at, at + want.length), lead = l => l.match(/^\s*/)[0];
+  const fixed = new Map(off.map(k => [want[k].trim(), source[k].trim()])), known = new Map(want.map((l, k) => [l, source[k]]));
+  let shift = null;
+  const rewritten = after.split(/\r*\n/).map(l => {
+    if (known.has(l)) { shift = [lead(l), lead(known.get(l))]; return known.get(l); }
+    const line = shift && l.startsWith(shift[0]) ? shift[1] + l.slice(shift[0].length) : l;
+    return fixed.has(l.trim()) ? lead(line) + fixed.get(l.trim()) : line;
+  });
+  return { before: source.join(crlf ? '\r\n' : '\n'), after: rewritten.join(crlf ? '\r\n' : '\n') };
 }
 function indentInsensitive(current, before, after, crlf) {
   const want = before.split(/\r*\n/), trimmed = want.map(l => l.trim());

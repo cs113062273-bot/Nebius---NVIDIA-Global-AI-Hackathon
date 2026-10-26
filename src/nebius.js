@@ -23,7 +23,14 @@ export function extractJson(text) {
 // the whole proposal; edits and every other field remain strictly schema-checked.
 export function normalizeAdvisory(plan) {
   if(!plan||typeof plan!=='object'||Array.isArray(plan))return plan;
-  const copy={...plan};
+  const copy={...plan},ADVISORY=['expected_accessibility_effect','functional_risks','verification_requirements'];
+  // Advisory fields written inside an edit instead of beside the edits are moved back to the top
+  // level (first edit's value wins). Edit content itself is never changed here.
+  if(Array.isArray(copy.edits))copy.edits=copy.edits.map(edit=>{
+    if(!edit||typeof edit!=='object')return edit;const rest={...edit};
+    for(const key of ADVISORY)if(key in rest){if(copy[key]==null)copy[key]=rest[key];delete rest[key];}
+    return rest;
+  });
   for(const key of ['functional_risks','verification_requirements'])if(typeof copy[key]==='string')copy[key]=[copy[key]];
   return copy;
 }

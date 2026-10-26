@@ -4,7 +4,8 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { Journey } from '../src/schema.js';
-import { taskSpecificEdits, preimageReport } from '../src/repair.js';
+import { taskSpecificEdits, preimageReport, resolvePreimage } from '../src/repair.js';
+import { normalizeAdvisory } from '../src/nebius.js';
 
 const journey = Journey.parse({ version: 1, id: 'open-drawer', title: 'Open the drawer', goal: 'Focus moves into the drawer', source: 'authored', profile: 'keyboard', path: '/',
   steps: [{ title: 'Open', action: { kind: 'press', key: 'Enter' }, assertions: [{ kind: 'focus', selector: '#filters-close' }] }],
@@ -28,4 +29,23 @@ test('An unapplied preimage reports the missing line and the closest real one, o
   const source = 'a\n  const x = 1\n  foo(x)\n  foo(x)\nend';
   assert.match(preimageReport(source, '  foo(x)'), /occurs 2 times \(lines 3, 4\)/);
   assert.match(preimageReport(source, '  const y = 1\n  foo(x)'), /not in file: "const y = 1"; closest is line 2: "const x = 1"/);
+});
+
+test('Misremembered context lines are tolerated only when the patch keeps them; changed and invented lines must match', () => {
+  const source = 'function f(self) {\n  const a = 1;\n  if (a) {\n    input.addEventListener("paste", onPaste.bind(null, this));\n  }\n  return a;\n}\n';
+  // Context `input.addEventListener("paste", onPaste.bind(null, self))` (kept unchanged in after) is near-identical to the file's `input.addEventListener("paste", onPaste.bind(null, this));`: the file's line is used.
+  const ok = resolvePreimage(source, '  if (a) {\n    input.addEventListener("paste", onPaste.bind(null, self))\n  }\n  return a;', '  if (a) {\n    input.addEventListener("paste", onPaste.bind(null, self))\n  }\n  return a + 1;');
+  assert.equal(ok.normalization, 'context-lines');
+  assert.equal(source.replace(ok.before, ok.after), source.replace('return a;', 'return a + 1;'));
+  // A changed line that differs in substance is not guessed.
+  assert.throws(() => resolvePreimage(source, '  if (a) {\n    input.addEventListener("paste", onPaste.bind(null, self))\n  }\n  return a;', '  if (a) {\n    stop()\n  }\n  return a;'));
+  // An invented line is never accepted, even if after keeps it.
+  assert.throws(() => resolvePreimage(source, '  if (a) {\n    prevent();\n    input.addEventListener("paste", onPaste.bind(null, this));\n  }', '  if (a) {\n    prevent();\n    input.addEventListener("paste", onPaste.bind(null, this));\n    done();\n  }'));
+});
+
+test('Advisory fields written inside an edit are moved to the top level', () => {
+  const plan = normalizeAdvisory({ root_cause: 'r', repair_strategy: 's', edits: [{ path: 'a.js', sha256: 'x', before: 'b', after: 'c', functional_risks: 'none', expected_accessibility_effect: 'e', verification_requirements: ['v'] }] });
+  assert.deepEqual(Object.keys(plan.edits[0]), ['path', 'sha256', 'before', 'after']);
+  assert.deepEqual(plan.functional_risks, ['none']);
+  assert.equal(plan.expected_accessibility_effect, 'e');
 });
