@@ -1,0 +1,98 @@
+{
+  "completedAt": "2026-10-26T07:03:26.019Z",
+  "policy": "auto",
+  "modelRun": "a3b872b7-1c6f-43a1-a658-a234d0f86633",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (src/_baseMenu.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"} else if (key === «Escape») {          // Hitting Escape:          // - Closes submenu.          // - Moves focus to parent menubar item.          preventEvent\". Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "9980d4bb6ed51fa6de8df4361811596a2a6972715eb776f3a687bc73adf920cc",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/menubar.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"// Hitting Escape:            // - Closes submenu.            // - Moves focus to parent menubar item.            preventEvent(event);            this.elements.\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-19e0bf71345f196b58083b08216c3690",
+      "usage": {
+        "completion_tokens": 12971,
+        "prompt_tokens": 37292,
+        "total_tokens": 50263,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 12392,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 25296,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 37292
+      },
+      "latencyMs": 70542,
+      "reservedCreditUsd": 0.0681969
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/menubar.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"} else if (key === «Escape») {          // Hitting Escape:          // - Closes submenu.          // - Moves focus to parent menubar item.          preventEvent\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-7294f3b73c34541b3849ec78eafb188c",
+      "usage": {
+        "completion_tokens": 20765,
+        "prompt_tokens": 38072,
+        "total_tokens": 58837,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 20139,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 38072
+      },
+      "latencyMs": 62320,
+      "reservedCreditUsd": 0.230747
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/_baseMenu.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"} else if (key === «Escape») {          // Hitting Escape:          // - Closes submenu.          // - Moves focus to parent menubar item.          preventEvent\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-ca7cee13ae1401af1075cdf7d7847f42",
+      "usage": {
+        "completion_tokens": 7492,
+        "prompt_tokens": 38815,
+        "total_tokens": 46307,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 6907,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 38815
+      },
+      "latencyMs": 21266,
+      "reservedCreditUsd": 0.233927
+    }
+  ]
+}

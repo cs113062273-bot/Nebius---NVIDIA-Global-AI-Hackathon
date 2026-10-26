@@ -128,10 +128,10 @@ export class NebiusClient {
     if(!model || !/^nvidia\//i.test(model) || !/nemotron/i.test(model)) throw new Error('Select an NVIDIA Nemotron model from the current authenticated catalog');
     const entry=(await this.models()).find(m=>m.id===model);
     if(!entry) throw new Error('Configured NVIDIA model unavailable in account catalog');
-    // The catalog does not list structured_outputs for Nemotron 3, but a probe on 2026-10-26 (5 Super and
-    // Ultra requests, ledger scope structured-probe-20261026) showed response_format json_schema accepted
-    // and every reply parsed, so repairs ask for it; the schema stays in the prompt as well.
-    const structured=entry.features.includes('structured_outputs')||/nemotron-3/i.test(model);
+    // Not forced for Nemotron 3: on 2026-10-26 Token Factory accepted response_format json_schema and the
+    // replies parsed, but code inside the strings came back corrupted (newlines as a bare n or dropped,
+    // quotes as guillemets), so no preimage could match. The schema stays in the prompt only.
+    const structured=entry.features.includes('structured_outputs');
     const {content,schema,maxOutput,reservation}=this.prepare({candidates,evidence,history});
     if(content.length>240000) throw new Error('Focused evidence exceeds inference budget; localize more narrowly');
     await fs.mkdir(this.dir,{recursive:true});

@@ -1,0 +1,98 @@
+{
+  "completedAt": "2026-10-26T07:00:43.875Z",
+  "policy": "auto",
+  "modelRun": "a12dbecf-13d8-46cd-a9b3-ddcc719ff273",
+  "verdict": "VERIFIED_FAIL",
+  "reasons": [
+    "APPLICATION: Edit 1 (src/a11y-dialog.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"hide(event        ) {n    // If the dialog is already closed, abortn    if (!this.shown) return thisn    n    // Dispatch a `hide` eventn    const hideEvent = t\". Copy before verbatim from source_candidates."
+  ],
+  "humanFixLinesInRequest": 0,
+  "implementation": "9980d4bb6ed51fa6de8df4361811596a2a6972715eb776f3a687bc73adf920cc",
+  "attempts": [
+    {
+      "attempt": 1,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/a11y-dialog.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"hide(event) {n    // If the dialog is already closed, abortn    if (!this.shown) return thisn    n    // Dispatch a `hide` eventn    const hideEvent = this.fire\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/nemotron-3-super-120b-a12b",
+      "requestId": "chatcmpl-8d05c349f4a08dbee6c60b191c0e005f",
+      "usage": {
+        "completion_tokens": 6455,
+        "prompt_tokens": 13972,
+        "total_tokens": 20427,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 5102,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "created_cache_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 13972
+      },
+      "latencyMs": 30338,
+      "reservedCreditUsd": 0.044448299999999996
+    },
+    {
+      "attempt": 2,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/a11y-dialog.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"hide(event        ) {n    // If the dialog is already closed, abortn    if (!this.shown) return thisn    n    // Dispatch a `hide` eventn    const hideEvent = t\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-448d0d75b9f125ae9eb796d311763935",
+      "usage": {
+        "completion_tokens": 4153,
+        "prompt_tokens": 15542,
+        "total_tokens": 19695,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 2765,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 15542
+      },
+      "latencyMs": 10714,
+      "reservedCreditUsd": 0.154143
+    },
+    {
+      "attempt": 3,
+      "verified": false,
+      "category": "APPLICATION",
+      "failure": "Edit 1 (src/a11y-dialog.js): before does not occur in the file. 1 of its lines are not in the source. not in file: \"hide(event        ) {n    // If the dialog is already closed, abortn    if (!this.shown) return thisn    n    // Dispatch a `hide` eventn    const hideEvent = t\". Copy before verbatim from source_candidates.",
+      "model": "nvidia/Nemotron-3-Ultra-550b-a55b",
+      "requestId": "chatcmpl-f4431174360976fdff94894e56de90e5",
+      "usage": {
+        "completion_tokens": 2181,
+        "prompt_tokens": 17035,
+        "total_tokens": 19216,
+        "completion_tokens_details": {
+          "accepted_prediction_tokens": null,
+          "audio_tokens": null,
+          "reasoning_tokens": 845,
+          "rejected_prediction_tokens": null
+        },
+        "prompt_tokens_details": {
+          "audio_tokens": null,
+          "cached_tokens": 0,
+          "multimodal_tokens": null
+        },
+        "prompt_cache_hit_tokens": 0,
+        "prompt_cache_miss_tokens": 17035
+      },
+      "latencyMs": 5758,
+      "reservedCreditUsd": 0.159862
+    }
+  ]
+}

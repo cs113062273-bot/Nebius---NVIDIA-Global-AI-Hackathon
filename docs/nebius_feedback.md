@@ -12,7 +12,7 @@ All inference in Tabstitch runs on Nebius Token Factory through its OpenAI-compa
 
 ## What could be better
 
-- **Advertise structured outputs for Nemotron.** The catalog does not list `structured_outputs` for the Nemotron 3 models, so until engine v10 we sent the schema only in the prompt, and 34 completions did not parse into it. A recorded probe on 2026-10-26 showed that `response_format` with a strict JSON schema in fact works for Super and Ultra: all 5 structured replies parsed, while the same requests sent plain failed once. Listing the feature in the catalog would have saved those failed calls.
+- **Structured outputs corrupt code strings.** The catalog does not list `structured_outputs` for the Nemotron 3 models, and 34 of our completions did not parse into the schema we sent in the prompt. Token Factory does accept `response_format` with a strict JSON schema for Super and Ultra, and every reply parsed. But the code inside the strings came back damaged: newlines as a bare `n`, `%n` or nothing, and quotes as guillemets. Engine v10 used it and was stopped after 2 runs, because none of its 6 patches could be applied. We went back to the prompt-only schema and repair only bracket structure. Either a fix or a documented limitation would help.
 - **Latency varies widely for long prompts.** At a p50 prompt of about 14,000 tokens, Super's p90 latency was 64 s and its maximum 139 s. Ultra was steadier. A published expected-latency figure per model would help set timeouts.
 - **Cost in the response.** The response reports tokens, not cost. We compute cost from catalog prices. A per-request cost field would make sponsor-credit accounting exact.
 
