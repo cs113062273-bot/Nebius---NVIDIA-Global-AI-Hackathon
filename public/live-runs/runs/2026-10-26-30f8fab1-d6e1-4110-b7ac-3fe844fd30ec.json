@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-26",
+  "at": "2026-10-26T01:54:01.498Z",
+  "run": "30f8fab1-d6e1-4110-b7ac-3fe844fd30ec",
+  "kind": "real",
+  "case": "bootstrap-tabs-arrow-focus",
+  "title": "Arrow keys in a tab list must move keyboard focus to the newly selected tab",
+  "library": "Bootstrap 5.2 (tab)",
+  "verdict": "VERIFIED_PASS",
+  "passedOn": 1,
+  "models": [
+    "nemotron-3-super-120b-a12b"
+  ],
+  "failures": [
+    null
+  ],
+  "costUsd": 0.0075,
+  "seconds": 27,
+  "trigger": "issue",
+  "issue": 2,
+  "requester": "cs113062273-bot",
+  "actionsRun": "https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/actions/runs/40256347700"
+}
