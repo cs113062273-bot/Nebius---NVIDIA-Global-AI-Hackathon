@@ -8,6 +8,8 @@
 
 **Built with:** NVIDIA Nemotron 3 Super, Nemotron 3 Ultra, Nemotron 3 Nano, Nebius Token Factory, Node.js, Playwright, Chromium, axe-core, Zod, GitHub Actions, GitHub Pages.
 
+**Judging in 5 minutes:** (1) home page, **Watch Nemotron fix a real Bootstrap bug**; (2) **A patch you can question**, the model's diff next to the maintainers' fix; (3) the [bug page](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html) for the open bugs and the scoreboard; (4) **Run it live** on any card for a fresh Nemotron repair; (5) [twbs/bootstrap#43202](https://github.com/twbs/bootstrap/issues/43202), the bug Tabstitch found.
+
 ## Inspiration
 
 Keyboard and form bugs stop people from finishing a task: focus that never enters a dialog, Escape that closes the wrong thing, a datepicker you cannot Tab out of, a field that submits the wrong value. Scanners rarely see them, because the page looks fine. AI can now write a plausible fix in seconds. The hard question is no longer "can a model write a patch" but "which patch can I merge".

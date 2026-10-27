@@ -4,10 +4,20 @@
 
 Tabstitch repairs keyboard and form bugs in web pages with **NVIDIA Nemotron on Nebius Token Factory**, then lets a real browser decide whether the patch works. A developer freezes what must keep working: the keyboard task, the data the form must submit, an independent pointer path and regression guards. Nemotron proposes bounded source edits in a disposable copy. Chromium replays every path. Any patch that passes the task but changes the submitted data or breaks a guarded behaviour is rejected, and the concrete failure goes back to the model.
 
-**Judge site (read-only, no setup):** https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/
-Start with **Watch Nemotron fix a real Bootstrap bug** on the home page: a recorded blind run where Chromium rejects Nemotron 3 Super's patch and Nemotron 3 Ultra then fixes the library. Then pick any bug on the [live page](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html); every published run, including the rejected ones, is listed under **All recorded runs**. Every run shows browser captures, assertions, the diff and the raw model request and response. Viewing makes no model call.
+**In plain words:** people who cannot use a mouse get stuck on web pages: Tab never leaves a date field, Escape will not close a dialog, a form quietly submits the wrong value. AI can write a fix in seconds, but many fixes that look right break something else. Tabstitch lets Nemotron write the fix, then replays the person's exact key presses in Chrome and accepts the fix only if the task works, the submitted data is right and nothing that worked before breaks. It is for front-end developers and component-library maintainers.
 
-**Run it live yourself (GitHub account only):** every bug card on the [live page](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html) has a **Run it live** button. It opens a prefilled `[live run] <bug>` issue; GitHub Actions ([`judge-live.yml`](.github/workflows/judge-live.yml)) gives Nemotron the buggy source, replays the result in Chromium, publishes the evidence and replies on the issue with the verdict, usually within 3 to 10 minutes. Each run is capped at US$0.50 of sponsor credits, with 12 requested runs a day and 3 per person.
+## A 5-minute tour
+
+The [judge site](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/) is read-only and needs no setup. Viewing it makes no model call.
+
+1. **Watch a repair (1 min).** On the home page, click **Watch Nemotron fix a real Bootstrap bug**. Escape is swallowed inside a modal, so keyboard users cannot close it. The player steps through: reproduce the bug, find the source, Nemotron 3 Super's patch rejected by Chromium, Nemotron 3 Ultra fixing the library with that failure report, verdict. Only then is the maintainers' own fix shown, which the model never saw.
+2. **Read a patch (1 min).** Under **A patch you can question**, see the model's diagnosis, its diff next to the published human fix, and every check it had to pass. Failed attempts are listed too.
+3. **Browse the bugs (1 min).** The [bug page](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html) has 7 bugs still open upstream (each card shows the upstream status, the patch review and every blind run), 26 bugs maintainers fixed by hand, and a scoreboard that keeps every engine version, including the worse ones.
+4. **Run it live (start it, read the reply later).** **Run it live** on any card opens a prefilled `[live run] <bug>` issue. GitHub Actions ([`judge-live.yml`](.github/workflows/judge-live.yml)) gives Nemotron the buggy source, replays the result in Chromium, publishes the evidence and replies on the issue, usually within 3 to 10 minutes. Capped at US$0.50 of sponsor credits per run, 12 runs a day, 3 per person.
+5. **See it in a pull request (1 min).** [PR #1](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/pull/1) shows the GitHub Action catching a keyboard regression and posting Ultra's verified patch.
+6. **Outside proof.** [twbs/bootstrap#43202](https://github.com/twbs/bootstrap/issues/43202) is a keyboard trap Tabstitch found, confirmed by a Bootstrap maintainer the same day.
+
+Every published run, including the rejected ones, is under **All recorded runs**, with browser captures, assertions, the diff and the raw model request and response.
 
 ## Real bugs, repaired blind
 
