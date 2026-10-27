@@ -16,29 +16,30 @@ Keyboard and form bugs stop people from finishing a task: focus that never enter
 
 ## What it does
 
-Tabstitch is for front-end developers and component-library maintainers who want an AI keyboard fix they can merge. A developer freezes what must keep working:
+Tabstitch is for front-end developers and component-library maintainers who want an AI keyboard fix they can merge. First, a developer writes down what must keep working:
 
-- the keyboard task, replayed with real key presses in Chromium;
-- the data the form must submit, read from native `FormData`;
-- an independent pointer path;
-- regression guards for behaviour that already works.
+- the keyboard task, replayed with real key presses in Chrome;
+- the data the form must submit;
+- the same task done with a mouse;
+- behaviour that already works and must not break.
 
-Nemotron 3 Super proposes bounded, hash-checked edits in a disposable copy. Chromium replays every path. If the patch is rejected, Nemotron 3 Ultra gets the exact failure (failed assertion, focus and key trace, guard results) and tries again, up to five proposals in the benchmark (three in live runs). A patch is accepted only if the task passes, the submitted data and pointer outcome are unchanged, every guard passes, no axe finding appears that the original never showed, and the component code was not fitted to the test page. Every attempt, accepted or not, is published with captures, assertions, the diff and the raw model request and response.
+This is frozen before the model sees anything. Nemotron 3 Super then edits a copy of the source. Chrome replays every one of those checks. If any fails, Nemotron 3 Ultra gets the exact failure, such as which key went where and which check broke, and tries again. A patch is accepted only when every check passes, and every attempt, accepted or not, is published with screenshots, the diff and the raw model request and response.
 
-It runs where developers work: a CLI, a reusable GitHub Action that posts the verified patch on the pull request ([live example, PR #1](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/pull/1)), task drafting from one sentence with Nemotron 3 Nano, and the judge site.
+It runs where developers work: a GitHub Action that posts the verified patch on the pull request ([example, PR #1](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/pull/1)), a CLI, and Nemotron 3 Nano drafting the task file from one sentence.
 
 ## What the evidence shows
 
-**26 real bugs, repaired blind.** Twelve open-source libraries (Bootstrap, GOV.UK Frontend, NHS.UK frontend, focus-trap, tabbable, MicroModal, a11y-dialog, accessible-menu, Pikaday, vanillajs-datepicker, Awesomplete, autoComplete.js), each pinned at the commit before a published maintainer fix. The maintainers' own fix must pass the frozen task first (26/26), and it is never sent to the model.
+**It found a real bug.** A Bootstrap 6 datepicker traps keyboard users: Tab never leaves the field. Nobody had reported it. Tabstitch found it, and it is now [twbs/bootstrap#43202](https://github.com/twbs/bootstrap/issues/43202), labelled *confirmed* by a Bootstrap maintainer the same day.
 
-- **Current engine (v13): 25 of 26 repaired on the first run, all in the library's own code.** Every bug gets three blind runs, and every run counts: 71 of 78 runs repaired (91%), and 25 of 26 bugs repaired at least once. v13 allows five proposals (Super, then Ultra four times); with three, v12 repaired 64 of 78.
-- Every engine version keeps its public score, including the worse ones. Any engine change reruns every bug.
-- Across all versions: **389 of 479 blind runs repaired (81%)**, 354 of them in the library's own code. Super's first patch passed 49% of the time; Chromium's failure report sent to Ultra added 155 more.
-- **61 patches fixed the reported key and still broke something**, such as the submitted data, the pointer path or a guarded behaviour. A test of the reported bug alone would have merged them. Each one is linked on the scoreboard.
+**26 real bugs, repaired blind.** Each comes from one of twelve open-source libraries (Bootstrap, GOV.UK Frontend, NHS.UK frontend, focus-trap, tabbable, MicroModal, a11y-dialog, accessible-menu, Pikaday, vanillajs-datepicker, Awesomplete, autoComplete.js), pinned just before the maintainers fixed it by hand. Their fix must pass our frozen checks first (26/26), so the test is fair, and it is never shown to the model.
 
-**We report our own mistakes too.** 35 earlier passes changed only the author-built page around the library, a workaround rather than a fix. Every pass is now labelled by where it changed code, and since v11 the page is read-only context. Before v12, a file-name filter hid every library file under `packages/` from the model, so GOV.UK and NHS.UK bugs could only be worked around. Before v9, our axe gate wrongly rejected 3 patches for colour contrast the library already had. All of these are disclosed and none is counted.
+- **The current engine repairs 25 of 26 on the first run, every one by changing the library's own code.** Each bug gets three runs and every run counts: 71 of 78 runs repaired (91%).
+- **61 patches fixed the reported key and still broke something**, such as the submitted data or the mouse path. A test of the reported bug alone would have accepted them. Each one is linked on the scoreboard.
+- Across every engine version: 389 of 479 runs repaired. Super's first patch passed in 234 of them; Ultra, given the browser's failure report, rescued 155 more. Every version keeps its public score, including the worse ones.
 
-**7 bugs still open upstream.** On each bug's strictest frozen task, 4 are repaired on the first v13 run and 6 at least once in three runs, browser-verified on the library's current code. A browser pass is not the last word: every patch is read after the verdict. Four reviews found a patch that passed and was wrong: a Bootstrap dialog patch that stopped Escape closing every other dialog, a Pikaday patch that hung at a date limit, a datepicker patch that ignored a configured format, and a drawer patch that handled only an autofocus field. Each gap became a stricter frozen task. Replayed without inference, the flawed patch fails it, and the pending human Bootstrap fixes pass. One bug, a Bootstrap 6 datepicker keyboard trap nobody had reported, was found by Tabstitch and is now [twbs/bootstrap#43202](https://github.com/twbs/bootstrap/issues/43202), labelled *confirmed* by a Bootstrap maintainer the same day.
+**7 bugs still open upstream.** 4 are repaired on the first run and 6 at least once in three runs. A browser pass is not the last word: we read every passing patch. Four times a patch passed and was still wrong (for example, a Bootstrap dialog fix that stopped Escape closing every other dialog). Each time, the gap became a stricter frozen check, and the flawed patch now fails it.
+
+**We publish our own mistakes.** 35 early passes only worked around a bug in our demo page instead of fixing the library; they are labelled and not counted, and the page is now read-only to the model. An early file filter hid GOV.UK and NHS.UK library files from the model, and an early accessibility check wrongly rejected 3 good patches. Both are fixed and disclosed.
 
 ## How we built it
 
