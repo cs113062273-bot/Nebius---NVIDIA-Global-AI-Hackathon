@@ -4,7 +4,7 @@
 
 Status: local functionality delivered; competition submission incomplete.
 
-Product update after this audit: added a bundled, explicitly recorded three-case presentation (scanner-clean keyboard failure, wrong functional result rejected, historical focus loss) with before/after screenshots, source changes and a presentation view. The original measured counts below are unchanged. The update added no automated test suite; a focused browser smoke check exercised case switching, presentation exit and 320-pixel layout. See `docs/competitive_landscape.md` for the competition-driven priority correction. Live inference remains untested.
+Product update after this audit: added a bundled, explicitly recorded three-case presentation (scanner-clean keyboard failure, wrong functional result rejected, historical focus loss) with before/after screenshots, source changes and a presentation view. The original measured counts below are unchanged. The update added no automated test suite; a focused browser smoke check exercised case switching, presentation exit and 320-pixel layout. See `competitive_landscape.md` for the competition-driven priority correction. Live inference remains untested.
 
 Source revision tested: `eff5218` (runtime, frontend, tests and fixtures). Subsequent changes add release packaging, measured clean-copy results and audit documentation; no claim is made that a public deployment was tested. Local Git commit exists; no remote push was performed in this session.
 

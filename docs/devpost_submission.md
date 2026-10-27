@@ -4,13 +4,17 @@
 
 **Try it (no setup):** https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/ . The first button plays a recorded blind repair of a real Bootstrap bug. **Run it live** on any bug card opens a GitHub issue; GitHub Actions then makes a fresh Nemotron repair on Nebius Token Factory and replies with the verdict in a few minutes. Source: https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon
 
+**Track:** Coding and Agentic Engineering. **Built for accessibility:** every bug here blocks someone using only a keyboard.
+
+**Built with:** NVIDIA Nemotron 3 Super, Nemotron 3 Ultra, Nemotron 3 Nano, Nebius Token Factory, Node.js, Playwright, Chromium, axe-core, Zod, GitHub Actions, GitHub Pages.
+
 ## Inspiration
 
 Keyboard and form bugs stop people from finishing a task: focus that never enters a dialog, Escape that closes the wrong thing, a datepicker you cannot Tab out of, a field that submits the wrong value. Scanners rarely see them, because the page looks fine. AI can now write a plausible fix in seconds. The hard question is no longer "can a model write a patch" but "which patch can I merge".
 
 ## What it does
 
-A developer freezes what must keep working:
+Tabstitch is for front-end developers and component-library maintainers who want an AI keyboard fix they can merge. A developer freezes what must keep working:
 
 - the keyboard task, replayed with real key presses in Chromium;
 - the data the form must submit, read from native `FormData`;
@@ -57,7 +61,7 @@ The model is good at the fix; the contract is what makes it mergeable. Regressio
 
 ## Feedback on Nebius and NVIDIA
 
-Measured from our call ledger ([details](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/blob/main/docs/nvidia_feedback.md), [platform](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/blob/main/docs/nebius_feedback.md)): Ultra was faster than Super for us (p50 19 s vs 33 s) and far more often well-formed. The catalog's prices made per-call cost ceilings easy. `response_format` is accepted for Nemotron 3 but corrupts code strings; a fix or a documented limitation would help.
+Measured from our call ledger ([details](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/blob/main/docs/nvidia_feedback.md), [platform](https://github.com/cs113062273-bot/Nebius---NVIDIA-Global-AI-Hackathon/blob/main/docs/nebius_feedback.md)): Ultra was faster than Super for us (p50 19 s vs 33 s) and far more often well-formed. The catalog's prices made per-call cost ceilings easy. Onboarding took one day, from credits to a browser-verified Ultra repair; the only snag was model ids cased differently per model. We did not need Nebius AI Cloud, since the site is static and live runs use GitHub Actions. We would build with Token Factory and Nemotron again for this pattern. `response_format` is accepted for Nemotron 3 but corrupts code strings; a fix or a documented limitation would help.
 
 ## What's next
 

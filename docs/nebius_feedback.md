@@ -2,6 +2,12 @@
 
 All inference in Tabstitch runs on Nebius Token Factory through its OpenAI-compatible API: 1,248 calls from the development machine between 2026-10-21 and 2026-10-27, plus the live runs that GitHub Actions makes on request and once a day. At catalog prices that is about US$30.30, paid from sponsor credits. Aggregates are in [`public/inference-stats.json`](../public/inference-stats.json).
 
+## Onboarding
+
+Zero to hello world took one day. Credits arrived on 2026-10-21, and on that day an authenticated catalog request and our first Nemotron 3 Ultra repair, verified in Chromium, both worked. The quickstart's OpenAI-compatible base URL was all we needed. One snag: model ids are cased differently per model (`nvidia/nemotron-3-super-120b-a12b`, `nvidia/Nemotron-3-Ultra-550b-a55b`, `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`), so we copy them from the catalog rather than typing them.
+
+We did not use Nebius AI Cloud. The judge site is static, and live runs execute on GitHub Actions, so there was no service of ours to host.
+
 ## What worked
 
 - **OpenAI-compatible chat completions.** One `fetch` client, with no SDK, covers Nemotron 3 Super, Ultra and Nano. Model choice is configuration.

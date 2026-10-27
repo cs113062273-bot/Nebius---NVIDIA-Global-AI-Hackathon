@@ -5,7 +5,7 @@
 Tabstitch repairs keyboard and form bugs in web pages with **NVIDIA Nemotron on Nebius Token Factory**, then lets a real browser decide whether the patch works. A developer freezes what must keep working: the keyboard task, the data the form must submit, an independent pointer path and regression guards. Nemotron proposes bounded source edits in a disposable copy. Chromium replays every path. Any patch that passes the task but changes the submitted data or breaks a guarded behaviour is rejected, and the concrete failure goes back to the model.
 
 **Judge site (read-only, no setup):** https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/
-Start with **Watch Nemotron fix a real Bootstrap bug** on the home page: a recorded blind run where Chromium rejects Nemotron 3 Super's patch and Nemotron 3 Ultra then fixes the library. Then pick any bug on the [live page](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html); all 231 published runs are listed under **All recorded runs**. Every run shows browser captures, assertions, the diff and the raw model request and response. Viewing makes no model call.
+Start with **Watch Nemotron fix a real Bootstrap bug** on the home page: a recorded blind run where Chromium rejects Nemotron 3 Super's patch and Nemotron 3 Ultra then fixes the library. Then pick any bug on the [live page](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html); every published run, including the rejected ones, is listed under **All recorded runs**. Every run shows browser captures, assertions, the diff and the raw model request and response. Viewing makes no model call.
 
 **Run it live yourself (GitHub account only):** every bug card on the [live page](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/live.html) has a **Run it live** button. It opens a prefilled `[live run] <bug>` issue; GitHub Actions ([`judge-live.yml`](.github/workflows/judge-live.yml)) gives Nemotron the buggy source, replays the result in Chromium, publishes the evidence and replies on the issue with the verdict, usually within 3 to 10 minutes. Each run is capped at US$0.50 of sponsor credits, with 12 requested runs a day and 3 per person.
 
@@ -59,30 +59,16 @@ Every pull request replays the frozen tasks in Chromium. If one breaks, Nemotron
 
 Keyboard and form fixes often look right and still submit the wrong data. In the pinned [GOV.UK accessible-autocomplete](https://github.com/alphagov/accessible-autocomplete/issues/777), clearing a saved country leaves the field empty on screen while the hidden `<select>` still submits `gb`. Accessibility scanners report nothing; the user's data is wrong.
 
-## What the recorded runs show
+## Earlier case studies
 
-The country form was strengthened four times after independent review. Each stricter contract was frozen before new inference, and earlier model patches were replayed against it without inference.
+Before the real-bug benchmark, two reported issues were studied in author-built pages, and each contract was made stricter after review:
 
-| Model-authored patch | What the browser found | Verdict |
-|---|---|---|
-| Ultra · first repair (clearing only) | An unlisted country (“Atlantis”) still submits `gb` | Rejected by the stricter task |
-| Super · trimmed blank input | Blank text matched the empty option by value; billing still submits `de` | Rejected |
-| Super · component blur handler | Passed its own task, but “Fra” + Tab no longer saves France, and the library's plain usage throws | Rejected by a withheld check, then by regression guards |
-| Ultra · public `onConfirm` option | Pressing Enter inside a cleared field submits without blur; `de` is still sent | Rejected by the next contract |
-| Ultra · `onConfirm` + exact-text submit sync | Passed that contract, but with the same options pretty-printed (text on its own indented line), saving without editing erased both saved countries | Rejected by the markup-independent contract |
-| **Ultra · trimmed submit-time sync** | Keyboard task, pointer path and 3/3 regression guards pass on pretty-printed markup; withheld single-line page, clear shipping and clear billing pass | **VERIFIED_PASS** |
-
-The final repair ([run `c3158127`](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/project.html?run=c3158127-dba3-43b3-8dcc-981dc00e071f&attempt=2)) edits only the consumer’s `app.js`, not the third-party library. Its first attempt also erased the saved countries and was rejected by all three guards; that failure went back to the model. A reviewer probe of eleven interactions (Enter inside the field, Escape, lowercase, trailing space, arrow selection, retyping, untouched save) found visible text and submitted form data consistent **11/11 on both markups**, against 5/11 for the original component and 0/11 for the previous final repair ([`reviewer-probes.json`](benchmarks/native-form-markup/reviewer-probes.json), reproducible with `scripts/probe-country-consistency.mjs`).
-
-One withheld check is a recorded `VERIFIED_FAIL` and stays that way: with pretty-printed options, typing only spaces matches the whitespace inside the component’s own option text, so the pinned component confirms Germany on blur. The field shows Germany and `de` is submitted. That matches the task goal (submit what the field shows) but not that check, which was written for single-line markup.
-
-A second component, [Pikaday](https://github.com/Pikaday/Pikaday/issues/955), shows the same loop on keyboard date navigation:
-
-- ArrowRight could select a closed weekend. Super repaired it; a precommitted reverse task passed.
-- A closed range boundary exposed a remaining flaw, and a separate Super run fixed it.
-- In `Europe/London`, ArrowDown across the end of British Summer Time landed on Thursday instead of Friday. Super switched to calendar-day arithmetic, and six withheld UTC, London and closed-range checks passed.
+- **GOV.UK accessible-autocomplete (country field).** Five model patches were rejected on the way, several after passing an earlier, weaker contract, including one that erased saved countries when the options were pretty-printed. The final Ultra repair ([run `c3158127`](https://cs113062273-bot.github.io/Nebius---NVIDIA-Global-AI-Hackathon/project.html?run=c3158127-dba3-43b3-8dcc-981dc00e071f&attempt=2)) passes the task, the pointer path and 3/3 guards on both markups. One withheld check stays a recorded `VERIFIED_FAIL`: typing only spaces makes the pinned component itself confirm Germany. Reviewer probes: [`reviewer-probes.json`](benchmarks/native-form-markup/reviewer-probes.json).
+- **[Pikaday](https://github.com/Pikaday/Pikaday/issues/955) (keyboard date navigation).** Super repaired arrow keys selecting a closed weekend, then a closed-range flaw that review exposed, then a British Summer Time bug where ArrowDown landed on Thursday; six withheld checks pass.
 
 ## How NVIDIA Nemotron and Nebius are used
+
+Where Token Factory sped the work up: one OpenAI-compatible endpoint serves all three Nemotron models, so routing Super, Ultra and Nano is configuration rather than code; the catalog's prices let every call be capped before it is sent; and the same key in a GitHub secret lets judges start a real run from an issue, with no server of ours.
 
 - Every repair proposal is a live `chat/completions` call to Nebius Token Factory with an NVIDIA Nemotron model selected from the authenticated catalog: `nvidia/Nemotron-3-Ultra-550b-a55b` or `nvidia/nemotron-3-super-120b-a12b`.
 - The model receives the failing browser evidence, the frozen requirements and the full allowlisted source with SHA-256 hashes. It returns root cause, strategy and exact before/after edits as JSON.
@@ -111,7 +97,7 @@ The four verdicts are `VERIFIED_PASS`, `VERIFIED_FAIL`, `INCONCLUSIVE` and `NOT_
 - **Every version, every run.** A change to the engine or a run limit is a new version, and every case is rerun on it; earlier scores stay on the scoreboard. From engine v9, each bug gets three blind runs and every run counts.
 - **Where a pass fixed the bug.** Each pass is labelled by its diff: a change to the library's own files, or only a workaround in the author-built page. Before engine v11 the page was editable, and 35 of the 389 passing runs only worked around the bug there.
 - **The gate's own errors.** Three Pikaday patches were rejected before engine v9 for colour contrast the library already had. They are listed on the scoreboard and are not counted as catches.
-- **Original case studies.** The GOV.UK autocomplete and Pikaday studies below are real reported issues in author-created pages, not production customers.
+- **Earlier case studies.** The GOV.UK autocomplete and Pikaday studies are real reported issues in author-created pages, not production customers.
 - **Post-hoc strengthening.** Every stricter task was added after review. Each one was frozen in `benchmarks/<case>/commitment.json` before the next inference, together with source hashes, task hashes and repair-implementation hashes.
 - **Implementation amendments.** Two changes were made after recorded failures: accepting a lone string for advisory lists, and adding optional regression guards. Both are disclosed in `amendment*.json`; source and tasks stayed frozen.
 - **Withheld checks.** These were omitted from model requests, but their markup is visible in the source. This is not a blind evaluation.
@@ -151,6 +137,9 @@ To reproduce an experiment, run `node scripts/evaluate-followup.mjs --prepare|--
 
 | Path | Purpose |
 |---|---|
+| `benchmarks/realbugs/`, `scripts/realbugs.mjs` | The 26 fixed upstream bugs, pinned sources, frozen tasks and per-version scores |
+| `benchmarks/openbugs/`, `scripts/openbugs.mjs` | The 7 bugs still open upstream, with patch reviews |
+| `action.yml`, `.github/workflows/judge-live.yml` | The GitHub Action and the judge live-run workflow |
 | `src/engine.js` | Repair loop: baseline, localization, proposals, isolated patching, replay, verdict |
 | `src/nebius.js` | Token Factory client, catalog check, budget ledger, raw request/response capture |
 | `src/runner.js`, `src/verifier.js` | Playwright journeys and the deterministic gate |
