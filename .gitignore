@@ -6,6 +6,10 @@ artifacts/
 coverage/
 *.log
 .DS_Store
+.vscode/
+docs/archive/
+scripts/_serve.mjs
+scripts/_shot.mjs
 
 # Raw DOM/AX dumps from baseline replays stay local; screenshots, results and hashes are committed.
 benchmarks/**/*.dom.html
